@@ -169,6 +169,19 @@ const APP_DATA = [
         url: 'https://swp1234.github.io/sky-runner/',
         isNew: true,
         isPopular: true
+    },
+    {
+        id: 'emotion-temp',
+        name: '감정 온도계 테스트',
+        shortDesc: '나의 감정 온도는 몇 도?',
+        description: '10가지 질문으로 알아보는 나의 감정 온도! 16가지 유형 중 당신은? 결과 이미지 저장 & 공유.',
+        icon: '🌡️',
+        color: '#e07a5f',
+        category: 'fortune',
+        tags: ['심리테스트', '감정', '성격', '바이럴', 'HSP', '감정온도'],
+        url: 'https://swp1234.github.io/emotion-temp/',
+        isNew: true,
+        isPopular: true
     }
 ];
 
