@@ -182,6 +182,19 @@ const APP_DATA = [
         url: 'https://swp1234.github.io/emotion-temp/',
         isNew: true,
         isPopular: true
+    },
+    {
+        id: 'mbti-love',
+        name: 'MBTI 연애 궁합 테스트',
+        shortDesc: '나의 연애 스타일은? 💕',
+        description: '12가지 질문으로 알아보는 나의 MBTI 연애 스타일! 16가지 유형과 256가지 궁합표. 나와 찰떡궁합인 유형은?',
+        icon: '💕',
+        color: '#e74c3c',
+        category: 'fortune',
+        tags: ['MBTI', '연애', '궁합', '심리테스트', '연애스타일'],
+        url: 'https://swp1234.github.io/mbti-love/',
+        isNew: true,
+        isPopular: true
     }
 ];
 
