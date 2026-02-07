@@ -156,6 +156,19 @@ const APP_DATA = [
         url: 'https://swp1234.github.io/unit-converter/',
         isNew: true,
         isPopular: false
+    },
+    {
+        id: 'sky-runner',
+        name: 'Sky Runner',
+        shortDesc: '우주 비행 아케이드 게임',
+        description: '우주선을 조종해 장애물을 피하세요! 원탭 조작의 중독성 캐주얼 아케이드 게임.',
+        icon: '🚀',
+        color: '#5f27cd',
+        category: 'quiz',
+        tags: ['게임', '아케이드', '우주', '캐주얼', 'Flappy'],
+        url: 'https://swp1234.github.io/sky-runner/',
+        isNew: true,
+        isPopular: true
     }
 ];
 
