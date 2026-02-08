@@ -299,6 +299,19 @@ const APP_DATA = [
         url: 'https://dopabrain.com/idle-clicker/',
         isNew: true,
         isPopular: true
+    },
+    {
+        id: 'valentine',
+        name: '밸런타인 궁합 테스트',
+        shortDesc: '우리의 궁합은 몇 %?',
+        description: '이름+생일+5가지 질문으로 알아보는 밸런타인 궁합! 이름 획수 궁합, 별자리 궁합, 사랑 유형까지 완벽 분석.',
+        icon: '💕',
+        color: '#ff4b91',
+        category: 'fortune',
+        tags: ['밸런타인', '궁합', '커플', '연애', '사랑', '심리테스트'],
+        url: 'https://dopabrain.com/valentine/',
+        isNew: true,
+        isPopular: true
     }
 ];
 
