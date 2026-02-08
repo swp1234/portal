@@ -273,6 +273,19 @@ const APP_DATA = [
         url: 'https://swp1234.github.io/zigzag-runner/',
         isNew: true,
         isPopular: true
+    },
+    {
+        id: 'past-life',
+        name: '전생 직업 테스트',
+        shortDesc: '나의 전생은 무엇이었을까?',
+        description: '10문항으로 알아보는 나의 전생 직업! 기사단장, 해적 선장, 르네상스 화가... 8가지 전생 유형과 궁합까지.',
+        icon: '🗡️',
+        color: '#C9A96E',
+        category: 'fortune',
+        tags: ['전생', '심리테스트', '바이럴', '궁합', '전생직업'],
+        url: 'https://swp1234.github.io/past-life/',
+        isNew: true,
+        isPopular: true
     }
 ];
 
