@@ -1,4 +1,4 @@
-// FireTools Portal - Main Application Logic
+// DopaBrain Portal - Main Application Logic
 (function () {
     'use strict';
 
@@ -195,7 +195,7 @@
     function trackRecentlyUsed() {
         // Load recent apps from localStorage
         try {
-            const recent = JSON.parse(localStorage.getItem('firetools_recent') || '[]');
+            const recent = JSON.parse(localStorage.getItem('dopabrain_recent') || '[]');
             // Could be used for "recently used" section in the future
         } catch (e) {
             // Ignore parse errors
@@ -204,11 +204,11 @@
 
     function trackAppClick(appId) {
         try {
-            let recent = JSON.parse(localStorage.getItem('firetools_recent') || '[]');
+            let recent = JSON.parse(localStorage.getItem('dopabrain_recent') || '[]');
             recent = recent.filter(id => id !== appId);
             recent.unshift(appId);
             recent = recent.slice(0, 5); // Keep last 5
-            localStorage.setItem('firetools_recent', JSON.stringify(recent));
+            localStorage.setItem('dopabrain_recent', JSON.stringify(recent));
         } catch (e) {
             // Ignore storage errors
         }

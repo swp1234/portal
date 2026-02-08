@@ -1,4 +1,4 @@
-const CACHE_NAME = 'firetools-portal-v1';
+const CACHE_NAME = 'dopabrain-portal-v1';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',

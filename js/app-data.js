@@ -10,7 +10,7 @@ const APP_DATA = [
         color: '#667eea',
         category: 'quiz',
         tags: ['퀴즈', '상식', '교육', '게임'],
-        url: 'https://swp1234.github.io/quiz-app/',
+        url: 'https://dopabrain.com/quiz-app/',
         isNew: false,
         isPopular: true
     },
@@ -23,7 +23,7 @@ const APP_DATA = [
         color: '#f39c12',
         category: 'tool',
         tags: ['환율', '계산기', '관세', '해외직구', '여행'],
-        url: 'https://swp1234.github.io/shopping-calc/',
+        url: 'https://dopabrain.com/shopping-calc/',
         isNew: false,
         isPopular: true
     },
@@ -36,7 +36,7 @@ const APP_DATA = [
         color: '#00b894',
         category: 'life',
         tags: ['타이머', '디톡스', '집중', '생산성'],
-        url: 'https://swp1234.github.io/detox-timer/',
+        url: 'https://dopabrain.com/detox-timer/',
         isNew: false,
         isPopular: false
     },
@@ -49,7 +49,7 @@ const APP_DATA = [
         color: '#9b59b6',
         category: 'fortune',
         tags: ['운세', '꿈해몽', '타로', '별자리'],
-        url: 'https://swp1234.github.io/dream-fortune/',
+        url: 'https://dopabrain.com/dream-fortune/',
         isNew: false,
         isPopular: true
     },
@@ -62,7 +62,7 @@ const APP_DATA = [
         color: '#e91e63',
         category: 'life',
         tags: ['긍정', '확언', '동기부여', '자존감', '명언'],
-        url: 'https://swp1234.github.io/affirmation/',
+        url: 'https://dopabrain.com/affirmation/',
         isNew: false,
         isPopular: false
     },
@@ -75,7 +75,7 @@ const APP_DATA = [
         color: '#e74c3c',
         category: 'fortune',
         tags: ['로또', '복권', '번호', '행운', '추첨'],
-        url: 'https://swp1234.github.io/lottery/',
+        url: 'https://dopabrain.com/lottery/',
         isNew: false,
         isPopular: true
     },
@@ -88,7 +88,7 @@ const APP_DATA = [
         color: '#3498db',
         category: 'tool',
         tags: ['D-Day', '카운트다운', '기념일', '일정'],
-        url: 'https://swp1234.github.io/dday-counter/',
+        url: 'https://dopabrain.com/dday-counter/',
         isNew: false,
         isPopular: false
     },
@@ -101,7 +101,7 @@ const APP_DATA = [
         color: '#1abc9c',
         category: 'fortune',
         tags: ['MBTI', '성격', '궁합', '심리테스트'],
-        url: 'https://swp1234.github.io/mbti-tips/',
+        url: 'https://dopabrain.com/mbti-tips/',
         isNew: false,
         isPopular: true
     },
@@ -114,7 +114,7 @@ const APP_DATA = [
         color: '#2c3e50',
         category: 'life',
         tags: ['백색소음', '수면', '집중', '명상', 'ASMR'],
-        url: 'https://swp1234.github.io/white-noise/',
+        url: 'https://dopabrain.com/white-noise/',
         isNew: false,
         isPopular: false
     },
@@ -127,7 +127,7 @@ const APP_DATA = [
         color: '#27ae60',
         category: 'quiz',
         tags: ['개발자', '코딩', 'IT', '프로그래밍', '퀴즈'],
-        url: 'https://swp1234.github.io/dev-quiz/',
+        url: 'https://dopabrain.com/dev-quiz/',
         isNew: false,
         isPopular: false
     },
@@ -140,7 +140,7 @@ const APP_DATA = [
         color: '#3742fa',
         category: 'tool',
         tags: ['연말정산', '환급', '세금', '계산기'],
-        url: 'https://swp1234.github.io/tax-refund-preview/',
+        url: 'https://dopabrain.com/tax-refund-preview/',
         isNew: true,
         isPopular: false
     },
@@ -153,7 +153,7 @@ const APP_DATA = [
         color: '#2ed573',
         category: 'tool',
         tags: ['단위', '변환', '평수', '온도', '무게'],
-        url: 'https://swp1234.github.io/unit-converter/',
+        url: 'https://dopabrain.com/unit-converter/',
         isNew: true,
         isPopular: false
     },
@@ -166,7 +166,7 @@ const APP_DATA = [
         color: '#5f27cd',
         category: 'quiz',
         tags: ['게임', '아케이드', '우주', '캐주얼', 'Flappy'],
-        url: 'https://swp1234.github.io/sky-runner/',
+        url: 'https://dopabrain.com/sky-runner/',
         isNew: true,
         isPopular: true
     },
@@ -179,7 +179,7 @@ const APP_DATA = [
         color: '#e07a5f',
         category: 'fortune',
         tags: ['심리테스트', '감정', '성격', '바이럴', 'HSP', '감정온도'],
-        url: 'https://swp1234.github.io/emotion-temp/',
+        url: 'https://dopabrain.com/emotion-temp/',
         isNew: true,
         isPopular: true
     },
@@ -192,7 +192,7 @@ const APP_DATA = [
         color: '#e74c3c',
         category: 'fortune',
         tags: ['MBTI', '연애', '궁합', '심리테스트', '연애스타일'],
-        url: 'https://swp1234.github.io/mbti-love/',
+        url: 'https://dopabrain.com/mbti-love/',
         isNew: true,
         isPopular: true
     },
@@ -205,7 +205,7 @@ const APP_DATA = [
         color: '#7c3aed',
         category: 'fortune',
         tags: ['HSP', '민감성', '심리테스트', '메타센싱', '고감수성자', '감정'],
-        url: 'https://swp1234.github.io/hsp-test/',
+        url: 'https://dopabrain.com/hsp-test/',
         isNew: true,
         isPopular: true
     },
@@ -218,7 +218,7 @@ const APP_DATA = [
         color: '#e91e63',
         category: 'fortune',
         tags: ['사랑', '주파수', '연애', '심리테스트', '솔페지오', '528Hz', '궁합'],
-        url: 'https://swp1234.github.io/love-frequency/',
+        url: 'https://dopabrain.com/love-frequency/',
         isNew: true,
         isPopular: true
     },
@@ -231,7 +231,7 @@ const APP_DATA = [
         color: '#3498db',
         category: 'quiz',
         tags: ['게임', '아케이드', '타이밍', '블록', '캐주얼', '타워'],
-        url: 'https://swp1234.github.io/stack-tower/',
+        url: 'https://dopabrain.com/stack-tower/',
         isNew: true,
         isPopular: true
     },
@@ -244,7 +244,7 @@ const APP_DATA = [
         color: '#ff2d78',
         category: 'fortune',
         tags: ['KPOP', '포지션', '아이돌', '심리테스트', 'BTS', 'BLACKPINK'],
-        url: 'https://swp1234.github.io/kpop-position/',
+        url: 'https://dopabrain.com/kpop-position/',
         isNew: true,
         isPopular: true
     },
@@ -257,7 +257,7 @@ const APP_DATA = [
         color: '#f4a261',
         category: 'quiz',
         tags: ['이모지', '머지', '진화', '퍼즐', '게임', '2048', '캐주얼'],
-        url: 'https://swp1234.github.io/emoji-merge/',
+        url: 'https://dopabrain.com/emoji-merge/',
         isNew: true,
         isPopular: true
     },
@@ -270,7 +270,7 @@ const APP_DATA = [
         color: '#ff6348',
         category: 'quiz',
         tags: ['게임', '아케이드', '지그재그', '러너', '캐주얼', '원탭'],
-        url: 'https://swp1234.github.io/zigzag-runner/',
+        url: 'https://dopabrain.com/zigzag-runner/',
         isNew: true,
         isPopular: true
     },
@@ -283,7 +283,7 @@ const APP_DATA = [
         color: '#C9A96E',
         category: 'fortune',
         tags: ['전생', '심리테스트', '바이럴', '궁합', '전생직업'],
-        url: 'https://swp1234.github.io/past-life/',
+        url: 'https://dopabrain.com/past-life/',
         isNew: true,
         isPopular: true
     },
@@ -296,7 +296,7 @@ const APP_DATA = [
         color: '#fbbf24',
         category: 'quiz',
         tags: ['게임', '클리커', '방치형', '경영', '사업', '캐주얼'],
-        url: 'https://swp1234.github.io/idle-clicker/',
+        url: 'https://dopabrain.com/idle-clicker/',
         isNew: true,
         isPopular: true
     }
