@@ -252,7 +252,14 @@
             en: { morning: 'Good morning!', afternoon: 'Good afternoon!', evening: 'Good evening!', night: 'Good night!' },
             zh: { morning: '早上好!', afternoon: '下午好!', evening: '晚上好!', night: '晚安!' },
             hi: { morning: 'सुप्रभात!', afternoon: 'शुभ दोपहर!', evening: 'शुभ संध्या!', night: 'शुभ रात्रि!' },
-            ru: { morning: 'Доброе утро!', afternoon: 'Добрый день!', evening: 'Добрый вечер!', night: 'Доброй ночи!' }
+            ru: { morning: 'Доброе утро!', afternoon: 'Добрый день!', evening: 'Добрый вечер!', night: 'Доброй ночи!' },
+            ja: { morning: 'おはようございます!', afternoon: 'こんにちは!', evening: 'こんばんは!', night: 'おやすみなさい!' },
+            es: { morning: '!Buenos dias!', afternoon: '!Buenas tardes!', evening: '!Buenas noches!', night: '!Buenas noches!' },
+            pt: { morning: 'Bom dia!', afternoon: 'Boa tarde!', evening: 'Boa noite!', night: 'Boa noite!' },
+            id: { morning: 'Selamat pagi!', afternoon: 'Selamat siang!', evening: 'Selamat sore!', night: 'Selamat malam!' },
+            tr: { morning: 'Gunaydin!', afternoon: 'Iyi gunler!', evening: 'Iyi aksamlar!', night: 'Iyi geceler!' },
+            de: { morning: 'Guten Morgen!', afternoon: 'Guten Tag!', evening: 'Guten Abend!', night: 'Gute Nacht!' },
+            fr: { morning: 'Bonjour !', afternoon: 'Bon apres-midi !', evening: 'Bonsoir !', night: 'Bonne nuit !' }
         };
         var g = greetings[lang] || greetings.en;
         return g[ctx.period] || g.morning;
@@ -260,9 +267,9 @@
 
     // ─── Section Labels ───────────────────────────────────────
     var SECTION_LABELS = {
-        recent: { ko: '최근 사용', en: 'Recently Used', zh: '最近使用', hi: 'हाल ही में उपयोग', ru: 'Недавние' },
-        recommended: { ko: '지금 추천', en: 'Recommended', zh: '为你推荐', hi: 'आपके लिए', ru: 'Рекомендации' },
-        forYou: { ko: '맞춤 추천', en: 'For You', zh: '个性化推荐', hi: 'आपके लिए सुझाव', ru: 'Для вас' }
+        recent: { ko: '최근 사용', en: 'Recently Used', zh: '最近使用', hi: 'हाल ही में उपयोग', ru: 'Недавние', ja: '最近使用', es: 'Usados recientemente', pt: 'Usados recentemente', id: 'Baru digunakan', tr: 'Son kullanilanlar', de: 'Zuletzt verwendet', fr: 'Utilises recemment' },
+        recommended: { ko: '지금 추천', en: 'Recommended', zh: '为你推荐', hi: 'आपके लिए', ru: 'Рекомендации', ja: 'おすすめ', es: 'Recomendados', pt: 'Recomendados', id: 'Rekomendasi', tr: 'Onerilen', de: 'Empfohlen', fr: 'Recommandes' },
+        forYou: { ko: '맞춤 추천', en: 'For You', zh: '个性化推荐', hi: 'आपके लिए सुझाव', ru: 'Для вас', ja: 'あなたへ', es: 'Para ti', pt: 'Para voce', id: 'Untuk kamu', tr: 'Senin icin', de: 'Fur dich', fr: 'Pour vous' }
     };
 
     function getSectionLabel(key, lang) {

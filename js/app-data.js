@@ -17,7 +17,14 @@ const APP_DATA = [
             en: { name: 'Knowledge Quiz', shortDesc: 'General knowledge test' },
             zh: { name: '知识问答', shortDesc: '常识测试' },
             hi: { name: 'ज्ञान क्विज़', shortDesc: 'सामान्य ज्ञान परीक्षा' },
-            ru: { name: 'Викторина', shortDesc: 'Тест на общие знания' }
+            ru: { name: 'Викторина', shortDesc: 'Тест на общие знания' },
+            ja: { name: '知識クイズ', shortDesc: '一般常識テスト' },
+            es: { name: 'Quiz de Conocimiento', shortDesc: 'Test de cultura general' },
+            pt: { name: 'Quiz de Conhecimento', shortDesc: 'Teste de conhecimentos gerais' },
+            id: { name: 'Kuis Pengetahuan', shortDesc: 'Tes pengetahuan umum' },
+            tr: { name: 'Bilgi Yarışması', shortDesc: 'Genel kültür testi' },
+            de: { name: 'Wissensquiz', shortDesc: 'Allgemeinwissen-Test' },
+            fr: { name: 'Quiz de Culture', shortDesc: 'Test de culture générale' }
         }
     },
     {
@@ -36,7 +43,14 @@ const APP_DATA = [
             en: { name: 'Shopping Calculator', shortDesc: 'Currency / duty / tip calc' },
             zh: { name: '全球购物计算器', shortDesc: '汇率/关税/小费计算' },
             hi: { name: 'शॉपिंग कैलकुलेटर', shortDesc: 'मुद्रा/शुल्क/टिप गणना' },
-            ru: { name: 'Калькулятор покупок', shortDesc: 'Валюта / пошлина / чаевые' }
+            ru: { name: 'Калькулятор покупок', shortDesc: 'Валюта / пошлина / чаевые' },
+            ja: { name: 'ショッピング計算機', shortDesc: '為替/関税/チップ計算' },
+            es: { name: 'Calculadora de Compras', shortDesc: 'Divisa / arancel / propina' },
+            pt: { name: 'Calculadora de Compras', shortDesc: 'Câmbio / taxa / gorjeta' },
+            id: { name: 'Kalkulator Belanja', shortDesc: 'Kurs / bea / tip' },
+            tr: { name: 'Alışveriş Hesaplayıcı', shortDesc: 'Döviz / gümrük / bahşiş' },
+            de: { name: 'Shopping-Rechner', shortDesc: 'Währung / Zoll / Trinkgeld' },
+            fr: { name: 'Calculateur Shopping', shortDesc: 'Devise / douane / pourboire' }
         }
     },
     {
@@ -55,7 +69,14 @@ const APP_DATA = [
             en: { name: 'Digital Detox Timer', shortDesc: 'Screen time manager' },
             zh: { name: '数字排毒计时器', shortDesc: '手机使用管理' },
             hi: { name: 'डिजिटल डिटॉक्स टाइमर', shortDesc: 'स्क्रीन टाइम प्रबंधन' },
-            ru: { name: 'Цифровой детокс', shortDesc: 'Управление экранным временем' }
+            ru: { name: 'Цифровой детокс', shortDesc: 'Управление экранным временем' },
+            ja: { name: 'デジタルデトックスタイマー', shortDesc: 'スクリーンタイム管理' },
+            es: { name: 'Temporizador Detox Digital', shortDesc: 'Gestión del tiempo de pantalla' },
+            pt: { name: 'Timer de Detox Digital', shortDesc: 'Gerenciador de tempo de tela' },
+            id: { name: 'Timer Detoks Digital', shortDesc: 'Pengatur waktu layar' },
+            tr: { name: 'Dijital Detoks Zamanlayıcı', shortDesc: 'Ekran süresi yönetimi' },
+            de: { name: 'Digital-Detox-Timer', shortDesc: 'Bildschirmzeit-Manager' },
+            fr: { name: 'Minuteur Détox Numérique', shortDesc: 'Gestion du temps d\'écran' }
         }
     },
     {
@@ -74,7 +95,14 @@ const APP_DATA = [
             en: { name: 'Dream & Fortune', shortDesc: 'AI dream reading & horoscope' },
             zh: { name: '解梦与运势', shortDesc: 'AI解梦 & 今日运势' },
             hi: { name: 'सपने और भाग्य', shortDesc: 'AI स्वप्न व्याख्या और राशिफल' },
-            ru: { name: 'Сны и гороскоп', shortDesc: 'AI толкование снов и гороскоп' }
+            ru: { name: 'Сны и гороскоп', shortDesc: 'AI толкование снов и гороскоп' },
+            ja: { name: '夢占い & 運勢', shortDesc: 'AI夢診断 & 今日の運勢' },
+            es: { name: 'Sueños y Fortuna', shortDesc: 'Interpretación de sueños con IA' },
+            pt: { name: 'Sonhos e Fortuna', shortDesc: 'Interpretação de sonhos com IA' },
+            id: { name: 'Mimpi & Ramalan', shortDesc: 'Tafsir mimpi AI & ramalan hari ini' },
+            tr: { name: 'Rüya & Fal', shortDesc: 'AI rüya yorumu ve günlük burç' },
+            de: { name: 'Traum & Horoskop', shortDesc: 'KI-Traumdeutung & Horoskop' },
+            fr: { name: 'Rêves & Horoscope', shortDesc: 'Interprétation des rêves par IA' }
         }
     },
     {
@@ -93,7 +121,14 @@ const APP_DATA = [
             en: { name: 'Daily Affirmation', shortDesc: 'Positive messages every day' },
             zh: { name: '每日正能量卡片', shortDesc: '每天新的正面信息' },
             hi: { name: 'दैनिक सकारात्मक संदेश', shortDesc: 'रोज़ नए प्रेरक संदेश' },
-            ru: { name: 'Ежедневные аффирмации', shortDesc: 'Позитивные послания каждый день' }
+            ru: { name: 'Ежедневные аффирмации', shortDesc: 'Позитивные послания каждый день' },
+            ja: { name: '毎日のアファメーション', shortDesc: '毎日のポジティブメッセージ' },
+            es: { name: 'Afirmación Diaria', shortDesc: 'Mensajes positivos cada día' },
+            pt: { name: 'Afirmação Diária', shortDesc: 'Mensagens positivas todo dia' },
+            id: { name: 'Afirmasi Harian', shortDesc: 'Pesan positif setiap hari' },
+            tr: { name: 'Günlük Olumlamalar', shortDesc: 'Her gün pozitif mesajlar' },
+            de: { name: 'Tägliche Affirmation', shortDesc: 'Positive Botschaften jeden Tag' },
+            fr: { name: 'Affirmation Quotidienne', shortDesc: 'Messages positifs chaque jour' }
         }
     },
     {
@@ -112,7 +147,14 @@ const APP_DATA = [
             en: { name: 'Lucky Number Generator', shortDesc: 'Lottery number picker' },
             zh: { name: '幸运号码生成器', shortDesc: '彩票号码生成' },
             hi: { name: 'लकी नंबर जनरेटर', shortDesc: 'लॉटरी नंबर चयन' },
-            ru: { name: 'Генератор чисел', shortDesc: 'Выбор номеров лотереи' }
+            ru: { name: 'Генератор чисел', shortDesc: 'Выбор номеров лотереи' },
+            ja: { name: 'ラッキーナンバー生成器', shortDesc: '宝くじ番号ピッカー' },
+            es: { name: 'Generador de Números', shortDesc: 'Selector de números de lotería' },
+            pt: { name: 'Gerador de Números', shortDesc: 'Seletor de números da loteria' },
+            id: { name: 'Generator Angka Keberuntungan', shortDesc: 'Pemilih nomor lotere' },
+            tr: { name: 'Şanslı Sayı Üretici', shortDesc: 'Piyango numarası seçici' },
+            de: { name: 'Glückszahlen-Generator', shortDesc: 'Lottozahlen-Picker' },
+            fr: { name: 'Générateur de Numéros', shortDesc: 'Sélecteur de numéros de loterie' }
         }
     },
     {
@@ -131,7 +173,14 @@ const APP_DATA = [
             en: { name: 'D-Day Counter', shortDesc: 'Date countdown tracker' },
             zh: { name: 'D-Day 倒计时', shortDesc: '重要日期倒计时' },
             hi: { name: 'D-Day काउंटर', shortDesc: 'तारीख काउंटडाउन' },
-            ru: { name: 'Счётчик D-Day', shortDesc: 'Обратный отсчёт до даты' }
+            ru: { name: 'Счётчик D-Day', shortDesc: 'Обратный отсчёт до даты' },
+            ja: { name: 'D-Dayカウンター', shortDesc: '日付カウントダウン' },
+            es: { name: 'Contador D-Day', shortDesc: 'Cuenta regresiva de fechas' },
+            pt: { name: 'Contador D-Day', shortDesc: 'Contagem regressiva de datas' },
+            id: { name: 'Penghitung D-Day', shortDesc: 'Hitung mundur tanggal' },
+            tr: { name: 'D-Day Sayacı', shortDesc: 'Tarih geri sayımı' },
+            de: { name: 'D-Day-Zähler', shortDesc: 'Datums-Countdown' },
+            fr: { name: 'Compteur D-Day', shortDesc: 'Compte à rebours de dates' }
         }
     },
     {
@@ -150,7 +199,14 @@ const APP_DATA = [
             en: { name: 'MBTI Compatibility', shortDesc: 'MBTI type analysis & tips' },
             zh: { name: 'MBTI 配对与建议', shortDesc: 'MBTI类型分析' },
             hi: { name: 'MBTI अनुकूलता', shortDesc: 'MBTI प्रकार विश्लेषण' },
-            ru: { name: 'MBTI совместимость', shortDesc: 'Анализ типов MBTI' }
+            ru: { name: 'MBTI совместимость', shortDesc: 'Анализ типов MBTI' },
+            ja: { name: 'MBTI相性 & ヒント', shortDesc: 'MBTIタイプ分析' },
+            es: { name: 'Compatibilidad MBTI', shortDesc: 'Análisis de tipos MBTI' },
+            pt: { name: 'Compatibilidade MBTI', shortDesc: 'Análise de tipos MBTI' },
+            id: { name: 'Kecocokan MBTI', shortDesc: 'Analisis tipe MBTI' },
+            tr: { name: 'MBTI Uyumluluk', shortDesc: 'MBTI tip analizi' },
+            de: { name: 'MBTI-Kompatibilität', shortDesc: 'MBTI-Typ-Analyse & Tipps' },
+            fr: { name: 'Compatibilité MBTI', shortDesc: 'Analyse des types MBTI' }
         }
     },
     {
@@ -169,7 +225,14 @@ const APP_DATA = [
             en: { name: 'White Noise Player', shortDesc: 'Focus & sleep sounds' },
             zh: { name: '白噪音播放器', shortDesc: '专注/睡眠背景音' },
             hi: { name: 'व्हाइट नॉइज़ प्लेयर', shortDesc: 'फोकस और नींद की आवाज़ें' },
-            ru: { name: 'Белый шум', shortDesc: 'Звуки для сна и фокуса' }
+            ru: { name: 'Белый шум', shortDesc: 'Звуки для сна и фокуса' },
+            ja: { name: 'ホワイトノイズプレーヤー', shortDesc: '集中 & 睡眠用サウンド' },
+            es: { name: 'Reproductor Ruido Blanco', shortDesc: 'Sonidos para concentración y sueño' },
+            pt: { name: 'Player de Ruído Branco', shortDesc: 'Sons para foco e sono' },
+            id: { name: 'Pemutar White Noise', shortDesc: 'Suara fokus & tidur' },
+            tr: { name: 'Beyaz Gürültü Oynatıcı', shortDesc: 'Odaklanma ve uyku sesleri' },
+            de: { name: 'Weißes-Rauschen-Player', shortDesc: 'Fokus- & Schlafgeräusche' },
+            fr: { name: 'Lecteur Bruit Blanc', shortDesc: 'Sons pour la concentration et le sommeil' }
         }
     },
     {
@@ -188,7 +251,14 @@ const APP_DATA = [
             en: { name: 'Developer Quiz', shortDesc: 'Coding & IT quiz' },
             zh: { name: '开发者测验', shortDesc: '编程/IT专业测验' },
             hi: { name: 'डेवलपर क्विज़', shortDesc: 'कोडिंग और IT क्विज़' },
-            ru: { name: 'Квиз разработчика', shortDesc: 'Тест по программированию' }
+            ru: { name: 'Квиз разработчика', shortDesc: 'Тест по программированию' },
+            ja: { name: '開発者クイズ', shortDesc: 'コーディング & ITクイズ' },
+            es: { name: 'Quiz para Desarrolladores', shortDesc: 'Quiz de programación e IT' },
+            pt: { name: 'Quiz do Desenvolvedor', shortDesc: 'Quiz de programação e TI' },
+            id: { name: 'Kuis Developer', shortDesc: 'Kuis coding & IT' },
+            tr: { name: 'Geliştirici Quizi', shortDesc: 'Kodlama ve BT quizi' },
+            de: { name: 'Entwickler-Quiz', shortDesc: 'Programmier- & IT-Quiz' },
+            fr: { name: 'Quiz Développeur', shortDesc: 'Quiz programmation et IT' }
         }
     },
     {
@@ -207,7 +277,14 @@ const APP_DATA = [
             en: { name: 'Tax Refund Calculator', shortDesc: 'Estimate your tax refund' },
             zh: { name: '退税计算器', shortDesc: '退税金额预估' },
             hi: { name: 'टैक्स रिफंड कैलकुलेटर', shortDesc: 'टैक्स रिफंड अनुमान' },
-            ru: { name: 'Калькулятор налогов', shortDesc: 'Расчёт возврата налогов' }
+            ru: { name: 'Калькулятор налогов', shortDesc: 'Расчёт возврата налогов' },
+            ja: { name: '確定申告シミュレーター', shortDesc: '還付金の試算' },
+            es: { name: 'Calculadora de Impuestos', shortDesc: 'Estima tu devolución fiscal' },
+            pt: { name: 'Calculadora de Impostos', shortDesc: 'Estime sua restituição' },
+            id: { name: 'Kalkulator Pajak', shortDesc: 'Estimasi pengembalian pajak' },
+            tr: { name: 'Vergi İadesi Hesaplayıcı', shortDesc: 'Vergi iadenizi tahmin edin' },
+            de: { name: 'Steuererstattungsrechner', shortDesc: 'Steuererstattung berechnen' },
+            fr: { name: 'Calculateur d\'Impôts', shortDesc: 'Estimez votre remboursement' }
         }
     },
     {
@@ -226,7 +303,14 @@ const APP_DATA = [
             en: { name: 'Unit Converter Pro', shortDesc: 'Length, weight, temp converter' },
             zh: { name: '单位转换器 Pro', shortDesc: '长度/重量/温度转换' },
             hi: { name: 'यूनिट कन्वर्टर Pro', shortDesc: 'लंबाई, वज़न, तापमान रूपांतरण' },
-            ru: { name: 'Конвертер величин', shortDesc: 'Длина, вес, температура' }
+            ru: { name: 'Конвертер величин', shortDesc: 'Длина, вес, температура' },
+            ja: { name: '単位変換器 Pro', shortDesc: '長さ・重さ・温度の変換' },
+            es: { name: 'Conversor de Unidades Pro', shortDesc: 'Longitud, peso, temperatura' },
+            pt: { name: 'Conversor de Unidades Pro', shortDesc: 'Comprimento, peso, temperatura' },
+            id: { name: 'Konverter Satuan Pro', shortDesc: 'Panjang, berat, suhu' },
+            tr: { name: 'Birim Dönüştürücü Pro', shortDesc: 'Uzunluk, ağırlık, sıcaklık' },
+            de: { name: 'Einheitenrechner Pro', shortDesc: 'Länge, Gewicht, Temperatur' },
+            fr: { name: 'Convertisseur d\'Unités Pro', shortDesc: 'Longueur, poids, température' }
         }
     },
     {
@@ -245,7 +329,14 @@ const APP_DATA = [
             en: { name: 'Sky Runner', shortDesc: 'Space flight arcade game' },
             zh: { name: 'Sky Runner', shortDesc: '太空飞行街机游戏' },
             hi: { name: 'Sky Runner', shortDesc: 'स्पेस फ्लाइट आर्केड गेम' },
-            ru: { name: 'Sky Runner', shortDesc: 'Космическая аркада' }
+            ru: { name: 'Sky Runner', shortDesc: 'Космическая аркада' },
+            ja: { name: 'Sky Runner', shortDesc: '宇宙フライトアーケード' },
+            es: { name: 'Sky Runner', shortDesc: 'Juego arcade de vuelo espacial' },
+            pt: { name: 'Sky Runner', shortDesc: 'Jogo arcade de voo espacial' },
+            id: { name: 'Sky Runner', shortDesc: 'Game arkade penerbangan luar angkasa' },
+            tr: { name: 'Sky Runner', shortDesc: 'Uzay uçuş arcade oyunu' },
+            de: { name: 'Sky Runner', shortDesc: 'Weltraum-Arcade-Spiel' },
+            fr: { name: 'Sky Runner', shortDesc: 'Jeu d\'arcade de vol spatial' }
         }
     },
     {
@@ -264,7 +355,14 @@ const APP_DATA = [
             en: { name: 'Emotion Temperature', shortDesc: "What's your emotion temp?" },
             zh: { name: '情绪温度计测试', shortDesc: '你的情绪温度是几度？' },
             hi: { name: 'इमोशन टेम्परेचर', shortDesc: 'आपका भावना तापमान क्या है?' },
-            ru: { name: 'Температура эмоций', shortDesc: 'Какова ваша эмоциональная t°?' }
+            ru: { name: 'Температура эмоций', shortDesc: 'Какова ваша эмоциональная t°?' },
+            ja: { name: '感情温度計テスト', shortDesc: 'あなたの感情温度は何度？' },
+            es: { name: 'Termómetro Emocional', shortDesc: '¿Cuál es tu temperatura emocional?' },
+            pt: { name: 'Termômetro Emocional', shortDesc: 'Qual é sua temperatura emocional?' },
+            id: { name: 'Tes Suhu Emosi', shortDesc: 'Berapa suhu emosimu?' },
+            tr: { name: 'Duygu Termometresi', shortDesc: 'Duygu sıcaklığın kaç derece?' },
+            de: { name: 'Emotionsthermometer', shortDesc: 'Wie hoch ist deine Gefühlstemperatur?' },
+            fr: { name: 'Thermomètre Émotionnel', shortDesc: 'Quelle est votre température émotionnelle ?' }
         }
     },
     {
@@ -283,7 +381,14 @@ const APP_DATA = [
             en: { name: 'MBTI Love Match', shortDesc: "What's your love style? 💕" },
             zh: { name: 'MBTI 恋爱配对', shortDesc: '你的恋爱风格是？💕' },
             hi: { name: 'MBTI लव मैच', shortDesc: 'आपकी प्रेम शैली क्या है? 💕' },
-            ru: { name: 'MBTI совместимость', shortDesc: 'Какой ваш стиль любви? 💕' }
+            ru: { name: 'MBTI совместимость', shortDesc: 'Какой ваш стиль любви? 💕' },
+            ja: { name: 'MBTI 恋愛相性テスト', shortDesc: 'あなたの恋愛スタイルは？💕' },
+            es: { name: 'Test de Amor MBTI', shortDesc: '¿Cuál es tu estilo de amor? 💕' },
+            pt: { name: 'Teste de Amor MBTI', shortDesc: 'Qual é seu estilo de amor? 💕' },
+            id: { name: 'Tes Cinta MBTI', shortDesc: 'Apa gaya cintamu? 💕' },
+            tr: { name: 'MBTI Aşk Testi', shortDesc: 'Aşk tarzın ne? 💕' },
+            de: { name: 'MBTI Liebes-Match', shortDesc: 'Was ist dein Liebesstil? 💕' },
+            fr: { name: 'Test Amour MBTI', shortDesc: 'Quel est votre style amoureux ? 💕' }
         }
     },
     {
@@ -302,7 +407,14 @@ const APP_DATA = [
             en: { name: 'HSP Sensitivity Test', shortDesc: 'Are you highly sensitive?' },
             zh: { name: 'HSP 敏感度测试', shortDesc: '你是高敏感人群吗？' },
             hi: { name: 'HSP संवेदनशीलता परीक्षण', shortDesc: 'क्या आप अति संवेदनशील हैं?' },
-            ru: { name: 'Тест HSP', shortDesc: 'Вы высокочувствительный человек?' }
+            ru: { name: 'Тест HSP', shortDesc: 'Вы высокочувствительный человек?' },
+            ja: { name: 'HSP 感受性テスト', shortDesc: 'あなたは繊細さん？' },
+            es: { name: 'Test de Sensibilidad HSP', shortDesc: '¿Eres altamente sensible?' },
+            pt: { name: 'Teste de Sensibilidade HSP', shortDesc: 'Você é altamente sensível?' },
+            id: { name: 'Tes Sensitivitas HSP', shortDesc: 'Apakah kamu sangat sensitif?' },
+            tr: { name: 'HSP Hassasiyet Testi', shortDesc: 'Yüksek hassasiyetli misin?' },
+            de: { name: 'HSP-Sensibilitätstest', shortDesc: 'Bist du hochsensibel?' },
+            fr: { name: 'Test de Sensibilité HSP', shortDesc: 'Êtes-vous hypersensible ?' }
         }
     },
     {
@@ -321,7 +433,14 @@ const APP_DATA = [
             en: { name: 'Love Frequency Test', shortDesc: 'What Hz is your love?' },
             zh: { name: '爱情频率测试', shortDesc: '你的爱情是几Hz？' },
             hi: { name: 'लव फ्रीक्वेंसी टेस्ट', shortDesc: 'आपके प्यार की फ्रीक्वेंसी?' },
-            ru: { name: 'Частота любви', shortDesc: 'На какой частоте ваша любовь?' }
+            ru: { name: 'Частота любви', shortDesc: 'На какой частоте ваша любовь?' },
+            ja: { name: '愛の周波数テスト', shortDesc: 'あなたの愛は何Hz？' },
+            es: { name: 'Test de Frecuencia del Amor', shortDesc: '¿A qué frecuencia está tu amor?' },
+            pt: { name: 'Teste de Frequência do Amor', shortDesc: 'Qual a frequência do seu amor?' },
+            id: { name: 'Tes Frekuensi Cinta', shortDesc: 'Berapa Hz cintamu?' },
+            tr: { name: 'Aşk Frekansı Testi', shortDesc: 'Aşkın kaç Hz?' },
+            de: { name: 'Liebesfrequenz-Test', shortDesc: 'Auf welcher Frequenz ist deine Liebe?' },
+            fr: { name: 'Test Fréquence d\'Amour', shortDesc: 'À quelle fréquence vibre votre amour ?' }
         }
     },
     {
@@ -340,7 +459,14 @@ const APP_DATA = [
             en: { name: 'Stack Tower', shortDesc: 'Timing block stacking game' },
             zh: { name: 'Stack Tower', shortDesc: '计时堆叠方块游戏' },
             hi: { name: 'Stack Tower', shortDesc: 'टाइमिंग ब्लॉक स्टैकिंग गेम' },
-            ru: { name: 'Stack Tower', shortDesc: 'Игра с укладкой блоков' }
+            ru: { name: 'Stack Tower', shortDesc: 'Игра с укладкой блоков' },
+            ja: { name: 'Stack Tower', shortDesc: 'タイミングブロック積みゲーム' },
+            es: { name: 'Stack Tower', shortDesc: 'Juego de apilar bloques' },
+            pt: { name: 'Stack Tower', shortDesc: 'Jogo de empilhar blocos' },
+            id: { name: 'Stack Tower', shortDesc: 'Game menumpuk blok' },
+            tr: { name: 'Stack Tower', shortDesc: 'Zamanlama blok istif oyunu' },
+            de: { name: 'Stack Tower', shortDesc: 'Timing-Blockstapelspiel' },
+            fr: { name: 'Stack Tower', shortDesc: 'Jeu d\'empilement de blocs' }
         }
     },
     {
@@ -359,7 +485,14 @@ const APP_DATA = [
             en: { name: 'K-POP Position Test', shortDesc: "What's your idol position?" },
             zh: { name: 'K-POP 位置测试', shortDesc: '你的偶像位置是？' },
             hi: { name: 'K-POP पोजीशन टेस्ट', shortDesc: 'आपकी आइडल पोजीशन क्या है?' },
-            ru: { name: 'K-POP позиция', shortDesc: 'Какая ваша позиция в группе?' }
+            ru: { name: 'K-POP позиция', shortDesc: 'Какая ваша позиция в группе?' },
+            ja: { name: 'K-POP ポジションテスト', shortDesc: 'あなたのアイドルポジションは？' },
+            es: { name: 'Test de Posición K-POP', shortDesc: '¿Cuál es tu posición de idol?' },
+            pt: { name: 'Teste de Posição K-POP', shortDesc: 'Qual é sua posição de idol?' },
+            id: { name: 'Tes Posisi K-POP', shortDesc: 'Apa posisi idolmu?' },
+            tr: { name: 'K-POP Pozisyon Testi', shortDesc: 'İdol pozisyonun ne?' },
+            de: { name: 'K-POP Positionstest', shortDesc: 'Was ist deine Idol-Position?' },
+            fr: { name: 'Test Position K-POP', shortDesc: 'Quelle est votre position d\'idol ?' }
         }
     },
     {
@@ -378,7 +511,14 @@ const APP_DATA = [
             en: { name: 'Emoji Merge', shortDesc: 'Emoji evolution puzzle game' },
             zh: { name: 'Emoji 合并', shortDesc: 'Emoji 进化益智游戏' },
             hi: { name: 'Emoji Merge', shortDesc: 'इमोजी इवोल्यूशन पज़ल गेम' },
-            ru: { name: 'Emoji Merge', shortDesc: 'Головоломка с эмодзи' }
+            ru: { name: 'Emoji Merge', shortDesc: 'Головоломка с эмодзи' },
+            ja: { name: 'Emoji Merge', shortDesc: '絵文字進化パズルゲーム' },
+            es: { name: 'Emoji Merge', shortDesc: 'Juego de puzle con emojis' },
+            pt: { name: 'Emoji Merge', shortDesc: 'Jogo de puzzle de emojis' },
+            id: { name: 'Emoji Merge', shortDesc: 'Game puzzle evolusi emoji' },
+            tr: { name: 'Emoji Merge', shortDesc: 'Emoji evrim bulmaca oyunu' },
+            de: { name: 'Emoji Merge', shortDesc: 'Emoji-Evolutions-Puzzle' },
+            fr: { name: 'Emoji Merge', shortDesc: 'Jeu de puzzle d\'émojis' }
         }
     },
     {
@@ -397,7 +537,14 @@ const APP_DATA = [
             en: { name: 'Zigzag Runner', shortDesc: 'Direction-switching arcade' },
             zh: { name: 'Zigzag Runner', shortDesc: '方向切换街机游戏' },
             hi: { name: 'Zigzag Runner', shortDesc: 'दिशा बदलने वाला आर्केड गेम' },
-            ru: { name: 'Zigzag Runner', shortDesc: 'Аркада со сменой направления' }
+            ru: { name: 'Zigzag Runner', shortDesc: 'Аркада со сменой направления' },
+            ja: { name: 'Zigzag Runner', shortDesc: '方向転換アーケードゲーム' },
+            es: { name: 'Zigzag Runner', shortDesc: 'Arcade de cambio de dirección' },
+            pt: { name: 'Zigzag Runner', shortDesc: 'Arcade de mudança de direção' },
+            id: { name: 'Zigzag Runner', shortDesc: 'Game arkade ganti arah' },
+            tr: { name: 'Zigzag Runner', shortDesc: 'Yön değiştirme arcade oyunu' },
+            de: { name: 'Zigzag Runner', shortDesc: 'Richtungswechsel-Arcade' },
+            fr: { name: 'Zigzag Runner', shortDesc: 'Arcade de changement de direction' }
         }
     },
     {
@@ -416,7 +563,14 @@ const APP_DATA = [
             en: { name: 'Past Life Job Test', shortDesc: 'What was your past life?' },
             zh: { name: '前世职业测试', shortDesc: '你的前世是什么？' },
             hi: { name: 'पूर्वजन्म परीक्षण', shortDesc: 'आपका पूर्वजन्म क्या था?' },
-            ru: { name: 'Тест прошлой жизни', shortDesc: 'Кем вы были в прошлой жизни?' }
+            ru: { name: 'Тест прошлой жизни', shortDesc: 'Кем вы были в прошлой жизни?' },
+            ja: { name: '前世の職業テスト', shortDesc: 'あなたの前世は何だった？' },
+            es: { name: 'Test de Vida Pasada', shortDesc: '¿Qué fuiste en tu vida pasada?' },
+            pt: { name: 'Teste de Vida Passada', shortDesc: 'O que você foi na vida passada?' },
+            id: { name: 'Tes Kehidupan Lampau', shortDesc: 'Apa pekerjaan masa lalumu?' },
+            tr: { name: 'Geçmiş Yaşam Testi', shortDesc: 'Geçmiş yaşamınızda neydiniz?' },
+            de: { name: 'Früheres-Leben-Test', shortDesc: 'Was warst du in einem früheren Leben?' },
+            fr: { name: 'Test de Vie Antérieure', shortDesc: 'Qu\'étiez-vous dans une vie passée ?' }
         }
     },
     {
@@ -435,7 +589,14 @@ const APP_DATA = [
             en: { name: 'Dungeon Clicker', shortDesc: 'Idle RPG dungeon game' },
             zh: { name: '地牢点击者', shortDesc: '放置型RPG地牢游戏' },
             hi: { name: 'डंजन क्लिकर', shortDesc: 'आइडल RPG डंजन गेम' },
-            ru: { name: 'Данжен Кликер', shortDesc: 'Idle RPG подземелье' }
+            ru: { name: 'Данжен Кликер', shortDesc: 'Idle RPG подземелье' },
+            ja: { name: 'ダンジョンクリッカー', shortDesc: '放置型RPGダンジョンゲーム' },
+            es: { name: 'Dungeon Clicker', shortDesc: 'Juego idle RPG de mazmorras' },
+            pt: { name: 'Dungeon Clicker', shortDesc: 'Jogo idle RPG de masmorra' },
+            id: { name: 'Dungeon Clicker', shortDesc: 'Game RPG idle dungeon' },
+            tr: { name: 'Dungeon Clicker', shortDesc: 'Idle RPG zindan oyunu' },
+            de: { name: 'Dungeon Clicker', shortDesc: 'Idle-RPG-Dungeon-Spiel' },
+            fr: { name: 'Dungeon Clicker', shortDesc: 'Jeu RPG idle de donjon' }
         }
     },
     {
@@ -454,17 +615,24 @@ const APP_DATA = [
             en: { name: 'Valentine Match Test', shortDesc: 'How compatible are you? %' },
             zh: { name: '情人节配对测试', shortDesc: '你们的匹配度是几%？' },
             hi: { name: 'वैलेंटाइन मैच टेस्ट', shortDesc: 'आपकी जोड़ी कितनी परफेक्ट? %' },
-            ru: { name: 'Тест совместимости', shortDesc: 'Какова ваша совместимость? %' }
+            ru: { name: 'Тест совместимости', shortDesc: 'Какова ваша совместимость? %' },
+            ja: { name: 'バレンタイン相性テスト', shortDesc: '二人の相性は何%？' },
+            es: { name: 'Test de San Valentín', shortDesc: '¿Cuánto son compatibles? %' },
+            pt: { name: 'Teste de Dia dos Namorados', shortDesc: 'Quão compatíveis vocês são? %' },
+            id: { name: 'Tes Kecocokan Valentine', shortDesc: 'Seberapa cocok kalian? %' },
+            tr: { name: 'Sevgililer Günü Testi', shortDesc: 'Ne kadar uyumlusunuz? %' },
+            de: { name: 'Valentinstag-Match-Test', shortDesc: 'Wie kompatibel seid ihr? %' },
+            fr: { name: 'Test Saint-Valentin', shortDesc: 'Êtes-vous compatibles ? %' }
         }
     }
 ];
 
 const CATEGORIES = {
-    all: { name: '전체', icon: '🏠', i18n: { en: 'All', zh: '全部', hi: 'सभी', ru: 'Все' } },
-    quiz: { name: '퀴즈/게임', icon: '🎮', i18n: { en: 'Games', zh: '游戏', hi: 'गेम्स', ru: 'Игры' } },
-    fortune: { name: '운세/테스트', icon: '🔮', i18n: { en: 'Tests', zh: '测试', hi: 'टेस्ट', ru: 'Тесты' } },
-    tool: { name: '계산기/도구', icon: '🧮', i18n: { en: 'Tools', zh: '工具', hi: 'टूल्स', ru: 'Инструменты' } },
-    life: { name: '라이프', icon: '🧘', i18n: { en: 'Life', zh: '生活', hi: 'लाइफ', ru: 'Жизнь' } }
+    all: { name: '전체', icon: '🏠', i18n: { en: 'All', zh: '全部', hi: 'सभी', ru: 'Все', ja: 'すべて', es: 'Todo', pt: 'Tudo', id: 'Semua', tr: 'Tümü', de: 'Alle', fr: 'Tout' } },
+    quiz: { name: '퀴즈/게임', icon: '🎮', i18n: { en: 'Games', zh: '游戏', hi: 'गेम्स', ru: 'Игры', ja: 'ゲーム', es: 'Juegos', pt: 'Jogos', id: 'Game', tr: 'Oyunlar', de: 'Spiele', fr: 'Jeux' } },
+    fortune: { name: '운세/테스트', icon: '🔮', i18n: { en: 'Tests', zh: '测试', hi: 'टेस्ट', ru: 'Тесты', ja: 'テスト', es: 'Tests', pt: 'Testes', id: 'Tes', tr: 'Testler', de: 'Tests', fr: 'Tests' } },
+    tool: { name: '계산기/도구', icon: '🧮', i18n: { en: 'Tools', zh: '工具', hi: 'टूल्स', ru: 'Инструменты', ja: 'ツール', es: 'Herramientas', pt: 'Ferramentas', id: 'Alat', tr: 'Araçlar', de: 'Werkzeuge', fr: 'Outils' } },
+    life: { name: '라이프', icon: '🧘', i18n: { en: 'Life', zh: '生活', hi: 'लाइफ', ru: 'Жизнь', ja: 'ライフ', es: 'Vida', pt: 'Vida', id: 'Kehidupan', tr: 'Yaşam', de: 'Leben', fr: 'Vie' } }
 };
 
 // Helper: get localized app name/desc
