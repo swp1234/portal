@@ -249,7 +249,7 @@ const APP_DATA = [
         isPopular: true
     },
     {
-        id: 'number-merge',
+        id: 'emoji-merge',
         name: '이모지 머지',
         shortDesc: '이모지 진화 퍼즐 게임',
         description: '같은 이모지를 합쳐 진화시키세요! 🥚→🐣→🐥→🦅→🐉→👑 알에서 용까지! 씨앗→세계수, 물방울→은하 4가지 진화 체인.',
@@ -257,7 +257,7 @@ const APP_DATA = [
         color: '#f4a261',
         category: 'quiz',
         tags: ['이모지', '머지', '진화', '퍼즐', '게임', '2048', '캐주얼'],
-        url: 'https://swp1234.github.io/number-merge/',
+        url: 'https://swp1234.github.io/emoji-merge/',
         isNew: true,
         isPopular: true
     },
