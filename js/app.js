@@ -20,6 +20,9 @@
                 langOptions.forEach(o => o.classList.remove('active'));
                 opt.classList.add('active');
                 langMenu.classList.add('hidden');
+                // Re-render app cards and blog with new language
+                filterApps();
+                if (typeof renderBlog === 'function') renderBlog();
             });
         });
     })();
@@ -68,14 +71,17 @@
 
     // Create single app card HTML
     function createAppCard(app, index) {
+        const lang = i18n.getCurrentLanguage();
+        const name = typeof getAppName === 'function' ? getAppName(app, lang) : app.name;
+        const desc = typeof getAppDesc === 'function' ? getAppDesc(app, lang) : app.shortDesc;
         const badges = [];
         if (app.isNew) badges.push('<span class="badge badge-new">NEW</span>');
         if (app.isPopular) badges.push('<span class="badge badge-popular">인기</span>');
 
         return `
-            <a href="${app.url}" class="app-card" data-id="${app.id}" 
-               style="--card-color: ${app.color}" 
-               aria-label="${app.name} - ${app.shortDesc}">
+            <a href="${app.url}" class="app-card" data-id="${app.id}"
+               style="--card-color: ${app.color}"
+               aria-label="${name} - ${desc}">
                 <div class="card-glow"></div>
                 <div class="card-content">
                     <div class="card-header">
@@ -85,8 +91,8 @@
                         <div class="card-badges">${badges.join('')}</div>
                     </div>
                     <div class="card-info">
-                        <h3 class="card-title">${app.name}</h3>
-                        <p class="card-desc">${app.shortDesc}</p>
+                        <h3 class="card-title">${name}</h3>
+                        <p class="card-desc">${desc}</p>
                     </div>
                     <div class="card-arrow">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -108,15 +114,20 @@
             filtered = filtered.filter(app => app.category === currentCategory);
         }
 
-        // Search filter
+        // Search filter (searches both Korean and localized text)
         if (searchQuery.trim()) {
             const query = searchQuery.toLowerCase().trim();
-            filtered = filtered.filter(app =>
-                app.name.toLowerCase().includes(query) ||
-                app.shortDesc.toLowerCase().includes(query) ||
-                app.description.toLowerCase().includes(query) ||
-                app.tags.some(tag => tag.toLowerCase().includes(query))
-            );
+            const lang = i18n.getCurrentLanguage();
+            filtered = filtered.filter(app => {
+                const name = typeof getAppName === 'function' ? getAppName(app, lang) : app.name;
+                const desc = typeof getAppDesc === 'function' ? getAppDesc(app, lang) : app.shortDesc;
+                return app.name.toLowerCase().includes(query) ||
+                    app.shortDesc.toLowerCase().includes(query) ||
+                    app.description.toLowerCase().includes(query) ||
+                    app.tags.some(tag => tag.toLowerCase().includes(query)) ||
+                    name.toLowerCase().includes(query) ||
+                    desc.toLowerCase().includes(query);
+            });
         }
 
         renderApps(filtered);

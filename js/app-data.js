@@ -12,7 +12,13 @@ const APP_DATA = [
         tags: ['퀴즈', '상식', '교육', '게임'],
         url: 'https://dopabrain.com/quiz-app/',
         isNew: false,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'Knowledge Quiz', shortDesc: 'General knowledge test' },
+            zh: { name: '知识问答', shortDesc: '常识测试' },
+            hi: { name: 'ज्ञान क्विज़', shortDesc: 'सामान्य ज्ञान परीक्षा' },
+            ru: { name: 'Викторина', shortDesc: 'Тест на общие знания' }
+        }
     },
     {
         id: 'shopping-calc',
@@ -25,7 +31,13 @@ const APP_DATA = [
         tags: ['환율', '계산기', '관세', '해외직구', '여행'],
         url: 'https://dopabrain.com/shopping-calc/',
         isNew: false,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'Shopping Calculator', shortDesc: 'Currency / duty / tip calc' },
+            zh: { name: '全球购物计算器', shortDesc: '汇率/关税/小费计算' },
+            hi: { name: 'शॉपिंग कैलकुलेटर', shortDesc: 'मुद्रा/शुल्क/टिप गणना' },
+            ru: { name: 'Калькулятор покупок', shortDesc: 'Валюта / пошлина / чаевые' }
+        }
     },
     {
         id: 'detox-timer',
@@ -38,7 +50,13 @@ const APP_DATA = [
         tags: ['타이머', '디톡스', '집중', '생산성'],
         url: 'https://dopabrain.com/detox-timer/',
         isNew: false,
-        isPopular: false
+        isPopular: false,
+        i18n: {
+            en: { name: 'Digital Detox Timer', shortDesc: 'Screen time manager' },
+            zh: { name: '数字排毒计时器', shortDesc: '手机使用管理' },
+            hi: { name: 'डिजिटल डिटॉक्स टाइमर', shortDesc: 'स्क्रीन टाइम प्रबंधन' },
+            ru: { name: 'Цифровой детокс', shortDesc: 'Управление экранным временем' }
+        }
     },
     {
         id: 'dream-fortune',
@@ -51,7 +69,13 @@ const APP_DATA = [
         tags: ['운세', '꿈해몽', '타로', '별자리'],
         url: 'https://dopabrain.com/dream-fortune/',
         isNew: false,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'Dream & Fortune', shortDesc: 'AI dream reading & horoscope' },
+            zh: { name: '解梦与运势', shortDesc: 'AI解梦 & 今日运势' },
+            hi: { name: 'सपने और भाग्य', shortDesc: 'AI स्वप्न व्याख्या और राशिफल' },
+            ru: { name: 'Сны и гороскоп', shortDesc: 'AI толкование снов и гороскоп' }
+        }
     },
     {
         id: 'affirmation',
@@ -64,7 +88,13 @@ const APP_DATA = [
         tags: ['긍정', '확언', '동기부여', '자존감', '명언'],
         url: 'https://dopabrain.com/affirmation/',
         isNew: false,
-        isPopular: false
+        isPopular: false,
+        i18n: {
+            en: { name: 'Daily Affirmation', shortDesc: 'Positive messages every day' },
+            zh: { name: '每日正能量卡片', shortDesc: '每天新的正面信息' },
+            hi: { name: 'दैनिक सकारात्मक संदेश', shortDesc: 'रोज़ नए प्रेरक संदेश' },
+            ru: { name: 'Ежедневные аффирмации', shortDesc: 'Позитивные послания каждый день' }
+        }
     },
     {
         id: 'lottery',
@@ -77,7 +107,13 @@ const APP_DATA = [
         tags: ['로또', '복권', '번호', '행운', '추첨'],
         url: 'https://dopabrain.com/lottery/',
         isNew: false,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'Lucky Number Generator', shortDesc: 'Lottery number picker' },
+            zh: { name: '幸运号码生成器', shortDesc: '彩票号码生成' },
+            hi: { name: 'लकी नंबर जनरेटर', shortDesc: 'लॉटरी नंबर चयन' },
+            ru: { name: 'Генератор чисел', shortDesc: 'Выбор номеров лотереи' }
+        }
     },
     {
         id: 'dday-counter',
@@ -90,7 +126,13 @@ const APP_DATA = [
         tags: ['D-Day', '카운트다운', '기념일', '일정'],
         url: 'https://dopabrain.com/dday-counter/',
         isNew: false,
-        isPopular: false
+        isPopular: false,
+        i18n: {
+            en: { name: 'D-Day Counter', shortDesc: 'Date countdown tracker' },
+            zh: { name: 'D-Day 倒计时', shortDesc: '重要日期倒计时' },
+            hi: { name: 'D-Day काउंटर', shortDesc: 'तारीख काउंटडाउन' },
+            ru: { name: 'Счётчик D-Day', shortDesc: 'Обратный отсчёт до даты' }
+        }
     },
     {
         id: 'mbti-tips',
@@ -103,7 +145,13 @@ const APP_DATA = [
         tags: ['MBTI', '성격', '궁합', '심리테스트'],
         url: 'https://dopabrain.com/mbti-tips/',
         isNew: false,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'MBTI Compatibility', shortDesc: 'MBTI type analysis & tips' },
+            zh: { name: 'MBTI 配对与建议', shortDesc: 'MBTI类型分析' },
+            hi: { name: 'MBTI अनुकूलता', shortDesc: 'MBTI प्रकार विश्लेषण' },
+            ru: { name: 'MBTI совместимость', shortDesc: 'Анализ типов MBTI' }
+        }
     },
     {
         id: 'white-noise',
@@ -116,7 +164,13 @@ const APP_DATA = [
         tags: ['백색소음', '수면', '집중', '명상', 'ASMR'],
         url: 'https://dopabrain.com/white-noise/',
         isNew: false,
-        isPopular: false
+        isPopular: false,
+        i18n: {
+            en: { name: 'White Noise Player', shortDesc: 'Focus & sleep sounds' },
+            zh: { name: '白噪音播放器', shortDesc: '专注/睡眠背景音' },
+            hi: { name: 'व्हाइट नॉइज़ प्लेयर', shortDesc: 'फोकस और नींद की आवाज़ें' },
+            ru: { name: 'Белый шум', shortDesc: 'Звуки для сна и фокуса' }
+        }
     },
     {
         id: 'dev-quiz',
@@ -129,7 +183,13 @@ const APP_DATA = [
         tags: ['개발자', '코딩', 'IT', '프로그래밍', '퀴즈'],
         url: 'https://dopabrain.com/dev-quiz/',
         isNew: false,
-        isPopular: false
+        isPopular: false,
+        i18n: {
+            en: { name: 'Developer Quiz', shortDesc: 'Coding & IT quiz' },
+            zh: { name: '开发者测验', shortDesc: '编程/IT专业测验' },
+            hi: { name: 'डेवलपर क्विज़', shortDesc: 'कोडिंग और IT क्विज़' },
+            ru: { name: 'Квиз разработчика', shortDesc: 'Тест по программированию' }
+        }
     },
     {
         id: 'tax-refund-preview',
@@ -142,7 +202,13 @@ const APP_DATA = [
         tags: ['연말정산', '환급', '세금', '계산기'],
         url: 'https://dopabrain.com/tax-refund-preview/',
         isNew: true,
-        isPopular: false
+        isPopular: false,
+        i18n: {
+            en: { name: 'Tax Refund Calculator', shortDesc: 'Estimate your tax refund' },
+            zh: { name: '退税计算器', shortDesc: '退税金额预估' },
+            hi: { name: 'टैक्स रिफंड कैलकुलेटर', shortDesc: 'टैक्स रिफंड अनुमान' },
+            ru: { name: 'Калькулятор налогов', shortDesc: 'Расчёт возврата налогов' }
+        }
     },
     {
         id: 'unit-converter',
@@ -155,7 +221,13 @@ const APP_DATA = [
         tags: ['단위', '변환', '평수', '온도', '무게'],
         url: 'https://dopabrain.com/unit-converter/',
         isNew: true,
-        isPopular: false
+        isPopular: false,
+        i18n: {
+            en: { name: 'Unit Converter Pro', shortDesc: 'Length, weight, temp converter' },
+            zh: { name: '单位转换器 Pro', shortDesc: '长度/重量/温度转换' },
+            hi: { name: 'यूनिट कन्वर्टर Pro', shortDesc: 'लंबाई, वज़न, तापमान रूपांतरण' },
+            ru: { name: 'Конвертер величин', shortDesc: 'Длина, вес, температура' }
+        }
     },
     {
         id: 'sky-runner',
@@ -168,7 +240,13 @@ const APP_DATA = [
         tags: ['게임', '아케이드', '우주', '캐주얼', 'Flappy'],
         url: 'https://dopabrain.com/sky-runner/',
         isNew: true,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'Sky Runner', shortDesc: 'Space flight arcade game' },
+            zh: { name: 'Sky Runner', shortDesc: '太空飞行街机游戏' },
+            hi: { name: 'Sky Runner', shortDesc: 'स्पेस फ्लाइट आर्केड गेम' },
+            ru: { name: 'Sky Runner', shortDesc: 'Космическая аркада' }
+        }
     },
     {
         id: 'emotion-temp',
@@ -181,7 +259,13 @@ const APP_DATA = [
         tags: ['심리테스트', '감정', '성격', '바이럴', 'HSP', '감정온도'],
         url: 'https://dopabrain.com/emotion-temp/',
         isNew: true,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'Emotion Temperature', shortDesc: "What's your emotion temp?" },
+            zh: { name: '情绪温度计测试', shortDesc: '你的情绪温度是几度？' },
+            hi: { name: 'इमोशन टेम्परेचर', shortDesc: 'आपका भावना तापमान क्या है?' },
+            ru: { name: 'Температура эмоций', shortDesc: 'Какова ваша эмоциональная t°?' }
+        }
     },
     {
         id: 'mbti-love',
@@ -194,7 +278,13 @@ const APP_DATA = [
         tags: ['MBTI', '연애', '궁합', '심리테스트', '연애스타일'],
         url: 'https://dopabrain.com/mbti-love/',
         isNew: true,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'MBTI Love Match', shortDesc: "What's your love style? 💕" },
+            zh: { name: 'MBTI 恋爱配对', shortDesc: '你的恋爱风格是？💕' },
+            hi: { name: 'MBTI लव मैच', shortDesc: 'आपकी प्रेम शैली क्या है? 💕' },
+            ru: { name: 'MBTI совместимость', shortDesc: 'Какой ваш стиль любви? 💕' }
+        }
     },
     {
         id: 'hsp-test',
@@ -207,7 +297,13 @@ const APP_DATA = [
         tags: ['HSP', '민감성', '심리테스트', '메타센싱', '고감수성자', '감정'],
         url: 'https://dopabrain.com/hsp-test/',
         isNew: true,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'HSP Sensitivity Test', shortDesc: 'Are you highly sensitive?' },
+            zh: { name: 'HSP 敏感度测试', shortDesc: '你是高敏感人群吗？' },
+            hi: { name: 'HSP संवेदनशीलता परीक्षण', shortDesc: 'क्या आप अति संवेदनशील हैं?' },
+            ru: { name: 'Тест HSP', shortDesc: 'Вы высокочувствительный человек?' }
+        }
     },
     {
         id: 'love-frequency',
@@ -220,7 +316,13 @@ const APP_DATA = [
         tags: ['사랑', '주파수', '연애', '심리테스트', '솔페지오', '528Hz', '궁합'],
         url: 'https://dopabrain.com/love-frequency/',
         isNew: true,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'Love Frequency Test', shortDesc: 'What Hz is your love?' },
+            zh: { name: '爱情频率测试', shortDesc: '你的爱情是几Hz？' },
+            hi: { name: 'लव फ्रीक्वेंसी टेस्ट', shortDesc: 'आपके प्यार की फ्रीक्वेंसी?' },
+            ru: { name: 'Частота любви', shortDesc: 'На какой частоте ваша любовь?' }
+        }
     },
     {
         id: 'stack-tower',
@@ -233,7 +335,13 @@ const APP_DATA = [
         tags: ['게임', '아케이드', '타이밍', '블록', '캐주얼', '타워'],
         url: 'https://dopabrain.com/stack-tower/',
         isNew: true,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'Stack Tower', shortDesc: 'Timing block stacking game' },
+            zh: { name: 'Stack Tower', shortDesc: '计时堆叠方块游戏' },
+            hi: { name: 'Stack Tower', shortDesc: 'टाइमिंग ब्लॉक स्टैकिंग गेम' },
+            ru: { name: 'Stack Tower', shortDesc: 'Игра с укладкой блоков' }
+        }
     },
     {
         id: 'kpop-position',
@@ -246,7 +354,13 @@ const APP_DATA = [
         tags: ['KPOP', '포지션', '아이돌', '심리테스트', 'BTS', 'BLACKPINK'],
         url: 'https://dopabrain.com/kpop-position/',
         isNew: true,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'K-POP Position Test', shortDesc: "What's your idol position?" },
+            zh: { name: 'K-POP 位置测试', shortDesc: '你的偶像位置是？' },
+            hi: { name: 'K-POP पोजीशन टेस्ट', shortDesc: 'आपकी आइडल पोजीशन क्या है?' },
+            ru: { name: 'K-POP позиция', shortDesc: 'Какая ваша позиция в группе?' }
+        }
     },
     {
         id: 'emoji-merge',
@@ -259,7 +373,13 @@ const APP_DATA = [
         tags: ['이모지', '머지', '진화', '퍼즐', '게임', '2048', '캐주얼'],
         url: 'https://dopabrain.com/emoji-merge/',
         isNew: true,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'Emoji Merge', shortDesc: 'Emoji evolution puzzle game' },
+            zh: { name: 'Emoji 合并', shortDesc: 'Emoji 进化益智游戏' },
+            hi: { name: 'Emoji Merge', shortDesc: 'इमोजी इवोल्यूशन पज़ल गेम' },
+            ru: { name: 'Emoji Merge', shortDesc: 'Головоломка с эмодзи' }
+        }
     },
     {
         id: 'zigzag-runner',
@@ -272,7 +392,13 @@ const APP_DATA = [
         tags: ['게임', '아케이드', '지그재그', '러너', '캐주얼', '원탭'],
         url: 'https://dopabrain.com/zigzag-runner/',
         isNew: true,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'Zigzag Runner', shortDesc: 'Direction-switching arcade' },
+            zh: { name: 'Zigzag Runner', shortDesc: '方向切换街机游戏' },
+            hi: { name: 'Zigzag Runner', shortDesc: 'दिशा बदलने वाला आर्केड गेम' },
+            ru: { name: 'Zigzag Runner', shortDesc: 'Аркада со сменой направления' }
+        }
     },
     {
         id: 'past-life',
@@ -285,7 +411,13 @@ const APP_DATA = [
         tags: ['전생', '심리테스트', '바이럴', '궁합', '전생직업'],
         url: 'https://dopabrain.com/past-life/',
         isNew: true,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'Past Life Job Test', shortDesc: 'What was your past life?' },
+            zh: { name: '前世职业测试', shortDesc: '你的前世是什么？' },
+            hi: { name: 'पूर्वजन्म परीक्षण', shortDesc: 'आपका पूर्वजन्म क्या था?' },
+            ru: { name: 'Тест прошлой жизни', shortDesc: 'Кем вы были в прошлой жизни?' }
+        }
     },
     {
         id: 'idle-clicker',
@@ -298,7 +430,13 @@ const APP_DATA = [
         tags: ['게임', '클리커', '방치형', 'RPG', '던전', '캐주얼'],
         url: 'https://dopabrain.com/idle-clicker/',
         isNew: true,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'Dungeon Clicker', shortDesc: 'Idle RPG dungeon game' },
+            zh: { name: '地牢点击者', shortDesc: '放置型RPG地牢游戏' },
+            hi: { name: 'डंजन क्लिकर', shortDesc: 'आइडल RPG डंजन गेम' },
+            ru: { name: 'Данжен Кликер', shortDesc: 'Idle RPG подземелье' }
+        }
     },
     {
         id: 'valentine',
@@ -311,14 +449,36 @@ const APP_DATA = [
         tags: ['밸런타인', '궁합', '커플', '연애', '사랑', '심리테스트'],
         url: 'https://dopabrain.com/valentine/',
         isNew: true,
-        isPopular: true
+        isPopular: true,
+        i18n: {
+            en: { name: 'Valentine Match Test', shortDesc: 'How compatible are you? %' },
+            zh: { name: '情人节配对测试', shortDesc: '你们的匹配度是几%？' },
+            hi: { name: 'वैलेंटाइन मैच टेस्ट', shortDesc: 'आपकी जोड़ी कितनी परफेक्ट? %' },
+            ru: { name: 'Тест совместимости', shortDesc: 'Какова ваша совместимость? %' }
+        }
     }
 ];
 
 const CATEGORIES = {
-    all: { name: '전체', icon: '🏠' },
-    quiz: { name: '퀴즈/게임', icon: '🎮' },
-    fortune: { name: '운세/테스트', icon: '🔮' },
-    tool: { name: '계산기/도구', icon: '🧮' },
-    life: { name: '라이프', icon: '🧘' }
+    all: { name: '전체', icon: '🏠', i18n: { en: 'All', zh: '全部', hi: 'सभी', ru: 'Все' } },
+    quiz: { name: '퀴즈/게임', icon: '🎮', i18n: { en: 'Games', zh: '游戏', hi: 'गेम्स', ru: 'Игры' } },
+    fortune: { name: '운세/테스트', icon: '🔮', i18n: { en: 'Tests', zh: '测试', hi: 'टेस्ट', ru: 'Тесты' } },
+    tool: { name: '계산기/도구', icon: '🧮', i18n: { en: 'Tools', zh: '工具', hi: 'टूल्स', ru: 'Инструменты' } },
+    life: { name: '라이프', icon: '🧘', i18n: { en: 'Life', zh: '生活', hi: 'लाइफ', ru: 'Жизнь' } }
 };
+
+// Helper: get localized app name/desc
+function getAppName(app, lang) {
+    if (lang && lang !== 'ko' && app.i18n && app.i18n[lang]) return app.i18n[lang].name || app.name;
+    return app.name;
+}
+function getAppDesc(app, lang) {
+    if (lang && lang !== 'ko' && app.i18n && app.i18n[lang]) return app.i18n[lang].shortDesc || app.shortDesc;
+    return app.shortDesc;
+}
+function getCategoryName(catKey, lang) {
+    var cat = CATEGORIES[catKey];
+    if (!cat) return catKey;
+    if (lang && lang !== 'ko' && cat.i18n && cat.i18n[lang]) return cat.i18n[lang];
+    return cat.name;
+}

@@ -168,8 +168,7 @@
         </section>
 
         <script>
-        (function() {
-            var BLOG_DATA = {
+        var BLOG_DATA = {
                 ko: [
                     { href: 'blog/psychology-test-best.html', tag: '심리', tagColor: '#6366f1,#4f46e5', title: '무료 심리테스트 추천 BEST 7', desc: '감정 온도계, MBTI, HSP, 전생 등 7가지 인기 테스트 모음.', meta: '10분 읽기' },
                     { href: 'blog/emotion-management-guide.html', tag: '감정', tagColor: '#e07a5f,#c4856c', title: '감정 관리 & 자기 이해 완벽 가이드', desc: '4단계 프레임워크, 유형별 전략, 일상 실천 10가지 팁.', meta: '9분 읽기' },
@@ -183,27 +182,44 @@
                     { href: 'blog/pyeongsu-calculator.html', tag: '부동산', tagColor: '#2ed573,#17a65b', title: '평수 계산법 완벽 정리', desc: '제곱미터 → 평 변환 공식, 환산표, 전용면적 vs 공급면적.', meta: '6분 읽기' }
                 ],
                 en: [
-                    { href: 'blog/en/personality-tests.html', tag: 'Tests', tagColor: '#6366f1,#4f46e5', title: 'Best Free Personality Tests 2026', desc: 'MBTI, HSP, Love Frequency & more. Find your true self with 7 viral tests.', meta: '8 min read' },
-                    { href: 'blog/en/free-games.html', tag: 'Games', tagColor: '#ec4899,#db2777', title: 'Top 5 Free Browser Games 2026', desc: 'No download needed. Play arcade, puzzle & idle games instantly.', meta: '7 min read' },
-                    { href: 'blog/en/valentine-guide.html', tag: 'Love', tagColor: '#f472b6,#ec4899', title: "Valentine's Day Compatibility Guide", desc: 'Zodiac, name & love match analysis for couples and singles.', meta: '8 min read' }
+                    { href: 'blog/en/habit-building.html', tag: 'Habits', tagColor: '#10b981,#059669', title: 'How to Build Better Habits: Science-Backed Guide', desc: 'Atomic habits, habit stacking, and the 21-day myth debunked.', meta: '10 min read' },
+                    { href: 'blog/en/sleep-science.html', tag: 'Sleep', tagColor: '#6366f1,#4f46e5', title: 'Sleep Chronotypes: Lion, Bear, Wolf, or Dolphin?', desc: 'Discover your chronotype and optimize your daily schedule.', meta: '9 min read' },
+                    { href: 'blog/en/digital-detox.html', tag: 'Focus', tagColor: '#f59e0b,#d97706', title: 'Digital Detox Guide: Reclaim Your Focus', desc: 'A practical 7-day plan to reset your dopamine and attention.', meta: '8 min read' },
+                    { href: 'blog/en/decision-making.html', tag: 'Mind', tagColor: '#8b5cf6,#7c3aed', title: 'The Science of Decision Making', desc: 'Cognitive biases, decision fatigue, and practical frameworks.', meta: '9 min read' },
+                    { href: 'blog/en/personality-tests.html', tag: 'Tests', tagColor: '#ec4899,#db2777', title: 'Best Free Personality Tests 2026', desc: 'MBTI, HSP, Love Frequency & more. Find your true self.', meta: '8 min read' },
+                    { href: 'blog/en/free-games.html', tag: 'Games', tagColor: '#3b82f6,#2563eb', title: 'Top 5 Free Browser Games 2026', desc: 'No download needed. Play arcade, puzzle & idle games.', meta: '7 min read' },
+                    { href: 'blog/en/valentine-guide.html', tag: 'Love', tagColor: '#f472b6,#ec4899', title: "Valentine's Day Compatibility Guide", desc: 'Zodiac, name & love match analysis for couples.', meta: '8 min read' }
                 ],
                 zh: [
-                    { href: 'blog/zh/personality-tests.html', tag: '测试', tagColor: '#8b5cf6,#7c3aed', title: '2026最佳免费性格测试推荐', desc: 'MBTI·HSP·爱情·前世测试，7款热门心理测试合集。', meta: '8分钟阅读' },
-                    { href: 'blog/zh/free-games.html', tag: '游戏', tagColor: '#ec4899,#db2777', title: '免费在线游戏TOP 5', desc: '无需下载，即开即玩的浏览器游戏推荐。', meta: '7分钟阅读' },
-                    { href: 'blog/zh/love-compatibility.html', tag: '星座', tagColor: '#f472b6,#ec4899', title: '2026星座配对完全指南', desc: '12星座配对·姓名配对·恋爱类型分析。', meta: '8分钟阅读' }
+                    { href: 'blog/zh/emotion-management.html', tag: '心理', tagColor: '#e07a5f,#c4856c', title: '情绪管理完全指南：掌控你的内心世界', desc: '认知行为疗法、正念冥想、情绪日记等实用方法。', meta: '10分钟阅读' },
+                    { href: 'blog/zh/focus-methods.html', tag: '效率', tagColor: '#10b981,#059669', title: '提升专注力的10种科学方法', desc: '番茄工作法、深度工作、多巴胺管理技巧。', meta: '9分钟阅读' },
+                    { href: 'blog/zh/sleep-guide.html', tag: '健康', tagColor: '#6366f1,#4f46e5', title: '科学睡眠指南：高质量睡眠秘诀', desc: '睡眠周期、褪黑素、失眠解决方案完全指南。', meta: '8分钟阅读' },
+                    { href: 'blog/zh/relationship-tips.html', tag: '关系', tagColor: '#f472b6,#ec4899', title: '人际关系沟通技巧：建立更好的连接', desc: '非暴力沟通、倾听技巧、冲突解决策略。', meta: '9分钟阅读' },
+                    { href: 'blog/zh/personality-tests.html', tag: '测试', tagColor: '#8b5cf6,#7c3aed', title: '2026最佳免费性格测试推荐', desc: 'MBTI·HSP·爱情·前世测试合集。', meta: '8分钟阅读' },
+                    { href: 'blog/zh/free-games.html', tag: '游戏', tagColor: '#ec4899,#db2777', title: '免费在线游戏TOP 5', desc: '无需下载，即开即玩的浏览器游戏。', meta: '7分钟阅读' },
+                    { href: 'blog/zh/love-compatibility.html', tag: '星座', tagColor: '#f59e0b,#d97706', title: '2026星座配对完全指南', desc: '12星座配对·姓名配对·恋爱分析。', meta: '8分钟阅读' }
                 ],
                 ru: [
-                    { href: 'blog/ru/personality-tests.html', tag: 'Тесты', tagColor: '#8b5cf6,#7c3aed', title: 'Лучшие тесты личности 2026', desc: 'MBTI, HSP, тест любовной частоты и другие. 7 вирусных тестов.', meta: '8 мин' },
-                    { href: 'blog/ru/free-games.html', tag: 'Игры', tagColor: '#ec4899,#db2777', title: 'Топ-5 браузерных игр 2026', desc: 'Играйте бесплатно без скачивания. Аркады, пазлы, кликеры.', meta: '7 мин' },
-                    { href: 'blog/ru/love-compatibility.html', tag: 'Любовь', tagColor: '#f472b6,#ec4899', title: 'Гороскоп совместимости 2026', desc: 'Совместимость по зодиаку, имени и типу любви.', meta: '8 мин' }
+                    { href: 'blog/ru/stress-management.html', tag: 'Здоровье', tagColor: '#10b981,#059669', title: 'Управление стрессом: Полное руководство', desc: 'Причины стресса, техники дыхания, медитация, режим дня.', meta: '10 мин' },
+                    { href: 'blog/ru/digital-detox.html', tag: 'Фокус', tagColor: '#f59e0b,#d97706', title: 'Цифровой детокс: Верните контроль', desc: 'Дофаминовый сброс и 7-дневный план детоксикации.', meta: '8 мин' },
+                    { href: 'blog/ru/habit-psychology.html', tag: 'Развитие', tagColor: '#8b5cf6,#7c3aed', title: 'Психология привычек: Измените жизнь', desc: 'Наука формирования привычек и стратегии изменений.', meta: '9 мин' },
+                    { href: 'blog/ru/sleep-science.html', tag: 'Сон', tagColor: '#6366f1,#4f46e5', title: 'Здоровый сон: Научный подход', desc: 'Фазы сна, хронотипы, гигиена сна, мелатонин.', meta: '9 мин' },
+                    { href: 'blog/ru/personality-tests.html', tag: 'Тесты', tagColor: '#ec4899,#db2777', title: 'Лучшие тесты личности 2026', desc: 'MBTI, HSP и другие вирусные тесты.', meta: '8 мин' },
+                    { href: 'blog/ru/free-games.html', tag: 'Игры', tagColor: '#3b82f6,#2563eb', title: 'Топ-5 браузерных игр 2026', desc: 'Аркады, пазлы, кликеры без скачивания.', meta: '7 мин' },
+                    { href: 'blog/ru/love-compatibility.html', tag: 'Любовь', tagColor: '#f472b6,#ec4899', title: 'Гороскоп совместимости 2026', desc: 'Совместимость по зодиаку и имени.', meta: '8 мин' }
                 ],
                 hi: [
-                    { href: 'blog/hi/personality-tests.html', tag: 'टेस्ट', tagColor: '#8b5cf6,#7c3aed', title: 'सर्वश्रेष्ठ मुफ्त व्यक्तित्व परीक्षण 2026', desc: 'MBTI, HSP, प्रेम आवृत्ति और अधिक। 7 वायरल टेस्ट।', meta: '8 मिनट' },
-                    { href: 'blog/hi/free-games.html', tag: 'गेम', tagColor: '#ec4899,#db2777', title: 'शीर्ष 5 मुफ्त ऑनलाइन गेम 2026', desc: 'बिना डाउनलोड खेलें। आर्केड, पज़ल और क्लिकर गेम।', meta: '7 मिनट' },
-                    { href: 'blog/hi/love-compatibility.html', tag: 'प्रेम', tagColor: '#f472b6,#ec4899', title: 'प्रेम अनुकूलता गाइड 2026', desc: 'राशि, नाम और प्रेम प्रकार के अनुसार अनुकूलता विश्लेषण।', meta: '8 मिनट' }
+                    { href: 'blog/hi/meditation-guide.html', tag: 'ध्यान', tagColor: '#10b981,#059669', title: 'ध्यान और मेडिटेशन: शुरुआती गाइड', desc: 'योग, प्राणायाम, माइंडफुलनेस और दैनिक अभ्यास।', meta: '10 मिनट' },
+                    { href: 'blog/hi/stress-management.html', tag: 'स्वास्थ्य', tagColor: '#e07a5f,#c4856c', title: 'तनाव प्रबंधन: 10 प्रभावी तरीके', desc: 'श्वास तकनीक, आयुर्वेदिक सुझाव, जीवनशैली बदलाव।', meta: '9 मिनट' },
+                    { href: 'blog/hi/healthy-habits.html', tag: 'जीवनशैली', tagColor: '#6366f1,#4f46e5', title: 'स्वस्थ जीवनशैली: 15 दैनिक आदतें', desc: 'सुबह की दिनचर्या, आहार, व्यायाम और नींद सुधार।', meta: '8 मिनट' },
+                    { href: 'blog/hi/career-mindset.html', tag: 'करियर', tagColor: '#f59e0b,#d97706', title: 'करियर सफलता के लिए मानसिक तैयारी', desc: 'ग्रोथ माइंडसेट, प्रोडक्टिविटी और लक्ष्य निर्धारण।', meta: '9 मिनट' },
+                    { href: 'blog/hi/personality-tests.html', tag: 'टेस्ट', tagColor: '#8b5cf6,#7c3aed', title: 'सर्वश्रेष्ठ मुफ्त व्यक्तित्व परीक्षण 2026', desc: 'MBTI, HSP और 7 वायरल टेस्ट।', meta: '8 मिनट' },
+                    { href: 'blog/hi/free-games.html', tag: 'गेम', tagColor: '#ec4899,#db2777', title: 'शीर्ष 5 मुफ्त ऑनलाइन गेम 2026', desc: 'बिना डाउनलोड खेलें। आर्केड और पज़ल।', meta: '7 मिनट' },
+                    { href: 'blog/hi/love-compatibility.html', tag: 'प्रेम', tagColor: '#f472b6,#ec4899', title: 'प्रेम अनुकूलता गाइड 2026', desc: 'राशि और नाम अनुकूलता विश्लेषण।', meta: '8 मिनट' }
                 ]
             };
 
+        function renderBlog() {
             var lang = (localStorage.getItem('app_language') || (navigator.language || navigator.userLanguage).split('-')[0]);
             if (!BLOG_DATA[lang]) lang = 'en';
 
@@ -220,7 +236,8 @@
                     + '<span class="blog-card-meta">' + b.meta + '</span></a>';
             });
             grid.innerHTML = html;
-        })();
+        }
+        renderBlog();
         </script>
 
         <!-- Footer -->
