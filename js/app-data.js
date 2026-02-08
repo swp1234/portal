@@ -286,6 +286,19 @@ const APP_DATA = [
         url: 'https://swp1234.github.io/past-life/',
         isNew: true,
         isPopular: true
+    },
+    {
+        id: 'idle-clicker',
+        name: 'Idle Clicker Empire',
+        shortDesc: '방치형 클리커 경영 게임',
+        description: '클릭으로 돈을 벌고 사업 제국을 건설하세요! 레모네이드 가판대에서 글로벌 은행까지 10단계 사업.',
+        icon: '💰',
+        color: '#fbbf24',
+        category: 'quiz',
+        tags: ['게임', '클리커', '방치형', '경영', '사업', '캐주얼'],
+        url: 'https://swp1234.github.io/idle-clicker/',
+        isNew: true,
+        isPopular: true
     }
 ];
 
