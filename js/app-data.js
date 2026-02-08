@@ -252,7 +252,7 @@ const APP_DATA = [
         id: 'number-merge',
         name: '이모지 머지',
         shortDesc: '이모지 진화 퍼즐 게임',
-        description: '같은 이모지를 합쳐 진화시키세요! 🥚→🐛→🐝→🦁→🐉→👑 동물/음식/우주/감정 4가지 진화 체인. 중독성 두뇌 퍼즐.',
+        description: '같은 이모지를 합쳐 진화시키세요! 🥚→🐣→🐥→🦅→🐉→👑 알에서 용까지! 씨앗→세계수, 물방울→은하 4가지 진화 체인.',
         icon: '🧬',
         color: '#f4a261',
         category: 'quiz',
