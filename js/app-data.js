@@ -250,14 +250,27 @@ const APP_DATA = [
     },
     {
         id: 'number-merge',
-        name: '숫자 합치기 2048',
-        shortDesc: '중독성 퍼즐 게임',
-        description: '같은 숫자를 합쳐 2048을 만들어보세요! 스와이프로 즐기는 중독성 두뇌 퍼즐. 5가지 테마, 칭호 시스템.',
-        icon: '🧩',
+        name: '이모지 머지',
+        shortDesc: '이모지 진화 퍼즐 게임',
+        description: '같은 이모지를 합쳐 진화시키세요! 🥚→🐛→🐝→🦁→🐉→👑 동물/음식/우주/감정 4가지 진화 체인. 중독성 두뇌 퍼즐.',
+        icon: '🧬',
         color: '#f4a261',
         category: 'quiz',
-        tags: ['2048', '퍼즐', '숫자', '게임', '두뇌', '캐주얼'],
+        tags: ['이모지', '머지', '진화', '퍼즐', '게임', '2048', '캐주얼'],
         url: 'https://swp1234.github.io/number-merge/',
+        isNew: true,
+        isPopular: true
+    },
+    {
+        id: 'zigzag-runner',
+        name: 'Zigzag Runner',
+        shortDesc: '방향 전환 아케이드 게임',
+        description: '탭 한 번으로 방향 전환! 끝없는 지그재그 길 위에서 코인을 모으며 달리세요. 5가지 테마와 20개 칭호.',
+        icon: '🏃',
+        color: '#ff6348',
+        category: 'quiz',
+        tags: ['게임', '아케이드', '지그재그', '러너', '캐주얼', '원탭'],
+        url: 'https://swp1234.github.io/zigzag-runner/',
         isNew: true,
         isPopular: true
     }
