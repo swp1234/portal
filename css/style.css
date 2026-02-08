@@ -357,6 +357,126 @@ body {
     to { transform: scale(2.5); opacity: 0; }
 }
 
+/* === Personalized Section === */
+.personalized-section {
+    margin-bottom: 20px;
+}
+
+.personalized-greeting {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 16px;
+    padding-left: 2px;
+}
+
+.personalized-block {
+    margin-bottom: 16px;
+}
+
+.personalized-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+    padding-left: 2px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.personalized-label::before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 14px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, var(--neon-purple), var(--neon-blue));
+}
+
+.personalized-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.personalized-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.p-card {
+    position: relative;
+    flex: 0 0 auto;
+    width: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 10px;
+    background: rgba(139, 92, 246, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(139, 92, 246, 0.1);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--text);
+    transition: var(--transition);
+    scroll-snap-align: start;
+    text-align: center;
+}
+
+.p-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--p-color, rgba(139, 92, 246, 0.3));
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3),
+                0 0 15px color-mix(in srgb, var(--p-color) 15%, transparent);
+}
+
+.p-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    background: linear-gradient(135deg, var(--p-color, #8b5cf6)22, var(--p-color, #8b5cf6)08);
+}
+
+.p-card-name {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Time-based indicator dot */
+.p-card[data-time-boost]::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--neon-blue);
+    box-shadow: 0 0 8px var(--neon-blue);
+}
+
+@media (min-width: 600px) {
+    .p-card { width: 140px; }
+    .personalized-greeting { font-size: 20px; }
+}
+
 /* === App Grid === */
 .app-grid {
     display: grid;

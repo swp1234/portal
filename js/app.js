@@ -20,7 +20,8 @@
                 langOptions.forEach(o => o.classList.remove('active'));
                 opt.classList.add('active');
                 langMenu.classList.add('hidden');
-                // Re-render app cards and blog with new language
+                // Re-render everything with new language
+                renderPersonalized();
                 filterApps();
                 if (typeof renderBlog === 'function') renderBlog();
             });
@@ -40,13 +41,98 @@
 
     // Initialize
     function init() {
-        renderApps(APP_DATA);
+        renderPersonalized();
+        filterApps();
         bindEvents();
         animateOnScroll();
-        trackRecentlyUsed();
     }
 
-    // Render app cards
+    // ─── Personalized Section ─────────────────────────────────
+    function renderPersonalized() {
+        if (typeof Personalize === 'undefined') return;
+
+        const section = document.getElementById('personalized-section');
+        const greetingEl = document.getElementById('personalized-greeting');
+        const recentBlock = document.getElementById('recent-block');
+        const recentLabel = document.getElementById('recent-label');
+        const recentApps = document.getElementById('recent-apps');
+        const recommendBlock = document.getElementById('recommend-block');
+        const recommendLabel = document.getElementById('recommend-label');
+        const recommendApps = document.getElementById('recommend-apps');
+
+        if (!section) return;
+
+        const lang = i18n.getCurrentLanguage();
+        const hasHistory = Personalize.hasData();
+
+        // Always show recommendation (time-based works for everyone)
+        const recommended = Personalize.getRecommended(APP_DATA, 6);
+
+        if (!hasHistory && recommended.length === 0) {
+            section.classList.add('hidden');
+            return;
+        }
+
+        section.classList.remove('hidden');
+
+        // Greeting
+        if (hasHistory) {
+            greetingEl.textContent = Personalize.getTimeGreeting(lang);
+            greetingEl.style.display = '';
+        } else {
+            greetingEl.style.display = 'none';
+        }
+
+        // Recent apps (only for returning users)
+        if (hasHistory) {
+            const recent = Personalize.getRecentApps(APP_DATA, 6);
+            if (recent.length > 0) {
+                recentBlock.style.display = '';
+                recentLabel.textContent = Personalize.getSectionLabel('recent', lang);
+                recentApps.innerHTML = recent.map(app => createMiniCard(app, lang)).join('');
+            } else {
+                recentBlock.style.display = 'none';
+            }
+        } else {
+            recentBlock.style.display = 'none';
+        }
+
+        // Recommended apps (time + behavior based)
+        if (recommended.length > 0) {
+            recommendBlock.style.display = '';
+            recommendLabel.textContent = hasHistory
+                ? Personalize.getSectionLabel('forYou', lang)
+                : Personalize.getSectionLabel('recommended', lang);
+            recommendApps.innerHTML = recommended.map(app => createMiniCard(app, lang, true)).join('');
+        } else {
+            recommendBlock.style.display = 'none';
+        }
+
+    }
+
+    // Click tracking on personalized cards (single listener, delegated)
+    document.getElementById('personalized-section')?.addEventListener('click', function(e) {
+        const card = e.target.closest('.p-card');
+        if (card && card.dataset.id && typeof Personalize !== 'undefined') {
+            const app = APP_DATA.find(a => a.id === card.dataset.id);
+            if (app) Personalize.trackClick(card.dataset.id, app.category);
+        }
+    });
+
+    function createMiniCard(app, lang, isRecommend) {
+        const name = typeof getAppName === 'function' ? getAppName(app, lang) : app.name;
+        const timeCtx = Personalize.getTimeContext();
+        const isBoosted = isRecommend && timeCtx.boostIds.indexOf(app.id) >= 0;
+
+        return `<a href="${app.url}" class="p-card" data-id="${app.id}"
+                   style="--p-color:${app.color}"
+                   ${isBoosted ? 'data-time-boost' : ''}>
+            <div class="p-card-icon">${app.icon}</div>
+            <div class="p-card-name">${name}</div>
+        </a>`;
+    }
+
+    // ─── Render App Cards (main grid) ─────────────────────────
     function renderApps(apps) {
         if (apps.length === 0) {
             appGrid.classList.add('hidden');
@@ -128,6 +214,19 @@
                     name.toLowerCase().includes(query) ||
                     desc.toLowerCase().includes(query);
             });
+
+            // Hide personalized section during search
+            const pSection = document.getElementById('personalized-section');
+            if (pSection) pSection.classList.add('hidden');
+        } else {
+            // Show personalized section when not searching
+            renderPersonalized();
+        }
+
+        // Apply personalized sorting for "all" category with no search
+        if (currentCategory === 'all' && !searchQuery.trim() && typeof Personalize !== 'undefined') {
+            const scored = Personalize.scoreApps(filtered);
+            if (scored) filtered = scored;
         }
 
         renderApps(filtered);
@@ -187,11 +286,12 @@
             }
         });
 
-        // Card click tracking
+        // Card click tracking (main grid)
         appGrid.addEventListener('click', (e) => {
             const card = e.target.closest('.app-card');
-            if (card) {
-                trackAppClick(card.dataset.id);
+            if (card && card.dataset.id && typeof Personalize !== 'undefined') {
+                const app = APP_DATA.find(a => a.id === card.dataset.id);
+                if (app) Personalize.trackClick(card.dataset.id, app.category);
             }
         });
     }
@@ -222,29 +322,6 @@
         document.querySelectorAll('.stats-section, .portal-footer').forEach(el => {
             observer.observe(el);
         });
-    }
-
-    // Track recently used apps (localStorage)
-    function trackRecentlyUsed() {
-        // Load recent apps from localStorage
-        try {
-            const recent = JSON.parse(localStorage.getItem('dopabrain_recent') || '[]');
-            // Could be used for "recently used" section in the future
-        } catch (e) {
-            // Ignore parse errors
-        }
-    }
-
-    function trackAppClick(appId) {
-        try {
-            let recent = JSON.parse(localStorage.getItem('dopabrain_recent') || '[]');
-            recent = recent.filter(id => id !== appId);
-            recent.unshift(appId);
-            recent = recent.slice(0, 5); // Keep last 5
-            localStorage.setItem('dopabrain_recent', JSON.stringify(recent));
-        } catch (e) {
-            // Ignore storage errors
-        }
     }
 
     // Service Worker Registration
