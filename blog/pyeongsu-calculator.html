@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title>평수 계산법 완벽 정리 | 제곱미터(㎡)를 평으로 쉽게 변환하는 법</title>
+    <meta name="description" content="평수 계산 공식, 제곱미터 평수 환산표, 전용면적 vs 공급면적 차이, 아파트 평수 계산 실전 예시. 무료 평수 계산기로 1초 만에 변환!">
+    <meta name="keywords" content="평수 계산, 제곱미터 평수, 평 계산기, 아파트 평수, 평수 환산, 전용면적, 공급면적">
+    <meta name="author" content="FireTools">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://swp1234.github.io/portal/blog/pyeongsu-calculator.html">
+
+    <!-- Open Graph (SNS 공유 최적화) -->
+    <meta property="og:title" content="평수 계산법 완벽 정리 | 제곱미터(㎡)를 평으로 쉽게 변환하는 법">
+    <meta property="og:description" content="평수 계산 공식, 제곱미터 평수 환산표, 전용면적 vs 공급면적 차이, 아파트 평수 계산 실전 예시. 무료 평수 계산기로 1초 만에 변환!">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://swp1234.github.io/portal/blog/pyeongsu-calculator.html">
+    <meta property="og:locale" content="ko_KR">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="평수 계산법 완벽 정리">
+    <meta name="twitter:description" content="평수 계산 공식과 환산표로 제곱미터를 평으로 쉽게 변환하세요.">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "평수 계산법 완벽 정리 - 제곱미터(㎡)를 평으로 쉽게 변환하는 법",
+        "description": "평수 계산 공식, 제곱미터 평수 환산표, 전용면적 vs 공급면적 차이, 아파트 평수 계산 실전 예시",
+        "author": {
+            "@type": "Organization",
+            "name": "FireTools"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "FireTools",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://swp1234.github.io/portal/icon-192.svg"
+            }
+        },
+        "datePublished": "2026-02-08",
+        "dateModified": "2026-02-08",
+        "image": "https://swp1234.github.io/portal/og-image.png"
+    }
+    </script>
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
+
+    <style>
+        :root {
+            --primary: #667eea;
+            --primary-light: #7c8ff8;
+            --primary-dark: #5a6fd6;
+            --accent: #f093fb;
+            --success: #00b894;
+            --warning: #e74c3c;
+
+            --bg: #07071a;
+            --bg-secondary: #0d0d2b;
+            --surface: rgba(15, 15, 40, 0.95);
+            --surface-glass: rgba(255, 255, 255, 0.06);
+            --surface-glass-hover: rgba(255, 255, 255, 0.1);
+            --border-glass: rgba(255, 255, 255, 0.08);
+
+            --text: #f0f0f5;
+            --text-secondary: #a0a0b8;
+            --text-dim: #6a6a80;
+
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-lg: 24px;
+
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .bg-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.2;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .bg-orb-1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #667eea33, transparent);
+            top: -50px;
+            right: -50px;
+        }
+
+        .bg-orb-2 {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, #f093fb22, transparent);
+            bottom: 10%;
+            left: -50px;
+            animation-delay: -7s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 30px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header & Navigation */
+        .blog-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition);
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+        }
+
+        .back-link:hover {
+            background: var(--surface-glass-hover);
+        }
+
+        .breadcrumb {
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+
+        /* Article Content */
+        article {
+            background: var(--surface-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-glass);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            line-height: 1.3;
+            color: var(--text);
+        }
+
+        .article-subtitle {
+            font-size: 1.1em;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: var(--surface-glass-hover);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 40px;
+        }
+
+        .toc-title {
+            font-size: 0.9em;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-list li {
+            margin: 8px 0;
+        }
+
+        .toc-list a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .toc-list a:hover {
+            color: var(--primary);
+        }
+
+        /* Headings */
+        h2 {
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: var(--text);
+            border-left: 4px solid var(--primary);
+            padding-left: 16px;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: var(--primary-light);
+        }
+
+        h4 {
+            font-size: 1.1em;
+            margin-top: 18px;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        strong {
+            color: var(--primary-light);
+            font-weight: 700;
+        }
+
+        em {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 16px 0 16px 24px;
+            color: var(--text);
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Code Blocks & Formulas */
+        .formula-box {
+            background: var(--surface-glass-hover);
+            border-left: 3px solid var(--primary);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            overflow-x: auto;
+        }
+
+        .formula-box code {
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: var(--surface-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primary)22, var(--accent)11);
+            border-bottom: 2px solid var(--border-glass);
+        }
+
+        th {
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 700;
+            color: var(--primary-light);
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-glass);
+            color: var(--text);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: var(--surface-glass-hover);
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, var(--primary)15, var(--accent)08);
+            border: 1px solid var(--border-glass);
+            border-left: 3px solid var(--primary);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 24px 0;
+        }
+
+        .highlight-title {
+            font-weight: 700;
+            color: var(--primary-light);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: var(--surface-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .example-title {
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 16px 28px;
+            border-radius: var(--radius);
+            border: none;
+            font-size: 1em;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            text-align: center;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary)15, var(--accent)08);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--surface-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 18px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary-light);
+            transition: var(--transition);
+            user-select: none;
+        }
+
+        .faq-question:hover {
+            background: var(--surface-glass-hover);
+        }
+
+        .faq-arrow {
+            font-size: 1.2em;
+            transition: var(--transition);
+        }
+
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+            color: var(--text-secondary);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 18px 18px 18px;
+            max-height: 500px;
+        }
+
+        /* Related Links */
+        .related-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-top: 30px;
+        }
+
+        .related-card {
+            background: var(--surface-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius);
+            padding: 18px;
+            text-decoration: none;
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .related-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .related-card-title {
+            font-weight: 700;
+            color: var(--primary-light);
+            margin-bottom: 8px;
+        }
+
+        .related-card-desc {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 16px;
+            }
+
+            article {
+                padding: 24px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+
+            .blog-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px 12px;
+            }
+
+            .cta-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-effects">
+        <div class="bg-orb bg-orb-1"></div>
+        <div class="bg-orb bg-orb-2"></div>
+    </div>
+
+    <div class="container">
+        <div class="blog-header">
+            <a href="/portal/" class="back-link">← FireTools로 돌아가기</a>
+            <div class="breadcrumb">FireTools > 블로그 > 평수 계산</div>
+        </div>
+
+        <article>
+            <header>
+                <div class="article-meta">
+                    <span>📅 2026년 2월 8일</span>
+                    <span>✍️ FireTools</span>
+                    <span>📖 15분 읽음</span>
+                </div>
+                <h1>평수 계산법 완벽 정리</h1>
+                <p class="article-subtitle">제곱미터(㎡)를 평으로 쉽게 변환하는 법</p>
+            </header>
+
+            <!-- Table of Contents -->
+            <nav class="toc">
+                <div class="toc-title">📑 목차</div>
+                <ul class="toc-list">
+                    <li><a href="#what-is-pyeongsu">평수란 무엇인가?</a></li>
+                    <li><a href="#conversion-formula">제곱미터를 평으로 변환하는 공식</a></li>
+                    <li><a href="#conversion-table">자주 쓰는 평수 환산표</a></li>
+                    <li><a href="#floor-types">전용면적 vs 공급면적 vs 계약면적</a></li>
+                    <li><a href="#practical-examples">아파트 평수 계산 실전 예시</a></li>
+                    <li><a href="#calculator-cta">평수 계산기로 1초 만에 변환하기</a></li>
+                    <li><a href="#faq">자주 묻는 질문 (FAQ)</a></li>
+                    <li><a href="#conclusion">마무리</a></li>
+                </ul>
+            </nav>
+
+            <!-- Section 1 -->
+            <section id="what-is-pyeongsu">
+                <h2>📏 평수란 무엇인가?</h2>
+
+                <p>부동산 거래를 할 때 가장 기본적으로 알아야 할 개념이 <strong>평수(坪)</strong>입니다. 하지만 많은 사람들이 평수와 제곱미터의 차이를 헷갈리거나, 광고에 나오는 평수가 실제와 다른 이유를 모르고 있습니다.</p>
+
+                <div class="highlight-box">
+                    <div class="highlight-title">💡 핵심 개념</div>
+                    <p><strong>1평 = 약 3.3058㎡</strong></p>
+                    <p style="margin-bottom: 0;">평(坪)은 한국과 일본에서 오래전부터 사용해온 면적 단위로, 한 변이 약 3.3m인 정사각형의 넓이를 뜻합니다.</p>
+                </div>
+
+                <h3>평수 단위의 역사</h3>
+                <p>과거 한국에서는 공식 단위로 평(坪)을 사용했습니다. 하지만 <strong>2007년 7월부터 부동산 중개 시 제곱미터(㎡) 표기가 의무화</strong>되었습니다. 그래도 부동산 거래, 광고, 일상 대화에서는 여전히 평수를 많이 사용하고 있어, 두 단위를 모두 이해하는 것이 중요합니다.</p>
+
+                <p>현재 한국의 법적 면적 단위는 국제 표준인 제곱미터(㎡)이지만, 실생활에서는 다음과 같이 혼용됩니다:</p>
+                <ul>
+                    <li>부동산 중개 광고: 제곱미터(㎡) 표기 의무</li>
+                    <li>부동산 거래 관습: 평(坪) 사용 (예: "이 집은 25평입니다")</li>
+                    <li>공식 계약서: 제곱미터(㎡) 기록</li>
+                    <li>시공사 광고: 제곱미터(㎡) + 평수(坪) 병기</li>
+                </ul>
+            </section>
+
+            <!-- Section 2 -->
+            <section id="conversion-formula">
+                <h2>🧮 제곱미터를 평으로 변환하는 공식</h2>
+
+                <p>평수와 제곱미터를 변환하는 것은 생각보다 간단합니다. 기본 공식만 알면 언제든 계산할 수 있습니다.</p>
+
+                <h3>기본 변환 공식</h3>
+
+                <div class="formula-box">
+                    <strong>제곱미터 → 평으로 변환:</strong><br>
+                    <code>평수 = 제곱미터(㎡) ÷ 3.3</code><br><br>
+                    <strong>평 → 제곱미터로 변환:</strong><br>
+                    <code>제곱미터(㎡) = 평수 × 3.3</code><br><br>
+                    <strong>정확한 계산 (소수점 고려):</strong><br>
+                    <code>평수 = 제곱미터 ÷ 3.3058</code>
+                </div>
+
+                <h3>암산 꿀팁</h3>
+                <p>정확하지 않아도 대략적인 평수를 알고 싶다면 다음 꿀팁을 사용하세요:</p>
+
+                <ul>
+                    <li><strong>약 3.3배 차이:</strong> 300㎡는 약 90평, 100㎡는 약 30평</li>
+                    <li><strong>어림수 계산:</strong> "÷3" 또는 "×3"으로 빠르게 추정</li>
+                    <li><strong>복합 계산:</strong> 84㎡ = (80÷3) + (4÷3) ≈ 25평 + 1.2평 ≈ 26평</li>
+                    <li><strong>직관적 암기:</strong> 10평 ≈ 33㎡, 20평 ≈ 66㎡, 30평 ≈ 100㎡</li>
+                </ul>
+
+                <div class="example-box">
+                    <div class="example-title">✅ 계산 예시</div>
+                    <p><strong>84㎡를 평으로 변환:</strong></p>
+                    <p style="margin-bottom: 8px;">84 ÷ 3.3058 = 25.4평</p>
+                    <p style="margin-bottom: 0;"><em>결론: 약 25평</em></p>
+                </div>
+            </section>
+
+            <!-- Section 3 -->
+            <section id="conversion-table">
+                <h2>📊 자주 쓰는 평수 환산표</h2>
+
+                <h3>아파트 주요 평수 빠른 참조표</h3>
+                <p>신혼부부부터 대가족까지 자주 선택하는 아파트 평수의 빠른 환산입니다:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>제곱미터(㎡)</th>
+                            <th>평수(坪)</th>
+                            <th>특징</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>59㎡</td>
+                            <td>약 18평</td>
+                            <td>원룸형, 신혼부부</td>
+                        </tr>
+                        <tr>
+                            <td>84㎡</td>
+                            <td>약 25평</td>
+                            <td>가장 인기있는 아파트</td>
+                        </tr>
+                        <tr>
+                            <td>114㎡</td>
+                            <td>약 34평</td>
+                            <td>대형 아파트, 4인 가족</td>
+                        </tr>
+                        <tr>
+                            <td>128㎡</td>
+                            <td>약 39평</td>
+                            <td>초대형 아파트</td>
+                        </tr>
+                        <tr>
+                            <td>165㎡</td>
+                            <td>약 50평</td>
+                            <td>럭셔리 아파트</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>상세 환산표 (10~100㎡)</h3>
+                <p>더 정밀한 계산이 필요한 경우 다음 환산표를 참고하세요:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>㎡</th>
+                            <th>평</th>
+                            <th>㎡</th>
+                            <th>평</th>
+                            <th>㎡</th>
+                            <th>평</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10㎡</td>
+                            <td>3.0평</td>
+                            <td>40㎡</td>
+                            <td>12.1평</td>
+                            <td>70㎡</td>
+                            <td>21.2평</td>
+                        </tr>
+                        <tr>
+                            <td>15㎡</td>
+                            <td>4.5평</td>
+                            <td>45㎡</td>
+                            <td>13.6평</td>
+                            <td>75㎡</td>
+                            <td>22.7평</td>
+                        </tr>
+                        <tr>
+                            <td>20㎡</td>
+                            <td>6.1평</td>
+                            <td>50㎡</td>
+                            <td>15.1평</td>
+                            <td>80㎡</td>
+                            <td>24.2평</td>
+                        </tr>
+                        <tr>
+                            <td>25㎡</td>
+                            <td>7.6평</td>
+                            <td>55㎡</td>
+                            <td>16.6평</td>
+                            <td>85㎡</td>
+                            <td>25.7평</td>
+                        </tr>
+                        <tr>
+                            <td>30㎡</td>
+                            <td>9.1평</td>
+                            <td>60㎡</td>
+                            <td>18.2평</td>
+                            <td>90㎡</td>
+                            <td>27.2평</td>
+                        </tr>
+                        <tr>
+                            <td>35㎡</td>
+                            <td>10.6평</td>
+                            <td>65㎡</td>
+                            <td>19.7평</td>
+                            <td>100㎡</td>
+                            <td>30.3평</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>상업용 부동산</h3>
+                <p>오피스, 카페, 상점 등 상업용 공간도 동일한 환산 비율이 적용됩니다:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>제곱미터(㎡)</th>
+                            <th>평수(坪)</th>
+                            <th>용도</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>33㎡</td>
+                            <td>약 10평</td>
+                            <td>소형 카페, 편의점</td>
+                        </tr>
+                        <tr>
+                            <td>66㎡</td>
+                            <td>약 20평</td>
+                            <td>중형 상점, 사무실</td>
+                        </tr>
+                        <tr>
+                            <td>165㎡</td>
+                            <td>약 50평</td>
+                            <td>대형 카페, 음식점</td>
+                        </tr>
+                        <tr>
+                            <td>330㎡</td>
+                            <td>약 100평</td>
+                            <td>대형 점포, 사무실</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 4 -->
+            <section id="floor-types">
+                <h2>🏢 전용면적 vs 공급면적 vs 계약면적</h2>
+
+                <p>아파트를 구매할 때 가장 헷갈리는 부분이 바로 이것입니다. 같은 아파트인데 광고에는 25평이라고 하고, 계약서에는 21평이라고 되어 있는 경우가 많습니다. 이는 면적 기준이 다르기 때문입니다.</p>
+
+                <h3>각 면적의 정의</h3>
+
+                <p><strong>1. 전용면적(專用面積)</strong></p>
+                <p>아파트에서 <em>소유자가 실제로 사용할 수 있는 공간</em>입니다. 거실, 침실, 주방, 화장실 등 내부 공간만 포함되며, 계단실, 복도, 엘리베이터 공간은 제외됩니다. 이것이 실제 거주 공간이므로 매매 계약서에 기재되는 면적입니다.</p>
+
+                <p><strong>2. 공급면적(供給面積)</strong></p>
+                <p>전용면적 + 공용공간(계단실, 복도, 엘리베이터 등)을 합친 면적입니다. 부동산 광고에는 보통 이 면적을 먼저 표시합니다. 공급면적이 전용면적보다 커 보이므로 광고 효과가 좋기 때문입니다. 시공사와 부동산 중개소가 자주 사용하는 기준이 바로 이것입니다.</p>
+
+                <p><strong>3. 계약면적(契約面積)</strong></p>
+                <p>실제 거래 계약서에 기재되는 면적으로, 대부분 전용면적과 동일합니다. 이 면적에 평당 가격을 곱해 총 매매가가 결정됩니다.</p>
+
+                <h3>면적 비교표</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>면적 종류</th>
+                            <th>포함 범위</th>
+                            <th>사용 기준</th>
+                            <th>광고/계약</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>전용면적</strong></td>
+                            <td>실제 거주 공간만</td>
+                            <td>가장 작음</td>
+                            <td>계약서 기준</td>
+                        </tr>
+                        <tr>
+                            <td><strong>공급면적</strong></td>
+                            <td>+ 공용공간</td>
+                            <td>중간</td>
+                            <td>광고 기준</td>
+                        </tr>
+                        <tr>
+                            <td><strong>계약면적</strong></td>
+                            <td>실제 거래면적</td>
+                            <td>최종 기준</td>
+                            <td>매매계약서</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box">
+                    <div class="highlight-title">⚠️ 실제 예시</div>
+                    <p><strong>광고: "공급면적 84㎡ (25평) 신축 아파트"</strong></p>
+                    <p style="margin-bottom: 0;"><strong>실제 계약: 전용면적 71㎡ (21평)</strong> ← 약 15% 차이 발생!</p>
+                </div>
+
+                <p>따라서 부동산 구매 시에는 반드시 광고에 나온 공급면적이 아니라 <strong>전용면적과 계약면적</strong>을 중심으로 판단해야 합니다.</p>
+            </section>
+
+            <!-- Section 5 -->
+            <section id="practical-examples">
+                <h2>🏠 아파트 평수 계산 실전 예시</h2>
+
+                <p>이론만으로는 부족합니다. 실제 상황에서 어떻게 활용하는지 사례별로 살펴보겠습니다.</p>
+
+                <h3>예시 1: 신혼부부 아파트 선택</h3>
+
+                <div class="example-box">
+                    <div class="example-title">✅ 신혼부부 선택 상황</div>
+                    <p><strong>상황:</strong> 신혼부부가 아파트를 구매하려고 합니다.</p>
+                    <p><strong>광고:</strong> "공급면적 59㎡" vs "공급면적 84㎡"</p>
+                    <p><strong>계산:</strong></p>
+                    <ul>
+                        <li>59㎡ ÷ 3.3 = 약 18평 (약 15% 공용공간) → 전용면적 약 50㎡</li>
+                        <li>84㎡ ÷ 3.3 = 약 25평 (약 15% 공용공간) → 전용면적 약 71㎡</li>
+                    </ul>
+                    <p><strong>결론:</strong> 59㎡는 원룸형으로 신혼부부 초기에 적합하고, 84㎡는 가족 확대를 고려한 안정적 선택입니다.</p>
+                </div>
+
+                <h3>예시 2: 오피스텔 vs 아파트</h3>
+
+                <div class="example-box">
+                    <div class="example-title">✅ 주거형 오피스텔 비교</div>
+                    <p><strong>상황:</strong> 투자자가 오피스텔과 아파트를 비교합니다.</p>
+                    <p><strong>옵션:</strong></p>
+                    <ul>
+                        <li>오피스텔: 공급면적 45㎡, 가격 3억 원</li>
+                        <li>아파트: 공급면적 59㎡, 가격 3억 5천만 원</li>
+                    </ul>
+                    <p><strong>계산:</strong></p>
+                    <ul>
+                        <li>오피스텔: 45㎡ ÷ 3.3 = 약 13.6평 (평당 약 2,200만 원)</li>
+                        <li>아파트: 59㎡ ÷ 3.3 = 약 18평 (평당 약 1,944만 원)</li>
+                    </ul>
+                    <p><strong>결론:</strong> 아파트가 평당 가격은 저렴하고 공간도 넓어 투자 가치가 더 좋습니다.</p>
+                </div>
+
+                <h3>예시 3: 재산세 계산</h3>
+
+                <div class="example-box">
+                    <div class="example-title">✅ 재산세 납부 기준</div>
+                    <p><strong>상황:</strong> 재산세를 계산해야 합니다.</p>
+                    <p><strong>기본정보:</strong> 공급면적 84㎡, 평가액 5억 원</p>
+                    <p><strong>계산:</strong></p>
+                    <ul>
+                        <li>공급면적 84㎡에서 전용면적 계산 필요</li>
+                        <li>84㎡ × 0.85(약 15% 차감) ≈ 71㎡ (약 21평)</li>
+                        <li>재산세는 전용면적 기준으로 산정됨</li>
+                    </ul>
+                    <p><strong>결론:</strong> 공급면적 표시보다 전용면적 감소에 따라 과세 표준이 달라집니다.</p>
+                </div>
+            </section>
+
+            <!-- Section 6 -->
+            <section id="calculator-cta">
+                <h2>🧰 평수 계산기로 1초 만에 변환하기</h2>
+
+                <p>이제 암산이나 수계산 없이 쉽게 평수를 변환할 수 있는 도구를 사용해보세요. FireTools의 <strong>단위 변환기 Pro</strong>를 사용하면 제곱미터, 평수뿐 아니라 다양한 생활 밀착형 단위를 즉시 변환할 수 있습니다.</p>
+
+                <div class="cta-section">
+                    <h3 style="margin-top: 0; color: var(--primary-light);">지금 바로 평수를 계산해보세요!</h3>
+                    <p>복잡한 공식 없이 숫자만 입력하면 자동으로 계산됩니다.</p>
+                    <a href="https://swp1234.github.io/unit-converter/" class="cta-button">
+                        🚀 단위 변환기 Pro 열기
+                    </a>
+                </div>
+
+                <h3>계산기의 주요 기능</h3>
+                <ul>
+                    <li>제곱미터(㎡) ↔ 평(坪) 즉시 변환</li>
+                    <li>평당 가격 자동 계산 (총액 ÷ 면적)</li>
+                    <li>평수별 아파트 추천 정보</li>
+                    <li>인치, 센티미터 등 다양한 길이 단위 지원</li>
+                    <li>모바일에서도 빠르게 사용 가능</li>
+                </ul>
+            </section>
+
+            <!-- Section 7 -->
+            <section id="faq">
+                <h2>❓ 자주 묻는 질문 (FAQ)</h2>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q1. 왜 굳이 3.3으로 나누나요? 왜 평수를 사용할까요?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>한국과 일본은 전통적으로 한 변이 약 3.03m인 정사각형(약 9.18㎡) 단위를 사용했습니다. 현대에는 1평을 약 3.3058㎡로 재정의했습니다. 법적으로는 제곱미터를 의무화했지만, 부동산 업계와 일반인들이 평수에 익숙해 여전히 사용하고 있습니다.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q2. 84㎡는 정확히 몇 평인가요?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>84㎡ ÷ 3.3058 = 약 25.41평입니다. 보통 "25평 아파트"라고 부르며, 한국에서 가장 인기 있는 평수 중 하나입니다. 신축 아파트에서 공급면적 84㎡는 전용면적으로 약 71~72㎡입니다.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q3. 광고에서 "25평"이라고 하는데 계약서에는 "21평"이라고 되어 있어요. 왜 차이가 날까요?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>광고는 공급면적(84㎡ ≈ 25평)을 기준으로 하지만, 계약은 전용면적(71㎡ ≈ 21평)을 기준으로 하기 때문입니다. 공용공간(계단실, 복도, 엘리베이터 등) 비용이 포함되므로 광고 면적이 더 크게 보입니다. 이는 불공정하지 않으며, 실제 거주 공간(전용면적)만 개인 소유이고 공용공간은 공동 소유이기 때문입니다.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q4. 넓이 단위가 이렇게 복잡한 이유가 뭔가요?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>국제 표준은 제곱미터(㎡)이지만, 한국과 일본의 문화적 전통이 남아 있습니다. 2007년부터 법적으로 제곱미터 표기를 의무화했지만, 부동산 거래에서 수십 년간 사용된 평수가 관습으로 남아 있습니다. 세계적으로 다양한 단위(제곱피트, 제곱야드 등)가 혼용되는 것과 유사합니다.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Q5. 계산기를 추천해주세요. 앱이 있나요?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>FireTools의 <strong>단위 변환기 Pro</strong>를 추천합니다! 웹 기반이므로 설치 없이 모든 기기(스마트폰, 태블릿, 컴퓨터)에서 바로 사용할 수 있습니다. 평수 계산뿐 아니라 평당 가격, 다양한 길이 단위 변환 등을 지원합니다. <a href="https://swp1234.github.io/unit-converter/" style="color: var(--primary);">여기를 클릭</a>하여 지금 바로 사용해보세요.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 8 -->
+            <section id="conclusion">
+                <h2>🎯 마무리</h2>
+
+                <p>평수 계산법은 생각보다 간단하지만, 부동산 거래에서 중요한 역할을 합니다. 이 글에서 배운 핵심을 정리하면 다음과 같습니다:</p>
+
+                <div class="highlight-box">
+                    <div class="highlight-title">💡 핵심 정리</div>
+                    <ul>
+                        <li><strong>1평 ≈ 3.3㎡</strong> - 기본 공식 외우기</li>
+                        <li><strong>광고는 공급면적, 계약은 전용면적</strong> - 15% 정도 차이 기대하기</li>
+                        <li><strong>신축 아파트 인기 평수:</strong> 59㎡(18평), 84㎡(25평), 114㎡(34평)</li>
+                        <li><strong>부동산 구매 시:</strong> 공급면적이 아니라 전용면적 중심으로 판단하기</li>
+                        <li><strong>빠른 계산:</strong> 계산기 도구 활용하기</li>
+                    </ul>
+                </div>
+
+                <h3>빠른 암산법 정리</h3>
+                <ul>
+                    <li>10평 × 3.3 = 33㎡</li>
+                    <li>20평 × 3.3 = 66㎡</li>
+                    <li>25평 × 3.3 = 82.5㎡ (실제로는 84㎡)</li>
+                    <li>30평 × 3.3 = 99㎡ (실제로는 100㎡)</li>
+                </ul>
+
+                <h3>부동산 광고 보는 현명한 방법</h3>
+                <ul>
+                    <li>광고의 "공급면적"을 0.85배 하면 대략적인 전용면적 추정 가능</li>
+                    <li>평당 가격은 전용면적으로 계산하여 정확한 총액 파악</li>
+                    <li>여러 아파트 비교할 때는 전용면적 기준으로 통일</li>
+                    <li>계약 전에 반드시 전용면적과 계약면적 확인하기</li>
+                </ul>
+
+                <h3>평수별 적정 거주 인원</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>평수</th>
+                            <th>㎡</th>
+                            <th>적정 거주</th>
+                            <th>특징</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>18평</td>
+                            <td>59㎡</td>
+                            <td>1~2인</td>
+                            <td>신혼부부, 1인 가구</td>
+                        </tr>
+                        <tr>
+                            <td>25평</td>
+                            <td>84㎡</td>
+                            <td>2~3인</td>
+                            <td>가장 인기 있는 선택</td>
+                        </tr>
+                        <tr>
+                            <td>34평</td>
+                            <td>114㎡</td>
+                            <td>3~4인</td>
+                            <td>넉넉한 공간</td>
+                        </tr>
+                        <tr>
+                            <td>50평 이상</td>
+                            <td>165㎡ 이상</td>
+                            <td>4인 이상</td>
+                            <td>럭셔리 아파트</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style="margin-top: 30px; font-size: 1.05em;"><strong>이제 평수 계산은 더 이상 어렵지 않습니다!</strong> 이 글의 공식과 팁을 기억하면 언제든 쉽게 계산할 수 있습니다. 혹시 더 빠른 계산이 필요하면 FireTools의 <strong>단위 변환기 Pro</strong>를 사용해보세요.</p>
+            </section>
+
+            <!-- Related Links -->
+            <div style="border-top: 1px solid var(--border-glass); padding-top: 40px; margin-top: 40px;">
+                <h3 style="margin-top: 0;">📚 관련 글</h3>
+                <div class="related-links">
+                    <a href="/portal/blog/tax-refund-guide.html" class="related-card">
+                        <div class="related-card-title">연말정산 가이드</div>
+                        <div class="related-card-desc">환급액 계산하는 법, 필요한 서류, 신고 방법</div>
+                    </a>
+                    <a href="/portal/blog/mbti-compatibility.html" class="related-card">
+                        <div class="related-card-title">MBTI 궁합표</div>
+                        <div class="related-card-desc">16가지 성격 유형별 완벽한 궁합 분석</div>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <!-- FAQ Interactive Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', function() {
+                    item.classList.toggle('active');
+                });
+            });
+
+            // Analytics tracking for section scrolls
+            const sections = document.querySelectorAll('section[id]');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        gtag('event', 'scroll_to_section', {
+                            section: entry.target.id
+                        });
+                    }
+                });
+            });
+
+            sections.forEach(section => observer.observe(section));
+
+            // CTA button click tracking
+            const ctaButton = document.querySelector('.cta-button');
+            if (ctaButton) {
+                ctaButton.addEventListener('click', function() {
+                    gtag('event', 'click_cta', {
+                        cta_name: 'unit_converter_pro',
+                        section: 'calculator'
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
