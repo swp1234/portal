@@ -195,6 +195,58 @@ const APP_DATA = [
         url: 'https://swp1234.github.io/mbti-love/',
         isNew: true,
         isPopular: true
+    },
+    {
+        id: 'hsp-test',
+        name: 'HSP 민감성 테스트',
+        shortDesc: '나는 고감수성자일까?',
+        description: '20가지 질문으로 알아보는 HSP 민감도! 5가지 유형과 감각별 분석. 2026 메타센싱 트렌드.',
+        icon: '🧠',
+        color: '#7c3aed',
+        category: 'fortune',
+        tags: ['HSP', '민감성', '심리테스트', '메타센싱', '고감수성자', '감정'],
+        url: 'https://swp1234.github.io/hsp-test/',
+        isNew: true,
+        isPopular: true
+    },
+    {
+        id: 'love-frequency',
+        name: '사랑 주파수 테스트',
+        shortDesc: '나의 사랑은 몇 Hz?',
+        description: '솔페지오 주파수 기반 사랑 유형 테스트! 10문항으로 나의 사랑 주파수를 찾고 실제 주파수 음악도 들어보세요.',
+        icon: '💕',
+        color: '#e91e63',
+        category: 'fortune',
+        tags: ['사랑', '주파수', '연애', '심리테스트', '솔페지오', '528Hz', '궁합'],
+        url: 'https://swp1234.github.io/love-frequency/',
+        isNew: true,
+        isPopular: true
+    },
+    {
+        id: 'stack-tower',
+        name: 'Stack Tower',
+        shortDesc: '타이밍 블록 쌓기 게임',
+        description: '완벽한 타이밍으로 블록을 쌓아 하늘 끝까지! 5가지 테마와 20개 칭호에 도전하세요.',
+        icon: '🏗️',
+        color: '#3498db',
+        category: 'quiz',
+        tags: ['게임', '아케이드', '타이밍', '블록', '캐주얼', '타워'],
+        url: 'https://swp1234.github.io/stack-tower/',
+        isNew: true,
+        isPopular: true
+    },
+    {
+        id: 'kpop-position',
+        name: 'K-POP 포지션 테스트',
+        shortDesc: '나의 아이돌 포지션은?',
+        description: '12가지 질문으로 알아보는 나의 K-POP 포지션! 메인보컬, 리더, 래퍼, 댄서, 비주얼, 막내, 올라운더 중 당신은?',
+        icon: '🎤',
+        color: '#ff2d78',
+        category: 'fortune',
+        tags: ['KPOP', '포지션', '아이돌', '심리테스트', 'BTS', 'BLACKPINK'],
+        url: 'https://swp1234.github.io/kpop-position/',
+        isNew: true,
+        isPopular: true
     }
 ];
 
