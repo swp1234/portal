@@ -247,6 +247,19 @@ const APP_DATA = [
         url: 'https://swp1234.github.io/kpop-position/',
         isNew: true,
         isPopular: true
+    },
+    {
+        id: 'number-merge',
+        name: '숫자 합치기 2048',
+        shortDesc: '중독성 퍼즐 게임',
+        description: '같은 숫자를 합쳐 2048을 만들어보세요! 스와이프로 즐기는 중독성 두뇌 퍼즐. 5가지 테마, 칭호 시스템.',
+        icon: '🧩',
+        color: '#f4a261',
+        category: 'quiz',
+        tags: ['2048', '퍼즐', '숫자', '게임', '두뇌', '캐주얼'],
+        url: 'https://swp1234.github.io/number-merge/',
+        isNew: true,
+        isPopular: true
     }
 ];
 
