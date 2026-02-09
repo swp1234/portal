@@ -132,10 +132,11 @@
         </a>`;
     }
 
-    // ─── Render App Cards (main grid) ─────────────────────────
+    // ─── Render App Cards (main grid) with Featured section ─────────────────────────
     function renderApps(apps) {
         if (apps.length === 0) {
             appGrid.classList.add('hidden');
+            document.getElementById('featured-section').classList.add('hidden');
             emptyState.classList.remove('hidden');
             return;
         }
@@ -143,7 +144,30 @@
         appGrid.classList.remove('hidden');
         emptyState.classList.add('hidden');
 
-        appGrid.innerHTML = apps.map((app, index) => createAppCard(app, index)).join('');
+        // Featured: idle-clicker, mbti-love, emotion-temp
+        const featuredIds = ['idle-clicker', 'mbti-love', 'emotion-temp'];
+        const featured = apps.filter(app => featuredIds.includes(app.id));
+        const regular = apps.filter(app => !featuredIds.includes(app.id));
+
+        // Show featured only if we have them and category is 'all'
+        const featuredSection = document.getElementById('featured-section');
+        if (currentCategory === 'all' && featured.length > 0 && !searchQuery.trim()) {
+            featuredSection.classList.remove('hidden');
+            const featuredGrid = document.getElementById('featured-grid');
+            featuredGrid.innerHTML = featured.map((app, index) => createFeaturedCard(app, index)).join('');
+
+            requestAnimationFrame(() => {
+                const cards = featuredGrid.querySelectorAll('.featured-card');
+                cards.forEach((card, i) => {
+                    card.style.animationDelay = `${i * 0.08}s`;
+                    card.classList.add('fade-in');
+                });
+            });
+        } else {
+            featuredSection.classList.add('hidden');
+        }
+
+        appGrid.innerHTML = regular.map((app, index) => createAppCard(app, index)).join('');
 
         // Animate cards with stagger
         requestAnimationFrame(() => {
@@ -155,6 +179,34 @@
         });
     }
 
+    // Create featured card HTML (larger, more prominent)
+    function createFeaturedCard(app, index) {
+        const lang = i18n.getCurrentLanguage();
+        const name = typeof getAppName === 'function' ? getAppName(app, lang) : app.name;
+        const desc = typeof getAppDesc === 'function' ? getAppDesc(app, lang) : app.shortDesc;
+
+        // User count (fake, for social proof)
+        const userCounts = { 'idle-clicker': '24K', 'mbti-love': '18K', 'emotion-temp': '15K' };
+        const users = userCounts[app.id] || '5K+';
+
+        return `
+            <a href="${app.url}" class="featured-card fade-in" data-id="${app.id}"
+               style="--card-color: ${app.color}"
+               aria-label="${name} - ${desc}">
+                <div class="featured-icon">${app.icon}</div>
+                <div class="featured-card-info">
+                    ${app.isPopular ? '<span class="featured-badge">🔥 인기</span>' : ''}
+                    <h3 class="featured-card-title">${name}</h3>
+                    <p class="featured-card-desc">${desc}</p>
+                    <div class="featured-card-meta">
+                        <span class="featured-users">👥 ${users}</span>
+                        <span class="featured-arrow">→</span>
+                    </div>
+                </div>
+            </a>
+        `;
+    }
+
     // Create single app card HTML
     function createAppCard(app, index) {
         const lang = i18n.getCurrentLanguage();
@@ -164,8 +216,20 @@
         if (app.isNew) badges.push('<span class="badge badge-new">NEW</span>');
         if (app.isPopular) badges.push('<span class="badge badge-popular">인기</span>');
 
+        // User count (fake, for social proof)
+        const userCounts = {
+            'quiz-app': '8.2K', 'hsp-test': '12K', 'dream-fortune': '9.5K',
+            'valentine': '7.8K', 'lottery': '6.3K', 'mbti-tips': '5.2K',
+            'shopping-calc': '4.1K', 'stack-tower': '11K', 'sky-runner': '10K',
+            'zigzag-runner': '9.2K', 'emoji-merge': '8.8K', 'kpop-position': '14K',
+            'love-frequency': '6.7K', 'past-life': '8.1K', 'tax-refund-preview': '3.2K',
+            'unit-converter': '2.1K', 'detox-timer': '1.8K', 'affirmation': '2.5K',
+            'white-noise': '3.6K', 'dev-quiz': '4.2K', 'dday-counter': '1.5K'
+        };
+        const users = userCounts[app.id] || '1K+';
+
         return `
-            <a href="${app.url}" class="app-card" data-id="${app.id}"
+            <a href="${app.url}" class="app-card fade-in" data-id="${app.id}" data-category="${app.category}"
                style="--card-color: ${app.color}"
                aria-label="${name} - ${desc}">
                 <div class="card-glow"></div>
@@ -179,6 +243,7 @@
                     <div class="card-info">
                         <h3 class="card-title">${name}</h3>
                         <p class="card-desc">${desc}</p>
+                        <div style="font-size: 11px; color: var(--text-dim); margin-top: auto; padding-top: 8px;">👥 ${users}</div>
                     </div>
                     <div class="card-arrow">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -283,6 +348,15 @@
             }
             if (e.key === 'Escape' && document.activeElement === searchInput) {
                 searchInput.blur();
+            }
+        });
+
+        // Card click tracking (featured)
+        document.getElementById('featured-section')?.addEventListener('click', (e) => {
+            const card = e.target.closest('.featured-card');
+            if (card && card.dataset.id && typeof Personalize !== 'undefined') {
+                const app = APP_DATA.find(a => a.id === card.dataset.id);
+                if (app) Personalize.trackClick(card.dataset.id, app.category);
             }
         });
 

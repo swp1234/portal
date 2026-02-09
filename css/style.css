@@ -477,6 +477,47 @@ body {
     .personalized-greeting { font-size: 20px; }
 }
 
+/* === Featured Section === */
+.featured-section {
+    margin-bottom: 32px;
+}
+
+.featured-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.featured-title {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue), var(--neon-pink));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.3px;
+    animation: gradientShift 4s ease infinite;
+    margin-bottom: 4px;
+}
+
+.featured-subtitle {
+    font-size: 13px;
+    color: var(--text-dim);
+}
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+@media (min-width: 600px) {
+    .featured-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 /* === App Grid === */
 .app-grid {
     display: grid;
@@ -485,15 +526,129 @@ body {
     margin-bottom: 24px;
 }
 
+/* === Featured Card === */
+.featured-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--card-color) 15%, transparent), rgba(139, 92, 246, 0.04));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid color-mix(in srgb, var(--card-color) 30%, transparent);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--text);
+    transition: var(--transition);
+    cursor: pointer;
+    min-height: 280px;
+    padding: 24px;
+}
+
+.featured-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: color-mix(in srgb, var(--card-color) 50%, transparent);
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.4),
+        0 0 40px color-mix(in srgb, var(--card-color) 30%, transparent),
+        inset 0 0 40px color-mix(in srgb, var(--card-color) 10%, transparent);
+}
+
+.featured-card:active {
+    transform: translateY(-6px) scale(1.01);
+}
+
+.featured-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--card-color) 30%, transparent), color-mix(in srgb, var(--card-color) 10%, transparent));
+    border: 2px solid color-mix(in srgb, var(--card-color) 20%, transparent);
+    margin-bottom: 16px;
+    transition: var(--transition);
+}
+
+.featured-card:hover .featured-icon {
+    transform: scale(1.1) rotate(-5deg);
+    border-color: color-mix(in srgb, var(--card-color) 40%, transparent);
+}
+
+.featured-card-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.featured-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--card-color) 40%, #ff6b9d), color-mix(in srgb, var(--card-color) 20%, #ff6b9d));
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    width: fit-content;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 0 12px color-mix(in srgb, var(--card-color) 30%, transparent);
+}
+
+.featured-card-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    color: var(--text);
+}
+
+.featured-card-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    flex: 1;
+    margin-bottom: 12px;
+}
+
+.featured-card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 12px;
+    border-top: 1px solid color-mix(in srgb, var(--card-color) 15%, transparent);
+    font-size: 12px;
+    color: var(--text-dim);
+}
+
+.featured-users {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.featured-arrow {
+    transition: var(--transition);
+    color: var(--card-color);
+    font-weight: 600;
+}
+
+.featured-card:hover .featured-arrow {
+    transform: translateX(4px);
+}
+
 /* === App Card === */
 .app-card {
     position: relative;
     display: flex;
     flex-direction: column;
-    background: rgba(139, 92, 246, 0.04);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--card-color) 10%, transparent), rgba(139, 92, 246, 0.04));
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(139, 92, 246, 0.1);
+    border: 1px solid color-mix(in srgb, var(--card-color) 20%, transparent);
     border-radius: var(--radius);
     overflow: hidden;
     text-decoration: none;
@@ -503,13 +658,37 @@ body {
     min-height: 160px;
 }
 
-.app-card:hover {
+.app-card[data-category="quiz"]:hover {
+    transform: scale(1.05) rotate(1deg);
+    border-color: color-mix(in srgb, var(--card-color) 40%, transparent);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px color-mix(in srgb, var(--card-color) 25%, transparent),
+        inset 0 0 30px color-mix(in srgb, var(--card-color) 05%, transparent);
+}
+
+.app-card[data-category="fortune"]:hover {
+    transform: translateY(-6px);
+    border-color: color-mix(in srgb, var(--card-color) 40%, transparent);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        0 0 35px color-mix(in srgb, var(--card-color) 30%, transparent);
+}
+
+.app-card[data-category="tool"]:hover {
     transform: translateY(-4px);
-    border-color: var(--card-color, rgba(139, 92, 246, 0.3));
+    border-color: color-mix(in srgb, var(--card-color) 40%, transparent);
     box-shadow:
         0 8px 30px rgba(0, 0, 0, 0.3),
-        0 0 25px color-mix(in srgb, var(--card-color) 20%, transparent),
-        inset 0 0 30px rgba(139, 92, 246, 0.03);
+        0 0 25px color-mix(in srgb, var(--card-color) 20%, transparent);
+}
+
+.app-card[data-category="life"]:hover {
+    transform: translateY(-5px);
+    border-color: color-mix(in srgb, var(--card-color) 40%, transparent);
+    box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.35),
+        0 0 28px color-mix(in srgb, var(--card-color) 22%, transparent);
 }
 
 .app-card:active {
@@ -626,19 +805,21 @@ body {
 }
 
 .card-color-bar {
-    height: 3px;
+    height: 4px;
     width: 100%;
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
+    opacity: 0.6;
+    transition: all 0.3s ease;
 }
 
 .app-card:hover .card-color-bar {
     opacity: 1;
-    box-shadow: 0 0 10px color-mix(in srgb, var(--card-color, #8b5cf6) 40%, transparent);
+    height: 5px;
+    box-shadow: 0 0 15px color-mix(in srgb, var(--card-color, #8b5cf6) 50%, transparent);
 }
 
 /* === Card Animation === */
-.app-card.fade-in {
+.app-card.fade-in,
+.featured-card.fade-in {
     animation: cardFadeIn 0.5s ease forwards;
     opacity: 0;
 }
@@ -652,6 +833,32 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* === Section Headers (for future category separation) === */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding: 0 4px;
+}
+
+.section-icon {
+    font-size: 24px;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+}
+
+.section-divider {
+    height: 2px;
+    flex: 1;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--section-color) 50%, transparent), transparent);
 }
 
 /* === Empty State === */
@@ -877,6 +1084,14 @@ body {
         gap: 16px;
     }
 
+    .featured-grid {
+        gap: 16px;
+    }
+
+    .featured-card {
+        min-height: 300px;
+    }
+
     .logo-text h1 {
         font-size: 38px;
     }
@@ -890,6 +1105,16 @@ body {
 @media (min-width: 900px) {
     .app-grid {
         grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+
+    .featured-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .featured-card {
+        min-height: 320px;
     }
 
     .search-box input {
