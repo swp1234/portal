@@ -195,7 +195,7 @@
             appGrid.innerHTML = renderCategorySections(regular);
         } else {
             // Simple grid for filtered/searched results
-            appGrid.innerHTML = `<div style="grid-column: 1 / -1;"><div class="app-grid">${regular.map((app, index) => createAppCard(app, index)).join('')}</div></div>`;
+            appGrid.innerHTML = regular.map((app, index) => createAppCard(app, index)).join('');
         }
 
         // Animate cards with stagger
@@ -228,23 +228,24 @@
         const sortedCategories = Object.keys(grouped)
             .sort((a, b) => (categoryInfo[a]?.order || 999) - (categoryInfo[b]?.order || 999));
 
-        return sortedCategories.map(category => {
-            const apps = grouped[category];
+        let html = '';
+        sortedCategories.forEach(category => {
+            const categoryApps = grouped[category];
             const info = categoryInfo[category] || { icon: '📦', label: category, color: '#8b5cf6' };
 
-            return `
-                <div class="category-section" style="--section-color: ${info.color}">
+            html += `<div class="category-section" style="--section-color: ${info.color}; grid-column: 1 / -1;">
                     <div class="section-header">
                         <span class="section-icon">${info.icon}</span>
                         <h2 class="section-title">${info.label}</h2>
                         <span class="section-divider"></span>
                     </div>
-                    <div class="app-grid">
-                        ${apps.map((app, idx) => createAppCard(app, idx)).join('')}
+                    <div class="app-grid" style="grid-column: 1 / -1;">
+                        ${categoryApps.map((app, idx) => createAppCard(app, idx)).join('')}
                     </div>
-                </div>
-            `;
-        }).join('');
+                </div>`;
+        });
+
+        return html;
     }
 
     // Create featured card HTML (larger, more prominent)
