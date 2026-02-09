@@ -704,6 +704,32 @@ const APP_DATA = [
         }
     },
     {
+        id: 'word-scramble',
+        name: '단어 스크램블',
+        shortDesc: '뒤섞인 글자 맞추기 게임',
+        description: '뒤섞인 알파벳을 올바른 순서로 배치하는 단어 퍼즐 게임! 난이도별 도전, 점수 경쟁, 콤보 시스템, 무한 플레이 가능!',
+        icon: '🎮',
+        color: '#e056fd',
+        category: 'quiz',
+        tags: ['게임', '퍼즐', '단어', '영어', '뇌훈련', 'game', 'word', 'puzzle', 'vocabulary', 'brain'],
+        url: 'https://dopabrain.com/word-scramble/',
+        isNew: true,
+        isPopular: true,
+        i18n: {
+            en: { name: 'Word Scramble', shortDesc: 'Unscramble word puzzle game' },
+            zh: { name: '单词乱序游戏', shortDesc: '解开打乱的字母' },
+            hi: { name: 'शब्द स्क्रैम्बल', shortDesc: 'शब्द पहेली खेल' },
+            ru: { name: 'Word Scramble', shortDesc: 'Игра со словами' },
+            ja: { name: 'Word Scramble', shortDesc: 'しりとり単語ゲーム' },
+            es: { name: 'Word Scramble', shortDesc: 'Juego de palabras revueltas' },
+            pt: { name: 'Word Scramble', shortDesc: 'Jogo de palavras embaralhadas' },
+            id: { name: 'Word Scramble', shortDesc: 'Game kata diacak' },
+            tr: { name: 'Word Scramble', shortDesc: 'Kelime karıştırma oyunu' },
+            de: { name: 'Word Scramble', shortDesc: 'Wort-Puzzle-Spiel' },
+            fr: { name: 'Word Scramble', shortDesc: 'Jeu de mots mélangés' }
+        }
+    },
+    {
         id: 'number-puzzle',
         name: '숫자 퍼즐 2048',
         shortDesc: '2048 숫자 게임',
