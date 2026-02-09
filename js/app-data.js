@@ -1271,6 +1271,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'zodiac-match',
+        name: '별자리 궁합',
+        shortDesc: '나와 상대의 별자리 궁합',
+        description: '별자리 궁합 테스트! 나와 상대방의 별자리를 선택하면 연애, 우정, 직장 궁합을 한눈에 볼 수 있어요. AI 심층 분석, 카드 공유 기능 포함.',
+        icon: '💜',
+        color: '#8e44ad',
+        category: 'test',
+        tags: ['별자리', '궁합', '연애', '심리테스트', 'zodiac', 'compatibility', 'love', 'test', 'astrology'],
+        url: 'https://dopabrain.com/zodiac-match/',
+        isNew: true,
+        isPopular: true,
+        popularity: 8,
+        i18n: {
+            en: { name: 'Zodiac Compatibility', shortDesc: 'Check your zodiac match' },
+            zh: { name: '星座配对', shortDesc: '检查你的星座配对' },
+            hi: { name: 'राशि अनुकूलता', shortDesc: 'अपनी राशि का मिलान जांचें' },
+            ru: { name: 'Совместимость зодиаков', shortDesc: 'Проверьте совместимость знаков' },
+            ja: { name: '星座相性診断', shortDesc: 'あなたの星座の相性をチェック' },
+            es: { name: 'Compatibilidad Zodiacal', shortDesc: 'Verifica tu compatibilidad zodiacal' },
+            pt: { name: 'Compatibilidade Zodiacal', shortDesc: 'Verifique sua compatibilidade' },
+            id: { name: 'Kecocokan Zodiak', shortDesc: 'Periksa kecocokan zodiak Anda' },
+            tr: { name: 'Burç Uyumu', shortDesc: 'Burç uyumunuzu kontrol edin' },
+            de: { name: 'Sternzeichen-Kompatibilität', shortDesc: 'Prüfe deine Sternzeichen-Kompatibilität' },
+            fr: { name: 'Compatibilité Astrologique', shortDesc: 'Vérifiez votre compatibilité zodiacale' }
+        }
+    },
+    {
         id: 'pong-game',
         name: 'Pong - 클래식 아케이드 게임',
         shortDesc: '1P vs AI / 2P 로컬 멀티플레이',
