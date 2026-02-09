@@ -624,6 +624,32 @@ const APP_DATA = [
             de: { name: 'Valentinstag-Match-Test', shortDesc: 'Wie kompatibel seid ihr? %' },
             fr: { name: 'Test Saint-Valentin', shortDesc: 'Êtes-vous compatibles ? %' }
         }
+    },
+    {
+        id: 'brain-type',
+        name: '두뇌 유형 테스트',
+        shortDesc: '나의 두뇌는 어떤 유형?',
+        description: '10개 질문으로 당신의 뇌 유형을 분석합니다. 8가지 두뇌 유형 중 당신을 가장 잘 나타내는 유형을 발견해보세요!',
+        icon: '🧠',
+        color: '#e040fb',
+        category: 'fortune',
+        tags: ['뇌', '성격', '심리테스트', '진단', '분석'],
+        url: 'https://dopabrain.com/brain-type/',
+        isNew: true,
+        isPopular: false,
+        i18n: {
+            en: { name: 'Brain Type Test', shortDesc: 'What is your brain type?' },
+            zh: { name: '脑型测试', shortDesc: '你的大脑类型是什么？' },
+            hi: { name: 'ब्रेन टाइप टेस्ट', shortDesc: 'आपका मस्तिष्क प्रकार क्या है?' },
+            ru: { name: 'Тест типа мозга', shortDesc: 'Какой у вас тип мозга?' },
+            ja: { name: '脳型診断テスト', shortDesc: 'あなたの脳型は?' },
+            es: { name: 'Test de Tipo de Cerebro', shortDesc: '¿Cuál es tu tipo de cerebro?' },
+            pt: { name: 'Teste de Tipo Cerebral', shortDesc: 'Qual é o seu tipo de cérebro?' },
+            id: { name: 'Tes Tipe Otak', shortDesc: 'Apa tipe otak Anda?' },
+            tr: { name: 'Beyin Tipi Testi', shortDesc: 'Beyin tipiniz nedir?' },
+            de: { name: 'Gehirn-Typ-Test', shortDesc: 'Welcher Gehirntyp sind Sie?' },
+            fr: { name: 'Test de Type de Cerveau', shortDesc: 'Quel est votre type de cerveau?' }
+        }
     }
 ];
 
