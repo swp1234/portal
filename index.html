@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="max-image-preview:large">
+
+    <!-- Resource hints for external domains -->
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+
     <!-- hreflang tags for multilingual SEO -->
     <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/" />
     <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/?lang=en" />
@@ -11,9 +18,10 @@
     <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/?lang=zh" />
     <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/" />
 
+    <title>DopaBrain 🧠 - 무료 온라인 게임, 심리 테스트, 유틸리티 | 도파브레인</title>
+
     <!-- SEO Meta Tags -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
-    <title>DopaBrain 🧠 - 무료 온라인 게임, 심리 테스트, 유틸리티 | 도파브레인</title>
     <meta name="description" content="중독성 게임, 심리테스트, 퀴즈, MBTI 궁합, 스트레스 측정, BMI 계산, 연말정산 등 25개 무료 콘텐츠! 🧠 설치 없이 바로 즐기세요. 12개 다국어 지원!">
     <meta name="keywords" content="온라인 게임, 심리테스트, MBTI 궁합, 꿈해몽, 퀴즈 게임, 계산기, 운세, 환율 계산, 단위 변환, 연말정산 계산기, 로또 번호, 감정 온도, 백색소음, 타이머, 뇌 테스트">
     <meta name="author" content="DopaBrain">
@@ -101,10 +109,15 @@
     }
     </script>
 
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Critical CSS inline + async stylesheet loading -->
+    <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/style.css"></noscript>
+
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
+
+    <!-- Preload critical scripts -->
     <link rel="preload" href="js/i18n.js" as="script">
     <link rel="preload" href="js/app-data.js" as="script">
     <link rel="preload" href="js/personalize.js" as="script">
@@ -426,6 +439,7 @@
         </div>
     </div>
 
+    <!-- Deferred script loading for non-blocking page render -->
     <script src="js/i18n.js" defer></script>
     <script src="js/app-data.js" defer></script>
     <script src="js/personalize.js" defer></script>

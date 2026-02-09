@@ -858,6 +858,32 @@ const APP_DATA = [
             de: { name: 'BMI-Rechner', shortDesc: 'BMI-Berechnung und Gesundheitsanalyse' },
             fr: { name: 'Calculatrice BMI', shortDesc: 'Calcul IMC et analyse de santé' }
         }
+    },
+    {
+        id: 'block-puzzle',
+        name: 'Block Puzzle',
+        shortDesc: '클래식 블록 퍼즐 게임',
+        description: '재미있는 클래식 블록 퍼즐 게임! 떨어지는 블록을 배치하여 줄을 완성하세요. 레벨 시스템, 콤보, 하드드롭, 홀드 기능. 네온 블록과 음향 효과가 있는 중독성 있는 게임!',
+        icon: '🧩',
+        color: '#9b59b6',
+        category: 'game',
+        tags: ['블록 퍼즐', '테트리스', '캐주얼 게임', '무료 게임', '퍼즐 게임', 'block', 'puzzle', 'tetris', 'casual', 'game', 'arcade'],
+        url: 'https://dopabrain.com/block-puzzle/',
+        isNew: true,
+        isPopular: true,
+        i18n: {
+            en: { name: 'Block Puzzle', shortDesc: 'Classic block puzzle game' },
+            zh: { name: '方块拼图', shortDesc: '经典方块拼图游戏' },
+            hi: { name: 'ब्लॉक पहेली', shortDesc: 'क्लासिक ब्लॉक पहेली गेम' },
+            ru: { name: 'Блок-Пазл', shortDesc: 'Классическая игра пазл' },
+            ja: { name: 'ブロックパズル', shortDesc: 'クラシックブロックパズル' },
+            es: { name: 'Block Puzzle', shortDesc: 'Juego de puzzle de bloques clásico' },
+            pt: { name: 'Block Puzzle', shortDesc: 'Clássico jogo de puzzle de blocos' },
+            id: { name: 'Block Puzzle', shortDesc: 'Game puzzle blok klasik' },
+            tr: { name: 'Block Puzzle', shortDesc: 'Klasik blok bulmaca oyunu' },
+            de: { name: 'Block Puzzle', shortDesc: 'Klassisches Blockpuzzle-Spiel' },
+            fr: { name: 'Block Puzzle', shortDesc: 'Jeu de puzzle de blocs classique' }
+        }
     }
 ];
 
