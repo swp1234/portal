@@ -1055,6 +1055,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'daily-tarot',
+        name: '오늘의 타로 운세',
+        shortDesc: '3장 카드 뽑기 & AI 분석',
+        description: '22장 메이저 아르카나 타로로 오늘의 운세를 점쳐보세요. 3장 스프레드(과거/현재/미래), 카테고리별 운세, AI 심층 리딩, 결과 공유 기능.',
+        icon: '🔮',
+        color: '#9b59b6',
+        category: 'fortune',
+        tags: ['타로', '운세', '카드', '점', '심리테스트', 'tarot', 'fortune', 'reading', 'destiny', 'cards', 'mystical'],
+        url: 'https://dopabrain.com/daily-tarot/',
+        isNew: true,
+        isPopular: true,
+        popularity: 8,
+        i18n: {
+            en: { name: 'Daily Tarot Reading', shortDesc: '3-card spread & AI analysis' },
+            zh: { name: '每日塔罗占卜', shortDesc: '三张卡牌解读 & AI 分析' },
+            hi: { name: 'दैनिक टैरो रीडिंग', shortDesc: '3-कार्ड स्प्रेड और AI विश्लेषण' },
+            ru: { name: 'Ежедневное Таро', shortDesc: 'Расклад 3 карт и AI анализ' },
+            ja: { name: '今日のタロット占い', shortDesc: '3枚スプレッド & AI分析' },
+            es: { name: 'Lectura Diaria de Tarot', shortDesc: 'Tirada de 3 cartas & análisis IA' },
+            pt: { name: 'Leitura Diária de Tarô', shortDesc: 'Spread de 3 cartas & análise IA' },
+            id: { name: 'Bacaan Tarot Harian', shortDesc: 'Spread 3 kartu & analisis AI' },
+            tr: { name: 'Günlük Tarot Okuması', shortDesc: '3 kartlı spread ve AI analizi' },
+            de: { name: 'Tägliche Tarot-Lesung', shortDesc: '3-Karten-Spread & KI-Analyse' },
+            fr: { name: 'Lecture de Tarot Quotidienne', shortDesc: 'Tirage 3 cartes & analyse IA' }
+        }
+    },
+    {
         id: 'puzzle-2048',
         name: '2048 퍼즐',
         shortDesc: '타일 합치기 숫자 게임',
