@@ -1298,6 +1298,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'todo-list',
+        name: 'Todo List - 스마트 할일 관리',
+        shortDesc: '우선순위, 카테고리, 마감일 관리',
+        description: '우선순위, 카테고리, 마감일과 함께 할일을 효율적으로 관리하세요. 드래그&드롭, 검색, 필터, 통계 기능 완비.',
+        icon: '✅',
+        color: '#2980b9',
+        category: 'tool',
+        tags: ['할일', '생산성', '계획', '체크리스트', 'todo', 'productivity', 'planner', 'checklist', 'task-management'],
+        url: 'https://dopabrain.com/todo-list/',
+        isNew: true,
+        isPopular: false,
+        popularity: 3,
+        i18n: {
+            en: { name: 'Todo List - Smart Task Manager', shortDesc: 'Manage tasks with priority & deadline' },
+            zh: { name: '待办清单 - 聪明的任务管理', shortDesc: '优先级和截止日期任务管理' },
+            hi: { name: 'टू-डू लिस्ट - स्मार्ट कार्य प्रबंधक', shortDesc: 'प्राथमिकता और समय सीमा के साथ कार्य प्रबंधन' },
+            ru: { name: 'Список дел - Умный менеджер задач', shortDesc: 'Управляйте задачами по приоритетам и срокам' },
+            ja: { name: 'ToDoリスト - スマートタスク管理', shortDesc: '優先度と期限付きタスク管理' },
+            es: { name: 'Lista de Tareas - Gestor Inteligente', shortDesc: 'Gestiona tareas con prioridad y fecha límite' },
+            pt: { name: 'Lista de Tarefas - Gerenciador Inteligente', shortDesc: 'Gerencie tarefas com prioridade e prazo' },
+            id: { name: 'Daftar Tugas - Pengelola Tugas Pintar', shortDesc: 'Kelola tugas dengan prioritas dan tenggat waktu' },
+            tr: { name: 'Yapılacaklar Listesi - Akıllı Görev Yöneticisi', shortDesc: 'Görevleri öncelik ve tarihle yönetin' },
+            de: { name: 'Aufgabenliste - Intelligenter Task-Manager', shortDesc: 'Verwalten Sie Aufgaben mit Priorität und Frist' },
+            fr: { name: 'Liste de Tâches - Gestionnaire Intelligent', shortDesc: 'Gérez les tâches par priorité et échéance' }
+        }
+    },
+    {
         id: 'pong-game',
         name: 'Pong - 클래식 아케이드 게임',
         shortDesc: '1P vs AI / 2P 로컬 멀티플레이',
