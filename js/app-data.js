@@ -13,6 +13,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/quiz-app/',
         isNew: false,
         isPopular: true,
+        popularity: 7,
         i18n: {
             en: { name: 'Knowledge Quiz', shortDesc: 'General knowledge test' },
             zh: { name: '知识问答', shortDesc: '常识测试' },
@@ -39,6 +40,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/shopping-calc/',
         isNew: false,
         isPopular: true,
+        popularity: 5,
         i18n: {
             en: { name: 'Shopping Calculator', shortDesc: 'Currency / duty / tip calc' },
             zh: { name: '全球购物计算器', shortDesc: '汇率/关税/小费计算' },
@@ -65,6 +67,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/detox-timer/',
         isNew: false,
         isPopular: false,
+        popularity: 4,
         i18n: {
             en: { name: 'Digital Detox Timer', shortDesc: 'Screen time manager' },
             zh: { name: '数字排毒计时器', shortDesc: '手机使用管理' },
@@ -91,6 +94,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/dream-fortune/',
         isNew: false,
         isPopular: true,
+        popularity: 10,
         i18n: {
             en: { name: 'Dream & Fortune', shortDesc: 'AI dream reading & horoscope' },
             zh: { name: '解梦与运势', shortDesc: 'AI解梦 & 今日运势' },
@@ -117,6 +121,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/affirmation/',
         isNew: false,
         isPopular: false,
+        popularity: 4,
         i18n: {
             en: { name: 'Daily Affirmation', shortDesc: 'Positive messages every day' },
             zh: { name: '每日正能量卡片', shortDesc: '每天新的正面信息' },
@@ -143,6 +148,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/lottery/',
         isNew: false,
         isPopular: true,
+        popularity: 6,
         i18n: {
             en: { name: 'Lucky Number Generator', shortDesc: 'Lottery number picker' },
             zh: { name: '幸运号码生成器', shortDesc: '彩票号码生成' },
@@ -169,6 +175,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/dday-counter/',
         isNew: false,
         isPopular: false,
+        popularity: 3,
         i18n: {
             en: { name: 'D-Day Counter', shortDesc: 'Date countdown tracker' },
             zh: { name: 'D-Day 倒计时', shortDesc: '重要日期倒计时' },
@@ -195,6 +202,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/mbti-tips/',
         isNew: false,
         isPopular: true,
+        popularity: 7,
         i18n: {
             en: { name: 'MBTI Compatibility', shortDesc: 'MBTI type analysis & tips' },
             zh: { name: 'MBTI 配对与建议', shortDesc: 'MBTI类型分析' },
@@ -221,6 +229,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/white-noise/',
         isNew: false,
         isPopular: false,
+        popularity: 4,
         i18n: {
             en: { name: 'White Noise Player', shortDesc: 'Focus & sleep sounds' },
             zh: { name: '白噪音播放器', shortDesc: '专注/睡眠背景音' },
@@ -247,6 +256,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/dev-quiz/',
         isNew: false,
         isPopular: false,
+        popularity: 4,
         i18n: {
             en: { name: 'Developer Quiz', shortDesc: 'Coding & IT quiz' },
             zh: { name: '开发者测验', shortDesc: '编程/IT专业测验' },
@@ -273,6 +283,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/tax-refund-preview/',
         isNew: true,
         isPopular: false,
+        popularity: 4,
         i18n: {
             en: { name: 'Tax Refund Calculator', shortDesc: 'Estimate your tax refund' },
             zh: { name: '退税计算器', shortDesc: '退税金额预估' },
@@ -299,6 +310,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/unit-converter/',
         isNew: true,
         isPopular: false,
+        popularity: 4,
         i18n: {
             en: { name: 'Unit Converter Pro', shortDesc: 'Length, weight, temp converter' },
             zh: { name: '单位转换器 Pro', shortDesc: '长度/重量/温度转换' },
@@ -909,6 +921,32 @@ const APP_DATA = [
             tr: { name: 'QR Kod Oluşturucu', shortDesc: 'URL·metin·WiFi·iletişimi QR\'ye dönüştürün' },
             de: { name: 'QR-Code-Generator', shortDesc: 'URL·Text·WiFi·Kontakt in QR konvertieren' },
             fr: { name: 'Générateur de Code QR', shortDesc: 'Convertir URL·texte·WiFi·contact en QR' }
+        }
+    },
+    {
+        id: 'numerology',
+        name: '운명의 숫자 수비학',
+        shortDesc: '인생 경로 숫자 & 궁합',
+        description: '생년월일로 인생 경로 숫자를 계산하고 이름으로 표현 숫자를 알아보세요. 마스터 넘버 해석, 숫자 궁합, AI 심층 분석. SNS 공유 최적화!',
+        icon: '🔢',
+        color: '#f1c40f',
+        category: 'fortune',
+        tags: ['수비학', '운명', '숫자', '인생경로', '표현숫자', '마스터넘버', '궁합', 'numerology', 'destiny', 'number', 'lifepath'],
+        url: 'https://dopabrain.com/numerology/',
+        isNew: false,
+        isPopular: true,
+        i18n: {
+            en: { name: 'Numerology - Destiny Numbers', shortDesc: 'Life path & compatibility' },
+            zh: { name: '数字命理学 - 命运之数', shortDesc: '人生路径和兼容性' },
+            hi: { name: 'संख्या विज्ञान - भाग्य संख्या', shortDesc: 'जीवन पथ और संगतता' },
+            ru: { name: 'Нумерология - Числа Судьбы', shortDesc: 'Путь жизни и совместимость' },
+            ja: { name: '数秘術 - 運命の数字', shortDesc: '人生経路と相性' },
+            es: { name: 'Numerología - Números del Destino', shortDesc: 'Camino de vida y compatibilidad' },
+            pt: { name: 'Numerologia - Números do Destino', shortDesc: 'Caminho de vida e compatibilidade' },
+            id: { name: 'Numerologi - Angka Takdir', shortDesc: 'Jalan hidup dan kompatibilitas' },
+            tr: { name: 'Numeroloji - Kader Sayıları', shortDesc: 'Yaşam yolu ve uyumluluk' },
+            de: { name: 'Numerologie - Schicksalszahlen', shortDesc: 'Lebensweg und Kompatibilität' },
+            fr: { name: 'Numérologie - Nombres du Destin', shortDesc: 'Chemin de vie et compatibilité' }
         }
     }
 ];
