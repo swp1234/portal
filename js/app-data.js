@@ -650,6 +650,32 @@ const APP_DATA = [
             de: { name: 'Gehirn-Typ-Test', shortDesc: 'Welcher Gehirntyp sind Sie?' },
             fr: { name: 'Test de Type de Cerveau', shortDesc: 'Quel est votre type de cerveau?' }
         }
+    },
+    {
+        id: 'color-memory',
+        name: '색상 기억력',
+        shortDesc: '기억력 도전 게임',
+        description: '색상의 순서를 따라 기억하는 Simon Says 스타일의 중독성 있는 게임. 레벨이 높아질수록 속도가 빨라집니다!',
+        icon: '🎨',
+        color: '#FF6B6B',
+        category: 'quiz',
+        tags: ['게임', '기억력', '색상', '두뇌', '캐주얼', '중독성'],
+        url: 'https://dopabrain.com/color-memory/',
+        isNew: true,
+        isPopular: true,
+        i18n: {
+            en: { name: 'Color Memory', shortDesc: 'Memory challenge game' },
+            zh: { name: '色彩记忆', shortDesc: '记忆力挑战游戏' },
+            hi: { name: 'रंग मेमोरी', shortDesc: 'स्मृति चुनौती गेम' },
+            ru: { name: 'Цветная Память', shortDesc: 'Игра на память' },
+            ja: { name: 'カラーメモリー', shortDesc: 'メモリー挑戦ゲーム' },
+            es: { name: 'Memoria de Colores', shortDesc: 'Juego de desafío de memoria' },
+            pt: { name: 'Memória de Cores', shortDesc: 'Jogo de desafio de memória' },
+            id: { name: 'Memori Warna', shortDesc: 'Game tantangan memori' },
+            tr: { name: 'Renk Belleği', shortDesc: 'Bellek mücadelesi oyunu' },
+            de: { name: 'Farbgedächtnis', shortDesc: 'Gedächtnisherausforderungsspiel' },
+            fr: { name: 'Mémoire des Couleurs', shortDesc: 'Jeu de défi mémoire' }
+        }
     }
 ];
 
