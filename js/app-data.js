@@ -974,6 +974,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'pomodoro-timer',
+        name: '포모도로 타이머',
+        shortDesc: '생산성 향상 타이머',
+        description: '집중력을 높이고 생산성을 극대화하는 포모도로 타이머. 커스터마이징 가능한 작업/휴식 시간, 통계, AI 분석, 알림 기능.',
+        icon: '🍅',
+        color: '#e74c3c',
+        category: 'tool',
+        tags: ['타이머', '포모도로', '생산성', '집중', '시간관리', 'pomodoro', 'timer', 'productivity', 'focus', 'time management'],
+        url: 'https://dopabrain.com/pomodoro-timer/',
+        isNew: true,
+        isPopular: true,
+        popularity: 7,
+        i18n: {
+            en: { name: 'Pomodoro Timer', shortDesc: 'Productivity boost timer' },
+            zh: { name: '番茄工作法计时器', shortDesc: '提高生产力的计时器' },
+            hi: { name: 'पोमोडोरो टाइमर', shortDesc: 'उत्पादकता बढ़ाने वाला टाइमर' },
+            ru: { name: 'Помидорный Таймер', shortDesc: 'Таймер повышения производительности' },
+            ja: { name: 'ポモドーロタイマー', shortDesc: '生産性向上タイマー' },
+            es: { name: 'Temporizador Pomodoro', shortDesc: 'Temporizador de productividad' },
+            pt: { name: 'Cronômetro Pomodoro', shortDesc: 'Cronômetro de produtividade' },
+            id: { name: 'Timer Pomodoro', shortDesc: 'Timer peningkat produktivitas' },
+            tr: { name: 'Pomodoro Zamanlayıcı', shortDesc: 'Üretkenlik artırıcı zamanlayıcı' },
+            de: { name: 'Pomodoro-Timer', shortDesc: 'Produktivitäts-Boost-Timer' },
+            fr: { name: 'Minuteur Pomodoro', shortDesc: 'Minuteur de productivité' }
+        }
+    },
+    {
         id: 'future-self',
         name: '10년 후의 나',
         shortDesc: '미래 자아 발견 테스트',
