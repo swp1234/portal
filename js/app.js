@@ -48,7 +48,40 @@
                 }
             });
         });
+
+        // Initialize Theme Toggle
+        initTheme();
     })();
+
+    // Theme Toggle Function
+    function initTheme() {
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+
+        // Load theme preference from localStorage
+        const savedTheme = localStorage.getItem('app-theme') || 'dark';
+        html.setAttribute('data-theme', savedTheme);
+        updateThemeButton(savedTheme);
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = html.getAttribute('data-theme') || 'dark';
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+                html.setAttribute('data-theme', newTheme);
+                localStorage.setItem('app-theme', newTheme);
+                updateThemeButton(newTheme);
+            });
+        }
+    }
+
+    function updateThemeButton(theme) {
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+            themeToggle.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+        }
+    }
 
     // DOM Elements
     const appGrid = document.getElementById('app-grid');
