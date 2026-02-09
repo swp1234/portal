@@ -14,7 +14,7 @@
     <!-- SEO Meta Tags -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
     <title>DopaBrain 🧠 - 무료 온라인 게임, 심리 테스트, 유틸리티 | 도파브레인</title>
-    <meta name="description" content="중독성 게임, 심리테스트, 퀴즈, MBTI 궁합, 스트레스 측정, 연말정산 등 28개 무료 콘텐츠! 🧠 설치 없이 바로 즐기세요. 12개 다국어 지원!">
+    <meta name="description" content="중독성 게임, 심리테스트, 퀴즈, MBTI 궁합, 스트레스 측정, BMI 계산, 연말정산 등 25개 무료 콘텐츠! 🧠 설치 없이 바로 즐기세요. 12개 다국어 지원!">
     <meta name="keywords" content="온라인 게임, 심리테스트, MBTI 궁합, 꿈해몽, 퀴즈 게임, 계산기, 운세, 환율 계산, 단위 변환, 연말정산 계산기, 로또 번호, 감정 온도, 백색소음, 타이머, 뇌 테스트">
     <meta name="author" content="DopaBrain">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -25,7 +25,7 @@
 
     <!-- Open Graph (SNS 공유 최적화) -->
     <meta property="og:title" content="DopaBrain 🧠 - 무료 온라인 도구 모음">
-    <meta property="og:description" content="퀴즈, 계산기, 운세, 게임, 스트레스 측정 등 28개 무료 도구를 한곳에서! 🧠 지금 바로 즐기세요!">
+    <meta property="og:description" content="퀴즈, 계산기, 운세, 게임, 스트레스 측정, BMI 등 25개 무료 도구를 한곳에서! 🧠 지금 바로 즐기세요!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dopabrain.com/portal/">
     <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg">
@@ -39,13 +39,13 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="DopaBrain 🧠 - 무료 온라인 도구 모음">
-    <meta name="twitter:description" content="30개+ 무료 도구! 🧠 퀴즈, 게임, 계산기, 운세!">
+    <meta name="twitter:description" content="25개+ 무료 도구! 🧠 퀴즈, 게임, 계산기, 운세!">
     <meta name="twitter:image" content="https://dopabrain.com/portal/icon-512.svg">
     <meta name="twitter:site" content="@dopabrain">
 
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#030014">
+    <meta name="theme-color" content="#667eea">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="icon" type="image/svg+xml" href="icon-192.svg">
@@ -187,29 +187,53 @@
             </div>
         </div>
 
-        <!-- Category Filter -->
-        <nav class="category-filter" aria-label="카테고리 필터">
-            <button class="cat-btn active" data-category="all">
-                <span class="cat-icon">🏠</span>
-                <span class="cat-label" data-i18n="categories.all">전체</span>
+        <!-- Category Filter (Horizontal Scrollable) -->
+        <div class="category-filter-wrapper" aria-label="카테고리 필터">
+            <button class="category-scroll-btn category-scroll-left hidden" id="scroll-left" aria-label="Scroll categories left">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
             </button>
-            <button class="cat-btn" data-category="quiz">
-                <span class="cat-icon">🎮</span>
-                <span class="cat-label" data-i18n="categories.quiz">퀴즈/게임</span>
+            <nav class="category-filter" id="category-filter">
+                <button class="cat-btn active" data-category="all">
+                    <span class="cat-icon">🏠</span>
+                    <span class="cat-label">전체</span>
+                </button>
+                <button class="cat-btn" data-category="game">
+                    <span class="cat-icon">🎮</span>
+                    <span class="cat-label">게임</span>
+                </button>
+                <button class="cat-btn" data-category="brain">
+                    <span class="cat-icon">🧠</span>
+                    <span class="cat-label">두뇌훈련</span>
+                </button>
+                <button class="cat-btn" data-category="test">
+                    <span class="cat-icon">🔮</span>
+                    <span class="cat-label">심리테스트</span>
+                </button>
+                <button class="cat-btn" data-category="fortune">
+                    <span class="cat-icon">✨</span>
+                    <span class="cat-label">운세점술</span>
+                </button>
+                <button class="cat-btn" data-category="tool">
+                    <span class="cat-icon">🧮</span>
+                    <span class="cat-label">계산기</span>
+                </button>
+                <button class="cat-btn" data-category="wellness">
+                    <span class="cat-icon">🧘</span>
+                    <span class="cat-label">웰빙</span>
+                </button>
+                <button class="cat-btn" data-category="dev">
+                    <span class="cat-icon">💻</span>
+                    <span class="cat-label">개발자</span>
+                </button>
+            </nav>
+            <button class="category-scroll-btn category-scroll-right hidden" id="scroll-right" aria-label="Scroll categories right">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
             </button>
-            <button class="cat-btn" data-category="fortune">
-                <span class="cat-icon">🔮</span>
-                <span class="cat-label" data-i18n="categories.fortune">운세/테스트</span>
-            </button>
-            <button class="cat-btn" data-category="tool">
-                <span class="cat-icon">🧮</span>
-                <span class="cat-label" data-i18n="categories.tool">계산기/도구</span>
-            </button>
-            <button class="cat-btn" data-category="life">
-                <span class="cat-icon">🧘</span>
-                <span class="cat-label" data-i18n="categories.life">라이프</span>
-            </button>
-        </nav>
+        </div>
 
         <!-- Personalized Section (dynamic - shown for returning users) -->
         <section class="personalized-section hidden" id="personalized-section">
@@ -250,11 +274,11 @@
         <!-- Stats Section -->
         <section class="stats-section">
             <div class="stat-item">
-                <span class="stat-number">24</span>
+                <span class="stat-number">33+</span>
                 <span class="stat-label" data-i18n="stats.tools">도구 수</span>
             </div>
             <div class="stat-item">
-                <span class="stat-number">5</span>
+                <span class="stat-number">8</span>
                 <span class="stat-label" data-i18n="stats.categories">카테고리</span>
             </div>
             <div class="stat-item">

@@ -211,10 +211,13 @@
     // Create category sections with headers
     function renderCategorySections(apps) {
         const categoryInfo = {
-            'quiz': { icon: '🎮', label: 'Games & Quizzes', color: '#667eea', order: 0 },
-            'fortune': { icon: '🔮', label: 'Tests & Fortune', color: '#f093fb', order: 1 },
-            'tool': { icon: '🧮', label: 'Tools & Calculators', color: '#4facfe', order: 2 },
-            'life': { icon: '🧘', label: 'Life & Wellness', color: '#43e97b', order: 3 }
+            'game': { icon: '🎮', label: '게임', color: '#667eea', order: 0 },
+            'brain': { icon: '🧠', label: '두뇌훈련', color: '#8b5cf6', order: 1 },
+            'test': { icon: '🔮', label: '심리테스트', color: '#f093fb', order: 2 },
+            'fortune': { icon: '✨', label: '운세점술', color: '#f39c12', order: 3 },
+            'tool': { icon: '🧮', label: '계산기', color: '#4facfe', order: 4 },
+            'wellness': { icon: '🧘', label: '웰빙', color: '#43e97b', order: 5 },
+            'dev': { icon: '💻', label: '개발자', color: '#27ae60', order: 6 }
         };
 
         const grouped = {};
@@ -364,6 +367,55 @@
         }
 
         renderApps(filtered);
+    }
+
+    // Category scrolling
+    const categoryFilter = document.getElementById('category-filter');
+    const scrollLeftBtn = document.getElementById('scroll-left');
+    const scrollRightBtn = document.getElementById('scroll-right');
+
+    function updateCategoryScrollButtons() {
+        if (!categoryFilter) return;
+        const scrollLeft = categoryFilter.scrollLeft;
+        const scrollWidth = categoryFilter.scrollWidth;
+        const clientWidth = categoryFilter.clientWidth;
+
+        // Show/hide scroll buttons based on scroll position
+        if (scrollLeft > 0) {
+            scrollLeftBtn?.classList.remove('hidden');
+        } else {
+            scrollLeftBtn?.classList.add('hidden');
+        }
+
+        if (scrollLeft < scrollWidth - clientWidth - 5) {
+            scrollRightBtn?.classList.remove('hidden');
+        } else {
+            scrollRightBtn?.classList.add('hidden');
+        }
+    }
+
+    if (scrollLeftBtn) {
+        scrollLeftBtn.addEventListener('click', () => {
+            if (categoryFilter) {
+                categoryFilter.scrollLeft -= 120;
+                updateCategoryScrollButtons();
+            }
+        });
+    }
+
+    if (scrollRightBtn) {
+        scrollRightBtn.addEventListener('click', () => {
+            if (categoryFilter) {
+                categoryFilter.scrollLeft += 120;
+                updateCategoryScrollButtons();
+            }
+        });
+    }
+
+    if (categoryFilter) {
+        categoryFilter.addEventListener('scroll', updateCategoryScrollButtons);
+        // Initial check after layout
+        setTimeout(updateCategoryScrollButtons, 100);
     }
 
     // Bind events
