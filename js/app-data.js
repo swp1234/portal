@@ -780,6 +780,58 @@ const APP_DATA = [
             de: { name: 'Memory Card Flip', shortDesc: 'Kartenkipp-Gedächtnisspiel' },
             fr: { name: 'Memory Card Flip', shortDesc: 'Jeu de mémoire avec retournement de cartes' }
         }
+    },
+    {
+        id: 'stress-check',
+        name: '스트레스 레벨 체크',
+        shortDesc: '당신의 스트레스 측정하기',
+        description: '15개 질문으로 직장, 인간관계, 건강, 재정, 일상의 스트레스 레벨을 측정하고 맞춤형 해소법을 받으세요! 카테고리별 분석, AI 심층 분석, 결과 이미지 저장 & 공유.',
+        icon: '😰',
+        color: '#e74c3c',
+        category: 'fortune',
+        tags: ['스트레스', '심리테스트', '감정', '건강', '분석', '테스트', 'stress', 'test', 'mental', 'health', 'psychology', 'emotion'],
+        url: 'https://dopabrain.com/stress-check/',
+        isNew: false,
+        isPopular: true,
+        i18n: {
+            en: { name: 'Stress Level Check', shortDesc: 'Measure your stress level' },
+            zh: { name: '压力水平检查', shortDesc: '测量您的压力水平' },
+            hi: { name: 'स्ट्रेस स्तर जांच', shortDesc: 'अपने तनाव को मापें' },
+            ru: { name: 'Проверка уровня стресса', shortDesc: 'Измерьте уровень стресса' },
+            ja: { name: 'ストレスレベルチェック', shortDesc: 'あなたの ストレスレベルを測定' },
+            es: { name: 'Comprobador de Nivel de Estrés', shortDesc: 'Mide tu nivel de estrés' },
+            pt: { name: 'Verificador de Nível de Estresse', shortDesc: 'Meça seu nível de estresse' },
+            id: { name: 'Pemeriksa Tingkat Stres', shortDesc: 'Ukur tingkat stres Anda' },
+            tr: { name: 'Stres Seviyesi Kontrolü', shortDesc: 'Stres seviyenizi ölçün' },
+            de: { name: 'Stressabbau-Check', shortDesc: 'Messen Sie Ihren Stresslevel' },
+            fr: { name: 'Vérificateur de Niveau de Stress', shortDesc: 'Mesurez votre niveau de stress' }
+        }
+    },
+    {
+        id: 'snake-game',
+        name: 'Snake Classic 🐍',
+        shortDesc: '클래식 뱀 게임 현대적 리메이크',
+        description: '네온 스타일의 클래식 뱀 게임! 모바일 스와이프, 데스크톱 키보드, 무한모드/벽모드, 파티클 이펙트, 음향 효과. 최고 점수를 목표로 도전하세요!',
+        icon: '🐍',
+        color: '#2ecc71',
+        category: 'quiz',
+        tags: ['게임', '뱀', '클래식', '아케이드', '캐주얼', '네온', 'snake', 'game', 'arcade', 'classic', 'casual'],
+        url: 'https://dopabrain.com/snake-game/',
+        isNew: true,
+        isPopular: true,
+        i18n: {
+            en: { name: 'Snake Classic', shortDesc: 'Modern remake of classic snake game' },
+            zh: { name: 'Snake Classic 🐍', shortDesc: '经典贪吃蛇游戏现代重制版' },
+            hi: { name: 'Snake Classic 🐍', shortDesc: 'क्लासिक सांप खेल का आधुनिक रीमेक' },
+            ru: { name: 'Snake Classic 🐍', shortDesc: 'Современный ремейк классической игры' },
+            ja: { name: 'Snake Classic 🐍', shortDesc: 'クラシックヘビゲームの現代的リメイク' },
+            es: { name: 'Snake Classic 🐍', shortDesc: 'Juego de serpiente clásico remasterizado' },
+            pt: { name: 'Snake Classic 🐍', shortDesc: 'Reedição moderna do clássico jogo de cobra' },
+            id: { name: 'Snake Classic 🐍', shortDesc: 'Remake modern dari permainan ular klasik' },
+            tr: { name: 'Snake Classic 🐍', shortDesc: 'Klasik yılan oyununun modern yeniden yapısı' },
+            de: { name: 'Snake Classic 🐍', shortDesc: 'Modernes Remake des klassischen Schlangenspiels' },
+            fr: { name: 'Snake Classic 🐍', shortDesc: 'Remake moderne du jeu de serpent classique' }
+        }
     }
 ];
 
