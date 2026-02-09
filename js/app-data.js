@@ -677,6 +677,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'iq-test',
+        name: '빠른 IQ 테스트',
+        shortDesc: '20문제로 지능 측정',
+        description: '20개의 패턴 인식, 수열, 논리 문제로 당신의 IQ를 측정하세요! 무료 온라인 IQ 테스트 게임! 결과를 이미지로 저장하고 SNS에 공유하세요.',
+        icon: '🧠',
+        color: '#3498db',
+        category: 'test',
+        tags: ['IQ 테스트', 'IQ 측정', '지능 테스트', '논리', '패턴', 'IQ test', 'intelligence', 'logical', 'pattern', 'quiz'],
+        url: 'https://dopabrain.com/iq-test/',
+        isNew: true,
+        isPopular: true,
+        popularity: 8,
+        i18n: {
+            en: { name: 'Quick IQ Test', shortDesc: 'Measure intelligence in 20 questions' },
+            zh: { name: '快速智商测试', shortDesc: '20题测量你的智力' },
+            hi: { name: 'तेज़ IQ टेस्ट', shortDesc: '20 प्रश्नों में बुद्धिमत्ता मापें' },
+            ru: { name: 'Быстрый тест IQ', shortDesc: 'Измерьте интеллект за 20 вопросов' },
+            ja: { name: 'クイック IQテスト', shortDesc: '20問で知能を測定' },
+            es: { name: 'Prueba de IQ Rápida', shortDesc: 'Mide tu inteligencia en 20 preguntas' },
+            pt: { name: 'Teste de IQ Rápido', shortDesc: 'Meça sua inteligência em 20 questões' },
+            id: { name: 'Tes IQ Cepat', shortDesc: 'Ukur kecerdasan dalam 20 pertanyaan' },
+            tr: { name: 'Hızlı IQ Testi', shortDesc: '20 soruda zeka ölçümü' },
+            de: { name: 'Schneller IQ-Test', shortDesc: 'Messe Intelligenz in 20 Fragen' },
+            fr: { name: 'Test de QI Rapide', shortDesc: 'Mesurez votre intelligence en 20 questions' }
+        }
+    },
+    {
         id: 'typing-speed',
         name: '타이핑 속도 테스트',
         shortDesc: 'WPM 측정 게임',
