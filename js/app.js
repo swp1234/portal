@@ -2,28 +2,50 @@
 (function () {
     'use strict';
 
-    // Initialize i18n
+    // Initialize i18n with error handling
     (async function initI18n() {
-        await i18n.loadTranslations(i18n.getCurrentLanguage());
-        i18n.updateUI();
+        try {
+            await i18n.loadTranslations(i18n.getCurrentLanguage());
+            i18n.updateUI();
+        } catch (e) {
+            console.warn('i18n load failed:', e.message);
+        }
+
         const langToggle = document.getElementById('lang-toggle');
         const langMenu = document.getElementById('lang-menu');
         const langOptions = document.querySelectorAll('.lang-option');
-        document.querySelector(`[data-lang="${i18n.getCurrentLanguage()}"]`)?.classList.add('active');
-        langToggle?.addEventListener('click', () => langMenu.classList.toggle('hidden'));
+        const langOptionActive = document.querySelector(`[data-lang="${i18n.getCurrentLanguage()}"]`);
+        if (langOptionActive) langOptionActive.classList.add('active');
+
+        if (langToggle && langMenu) {
+            langToggle.addEventListener('click', () => langMenu.classList.toggle('hidden'));
+        }
+
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.language-selector')) langMenu?.classList.add('hidden');
+            if (langMenu && !e.target.closest('.language-selector')) langMenu.classList.add('hidden');
         });
+
         langOptions.forEach(opt => {
             opt.addEventListener('click', async () => {
-                await i18n.setLanguage(opt.getAttribute('data-lang'));
-                langOptions.forEach(o => o.classList.remove('active'));
-                opt.classList.add('active');
-                langMenu.classList.add('hidden');
-                // Re-render everything with new language
-                renderPersonalized();
-                filterApps();
-                if (typeof renderBlog === 'function') renderBlog();
+                const lang = opt.getAttribute('data-lang');
+                if (lang) {
+                    try {
+                        await i18n.setLanguage(lang);
+                    } catch (e) {
+                        console.warn('Language change failed:', e.message);
+                    }
+                    langOptions.forEach(o => o.classList.remove('active'));
+                    opt.classList.add('active');
+                    if (langMenu) langMenu.classList.add('hidden');
+                    // Re-render everything with new language
+                    try {
+                        renderPersonalized();
+                        filterApps();
+                        if (typeof renderBlog === 'function') renderBlog();
+                    } catch (e) {
+                        console.warn('Re-render after language change failed:', e.message);
+                    }
+                }
             });
         });
     })();
