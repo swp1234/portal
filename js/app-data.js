@@ -1053,6 +1053,33 @@ const APP_DATA = [
             de: { name: 'Gewohnheits-Tracker', shortDesc: 'Ihre täglichen Gewohnheiten verfolgen' },
             fr: { name: 'Suivi des Habitudes', shortDesc: 'Suivez vos habitudes quotidiennes' }
         }
+    },
+    {
+        id: 'puzzle-2048',
+        name: '2048 퍼즐',
+        shortDesc: '타일 합치기 숫자 게임',
+        description: '같은 숫자 타일을 합쳐 2048을 만드는 중독성 있는 퍼즐 게임! 스와이프/화살표 조작, Undo 기능, 점수 저장, 게임오버/승리 모달.',
+        icon: '🔢',
+        color: '#f39c12',
+        category: 'game',
+        tags: ['퍼즐', '2048', '숫자', '게임', '캐주얼', '전략', 'puzzle', 'number', '2048', 'casual', 'game'],
+        url: 'https://dopabrain.com/puzzle-2048/',
+        isNew: true,
+        isPopular: true,
+        popularity: 8,
+        i18n: {
+            en: { name: '2048 Puzzle', shortDesc: 'Number tile merging game' },
+            zh: { name: '2048 拼图', shortDesc: '合并数字瓷砖游戏' },
+            hi: { name: '2048 पज़ल', shortDesc: 'संख्या टाइल मर्ज गेम' },
+            ru: { name: '2048 Головоломка', shortDesc: 'Игра слияния числовых плиток' },
+            ja: { name: '2048 パズル', shortDesc: '数字タイルマージゲーム' },
+            es: { name: 'Puzzle 2048', shortDesc: 'Juego de fusión de fichas numéricas' },
+            pt: { name: 'Puzzle 2048', shortDesc: 'Jogo de fusão de tiles numéricos' },
+            id: { name: 'Puzzle 2048', shortDesc: 'Game penggabungan ubin angka' },
+            tr: { name: '2048 Bulmaca', shortDesc: 'Sayı karosu birleştirme oyunu' },
+            de: { name: '2048 Puzzle', shortDesc: 'Zahlenplättchen-Fusionsspiel' },
+            fr: { name: 'Puzzle 2048', shortDesc: 'Jeu de fusion de tuiles numériques' }
+        }
     }
 ];
 

@@ -102,6 +102,9 @@
         filterApps();
         bindEvents();
         animateOnScroll();
+        initHeroInteraction();
+        initCardTilt();
+        initParallax();
     }
 
     // ─── Personalized Section ─────────────────────────────────
@@ -619,8 +622,82 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.stats-section, .portal-footer').forEach(el => {
+        // Add scroll-reveal classes to various elements
+        document.querySelectorAll('.stats-section, .portal-footer, .blog-section, .featured-section').forEach(el => {
+            el.classList.add('scroll-reveal');
             observer.observe(el);
+        });
+
+        // Add staggered reveal to section headers
+        document.querySelectorAll('.section-header').forEach((el, idx) => {
+            el.classList.add('scroll-reveal-left');
+            el.style.setProperty('--reveal-delay', `${idx * 0.1}s`);
+            observer.observe(el);
+        });
+    }
+
+    // Hero section - Mouse follow glow effect
+    function initHeroInteraction() {
+        const heroContainer = document.querySelector('.hero-container');
+        if (!heroContainer) return;
+
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth < 768) return; // Disable on mobile
+
+            const rect = heroContainer.getBoundingClientRect();
+            const isNearHero = e.clientY < rect.bottom + 100;
+
+            if (isNearHero) {
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const bgElement = heroContainer.querySelector('::before');
+                if (bgElement) {
+                    heroContainer.style.setProperty('--mouse-x', `${x}px`);
+                    heroContainer.style.setProperty('--mouse-y', `${y}px`);
+                }
+            }
+        });
+    }
+
+    // Card tilt effect on hover
+    function initCardTilt() {
+        document.querySelectorAll('.app-card, .featured-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                if (window.innerWidth < 600) return; // Disable on mobile
+
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+
+                card.style.setProperty('--rotate-x', `${rotateX}deg`);
+                card.style.setProperty('--rotate-y', `${rotateY}deg`);
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.setProperty('--rotate-x', '0deg');
+                card.style.setProperty('--rotate-y', '0deg');
+            });
+        });
+    }
+
+    // Parallax effect on scroll
+    function initParallax() {
+        const scrollElements = document.querySelectorAll('[data-parallax]');
+        if (scrollElements.length === 0) return;
+
+        window.addEventListener('scroll', () => {
+            scrollElements.forEach(el => {
+                const speed = el.dataset.parallax || 0.5;
+                const yPos = window.scrollY * speed;
+                el.style.transform = `translateY(${yPos}px)`;
+            });
         });
     }
 
