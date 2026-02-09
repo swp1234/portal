@@ -676,6 +676,32 @@ const APP_DATA = [
             de: { name: 'Farbgedächtnis', shortDesc: 'Gedächtnisherausforderungsspiel' },
             fr: { name: 'Mémoire des Couleurs', shortDesc: 'Jeu de défi mémoire' }
         }
+    },
+    {
+        id: 'number-puzzle',
+        name: '숫자 퍼즐 2048',
+        shortDesc: '2048 숫자 게임',
+        description: '같은 숫자를 합쳐 2048을 만드는 퍼즐 게임! 전략적 사고와 두뇌 활동을 자극하는 중독성 있는 게임.',
+        icon: '🔢',
+        color: '#EDB879',
+        category: 'quiz',
+        tags: ['게임', '퍼즐', '숫자', '2048', '캐주얼'],
+        url: 'https://dopabrain.com/number-puzzle/',
+        isNew: true,
+        isPopular: false,
+        i18n: {
+            en: { name: 'Number Puzzle 2048', shortDesc: '2048 number game' },
+            zh: { name: '数字拼图2048', shortDesc: '2048数字游戏' },
+            hi: { name: 'संख्या पहेली 2048', shortDesc: '2048 नंबर गेम' },
+            ru: { name: 'Числовая Головоломка 2048', shortDesc: 'Числовая игра 2048' },
+            ja: { name: 'ナンバーパズル2048', shortDesc: '2048数字ゲーム' },
+            es: { name: 'Puzzle de Números 2048', shortDesc: 'Juego de números 2048' },
+            pt: { name: 'Puzzle de Números 2048', shortDesc: 'Jogo de números 2048' },
+            id: { name: 'Puzzle Angka 2048', shortDesc: 'Game angka 2048' },
+            tr: { name: 'Sayı Bulmacası 2048', shortDesc: '2048 sayı oyunu' },
+            de: { name: 'Zahlen-Puzzle 2048', shortDesc: 'Zahlenpuzzle-Spiel' },
+            fr: { name: 'Puzzle de Nombres 2048', shortDesc: 'Jeu de nombres 2048' }
+        }
     }
 ];
 
