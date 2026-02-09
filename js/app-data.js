@@ -972,6 +972,33 @@ const APP_DATA = [
             de: { name: 'Numerologie - Schicksalszahlen', shortDesc: 'Lebensweg und Kompatibilität' },
             fr: { name: 'Numérologie - Nombres du Destin', shortDesc: 'Chemin de vie et compatibilité' }
         }
+    },
+    {
+        id: 'future-self',
+        name: '10년 후의 나',
+        shortDesc: '미래 자아 발견 테스트',
+        description: '현재의 습관과 성격으로 10년 뒤 당신의 미래 자아를 예측합니다. CEO, 예술가, 모험가, 학자, 힐러, 인플루언서, 발명가, 자유인 중 누구인가요? SNS 공유 최적화!',
+        icon: '🚀',
+        color: '#3498db',
+        category: 'test',
+        tags: ['성격테스트', '미래예측', '자아발견', '타입테스트', '심리테스트', '인생테스트', 'future', 'self', 'personality', 'prediction', 'archetype'],
+        url: 'https://dopabrain.com/future-self/',
+        isNew: true,
+        isPopular: true,
+        popularity: 8,
+        i18n: {
+            en: { name: '10 Years From Now', shortDesc: 'Discover your future archetype' },
+            zh: { name: '10年后的你', shortDesc: '发现你的未来自我' },
+            hi: { name: '10 साल बाद', shortDesc: 'अपने भविष्य की खोज करें' },
+            ru: { name: '10 лет спустя', shortDesc: 'Откройте свой архетип будущего' },
+            ja: { name: '10年後のあなた', shortDesc: '未来の自分を発見する' },
+            es: { name: '10 Años en el Futuro', shortDesc: 'Descubre tu yo futuro' },
+            pt: { name: '10 Anos no Futuro', shortDesc: 'Descubra seu futuro pessoal' },
+            id: { name: '10 Tahun Kemudian', shortDesc: 'Temukan diri masa depan Anda' },
+            tr: { name: '10 Yıl Sonra', shortDesc: 'Gelecek öz-arketipi keşfedin' },
+            de: { name: 'In 10 Jahren', shortDesc: 'Entdecke dein zukünftiges Selbst' },
+            fr: { name: '10 Ans Plus Tard', shortDesc: 'Découvrez votre futur moi' }
+        }
     }
 ];
 
