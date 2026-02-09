@@ -1188,6 +1188,33 @@ const APP_DATA = [
             de: { name: 'Maze Runner - Flucht aus dem Labyrinth', shortDesc: 'Zufälliges Labyrinth-Puzzlespiel' },
             fr: { name: 'Maze Runner - Échappez au Labyrinthe', shortDesc: 'Jeu de puzzle de labyrinthe aléatoire' }
         }
+    },
+    {
+        id: 'blood-type',
+        name: '혈액형 성격 분석',
+        shortDesc: 'AI 혈액형 성격 분석 & 궁합',
+        description: '당신의 혈액형으로 숨겨진 성격을 발견하세요! 혈액형 궁합, 유명인 비교, 건강 팁, 결과 카드 공유 등 5가지 탭. SNS 공유 최적화, Canvas 이미지 생성.',
+        icon: '🩸',
+        color: '#e74c3c',
+        category: 'test',
+        tags: ['혈액형', '성격', '궁합', '심리테스트', '바이럴', 'blood type', 'personality', 'analysis', 'viral', 'personality test'],
+        url: 'https://dopabrain.com/blood-type/',
+        isNew: true,
+        isPopular: true,
+        popularity: 9,
+        i18n: {
+            en: { name: 'Blood Type Personality Analysis', shortDesc: 'AI blood type analysis & compatibility' },
+            zh: { name: '血型性格分析', shortDesc: 'AI血型分析和兼容性' },
+            hi: { name: 'रक्त प्रकार व्यक्तित्व विश्लेषण', shortDesc: 'AI रक्त प्रकार विश्लेषण और अनुकूलता' },
+            ru: { name: 'Анализ типа крови', shortDesc: 'AI анализ группы крови и совместимость' },
+            ja: { name: '血液型性格分析', shortDesc: 'AI血液型分析と相性' },
+            es: { name: 'Análisis de Tipo de Sangre', shortDesc: 'Análisis de tipo de sangre IA y compatibilidad' },
+            pt: { name: 'Análise de Tipo de Sangue', shortDesc: 'Análise de tipo de sangue com IA e compatibilidade' },
+            id: { name: 'Analisis Kepribadian Tipe Darah', shortDesc: 'Analisis tipe darah AI dan kompatibilitas' },
+            tr: { name: 'Kan Grubu Kişilik Analizi', shortDesc: 'AI kan grubu analizi ve uyumluluk' },
+            de: { name: 'Blutgruppen-Persönlichkeitsanalyse', shortDesc: 'KI-Blutgruppen-Analyse und Kompatibilität' },
+            fr: { name: 'Analyse de Personnalité des Groupes Sanguins', shortDesc: 'Analyse des groupes sanguins par IA et compatibilité' }
+        }
     }
 ];
 

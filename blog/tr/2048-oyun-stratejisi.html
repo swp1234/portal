@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="description" content="2048 Oyun Stratejisi: En Yüksek Puanı Elde Etme İpuçları ve Teknikler. Profesyonel stratejiler, köşe tekniği, birleştirme düzeni ve ustalaşmanın sırları.">
+    <meta name="keywords" content="2048 oyun, 2048 strateji, 2048 ipuçları, en yüksek skor, oyun stratejisi, bulmaca oyunları, 2048 rehberi">
+    <meta name="author" content="DopaBrain">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="naver-site-verification" content="naver0f894086393482efed7c1ac0a16062e5">
+    <title>2048 Oyun Stratejisi: En Yüksek Puanı Elde Etme İpuçları | DopaBrain</title>
+
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="2048 Oyun Stratejisi: En Yüksek Puanı Elde Etme İpuçları">
+    <meta property="og:description" content="2048 oyununda ustalaşmak için profesyonel stratejiler, köşe tekniği, birleştirme düzeni ve ileri seviye ipuçları.">
+    <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg">
+    <meta property="og:url" content="https://dopabrain.com/portal/blog/tr/2048-oyun-stratejisi.html">
+    <meta property="og:site_name" content="DopaBrain">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="2048 Oyun Stratejisi">
+    <meta name="twitter:description" content="2048'de en yüksek puanı almak için strateji ve ipuçları.">
+    <meta name="twitter:image" content="https://dopabrain.com/portal/icon-512.svg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://dopabrain.com/portal/blog/tr/2048-oyun-stratejisi.html">
+
+    <!-- Alternate Language Links -->
+    <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/2048-oyun-stratejisi.html">
+    <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/2048-game-guide.html">
+    <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/strategi-game-2048.html">
+
+    <!-- Schema.org Article JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "2048 Oyun Stratejisi: En Yüksek Puanı Elde Etme İpuçları",
+        "description": "2048 oyununda ustalaşmak için profesyonel stratejiler, köşe tekniği, birleştirme düzeni ve ileri seviye ipuçları.",
+        "image": "https://dopabrain.com/portal/icon-512.svg",
+        "datePublished": "2026-02-10",
+        "dateModified": "2026-02-10",
+        "inLanguage": "tr",
+        "author": {
+            "@type": "Organization",
+            "name": "DopaBrain"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "DopaBrain",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://dopabrain.com/portal/icon-512.svg"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://dopabrain.com/portal/blog/tr/2048-oyun-stratejisi.html"
+        }
+    }
+    </script>
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-J8GSWM40TV');
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882"
+        crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --secondary: #8b5cf6;
+            --accent: #a78bfa;
+            --bg-dark: #0f0f23;
+            --bg-light: #1a1a2e;
+            --text-primary: #f8f9fa;
+            --text-secondary: #b8bcc4;
+            --border-color: rgba(99, 102, 241, 0.12);
+            --card-bg: rgba(99, 102, 241, 0.06);
+            --success: #7c3aed;
+            --spacing: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #0f0f23;
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 10% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 90% 70%, rgba(99, 102, 241, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s ease;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem var(--spacing);
+            background: rgba(15, 15, 35, 0.9);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .header-nav a:hover {
+            color: var(--secondary);
+            transform: translateX(-2px);
+        }
+
+        .header-nav span {
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero-section {
+            position: relative;
+            padding: 6rem var(--spacing) 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(99, 102, 241, 0.08) 100%);
+            border-bottom: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .article-header {
+            position: relative;
+            z-index: 10;
+            margin-bottom: 0;
+        }
+
+        .article-header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            color: var(--text-primary);
+        }
+
+        .article-header h1 span {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .article-desc {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-wrapper {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 3rem;
+            margin: 3rem auto;
+        }
+
+        .toc {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            backdrop-filter: blur(10px);
+            height: fit-content;
+            position: sticky;
+            top: 70px;
+        }
+
+        .toc h2 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .toc ol {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            margin-bottom: 0.9rem;
+            font-size: 0.9rem;
+        }
+
+        .toc li::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin-right: 0.7rem;
+            opacity: 0.6;
+        }
+
+        .toc a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .toc a:hover {
+            color: var(--secondary);
+            padding-left: 0.5rem;
+        }
+
+        .article-content {
+            margin: 0;
+        }
+
+        .article-content section {
+            margin-bottom: 4rem;
+        }
+
+        .article-content h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 0 0 1.5rem 0;
+            position: relative;
+            padding-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .article-content h2::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 2px;
+        }
+
+        .article-content h3 {
+            font-size: 1.35rem;
+            color: var(--text-primary);
+            margin: 1.8rem 0 1rem;
+            font-weight: 700;
+        }
+
+        .article-content h4 {
+            font-size: 1.05rem;
+            color: var(--primary);
+            margin: 1.2rem 0 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
+        }
+
+        .article-content p {
+            margin-bottom: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.85;
+            font-size: 1rem;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .article-content strong {
+            color: var(--primary-light);
+            font-weight: 700;
+        }
+
+        .highlight-box {
+            background: var(--card-bg);
+            border-left: 4px solid var(--primary);
+            padding: 1.8rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+        }
+
+        .highlight-box.success {
+            border-left-color: var(--success);
+            background: rgba(124, 58, 237, 0.06);
+            border-color: rgba(124, 58, 237, 0.12);
+        }
+
+        .highlight-box p {
+            color: var(--text-primary);
+            margin-bottom: 0;
+            line-height: 1.7;
+        }
+
+        .highlight-box strong {
+            color: var(--secondary);
+        }
+
+        .strategy-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 2.5rem 0;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .strategy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--card-accent, var(--primary)), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .strategy-card:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-8px) perspective(1000px) rotateX(2deg);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.15);
+        }
+
+        .strategy-card:hover::before {
+            opacity: 1;
+        }
+
+        .strategy-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--card-accent, var(--primary)) 0%, var(--primary-light) 100%);
+            color: white;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 8px 16px rgba(139, 92, 246, 0.25);
+        }
+
+        .strategy-card h3 {
+            margin-top: 0;
+            color: var(--text-primary);
+            font-size: 1.45rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .strategy-card > p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.8rem;
+            margin: 2.5rem 0;
+        }
+
+        .guide-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.8rem;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .guide-card:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .guide-card h4 {
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .guide-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+            line-height: 1.7;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(99, 102, 241, 0.08) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            margin: 4rem 0;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-section h2 {
+            color: var(--text-primary);
+            margin-top: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.1rem 3rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 12px 24px rgba(139, 92, 246, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 36px rgba(139, 92, 246, 0.4);
+        }
+
+        .related-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .related-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .related-card:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateY(-6px);
+            background: rgba(139, 92, 246, 0.1);
+            box-shadow: 0 16px 32px rgba(139, 92, 246, 0.12);
+        }
+
+        .related-card h3 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .related-card p {
+            color: var(--text-secondary);
+            margin-bottom: 0;
+            line-height: 1.7;
+        }
+
+        .article-footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+            color: var(--text-secondary);
+        }
+
+        .article-footer p {
+            margin-bottom: 0.8rem;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 1024px) {
+            .article-wrapper {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .toc {
+                position: relative;
+                top: auto;
+                display: none;
+            }
+
+            .article-header h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-badge {
+                position: static;
+                display: inline-block;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-section {
+                padding: 3rem var(--spacing) 2rem;
+            }
+
+            .container {
+                padding: 0 var(--spacing);
+            }
+
+            .article-header h1 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+
+            .article-meta {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .article-desc {
+                font-size: 1rem;
+            }
+
+            .strategy-card {
+                padding: 1.8rem;
+            }
+
+            .strategy-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 1.5rem;
+            }
+
+            .strategy-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .cta-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .article-content h2 {
+                font-size: 1.6rem;
+            }
+
+            .guide-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .strategy-card {
+                padding: 1.5rem;
+            }
+
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .header-nav {
+                font-size: 0.85rem;
+            }
+
+            .header-nav span {
+                display: none;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .header-nav,
+            .toc,
+            .cta-section,
+            .related-posts,
+            .article-footer,
+            .progress-bar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+
+    <div class="header-nav">
+        <a href="https://dopabrain.com/portal/">← DopaBrain'e Dön</a>
+        <span style="color: var(--text-secondary);">2048 Oyun Rehberi</span>
+    </div>
+
+    <div class="hero-section">
+        <div class="hero-badge">OYUN STRATEJISI</div>
+        <div class="container">
+            <header class="article-header">
+                <h1>2048 Oyun <span>Stratejisi Rehberi</span></h1>
+                <div class="article-meta">
+                    <span>📅 10 Şubat 2026</span>
+                    <span>👤 DopaBrain</span>
+                    <span>⏱️ Okuma süresi ~15 dakika</span>
+                </div>
+                <p class="article-desc">
+                    2048 oyununda uzmanlaşmak için profesyonel stratejiler, köşe tekniği, birleştirme düzeni ve ileri seviye ipuçları. En yüksek puanları almak için gerekli tüm bilgiyi öğrenin.
+                </p>
+            </header>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="article-wrapper">
+            <nav class="toc">
+                <h2>📑 İçindekiler</h2>
+                <ol>
+                    <li><a href="#intro">2048 Nedir?</a></li>
+                    <li><a href="#basics">Temel Kurallar</a></li>
+                    <li><a href="#corner">Köşe Tekniği</a></li>
+                    <li><a href="#merging">Birleştirme Düzeni</a></li>
+                    <li><a href="#advanced">İleri Stratejiler</a></li>
+                    <li><a href="#common">Yaygın Hatalar</a></li>
+                    <li><a href="#tips">Hızlı İpuçları</a></li>
+                </ol>
+            </nav>
+
+            <main class="article-content">
+                <section id="intro">
+                    <h2>2048 Oyununa Giriş</h2>
+                    <p>
+                        2048 bulmaca oyunu, basit kuralları ve sonsuz stratejik derinliğiyle dünya çapında milyonlarca oyuncuyu cezbetmiştir. Amaç: 2048 sayısını oluşturmak. Ama asıl zorluk, bunu yaparken panoyu düzenli tutmak ve maximum puanı almaktır.
+                    </p>
+
+                    <div class="highlight-box success">
+                        <p>💡 <strong>Anahtar Kavram:</strong> 2048 sadece "2048" sayısını elde etmek değildir - amacınız oyunu mümkün olduğu kadar uzun devam ettirmek ve mümkün olan en yüksek puanı almaktır.</p>
+                    </div>
+
+                    <h3>Neden Stratejik Oyun?</h3>
+                    <p>
+                        İlk bakışta şans oyunu gibi görünse de, 2048 tamamen stratejiye bağlıdır. Her hamleniz pano düzenini etkiler ve gelecekteki hareketlerinizi sınırlar. Professional oyuncular 100,000+ puanlar alırken, başlangıç oyuncuları 1,000 civarında kalır. Bu fark stratejisinden kaynaklanır.
+                    </p>
+                </section>
+
+                <section id="basics">
+                    <h2>Temel Kurallar ve Mekanikler</h2>
+                    <p>
+                        2048'in temeli basit fakat etkin mekaniklerden oluşur. Kuralları anlamak, stratejik düşünmek için ön koşuldur.
+                    </p>
+
+                    <h3>Oyun Nasıl Çalışır?</h3>
+                    <ul>
+                        <li><strong>Başlangıç:</strong> Pano 2 veya 4 sayılarıyla başlar (çoğunlukla 2)</li>
+                        <li><strong>Hareket:</strong> Dört yön tuşuyla (yukarı, aşağı, sağ, sol) kaydırırsınız</li>
+                        <li><strong>Birleştirme:</strong> Aynı sayılar birbirine temas ettiğinde birleşerek iki katına çıkar</li>
+                        <li><strong>Yeni Sayı:</strong> Her hareket sonra rastgele konuma 2 veya 4 (90%/10% ihtimalle) eklenir</li>
+                        <li><strong>Oyun Sonu:</strong> Pano dolarken ve hiç hamle yapılamadığında oyun biter</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <p>⚠️ <strong>Önemli:</strong> Her hareket mutlaka panoyu değiştirmelidir. Eğer tarafınız hareket etmezse, o yön için bir hamle sayılmaz ancak yeni sayı yine eklenir.</p>
+                    </div>
+                </section>
+
+                <section id="corner">
+                    <h2>Köşe Tekniği: 2048'in Temel Stratejisi</h2>
+                    <p>
+                        Professional oyuncuların %90'ı "köşe tekniği" kullanır. Bu, en büyük sayıyı panoda sabit bir konuma (genellikle bir köşeye) kilitleyen stratejidir.
+                    </p>
+
+                    <div class="strategy-card">
+                        <div class="strategy-icon">🔒</div>
+                        <h3>Köşe Kilitleme Yöntemi</h3>
+                        <p>
+                            Stratejinin ana fikri: En yüksek değerli sayıyı bir köşede (genellikle sağ alt) kilitleyin ve asla oradan hareket ettirmeyin.
+                        </p>
+                        <strong>Adımlar:</strong>
+                        <ol>
+                            <li>En büyük sayıyı sağ alt köşeye getirin</li>
+                            <li>Köşedeki sayıyı kesinlikle sağ veya aşağı yönlerine doğru hareket ettirmeyin</li>
+                            <li>Diğer hareketleri (sol, yukarı) kullanarak daha küçük sayıları birleştirin</li>
+                            <li>Büyük sayıya ulaşabilecek aynı değerdeki sayılar elde etmek için sabırla oynayın</li>
+                        </ol>
+                    </div>
+
+                    <h3>Köşe Tekniğinin Avantajları</h3>
+                    <div class="guide-grid">
+                        <div class="guide-card">
+                            <h4>✅ Kontrol</h4>
+                            <p>Pano düzeni tahmin edilebilir hale gelir. Büyük sayı hareket etmediği için tasarım basitleşir.</p>
+                        </div>
+                        <div class="guide-card">
+                            <h4>✅ Birleştirme İhtiyacı</h4>
+                            <p>Daha düşük sayıların birleştirilmesi için daha fazla yer oluşturursunuz. Pano daha az sıkışır.</p>
+                        </div>
+                        <div class="guide-card">
+                            <h4>✅ Büyüme Hızı</h4>
+                            <p>Kontrollü büyüme, panic durumlarını önler ve oyun uzun süre devam eder.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="merging">
+                    <h2>Birleştirme Düzeni ve Konumlandırma</h2>
+                    <p>
+                        Köşe tekniğini uyguladıktan sonra, başarı diğer sayıları nasıl konumlandırdığınıza bağlıdır. Etkili birleştirme düzeni, oyunu uzun süre devam ettirir.
+                    </p>
+
+                    <h3>İdeal Pano Düzeni</h3>
+                    <p>
+                        Pano düzeni genellikle büyükten küçüğe doğru spiral şeklinde olmalıdır. Örnek:
+                    </p>
+                    <pre style="background: rgba(99, 102, 241, 0.1); padding: 1.5rem; border-radius: 8px; color: var(--text-secondary); overflow-x: auto;">
+2048 | 1024 | 512 | 256
+  8  |   4  |  2  |  128
+ 16  |  32  | 64  |  64
+ 32  | 256  | 512 | 1024
+                    </pre>
+
+                    <h3>Tek Satır Stratejisi</h3>
+                    <ul>
+                        <li>En büyük sayıyı sağ alt köşeye kilitleyince, alt satırı "tek satır" olarak kullanın</li>
+                        <li>Tüm birleştirmeleri alt satırda yapın ve sıralamayı koruyin</li>
+                        <li>Üst satırlar, düşük değerdeki sayıları yakalayacak "tampon" olarak çalışır</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <p>💡 <strong>Pro İpucu:</strong> Alt satırı sol-sağ yönünde her zaman 4-2-4-2 düzeni (veya 8-4-2-1 gibi) ile tutmaya çalışın. Bu, birleştirme için en iyi ortamı sağlar.</p>
+                    </div>
+                </section>
+
+                <section id="advanced">
+                    <h2>İleri Seviye Stratejiler</h2>
+                    <p>
+                        Taban stratejisini öğrendikten sonra, oyunu mastering etmek için ileri teknikleri uygulamanız gerekir.
+                    </p>
+
+                    <h3>Ön Planlama (Look-Ahead)</h3>
+                    <p>
+                        Deneyimli oyuncular hamle yapmadan önce 2-3 hamle ileriye planlar. Rastgele sayı yerleşimine göre hangi hareketlerin panoyu kapatmayacağını hesaplarlar.
+                    </p>
+
+                    <h3>Denizlik Yöntemi</h3>
+                    <p>
+                        Köşe tekniğinin bir varyasyonu: en büyük sayıyı bir satır veya sütunun tam ortasında değil, kenarında konumlandırma. Bu daha esnek bir oyun sağlar.
+                    </p>
+
+                    <h3>Alternatif Stratejiler</h3>
+                    <ul>
+                        <li><strong>Sütun Yöntemi:</strong> Sağ sütunu koruyun ve diğer hareketi sol tarafta yapın</li>
+                        <li><strong>Dalgalı Hareket:</strong> Köşe tekniğinden kısa süreler ayrılarak pano esnekliğini artırın</li>
+                        <li><strong>Hızlı Oyun:</strong> Daha az plan, daha hızlı hamle - bazı oyuncuların stiline uyar</li>
+                    </ul>
+                </section>
+
+                <section id="common">
+                    <h2>Yaygın Hatalar ve Nasıl Kaçınılır</h2>
+                    <p>
+                        Hatta stratejilerin aksi, başarısızlığın nedenidir. İşte oyunculara sık sık tuzak olan hatalar:
+                    </p>
+
+                    <div class="strategy-card">
+                        <div class="strategy-icon">❌</div>
+                        <h3>Hata #1: Büyük Sayıyı Pano Ortasında Tutmak</h3>
+                        <p>
+                            Eğer en büyük sayı ortada veya rastgele konumlara dağılmışsa, pano çabuk dolar. Köşe kilitlemesin'de taşınmaz bir kural budur.
+                        </p>
+                    </div>
+
+                    <div class="strategy-card">
+                        <div class="strategy-icon">❌</div>
+                        <h3>Hata #2: Düşüncesiz Hareket</h3>
+                        <p>
+                            Hemen hamle yapma. Hamlenizi planlayın. Her hamle panoda yeni bir sayı eklenir - bu rastgeledir ancak hareket seçiminiz değildir.
+                        </p>
+                    </div>
+
+                    <div class="strategy-card">
+                        <div class="strategy-icon">❌</div>
+                        <h3>Hata #3: Çok Agresif Oyun</h3>
+                        <p>
+                            Temkin göster. Küçük sayıları çabuk birleştirmek için acele etmek panoyu kapatmaya neden olur. Sabırlı ol, büyük sayı bekle.
+                        </p>
+                    </div>
+                </section>
+
+                <section id="tips">
+                    <h2>Hızlı İpuçları ve Teknikler</h2>
+                    <div class="guide-grid">
+                        <div class="guide-card">
+                            <h4>⌨️ Kontrolör Kullanın</h4>
+                            <p>Bilgisayarda oyunuyorsanız, oklar yerine WASD tuşlarını alışkanlık haline getirin. Daha hızlı ve rahat.</p>
+                        </div>
+                        <div class="guide-card">
+                            <h4>🧠 Zihni Sakin Tutun</h4>
+                            <p>Panic yapmayın. Oyun kapalı görünse bile, bazen bir hamle mümkündür. Sakin karar alın.</p>
+                        </div>
+                        <div class="guide-card">
+                            <h4>📊 Puanı İzleyin</h4>
+                            <p>Her hamlenin puanı görmek, başarının göstergesidir. Stabil artış = iyi strateji.</p>
+                        </div>
+                        <div class="guide-card">
+                            <h4>🎮 Varyasyon Deneyin</h4>
+                            <p>Farklı estratejiler deneyin. Herbir stilin avantajı vardır - sizin tarzınızı bulun.</p>
+                        </div>
+                        <div class="guide-card">
+                            <h4>🔄 Sık Oynayın</h4>
+                            <p>Ustalaşma talep eder. Belki başında zordur, ama sık oynayıkça reflexleriniz gelişir.</p>
+                        </div>
+                        <div class="guide-card">
+                            <h4>📱 Çevrimiçi Oyunları Oynayın</h4>
+                            <p>2048'in çeşitli versiyonları vardır. Web tabanlı oyunlar hızlı ve kolay erişilir.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="cta-section">
+                    <h2>2048'de Uzman Olun</h2>
+                    <p>Stratejileri öğrendiniz mi? Şimdi sıra pratik yapmanızda. DopaBrain'de 2048 oyununu oynayın ve stratejilerinizi test edin!</p>
+                    <a href="https://dopabrain.com/" class="cta-button">🎮 Oyuna Başla</a>
+                </div>
+
+                <section>
+                    <h2>İlişkili Makaleler</h2>
+                    <div class="related-posts">
+                        <a href="https://dopabrain.com/portal/blog/tr/daily-tarot-stratejisi.html" class="related-card">
+                            <h3>Yeni Başlayanlar İçin Tarot Rehberi</h3>
+                            <p>Tarot kartlarının anlamını öğrenin ve maneviyat yolculuğunuza başlayın.</p>
+                        </a>
+                        <a href="https://dopabrain.com/portal/blog/tr/pomodoro-tekniği.html" class="related-card">
+                            <h3>Pomodoro Tekniği ile Verimlilik</h3>
+                            <p>Dikkat dağınıklığını azaltın ve odaklanmayı artırın. Basit, etkili ve bilimsel yöntem.</p>
+                        </a>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>2048 oyunu Gabriele Cirulli tarafından oluşturulmuştur ve açık kaynaklıdır.</p>
+        <p>Bu rehber, oyuncuların stratejik düşünme becerilerini geliştirmelerine yardımcı olmak amacıyla hazırlanmıştır.</p>
+        <p>Telif Hakkı © 2026 DopaBrain. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector('.progress-bar').style.width = scrolled + '%';
+        });
+
+        document.querySelectorAll('.toc a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        document.querySelectorAll('.cta-button, .related-card').forEach(element => {
+            element.addEventListener('click', function() {
+                if (window.gtag) {
+                    gtag('event', 'click', {
+                        'event_category': 'engagement',
+                        'event_label': this.textContent,
+                        'value': 1
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
