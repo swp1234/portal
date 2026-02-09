@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="description" content="扫雷攻略 - 从入门到精通完整指南。学习基础规则、初级策略、高级技巧、概率计算，快速提升扫雷水平。">
+    <meta name="keywords" content="扫雷, 扫雷游戏, 扫雷攻略, 扫雷技巧, 扫雷策略, 扫雷教程, 益智游戏">
+    <meta name="author" content="DopaBrain">
+    <meta name="theme-color" content="#3b82f6">
+    <title>扫雷攻略：从入门到精通完整指南 | DopaBrain</title>
+
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="扫雷攻略 - 从入门到精通">
+    <meta property="og:description" content="学习扫雷基础、初级策略、高级技巧，快速成为扫雷高手。">
+    <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg">
+    <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/minesweeper-strategy-guide.html">
+    <meta property="og:site_name" content="DopaBrain">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="扫雷攻略 - 完整指南">
+    <meta name="twitter:description" content="从入门到精通的扫雷教程和技巧">
+    <meta name="twitter:image" content="https://dopabrain.com/portal/icon-512.svg">
+
+    <!-- Canonical & Alternate Links -->
+    <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/minesweeper-strategy-guide.html">
+    <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/minesweeper-strategy-guide.html">
+    <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/minesweeper-guide.html">
+
+    <!-- Schema.org Article JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "扫雷攻略：从入门到精通完整指南",
+        "description": "学习基础规则、初级策略、高级技巧、概率计算，快速提升扫雷水平。",
+        "image": "https://dopabrain.com/portal/icon-512.svg",
+        "datePublished": "2026-02-10",
+        "dateModified": "2026-02-10",
+        "inLanguage": "zh",
+        "author": {
+            "@type": "Organization",
+            "name": "DopaBrain"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "DopaBrain",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://dopabrain.com/portal/icon-512.svg"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://dopabrain.com/portal/blog/zh/minesweeper-strategy-guide.html"
+        }
+    }
+    </script>
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-J8GSWM40TV');
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882"
+        crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-light: #60a5fa;
+            --secondary: #1e40af;
+            --bg-dark: #0f0f23;
+            --bg-light: #1a1a2e;
+            --text-primary: #f8f9fa;
+            --text-secondary: #b8bcc4;
+            --border-color: rgba(59, 130, 246, 0.12);
+            --card-bg: rgba(59, 130, 246, 0.06);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700; }
+        .article-meta { opacity: 0.9; font-size: 0.95rem; }
+
+        .toc {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .toc h2 { margin-bottom: 1rem; font-size: 1.3rem; }
+        .toc ul { list-style: none; }
+        .toc li { margin: 0.5rem 0; }
+        .toc a {
+            color: var(--primary-light);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .toc a:hover { color: var(--primary); }
+
+        .content {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem 0;
+            color: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding-left: 1rem;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 0.8rem 0;
+            color: var(--text-primary);
+        }
+
+        p { margin-bottom: 1rem; line-height: 1.8; }
+
+        .strategy-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .tip {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            margin: 1.5rem 0;
+            border-collapse: collapse;
+            background: var(--bg-dark);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: var(--primary);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .related-articles {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 3rem 0;
+        }
+
+        .related-articles h3 { margin-top: 0; }
+        .article-link {
+            display: block;
+            color: var(--primary-light);
+            text-decoration: none;
+            margin: 0.8rem 0;
+            padding: 0.8rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .article-link:hover { background: rgba(59, 130, 246, 0.2); }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>扫雷攻略</h1>
+            <p class="article-meta">从入门到精通完整指南 | 2026年2月10日</p>
+        </header>
+
+        <div class="toc">
+            <h2>目录</h2>
+            <ul>
+                <li><a href="#introduction">扫雷是什么</a></li>
+                <li><a href="#basics">基本规则</a></li>
+                <li><a href="#beginner">初级策略</a></li>
+                <li><a href="#intermediate">中级技巧</a></li>
+                <li><a href="#advanced">高级解析</a></li>
+                <li><a href="#probability">概率计算</a></li>
+                <li><a href="#practice">训练方法</a></li>
+                <li><a href="#conclusion">总结</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <h2 id="introduction">扫雷是什么</h2>
+            <p>扫雷是一个经典益智游戏，诞生于1980年代，至今仍受到全球数百万玩家的喜爱。这个游戏结合了逻辑推理、概率计算和战略思维，是训练大脑的最佳工具之一。</p>
+            <p>Microsoft Windows的推出让扫雷走进千家万户，使其成为最广为人知的益智游戏。如今，扫雷在手机、网页等多个平台上都可以进行，是日常休闲和脑力训练的完美结合。</p>
+
+            <h2 id="basics">基本规则</h2>
+            <p>掌握扫雷的基本规则是开始游戏的第一步。</p>
+
+            <div class="strategy-box">
+                <h3>核心规则</h3>
+                <ul>
+                    <li>点击方格来揭示隐藏的内容</li>
+                    <li>点到地雷时游戏结束</li>
+                    <li>数字表示周围8个方格中地雷的数量</li>
+                    <li>清除所有非地雷方格即获胜</li>
+                    <li>右键标记可疑地雷位置</li>
+                </ul>
+            </div>
+
+            <h2 id="beginner">初级策略</h2>
+            <p>新手玩家应该掌握以下基本策略来开始扫雷之旅。</p>
+
+            <h3>1. 从角落开始</h3>
+            <p>第一步最好点击棋盘四个角之一。角落周围的方格较少，更容易快速打开大面积区域。</p>
+
+            <h3>2. 理解数字含义</h3>
+            <p>数字代表该方格周围8个相邻方格中包含的地雷总数。理解这一点是成功的基础。</p>
+
+            <h3>3. 使用排除法</h3>
+            <p>当一个数字周围的地雷数已经满足时，其他方格就是安全的。反之亦然——当周围全是空白时，所有相邻方格都是安全的。</p>
+
+            <div class="tip">
+                <strong>初学者建议：</strong>从小规模开始（8×8），逐步掌握规则和常见模式，不必急于追求高难度。
+            </div>
+
+            <h2 id="intermediate">中级技巧</h2>
+            <p>掌握基础后，学习这些中级技巧可以显著提高速度和成功率。</p>
+
+            <h3>模式识别</h3>
+            <p>经验丰富的玩家能够快速识别常见的数字模式，如"1-2-1"或"2-2-2"等，这些模式有明确的逻辑推论。</p>
+
+            <h3>假设排除法</h3>
+            <p>当遇到不确定情况时，设置假设然后检查是否产生矛盾。如果假设导致逻辑矛盾，则该假设必然错误。</p>
+
+            <h3>边界分析</h3>
+            <p>关注已打开区域的边界线（边界），这些位置包含最多信息，是突破的关键点。</p>
+
+            <div class="strategy-box">
+                <h3>常见模式速查表</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>模式</th>
+                            <th>含义</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>数字2周围有2个地雷</td>
+                            <td>剩余方格都是安全的</td>
+                            <td>全部点击</td>
+                        </tr>
+                        <tr>
+                            <td>数字1周围有1个地雷</td>
+                            <td>剩余方格都是安全的</td>
+                            <td>全部点击</td>
+                        </tr>
+                        <tr>
+                            <td>数字3周围有3个未标记地雷</td>
+                            <td>未标记的方格是地雷</td>
+                            <td>标记后避开</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 id="advanced">高级解析</h2>
+            <p>顶尖玩家使用这些高级技术来实现完美扫雷。</p>
+
+            <h3>复杂逻辑推理</h3>
+            <p>同时考虑多个数字约束，通过数学推理计算最可能安全的方格。这需要大量的练习和经验。</p>
+
+            <h3>局部与全局分析</h3>
+            <p>局部分析专注于特定区域，全局分析考虑整个棋盘的地雷分布。结合两者才能做出最优决策。</p>
+
+            <h3>概率论应用</h3>
+            <p>精确计算每个未点击方格的地雷概率，选择最安全的方格点击。这是专家级玩家的标志。</p>
+
+            <h2 id="probability">概率计算</h2>
+            <p>概率是扫雷的核心科学基础。</p>
+
+            <h3>基础概率</h3>
+            <p>如果有n个未点击方格和m个已知地雷，则特定方格是地雷的概率为 m/n。</p>
+
+            <h3>条件概率</h3>
+            <p>当多个数字约束相互作用时，需要使用条件概率来计算精确概率。这在复杂局面中至关重要。</p>
+
+            <div class="tip">
+                <strong>概率决策：</strong>当概率为50/50时，两个选择的期望价值相同。此时应选择能获取最多信息的方格。
+            </div>
+
+            <h2 id="practice">训练方法</h2>
+            <p>系统的训练能够快速提升扫雷技能。</p>
+
+            <h3>渐进难度法</h3>
+            <p>初级（8×8, 10地雷）→ 中级（16×16, 40地雷）→ 高级（16×30, 99地雷），循序渐进。</p>
+
+            <h3>模式学习</h3>
+            <p>记录常见模式，反复练习直到能够立即识别。模式识别速度是提高整体速度的关键。</p>
+
+            <h3>计时训练</h3>
+            <p>在同一难度下反复挑战，记录最佳时间。时间压力能够加快反应速度。</p>
+
+            <h3>失败分析</h3>
+            <p>每次失败都是学习机会。分析失败的原因，避免重复错误是进步的捷径。</p>
+
+            <h2 id="conclusion">总结</h2>
+            <p>扫雷以其简洁的规则和深刻的策略，成为了经久不衰的益智游戏。从初学者到高手，每个阶段都有新的挑战和成长空间。</p>
+
+            <p>通过掌握基础规则、学习中级技巧、研究高级策略和概率计算，任何人都能成为扫雷高手。关键是持之以恒的练习和对每次失败的反思。</p>
+
+            <p>在DopaBrain的扫雷游戏中练习这些技巧，不仅能提升游戏水平，还能锻炼逻辑思维和集中力。立即开始你的扫雷之旅吧！</p>
+        </div>
+
+        <div class="related-articles">
+            <h3>相关文章</h3>
+            <a href="https://dopabrain.com/portal/blog/zh/2026-zuijia-naoli-youxi.html" class="article-link">2026年最佳益智游戏TOP 10</a>
+            <a href="https://dopabrain.com/portal/blog/zh/free-games.html" class="article-link">免费在线游戏完整指南</a>
+            <a href="https://dopabrain.com/portal/blog/zh/block-puzzle-game-guide.html" class="article-link">方块拼图游戏攻略</a>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 DopaBrain. 版权所有 | <a href="https://dopabrain.com/portal/">返回首页</a></p>
+        </footer>
+    </div>
+
+    <script>
+        let scrollPercentage = 0;
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            scrollPercentage = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
