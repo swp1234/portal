@@ -1161,6 +1161,33 @@ const APP_DATA = [
             de: { name: 'Morgenroutine-Planer', shortDesc: 'Morgenroutinen- und Produktivitäts-App' },
             fr: { name: 'Planificateur de Routine Matinale', shortDesc: 'Application de routine matinale et productivité' }
         }
+    },
+    {
+        id: 'maze-runner',
+        name: '미로 러너 - 미로 탈출',
+        shortDesc: '무작위 미로 생성 퍼즐 게임',
+        description: '절차적으로 생성되는 미로를 탈출하세요! 3가지 게임 모드(일반, 안개, 시간 공격), 난이도 상승, 아이템 수집, 미니맵, 수상한 장치. 스테이지가 올라갈수록 미로가 커집니다!',
+        icon: '🌀',
+        color: '#1abc9c',
+        category: 'game',
+        tags: ['게임', '퍼즐', '미로', '어드벤처', 'maze', 'puzzle', 'game', 'escape', 'adventure', 'challenge'],
+        url: 'https://dopabrain.com/maze-runner/',
+        isNew: true,
+        isPopular: false,
+        popularity: 6,
+        i18n: {
+            en: { name: 'Maze Runner - Escape the Maze', shortDesc: 'Random maze puzzle game' },
+            zh: { name: '迷宫跑者 - 逃离迷宫', shortDesc: '随机生成迷宫益智游戏' },
+            hi: { name: 'भूलभुलैया रनर - भूलभुलैया से बचें', shortDesc: 'यादृच्छिक भूलभुलैया पहेली खेल' },
+            ru: { name: 'Лабиринт - Побег из лабиринта', shortDesc: 'Игра-головоломка со случайным лабиринтом' },
+            ja: { name: '迷路ランナー - 迷路からの脱出', shortDesc: 'ランダム生成迷路パズルゲーム' },
+            es: { name: 'Maze Runner - Escapar del Laberinto', shortDesc: 'Juego de puzzle de laberinto aleatorio' },
+            pt: { name: 'Maze Runner - Fuga do Labirinto', shortDesc: 'Jogo de quebra-cabeça de labirinto aleatório' },
+            id: { name: 'Maze Runner - Keluar dari Labirin', shortDesc: 'Permainan puzzle labirin acak' },
+            tr: { name: 'Labirent Koşucusu - Labirenti Kurtul', shortDesc: 'Rastgele labirent bulmaca oyunu' },
+            de: { name: 'Maze Runner - Flucht aus dem Labyrinth', shortDesc: 'Zufälliges Labyrinth-Puzzlespiel' },
+            fr: { name: 'Maze Runner - Échappez au Labyrinthe', shortDesc: 'Jeu de puzzle de labyrinthe aléatoire' }
+        }
     }
 ];
 
