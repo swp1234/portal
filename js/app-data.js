@@ -1107,6 +1107,33 @@ const APP_DATA = [
             de: { name: '2048 Puzzle', shortDesc: 'Zahlenplättchen-Fusionsspiel' },
             fr: { name: 'Puzzle 2048', shortDesc: 'Jeu de fusion de tuiles numériques' }
         }
+    },
+    {
+        id: 'word-guess',
+        name: 'Word Guess',
+        shortDesc: '5글자 영어 단어 맞추기',
+        description: '매일 새로운 Wordle 스타일 단어 퍼즐! 6번의 시도로 5글자 단어를 맞춰보세요. 일일 모드와 무한 연습 모드, 통계, 결과 공유 기능.',
+        icon: '🔤',
+        color: '#27ae60',
+        category: 'game',
+        tags: ['Wordle', '단어', '퍼즐', '게임', '일일', 'word', 'puzzle', 'game', 'daily', 'english'],
+        url: 'https://dopabrain.com/word-guess/',
+        isNew: true,
+        isPopular: true,
+        popularity: 9,
+        i18n: {
+            en: { name: 'Word Guess', shortDesc: 'Daily 5-letter word puzzle' },
+            zh: { name: 'Word Guess', shortDesc: '每日5字母单词拼图' },
+            hi: { name: 'Word Guess', shortDesc: 'दैनिक 5-अक्षर शब्द पहेली' },
+            ru: { name: 'Word Guess', shortDesc: 'Ежедневный 5-буквенный словесный пазл' },
+            ja: { name: 'Word Guess', shortDesc: '毎日の5文字単語パズル' },
+            es: { name: 'Word Guess', shortDesc: 'Puzle diario de palabras de 5 letras' },
+            pt: { name: 'Word Guess', shortDesc: 'Quebra-cabeça diário de 5 letras' },
+            id: { name: 'Word Guess', shortDesc: 'Puzzle kata 5 huruf harian' },
+            tr: { name: 'Word Guess', shortDesc: 'Günlük 5 harfli kelime bulmacası' },
+            de: { name: 'Word Guess', shortDesc: 'Tägliches 5-Buchstaben-Wortpuzzle' },
+            fr: { name: 'Word Guess', shortDesc: 'Puzzle quotidien de mots de 5 lettres' }
+        }
     }
 ];
 
