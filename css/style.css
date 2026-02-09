@@ -2455,3 +2455,174 @@ input[type="submit"],
     background: #8b5cf6;
     color: white;
 }
+
+/* === Enhanced Filter UI === */
+.sort-filter-wrapper {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    animation: fadeInDown 0.6s ease-out;
+}
+
+.sort-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: var(--surface-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 14px;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.sort-btn:hover {
+    background: var(--surface-glass-hover);
+    border-color: var(--border-glass-hover);
+    transform: translateY(-2px);
+}
+
+.sort-btn.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-color: var(--primary);
+    color: white;
+    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
+}
+
+.sort-icon {
+    font-size: 16px;
+}
+
+.sort-label {
+    font-size: 13px;
+}
+
+/* === Search Result Count === */
+.search-result-count {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    padding: 8px;
+    background: var(--surface-glass);
+    border-radius: var(--radius-sm);
+    animation: slideUp 0.4s ease-out;
+}
+
+/* === Load More Button === */
+.load-more-btn {
+    display: block;
+    margin: 40px auto;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border: none;
+    border-radius: var(--radius);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.load-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+}
+
+.load-more-btn:active {
+    transform: translateY(0);
+}
+
+.load-more-btn span {
+    display: inline-block;
+    animation: pulse 0.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+
+/* === Category Filter Active State Enhancement === */
+.cat-btn {
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cat-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transform: translateX(-50%);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cat-btn.active::after {
+    width: 20px;
+}
+
+.cat-btn.active {
+    background: linear-gradient(135deg, var(--surface-glass-hover), var(--surface-glass));
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* === Animations === */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === Responsive === */
+@media (max-width: 640px) {
+    .sort-filter-wrapper {
+        gap: 6px;
+        margin-bottom: 16px;
+    }
+
+    .sort-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .sort-icon {
+        font-size: 14px;
+    }
+
+    .load-more-btn {
+        margin: 24px 16px;
+        padding: 12px 24px;
+        font-size: 13px;
+    }
+}
