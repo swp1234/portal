@@ -8,7 +8,7 @@ const APP_DATA = [
         description: '재미있는 지식 퀴즈로 상식을 쌓아보세요! 100개의 다양한 문제에 도전하세요.',
         icon: '🧠',
         color: '#667eea',
-        category: 'quiz',
+        category: 'brain',
         tags: ['퀴즈', '상식', '교육', '게임', 'quiz', 'knowledge', 'education', 'game'],
         url: 'https://dopabrain.com/quiz-app/',
         isNew: false,
@@ -320,7 +320,7 @@ const APP_DATA = [
         description: '우주선을 조종해 장애물을 피하세요! 원탭 조작의 중독성 캐주얼 아케이드 게임.',
         icon: '🚀',
         color: '#3b82f6',
-        category: 'quiz',
+        category: 'game',
         tags: ['게임', '아케이드', '우주', '캐주얼', 'Flappy', 'game', 'arcade', 'space', 'casual', 'runner'],
         url: 'https://dopabrain.com/sky-runner/',
         isNew: true,
@@ -837,10 +837,13 @@ const APP_DATA = [
 
 const CATEGORIES = {
     all: { name: '전체', icon: '🏠', i18n: { en: 'All', zh: '全部', hi: 'सभी', ru: 'Все', ja: 'すべて', es: 'Todo', pt: 'Tudo', id: 'Semua', tr: 'Tümü', de: 'Alle', fr: 'Tout' } },
-    quiz: { name: '퀴즈/게임', icon: '🎮', i18n: { en: 'Games', zh: '游戏', hi: 'गेम्स', ru: 'Игры', ja: 'ゲーム', es: 'Juegos', pt: 'Jogos', id: 'Game', tr: 'Oyunlar', de: 'Spiele', fr: 'Jeux' } },
-    fortune: { name: '운세/테스트', icon: '🔮', i18n: { en: 'Tests', zh: '测试', hi: 'टेस्ट', ru: 'Тесты', ja: 'テスト', es: 'Tests', pt: 'Testes', id: 'Tes', tr: 'Testler', de: 'Tests', fr: 'Tests' } },
-    tool: { name: '계산기/도구', icon: '🧮', i18n: { en: 'Tools', zh: '工具', hi: 'टूल्स', ru: 'Инструменты', ja: 'ツール', es: 'Herramientas', pt: 'Ferramentas', id: 'Alat', tr: 'Araçlar', de: 'Werkzeuge', fr: 'Outils' } },
-    life: { name: '라이프', icon: '🧘', i18n: { en: 'Life', zh: '生活', hi: 'लाइफ', ru: 'Жизнь', ja: 'ライフ', es: 'Vida', pt: 'Vida', id: 'Kehidupan', tr: 'Yaşam', de: 'Leben', fr: 'Vie' } }
+    game: { name: '게임', icon: '🎮', i18n: { en: 'Games', zh: '游戏', hi: 'गेम्स', ru: 'Игры', ja: 'ゲーム', es: 'Juegos', pt: 'Jogos', id: 'Game', tr: 'Oyunlar', de: 'Spiele', fr: 'Jeux' } },
+    brain: { name: '두뇌훈련', icon: '🧠', i18n: { en: 'Brain Train', zh: '脑训练', hi: 'मस्तिष्क प्रशिक्षण', ru: 'Тренировка мозга', ja: '脳トレ', es: 'Entrena tu Cerebro', pt: 'Treino Cerebral', id: 'Latihan Otak', tr: 'Beyin Antrenmanı', de: 'Gehirntraining', fr: 'Entraînement Cérébral' } },
+    test: { name: '심리테스트', icon: '🔮', i18n: { en: 'Tests', zh: '心理测试', hi: 'मनोविज्ञान परीक्षण', ru: 'Тесты', ja: '心理テスト', es: 'Tests de Psicología', pt: 'Testes Psicológicos', id: 'Tes Psikologi', tr: 'Psikoloji Testleri', de: 'Psychologische Tests', fr: 'Tests Psychologiques' } },
+    fortune: { name: '운세점술', icon: '✨', i18n: { en: 'Fortune', zh: '运势占卜', hi: 'भाग्य', ru: 'Гадание', ja: '運勢', es: 'Fortuna', pt: 'Fortuna', id: 'Keberuntungan', tr: 'Fal', de: 'Wahrsagung', fr: 'Fortune' } },
+    tool: { name: '계산기', icon: '🧮', i18n: { en: 'Calculators', zh: '计算器', hi: 'कैलकुलेटर', ru: 'Калькуляторы', ja: '計算機', es: 'Calculadoras', pt: 'Calculadoras', id: 'Kalkulator', tr: 'Hesap Makinesi', de: 'Taschenrechner', fr: 'Calculatrices' } },
+    wellness: { name: '웰빙', icon: '🧘', i18n: { en: 'Wellness', zh: '健康', hi: 'कल्याण', ru: 'Благополучие', ja: 'ウェルネス', es: 'Bienestar', pt: 'Bem-estar', id: 'Kesejahteraan', tr: 'Sağlık', de: 'Wohlbefinden', fr: 'Bien-être' } },
+    dev: { name: '개발자', icon: '💻', i18n: { en: 'Developer', zh: '开发者', hi: 'डेवलपर', ru: 'Разработчик', ja: '開発者', es: 'Desarrollador', pt: 'Desenvolvedor', id: 'Pengembang', tr: 'Geliştirici', de: 'Entwickler', fr: 'Développeur' } }
 };
 
 // Helper: get localized app name/desc
