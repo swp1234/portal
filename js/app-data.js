@@ -1134,6 +1134,33 @@ const APP_DATA = [
             de: { name: 'Word Guess', shortDesc: 'Tägliches 5-Buchstaben-Wortpuzzle' },
             fr: { name: 'Word Guess', shortDesc: 'Puzzle quotidien de mots de 5 lettres' }
         }
+    },
+    {
+        id: 'routine-planner',
+        name: '모닝 루틴 플래너',
+        shortDesc: '아침 루틴 관리 & 생산성 앱',
+        description: '체계적으로 아침 루틴을 관리하세요. 루틴 설정, 타이머, 진행률 추적, 주간 달성 캘린더, 루틴 템플릿, SNS 공유 기능!',
+        icon: '🌅',
+        color: '#f1c40f',
+        category: 'wellness',
+        tags: ['루틴', '생산성', '타이머', '아침', '습관', '계획', 'morning', 'routine', 'productivity', 'habit', 'timer', 'planner'],
+        url: 'https://dopabrain.com/routine-planner/',
+        isNew: true,
+        isPopular: false,
+        popularity: 5,
+        i18n: {
+            en: { name: 'Morning Routine Planner', shortDesc: 'Morning routine & productivity app' },
+            zh: { name: '早晨日常规划器', shortDesc: '早晨日常管理应用' },
+            hi: { name: 'सुबह की दिनचर्या योजनाकार', shortDesc: 'सुबह की दिनचर्या और उत्पादकता ऐप' },
+            ru: { name: 'Планировщик утреннего распорядка', shortDesc: 'Приложение для утреннего расписания' },
+            ja: { name: 'モーニングルーチンプランナー', shortDesc: '朝の習慣と生産性アプリ' },
+            es: { name: 'Planificador de Rutina Matutina', shortDesc: 'Aplicación de rutina matutina y productividad' },
+            pt: { name: 'Planejador de Rotina Matinal', shortDesc: 'Aplicativo de rotina e produtividade matinal' },
+            id: { name: 'Perencana Rutinitas Pagi', shortDesc: 'Aplikasi rutinitas pagi dan produktivitas' },
+            tr: { name: 'Sabah Rutini Planlayıcısı', shortDesc: 'Sabah rutini ve verimlilik uygulaması' },
+            de: { name: 'Morgenroutine-Planer', shortDesc: 'Morgenroutinen- und Produktivitäts-App' },
+            fr: { name: 'Planificateur de Routine Matinale', shortDesc: 'Application de routine matinale et productivité' }
+        }
     }
 ];
 
