@@ -884,6 +884,32 @@ const APP_DATA = [
             de: { name: 'Block Puzzle', shortDesc: 'Klassisches Blockpuzzle-Spiel' },
             fr: { name: 'Block Puzzle', shortDesc: 'Jeu de puzzle de blocs classique' }
         }
+    },
+    {
+        id: 'qr-generator',
+        name: 'QR 코드 생성기',
+        shortDesc: 'URL·텍스트·WiFi·연락처 QR 변환',
+        description: '고급 QR 코드 생성 도구. URL, 텍스트, WiFi, 연락처, 이메일, 전화번호를 QR 코드로 변환하세요. 색상 커스터마이징, 사이즈 조절, PNG 다운로드 기능 제공.',
+        icon: '🔲',
+        color: '#1abc9c',
+        category: 'tool',
+        tags: ['QR 코드', '생성기', 'QR', 'URL', 'WiFi', '연락처', '바코드', 'qr', 'code', 'generator', 'barcode'],
+        url: 'https://dopabrain.com/qr-generator/',
+        isNew: true,
+        isPopular: false,
+        i18n: {
+            en: { name: 'QR Code Generator', shortDesc: 'Convert URL·text·WiFi·contact to QR' },
+            zh: { name: '二维码生成器', shortDesc: '将URL·文本·WiFi·联系人转换为二维码' },
+            hi: { name: 'QR कोड जनरेटर', shortDesc: 'URL·पाठ·WiFi·संपर्क को QR में परिवर्तित करें' },
+            ru: { name: 'Генератор QR-кодов', shortDesc: 'Преобразуйте URL·текст·WiFi·контакт в QR' },
+            ja: { name: 'QRコード生成器', shortDesc: 'URL·テキスト·WiFi·連絡先をQRに変換' },
+            es: { name: 'Generador de Códigos QR', shortDesc: 'Convertir URL·texto·WiFi·contacto a QR' },
+            pt: { name: 'Gerador de Código QR', shortDesc: 'Converta URL·texto·WiFi·contato em QR' },
+            id: { name: 'Generator Kode QR', shortDesc: 'Konversi URL·teks·WiFi·kontak ke QR' },
+            tr: { name: 'QR Kod Oluşturucu', shortDesc: 'URL·metin·WiFi·iletişimi QR\'ye dönüştürün' },
+            de: { name: 'QR-Code-Generator', shortDesc: 'URL·Text·WiFi·Kontakt in QR konvertieren' },
+            fr: { name: 'Générateur de Code QR', shortDesc: 'Convertir URL·texte·WiFi·contact en QR' }
+        }
     }
 ];
 
