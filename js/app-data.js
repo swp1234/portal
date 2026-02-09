@@ -1026,6 +1026,33 @@ const APP_DATA = [
             de: { name: 'In 10 Jahren', shortDesc: 'Entdecke dein zukünftiges Selbst' },
             fr: { name: '10 Ans Plus Tard', shortDesc: 'Découvrez votre futur moi' }
         }
+    },
+    {
+        id: 'habit-tracker',
+        name: '습관 추적기',
+        shortDesc: '좋은 습관 만들기 추적 도구',
+        description: '매일 습관을 기록하고 추적하세요! 스트릭, 통계, 히트맵으로 진행 상황을 시각화하고 목표를 달성하세요. 뱃지와 AI 분석도 함께!',
+        icon: '✨',
+        color: '#2ecc71',
+        category: 'wellness',
+        tags: ['습관', '추적기', '생산성', '목표', '목표달성', '생활', 'habit', 'tracker', 'productivity', 'goal', 'lifestyle', 'wellness'],
+        url: 'https://dopabrain.com/habit-tracker/',
+        isNew: true,
+        isPopular: true,
+        popularity: 7,
+        i18n: {
+            en: { name: 'Habit Tracker', shortDesc: 'Build better habits daily' },
+            zh: { name: '习惯追踪器', shortDesc: '追踪您的日常习惯' },
+            hi: { name: 'आदत ट्रैकर', shortDesc: 'अपनी दैनिक आदतें ट्रैक करें' },
+            ru: { name: 'Трекер привычек', shortDesc: 'Отслеживайте ваши привычки' },
+            ja: { name: '習慣トラッカー', shortDesc: '毎日の習慣を追跡する' },
+            es: { name: 'Rastreador de Hábitos', shortDesc: 'Rastrear sus hábitos diarios' },
+            pt: { name: 'Rastreador de Hábitos', shortDesc: 'Acompanhe seus hábitos diários' },
+            id: { name: 'Pelacak Kebiasaan', shortDesc: 'Lacak kebiasaan harian Anda' },
+            tr: { name: 'Alışkanlık İzleyici', shortDesc: 'Günlük alışkanlıklarınızı izleyin' },
+            de: { name: 'Gewohnheits-Tracker', shortDesc: 'Ihre täglichen Gewohnheiten verfolgen' },
+            fr: { name: 'Suivi des Habitudes', shortDesc: 'Suivez vos habitudes quotidiennes' }
+        }
     }
 ];
 
