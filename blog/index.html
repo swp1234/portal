@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="DopaBrain 블로그 - 심리테스트, 두뇌 테스트, 게임 가이드, 스트레스 해소, 감정 관리 등 생활 밀착형 콘텐츠. SEO 최적화된 심리 건강 및 웰빙 정보.">
+    <meta name="keywords" content="블로그, 심리테스트, 두뇌 테스트, 게임, 스트레스, 감정, 웰빙, DopaBrain">
+    <meta name="author" content="DopaBrain">
+    <title>DopaBrain 블로그 | 심리테스트·두뇌·게임·웰빙 정보</title>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="DopaBrain 블로그">
+    <meta property="og:description" content="심리테스트, 뇌 건강, 게임 가이드, 스트레스 해소법 등 생활 정보">
+    <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg">
+    <meta property="og:url" content="https://dopabrain.com/portal/blog/">
+    <meta property="og:site_name" content="DopaBrain">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://dopabrain.com/portal/blog/">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-J8GSWM40TV');
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882"
+        crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --primary: #667eea;
+            --primary-light: #818cf8;
+            --secondary: #06b6d4;
+            --accent: #f43f5e;
+            --bg-dark: #0a0a1a;
+            --bg-light: #15151f;
+            --text-primary: #f0f0f8;
+            --text-secondary: #a0a0b8;
+            --border-color: rgba(99, 102, 241, 0.15);
+            --card-bg: rgba(99, 102, 241, 0.08);
+            --spacing: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            background: #0a0a1a;
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem var(--spacing);
+            background: rgba(10, 10, 26, 0.85);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .header-nav a:hover {
+            color: var(--secondary);
+            transform: translateX(-2px);
+        }
+
+        .header-nav span {
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero-section {
+            position: relative;
+            padding: 6rem var(--spacing) 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border-bottom: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .article-header {
+            position: relative;
+            z-index: 10;
+            margin-bottom: 0;
+        }
+
+        .article-header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            color: var(--text-primary);
+        }
+
+        .article-header h1 span {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .article-desc {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .blog-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--card-accent, var(--primary)) 0%, transparent 100%);
+        }
+
+        .blog-card:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+            transform: translateY(-8px);
+            background: rgba(99, 102, 241, 0.12);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .blog-category {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--card-accent, var(--primary)) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            width: fit-content;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-card h3 {
+            color: var(--text-primary);
+            margin: 0 0 0.8rem 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .blog-excerpt {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover .read-more {
+            gap: 0.8rem;
+            color: var(--secondary);
+        }
+
+        .blog-card.psychology {
+            --card-accent: #6366f1;
+        }
+
+        .blog-card.brain {
+            --card-accent: #3b82f6;
+        }
+
+        .blog-card.game {
+            --card-accent: #f59e0b;
+        }
+
+        .blog-card.wellness {
+            --card-accent: #10b981;
+        }
+
+        .blog-card.test {
+            --card-accent: #ec4899;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 3rem 0 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 2px;
+        }
+
+        .article-footer {
+            text-align: center;
+            padding: 3rem var(--spacing);
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+            color: var(--text-secondary);
+        }
+
+        .article-footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .article-header h1 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+
+            .article-desc {
+                font-size: 1rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .blog-card {
+                padding: 1.5rem;
+            }
+
+            .header-nav span {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-nav">
+        <a href="https://dopabrain.com/portal/">← DopaBrain 홈</a>
+        <span style="color: var(--text-secondary);">블로그</span>
+    </div>
+
+    <div class="hero-section">
+        <div class="container">
+            <header class="article-header">
+                <h1>DopaBrain <span>블로그</span></h1>
+            <p class="article-desc">
+                심리테스트, 두뇌 건강, 게임 가이드, 스트레스 해소법 등 일상을 더 나은 삶으로 만드는 정보를 제공합니다.
+            </p>
+            </header>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 최신 글 섹션 -->
+        <h2 class="section-title">최신 글</h2>
+        <div class="blog-grid">
+            <a href="/portal/blog/stress-relief-tools-2026.html" class="blog-card wellness">
+                <span class="blog-category">웰빙</span>
+                <h3>직장인 스트레스 해소법 2026</h3>
+                <div class="blog-meta">
+                    <span>📅 2026.02.10</span>
+                    <span>⏱️ 17분</span>
+                </div>
+                <p class="blog-excerpt">디지털 디톡스, 감정 온도계, 명상, 백색소음, 자기 긍정 등 5가지 무료 힐링 도구로 스트레스를 해소하는 방법.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+
+            <a href="/portal/blog/idle-game-guide-2026.html" class="blog-card game">
+                <span class="blog-category">게임 가이드</span>
+                <h3>방치형 게임 추천 2026</h3>
+                <div class="blog-meta">
+                    <span>📅 2026.02.10</span>
+                    <span>⏱️ 16분</span>
+                </div>
+                <p class="blog-excerpt">던전 클리커의 게임 시스템, 장비 업그레이드, 스킬, 환생 메카닉까지 완벽한 게임 공략 가이드.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+
+            <a href="/portal/blog/brain-test-2026.html" class="blog-card brain">
+                <span class="blog-category">두뇌 테스트</span>
+                <h3>2026 인기 무료 두뇌 테스트 TOP 5</h3>
+                <div class="blog-meta">
+                    <span>📅 2026.02.10</span>
+                    <span>⏱️ 18분</span>
+                </div>
+                <p class="blog-excerpt">뇌유형 진단, 좌뇌 우뇌 검사, 인지능력, 창의성, 집중력 테스트로 자신의 뇌 강점을 파악하세요.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+        </div>
+
+        <!-- 심리테스트 섹션 -->
+        <h2 class="section-title">심리테스트 & 진단</h2>
+        <div class="blog-grid">
+            <a href="/portal/blog/psychology-test-best.html" class="blog-card psychology">
+                <span class="blog-category">심리테스트</span>
+                <h3>2026 무료 심리테스트 추천 BEST 7</h3>
+                <div class="blog-meta">
+                    <span>📅 2026.02.08</span>
+                    <span>⏱️ 15분</span>
+                </div>
+                <p class="blog-excerpt">감정 온도계, MBTI 궁합, HSP 테스트, 사랑 주파수 등 2026 인기 심리테스트 7가지 완벽 비교.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+
+            <a href="/portal/blog/stress-test-psychology.html" class="blog-card psychology">
+                <span class="blog-category">스트레스</span>
+                <h3>스트레스 자가진단 테스트</h3>
+                <div class="blog-meta">
+                    <span>📅 2026.02.09</span>
+                    <span>⏱️ 20분</span>
+                </div>
+                <p class="blog-excerpt">심리학 기반 스트레스 수준 측정, HSP 테스트, 번아웃 진단, 스트레스 해소 5가지 방법.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+
+            <a href="/portal/blog/hsp-guide.html" class="blog-card psychology">
+                <span class="blog-category">심리 가이드</span>
+                <h3>HSP(고감수성자) 완벽 가이드 2026</h3>
+                <div class="blog-meta">
+                    <span>📅 최신</span>
+                    <span>⏱️ 12분</span>
+                </div>
+                <p class="blog-excerpt">고감수성자의 특징, 장점, 약점, 감정 관리법을 알아보고 당신의 민감함을 강점으로 변환하세요.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+        </div>
+
+        <!-- 생활 정보 섹션 -->
+        <h2 class="section-title">생활 정보 & 자기개발</h2>
+        <div class="blog-grid">
+            <a href="/portal/blog/emotion-management-guide.html" class="blog-card wellness">
+                <span class="blog-category">감정 관리</span>
+                <h3>감정 관리 완벽 가이드</h3>
+                <div class="blog-meta">
+                    <span>📅 최신</span>
+                    <span>⏱️ 14분</span>
+                </div>
+                <p class="blog-excerpt">부정 감정을 건강하게 처리하고, 감정 지능을 높이는 실용적인 방법들을 배워보세요.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+
+            <a href="/portal/blog/free-online-games.html" class="blog-card game">
+                <span class="blog-category">게임</span>
+                <h3>무료 온라인 게임 추천</h3>
+                <div class="blog-meta">
+                    <span>📅 최신</span>
+                    <span>⏱️ 11분</span>
+                </div>
+                <p class="blog-excerpt">브라우저에서 즐기는 다양한 무료 게임들과 게임 선택 가이드.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+
+            <a href="/portal/blog/mbti-compatibility.html" class="blog-card test">
+                <span class="blog-category">MBTI</span>
+                <h3>MBTI 궁합표 & 해석 가이드</h3>
+                <div class="blog-meta">
+                    <span>📅 최신</span>
+                    <span>⏱️ 13분</span>
+                </div>
+                <p class="blog-excerpt">16가지 MBTI 조합별 궁합 분석과 관계 개선 조언.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+        </div>
+
+        <!-- 시즌 콘텐츠 -->
+        <h2 class="section-title">시즌별 특집</h2>
+        <div class="blog-grid">
+            <a href="/portal/blog/lunar-new-year-fortune.html" class="blog-card psychology">
+                <span class="blog-category">설 특집</span>
+                <h3>설날 운세 & 신년 운세 2026</h3>
+                <div class="blog-meta">
+                    <span>📅 최신</span>
+                    <span>⏱️ 10분</span>
+                </div>
+                <p class="blog-excerpt">2026년 신년 운세와 설날 행운을 위한 심리 자세.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+
+            <a href="/portal/blog/valentine-compatibility-guide.html" class="blog-card psychology">
+                <span class="blog-category">발렌타인</span>
+                <h3>발렌타인 궁합 가이드</h3>
+                <div class="blog-meta">
+                    <span>📅 최신</span>
+                    <span>⏱️ 11분</span>
+                </div>
+                <p class="blog-excerpt">커플 관계를 심화시키는 궁합 분석과 실용적인 연애 조언.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+
+            <a href="/portal/blog/mbti-love-compatibility-2026.html" class="blog-card psychology">
+                <span class="blog-category">연애</span>
+                <h3>MBTI 연애 궁합 2026</h3>
+                <div class="blog-meta">
+                    <span>📅 최신</span>
+                    <span>⏱️ 12분</span>
+                </div>
+                <p class="blog-excerpt">MBTI 유형별 연애 스타일과 이상적인 파트너 유형 분석.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+        </div>
+
+        <!-- 실용 정보 -->
+        <h2 class="section-title">실용 정보</h2>
+        <div class="blog-grid">
+            <a href="/portal/blog/pyeongsu-calculator.html" class="blog-card test">
+                <span class="blog-category">계산 도구</span>
+                <h3>평수 계산기 · 면적 환산표</h3>
+                <div class="blog-meta">
+                    <span>📅 최신</span>
+                    <span>⏱️ 6분</span>
+                </div>
+                <p class="blog-excerpt">평수, 제곱미터, 평방피트 간 빠른 환산 가이드.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+
+            <a href="/portal/blog/2026-online-games-trend.html" class="blog-card game">
+                <span class="blog-category">게임 트렌드</span>
+                <h3>2026 온라인 게임 트렌드</h3>
+                <div class="blog-meta">
+                    <span>📅 최신</span>
+                    <span>⏱️ 10분</span>
+                </div>
+                <p class="blog-excerpt">2026년 인기 있는 게임 장르와 게임 산업 트렌드 분석.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+
+            <a href="/portal/blog/lotto-strategy.html" class="blog-card test">
+                <span class="blog-category">정보</span>
+                <h3>로또 번호 생성 가이드</h3>
+                <div class="blog-meta">
+                    <span>📅 최신</span>
+                    <span>⏱️ 8분</span>
+                </div>
+                <p class="blog-excerpt">로또 번호 선택 전략과 확률 이해.</p>
+                <span class="read-more">더 읽기 →</span>
+            </a>
+        </a>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>DopaBrain 블로그는 심리학, 신경과학, 웰빙에 관한 정보를 제공합니다.</p>
+        <p>Copyright © 2026 DopaBrain. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.blog-card').forEach(card => {
+            card.addEventListener('click', function() {
+                if (window.gtag) {
+                    gtag('event', 'view_blog', {
+                        'blog_title': this.querySelector('h3').textContent,
+                        'event_category': 'blog'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
