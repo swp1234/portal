@@ -154,7 +154,7 @@
         </a>`;
     }
 
-    // ─── Render App Cards (main grid) with Featured section ─────────────────────────
+    // ─── Render App Cards with Category Sections ─────────────────────────
     function renderApps(apps) {
         if (apps.length === 0) {
             appGrid.classList.add('hidden');
@@ -189,7 +189,14 @@
             featuredSection.classList.add('hidden');
         }
 
-        appGrid.innerHTML = regular.map((app, index) => createAppCard(app, index)).join('');
+        // Organize apps by category for section rendering
+        if (currentCategory === 'all' && !searchQuery.trim()) {
+            // Group apps by category with section headers
+            appGrid.innerHTML = renderCategorySections(regular);
+        } else {
+            // Simple grid for filtered/searched results
+            appGrid.innerHTML = `<div style="grid-column: 1 / -1;"><div class="app-grid">${regular.map((app, index) => createAppCard(app, index)).join('')}</div></div>`;
+        }
 
         // Animate cards with stagger
         requestAnimationFrame(() => {
@@ -199,6 +206,45 @@
                 card.classList.add('fade-in');
             });
         });
+    }
+
+    // Create category sections with headers
+    function renderCategorySections(apps) {
+        const categoryInfo = {
+            'quiz': { icon: '🎮', label: 'Games & Quizzes', color: '#667eea', order: 0 },
+            'fortune': { icon: '🔮', label: 'Tests & Fortune', color: '#f093fb', order: 1 },
+            'tool': { icon: '🧮', label: 'Tools & Calculators', color: '#4facfe', order: 2 },
+            'life': { icon: '🧘', label: 'Life & Wellness', color: '#43e97b', order: 3 }
+        };
+
+        const grouped = {};
+        apps.forEach(app => {
+            const cat = app.category || 'tool';
+            if (!grouped[cat]) grouped[cat] = [];
+            grouped[cat].push(app);
+        });
+
+        // Sort categories by order
+        const sortedCategories = Object.keys(grouped)
+            .sort((a, b) => (categoryInfo[a]?.order || 999) - (categoryInfo[b]?.order || 999));
+
+        return sortedCategories.map(category => {
+            const apps = grouped[category];
+            const info = categoryInfo[category] || { icon: '📦', label: category, color: '#8b5cf6' };
+
+            return `
+                <div class="category-section" style="--section-color: ${info.color}">
+                    <div class="section-header">
+                        <span class="section-icon">${info.icon}</span>
+                        <h2 class="section-title">${info.label}</h2>
+                        <span class="section-divider"></span>
+                    </div>
+                    <div class="app-grid">
+                        ${apps.map((app, idx) => createAppCard(app, idx)).join('')}
+                    </div>
+                </div>
+            `;
+        }).join('');
     }
 
     // Create featured card HTML (larger, more prominent)

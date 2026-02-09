@@ -754,6 +754,32 @@ const APP_DATA = [
             de: { name: 'Zahlen-Puzzle 2048', shortDesc: 'Zahlenpuzzle-Spiel' },
             fr: { name: 'Puzzle de Nombres 2048', shortDesc: 'Jeu de nombres 2048' }
         }
+    },
+    {
+        id: 'memory-card',
+        name: '메모리 카드 플립',
+        shortDesc: '카드 뒤집기 기억력 게임',
+        description: '카드를 뒤집어서 짝을 맞추는 클래식 메모리 게임! 콤보 시스템과 다양한 테마로 더욱 재미있는 게임 경험을 즐기세요. 4가지 테마 & 3가지 난이도!',
+        icon: '🎴',
+        color: '#e67e22',
+        category: 'quiz',
+        tags: ['게임', '기억력', '카드', '콤보', '캐주얼', 'memory', 'card', 'flip', 'game', 'puzzle'],
+        url: 'https://dopabrain.com/memory-card/',
+        isNew: true,
+        isPopular: true,
+        i18n: {
+            en: { name: 'Memory Card Flip', shortDesc: 'Card flipping memory game' },
+            zh: { name: '记忆卡翻转', shortDesc: '卡牌翻转记忆游戏' },
+            hi: { name: 'मेमोरी कार्ड फ्लिप', shortDesc: 'कार्ड फ्लिपिंग स्मृति खेल' },
+            ru: { name: 'Перекидывание карт памяти', shortDesc: 'Игра на память с переворотом карт' },
+            ja: { name: 'メモリーカードフリップ', shortDesc: 'カードめくり記憶ゲーム' },
+            es: { name: 'Memory Card Flip', shortDesc: 'Juego de memoria de volteo de cartas' },
+            pt: { name: 'Memory Card Flip', shortDesc: 'Jogo de memória com virada de cartas' },
+            id: { name: 'Memory Card Flip', shortDesc: 'Game memori dengan kartu yang dibalik' },
+            tr: { name: 'Memory Card Flip', shortDesc: 'Kart çevirme hafıza oyunu' },
+            de: { name: 'Memory Card Flip', shortDesc: 'Kartenkipp-Gedächtnisspiel' },
+            fr: { name: 'Memory Card Flip', shortDesc: 'Jeu de mémoire avec retournement de cartes' }
+        }
     }
 ];
 

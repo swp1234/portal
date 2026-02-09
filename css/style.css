@@ -169,6 +169,24 @@ body {
     z-index: 2;
 }
 
+/* === Typewriter Typing Effect === */
+@keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-cursor {
+    50% { border-color: var(--neon-purple); }
+}
+
+.typewriter-effect {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid var(--neon-purple);
+    animation: typewriter 3.5s steps(40, end) 0.3s 1 forwards, blink-cursor 0.75s step-end infinite 3.8s;
+}
+
 .logo-area {
     display: flex;
     align-items: center;
@@ -646,11 +664,14 @@ body {
 }
 
 /* === App Grid === */
+#app-grid {
+    margin-bottom: 24px;
+}
+
 .app-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
-    margin-bottom: 24px;
 }
 
 /* === Featured Card === */
@@ -785,37 +806,59 @@ body {
     min-height: 160px;
 }
 
+/* === 3D Tilt & Perspective Effects === */
+@keyframes tiltEntry {
+    from {
+        opacity: 0;
+        transform: rotateX(20deg) rotateY(-10deg) translateZ(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: rotateX(0deg) rotateY(0deg) translateZ(0px);
+    }
+}
+
+.app-card {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+/* Quiz/Game Category - Playful Tilt */
 .app-card[data-category="quiz"]:hover {
-    transform: scale(1.05) rotate(1deg);
-    border-color: color-mix(in srgb, var(--card-color) 40%, transparent);
+    transform: perspective(1000px) rotateX(-5deg) rotateY(8deg) scale(1.08) translateY(-8px);
+    border-color: color-mix(in srgb, var(--card-color) 50%, transparent);
     box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.4),
-        0 0 30px color-mix(in srgb, var(--card-color) 25%, transparent),
-        inset 0 0 30px color-mix(in srgb, var(--card-color) 05%, transparent);
+        0 24px 48px rgba(0, 0, 0, 0.5),
+        0 0 40px color-mix(in srgb, var(--card-color) 35%, transparent),
+        inset 0 0 30px color-mix(in srgb, var(--card-color) 08%, transparent);
 }
 
+/* Fortune/Test Category - Floating Rise */
 .app-card[data-category="fortune"]:hover {
-    transform: translateY(-6px);
-    border-color: color-mix(in srgb, var(--card-color) 40%, transparent);
+    transform: perspective(1000px) rotateX(-3deg) scale(1.07) translateY(-12px);
+    border-color: color-mix(in srgb, var(--card-color) 45%, transparent);
     box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.4),
-        0 0 35px color-mix(in srgb, var(--card-color) 30%, transparent);
+        0 28px 56px rgba(0, 0, 0, 0.5),
+        0 0 50px color-mix(in srgb, var(--card-color) 40%, transparent),
+        inset 0 0 20px color-mix(in srgb, var(--card-color) 12%, transparent);
 }
 
+/* Tool/Calculator Category - Smooth Lift */
 .app-card[data-category="tool"]:hover {
-    transform: translateY(-4px);
+    transform: perspective(1000px) rotateX(-2deg) rotateY(4deg) scale(1.06) translateY(-10px);
     border-color: color-mix(in srgb, var(--card-color) 40%, transparent);
     box-shadow:
-        0 8px 30px rgba(0, 0, 0, 0.3),
-        0 0 25px color-mix(in srgb, var(--card-color) 20%, transparent);
+        0 20px 40px rgba(0, 0, 0, 0.45),
+        0 0 35px color-mix(in srgb, var(--card-color) 28%, transparent);
 }
 
+/* Life/Wellness Category - Gentle Rise */
 .app-card[data-category="life"]:hover {
-    transform: translateY(-5px);
-    border-color: color-mix(in srgb, var(--card-color) 40%, transparent);
+    transform: perspective(1000px) rotateX(-3deg) rotateY(-4deg) scale(1.065) translateY(-11px);
+    border-color: color-mix(in srgb, var(--card-color) 42%, transparent);
     box-shadow:
-        0 10px 35px rgba(0, 0, 0, 0.35),
-        0 0 28px color-mix(in srgb, var(--card-color) 22%, transparent);
+        0 22px 44px rgba(0, 0, 0, 0.48),
+        0 0 38px color-mix(in srgb, var(--card-color) 32%, transparent);
 }
 
 .app-card:active {
@@ -872,25 +915,63 @@ body {
     gap: 4px;
 }
 
+/* === Enhanced Badges === */
+@keyframes badgePulse {
+    0%, 100% {
+        box-shadow: 0 0 8px currentColor, 0 0 16px currentColor;
+    }
+    50% {
+        box-shadow: 0 0 12px currentColor, 0 0 24px currentColor, 0 0 32px currentColor;
+    }
+}
+
+@keyframes badgeFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-2px); }
+}
+
 .badge {
-    padding: 3px 8px;
+    padding: 4px 10px;
     border-radius: 100px;
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    animation: badgeFloat 2.5s ease-in-out infinite;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.badge:hover {
+    transform: scale(1.1) translateY(-3px);
 }
 
 .badge-new {
-    background: linear-gradient(135deg, #06b6d4, #22d3ee);
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.95), rgba(34, 211, 238, 0.95));
     color: #fff;
-    box-shadow: 0 0 8px rgba(6, 182, 212, 0.3);
+    box-shadow: 0 0 12px rgba(6, 182, 212, 0.6), 0 0 24px rgba(6, 182, 212, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .badge-popular {
-    background: linear-gradient(135deg, #ec4899, #f472b6);
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.95), rgba(244, 114, 182, 0.95));
     color: #fff;
-    box-shadow: 0 0 8px rgba(236, 72, 153, 0.3);
+    box-shadow: 0 0 12px rgba(236, 72, 153, 0.6), 0 0 24px rgba(236, 72, 153, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.badge-hot {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(248, 113, 113, 0.95));
+    color: #fff;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.6), 0 0 24px rgba(239, 68, 68, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.badge::before {
+    content: attr(data-badge-icon);
+    font-size: 11px;
 }
 
 .card-info {
@@ -944,48 +1025,118 @@ body {
     box-shadow: 0 0 15px color-mix(in srgb, var(--card-color, #8b5cf6) 50%, transparent);
 }
 
-/* === Card Animation === */
+/* === Card Animation with Stagger === */
 .app-card.fade-in,
 .featured-card.fade-in {
-    animation: cardFadeIn 0.5s ease forwards;
+    animation: cardFadeIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     opacity: 0;
+    transform: translateY(30px) scale(0.95);
 }
 
 @keyframes cardFadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(30px) scale(0.95);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
-/* === Section Headers (for future category separation) === */
+/* Stagger effect for grid items */
+.app-grid .app-card:nth-child(1) { animation-delay: 0.05s; }
+.app-grid .app-card:nth-child(2) { animation-delay: 0.1s; }
+.app-grid .app-card:nth-child(3) { animation-delay: 0.15s; }
+.app-grid .app-card:nth-child(4) { animation-delay: 0.2s; }
+.app-grid .app-card:nth-child(n+5) { animation-delay: calc(0.05s * (var(--index) - 4)); }
+
+.featured-grid .featured-card:nth-child(1) { animation-delay: 0.05s; }
+.featured-grid .featured-card:nth-child(2) { animation-delay: 0.15s; }
+.featured-grid .featured-card:nth-child(3) { animation-delay: 0.25s; }
+
+/* === Category Section Headers === */
+.category-section {
+    margin-bottom: 32px;
+}
+
+.category-section:first-of-type {
+    margin-top: 0;
+}
+
+@keyframes slideInSection {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .section-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding: 0 4px;
+    gap: 14px;
+    margin-bottom: 18px;
+    padding: 16px 16px;
+    background: linear-gradient(135deg,
+        color-mix(in srgb, var(--section-color, #8b5cf6) 12%, transparent),
+        color-mix(in srgb, var(--section-color, #8b5cf6) 06%, transparent));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-left: 4px solid var(--section-color, #8b5cf6);
+    border-radius: var(--radius);
+    animation: slideInSection 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.section-header::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 32px;
+    background: linear-gradient(90deg, var(--section-color, #8b5cf6), transparent);
+    border-radius: 2px;
+    animation: expandWidth 0.8s ease-out forwards;
+}
+
+@keyframes expandWidth {
+    from { width: 0; }
+    to { width: 3px; }
 }
 
 .section-icon {
-    font-size: 24px;
+    font-size: 28px;
+    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--section-color) 30%, transparent));
 }
 
 .section-title {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 800;
     color: var(--text);
     flex: 1;
+    background: linear-gradient(135deg, var(--text), color-mix(in srgb, var(--section-color) 60%, var(--text)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-subtitle {
+    font-size: 12px;
+    color: color-mix(in srgb, var(--section-color) 70%, var(--text-secondary));
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
 .section-divider {
-    height: 2px;
+    height: 3px;
     flex: 1;
-    background: linear-gradient(90deg, color-mix(in srgb, var(--section-color) 50%, transparent), transparent);
+    border-radius: 2px;
+    background: linear-gradient(90deg,
+        color-mix(in srgb, var(--section-color) 50%, transparent),
+        transparent);
 }
 
 /* === Empty State === */
@@ -1063,14 +1214,16 @@ body {
     font-weight: 500;
 }
 
-/* === Footer === */
+/* === Footer - Enhanced Brand Signature === */
 .portal-footer {
     text-align: center;
-    padding: 16px 0 24px;
-    border-top: 1px solid var(--border-glass);
+    padding: 32px 20px 24px;
+    border-top: 2px solid linear-gradient(90deg, transparent, var(--neon-purple), transparent);
+    background: linear-gradient(180deg, rgba(139, 92, 246, 0.03), transparent);
     opacity: 0;
     transform: translateY(20px);
     transition: var(--transition);
+    margin-top: 24px;
 }
 
 .portal-footer.visible {
@@ -1078,16 +1231,42 @@ body {
     transform: translateY(0);
 }
 
+.footer-signature {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.footer-signature::before,
+.footer-signature::after {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--neon-purple), transparent);
+}
+
+.footer-signature::after {
+    background: linear-gradient(90deg, transparent, var(--neon-purple));
+}
+
 .portal-footer p {
     font-size: 12px;
     color: var(--text-dim);
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 
 .footer-links {
     display: flex;
     justify-content: center;
-    gap: 16px;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
 }
 
 .footer-links a {
@@ -1095,10 +1274,36 @@ body {
     color: var(--text-secondary);
     text-decoration: none;
     transition: var(--transition-fast);
+    position: relative;
+    padding-bottom: 2px;
+}
+
+.footer-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--neon-purple);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
 }
 
 .footer-links a:hover {
     color: var(--neon-purple);
+}
+
+.footer-links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.footer-meta {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
 }
 
 /* === Blog Section === */
