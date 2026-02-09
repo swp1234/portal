@@ -652,6 +652,32 @@ const APP_DATA = [
         }
     },
     {
+        id: 'typing-speed',
+        name: '타이핑 속도 테스트',
+        shortDesc: 'WPM 측정 게임',
+        description: '타이핑 속도를 측정하세요! WPM(분당 단어수)과 정확도를 테스트하고 당신의 타이핑 실력을 확인하세요. 2가지 모드: 단어 모드, 문장 모드.',
+        icon: '⌨️',
+        color: '#4CAF50',
+        category: 'quiz',
+        tags: ['타이핑', '게임', '속도테스트', 'WPM', '연습', 'typing', 'speed', 'test', 'game', 'keyboard'],
+        url: 'https://dopabrain.com/typing-speed/',
+        isNew: true,
+        isPopular: true,
+        i18n: {
+            en: { name: 'Typing Speed Test', shortDesc: 'WPM measurement game' },
+            zh: { name: '打字速度测试', shortDesc: 'WPM测量游戏' },
+            hi: { name: 'टाइपिंग स्पीड टेस्ट', shortDesc: 'WPM माप गेम' },
+            ru: { name: 'Тест скорости печати', shortDesc: 'Игра измерения WPM' },
+            ja: { name: 'タイピング速度テスト', shortDesc: 'WPM測定ゲーム' },
+            es: { name: 'Prueba de Velocidad de Escritura', shortDesc: 'Juego de medición WPM' },
+            pt: { name: 'Teste de Velocidade de Digitação', shortDesc: 'Jogo de medição WPM' },
+            id: { name: 'Tes Kecepatan Mengetik', shortDesc: 'Game pengukuran WPM' },
+            tr: { name: 'Yazma Hızı Testi', shortDesc: 'WPM ölçüm oyunu' },
+            de: { name: 'Schreibgeschwindigkeitstest', shortDesc: 'WPM-Messspiel' },
+            fr: { name: 'Test de Vitesse de Saisie', shortDesc: 'Jeu de mesure WPM' }
+        }
+    },
+    {
         id: 'color-memory',
         name: '색상 기억력',
         shortDesc: '기억력 도전 게임',

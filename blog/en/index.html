@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="DopaBrain English Blog - Free brain training games, personality tests, digital wellness, mental health tips, and psychology insights.">
+    <meta name="keywords" content="blog, brain training, personality tests, mental health, digital wellness, psychology, games, online tools">
+    <meta name="author" content="DopaBrain">
+    <title>DopaBrain English Blog | Brain Training, Personality Tests & Wellness</title>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="DopaBrain English Blog">
+    <meta property="og:description" content="Free brain training games, personality tests, digital wellness apps, and mental health guides">
+    <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg">
+    <meta property="og:url" content="https://dopabrain.com/portal/blog/en/">
+    <meta property="og:site_name" content="DopaBrain">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://dopabrain.com/portal/blog/en/">
+
+    <!-- hreflang -->
+    <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/">
+    <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-J8GSWM40TV');
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882"
+        crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --primary: #667eea;
+            --primary-light: #818cf8;
+            --secondary: #06b6d4;
+            --accent: #f43f5e;
+            --bg-dark: #0a0a1a;
+            --bg-light: #15151f;
+            --text-primary: #f0f0f8;
+            --text-secondary: #a0a0b8;
+            --border-color: rgba(99, 102, 241, 0.15);
+            --card-bg: rgba(99, 102, 241, 0.08);
+            --spacing: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', sans-serif;
+            background: #0a0a1a;
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem var(--spacing);
+            background: rgba(10, 10, 26, 0.85);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .header-nav a:hover {
+            color: var(--secondary);
+            transform: translateX(-2px);
+        }
+
+        .header-nav span {
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero-section {
+            position: relative;
+            padding: 6rem var(--spacing) 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border-bottom: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .article-header {
+            position: relative;
+            z-index: 10;
+            margin-bottom: 0;
+        }
+
+        .article-header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            color: var(--text-primary);
+        }
+
+        .article-header h1 span {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .article-desc {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .blog-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--card-accent, var(--primary)) 0%, transparent 100%);
+        }
+
+        .blog-card:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+            transform: translateY(-8px);
+            background: rgba(99, 102, 241, 0.12);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .blog-category {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--card-accent, var(--primary)) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            width: fit-content;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-card h3 {
+            color: var(--text-primary);
+            margin: 0 0 0.8rem 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .blog-excerpt {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover .read-more {
+            gap: 0.8rem;
+            color: var(--secondary);
+        }
+
+        .blog-card.brain {
+            --card-accent: #3b82f6;
+        }
+
+        .blog-card.psychology {
+            --card-accent: #6366f1;
+        }
+
+        .blog-card.wellness {
+            --card-accent: #10b981;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 3rem 0 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 2px;
+        }
+
+        .article-footer {
+            text-align: center;
+            padding: 3rem var(--spacing);
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+            color: var(--text-secondary);
+        }
+
+        .article-footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .article-header h1 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+
+            .article-desc {
+                font-size: 1rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .blog-card {
+                padding: 1.5rem;
+            }
+
+            .header-nav span {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-nav">
+        <a href="https://dopabrain.com/portal/">← DopaBrain Home</a>
+        <span style="color: var(--text-secondary);">English Blog</span>
+    </div>
+
+    <div class="hero-section">
+        <div class="container">
+            <header class="article-header">
+                <h1>DopaBrain <span>English Blog</span></h1>
+            <p class="article-desc">
+                Discover brain training games, personality tests, digital wellness tools, and science-backed mental health guides.
+            </p>
+            </header>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Latest Posts -->
+        <h2 class="section-title">Latest Articles</h2>
+        <div class="blog-grid">
+            <a href="/portal/blog/en/2026-02-10-brain-training-games.html" class="blog-card brain">
+                <span class="blog-category">Brain Training</span>
+                <h3>Best Free Brain Training Games Online 2026 - Boost Your Memory & Focus</h3>
+                <div class="blog-meta">
+                    <span>📅 Feb 10, 2026</span>
+                    <span>⏱️ 12 min</span>
+                </div>
+                <p class="blog-excerpt">Discover the best free brain training games to improve memory, focus, reaction time, and cognitive skills. Play color-memory, number-puzzle, reaction-test instantly.</p>
+                <span class="read-more">Read More →</span>
+            </a>
+
+            <a href="/portal/blog/en/2026-02-10-personality-tests-guide.html" class="blog-card psychology">
+                <span class="blog-category">Psychology</span>
+                <h3>Free Online Personality Tests That Actually Work - Discover Your True Self</h3>
+                <div class="blog-meta">
+                    <span>📅 Feb 10, 2026</span>
+                    <span>⏱️ 14 min</span>
+                </div>
+                <p class="blog-excerpt">Explore accurate personality tests including MBTI, HSP test, brain-type, and past-life analysis. Understand yourself better and improve relationships.</p>
+                <span class="read-more">Read More →</span>
+            </a>
+
+            <a href="/portal/blog/en/2026-02-10-digital-wellness-apps.html" class="blog-card wellness">
+                <span class="blog-category">Wellness</span>
+                <h3>The Ultimate Guide to Digital Wellness Apps - Free Tools for Better Mental Health</h3>
+                <div class="blog-meta">
+                    <span>📅 Feb 10, 2026</span>
+                    <span>⏱️ 13 min</span>
+                </div>
+                <p class="blog-excerpt">Free digital wellness apps for stress relief, better sleep, emotional balance. Digital detox timer, white noise, daily affirmations, emotion temperature.</p>
+                <span class="read-more">Read More →</span>
+            </a>
+        </div>
+
+        <!-- All English Posts -->
+        <h2 class="section-title">All Articles</h2>
+        <div class="blog-grid">
+            <a href="/portal/blog/en/personality-tests.html" class="blog-card psychology">
+                <span class="blog-category">Psychology</span>
+                <h3>Personality Tests Guide</h3>
+                <div class="blog-meta">
+                    <span>📅 Recent</span>
+                    <span>⏱️ 10 min</span>
+                </div>
+                <p class="blog-excerpt">Comprehensive guide to understanding personality through science-backed assessment tools.</p>
+                <span class="read-more">Read More →</span>
+            </a>
+
+            <a href="/portal/blog/en/free-games.html" class="blog-card wellness">
+                <span class="blog-category">Games</span>
+                <h3>Free Online Games</h3>
+                <div class="blog-meta">
+                    <span>📅 Recent</span>
+                    <span>⏱️ 11 min</span>
+                </div>
+                <p class="blog-excerpt">Collection of the best free online games available without downloads or installations.</p>
+                <span class="read-more">Read More →</span>
+            </a>
+
+            <a href="/portal/blog/en/best-browser-games-2026.html" class="blog-card brain">
+                <span class="blog-category">Games</span>
+                <h3>10 Best Free Browser Games 2026</h3>
+                <div class="blog-meta">
+                    <span>📅 Recent</span>
+                    <span>⏱️ 12 min</span>
+                </div>
+                <p class="blog-excerpt">The hottest browser-based games you can play instantly. No download required.</p>
+                <span class="read-more">Read More →</span>
+            </a>
+
+            <a href="/portal/blog/en/brain-type-test-2026.html" class="blog-card brain">
+                <span class="blog-category">Brain Type</span>
+                <h3>Brain Type Test 2026</h3>
+                <div class="blog-meta">
+                    <span>📅 Recent</span>
+                    <span>⏱️ 10 min</span>
+                </div>
+                <p class="blog-excerpt">Discover your brain type and how it affects your learning and problem-solving abilities.</p>
+                <span class="read-more">Read More →</span>
+            </a>
+
+            <a href="/portal/blog/en/digital-detox.html" class="blog-card wellness">
+                <span class="blog-category">Wellness</span>
+                <h3>Digital Detox Guide</h3>
+                <div class="blog-meta">
+                    <span>📅 Recent</span>
+                    <span>⏱️ 9 min</span>
+                </div>
+                <p class="blog-excerpt">Practical strategies for managing your digital life and improving mental health.</p>
+                <span class="read-more">Read More →</span>
+            </a>
+
+            <a href="/portal/blog/en/daily-affirmation-guide.html" class="blog-card psychology">
+                <span class="blog-category">Personal Growth</span>
+                <h3>Daily Affirmation Guide</h3>
+                <div class="blog-meta">
+                    <span>📅 Recent</span>
+                    <span>⏱️ 11 min</span>
+                </div>
+                <p class="blog-excerpt">Transform your mindset with science-backed affirmation practices.</p>
+                <span class="read-more">Read More →</span>
+            </a>
+        </div>
+
+        <!-- Language Navigation -->
+        <h2 class="section-title">Other Languages</h2>
+        <div style="margin: 3rem 0; padding: 2rem; background: rgba(99, 102, 241, 0.08); border: 1px solid var(--border-color); border-radius: 16px;">
+            <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">DopaBrain blog is available in multiple languages.</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem;">
+                <a href="/portal/blog/" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; text-align: center; text-decoration: none; color: var(--primary); transition: all 0.3s ease; font-weight: 600;" onmouseover="this.style.background='rgba(99, 102, 241, 0.12)'" onmouseout="this.style.background='var(--card-bg)'">
+                    🇰🇷 한국어
+                </a>
+                <a href="/portal/blog/zh/" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; text-align: center; text-decoration: none; color: var(--primary); transition: all 0.3s ease; font-weight: 600;" onmouseover="this.style.background='rgba(99, 102, 241, 0.12)'" onmouseout="this.style.background='var(--card-bg)'">
+                    🇨🇳 中文
+                </a>
+                <a href="/portal/blog/hi/" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; text-align: center; text-decoration: none; color: var(--primary); transition: all 0.3s ease; font-weight: 600;" onmouseover="this.style.background='rgba(99, 102, 241, 0.12)'" onmouseout="this.style.background='var(--card-bg)'">
+                    🇮🇳 हिन्दी
+                </a>
+                <a href="/portal/blog/ru/" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; text-align: center; text-decoration: none; color: var(--primary); transition: all 0.3s ease; font-weight: 600;" onmouseover="this.style.background='rgba(99, 102, 241, 0.12)'" onmouseout="this.style.background='var(--card-bg)'">
+                    🇷🇺 Русский
+                </a>
+                <a href="/portal/blog/ja/" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; text-align: center; text-decoration: none; color: var(--primary); transition: all 0.3s ease; font-weight: 600;" onmouseover="this.style.background='rgba(99, 102, 241, 0.12)'" onmouseout="this.style.background='var(--card-bg)'">
+                    🇯🇵 日本語
+                </a>
+                <a href="/portal/blog/es/" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; text-align: center; text-decoration: none; color: var(--primary); transition: all 0.3s ease; font-weight: 600;" onmouseover="this.style.background='rgba(99, 102, 241, 0.12)'" onmouseout="this.style.background='var(--card-bg)'">
+                    🇪🇸 Español
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>DopaBrain - Free Brain Training & Mental Health Resources</p>
+        <p>Copyright © 2026 DopaBrain. All rights reserved. | <a href="https://dopabrain.com/portal/privacy-policy.html">Privacy Policy</a></p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.blog-card').forEach(card => {
+            card.addEventListener('click', function() {
+                if (window.gtag) {
+                    gtag('event', 'view_blog', {
+                        'blog_title': this.querySelector('h3').textContent,
+                        'event_category': 'blog'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
