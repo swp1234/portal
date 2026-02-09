@@ -1260,7 +1260,7 @@ const APP_DATA = [
             en: { name: 'Minesweeper', shortDesc: 'Classic puzzle game' },
             zh: { name: '扫雷游戏', shortDesc: '经典益智游戏' },
             hi: { name: 'माइनस्वीपर', shortDesc: 'क्लासिक पहेली गेम' },
-            ru: { name: 'Сапёр', shortDesc: 'Классическая головоломка' },
+            ru: { name: 'Сапёर', shortDesc: 'Классическая головоломка' },
             ja: { name: 'マインスウィーパー', shortDesc: 'クラシックパズルゲーム' },
             es: { name: 'Buscaminas', shortDesc: 'Juego de puzzle clásico' },
             pt: { name: 'Minesweeper', shortDesc: 'Jogo de puzzle clássico' },
@@ -1268,6 +1268,33 @@ const APP_DATA = [
             tr: { name: 'Mayın Tarlası', shortDesc: 'Klasik bulmaca oyunu' },
             de: { name: 'Minensuchspiel', shortDesc: 'Klassisches Puzzlespiel' },
             fr: { name: 'Démineur', shortDesc: 'Jeu de puzzle classique' }
+        }
+    },
+    {
+        id: 'pong-game',
+        name: 'Pong - 클래식 아케이드 게임',
+        shortDesc: '1P vs AI / 2P 로컬 멀티플레이',
+        description: '클래식 Pong 게임의 현대적 재해석! 1P vs AI 모드 또는 2P 로컬 멀티플레이. 3단계 난이도, 패들 크기 조절, 파워업 모드, 터치 드래그 + 마우스/키보드 지원. 네온 글로우 비주얼과 스무스한 물리 엔진.',
+        icon: '🏓',
+        color: '#e67e22',
+        category: 'game',
+        tags: ['게임', '아케이드', 'Pong', '클래식', '멀티플레이', '1P vs AI', '2P 로컬', 'arcade', 'classic', 'multiplayer'],
+        url: 'https://dopabrain.com/pong-game/',
+        isNew: true,
+        isPopular: true,
+        popularity: 7,
+        i18n: {
+            en: { name: 'Pong - Classic Arcade', shortDesc: '1P vs AI / 2P Local Multiplayer' },
+            zh: { name: 'Pong - 经典街机游戏', shortDesc: '1P对阵AI / 2P本地多人' },
+            hi: { name: 'Pong - क्लासिक आर्केड गेम', shortDesc: '1P vs AI / 2P स्थानीय मल्टीप्लेयर' },
+            ru: { name: 'Pong - Классическая аркада', shortDesc: '1P против AI / 2P локальный мультиплеер' },
+            ja: { name: 'Pong - クラシックアーケード', shortDesc: '1P vs AI / 2Pローカルマルチプレイ' },
+            es: { name: 'Pong - Arcade Clásico', shortDesc: '1P vs IA / Multijugador Local 2P' },
+            pt: { name: 'Pong - Arcade Clássico', shortDesc: '1P vs IA / Multijogador Local 2P' },
+            id: { name: 'Pong - Game Arcade Klasik', shortDesc: '1P vs AI / 2P Lokal Multiplayer' },
+            tr: { name: 'Pong - Klasik Arcade Oyunu', shortDesc: '1P vs AI / 2P Yerel Çok Oyunculu' },
+            de: { name: 'Pong - Klassisches Arcade-Spiel', shortDesc: '1P vs KI / 2P lokales Multiplayer' },
+            fr: { name: 'Pong - Jeu d\'Arcade Classique', shortDesc: '1J vs IA / Multijoueur local 2J' }
         }
     }
 ];
