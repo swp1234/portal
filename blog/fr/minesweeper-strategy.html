@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="description" content="Démineur : Stratégie du débutant à l'expert. Apprenez les techniques, patterns et astuces pour maîtriser ce jeu classique de logique et résoudre chaque plateau.">
+    <meta name="keywords" content="démineur stratégie, minesweeper guide, technique démineur, patterns démineur, astuces minesweeper, résoudre démineur">
+    <meta name="author" content="DopaBrain">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="naver-site-verification" content="naver0f894086393482efed7c1ac0a16062e5">
+    <title>Démineur : Stratégie du Débutant à l'Expert | Guide Complet | DopaBrain</title>
+
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Démineur : Stratégie du Débutant à l'Expert">
+    <meta property="og:description" content="Guide complet des stratégies, techniques et patterns du démineur. Maîtrisez ce jeu classique avec des astuces éprouvées.">
+    <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg">
+    <meta property="og:url" content="https://dopabrain.com/portal/blog/fr/minesweeper-strategy.html">
+    <meta property="og:site_name" content="DopaBrain">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Démineur : Guide de Stratégie Complet">
+    <meta name="twitter:description" content="Apprenez à maîtriser le démineur avec des stratégies éprouvées du débutant à l'expert.">
+    <meta name="twitter:image" content="https://dopabrain.com/portal/icon-512.svg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://dopabrain.com/portal/blog/fr/minesweeper-strategy.html">
+
+    <!-- Alternate Language Links -->
+    <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/minesweeper-strategy.html">
+    <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/minesweeper-strategy.html">
+
+    <!-- Schema.org Article JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Démineur : Stratégie du Débutant à l'Expert",
+        "description": "Guide complet des stratégies de démineur couvrant les techniques de base, les patterns avancés et les astuces pour résoudre chaque plateau.",
+        "image": "https://dopabrain.com/portal/icon-512.svg",
+        "datePublished": "2026-02-10",
+        "dateModified": "2026-02-10",
+        "inLanguage": "fr",
+        "author": {
+            "@type": "Organization",
+            "name": "DopaBrain"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "DopaBrain",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://dopabrain.com/portal/icon-512.svg"
+            }
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://dopabrain.com/portal/blog/fr/minesweeper-strategy.html"
+        }
+    }
+    </script>
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-J8GSWM40TV');
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882"
+        crossorigin="anonymous"></script>
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --secondary: #8b5cf6;
+            --accent: #a78bfa;
+            --bg-dark: #0f0f23;
+            --bg-light: #1a1a2e;
+            --text-primary: #f8f9fa;
+            --text-secondary: #b8bcc4;
+            --border-color: rgba(99, 102, 241, 0.12);
+            --card-bg: rgba(99, 102, 241, 0.06);
+            --success: #7c3aed;
+            --spacing: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #0f0f23;
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 10% 30%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 90% 70%, rgba(99, 102, 241, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.1s ease;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem var(--spacing);
+            background: rgba(15, 15, 35, 0.9);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .header-nav a:hover {
+            color: var(--secondary);
+            transform: translateX(-2px);
+        }
+
+        .header-nav span {
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero-section {
+            position: relative;
+            padding: 6rem var(--spacing) 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(99, 102, 241, 0.08) 100%);
+            border-bottom: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .article-header {
+            position: relative;
+            z-index: 10;
+            margin-bottom: 0;
+        }
+
+        .article-header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            color: var(--text-primary);
+        }
+
+        .article-header h1 span {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .article-desc {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 var(--spacing);
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-wrapper {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 3rem;
+            margin: 3rem auto;
+        }
+
+        .toc {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            backdrop-filter: blur(10px);
+            height: fit-content;
+            position: sticky;
+            top: 70px;
+        }
+
+        .toc h2 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .toc ol {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            margin-bottom: 0.9rem;
+            font-size: 0.9rem;
+        }
+
+        .toc li::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin-right: 0.7rem;
+            opacity: 0.6;
+        }
+
+        .toc a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .toc a:hover {
+            color: var(--secondary);
+            padding-left: 0.5rem;
+        }
+
+        .article-content {
+            margin: 0;
+        }
+
+        .article-content section {
+            margin-bottom: 4rem;
+        }
+
+        .article-content h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: 0 0 1.5rem 0;
+            position: relative;
+            padding-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .article-content h2::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 2px;
+        }
+
+        .article-content h3 {
+            font-size: 1.35rem;
+            color: var(--text-primary);
+            margin: 1.8rem 0 1rem;
+            font-weight: 700;
+        }
+
+        .article-content h4 {
+            font-size: 1.05rem;
+            color: var(--primary);
+            margin: 1.2rem 0 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
+        }
+
+        .article-content p {
+            margin-bottom: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.85;
+            font-size: 1rem;
+        }
+
+        .article-content ul,
+        .article-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-content li {
+            margin-bottom: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .article-content strong {
+            color: var(--primary-light);
+            font-weight: 700;
+        }
+
+        .highlight-box {
+            background: var(--card-bg);
+            border-left: 4px solid var(--primary);
+            padding: 1.8rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+        }
+
+        .highlight-box.success {
+            border-left-color: var(--success);
+            background: rgba(124, 58, 237, 0.06);
+            border-color: rgba(124, 58, 237, 0.12);
+        }
+
+        .highlight-box p {
+            color: var(--text-primary);
+            margin-bottom: 0;
+            line-height: 1.7;
+        }
+
+        .highlight-box strong {
+            color: var(--secondary);
+        }
+
+        .strategy-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 2.5rem 0;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .strategy-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .strategy-card:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.15);
+        }
+
+        .strategy-card:hover::before {
+            opacity: 1;
+        }
+
+        .strategy-level {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary-light) 100%);
+            color: white;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 6px 12px rgba(139, 92, 246, 0.2);
+        }
+
+        .strategy-card h3 {
+            margin-top: 0;
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .strategy-card > p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .tips-box {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+            padding: 1.3rem;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            border: 1px solid rgba(139, 92, 246, 0.1);
+            line-height: 1.8;
+        }
+
+        .tips-box strong {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .strategy-card ul {
+            margin: 1.2rem 0 1.5rem 1.8rem;
+        }
+
+        .strategy-card li {
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(99, 102, 241, 0.08) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            margin: 4rem 0;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-section h2 {
+            color: var(--text-primary);
+            margin-top: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.1rem 3rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 12px 24px rgba(139, 92, 246, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 36px rgba(139, 92, 246, 0.4);
+        }
+
+        .related-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .related-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .related-card:hover {
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateY(-6px);
+            background: rgba(139, 92, 246, 0.1);
+            box-shadow: 0 16px 32px rgba(139, 92, 246, 0.12);
+        }
+
+        .related-card h3 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .related-card p {
+            color: var(--text-secondary);
+            margin-bottom: 0;
+            line-height: 1.7;
+        }
+
+        .article-footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+            color: var(--text-secondary);
+        }
+
+        .article-footer p {
+            margin-bottom: 0.8rem;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 1024px) {
+            .article-wrapper {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .toc {
+                position: relative;
+                top: auto;
+                display: none;
+            }
+
+            .article-header h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-badge {
+                position: static;
+                display: inline-block;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-section {
+                padding: 3rem var(--spacing) 2rem;
+            }
+
+            .container {
+                padding: 0 var(--spacing);
+            }
+
+            .article-header h1 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+
+            .article-meta {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .article-desc {
+                font-size: 1rem;
+            }
+
+            .strategy-card {
+                padding: 1.8rem;
+            }
+
+            .strategy-level {
+                width: 44px;
+                height: 44px;
+                font-size: 0.9rem;
+            }
+
+            .strategy-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .cta-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .article-content h2 {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .article-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .strategy-card {
+                padding: 1.5rem;
+            }
+
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .header-nav {
+                font-size: 0.85rem;
+            }
+
+            .header-nav span {
+                display: none;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .header-nav,
+            .toc,
+            .cta-section,
+            .related-posts,
+            .article-footer,
+            .progress-bar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+
+    <div class="header-nav">
+        <a href="https://dopabrain.com/portal/">← Retour à DopaBrain</a>
+        <span style="color: var(--text-secondary);">Guide de Stratégie Démineur</span>
+    </div>
+
+    <div class="hero-section">
+        <div class="hero-badge">GUIDE COMPLET</div>
+        <div class="container">
+            <header class="article-header">
+                <h1>Démineur : <span>Stratégie du débutant à l'expert</span></h1>
+                <div class="article-meta">
+                    <span>📅 10 février 2026</span>
+                    <span>👤 DopaBrain</span>
+                    <span>⏱️ Lecture d'environ 16 min</span>
+                </div>
+                <p class="article-desc">
+                    Maîtrisez le classique jeu de logique Démineur avec ce guide stratégique complet. Apprenez les techniques, les patterns et les astuces pour résoudre chaque plateau en tant que expert.
+                </p>
+            </header>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="article-wrapper">
+            <nav class="toc">
+                <h2>📑 Table des matières</h2>
+                <ol>
+                    <li><a href="#basics">Les bases du jeu</a></li>
+                    <li><a href="#beginner">Stratégie débutant</a></li>
+                    <li><a href="#intermediate">Techniques intermédiaires</a></li>
+                    <li><a href="#advanced">Stratégies avancées</a></li>
+                    <li><a href="#patterns">Patterns communs</a></li>
+                    <li><a href="#probability">Analyse probabiliste</a></li>
+                    <li><a href="#mental">Amélioration mentale</a></li>
+                    <li><a href="#tips">Astuces et hacks</a></li>
+                    <li><a href="#practice">Entraînement</a></li>
+                </ol>
+            </nav>
+
+            <main class="article-content">
+                <section id="basics">
+                    <h2>Les bases du jeu Démineur</h2>
+                    <p>
+                        Le <strong>Démineur (Minesweeper)</strong> est un jeu de logique classique où votre objectif est de découvrir toutes les cases non-minées sur un plateau sans déclencher une seule mine. Chaque nombre indique combien de mines se trouvent dans les 8 cases adjacentes.
+                    </p>
+
+                    <h3>Comment ça marche</h3>
+                    <ul>
+                        <li><strong>Plateau :</strong> Une grille de cases carrées (habituellement 8×8, 10×10, ou 16×30)</li>
+                        <li><strong>Mines :</strong> Cachées aléatoirement sous certaines cases</li>
+                        <li><strong>Nombres :</strong> Indiquent le nombre exact de mines adjacentes (0-8)</li>
+                        <li><strong>Cases vides :</strong> Aucune mine adjacente (nombre = 0)</li>
+                        <li><strong>Vous perdez :</strong> Si vous cliquez sur une mine</li>
+                        <li><strong>Vous gagnez :</strong> Si vous découvrez toutes les cases non-minées</li>
+                    </ul>
+
+                    <div class="highlight-box success">
+                        <p>💡 <strong>Point clé :</strong> Chaque nombre est une certitude mathématique. Si une case indique "2", il y a EXACTEMENT 2 mines parmi les 8 cases adjacentes. Utilisez cette logique absolue pour déduire où se trouvent les mines.</p>
+                    </div>
+                </section>
+
+                <section id="beginner">
+                    <h2>Stratégie Débutant : Construire une base solide</h2>
+
+                    <div class="strategy-card">
+                        <div class="strategy-level">1</div>
+                        <h3>Ouverture : Le premier coup crucial</h3>
+                        <p>
+                            Votre premier coup détermine votre succès ou votre échec. <strong>Cliquez toujours au centre</strong> de la grille plutôt que dans les coins. Pourquoi ? Le centre a plus de voisins, ce qui signifie plus d'informations révélées.
+                        </p>
+
+                        <div class="tips-box">
+                            <strong>Astuce :</strong> Un clic central révèle généralement 10-20 cases. Un clic de coin n'en révèle que 3-8. Les cases vides auto-révèlent aussi les cases voisines, créant une cascade.
+                        </div>
+
+                        <h4>Meilleure première tactique</h4>
+                        <ul>
+                            <li>Cliquez au centre du plateau</li>
+                            <li>Si vous révélez un "0" (zone vide), attendez-vous à une grande cascade</li>
+                            <li>Si vous révélez un nombre petit (1-2), vous avez des mines à proximité</li>
+                            <li>Étudiez d'abord avant de cliquer davantage</li>
+                        </ul>
+                    </div>
+
+                    <div class="strategy-card">
+                        <div class="strategy-level">2</div>
+                        <h3>Déduction logique simple</h3>
+                        <p>
+                            <strong>La règle d'or du démineur :</strong> Si une case indique "N" et a exactement N voisins non découverts, alors tous les N voisins sont des mines.
+                        </p>
+
+                        <div class="tips-box">
+                            <strong>Exemple :</strong> Une case "1" avec 1 voisin non découvert = ce voisin est une mine. Marquezla comme telle et cliquez en toute sécurité sur tous les autres voisins.
+                        </div>
+
+                        <h4>Modèles simples à reconnaître</h4>
+                        <ul>
+                            <li><strong>"1" avec 1 voisin non découvert</strong> = Ce voisin est une mine</li>
+                            <li><strong>"2" avec 2 voisins non découverts</strong> = Les deux sont des mines</li>
+                            <li><strong>"0" (espace vide)</strong> = TOUS les voisins sont sûrs, cliquez tous</li>
+                        </ul>
+                    </div>
+
+                    <div class="strategy-card">
+                        <div class="strategy-level">3</div>
+                        <h3>Marquage efficace des mines</h3>
+                        <p>
+                            Marquez les mines que vous êtes sûr de trouver avec le drapeau du jeu. Cela <strong>réduit mentalement le problème</strong> et vous aide à voir les patterns plus rapidement.
+                        </p>
+
+                        <h4>Système de marquage</h4>
+                        <ul>
+                            <li>🚩 <strong>Drapeau rouge :</strong> Vous êtes 100% certain que c'est une mine</li>
+                            <li>❓ <strong>Point d'interrogation :</strong> Peut-être une mine, à vérifier plus tard</li>
+                            <li><strong>Pas de marque :</strong> Vous êtes sûr que c'est sûr</li>
+                        </ul>
+
+                        <p>
+                            <strong>Important :</strong> Marquez uniquement si vous êtes CERTAIN. Un mauvais marquage peut vous tromper plus tard.
+                        </p>
+                    </div>
+                </section>
+
+                <section id="intermediate">
+                    <h2>Techniques intermédiaires : Résoudre les cas ambigus</h2>
+
+                    <div class="strategy-card">
+                        <div class="strategy-level">4</div>
+                        <h3>Analyse des régions limitrophes</h3>
+                        <p>
+                            Lorsqu'une région révélée borde une région non découverte, <strong>analyser la limite</strong> peut révéler où sont les mines.
+                        </p>
+
+                        <div class="tips-box">
+                            <strong>Technique :</strong> Une limite "1-2-1" signifie souvent une structure minière spécifique. Compter les mines confirmées par rapport aux nombres aide à identifier les cases sûres.
+                        </div>
+                    </div>
+
+                    <div class="strategy-card">
+                        <div class="strategy-level">5</div>
+                        <h3>Technique de recoupement</h3>
+                        <p>
+                            Lorsque deux nombres se chevauchent (partagent un voisinage), <strong>comparer leurs nombres peut révéler des informations</strong>.
+                        </p>
+
+                        <h4>Exemple de recoupement</h4>
+                        <p>
+                            Cas A indique "3" avec 5 voisins non découverts (2 marqués, 3 non marqués)<br>
+                            Cas B indique "2" avec 2 voisins non marqués communs à A<br>
+                            → Conclusion : Parmi les 3 voisins non marqués restants d'A, il y a 1 mine.
+                        </p>
+                    </div>
+
+                    <div class="strategy-card">
+                        <div class="strategy-level">6</div>
+                        <h3>Élimination des fronts</h3>
+                        <p>
+                            Les fronts sont les limites entre la zone découverte et non découverte. <strong>En analysant les nombres de front</strong>, vous pouvez éliminer les possibilités.
+                        </p>
+
+                        <h4>Processus</h4>
+                        <ol>
+                            <li>Identifiez les cases de front (dernières cases découvertes avant le brouillard)</li>
+                            <li>Notez leurs nombres et voisins non découverts</li>
+                            <li>Comparez les nombres entre les voisins de front qui se chevauchent</li>
+                            <li>Déduisez où les mines doivent être</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section id="advanced">
+                    <h2>Stratégies avancées : Logique mathématique</h2>
+
+                    <div class="strategy-card">
+                        <div class="strategy-level">7</div>
+                        <h3>Analyse de contrainte satisfiable</h3>
+                        <p>
+                            À haut niveau, le démineur est un problème de <strong>satisfaction de contraintes</strong>. Chaque nombre est une contrainte. Votre tâche est de trouver la configuration minière unique qui satisfait toutes les contraintes.
+                        </p>
+
+                        <div class="tips-box">
+                            <strong>Approche avancée :</strong> Si vous trouvez une configuration de mines qui satisfait tous les nombres, c'est la solution. Les joueurs experts construisent mentalement ces configurations.
+                        </div>
+                    </div>
+
+                    <div class="strategy-card">
+                        <div class="strategy-level">8</div>
+                        <h3>Réduction par propagation</h3>
+                        <p>
+                            Chaque fois que vous découvrez une information, <strong>propagez-la à travers le plateau</strong>. Une découverte peut en déclencher des douzaines d'autres.
+                        </p>
+
+                        <h4>Processus de propagation</h4>
+                        <ul>
+                            <li>Vous découvrez qu'une case est une mine</li>
+                            <li>Les nombres voisins réduisent maintenant leurs comptes</li>
+                            <li>Les nombres réduits peuvent devenir certainement sûrs ou certainement minés</li>
+                            <li>Cela se propage à travers le plateau</li>
+                        </ul>
+                    </div>
+
+                    <div class="strategy-card">
+                        <div class="strategy-level">9</div>
+                        <h3>Arborescence de cas (Guessing intelligent)</h3>
+                        <p>
+                            Parfois, <strong>aucune logique purement déductive ne suffit</strong>. Les joueurs experts font des suppositions probabilistes basées sur la probabilité, pas au hasard.
+                        </p>
+
+                        <h4>Comment deviner intelligemment</h4>
+                        <ul>
+                            <li>Identifiez les régions ambigües isolées</li>
+                            <li>Calculez la probabilité pour chaque case (voir section ci-dessous)</li>
+                            <li>Cliquez sur la case la MOINS susceptible d'être une mine</li>
+                            <li>Si vous devinez mal, apprenez de cet arrangement et réessayez</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="patterns">
+                    <h2>Patterns communs à reconnaître instantanément</h2>
+
+                    <h3>Pattern "1-1" (Ligne droite)</h3>
+                    <p>
+                        Deux cases "1" en ligne avec un voisin non découvert partagé = ce voisin est probablement miné. Vérifiez les autres voisins.
+                    </p>
+
+                    <h3>Pattern "1-2-1"</h3>
+                    <p>
+                        Trois nombres consécutifs 1, 2, 1 généralement indique une structure minière symétrique. Le "2" au centre a 2 mines adjacentes.
+                    </p>
+
+                    <h3>Pattern "2-2" (Coin piégé)</h3>
+                    <p>
+                        Deux "2" diagonales peuvent souvent verrouiller le placement de mines. Chaque "2" a exactement 2 mines, donc le chevauchement révèle la configuration.
+                    </p>
+
+                    <h3>Pattern de cascade "0"</h3>
+                    <p>
+                        Une zone de "0" (cases vides) signifie que TOUS les voisins sont sûrs. Cliquez agressivement sur le périmètre des zones vides.
+                    </p>
+
+                    <div class="highlight-box success">
+                        <p>✨ <strong>Conseil expert :</strong> Mémorisez ces patterns. En jeu, en reconnaître un = en résoudre instantanément une partie.</p>
+                    </div>
+                </section>
+
+                <section id="probability">
+                    <h2>Analyse probabiliste : Quand la logique n'est pas suffisante</h2>
+
+                    <p>
+                        Lorsque plusieurs configurations satisfont les contraintes, vous devez <strong>deviner stratégiquement</strong>. Voici comment calculer les probabilités.
+                    </p>
+
+                    <h3>Formule simple de probabilité minière</h3>
+                    <p>
+                        Pour une région isolée avec N cases non découvertes et M mines restantes :
+                    </p>
+                    <p style="padding: 1.5rem; background: rgba(255,255,255,0.08); border-radius: 8px; margin: 1rem 0;">
+                        <strong>Probabilité d'une mine = M / N</strong>
+                    </p>
+
+                    <h3>Exemple</h3>
+                    <ul>
+                        <li>8 cases non découvertes restantes</li>
+                        <li>2 mines confirmées restantes</li>
+                        <li>Probabilité = 2/8 = 25% d'une mine par case</li>
+                        <li>→ Cliquez sur n'importe laquelle; elle a 75% de chances d'être sûre</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <p>🎲 <strong>Note importante :</strong> Les meilleures stratégies devinent toujours la MOINS probable d'être minée, pas la plus probable.</p>
+                    </div>
+                </section>
+
+                <section id="mental">
+                    <h2>Entraînement mental : Développer l'intuition</h2>
+
+                    <h3>Exercice 1 : Reconnaissance de patterns rapide</h3>
+                    <p>
+                        Entraînez votre cerveau à reconnaître les patterns courants en <strong>1-2 secondes</strong>. Jouez des jeux rapides en mode débutant et cherchez les patterns.
+                    </p>
+
+                    <h3>Exercice 2 : Analyse de configuration</h3>
+                    <p>
+                        Arrêtez le jeu au hasard et demandez-vous : <strong>« Quelle configuration minière satisfait ces nombres ? »</strong> Pratiquez la pensée en arborescence mentale.
+                    </p>
+
+                    <h3>Exercice 3 : Jeux sans interface</h3>
+                    <p>
+                        Sur papier, écrivez une simple grille 4×4 avec quelques nombres. Résolvez-la en déduction logique uniquement. Cela renforce la logique sans distraction visuelle.
+                    </p>
+
+                    <div class="highlight-box success">
+                        <p>🧠 <strong>Fait scientifique :</strong> Le démineur améliore la résolution de problèmes logiques et la mémoire de travail. 15 minutes de démineur quotidien améliore les compétences de déduction.</p>
+                    </div>
+                </section>
+
+                <section id="tips">
+                    <h2>Astuces et hacks pratiques</h2>
+
+                    <h3>Astuce 1 : Double-cliquez pour révéler</h3>
+                    <p>
+                        Si vous avez marqué tous les voisins minés d'un nombre, double-cliquez pour révéler automatiquement le reste. Cela économise du temps.
+                    </p>
+
+                    <h3>Astuce 2 : Utilisez le score de mines restantes</h3>
+                    <p>
+                        Le compteur de mines vous dit combien de mines restent. Si vous en avez marqué 10/10, tous les non marqués sont sûrs. Cela accélère la fin du jeu.
+                    </p>
+
+                    <h3>Astuce 3 : Zone froides vs zones chaudes</h3>
+                    <p>
+                        <strong>Zone froide :</strong> Beaucoup de 0 et de petits nombres = peu de mines<br>
+                        <strong>Zone chaude :</strong> Beaucoup de grands nombres = beaucoup de mines<br>
+                        → Explorez d'abord les zones froides, sauvegardez les zones chaudes en dernier.
+                    </p>
+
+                    <h3>Astuce 4 : Technique en forme de L</h3>
+                    <p>
+                        Lorsque la logique pure n'y suffit pas, cherchez les zones "en forme de L" où les nombres se croisent. Celles-ci sont souvent les points de tension clés du puzzle.
+                    </p>
+
+                    <h3>Astuce 5 : Commencez aux coins</h3>
+                    <p>
+                        Après votre premier coup au centre, développez-vous vers les coins. Les coins ont moins de voisins, donc les nombres révèlent plus d'informations proportionnellement.
+                    </p>
+                </section>
+
+                <section id="practice">
+                    <h2>Routine d'entraînement pour la maîtrise</h2>
+
+                    <h3>Semaine 1 : Fondamentaux (30 min/jour)</h3>
+                    <ul>
+                        <li>10 jeux faciles (8×8, 10 mines) - Focus sur pattern recognition</li>
+                        <li>5 jeux moyen (10×10, 30 mines) - Pratiquez la déduction multi-couches</li>
+                        <li>2 jeux difficile (16×16, 40+ mines) - Challenge limit</li>
+                    </ul>
+
+                    <h3>Semaine 2-3 : Intermédiaire (45 min/jour)</h3>
+                    <ul>
+                        <li>15 jeux difficile - Construire la consistance</li>
+                        <li>5 jeux expert (16×30, 99 mines) - Push the limits</li>
+                        <li>Analyse : Notez les erreurs et apprenez-en</li>
+                    </ul>
+
+                    <h3>Semaine 4+ : Avancé (1h/jour)</h3>
+                    <ul>
+                        <li>Variété : Mélangez facile et difficile</li>
+                        <li>Chronométrez-vous : Visez la vitesse et la précision</li>
+                        <li>Défi mental : Jeux expert sans marquage (mode hardcore)</li>
+                    </ul>
+
+                    <div class="highlight-box success">
+                        <p>🏆 <strong>Objectif réaliste :</strong> Après 4 semaines d'entraînement régulier, vous devriez résoudre 70% des jeux difficiles sans deviner.</p>
+                    </div>
+                </section>
+
+                <div class="cta-section">
+                    <h2>Commencez à maîtriser le Démineur aujourd'hui</h2>
+                    <p>Appliquez ces stratégies à votre prochain jeu. Commencez par les basics et progressez graduellement. Chaque jeu est une opportunité d'apprendre.</p>
+                    <a href="https://dopabrain.com/" class="cta-button">🎮 Jouer au Démineur maintenant</a>
+                </div>
+
+                <section>
+                    <h2>Articles connexes</h2>
+                    <div class="related-posts">
+                        <a href="https://dopabrain.com/portal/blog/fr/free-games.html" class="related-card">
+                            <h3>Top 5 des jeux gratuits en ligne 2026</h3>
+                            <p>Jeux cérébraux gratuits sans téléchargement. Démineur, 2048, et plus de jeux à découvrir.</p>
+                        </a>
+                        <a href="https://dopabrain.com/portal/blog/fr/personality-tests.html" class="related-card">
+                            <h3>Les 7 meilleurs tests de personnalité 2026</h3>
+                            <p>Découvrez votre vraie personnalité avec les tests gratuits les plus populaires.</p>
+                        </a>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer class="article-footer">
+        <p>Ce guide est basé sur les stratégies recommandées par les meilleurs joueurs de Démineur et l'analyse mathématique du jeu.</p>
+        <p>Le Démineur est un excellent exercice mental pour développer la logique, la concentration et la résolution de problèmes.</p>
+        <p>Copyright © 2026 DopaBrain. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector('.progress-bar').style.width = scrolled + '%';
+        });
+
+        document.querySelectorAll('.toc a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        document.querySelectorAll('.cta-button, .related-card').forEach(element => {
+            element.addEventListener('click', function() {
+                if (window.gtag) {
+                    gtag('event', 'click', {
+                        'event_category': 'engagement',
+                        'event_label': this.textContent,
+                        'value': 1
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
