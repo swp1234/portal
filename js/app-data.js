@@ -1215,6 +1215,33 @@ const APP_DATA = [
             de: { name: 'Blutgruppen-Persönlichkeitsanalyse', shortDesc: 'KI-Blutgruppen-Analyse und Kompatibilität' },
             fr: { name: 'Analyse de Personnalité des Groupes Sanguins', shortDesc: 'Analyse des groupes sanguins par IA et compatibilité' }
         }
+    },
+    {
+        id: 'minesweeper',
+        name: 'Minesweeper 지뢰찾기',
+        shortDesc: '클래식 퍼즐 게임',
+        description: '숨겨진 지뢰를 찾아내는 클래식 퍼즐 게임! 3가지 난이도 (초급 9x9, 중급 16x16, 고급 30x16), 최고 기록 저장, 깃발 표시 기능, 최적화된 모바일 플레이. 우클릭 또는 길게 누르기로 깃발 설정.',
+        icon: '💣',
+        color: '#3498db',
+        category: 'game',
+        tags: ['게임', '퍼즐', '지뢰찾기', 'minesweeper', 'puzzle', 'classic', 'logic'],
+        url: 'https://dopabrain.com/games/minesweeper/',
+        isNew: true,
+        isPopular: true,
+        popularity: 7,
+        i18n: {
+            en: { name: 'Minesweeper', shortDesc: 'Classic puzzle game' },
+            zh: { name: '扫雷游戏', shortDesc: '经典益智游戏' },
+            hi: { name: 'माइनस्वीपर', shortDesc: 'क्लासिक पहेली गेम' },
+            ru: { name: 'Сапёр', shortDesc: 'Классическая головоломка' },
+            ja: { name: 'マインスウィーパー', shortDesc: 'クラシックパズルゲーム' },
+            es: { name: 'Buscaminas', shortDesc: 'Juego de puzzle clásico' },
+            pt: { name: 'Minesweeper', shortDesc: 'Jogo de puzzle clássico' },
+            id: { name: 'Minesweeper', shortDesc: 'Game puzzle klasik' },
+            tr: { name: 'Mayın Tarlası', shortDesc: 'Klasik bulmaca oyunu' },
+            de: { name: 'Minensuchspiel', shortDesc: 'Klassisches Puzzlespiel' },
+            fr: { name: 'Démineur', shortDesc: 'Jeu de puzzle classique' }
+        }
     }
 ];
 
