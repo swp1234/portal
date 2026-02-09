@@ -90,9 +90,11 @@
     const emptyState = document.getElementById('empty-state');
     const resetSearch = document.getElementById('reset-search');
     const catButtons = document.querySelectorAll('.cat-btn');
+    const sortButtons = document.querySelectorAll('.sort-btn');
 
     let currentCategory = 'all';
     let searchQuery = '';
+    let currentSort = 'popularity';
 
     // Initialize
     function init() {
@@ -294,13 +296,21 @@
         const userCounts = { 'idle-clicker': '24K', 'mbti-love': '18K', 'emotion-temp': '15K' };
         const users = userCounts[app.id] || '5K+';
 
+        // Featured badge with popularity
+        let badgeHtml = '';
+        if (app.popularity >= 8) {
+            badgeHtml = '<span class="featured-badge">🔥 핫트렌드</span>';
+        } else if (app.isPopular) {
+            badgeHtml = '<span class="featured-badge">⭐ 인기</span>';
+        }
+
         return `
             <a href="${app.url}" class="featured-card fade-in" data-id="${app.id}"
                style="--card-color: ${app.color}"
                aria-label="${name} - ${desc}">
                 <div class="featured-icon">${app.icon}</div>
                 <div class="featured-card-info">
-                    ${app.isPopular ? '<span class="featured-badge">🔥 인기</span>' : ''}
+                    ${badgeHtml}
                     <h3 class="featured-card-title">${name}</h3>
                     <p class="featured-card-desc">${desc}</p>
                     <div class="featured-card-meta">
@@ -318,8 +328,19 @@
         const name = typeof getAppName === 'function' ? getAppName(app, lang) : app.name;
         const desc = typeof getAppDesc === 'function' ? getAppDesc(app, lang) : app.shortDesc;
         const badges = [];
-        if (app.isNew) badges.push('<span class="badge badge-new">NEW</span>');
-        if (app.isPopular) badges.push('<span class="badge badge-popular">인기</span>');
+
+        // Add game badge if it's a game
+        if (app.category === 'game') badges.push('<span class="badge badge-game">🎮</span>');
+
+        // Add NEW badge for new apps
+        if (app.isNew) badges.push('<span class="badge badge-new">✨ NEW</span>');
+
+        // Add popularity badge (8+ is hot)
+        if (app.popularity >= 8) {
+            badges.push('<span class="badge badge-hot">🔥 인기</span>');
+        } else if (app.isPopular) {
+            badges.push('<span class="badge badge-popular">인기</span>');
+        }
 
         // User count (fake, for social proof)
         const userCounts = {
@@ -361,6 +382,40 @@
         `;
     }
 
+    // Sort apps by specified criteria
+    function sortApps(apps) {
+        let sorted = [...apps];
+
+        switch (currentSort) {
+            case 'popularity':
+                // Sort by popularity (higher first), then by isNew
+                sorted.sort((a, b) => {
+                    const popDiff = (b.popularity || 0) - (a.popularity || 0);
+                    if (popDiff !== 0) return popDiff;
+                    return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
+                });
+                break;
+            case 'latest':
+                // Sort by isNew first, then by popularity
+                sorted.sort((a, b) => {
+                    if (a.isNew !== b.isNew) return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
+                    return (b.popularity || 0) - (a.popularity || 0);
+                });
+                break;
+            case 'name':
+                // Sort alphabetically by name
+                const lang = i18n.getCurrentLanguage();
+                sorted.sort((a, b) => {
+                    const nameA = typeof getAppName === 'function' ? getAppName(a, lang) : a.name;
+                    const nameB = typeof getAppName === 'function' ? getAppName(b, lang) : b.name;
+                    return nameA.localeCompare(nameB, 'ko');
+                });
+                break;
+        }
+
+        return sorted;
+    }
+
     // Filter apps by category and search
     function filterApps() {
         let filtered = APP_DATA;
@@ -393,8 +448,11 @@
             renderPersonalized();
         }
 
-        // Apply personalized sorting for "all" category with no search
-        if (currentCategory === 'all' && !searchQuery.trim() && typeof Personalize !== 'undefined') {
+        // Apply sorting
+        filtered = sortApps(filtered);
+
+        // Apply personalized scoring for "all" category with no search (after sort)
+        if (currentCategory === 'all' && !searchQuery.trim() && typeof Personalize !== 'undefined' && currentSort === 'popularity') {
             const scored = Personalize.scoreApps(filtered);
             if (scored) filtered = scored;
         }
@@ -453,6 +511,20 @@
 
     // Bind events
     function bindEvents() {
+        // Sort buttons
+        sortButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                sortButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentSort = btn.dataset.sort;
+
+                // Ripple effect
+                createRipple(btn, e);
+
+                filterApps();
+            });
+        });
+
         // Category buttons
         catButtons.forEach(btn => {
             btn.addEventListener('click', (e) => {
