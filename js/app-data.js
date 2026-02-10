@@ -1352,6 +1352,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'flappy-bird',
+        name: 'Sky Flap - 플래피 아케이드',
+        shortDesc: '탭하여 날고 장애물을 피하세요',
+        description: '클래식 플래피 버드 스타일 아케이드 게임! 탭하여 날고 파이프를 피하세요. 친구와 점수를 경쟁하세요.',
+        icon: '🐦',
+        color: '#4fc3f7',
+        category: 'game',
+        tags: ['게임', '아케이드', '플래피', '캐주얼', 'flappy bird', 'arcade', 'casual game', 'tap game'],
+        url: 'https://dopabrain.com/flappy-bird/',
+        isNew: false,
+        isPopular: false,
+        popularity: 5,
+        i18n: {
+            en: { name: 'Sky Flap - Arcade Game', shortDesc: 'Tap to fly and dodge obstacles' },
+            zh: { name: 'Sky Flap - 街机游戏', shortDesc: '点击飞行，躲避障碍' },
+            hi: { name: 'Sky Flap - आर्केड गेम', shortDesc: 'टैप करें और बाधाओं से बचें' },
+            ru: { name: 'Sky Flap - Аркадная игра', shortDesc: 'Нажимай, чтобы лететь и уклоняться' },
+            ja: { name: 'Sky Flap - アーケードゲーム', shortDesc: 'タップして飛んで障害物を避けよう' },
+            es: { name: 'Sky Flap - Juego Arcade', shortDesc: 'Toca para volar y esquivar obstáculos' },
+            pt: { name: 'Sky Flap - Jogo Arcade', shortDesc: 'Toque para voar e desviar de obstáculos' },
+            id: { name: 'Sky Flap - Game Arcade', shortDesc: 'Ketuk untuk terbang dan hindari rintangan' },
+            tr: { name: 'Sky Flap - Arcade Oyunu', shortDesc: 'Uçmak için dokun ve engellerden kaç' },
+            de: { name: 'Sky Flap - Arcade-Spiel', shortDesc: 'Tippe zum Fliegen und weiche Hindernissen aus' },
+            fr: { name: 'Sky Flap - Jeu d\'Arcade', shortDesc: 'Touchez pour voler et esquiver les obstacles' }
+        }
+    },
+    {
         id: 'mbti-career',
         name: 'MBTI 직업 궁합 테스트',
         shortDesc: 'MBTI 유형별 최적 직업 추천',
