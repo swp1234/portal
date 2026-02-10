@@ -237,7 +237,7 @@
             requestAnimationFrame(() => {
                 const cards = featuredGrid.querySelectorAll('.featured-card');
                 cards.forEach((card, i) => {
-                    card.style.animationDelay = `${i * 0.08}s`;
+                    card.style.animationDelay = `${i * 0.03}s`;
                     card.classList.add('fade-in');
                 });
             });
@@ -260,7 +260,7 @@
         requestAnimationFrame(() => {
             const cards = appGrid.querySelectorAll('.app-card');
             cards.forEach((card, i) => {
-                card.style.animationDelay = `${i * 0.06}s`;
+                card.style.animationDelay = `${i * 0.02}s`;
                 card.classList.add('fade-in');
             });
         });
@@ -540,7 +540,7 @@
                         const startIdx = Math.max(0, itemsPerPage * (currentPage - 1));
                         for (let i = startIdx; i < cards.length; i++) {
                             const card = cards[i];
-                            card.style.animationDelay = `${(i - startIdx) * 0.06}s`;
+                            card.style.animationDelay = `${(i - startIdx) * 0.02}s`;
                             card.classList.add('fade-in');
                         }
                     });
