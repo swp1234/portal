@@ -1629,13 +1629,14 @@ body {
 }
 
 .blog-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
     background: rgba(139, 92, 246, 0.04);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(139, 92, 246, 0.1);
     border-radius: var(--radius);
-    padding: 24px;
+    padding: 28px;
     text-decoration: none;
     color: var(--text);
     transition: var(--transition);
@@ -1663,9 +1664,9 @@ body {
 }
 
 .blog-card-title {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
-    line-height: 1.6;
+    line-height: 1.5;
     margin-bottom: 12px;
     background: linear-gradient(135deg, var(--text), var(--text-secondary));
     -webkit-background-clip: text;
@@ -1684,10 +1685,11 @@ body {
 }
 
 .blog-card-desc {
-    font-size: 15px;
+    font-size: 13.5px;
     color: var(--text-secondary);
-    line-height: 1.75;
+    line-height: 1.7;
     margin-bottom: 14px;
+    flex: 1;
     word-break: keep-all;
     letter-spacing: 0.2px;
 }
@@ -1724,20 +1726,26 @@ body {
 @media (min-width: 600px) {
     .blog-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 16px;
     }
 
     .blog-card-title {
-        font-size: 17px;
-        line-height: 1.6;
+        font-size: 16px;
+        line-height: 1.5;
         margin-bottom: 12px;
     }
 
     .blog-card-desc {
-        font-size: 15px;
-        line-height: 1.75;
+        font-size: 13.5px;
+        line-height: 1.7;
         margin-bottom: 14px;
+    }
+}
+
+@media (min-width: 900px) {
+    .blog-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
@@ -1793,14 +1801,14 @@ body {
     }
 
     .blog-card-title {
-        font-size: 16px;
-        line-height: 1.6;
+        font-size: 15px;
+        line-height: 1.5;
         margin-bottom: 10px;
     }
 
     .blog-card-desc {
-        font-size: 14px;
-        line-height: 1.7;
+        font-size: 13px;
+        line-height: 1.65;
         margin-bottom: 12px;
     }
 
@@ -1997,15 +2005,15 @@ body {
     }
 
     .blog-card-title {
-        font-size: 15px;
-        line-height: 1.6;
-        margin-bottom: 10px;
+        font-size: 14px;
+        line-height: 1.45;
+        margin-bottom: 8px;
     }
 
     .blog-card-desc {
-        font-size: 13px;
-        line-height: 1.7;
-        margin-bottom: 12px;
+        font-size: 12.5px;
+        line-height: 1.6;
+        margin-bottom: 10px;
     }
 
     .blog-card-tag {
