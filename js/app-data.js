@@ -1431,6 +1431,87 @@ const APP_DATA = [
             de: { name: 'MBTI Karrierepassung', shortDesc: 'Finden Sie den perfekten Job für Ihre Persönlichkeit' },
             fr: { name: 'MBTI Correspondance Professionnelle', shortDesc: 'Trouvez l\'emploi parfait pour votre personnalité' }
         }
+    },
+    {
+        id: 'brick-breaker',
+        name: '벽돌깨기',
+        shortDesc: '클래식 벽돌깨기 게임',
+        description: '클래식 벽돌깨기의 현대적 리메이크! 10+ 스테이지, 파워업 아이템, 부드러운 물리 엔진.',
+        icon: '🧱',
+        color: '#e74c3c',
+        category: 'game',
+        tags: ['벽돌깨기', '브릭브레이커', '아케이드', '게임', 'brick breaker', 'breakout', 'arcade', 'game'],
+        url: 'https://dopabrain.com/brick-breaker/',
+        isNew: false,
+        isPopular: false,
+        popularity: 3,
+        i18n: {
+            en: { name: 'Brick Breaker', shortDesc: 'Classic breakout game' },
+            zh: { name: '打砖块', shortDesc: '经典打砖块游戏' },
+            hi: { name: 'ब्रिक ब्रेकर', shortDesc: 'क्लासिक ब्रिक ब्रेकर गेम' },
+            ru: { name: 'Разбей кирпичи', shortDesc: 'Классическая игра Breakout' },
+            ja: { name: 'ブロック崩し', shortDesc: 'クラシック ブレイクアウトゲーム' },
+            es: { name: 'Rompe Ladrillos', shortDesc: 'Juego clásico Brick Breaker' },
+            pt: { name: 'Quebra Tijolos', shortDesc: 'Jogo clássico Brick Breaker' },
+            id: { name: 'Pemecah Bata', shortDesc: 'Game Brick Breaker klasik' },
+            tr: { name: 'Tuğla Kırıcı', shortDesc: 'Klasik Brick Breaker oyunu' },
+            de: { name: 'Brick Breaker', shortDesc: 'Klassisches Brick Breaker Spiel' },
+            fr: { name: 'Casse-Briques', shortDesc: 'Jeu classique Brick Breaker' }
+        }
+    },
+    {
+        id: 'color-palette',
+        name: '색상 팔레트 생성기',
+        shortDesc: '조화로운 색상 자동 생성',
+        description: '조화로운 색상 팔레트를 자동으로 생성합니다. 보색, 유사색, 삼각배색 등 다양한 색상 모드 지원.',
+        icon: '🎨',
+        color: '#667eea',
+        category: 'tool',
+        tags: ['색상', '팔레트', '디자인', '도구', 'color', 'palette', 'design', 'tool', 'HEX', 'RGB'],
+        url: 'https://dopabrain.com/color-palette/',
+        isNew: false,
+        isPopular: false,
+        popularity: 3,
+        i18n: {
+            en: { name: 'Color Palette Generator', shortDesc: 'Generate harmonious colors' },
+            zh: { name: '色彩调色板生成器', shortDesc: '生成和谐的色彩' },
+            hi: { name: 'रंग पैलेट जनरेटर', shortDesc: 'सामंजस्यपूर्ण रंग उत्पन्न करें' },
+            ru: { name: 'Генератор палитр', shortDesc: 'Создайте гармоничные цвета' },
+            ja: { name: 'カラーパレット生成', shortDesc: '調和のとれた色を生成' },
+            es: { name: 'Generador de Paleta', shortDesc: 'Genere colores armoniosos' },
+            pt: { name: 'Gerador de Paleta', shortDesc: 'Gere cores harmonicamente' },
+            id: { name: 'Pembuat Palet Warna', shortDesc: 'Hasilkan warna harmonis' },
+            tr: { name: 'Renk Paleti Oluşturucu', shortDesc: 'Uyumlu renkler oluşturun' },
+            de: { name: 'Farbpaletten-Generator', shortDesc: 'Harmonische Farben generieren' },
+            fr: { name: 'Générateur de Palette', shortDesc: 'Générez des couleurs harmonieuses' }
+        }
+    },
+    {
+        id: 'password-generator',
+        name: '비밀번호 생성기',
+        shortDesc: '강력한 패스워드 생성',
+        description: '안전한 랜덤 비밀번호 생성기. 커스터마이즈 옵션, 강도 표시, 원클릭 복사, 히스토리 기능.',
+        icon: '🔐',
+        color: '#2980b9',
+        category: 'tool',
+        tags: ['비밀번호', '패스워드', '보안', '도구', 'password', 'generator', 'security', 'tool'],
+        url: 'https://dopabrain.com/password-generator/',
+        isNew: false,
+        isPopular: false,
+        popularity: 3,
+        i18n: {
+            en: { name: 'Password Generator', shortDesc: 'Generate strong & secure passwords' },
+            zh: { name: '密码生成器', shortDesc: '生成强大和安全的密码' },
+            hi: { name: 'पासवर्ड जेनरेटर', shortDesc: 'मजबूत और सुरक्षित पासवर्ड बनाएं' },
+            ru: { name: 'Генератор паролей', shortDesc: 'Создавайте сильные и безопасные пароли' },
+            ja: { name: 'パスワード生成', shortDesc: '強力で安全なパスワードを生成' },
+            es: { name: 'Generador de Contraseñas', shortDesc: 'Genera contraseñas fuertes y seguras' },
+            pt: { name: 'Gerador de Senhas', shortDesc: 'Gere senhas fortes e seguras' },
+            id: { name: 'Pembuat Kata Sandi', shortDesc: 'Buat kata sandi kuat dan aman' },
+            tr: { name: 'Parola Üreticisi', shortDesc: 'Güçlü ve güvenli parola oluşturun' },
+            de: { name: 'Passwortgenerator', shortDesc: 'Starke und sichere Passwörter generieren' },
+            fr: { name: 'Générateur de Mots de Passe', shortDesc: 'Générez des mots de passe forts et sécurisés' }
+        }
     }
 ];
 
