@@ -1298,6 +1298,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'biorhythm',
+        name: '바이오리듬 계산기',
+        shortDesc: '생년월일 기반 바이오리듬 그래프',
+        description: '생년월일을 입력하면 신체(23일), 감성(28일), 지성(33일) 바이오리듬을 아름다운 그래프로 보여드립니다. 궁합 비교, 위험일 알림 기능 포함.',
+        icon: '🌊',
+        color: '#6c5ce7',
+        category: 'fortune',
+        tags: ['바이오리듬', '운세', '건강', '리듬', '궁합', 'biorhythm', 'fortune', 'health', 'rhythm', 'compatibility'],
+        url: 'https://dopabrain.com/biorhythm/',
+        isNew: true,
+        isPopular: false,
+        popularity: 5,
+        i18n: {
+            en: { name: 'Biorhythm Calculator', shortDesc: 'Biorhythm graph from your birthdate' },
+            zh: { name: '生物节律计算器', shortDesc: '根据生日查看生物节律图' },
+            hi: { name: 'बायोरिदम कैलकुलेटर', shortDesc: 'जन्मतिथि से बायोरिदम ग्राफ' },
+            ru: { name: 'Калькулятор Биоритмов', shortDesc: 'График биоритмов по дате рождения' },
+            ja: { name: 'バイオリズム計算機', shortDesc: '誕生日からバイオリズムグラフ' },
+            es: { name: 'Calculadora de Biorritmos', shortDesc: 'Gráfico de biorritmos por fecha de nacimiento' },
+            pt: { name: 'Calculadora de Biorritmo', shortDesc: 'Gráfico de biorritmo pela data de nascimento' },
+            id: { name: 'Kalkulator Biorhythm', shortDesc: 'Grafik biorhythm dari tanggal lahir' },
+            tr: { name: 'Biyoritm Hesaplayıcı', shortDesc: 'Doğum tarihinden biyoritm grafiği' },
+            de: { name: 'Biorhythmus-Rechner', shortDesc: 'Biorhythmus-Grafik nach Geburtsdatum' },
+            fr: { name: 'Calculateur de Biorythme', shortDesc: 'Graphique de biorythme par date de naissance' }
+        }
+    },
+    {
         id: 'todo-list',
         name: 'Todo List - 스마트 할일 관리',
         shortDesc: '우선순위, 카테고리, 마감일 관리',
