@@ -90,7 +90,7 @@
             background: var(--bg-dark);
             color: var(--text-primary);
             line-height: 1.8;
-            font-size: 17px;
+            font-size: 18px;
         }
 
         /* Hero Section with 4-Color Split Gradient */
@@ -148,7 +148,19 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 3rem 1.5rem;
+            padding: 3rem 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 2rem 1.25rem;
+            }
         }
 
         /* Typography */
@@ -187,9 +199,10 @@
         }
 
         p {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             color: var(--text-secondary);
-            line-height: 1.8;
+            line-height: 1.9;
+            letter-spacing: 0.3px;
         }
 
         strong {
@@ -210,17 +223,22 @@
 
         .intro p {
             color: var(--text-primary);
-            margin-bottom: 0.8rem;
-            line-height: 1.9;
+            margin-bottom: 1.2rem;
+            line-height: 2;
+            letter-spacing: 0.3px;
+        }
+
+        .intro p:last-child {
+            margin-bottom: 0;
         }
 
         /* Table of Contents - Grid Style */
         .toc {
             background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(16, 185, 129, 0.06));
             border: 1px solid rgba(139, 92, 246, 0.15);
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 12px;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             backdrop-filter: blur(10px);
         }
 
@@ -234,16 +252,24 @@
             counter-reset: toc-counter;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+            gap: 1.2rem;
+        }
+
+        @media (max-width: 600px) {
+            .toc ol {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
         }
 
         .toc li {
             counter-increment: toc-counter;
-            padding: 0.8rem;
+            padding: 1rem 1.2rem;
             background: rgba(139, 92, 246, 0.05);
             border-radius: 8px;
             border-left: 3px solid var(--nt-color);
             transition: all 0.3s ease;
+            line-height: 1.8;
         }
 
         .toc li:hover {
@@ -264,6 +290,8 @@
             text-decoration: none;
             transition: color 0.3s ease;
             font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.2px;
         }
 
         .toc a:hover {
@@ -565,8 +593,8 @@
             background: rgba(139, 92, 246, 0.06);
             border: 1px solid rgba(139, 92, 246, 0.15);
             border-left: 4px solid var(--nt-color);
-            padding: 1.8rem;
-            margin-bottom: 1.5rem;
+            padding: 2rem 2.2rem;
+            margin-bottom: 1.8rem;
             border-radius: 10px;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
@@ -588,7 +616,9 @@
 
         .faq-answer {
             color: var(--text-secondary);
-            line-height: 1.85;
+            line-height: 1.95;
+            letter-spacing: 0.2px;
+            font-size: 0.95rem;
         }
 
         /* Footer */
@@ -645,10 +675,22 @@
 
             h2 {
                 font-size: 1.5rem;
+                margin-top: 2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+                margin-top: 1.5rem;
             }
 
             .container {
-                padding: 2rem 1rem;
+                padding: 2rem 1.5rem;
+            }
+
+            p {
+                font-size: 1rem;
+                line-height: 1.9;
             }
 
             .type-grid {
@@ -675,8 +717,21 @@
 
             .compat-table th,
             .compat-table td {
-                padding: 0.7rem 0.4rem;
-                font-size: 0.85rem;
+                padding: 0.8rem 0.5rem;
+                font-size: 0.9rem;
+            }
+
+            .faq-item {
+                padding: 1.8rem 2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .intro {
+                padding: 1.8rem 2rem;
+            }
+
+            .toc {
+                padding: 2rem 2.2rem;
             }
 
             .header-content {
