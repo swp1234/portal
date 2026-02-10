@@ -217,11 +217,16 @@
         // Featured: idle-clicker, mbti-love, emotion-temp
         const featuredIds = ['idle-clicker', 'mbti-love', 'emotion-temp'];
         const featured = apps.filter(app => featuredIds.includes(app.id));
-        const regular = apps.filter(app => !featuredIds.includes(app.id));
+        const showFeaturedSection = currentCategory === 'all' && featured.length > 0 && !searchQuery.trim();
+
+        // Only exclude featured from regular grid when featured section is visible
+        const regular = showFeaturedSection
+            ? apps.filter(app => !featuredIds.includes(app.id))
+            : apps;
 
         // Show featured only if we have them and category is 'all'
         const featuredSection = document.getElementById('featured-section');
-        if (currentCategory === 'all' && featured.length > 0 && !searchQuery.trim()) {
+        if (showFeaturedSection) {
             featuredSection.classList.remove('hidden');
             const featuredGrid = document.getElementById('featured-grid');
             featuredGrid.innerHTML = featured.map((app, index) => createFeaturedCard(app, index)).join('');
@@ -514,15 +519,17 @@
                 loadMoreBtn.addEventListener('click', () => {
                     currentPage++;
                     // Re-render with new page
-                    if (currentCategory === 'all' && !searchQuery.trim()) {
-                        const paginatedApps = filteredAppsCache
-                            .filter(app => !['idle-clicker', 'mbti-love', 'emotion-temp'].includes(app.id))
-                            .slice(0, itemsPerPage * currentPage);
+                    const featuredIds = ['idle-clicker', 'mbti-love', 'emotion-temp'];
+                    const showFeatured = currentCategory === 'all' && !searchQuery.trim();
+                    const loadMoreApps = showFeatured
+                        ? filteredAppsCache.filter(app => !featuredIds.includes(app.id))
+                        : filteredAppsCache;
+
+                    if (showFeatured) {
+                        const paginatedApps = loadMoreApps.slice(0, itemsPerPage * currentPage);
                         appGrid.innerHTML = renderCategorySections(paginatedApps);
                     } else {
-                        const paginatedApps = filteredAppsCache
-                            .filter(app => !['idle-clicker', 'mbti-love', 'emotion-temp'].includes(app.id))
-                            .slice(0, itemsPerPage * currentPage);
+                        const paginatedApps = loadMoreApps.slice(0, itemsPerPage * currentPage);
                         appGrid.innerHTML = paginatedApps.map((app, index) => createAppCard(app, index)).join('');
                     }
 
