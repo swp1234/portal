@@ -97,8 +97,19 @@
         ].join('');
         document.head.appendChild(style);
 
+        // Localized title
+        var titles = {
+            ko: '이것도 해보세요', en: 'You might also like', ja: 'こちらもおすすめ',
+            zh: '你可能还喜欢', es: 'También te puede gustar', pt: 'Você também pode gostar',
+            id: 'Mungkin kamu juga suka', tr: 'Bunları da beğenebilirsiniz', de: 'Das könnte dir auch gefallen',
+            fr: 'Vous aimerez aussi', hi: 'आपको यह भी पसंद आएगा', ru: 'Вам также понравится'
+        };
+        var lang = 'en';
+        try { if (typeof i18n !== 'undefined' && i18n.getCurrentLanguage) lang = i18n.getCurrentLanguage(); else lang = (navigator.language || 'en').slice(0, 2); } catch(e) {}
+        var title = titles[lang] || titles.en;
+
         // Build HTML
-        var html = '<div class="cp-section"><div class="cp-title">You might also like</div><div class="cp-grid">';
+        var html = '<div class="cp-section"><div class="cp-title">' + title + '</div><div class="cp-grid">';
         picks.forEach(function(app) {
             var url = app.url.replace('https://dopabrain.com', '');
             html += '<a href="' + url + '" class="cp-card">'
