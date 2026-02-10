@@ -1252,7 +1252,7 @@ const APP_DATA = [
         color: '#3498db',
         category: 'game',
         tags: ['게임', '퍼즐', '지뢰찾기', 'minesweeper', 'puzzle', 'classic', 'logic'],
-        url: 'https://dopabrain.com/games/minesweeper/',
+        url: 'https://dopabrain.com/minesweeper/',
         isNew: true,
         isPopular: true,
         popularity: 7,
