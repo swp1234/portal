@@ -81,3 +81,11 @@ class I18n {
 }
 
 const i18n = new I18n();
+
+// Ensure loader transitions properly (CSS must support opacity/visibility)
+(function() {
+    const appLoader = document.getElementById('app-loader');
+    if (appLoader && !appLoader.style.transition) {
+        appLoader.style.transition = 'opacity 0.4s ease-out, visibility 0.4s ease-out';
+    }
+})();

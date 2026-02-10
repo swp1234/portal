@@ -110,6 +110,14 @@
         initCardTilt();
         initParallax();
         initInfiniteScroll();
+
+        // Hide loader when app is ready
+        const appLoader = document.getElementById('app-loader');
+        if (appLoader) {
+            appLoader.style.opacity = '0';
+            appLoader.style.visibility = 'hidden';
+            appLoader.style.transition = 'opacity 0.4s ease-out, visibility 0.4s ease-out';
+        }
     }
 
     // ─── Personalized Section ─────────────────────────────────
