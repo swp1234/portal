@@ -1460,6 +1460,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'dev-quiz',
+        name: '개발자 퀴즈',
+        shortDesc: '코딩 실력 테스트',
+        description: 'JavaScript, Python, 웹개발, DB, Git 등 8개 카테고리 100문제로 코딩 실력을 테스트하세요!',
+        icon: '💻',
+        color: '#27ae60',
+        category: 'brain',
+        tags: ['코딩', '퀴즈', '개발자', '프로그래밍', 'coding', 'quiz', 'developer', 'programming', 'JavaScript', 'Python'],
+        url: 'https://dopabrain.com/dev-quiz/',
+        isNew: false,
+        isPopular: false,
+        popularity: 5,
+        i18n: {
+            en: { name: 'Developer Quiz', shortDesc: 'Test your coding skills' },
+            zh: { name: '开发者测验', shortDesc: '测试你的编程技能' },
+            hi: { name: 'डेवलपर क्विज़', shortDesc: 'अपने कोडिंग कौशल का परीक्षण करें' },
+            ru: { name: 'Викторина для разработчиков', shortDesc: 'Проверьте навыки программирования' },
+            ja: { name: '開発者クイズ', shortDesc: 'コーディングスキルをテスト' },
+            es: { name: 'Quiz de Desarrollador', shortDesc: 'Pon a prueba tus habilidades de programación' },
+            pt: { name: 'Quiz de Desenvolvedor', shortDesc: 'Teste suas habilidades de programação' },
+            id: { name: 'Kuis Developer', shortDesc: 'Uji keterampilan coding Anda' },
+            tr: { name: 'Geliştirici Testi', shortDesc: 'Kodlama becerilerinizi test edin' },
+            de: { name: 'Entwickler-Quiz', shortDesc: 'Teste deine Programmierfähigkeiten' },
+            fr: { name: 'Quiz Développeur', shortDesc: 'Testez vos compétences en programmation' }
+        }
+    },
+    {
         id: 'color-palette',
         name: '색상 팔레트 생성기',
         shortDesc: '조화로운 색상 자동 생성',
