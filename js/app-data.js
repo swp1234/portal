@@ -1512,6 +1512,87 @@ const APP_DATA = [
             de: { name: 'Passwortgenerator', shortDesc: 'Starke und sichere Passwörter generieren' },
             fr: { name: 'Générateur de Mots de Passe', shortDesc: 'Générez des mots de passe forts et sécurisés' }
         }
+    },
+    {
+        id: 'reaction-test',
+        name: '반응속도 테스트',
+        shortDesc: '신경 반응 속도 측정',
+        description: '반응속도를 5회 측정하여 당신의 신경 반응 속도를 테스트하세요!',
+        icon: '⚡',
+        color: '#e74c3c',
+        category: 'test',
+        tags: ['반응속도', '테스트', 'reaction', 'speed', 'reflex'],
+        url: 'https://dopabrain.com/reaction-test/',
+        isNew: false,
+        isPopular: false,
+        popularity: 5,
+        i18n: {
+            en: { name: 'Reaction Speed Test', shortDesc: 'Measure your nerve response time' },
+            zh: { name: '反应速度测试', shortDesc: '测量你的神经反应速度' },
+            hi: { name: 'प्रतिक्रिया गति परीक्षण', shortDesc: 'अपनी तंत्रिका प्रतिक्रिया गति मापें' },
+            ru: { name: 'Тест скорости реакции', shortDesc: 'Измерьте скорость нервной реакции' },
+            ja: { name: '反応速度テスト', shortDesc: '神経反応速度を測定' },
+            es: { name: 'Test de Velocidad de Reacción', shortDesc: 'Mide tu velocidad de reacción' },
+            pt: { name: 'Teste de Velocidade de Reação', shortDesc: 'Meça sua velocidade de reação' },
+            id: { name: 'Tes Kecepatan Reaksi', shortDesc: 'Ukur kecepatan reaksi saraf Anda' },
+            tr: { name: 'Tepki Hızı Testi', shortDesc: 'Sinir tepki hızınızı ölçün' },
+            de: { name: 'Reaktionsgeschwindigkeitstest', shortDesc: 'Messen Sie Ihre Reaktionszeit' },
+            fr: { name: 'Test de Vitesse de Réaction', shortDesc: 'Mesurez votre temps de réaction' }
+        }
+    },
+    {
+        id: 'animal-personality',
+        name: '내면 동물 테스트',
+        shortDesc: '나의 내면 동물 찾기',
+        description: '12개 질문으로 당신의 내면 동물을 알아보세요!',
+        icon: '🦁',
+        color: '#8e44ad',
+        category: 'test',
+        tags: ['동물', '성격', '심리', 'animal', 'personality'],
+        url: 'https://dopabrain.com/animal-personality/',
+        isNew: true,
+        isPopular: false,
+        popularity: 4,
+        i18n: {
+            en: { name: 'Animal Personality Test', shortDesc: 'Find your inner animal' },
+            zh: { name: '内心动物测试', shortDesc: '找到你的内在动物' },
+            hi: { name: 'पशु व्यक्तित्व परीक्षण', shortDesc: 'अपना आंतरिक जानवर खोजें' },
+            ru: { name: 'Тест: какое вы животное?', shortDesc: 'Найдите свое внутреннее животное' },
+            ja: { name: '内なる動物診断', shortDesc: 'あなたの内なる動物を見つけよう' },
+            es: { name: 'Test de Personalidad Animal', shortDesc: 'Encuentra tu animal interior' },
+            pt: { name: 'Teste de Personalidade Animal', shortDesc: 'Encontre seu animal interior' },
+            id: { name: 'Tes Kepribadian Hewan', shortDesc: 'Temukan hewan batin Anda' },
+            tr: { name: 'Hayvan Kişilik Testi', shortDesc: 'İç hayvanınızı bulun' },
+            de: { name: 'Tier-Persönlichkeitstest', shortDesc: 'Finde dein inneres Tier' },
+            fr: { name: 'Test de Personnalité Animale', shortDesc: 'Trouvez votre animal intérieur' }
+        }
+    },
+    {
+        id: 'color-personality',
+        name: '성격 색상 테스트',
+        shortDesc: '나의 성격 색상 찾기',
+        description: '12개 질문으로 당신의 성격을 나타내는 색상을 찾아보세요!',
+        icon: '🎨',
+        color: '#f39c12',
+        category: 'test',
+        tags: ['색상', '성격', '심리', 'color', 'personality'],
+        url: 'https://dopabrain.com/color-personality/',
+        isNew: true,
+        isPopular: false,
+        popularity: 4,
+        i18n: {
+            en: { name: 'Color Personality Test', shortDesc: 'Discover your personality color' },
+            zh: { name: '性格色彩测试', shortDesc: '发现你的性格颜色' },
+            hi: { name: 'रंग व्यक्तित्व परीक्षण', shortDesc: 'अपने व्यक्तित्व का रंग खोजें' },
+            ru: { name: 'Тест: цвет вашей личности', shortDesc: 'Откройте свой цвет личности' },
+            ja: { name: '性格カラー診断', shortDesc: 'あなたの性格カラーを発見' },
+            es: { name: 'Test de Color de Personalidad', shortDesc: 'Descubre tu color de personalidad' },
+            pt: { name: 'Teste de Cor da Personalidade', shortDesc: 'Descubra a cor da sua personalidade' },
+            id: { name: 'Tes Warna Kepribadian', shortDesc: 'Temukan warna kepribadian Anda' },
+            tr: { name: 'Renk Kişilik Testi', shortDesc: 'Kişilik renginizi keşfedin' },
+            de: { name: 'Farb-Persönlichkeitstest', shortDesc: 'Entdecke deine Persönlichkeitsfarbe' },
+            fr: { name: 'Test de Couleur de Personnalité', shortDesc: 'Découvrez votre couleur de personnalité' }
+        }
     }
 ];
 
