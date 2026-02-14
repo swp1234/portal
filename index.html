@@ -428,122 +428,262 @@
             </div>
         </section>
 
-        <!-- Blog Section (Dynamic - Language-aware) -->
-        <section class="blog-section">
+        <!-- Blog Section — Magazine Layout -->
+        <section class="blog-section" id="blog-section">
             <div class="blog-header">
-                <h2 class="blog-title" data-i18n="blog.title">📚 Blog</h2>
-                <p class="blog-subtitle" data-i18n="blog.subtitle">심리, 게임, 웰빙 가이드 120+</p>
-                <a href="/portal/blog/" class="blog-view-all" data-i18n="blog.viewAll">블로그 전체 보기 →</a>
+                <div class="blog-header-top">
+                    <h2 class="blog-title" data-i18n="blog.title">Blog</h2>
+                    <span class="blog-count" id="blog-count"></span>
+                </div>
+                <p class="blog-subtitle" data-i18n="blog.subtitle">심리, 게임, 웰빙 가이드</p>
+                <div class="blog-search-wrap">
+                    <svg class="blog-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                    <input type="text" class="blog-search" id="blog-search" placeholder="Search articles...">
+                </div>
+                <div class="blog-filters" id="blog-filters"></div>
             </div>
             <div class="blog-grid" id="blog-grid"></div>
+            <div class="blog-actions" id="blog-actions">
+                <button class="blog-load-more" id="blog-load-more">Load More</button>
+                <a href="/portal/blog/" class="blog-view-all" id="blog-view-all" data-i18n="blog.viewAll">View All Articles →</a>
+            </div>
         </section>
 
         <script>
-        var BLOG_DATA = {
+        (function() {
+            var BLOG_DATA = {
                 ko: [
-                    { href: 'blog/psychology-test-best.html', tag: '심리', tagColor: '#6366f1,#4f46e5', title: '무료 심리테스트 추천 BEST 7', desc: '감정 온도계, MBTI, HSP, 전생 등 7가지 인기 테스트 모음.', meta: '10분 읽기' },
-                    { href: 'blog/emotion-management-guide.html', tag: '감정', tagColor: '#e07a5f,#c4856c', title: '감정 관리 & 자기 이해 완벽 가이드', desc: '4단계 프레임워크, 유형별 전략, 일상 실천 10가지 팁.', meta: '9분 읽기' },
-                    { href: 'blog/free-online-games.html', tag: '게임', tagColor: '#5f27cd,#341f97', title: '무료 온라인 게임 추천 TOP 5', desc: '설치 없이 즐기는 브라우저 게임. 장르별 추천과 공략.', meta: '7분 읽기' },
-                    { href: 'blog/valentine-compatibility-guide.html', tag: '연애', tagColor: '#f472b6,#ec4899', title: '밸런타인 궁합 완벽 가이드', desc: '별자리·이름·연인 궁합 분석, 12별자리 궁합표.', meta: '8분 읽기' },
-                    { href: 'blog/mbti-compatibility.html', tag: 'MBTI', tagColor: '#e91e63,#c2185b', title: 'MBTI 궁합표 16×16 완전판', desc: '유형별 최고·최악 조합, 256가지 궁합 점수 한눈에 확인.', meta: '10분 읽기' },
-                    { href: 'blog/hsp-guide.html', tag: '심리', tagColor: '#7c3aed,#5b21b6', title: 'HSP 고감수성자 완벽 가이드', desc: '나도 HSP일까? 자가진단 체크리스트, 메타센싱 트렌드.', meta: '8분 읽기' },
-                    { href: 'blog/lotto-strategy.html', tag: '로또', tagColor: '#e74c3c,#c0392b', title: '로또 당첨 확률 높이는 전략', desc: '통계 기반 번호 선택법, 피해야 할 패턴, 기대값 분석.', meta: '7분 읽기' },
-                    { href: 'blog/tax-refund-guide.html', tag: '금융', tagColor: '#3498db,#2980b9', title: '연말정산 환급액 최대화 가이드', desc: '환급액 늘리는 7가지 전략. 소득공제 vs 세액공제 정리.', meta: '8분 읽기' },
-                    { href: 'blog/lunar-new-year-fortune.html', tag: '운세', tagColor: '#f39c12,#e67e22', title: '2026 병오년 설날 운세 가이드', desc: '12띠별 신년 운세, 별자리 사랑운/재물운 총정리.', meta: '9분 읽기' },
-                    { href: 'blog/pyeongsu-calculator.html', tag: '부동산', tagColor: '#2ed573,#17a65b', title: '평수 계산법 완벽 정리', desc: '제곱미터 → 평 변환 공식, 환산표, 전용면적 vs 공급면적.', meta: '6분 읽기' }
+                    { href: 'blog/psychology-test-best.html', cat: 'tests', tag: '심리', tagColor: '#8b5cf6', title: '무료 심리테스트 추천 BEST 7', desc: '감정 온도계, MBTI, HSP, 전생 등 7가지 인기 테스트 모음.', meta: '10분' },
+                    { href: 'blog/mbti-compatibility.html', cat: 'tests', tag: 'MBTI', tagColor: '#ec4899', title: 'MBTI 궁합표 16×16 완전판', desc: '유형별 최고·최악 조합, 256가지 궁합 점수 한눈에 확인.', meta: '10분' },
+                    { href: 'blog/hsp-guide.html', cat: 'tests', tag: 'HSP', tagColor: '#7c3aed', title: 'HSP 고감수성자 완벽 가이드', desc: '나도 HSP일까? 자가진단 체크리스트, 메타센싱 트렌드.', meta: '8분' },
+                    { href: 'blog/emotion-management-guide.html', cat: 'wellness', tag: '감정', tagColor: '#10b981', title: '감정 관리 & 자기 이해 완벽 가이드', desc: '4단계 프레임워크, 유형별 전략, 일상 실천 10가지 팁.', meta: '9분' },
+                    { href: 'blog/free-online-games.html', cat: 'games', tag: '게임', tagColor: '#3b82f6', title: '무료 온라인 게임 추천 TOP 5', desc: '설치 없이 즐기는 브라우저 게임. 장르별 추천과 공략.', meta: '7분' },
+                    { href: 'blog/valentine-compatibility-guide.html', cat: 'love', tag: '연애', tagColor: '#f472b6', title: '밸런타인 궁합 완벽 가이드', desc: '별자리·이름·연인 궁합 분석, 12별자리 궁합표.', meta: '8분' },
+                    { href: 'blog/lotto-strategy.html', cat: 'tools', tag: '로또', tagColor: '#e74c3c', title: '로또 당첨 확률 높이는 전략', desc: '통계 기반 번호 선택법, 피해야 할 패턴, 기대값 분석.', meta: '7분' },
+                    { href: 'blog/tax-refund-guide.html', cat: 'tools', tag: '금융', tagColor: '#3498db', title: '연말정산 환급액 최대화 가이드', desc: '환급액 늘리는 7가지 전략. 소득공제 vs 세액공제 정리.', meta: '8분' },
+                    { href: 'blog/lunar-new-year-fortune.html', cat: 'love', tag: '운세', tagColor: '#f59e0b', title: '2026 병오년 설날 운세 가이드', desc: '12띠별 신년 운세, 별자리 사랑운/재물운 총정리.', meta: '9분' },
+                    { href: 'blog/pyeongsu-calculator.html', cat: 'tools', tag: '부동산', tagColor: '#2ed573', title: '평수 계산법 완벽 정리', desc: '제곱미터 → 평 변환 공식, 환산표, 전용면적 vs 공급면적.', meta: '6분' }
                 ],
                 en: [
-                    { href: 'blog/en/habit-building.html', tag: 'Habits', tagColor: '#10b981,#059669', title: 'How to Build Better Habits: Science-Backed Guide', desc: 'Atomic habits, habit stacking, and the 21-day myth debunked.', meta: '10 min read' },
-                    { href: 'blog/en/sleep-science.html', tag: 'Sleep', tagColor: '#6366f1,#4f46e5', title: 'Sleep Chronotypes: Lion, Bear, Wolf, or Dolphin?', desc: 'Discover your chronotype and optimize your daily schedule.', meta: '9 min read' },
-                    { href: 'blog/en/digital-detox.html', tag: 'Focus', tagColor: '#f59e0b,#d97706', title: 'Digital Detox Guide: Reclaim Your Focus', desc: 'A practical 7-day plan to reset your dopamine and attention.', meta: '8 min read' },
-                    { href: 'blog/en/decision-making.html', tag: 'Mind', tagColor: '#8b5cf6,#7c3aed', title: 'The Science of Decision Making', desc: 'Cognitive biases, decision fatigue, and practical frameworks.', meta: '9 min read' },
-                    { href: 'blog/en/personality-tests.html', tag: 'Tests', tagColor: '#ec4899,#db2777', title: 'Best Free Personality Tests 2026', desc: 'MBTI, HSP, Love Frequency & more. Find your true self.', meta: '8 min read' },
-                    { href: 'blog/en/free-games.html', tag: 'Games', tagColor: '#3b82f6,#2563eb', title: 'Top 5 Free Browser Games 2026', desc: 'No download needed. Play arcade, puzzle & idle games.', meta: '7 min read' },
-                    { href: 'blog/en/valentine-guide.html', tag: 'Love', tagColor: '#f472b6,#ec4899', title: "Valentine's Day Compatibility Guide", desc: 'Zodiac, name & love match analysis for couples.', meta: '8 min read' }
+                    { href: 'blog/en/emoji-merge-puzzle-guide.html', cat: 'games', tag: 'Puzzle', tagColor: '#f59e0b', title: 'Emoji Merge: Ultimate Strategy Guide', desc: 'Master combos, chain reactions, and score multipliers in this addictive puzzle game.', meta: '8 min' },
+                    { href: 'blog/en/minesweeper-strategy-guide.html', cat: 'games', tag: 'Strategy', tagColor: '#3b82f6', title: 'Minesweeper Strategy: Win Every Time', desc: 'Pattern recognition, probability tactics, and expert tips.', meta: '9 min' },
+                    { href: 'blog/en/flappy-bird-game-guide.html', cat: 'games', tag: 'Arcade', tagColor: '#3b82f6', title: 'Flappy Bird: Tips to Beat High Scores', desc: 'Timing, rhythm techniques, and avoiding common mistakes.', meta: '7 min' },
+                    { href: 'blog/en/snake-game-guide.html', cat: 'games', tag: 'Classic', tagColor: '#3b82f6', title: 'Snake Game: Classic Strategy Guide', desc: 'Growth patterns, wall strategies, and speed management.', meta: '7 min' },
+                    { href: 'blog/en/idle-clicker-dungeon-guide.html', cat: 'games', tag: 'Idle', tagColor: '#3b82f6', title: 'Idle Clicker Dungeon: Complete Guide', desc: 'Upgrade paths, prestige strategy, and optimal builds.', meta: '8 min' },
+                    { href: 'blog/en/typing-speed-test-guide.html', cat: 'games', tag: 'Skill', tagColor: '#3b82f6', title: 'Typing Speed Test: Boost Your WPM', desc: 'Touch typing techniques, finger placement, and practice drills.', meta: '7 min' },
+                    { href: 'blog/en/free-games.html', cat: 'games', tag: 'Games', tagColor: '#3b82f6', title: 'Top 5 Free Browser Games 2026', desc: 'No download needed. Play arcade, puzzle & idle games.', meta: '7 min' },
+                    { href: 'blog/en/personality-tests.html', cat: 'tests', tag: 'Tests', tagColor: '#8b5cf6', title: 'Best Free Personality Tests 2026', desc: 'MBTI, HSP, Love Frequency & more. Find your true self.', meta: '8 min' },
+                    { href: 'blog/en/mbti-compatibility-guide.html', cat: 'tests', tag: 'MBTI', tagColor: '#8b5cf6', title: 'MBTI Compatibility: Complete 16×16 Guide', desc: 'Best & worst type matches with detailed analysis for all 256 combinations.', meta: '10 min' },
+                    { href: 'blog/en/hsp-highly-sensitive-person-test.html', cat: 'tests', tag: 'HSP', tagColor: '#8b5cf6', title: 'HSP Test: Are You Highly Sensitive?', desc: 'Self-assessment checklist, coping strategies, and meta-sensing trends.', meta: '9 min' },
+                    { href: 'blog/en/color-personality-test-guide.html', cat: 'tests', tag: 'Color', tagColor: '#8b5cf6', title: 'Color Personality Test: What Colors Reveal', desc: 'Psychology of color preference and hidden personality traits.', meta: '8 min' },
+                    { href: 'blog/en/brain-type-test-2026.html', cat: 'tests', tag: 'Brain', tagColor: '#8b5cf6', title: 'Brain Type Test: Left vs Right Brain', desc: 'Discover your dominant thinking style and cognitive strengths.', meta: '8 min' },
+                    { href: 'blog/en/free-iq-test-guide.html', cat: 'tests', tag: 'IQ', tagColor: '#8b5cf6', title: 'Free IQ Test: Measure Your Intelligence', desc: 'Spatial reasoning, logic puzzles, and comprehensive score analysis.', meta: '9 min' },
+                    { href: 'blog/en/love-frequency-test-guide.html', cat: 'tests', tag: 'Love', tagColor: '#ec4899', title: 'Love Frequency Test: Find Your Match', desc: 'Discover your emotional wavelength and romantic compatibility type.', meta: '8 min' },
+                    { href: 'blog/en/animal-personality-test-guide.html', cat: 'tests', tag: 'Animal', tagColor: '#8b5cf6', title: 'Animal Personality Test: Discover Your Spirit Animal', desc: 'Which animal matches your personality? Take the quiz and find out.', meta: '7 min' },
+                    { href: 'blog/en/pomodoro-timer-guide.html', cat: 'tools', tag: 'Focus', tagColor: '#f59e0b', title: 'Pomodoro Timer: Master Focus Sessions', desc: '25/5 technique, deep work science, and productivity optimization.', meta: '8 min' },
+                    { href: 'blog/en/password-generator-guide.html', cat: 'tools', tag: 'Security', tagColor: '#f59e0b', title: 'Password Generator: Create Unbreakable Passwords', desc: 'Entropy explained, security best practices, and manager tips.', meta: '7 min' },
+                    { href: 'blog/en/habit-tracker-guide.html', cat: 'tools', tag: 'Habits', tagColor: '#f59e0b', title: 'Habit Tracker: Build Better Routines', desc: 'Visual streaks, progress analytics, and habit formation science.', meta: '8 min' },
+                    { href: 'blog/en/qr-generator-guide.html', cat: 'tools', tag: 'QR', tagColor: '#f59e0b', title: 'QR Code Generator: Complete Guide', desc: 'Create, customize, and use QR codes for business and personal use.', meta: '6 min' },
+                    { href: 'blog/en/todo-list-guide.html', cat: 'tools', tag: 'Productivity', tagColor: '#f59e0b', title: 'Smart To-Do List: Get Things Done', desc: 'Task prioritization, GTD method, and digital workflow tips.', meta: '7 min' },
+                    { href: 'blog/en/habit-building.html', cat: 'wellness', tag: 'Habits', tagColor: '#10b981', title: 'How to Build Better Habits: Science-Backed Guide', desc: 'Atomic habits, habit stacking, and the 21-day myth debunked.', meta: '10 min' },
+                    { href: 'blog/en/sleep-science.html', cat: 'wellness', tag: 'Sleep', tagColor: '#10b981', title: 'Sleep Chronotypes: Lion, Bear, Wolf, or Dolphin?', desc: 'Discover your chronotype and optimize your daily schedule.', meta: '9 min' },
+                    { href: 'blog/en/digital-detox.html', cat: 'wellness', tag: 'Focus', tagColor: '#10b981', title: 'Digital Detox: Reclaim Your Focus', desc: 'A practical 7-day plan to reset your dopamine and attention span.', meta: '8 min' },
+                    { href: 'blog/en/white-noise-guide.html', cat: 'wellness', tag: 'Sleep', tagColor: '#10b981', title: 'White Noise Guide: Better Sleep & Focus', desc: 'Science of sound masking, noise color types, and best use cases.', meta: '8 min' },
+                    { href: 'blog/en/decision-making.html', cat: 'wellness', tag: 'Mind', tagColor: '#10b981', title: 'The Science of Decision Making', desc: 'Cognitive biases, decision fatigue, and practical frameworks.', meta: '9 min' },
+                    { href: 'blog/en/valentine-guide.html', cat: 'love', tag: 'Love', tagColor: '#ec4899', title: "Valentine's Day Compatibility Guide", desc: 'Zodiac, name & love match analysis for couples.', meta: '8 min' },
+                    { href: 'blog/en/zodiac-compatibility.html', cat: 'love', tag: 'Zodiac', tagColor: '#ec4899', title: 'Zodiac Compatibility 2026: Complete Guide', desc: '12-sign compatibility chart with love & friendship scores.', meta: '9 min' },
+                    { href: 'blog/en/mbti-love-compatibility-guide.html', cat: 'love', tag: 'MBTI', tagColor: '#ec4899', title: 'MBTI Love Compatibility: Find Your Ideal Partner', desc: '16 types decoded — who clicks, who clashes, and why.', meta: '10 min' }
                 ],
                 zh: [
-                    { href: 'blog/zh/emotion-management.html', tag: '心理', tagColor: '#e07a5f,#c4856c', title: '情绪管理完全指南：掌控你的内心世界', desc: '认知行为疗法、正念冥想、情绪日记等实用方法。', meta: '10分钟阅读' },
-                    { href: 'blog/zh/focus-methods.html', tag: '效率', tagColor: '#10b981,#059669', title: '提升专注力的10种科学方法', desc: '番茄工作法、深度工作、多巴胺管理技巧。', meta: '9分钟阅读' },
-                    { href: 'blog/zh/sleep-guide.html', tag: '健康', tagColor: '#6366f1,#4f46e5', title: '科学睡眠指南：高质量睡眠秘诀', desc: '睡眠周期、褪黑素、失眠解决方案完全指南。', meta: '8分钟阅读' },
-                    { href: 'blog/zh/relationship-tips.html', tag: '关系', tagColor: '#f472b6,#ec4899', title: '人际关系沟通技巧：建立更好的连接', desc: '非暴力沟通、倾听技巧、冲突解决策略。', meta: '9分钟阅读' },
-                    { href: 'blog/zh/personality-tests.html', tag: '测试', tagColor: '#8b5cf6,#7c3aed', title: '2026最佳免费性格测试推荐', desc: 'MBTI·HSP·爱情·前世测试合集。', meta: '8分钟阅读' },
-                    { href: 'blog/zh/free-games.html', tag: '游戏', tagColor: '#ec4899,#db2777', title: '免费在线游戏TOP 5', desc: '无需下载，即开即玩的浏览器游戏。', meta: '7分钟阅读' },
-                    { href: 'blog/zh/love-compatibility.html', tag: '星座', tagColor: '#f59e0b,#d97706', title: '2026星座配对完全指南', desc: '12星座配对·姓名配对·恋爱分析。', meta: '8分钟阅读' }
+                    { href: 'blog/zh/emotion-management.html', cat: 'wellness', tag: '心理', tagColor: '#10b981', title: '情绪管理完全指南：掌控你的内心世界', desc: '认知行为疗法、正念冥想、情绪日记等实用方法。', meta: '10分钟' },
+                    { href: 'blog/zh/focus-methods.html', cat: 'tools', tag: '效率', tagColor: '#f59e0b', title: '提升专注力的10种科学方法', desc: '番茄工作法、深度工作、多巴胺管理技巧。', meta: '9分钟' },
+                    { href: 'blog/zh/sleep-guide.html', cat: 'wellness', tag: '健康', tagColor: '#10b981', title: '科学睡眠指南：高质量睡眠秘诀', desc: '睡眠周期、褪黑素、失眠解决方案完全指南。', meta: '8分钟' },
+                    { href: 'blog/zh/relationship-tips.html', cat: 'love', tag: '关系', tagColor: '#ec4899', title: '人际关系沟通技巧：建立更好的连接', desc: '非暴力沟通、倾听技巧、冲突解决策略。', meta: '9分钟' },
+                    { href: 'blog/zh/personality-tests.html', cat: 'tests', tag: '测试', tagColor: '#8b5cf6', title: '2026最佳免费性格测试推荐', desc: 'MBTI·HSP·爱情·前世测试合集。', meta: '8分钟' },
+                    { href: 'blog/zh/free-games.html', cat: 'games', tag: '游戏', tagColor: '#3b82f6', title: '免费在线游戏TOP 5', desc: '无需下载，即开即玩的浏览器游戏。', meta: '7分钟' },
+                    { href: 'blog/zh/love-compatibility.html', cat: 'love', tag: '星座', tagColor: '#ec4899', title: '2026星座配对完全指南', desc: '12星座配对·姓名配对·恋爱分析。', meta: '8分钟' }
                 ],
                 ru: [
-                    { href: 'blog/ru/stress-management.html', tag: 'Здоровье', tagColor: '#10b981,#059669', title: 'Управление стрессом: Полное руководство', desc: 'Причины стресса, техники дыхания, медитация, режим дня.', meta: '10 мин' },
-                    { href: 'blog/ru/digital-detox.html', tag: 'Фокус', tagColor: '#f59e0b,#d97706', title: 'Цифровой детокс: Верните контроль', desc: 'Дофаминовый сброс и 7-дневный план детоксикации.', meta: '8 мин' },
-                    { href: 'blog/ru/habit-psychology.html', tag: 'Развитие', tagColor: '#8b5cf6,#7c3aed', title: 'Психология привычек: Измените жизнь', desc: 'Наука формирования привычек и стратегии изменений.', meta: '9 мин' },
-                    { href: 'blog/ru/sleep-science.html', tag: 'Сон', tagColor: '#6366f1,#4f46e5', title: 'Здоровый сон: Научный подход', desc: 'Фазы сна, хронотипы, гигиена сна, мелатонин.', meta: '9 мин' },
-                    { href: 'blog/ru/personality-tests.html', tag: 'Тесты', tagColor: '#ec4899,#db2777', title: 'Лучшие тесты личности 2026', desc: 'MBTI, HSP и другие вирусные тесты.', meta: '8 мин' },
-                    { href: 'blog/ru/free-games.html', tag: 'Игры', tagColor: '#3b82f6,#2563eb', title: 'Топ-5 браузерных игр 2026', desc: 'Аркады, пазлы, кликеры без скачивания.', meta: '7 мин' },
-                    { href: 'blog/ru/love-compatibility.html', tag: 'Любовь', tagColor: '#f472b6,#ec4899', title: 'Гороскоп совместимости 2026', desc: 'Совместимость по зодиаку и имени.', meta: '8 мин' }
+                    { href: 'blog/ru/stress-management.html', cat: 'wellness', tag: 'Здоровье', tagColor: '#10b981', title: 'Управление стрессом: Полное руководство', desc: 'Причины стресса, техники дыхания, медитация, режим дня.', meta: '10 мин' },
+                    { href: 'blog/ru/digital-detox.html', cat: 'wellness', tag: 'Фокус', tagColor: '#f59e0b', title: 'Цифровой детокс: Верните контроль', desc: 'Дофаминовый сброс и 7-дневный план детоксикации.', meta: '8 мин' },
+                    { href: 'blog/ru/habit-psychology.html', cat: 'wellness', tag: 'Развитие', tagColor: '#10b981', title: 'Психология привычек: Измените жизнь', desc: 'Наука формирования привычек и стратегии изменений.', meta: '9 мин' },
+                    { href: 'blog/ru/sleep-science.html', cat: 'wellness', tag: 'Сон', tagColor: '#10b981', title: 'Здоровый сон: Научный подход', desc: 'Фазы сна, хронотипы, гигиена сна, мелатонин.', meta: '9 мин' },
+                    { href: 'blog/ru/personality-tests.html', cat: 'tests', tag: 'Тесты', tagColor: '#8b5cf6', title: 'Лучшие тесты личности 2026', desc: 'MBTI, HSP и другие вирусные тесты.', meta: '8 мин' },
+                    { href: 'blog/ru/free-games.html', cat: 'games', tag: 'Игры', tagColor: '#3b82f6', title: 'Топ-5 браузерных игр 2026', desc: 'Аркады, пазлы, кликеры без скачивания.', meta: '7 мин' },
+                    { href: 'blog/ru/love-compatibility.html', cat: 'love', tag: 'Любовь', tagColor: '#ec4899', title: 'Гороскоп совместимости 2026', desc: 'Совместимость по зодиаку и имени.', meta: '8 мин' }
                 ],
                 hi: [
-                    { href: 'blog/hi/meditation-guide.html', tag: 'ध्यान', tagColor: '#10b981,#059669', title: 'ध्यान और मेडिटेशन: शुरुआती गाइड', desc: 'योग, प्राणायाम, माइंडफुलनेस और दैनिक अभ्यास।', meta: '10 मिनट' },
-                    { href: 'blog/hi/stress-management.html', tag: 'स्वास्थ्य', tagColor: '#e07a5f,#c4856c', title: 'तनाव प्रबंधन: 10 प्रभावी तरीके', desc: 'श्वास तकनीक, आयुर्वेदिक सुझाव, जीवनशैली बदलाव।', meta: '9 मिनट' },
-                    { href: 'blog/hi/healthy-habits.html', tag: 'जीवनशैली', tagColor: '#6366f1,#4f46e5', title: 'स्वस्थ जीवनशैली: 15 दैनिक आदतें', desc: 'सुबह की दिनचर्या, आहार, व्यायाम और नींद सुधार।', meta: '8 मिनट' },
-                    { href: 'blog/hi/career-mindset.html', tag: 'करियर', tagColor: '#f59e0b,#d97706', title: 'करियर सफलता के लिए मानसिक तैयारी', desc: 'ग्रोथ माइंडसेट, प्रोडक्टिविटी और लक्ष्य निर्धारण।', meta: '9 मिनट' },
-                    { href: 'blog/hi/personality-tests.html', tag: 'टेस्ट', tagColor: '#8b5cf6,#7c3aed', title: 'सर्वश्रेष्ठ मुफ्त व्यक्तित्व परीक्षण 2026', desc: 'MBTI, HSP और 7 वायरल टेस्ट।', meta: '8 मिनट' },
-                    { href: 'blog/hi/free-games.html', tag: 'गेम', tagColor: '#ec4899,#db2777', title: 'शीर्ष 5 मुफ्त ऑनलाइन गेम 2026', desc: 'बिना डाउनलोड खेलें। आर्केड और पज़ल।', meta: '7 मिनट' },
-                    { href: 'blog/hi/love-compatibility.html', tag: 'प्रेम', tagColor: '#f472b6,#ec4899', title: 'प्रेम अनुकूलता गाइड 2026', desc: 'राशि और नाम अनुकूलता विश्लेषण।', meta: '8 मिनट' }
+                    { href: 'blog/hi/meditation-guide.html', cat: 'wellness', tag: 'ध्यान', tagColor: '#10b981', title: 'ध्यान और मेडिटेशन: शुरुआती गाइड', desc: 'योग, प्राणायाम, माइंडफुलनेस और दैनिक अभ्यास।', meta: '10 मिनट' },
+                    { href: 'blog/hi/stress-management.html', cat: 'wellness', tag: 'स्वास्थ्य', tagColor: '#10b981', title: 'तनाव प्रबंधन: 10 प्रभावी तरीके', desc: 'श्वास तकनीक, आयुर्वेदिक सुझाव, जीवनशैली बदलाव।', meta: '9 मिनट' },
+                    { href: 'blog/hi/healthy-habits.html', cat: 'wellness', tag: 'जीवनशैली', tagColor: '#10b981', title: 'स्वस्थ जीवनशैली: 15 दैनिक आदतें', desc: 'सुबह की दिनचर्या, आहार, व्यायाम और नींद सुधार।', meta: '8 मिनट' },
+                    { href: 'blog/hi/career-mindset.html', cat: 'tools', tag: 'करियर', tagColor: '#f59e0b', title: 'करियर सफलता के लिए मानसिक तैयारी', desc: 'ग्रोथ माइंडसेट, प्रोडक्टिविटी और लक्ष्य निर्धारण।', meta: '9 मिनट' },
+                    { href: 'blog/hi/personality-tests.html', cat: 'tests', tag: 'टेस्ट', tagColor: '#8b5cf6', title: 'सर्वश्रेष्ठ मुफ्त व्यक्तित्व परीक्षण 2026', desc: 'MBTI, HSP और 7 वायरल टेस्ट।', meta: '8 मिनट' },
+                    { href: 'blog/hi/free-games.html', cat: 'games', tag: 'गेम', tagColor: '#3b82f6', title: 'शीर्ष 5 मुफ्त ऑनलाइन गेम 2026', desc: 'बिना डाउनलोड खेलें। आर्केड और पज़ल।', meta: '7 मिनट' },
+                    { href: 'blog/hi/love-compatibility.html', cat: 'love', tag: 'प्रेम', tagColor: '#ec4899', title: 'प्रेम अनुकूलता गाइड 2026', desc: 'राशि और नाम अनुकूलता विश्लेषण।', meta: '8 मिनट' }
                 ],
                 ja: [
-                    { href: 'blog/ja/personality-tests.html', tag: '心理', tagColor: '#8b5cf6,#7c3aed', title: '2026年おすすめ無料性格診断テスト', desc: 'MBTI、HSP、恋愛相性など人気テストまとめ。', meta: '8分で読める' },
-                    { href: 'blog/ja/free-games.html', tag: 'ゲーム', tagColor: '#3b82f6,#2563eb', title: '無料ブラウザゲームTOP 5', desc: 'ダウンロード不要。アーケード、パズル、放置ゲーム。', meta: '7分で読める' },
-                    { href: 'blog/ja/blood-type-personality.html', tag: '血液型', tagColor: '#f472b6,#ec4899', title: '血液型性格診断：科学と文化', desc: 'A型・B型・O型・AB型の性格特徴と相性。', meta: '9分で読める' }
+                    { href: 'blog/ja/personality-tests.html', cat: 'tests', tag: '心理', tagColor: '#8b5cf6', title: '2026年おすすめ無料性格診断テスト', desc: 'MBTI、HSP、恋愛相性など人気テストまとめ。', meta: '8分' },
+                    { href: 'blog/ja/free-games.html', cat: 'games', tag: 'ゲーム', tagColor: '#3b82f6', title: '無料ブラウザゲームTOP 5', desc: 'ダウンロード不要。アーケード、パズル、放置ゲーム。', meta: '7分' },
+                    { href: 'blog/ja/blood-type-personality.html', cat: 'tests', tag: '血液型', tagColor: '#ec4899', title: '血液型性格診断：科学と文化', desc: 'A型・B型・O型・AB型の性格特徴と相性。', meta: '9分' },
+                    { href: 'blog/ja/emoji-merge-game-guide.html', cat: 'games', tag: 'パズル', tagColor: '#f59e0b', title: '絵文字マージ：究極攻略ガイド', desc: 'コンボ、連鎖反応、スコア倍率をマスターしよう。', meta: '8分' },
+                    { href: 'blog/ja/minesweeper-strategy-guide.html', cat: 'games', tag: '戦略', tagColor: '#3b82f6', title: 'マインスイーパー攻略：必勝テクニック', desc: 'パターン認識、確率戦術、上級者向けテクニック。', meta: '9分' },
+                    { href: 'blog/ja/habit-tracker-guide.html', cat: 'tools', tag: '習慣', tagColor: '#f59e0b', title: '無料習慣トラッカー完全ガイド', desc: 'ストリーク追跡、進捗分析、習慣形成の科学。', meta: '8分' },
+                    { href: 'blog/ja/white-noise-guide.html', cat: 'wellness', tag: '睡眠', tagColor: '#10b981', title: 'ホワイトノイズガイド：睡眠＆集中', desc: '音響マスキングの科学、ノイズの種類と最適な使い方。', meta: '8分' }
                 ],
                 es: [
-                    { href: 'blog/es/personality-tests.html', tag: 'Tests', tagColor: '#8b5cf6,#7c3aed', title: 'Los mejores tests de personalidad gratis 2026', desc: 'MBTI, HSP, amor y más tests virales.', meta: '8 min lectura' },
-                    { href: 'blog/es/free-games.html', tag: 'Juegos', tagColor: '#3b82f6,#2563eb', title: 'Top 5 juegos gratis en navegador 2026', desc: 'Sin descarga. Arcade, puzle y juegos idle.', meta: '7 min lectura' },
-                    { href: 'blog/es/love-compatibility.html', tag: 'Amor', tagColor: '#f472b6,#ec4899', title: 'Guía de compatibilidad amorosa 2026', desc: 'Compatibilidad por zodiaco y nombre.', meta: '8 min lectura' }
+                    { href: 'blog/es/personality-tests.html', cat: 'tests', tag: 'Tests', tagColor: '#8b5cf6', title: 'Los mejores tests de personalidad gratis 2026', desc: 'MBTI, HSP, amor y más tests virales.', meta: '8 min' },
+                    { href: 'blog/es/free-games.html', cat: 'games', tag: 'Juegos', tagColor: '#3b82f6', title: 'Top 5 juegos gratis en navegador 2026', desc: 'Sin descarga. Arcade, puzle y juegos idle.', meta: '7 min' },
+                    { href: 'blog/es/love-compatibility.html', cat: 'love', tag: 'Amor', tagColor: '#ec4899', title: 'Guía de compatibilidad amorosa 2026', desc: 'Compatibilidad por zodiaco y nombre.', meta: '8 min' }
                 ],
                 pt: [
-                    { href: 'blog/pt/personality-tests.html', tag: 'Testes', tagColor: '#8b5cf6,#7c3aed', title: 'Melhores testes de personalidade grátis 2026', desc: 'MBTI, HSP, amor e mais testes virais.', meta: '8 min leitura' },
-                    { href: 'blog/pt/free-games.html', tag: 'Jogos', tagColor: '#3b82f6,#2563eb', title: 'Top 5 jogos grátis no navegador 2026', desc: 'Sem download. Arcade, puzzle e jogos idle.', meta: '7 min leitura' },
-                    { href: 'blog/pt/self-care-guide.html', tag: 'Bem-estar', tagColor: '#10b981,#059669', title: 'Guia de autocuidado: cuide de você', desc: 'Rotina, saúde mental e hábitos positivos.', meta: '9 min leitura' }
+                    { href: 'blog/pt/personality-tests.html', cat: 'tests', tag: 'Testes', tagColor: '#8b5cf6', title: 'Melhores testes de personalidade grátis 2026', desc: 'MBTI, HSP, amor e mais testes virais.', meta: '8 min' },
+                    { href: 'blog/pt/free-games.html', cat: 'games', tag: 'Jogos', tagColor: '#3b82f6', title: 'Top 5 jogos grátis no navegador 2026', desc: 'Sem download. Arcade, puzzle e jogos idle.', meta: '7 min' },
+                    { href: 'blog/pt/self-care-guide.html', cat: 'wellness', tag: 'Bem-estar', tagColor: '#10b981', title: 'Guia de autocuidado: cuide de você', desc: 'Rotina, saúde mental e hábitos positivos.', meta: '9 min' }
                 ],
                 id: [
-                    { href: 'blog/id/personality-tests.html', tag: 'Tes', tagColor: '#8b5cf6,#7c3aed', title: 'Tes kepribadian gratis terbaik 2026', desc: 'MBTI, HSP, cinta dan tes viral lainnya.', meta: '8 menit baca' },
-                    { href: 'blog/id/free-games.html', tag: 'Game', tagColor: '#3b82f6,#2563eb', title: 'Top 5 game gratis di browser 2026', desc: 'Tanpa unduh. Arcade, puzzle, dan idle game.', meta: '7 menit baca' },
-                    { href: 'blog/id/zodiac-ramalan.html', tag: 'Zodiak', tagColor: '#f59e0b,#d97706', title: 'Ramalan zodiak dan kecocokan 2026', desc: 'Kecocokan berdasarkan zodiak dan nama.', meta: '8 menit baca' }
+                    { href: 'blog/id/personality-tests.html', cat: 'tests', tag: 'Tes', tagColor: '#8b5cf6', title: 'Tes kepribadian gratis terbaik 2026', desc: 'MBTI, HSP, cinta dan tes viral lainnya.', meta: '8 mnt' },
+                    { href: 'blog/id/free-games.html', cat: 'games', tag: 'Game', tagColor: '#3b82f6', title: 'Top 5 game gratis di browser 2026', desc: 'Tanpa unduh. Arcade, puzzle, dan idle game.', meta: '7 mnt' },
+                    { href: 'blog/id/zodiac-ramalan.html', cat: 'love', tag: 'Zodiak', tagColor: '#ec4899', title: 'Ramalan zodiak dan kecocokan 2026', desc: 'Kecocokan berdasarkan zodiak dan nama.', meta: '8 mnt' }
                 ],
                 tr: [
-                    { href: 'blog/tr/personality-tests.html', tag: 'Testler', tagColor: '#8b5cf6,#7c3aed', title: '2026 en iyi ücretsiz kişilik testleri', desc: 'MBTI, HSP, aşk ve diğer viral testler.', meta: '8 dk okuma' },
-                    { href: 'blog/tr/free-games.html', tag: 'Oyunlar', tagColor: '#3b82f6,#2563eb', title: '2026 en iyi 5 ücretsiz tarayıcı oyunu', desc: 'İndirme gerektirmez. Arcade, bulmaca ve idle.', meta: '7 dk okuma' },
-                    { href: 'blog/tr/kisisel-gelisim.html', tag: 'Gelişim', tagColor: '#10b981,#059669', title: 'Kişisel gelişim rehberi', desc: 'Alışkanlıklar, motivasyon ve hedef belirleme.', meta: '9 dk okuma' }
+                    { href: 'blog/tr/personality-tests.html', cat: 'tests', tag: 'Testler', tagColor: '#8b5cf6', title: '2026 en iyi ücretsiz kişilik testleri', desc: 'MBTI, HSP, aşk ve diğer viral testler.', meta: '8 dk' },
+                    { href: 'blog/tr/free-games.html', cat: 'games', tag: 'Oyunlar', tagColor: '#3b82f6', title: '2026 en iyi 5 ücretsiz tarayıcı oyunu', desc: 'İndirme gerektirmez. Arcade, bulmaca ve idle.', meta: '7 dk' },
+                    { href: 'blog/tr/kisisel-gelisim.html', cat: 'wellness', tag: 'Gelişim', tagColor: '#10b981', title: 'Kişisel gelişim rehberi', desc: 'Alışkanlıklar, motivasyon ve hedef belirleme.', meta: '9 dk' }
                 ],
                 de: [
-                    { href: 'blog/de/personality-tests.html', tag: 'Tests', tagColor: '#8b5cf6,#7c3aed', title: 'Beste kostenlose Persönlichkeitstests 2026', desc: 'MBTI, HSP, Liebe und mehr virale Tests.', meta: '8 Min. Lesezeit' },
-                    { href: 'blog/de/free-games.html', tag: 'Spiele', tagColor: '#3b82f6,#2563eb', title: 'Top 5 kostenlose Browserspiele 2026', desc: 'Kein Download nötig. Arcade, Puzzle und Idle.', meta: '7 Min. Lesezeit' },
-                    { href: 'blog/de/produktivitaet.html', tag: 'Produktivität', tagColor: '#10b981,#059669', title: 'Produktivität steigern: Wissenschaftliche Methoden', desc: 'Pomodoro, Deep Work und Dopamin-Management.', meta: '9 Min. Lesezeit' }
+                    { href: 'blog/de/personality-tests.html', cat: 'tests', tag: 'Tests', tagColor: '#8b5cf6', title: 'Beste kostenlose Persönlichkeitstests 2026', desc: 'MBTI, HSP, Liebe und mehr virale Tests.', meta: '8 Min' },
+                    { href: 'blog/de/free-games.html', cat: 'games', tag: 'Spiele', tagColor: '#3b82f6', title: 'Top 5 kostenlose Browserspiele 2026', desc: 'Kein Download nötig. Arcade, Puzzle und Idle.', meta: '7 Min' },
+                    { href: 'blog/de/produktivitaet.html', cat: 'tools', tag: 'Produktivität', tagColor: '#f59e0b', title: 'Produktivität steigern: Wissenschaftliche Methoden', desc: 'Pomodoro, Deep Work und Dopamin-Management.', meta: '9 Min' }
                 ],
                 fr: [
-                    { href: 'blog/fr/personality-tests.html', tag: 'Tests', tagColor: '#8b5cf6,#7c3aed', title: 'Meilleurs tests de personnalité gratuits 2026', desc: 'MBTI, HSP, amour et autres tests viraux.', meta: '8 min de lecture' },
-                    { href: 'blog/fr/free-games.html', tag: 'Jeux', tagColor: '#3b82f6,#2563eb', title: 'Top 5 jeux gratuits en navigateur 2026', desc: 'Sans téléchargement. Arcade, puzzle et idle.', meta: '7 min de lecture' },
-                    { href: 'blog/fr/bien-etre.html', tag: 'Bien-être', tagColor: '#10b981,#059669', title: 'Guide du bien-être : prendre soin de soi', desc: 'Routine, santé mentale et habitudes positives.', meta: '9 min de lecture' }
+                    { href: 'blog/fr/personality-tests.html', cat: 'tests', tag: 'Tests', tagColor: '#8b5cf6', title: 'Meilleurs tests de personnalité gratuits 2026', desc: 'MBTI, HSP, amour et autres tests viraux.', meta: '8 min' },
+                    { href: 'blog/fr/free-games.html', cat: 'games', tag: 'Jeux', tagColor: '#3b82f6', title: 'Top 5 jeux gratuits en navigateur 2026', desc: 'Sans téléchargement. Arcade, puzzle et idle.', meta: '7 min' },
+                    { href: 'blog/fr/bien-etre.html', cat: 'wellness', tag: 'Bien-être', tagColor: '#10b981', title: 'Guide du bien-être : prendre soin de soi', desc: 'Routine, santé mentale et habitudes positives.', meta: '9 min' }
                 ]
             };
 
-        function renderBlog() {
-            var lang = (localStorage.getItem('app_language') || (navigator.language || navigator.userLanguage).split('-')[0]);
-            if (!BLOG_DATA[lang]) lang = 'en';
+            var CATS = {
+                ko: [{id:'all',l:'전체',i:'✦'},{id:'tests',l:'심리',i:'🧪'},{id:'games',l:'게임',i:'🎮'},{id:'tools',l:'도구',i:'🔧'},{id:'wellness',l:'건강',i:'🧠'},{id:'love',l:'연애',i:'❤️'}],
+                en: [{id:'all',l:'All',i:'✦'},{id:'games',l:'Games',i:'🎮'},{id:'tests',l:'Tests',i:'🧪'},{id:'tools',l:'Tools',i:'🔧'},{id:'wellness',l:'Wellness',i:'🧠'},{id:'love',l:'Love',i:'❤️'}],
+                zh: [{id:'all',l:'全部',i:'✦'},{id:'tests',l:'测试',i:'🧪'},{id:'games',l:'游戏',i:'🎮'},{id:'tools',l:'效率',i:'🔧'},{id:'wellness',l:'健康',i:'🧠'},{id:'love',l:'爱情',i:'❤️'}],
+                ja: [{id:'all',l:'すべて',i:'✦'},{id:'games',l:'ゲーム',i:'🎮'},{id:'tests',l:'テスト',i:'🧪'},{id:'tools',l:'ツール',i:'🔧'},{id:'wellness',l:'健康',i:'🧠'},{id:'love',l:'恋愛',i:'❤️'}],
+                _default: [{id:'all',l:'All',i:'✦'},{id:'games',l:'Games',i:'🎮'},{id:'tests',l:'Tests',i:'🧪'},{id:'tools',l:'Tools',i:'🔧'},{id:'wellness',l:'Wellness',i:'🧠'},{id:'love',l:'Love',i:'❤️'}]
+            };
 
-            var grid = document.getElementById('blog-grid');
-            if (!grid) return;
+            var SEARCH_PH = {ko:'블로그 검색...',en:'Search articles...',zh:'搜索文章...',ja:'記事を検索...',ru:'Поиск статей...',hi:'लेख खोजें...',es:'Buscar artículos...',pt:'Pesquisar artigos...',id:'Cari artikel...',tr:'Makale ara...',de:'Artikel suchen...',fr:'Rechercher...'};
+            var LOAD_MORE_T = {ko:'더 보기',en:'Load More',zh:'加载更多',ja:'もっと見る',ru:'Ещё',hi:'और देखें',es:'Ver más',pt:'Ver mais',id:'Muat lagi',tr:'Daha fazla',de:'Mehr laden',fr:'Voir plus'};
+            var VIEW_ALL_T = {ko:'전체 보기 →',en:'View All →',zh:'查看全部 →',ja:'すべて見る →',ru:'Все статьи →',hi:'सभी देखें →',es:'Ver todos →',pt:'Ver todos →',id:'Lihat semua →',tr:'Tümünü gör →',de:'Alle ansehen →',fr:'Voir tout →'};
 
-            var blogs = BLOG_DATA[lang];
-            var html = '';
-            blogs.forEach(function(b) {
-                html += '<a href="' + b.href + '" class="blog-card">'
-                    + '<div class="blog-card-tag" style="background:linear-gradient(135deg,' + b.tagColor + ')">' + b.tag + '</div>'
-                    + '<h3 class="blog-card-title">' + b.title + '</h3>'
-                    + '<p class="blog-card-desc">' + b.desc + '</p>'
-                    + '<span class="blog-card-meta">' + b.meta + '</span></a>';
-            });
-            grid.innerHTML = html;
-        }
-        renderBlog();
+            var state = { cat: 'all', q: '', shown: 9, BATCH: 6 };
+            var lang, blogs, filtered;
+
+            function init() {
+                lang = localStorage.getItem('app_language') || (navigator.language || navigator.userLanguage || 'en').split('-')[0];
+                if (!BLOG_DATA[lang]) lang = 'en';
+                blogs = BLOG_DATA[lang];
+
+                document.getElementById('blog-count').textContent = blogs.length + '+';
+                document.getElementById('blog-search').placeholder = SEARCH_PH[lang] || SEARCH_PH.en;
+                document.getElementById('blog-load-more').textContent = LOAD_MORE_T[lang] || LOAD_MORE_T.en;
+                var va = document.getElementById('blog-view-all');
+                va.textContent = VIEW_ALL_T[lang] || VIEW_ALL_T.en;
+                va.href = '/portal/blog/' + (lang === 'ko' ? '' : lang + '/');
+
+                renderFilters();
+                applyFilter();
+                setupEvents();
+            }
+
+            function renderFilters() {
+                var cats = CATS[lang] || CATS._default;
+                var el = document.getElementById('blog-filters');
+                el.innerHTML = cats.map(function(c) {
+                    return '<button class="blog-filter' + (c.id === 'all' ? ' active' : '') + '" data-cat="' + c.id + '">' + c.i + ' ' + c.l + '</button>';
+                }).join('');
+            }
+
+            function applyFilter() {
+                var q = state.q.toLowerCase();
+                filtered = blogs.filter(function(b) {
+                    var catOk = state.cat === 'all' || b.cat === state.cat;
+                    var qOk = !q || b.title.toLowerCase().indexOf(q) !== -1 || b.desc.toLowerCase().indexOf(q) !== -1 || b.tag.toLowerCase().indexOf(q) !== -1;
+                    return catOk && qOk;
+                });
+                state.shown = 9;
+                renderGrid();
+            }
+
+            function renderGrid() {
+                var grid = document.getElementById('blog-grid');
+                var slice = filtered.slice(0, state.shown);
+
+                if (!slice.length) {
+                    grid.innerHTML = '<div class="blog-no-results">' + (lang === 'ko' ? '검색 결과가 없습니다' : lang === 'ja' ? '結果が見つかりません' : 'No articles found') + '</div>';
+                    document.getElementById('blog-load-more').style.display = 'none';
+                    return;
+                }
+
+                grid.innerHTML = slice.map(function(b, i) {
+                    var hero = i === 0 && state.cat === 'all' && !state.q ? ' hero' : '';
+                    return '<a href="' + b.href + '" class="blog-card' + hero + '" style="--card-accent:' + b.tagColor + '">'
+                        + '<div class="blog-card-tag" style="background:' + b.tagColor + '">' + b.tag + '</div>'
+                        + '<h3 class="blog-card-title">' + b.title + '</h3>'
+                        + '<p class="blog-card-desc">' + b.desc + '</p>'
+                        + '<div class="blog-card-footer"><span class="blog-card-meta">' + b.meta + '</span><span class="blog-card-arrow">→</span></div>'
+                        + '</a>';
+                }).join('');
+
+                // Staggered entrance via IntersectionObserver
+                var cards = grid.querySelectorAll('.blog-card');
+                if ('IntersectionObserver' in window) {
+                    var obs = new IntersectionObserver(function(entries) {
+                        entries.forEach(function(e, idx) {
+                            if (e.isIntersecting) {
+                                setTimeout(function() { e.target.classList.add('visible'); }, idx * 60);
+                                obs.unobserve(e.target);
+                            }
+                        });
+                    }, { threshold: 0.1 });
+                    cards.forEach(function(c) { obs.observe(c); });
+                } else {
+                    cards.forEach(function(c) { c.classList.add('visible'); });
+                }
+
+                // Load more button
+                var btn = document.getElementById('blog-load-more');
+                btn.style.display = state.shown >= filtered.length ? 'none' : '';
+            }
+
+            function setupEvents() {
+                // Category filters
+                document.getElementById('blog-filters').addEventListener('click', function(e) {
+                    var btn = e.target.closest('.blog-filter');
+                    if (!btn) return;
+                    state.cat = btn.dataset.cat;
+                    document.querySelectorAll('.blog-filter').forEach(function(f) { f.classList.remove('active'); });
+                    btn.classList.add('active');
+                    applyFilter();
+                });
+
+                // Search
+                var searchTimer;
+                document.getElementById('blog-search').addEventListener('input', function(e) {
+                    clearTimeout(searchTimer);
+                    searchTimer = setTimeout(function() {
+                        state.q = e.target.value.trim();
+                        applyFilter();
+                    }, 200);
+                });
+
+                // Load more
+                document.getElementById('blog-load-more').addEventListener('click', function() {
+                    state.shown += state.BATCH;
+                    renderGrid();
+                });
+            }
+
+            init();
+        })();
         </script>
 
         <!-- Footer -->
