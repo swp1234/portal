@@ -4,23 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
-    <meta name="description" content="DopaBrain English Blog - Free brain training games, personality tests, digital wellness, mental health tips, and psychology insights.">
-    <meta name="keywords" content="blog, brain training, personality tests, mental health, digital wellness, psychology, games, online tools">
+    <meta name="description" content="DopaBrain Blog - 86+ free guides on brain games, personality tests, productivity tools, wellness tips, and more.">
+    <meta name="keywords" content="blog, brain training, personality tests, mental health, digital wellness, games, productivity tools">
     <meta name="author" content="DopaBrain">
-    <title>DopaBrain English Blog | Brain Training, Personality Tests & Wellness</title>
+    <title>DopaBrain Blog | Games, Tests, Tools & Wellness Guides</title>
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="DopaBrain English Blog">
-    <meta property="og:description" content="Free brain training games, personality tests, digital wellness apps, and mental health guides">
+    <meta property="og:title" content="DopaBrain Blog - 86+ Free Guides">
+    <meta property="og:description" content="Brain games, personality tests, productivity tools, wellness tips, and more.">
     <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg">
     <meta property="og:url" content="https://dopabrain.com/portal/blog/en/">
     <meta property="og:site_name" content="DopaBrain">
 
-    <!-- Canonical -->
     <link rel="canonical" href="https://dopabrain.com/portal/blog/en/">
-
-    <!-- hreflang -->
     <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/">
     <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/">
     <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/">
@@ -35,689 +31,478 @@
     <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/">
     <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/">
 
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-J8GSWM40TV');
-    </script>
-
-    <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882"
-        crossorigin="anonymous"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
 
     <style>
         :root {
-            --primary: #667eea;
-            --primary-light: #818cf8;
-            --secondary: #06b6d4;
-            --accent: #f43f5e;
-            --bg-dark: #0a0a1a;
-            --bg-light: #15151f;
-            --text-primary: #f0f0f8;
-            --text-secondary: #a0a0b8;
-            --border-color: rgba(99, 102, 241, 0.15);
-            --card-bg: rgba(99, 102, 241, 0.08);
-            --spacing: 1rem;
+            --primary: #8b5cf6;
+            --primary-light: #a78bfa;
+            --accent: #06b6d4;
+            --accent-pink: #ec4899;
+            --bg: #030014;
+            --bg-card: rgba(139,92,246,0.06);
+            --bg-card-hover: rgba(139,92,246,0.12);
+            --text: #f0f0ff;
+            --text-sec: #a5a0d0;
+            --text-dim: #5a5580;
+            --border: rgba(139,92,246,0.12);
+            --border-hover: rgba(139,92,246,0.25);
+            --radius: 16px;
+            --cat-games: #3b82f6;
+            --cat-tests: #8b5cf6;
+            --cat-tools: #f59e0b;
+            --cat-wellness: #10b981;
+            --cat-love: #ec4899;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', sans-serif;
-            background: #0a0a1a;
-            color: var(--text-primary);
-            line-height: 1.7;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
         }
-
         body::before {
             content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image:
-                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+            position: fixed; inset: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(139,92,246,0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(6,182,212,0.06) 0%, transparent 50%);
             pointer-events: none;
-            z-index: 0;
         }
 
-        .header-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem var(--spacing);
-            background: rgba(10, 10, 26, 0.85);
-            border-bottom: 1px solid var(--border-color);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        /* Header */
+        .site-header {
+            position: sticky; top: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 20px;
+            background: rgba(3,0,20,0.88);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
         }
-
-        .header-nav a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+        .site-header a { color: var(--primary-light); text-decoration: none; font-weight: 600; font-size: 14px; transition: color 0.2s; }
+        .site-header a:hover { color: var(--accent); }
+        .header-search {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(139,92,246,0.08);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 7px 14px;
+            max-width: 280px; flex: 1;
         }
-
-        .header-nav a:hover {
-            color: var(--secondary);
-            transform: translateX(-2px);
+        .header-search svg { width: 15px; height: 15px; color: var(--text-dim); flex-shrink: 0; }
+        .header-search input {
+            background: none; border: none; outline: none;
+            color: var(--text); font-size: 13px; font-family: inherit; width: 100%;
         }
+        .header-search input::placeholder { color: var(--text-dim); }
 
-        .header-nav span {
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .hero-section {
-            position: relative;
-            padding: 6rem var(--spacing) 4rem;
+        /* Hero */
+        .hero {
             text-align: center;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(6, 182, 212, 0.1) 100%);
-            border-bottom: 1px solid var(--border-color);
-            overflow: hidden;
+            padding: 56px 20px 40px;
+            background: linear-gradient(180deg, rgba(139,92,246,0.1) 0%, transparent 100%);
         }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .article-header {
-            position: relative;
-            z-index: 10;
-            margin-bottom: 0;
-        }
-
-        .article-header h1 {
-            font-size: 3.5rem;
+        .hero h1 {
+            font-size: clamp(28px, 5vw, 44px);
             font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            letter-spacing: -1px;
-            color: var(--text-primary);
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .hero p { font-size: 15px; color: var(--text-sec); max-width: 600px; margin: 0 auto; }
+
+        /* Filters */
+        .filters {
+            display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;
+            padding: 20px 20px 0;
+            max-width: 800px; margin: 0 auto;
+        }
+        .filter-btn {
+            padding: 7px 16px; border-radius: 100px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-sec); font-size: 13px; font-weight: 600; font-family: inherit;
+            cursor: pointer; transition: all 0.2s; white-space: nowrap;
+        }
+        .filter-btn:hover { border-color: var(--border-hover); color: var(--text); background: var(--bg-card); }
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            border-color: transparent; color: #fff;
+            box-shadow: 0 2px 12px rgba(139,92,246,0.3);
+        }
+        .result-count {
+            text-align: center; padding: 16px 20px 0;
+            font-size: 13px; color: var(--text-dim); font-weight: 500;
         }
 
-        .article-header h1 span {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .article-desc {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            max-width: 750px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 var(--spacing);
-            position: relative;
-            z-index: 1;
-        }
-
-        .blog-grid {
+        /* Grid */
+        .container { max-width: 1120px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin: 4rem 0;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            padding: 20px 0;
         }
+        @media (min-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } }
+        @media (min-width: 940px) { .grid { grid-template-columns: repeat(3, 1fr); } }
 
-        .blog-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(8px);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+        /* Card */
+        .card {
+            display: flex; flex-direction: column;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px;
+            text-decoration: none; color: var(--text);
+            position: relative; overflow: hidden;
+            transition: transform 0.3s cubic-bezier(.4,0,.2,1), border-color 0.3s, box-shadow 0.3s;
+            opacity: 0; transform: translateY(14px);
         }
-
-        .blog-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--card-accent, var(--primary)) 0%, transparent 100%);
+        .card.show { opacity: 1; transform: translateY(0); transition: opacity 0.35s ease, transform 0.35s ease, border-color 0.3s, box-shadow 0.3s; }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-hover);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 16px rgba(139,92,246,0.08);
         }
-
-        .blog-card:hover {
-            border-color: rgba(99, 102, 241, 0.4);
-            transform: translateY(-8px);
-            background: rgba(99, 102, 241, 0.12);
-            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        .card::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--accent-color, var(--primary));
+            opacity: 0; transition: opacity 0.25s;
         }
-
-        .blog-category {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--card-accent, var(--primary)) 0%, var(--primary-light) 100%);
-            color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            width: fit-content;
-            letter-spacing: 0.5px;
+        .card:hover::after { opacity: 1; }
+        .card-tag {
+            display: inline-block; width: fit-content;
+            padding: 3px 10px; border-radius: 100px;
+            font-size: 11px; font-weight: 700; color: #fff;
+            letter-spacing: 0.3px; margin-bottom: 10px;
         }
-
-        .blog-card h3 {
-            color: var(--text-primary);
-            margin: 0 0 0.8rem 0;
-            font-size: 1.3rem;
-            font-weight: 700;
-            line-height: 1.4;
+        .card h3 {
+            font-size: 15px; font-weight: 700; line-height: 1.45; margin-bottom: 8px;
+            color: var(--text); transition: color 0.2s;
+            display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
-
-        .blog-meta {
-            display: flex;
-            gap: 1rem;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
+        .card:hover h3 { color: #fff; }
+        .card p {
+            font-size: 13px; color: var(--text-sec); line-height: 1.6; margin-bottom: 12px; flex: 1;
+            display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
+        .card-foot { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-dim); }
+        .card-foot .arrow { color: var(--accent); font-weight: 600; opacity: 0; transform: translateX(-6px); transition: all 0.2s; }
+        .card:hover .card-foot .arrow { opacity: 1; transform: translateX(0); }
 
-        .blog-excerpt {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-            flex-grow: 1;
+        /* Hero card (first in "All" view) */
+        .card.hero-card {
+            background: linear-gradient(145deg, rgba(139,92,246,0.14), rgba(6,182,212,0.06));
+            border-color: rgba(139,92,246,0.2);
+            padding: 28px;
         }
+        .card.hero-card h3 { font-size: clamp(17px, 2.2vw, 20px); -webkit-line-clamp: 3; line-clamp: 3; }
+        .card.hero-card p { font-size: 14px; -webkit-line-clamp: 3; line-clamp: 3; }
+        @media (min-width: 600px) { .card.hero-card { grid-column: span 2; } }
+        @media (min-width: 940px) { .card.hero-card { grid-column: span 2; grid-row: span 2; } .card.hero-card p { -webkit-line-clamp: 5; line-clamp: 5; } }
 
-        .read-more {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--primary);
-            font-weight: 600;
-            transition: all 0.3s ease;
+        /* No results */
+        .no-results { grid-column: 1/-1; text-align: center; padding: 48px 20px; color: var(--text-dim); font-size: 14px; }
+
+        /* Actions */
+        .actions { text-align: center; padding: 8px 0 40px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .load-more-btn {
+            padding: 11px 28px; border-radius: var(--radius);
+            border: 1px solid var(--border); background: var(--bg-card);
+            color: var(--text); font-size: 14px; font-weight: 600; font-family: inherit;
+            cursor: pointer; transition: all 0.2s;
         }
+        .load-more-btn:hover { background: var(--bg-card-hover); border-color: var(--border-hover); transform: translateY(-2px); }
+        .load-more-btn:disabled { opacity: 0.3; cursor: default; transform: none; }
 
-        .blog-card:hover .read-more {
-            gap: 0.8rem;
-            color: var(--secondary);
+        /* Languages */
+        .lang-section { padding: 32px 0 40px; border-top: 1px solid var(--border); margin-top: 20px; }
+        .lang-section h2 { text-align: center; font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--text-sec); }
+        .lang-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; }
+        .lang-link {
+            padding: 12px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+            text-align: center; text-decoration: none; color: var(--primary-light);
+            font-weight: 600; font-size: 14px; transition: all 0.2s;
         }
+        .lang-link:hover { background: var(--bg-card-hover); border-color: var(--border-hover); transform: translateY(-2px); }
 
-        .blog-card.brain {
-            --card-accent: #3b82f6;
-        }
+        /* Footer */
+        footer { text-align: center; padding: 24px 20px; font-size: 12px; color: var(--text-dim); border-top: 1px solid var(--border); }
+        footer a { color: var(--primary-light); text-decoration: none; }
 
-        .blog-card.psychology {
-            --card-accent: #6366f1;
-        }
-
-        .blog-card.wellness {
-            --card-accent: #10b981;
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            margin: 3rem 0 2rem;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-
-        .section-title::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-            border-radius: 2px;
-        }
-
-        .article-footer {
-            text-align: center;
-            padding: 3rem var(--spacing);
-            border-top: 1px solid var(--border-color);
-            margin-top: 4rem;
-            color: var(--text-secondary);
-        }
-
-        .article-footer p {
-            margin-bottom: 0.5rem;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-secondary);
-            border-top: 1px solid var(--border-color);
-        }
-
-        @media (max-width: 768px) {
-            .article-header h1 {
-                font-size: 2rem;
-                margin-bottom: 1rem;
-            }
-
-            .article-desc {
-                font-size: 1rem;
-            }
-
-            .blog-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .section-title {
-                font-size: 1.6rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .article-header h1 {
-                font-size: 1.6rem;
-            }
-
-            .blog-card {
-                padding: 1.5rem;
-            }
-
-            .header-nav span {
-                display: none;
-            }
+        @media (max-width: 599px) {
+            .hero { padding: 40px 16px 28px; }
+            .card { padding: 18px; }
+            .card h3 { font-size: 14px; }
+            .card p { font-size: 12.5px; }
+            .filter-btn { padding: 6px 12px; font-size: 12px; }
+            .header-search { max-width: 200px; }
         }
     </style>
 </head>
 <body>
-    <div class="header-nav">
-        <a href="https://dopabrain.com/portal/">← DopaBrain Home</a>
-        <span style="color: var(--text-secondary);">English Blog</span>
-    </div>
-
-    <div class="hero-section">
-        <div class="container">
-            <header class="article-header">
-                <h1>DopaBrain <span>English Blog</span></h1>
-            <p class="article-desc">
-                Discover brain training games, personality tests, digital wellness tools, and science-backed mental health guides.
-            </p>
-            </header>
+    <header class="site-header">
+        <a href="/portal/">← DopaBrain</a>
+        <div class="header-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="text" id="search" placeholder="Search articles...">
         </div>
-    </div>
+    </header>
+
+    <section class="hero">
+        <h1>DopaBrain <span>Blog</span></h1>
+        <p>Free guides on brain games, personality tests, productivity tools, wellness, and more.</p>
+    </section>
+
+    <div class="filters" id="filters"></div>
+    <div class="result-count" id="result-count"></div>
 
     <div class="container">
-        <!-- Latest Posts -->
-        <h2 class="section-title">Latest Articles</h2>
-        <div class="blog-grid">
-            <a href="/portal/blog/en/2026-02-10-brain-training-games.html" class="blog-card brain">
-                <span class="blog-category">Brain Training</span>
-                <h3>Best Free Brain Training Games Online 2026 - Boost Your Memory & Focus</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 12 min</span>
-                </div>
-                <p class="blog-excerpt">Discover the best free brain training games to improve memory, focus, reaction time, and cognitive skills. Play color-memory, number-puzzle, reaction-test instantly.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/2026-02-10-personality-tests-guide.html" class="blog-card psychology">
-                <span class="blog-category">Psychology</span>
-                <h3>Free Online Personality Tests That Actually Work - Discover Your True Self</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 14 min</span>
-                </div>
-                <p class="blog-excerpt">Explore accurate personality tests including MBTI, HSP test, brain-type, and past-life analysis. Understand yourself better and improve relationships.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/2026-02-10-digital-wellness-apps.html" class="blog-card wellness">
-                <span class="blog-category">Wellness</span>
-                <h3>The Ultimate Guide to Digital Wellness Apps - Free Tools for Better Mental Health</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 13 min</span>
-                </div>
-                <p class="blog-excerpt">Free digital wellness apps for stress relief, better sleep, emotional balance. Digital detox timer, white noise, daily affirmations, emotion temperature.</p>
-                <span class="read-more">Read More →</span>
-            </a>
+        <div class="grid" id="grid"></div>
+        <div class="actions" id="actions">
+            <button class="load-more-btn" id="load-more">Load More</button>
         </div>
 
-        <!-- All English Posts -->
-        <h2 class="section-title">All Articles</h2>
-        <div class="blog-grid">
-            <a href="/portal/blog/en/reaction-time-test-how-fast-are-you.html" class="blog-card brain" style="--card-accent: #00e676;">
-                <span class="blog-category">Reaction Speed</span>
-                <h3>Reaction Time Test: How Fast Are Your Reflexes? Complete Guide</h3>
-                <div class="blog-meta">
-                    <span>Feb 10, 2026</span>
-                    <span>8 min</span>
-                </div>
-                <p class="blog-excerpt">Measure your reaction speed and compare to averages by age, gender, and activity. Learn proven strategies to improve your reflexes for gaming, sports, and daily life.</p>
-                <span class="read-more">Read More &rarr;</span>
-            </a>
-
-            <a href="/portal/blog/en/kpop-position-test-which-kpop-role.html" class="blog-card psychology">
-                <span class="blog-category">K-POP</span>
-                <h3>K-POP Position Test: Which K-POP Role Matches Your Personality?</h3>
-                <div class="blog-meta">
-                    <span>Feb 10, 2026</span>
-                    <span>8 min</span>
-                </div>
-                <p class="blog-excerpt">Discover your K-POP group position! Are you the Main Vocalist, Lead Dancer, Rapper, Visual, or Center? Take this free personality quiz and find your idol role.</p>
-                <span class="read-more">Read More &rarr;</span>
-            </a>
-
-            <a href="/portal/blog/en/past-life-test-who-were-you.html" class="blog-card psychology" style="--card-accent: #7b2ff7;">
-                <span class="blog-category">Spirituality</span>
-                <h3>Past Life Test: Discover Who You Were in a Previous Life</h3>
-                <div class="blog-meta">
-                    <span>Feb 10, 2026</span>
-                    <span>8 min</span>
-                </div>
-                <p class="blog-excerpt">Take the free past life quiz to uncover who you were in a previous life. Based on your birth date and personality, explore reincarnation beliefs across cultures and discover your past life archetype.</p>
-                <span class="read-more">Read More &rarr;</span>
-            </a>
-
-            <a href="/portal/blog/en/hsp-highly-sensitive-person-test.html" class="blog-card psychology">
-                <span class="blog-category">Psychology</span>
-                <h3>Free HSP Test: Are You a Highly Sensitive Person?</h3>
-                <div class="blog-meta">
-                    <span>Feb 11, 2026</span>
-                    <span>6 min</span>
-                </div>
-                <p class="blog-excerpt">Take a free 20-question HSP test based on Dr. Elaine Aron's research. Discover your sensitivity level with instant results and personalized insights.</p>
-                <span class="read-more">Read More &rarr;</span>
-            </a>
-
-            <a href="/portal/blog/en/personality-tests.html" class="blog-card psychology">
-                <span class="blog-category">Psychology</span>
-                <h3>Personality Tests Guide</h3>
-                <div class="blog-meta">
-                    <span>📅 Recent</span>
-                    <span>⏱️ 10 min</span>
-                </div>
-                <p class="blog-excerpt">Comprehensive guide to understanding personality through science-backed assessment tools.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/free-games.html" class="blog-card wellness">
-                <span class="blog-category">Games</span>
-                <h3>Free Online Games</h3>
-                <div class="blog-meta">
-                    <span>📅 Recent</span>
-                    <span>⏱️ 11 min</span>
-                </div>
-                <p class="blog-excerpt">Collection of the best free online games available without downloads or installations.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/best-browser-games-2026.html" class="blog-card brain">
-                <span class="blog-category">Games</span>
-                <h3>10 Best Free Browser Games 2026</h3>
-                <div class="blog-meta">
-                    <span>📅 Recent</span>
-                    <span>⏱️ 12 min</span>
-                </div>
-                <p class="blog-excerpt">The hottest browser-based games you can play instantly. No download required.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/brain-type-test-2026.html" class="blog-card brain">
-                <span class="blog-category">Brain Type</span>
-                <h3>Brain Type Test 2026</h3>
-                <div class="blog-meta">
-                    <span>📅 Recent</span>
-                    <span>⏱️ 10 min</span>
-                </div>
-                <p class="blog-excerpt">Discover your brain type and how it affects your learning and problem-solving abilities.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/digital-detox.html" class="blog-card wellness">
-                <span class="blog-category">Wellness</span>
-                <h3>Digital Detox Guide</h3>
-                <div class="blog-meta">
-                    <span>📅 Recent</span>
-                    <span>⏱️ 9 min</span>
-                </div>
-                <p class="blog-excerpt">Practical strategies for managing your digital life and improving mental health.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/daily-affirmation-guide.html" class="blog-card psychology">
-                <span class="blog-category">Personal Growth</span>
-                <h3>Daily Affirmation Guide</h3>
-                <div class="blog-meta">
-                    <span>📅 Recent</span>
-                    <span>⏱️ 11 min</span>
-                </div>
-                <p class="blog-excerpt">Transform your mindset with science-backed affirmation practices.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/blood-type-personality-guide.html" class="blog-card psychology">
-                <span class="blog-category">Personality</span>
-                <h3>Blood Type Personality Guide: Complete Analysis</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 8 min</span>
-                </div>
-                <p class="blog-excerpt">Discover your personality based on blood type. Complete guide to A, B, O, and AB type traits, characteristics, dating styles, and career recommendations.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/minesweeper-strategy-guide.html" class="blog-card brain">
-                <span class="blog-category">Strategy</span>
-                <h3>Minesweeper Strategy Guide: From Beginner to Expert</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 8 min</span>
-                </div>
-                <p class="blog-excerpt">Master Minesweeper with proven strategies: logical analysis, pattern recognition, and probability calculations for all skill levels.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/free-iq-test-guide.html" class="blog-card brain">
-                <span class="blog-category">IQ Test</span>
-                <h3>Free IQ Test Guide: Discover Your Brain Power in Minutes</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 9 min</span>
-                </div>
-                <p class="blog-excerpt">Complete IQ testing guide: methods, score interpretation, and strategies to improve cognitive abilities.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/emotional-temperature-test-guide.html" class="blog-card psychology">
-                <span class="blog-category">Psychology</span>
-                <h3>Emotional Temperature Test: Measure Your Feelings Scientifically</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 8 min</span>
-                </div>
-                <p class="blog-excerpt">Discover your emotional temperature with this free test. Learn how to measure, understand, and regulate your emotions for better mental health and relationships.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/what-your-favorite-color-says-about-you.html" class="blog-card psychology" style="--card-accent: #f43f5e;">
-                <span class="blog-category">Color Psychology</span>
-                <h3>What Your Favorite Color Says About You: Complete Color Personality Guide</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 10 min</span>
-                </div>
-                <p class="blog-excerpt">Your favorite color reveals hidden personality traits. Explore the psychology behind color preferences and what they say about your character, emotions, and relationships.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/biorhythm-love-compatibility.html" class="blog-card psychology" style="--card-accent: #ec4899;">
-                <span class="blog-category">Relationships</span>
-                <h3>Biorhythm Love Compatibility: Are You and Your Partner in Sync?</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 9 min</span>
-                </div>
-                <p class="blog-excerpt">Calculate your biorhythm love compatibility. Discover how physical, emotional, and intellectual cycles affect your relationship harmony and romantic timing.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/future-self-prediction-quiz.html" class="blog-card psychology" style="--card-accent: #8b5cf6;">
-                <span class="blog-category">Prediction</span>
-                <h3>Future Self Prediction Quiz: What Will You Be Like in 10 Years?</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 8 min</span>
-                </div>
-                <p class="blog-excerpt">Take the AI-powered future self prediction quiz. Based on your personality, habits, and goals, discover what your life might look like in the next decade.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/kpop-positions-explained-guide.html" class="blog-card psychology" style="--card-accent: #f97316;">
-                <span class="blog-category">K-POP</span>
-                <h3>K-POP Positions Explained: Complete Guide to Group Roles</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 10 min</span>
-                </div>
-                <p class="blog-excerpt">Everything you need to know about K-POP group positions: Main Vocalist, Lead Dancer, Rapper, Visual, Center, and more. Learn what each role means and find yours.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/15-signs-highly-sensitive-person.html" class="blog-card wellness">
-                <span class="blog-category">HSP</span>
-                <h3>15 Signs You're a Highly Sensitive Person (HSP)</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 9 min</span>
-                </div>
-                <p class="blog-excerpt">Are you a highly sensitive person? Discover the 15 telltale signs of high sensitivity, understand the science behind HSP traits, and learn coping strategies.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/spirit-animal-personality-quiz.html" class="blog-card psychology" style="--card-accent: #22c55e;">
-                <span class="blog-category">Personality</span>
-                <h3>Spirit Animal Personality Quiz: Discover Your Inner Animal</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 8 min</span>
-                </div>
-                <p class="blog-excerpt">Find your spirit animal with this personality quiz. Explore what your inner animal reveals about your strengths, instincts, and hidden personality traits.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/common-dreams-meaning-guide.html" class="blog-card psychology" style="--card-accent: #7b2ff7;">
-                <span class="blog-category">Dream Analysis</span>
-                <h3>Common Dreams and Their Meanings: A Complete Guide</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 11 min</span>
-                </div>
-                <p class="blog-excerpt">Decode your dreams with this comprehensive guide. Learn what common dreams like falling, flying, and being chased really mean according to psychology.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/past-life-calculator-birthday.html" class="blog-card psychology" style="--card-accent: #a855f7;">
-                <span class="blog-category">Spirituality</span>
-                <h3>Past Life Calculator by Birthday: Who Were You in a Past Life?</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 8 min</span>
-                </div>
-                <p class="blog-excerpt">Use your birthday to calculate your past life identity. Explore numerology-based past life analysis and discover fascinating connections to your previous incarnation.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-
-            <a href="/portal/blog/en/flappy-bird-strategy-tips-2026.html" class="blog-card brain" style="--card-accent: #eab308;">
-                <span class="blog-category">Gaming</span>
-                <h3>Flappy Bird Strategy & Tips: Master the Classic Game in 2026</h3>
-                <div class="blog-meta">
-                    <span>📅 Feb 10, 2026</span>
-                    <span>⏱️ 7 min</span>
-                </div>
-                <p class="blog-excerpt">Beat your high score with proven Flappy Bird strategies. Expert tips on timing, rhythm, focus techniques, and avoiding common mistakes in this addictive classic.</p>
-                <span class="read-more">Read More →</span>
-            </a>
-        </div>
-
-        <!-- Language Navigation -->
-        <h2 class="section-title">Other Languages</h2>
-        <div style="margin: 3rem 0; padding: 2rem; background: rgba(99, 102, 241, 0.08); border: 1px solid var(--border-color); border-radius: 16px;">
-            <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">DopaBrain blog is available in multiple languages.</p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem;">
-                <a href="/portal/blog/" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; text-align: center; text-decoration: none; color: var(--primary); transition: all 0.3s ease; font-weight: 600;" onmouseover="this.style.background='rgba(99, 102, 241, 0.12)'" onmouseout="this.style.background='var(--card-bg)'">
-                    🇰🇷 한국어
-                </a>
-                <a href="/portal/blog/zh/" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; text-align: center; text-decoration: none; color: var(--primary); transition: all 0.3s ease; font-weight: 600;" onmouseover="this.style.background='rgba(99, 102, 241, 0.12)'" onmouseout="this.style.background='var(--card-bg)'">
-                    🇨🇳 中文
-                </a>
-                <a href="/portal/blog/hi/" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; text-align: center; text-decoration: none; color: var(--primary); transition: all 0.3s ease; font-weight: 600;" onmouseover="this.style.background='rgba(99, 102, 241, 0.12)'" onmouseout="this.style.background='var(--card-bg)'">
-                    🇮🇳 हिन्दी
-                </a>
-                <a href="/portal/blog/ru/" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; text-align: center; text-decoration: none; color: var(--primary); transition: all 0.3s ease; font-weight: 600;" onmouseover="this.style.background='rgba(99, 102, 241, 0.12)'" onmouseout="this.style.background='var(--card-bg)'">
-                    🇷🇺 Русский
-                </a>
-                <a href="/portal/blog/ja/" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; text-align: center; text-decoration: none; color: var(--primary); transition: all 0.3s ease; font-weight: 600;" onmouseover="this.style.background='rgba(99, 102, 241, 0.12)'" onmouseout="this.style.background='var(--card-bg)'">
-                    🇯🇵 日本語
-                </a>
-                <a href="/portal/blog/es/" style="padding: 1rem; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; text-align: center; text-decoration: none; color: var(--primary); transition: all 0.3s ease; font-weight: 600;" onmouseover="this.style.background='rgba(99, 102, 241, 0.12)'" onmouseout="this.style.background='var(--card-bg)'">
-                    🇪🇸 Español
-                </a>
+        <section class="lang-section">
+            <h2>Read in Other Languages</h2>
+            <div class="lang-grid">
+                <a href="/portal/blog/" class="lang-link">🇰🇷 한국어</a>
+                <a href="/portal/blog/zh/" class="lang-link">🇨🇳 中文</a>
+                <a href="/portal/blog/hi/" class="lang-link">🇮🇳 हिन्दी</a>
+                <a href="/portal/blog/ru/" class="lang-link">🇷🇺 Русский</a>
+                <a href="/portal/blog/ja/" class="lang-link">🇯🇵 日本語</a>
+                <a href="/portal/blog/es/" class="lang-link">🇪🇸 Español</a>
+                <a href="/portal/blog/pt/" class="lang-link">🇧🇷 Português</a>
+                <a href="/portal/blog/id/" class="lang-link">🇮🇩 Indonesia</a>
+                <a href="/portal/blog/tr/" class="lang-link">🇹🇷 Türkçe</a>
+                <a href="/portal/blog/de/" class="lang-link">🇩🇪 Deutsch</a>
+                <a href="/portal/blog/fr/" class="lang-link">🇫🇷 Français</a>
             </div>
-        </div>
+        </section>
     </div>
 
     <footer>
-        <p>DopaBrain - Free Brain Training & Mental Health Resources</p>
-        <p>Copyright © 2026 DopaBrain. All rights reserved. | <a href="https://dopabrain.com/portal/privacy-policy.html">Privacy Policy</a></p>
+        <p>DopaBrain - Free Brain Training & Wellness Resources</p>
+        <p>© 2026 DopaBrain. All rights reserved. | <a href="/portal/privacy-policy.html">Privacy Policy</a></p>
     </footer>
 
     <script>
-        document.querySelectorAll('.blog-card').forEach(card => {
-            card.addEventListener('click', function() {
-                if (window.gtag) {
-                    gtag('event', 'view_blog', {
-                        'blog_title': this.querySelector('h3').textContent,
-                        'event_category': 'blog'
-                    });
-                }
+    (function(){
+        // [file, cat, tag, tagColor, title, desc, time]
+        var D = [
+            // === GAMES (27) ===
+            ['emoji-merge-puzzle-guide.html','games','Puzzle','#f59e0b','Emoji Merge: Ultimate Strategy Guide','Master combos, chain reactions, and score multipliers in this addictive puzzle game.','8 min'],
+            ['minesweeper-strategy-guide.html','games','Strategy','#3b82f6','Minesweeper Strategy: Win Every Time','Pattern recognition, probability tactics, and expert tips for consistent wins.','9 min'],
+            ['flappy-bird-game-guide.html','games','Arcade','#3b82f6','Flappy Bird: Beat Your High Score','Timing, rhythm techniques, and avoiding common mistakes in this classic.','7 min'],
+            ['flappy-bird-strategy-tips-2026.html','games','Arcade','#3b82f6','Flappy Bird Strategy: Expert Tips 2026','Advanced strategies, focus techniques, and score optimization.','8 min'],
+            ['snake-game-guide.html','games','Classic','#3b82f6','Snake Game: Classic Strategy Guide','Growth patterns, wall strategies, and speed management techniques.','7 min'],
+            ['snake-game-classic-online.html','games','Classic','#3b82f6','Classic Snake: Play Online Free','The retro classic reimagined for the browser. Tips and gameplay guide.','6 min'],
+            ['block-puzzle-game-guide.html','games','Puzzle','#3b82f6','Block Puzzle: Strategic Thinking Guide','Placement strategies, combo techniques, and high-score tips.','8 min'],
+            ['maze-runner-game-guide.html','games','Maze','#3b82f6','Maze Runner: Navigation Tips & Tricks','Pathfinding strategies, dead-end avoidance, and speed run techniques.','7 min'],
+            ['sky-runner-game-guide.html','games','Arcade','#3b82f6','Sky Runner: Endless Running Strategy','Platform timing, obstacle patterns, and power-up optimization.','7 min'],
+            ['pong-game-guide.html','games','Classic','#3b82f6','Pong Game: Retro Gaming Guide','Classic paddle game strategies, angles, and competitive tips.','6 min'],
+            ['pong-game-play-online.html','games','Classic','#3b82f6','Play Pong Online: Tips & Controls','Browser-based Pong with controls guide and winning strategies.','5 min'],
+            ['brick-breaker-game-guide.html','games','Arcade','#3b82f6','Brick Breaker: Complete Game Guide','Ball angle physics, power-up strategy, and level clearing tips.','8 min'],
+            ['brick-breaker-game-classic.html','games','Arcade','#3b82f6','Classic Brick Breaker: Strategy & Tips','Retro breakout gameplay with modern strategy techniques.','7 min'],
+            ['color-memory-game-guide.html','games','Brain','#3b82f6','Color Memory: Boost Your Brain','Visual memory training through color sequence challenges.','7 min'],
+            ['idle-clicker-dungeon-guide.html','games','Idle','#3b82f6','Idle Clicker Dungeon: Complete Guide','Upgrade paths, prestige strategy, and optimal progression builds.','8 min'],
+            ['word-scramble-game-guide.html','games','Word','#3b82f6','Word Scramble: Vocabulary Challenge','Anagram solving techniques and vocabulary building tips.','6 min'],
+            ['word-guess-wordle-guide.html','games','Word','#3b82f6','Word Guess (Wordle): Strategy Guide','Opening word strategy, letter frequency analysis, and winning tips.','8 min'],
+            ['number-puzzle-2048-tips.html','games','Puzzle','#3b82f6','2048 Puzzle: Tips & Winning Strategies','Corner strategy, merge patterns, and reaching the 2048 tile.','8 min'],
+            ['typing-speed-test-guide.html','games','Skill','#3b82f6','Typing Speed Test: Boost Your WPM','Touch typing techniques, finger placement, and practice drills.','7 min'],
+            ['reaction-time-test-how-fast-are-you.html','games','Skill','#3b82f6','Reaction Time Test: How Fast Are You?','Measure and improve your reflexes with science-backed methods.','6 min'],
+            ['memory-card-games-improve-brain.html','games','Brain','#3b82f6','Memory Card Games: Brain Training','Card matching strategies and cognitive improvement techniques.','7 min'],
+            ['top-10-browser-games-2026.html','games','Lists','#3b82f6','Top 10 Browser Games 2026','Best free browser games ranked by fun factor and replayability.','8 min'],
+            ['top-10-free-mini-games-brain-breaks.html','games','Lists','#3b82f6','Top 10 Mini Games for Brain Breaks','Quick mental refreshers for work and study breaks.','7 min'],
+            ['best-browser-games-2026.html','games','Lists','#3b82f6','Best Browser Games 2026: No Download','Curated list of the best instant-play browser games.','7 min'],
+            ['best-brain-games-free-2026.html','games','Lists','#3b82f6','Best Free Brain Games 2026','Cognitive training games that are actually backed by science.','8 min'],
+            ['best-free-brain-training-games-2026.html','games','Lists','#3b82f6','Best Free Brain Training Games','Complete guide to brain training games and their benefits.','9 min'],
+            ['free-games.html','games','Games','#3b82f6','Top 5 Free Browser Games','No download needed. Play arcade, puzzle & idle games instantly.','7 min'],
+
+            // === TESTS (32) ===
+            ['personality-tests.html','tests','Tests','#8b5cf6','Best Free Personality Tests 2026','MBTI, HSP, Love Frequency & more. Find your true self.','8 min'],
+            ['2026-02-10-personality-tests-guide.html','tests','Guide','#8b5cf6','Free Personality Tests That Actually Work','Scientifically validated tests to understand yourself better.','14 min'],
+            ['mbti-compatibility-guide.html','tests','MBTI','#8b5cf6','MBTI Compatibility: Complete 16×16 Guide','Best & worst type matches for all 256 combinations.','10 min'],
+            ['mbti-career-guide.html','tests','MBTI','#8b5cf6','MBTI Career Guide: Find Your Ideal Job','Career paths aligned with each of the 16 personality types.','10 min'],
+            ['mbti-love-compatibility-guide.html','tests','MBTI','#ec4899','MBTI Love Compatibility Guide','16 types decoded — who clicks, who clashes, and why.','10 min'],
+            ['hsp-highly-sensitive-person-test.html','tests','HSP','#8b5cf6','HSP Test: Are You Highly Sensitive?','Self-assessment checklist and coping strategies for HSPs.','9 min'],
+            ['15-signs-highly-sensitive-person.html','tests','HSP','#8b5cf6','15 Signs You\'re a Highly Sensitive Person','Recognizing high sensitivity and turning it into a strength.','8 min'],
+            ['stress-check-test-guide.html','tests','Stress','#8b5cf6','Stress Level Check: Self-Assessment Guide','Evaluate your stress levels with science-based metrics.','8 min'],
+            ['how-stressed-are-you-test.html','tests','Stress','#8b5cf6','How Stressed Are You? Free Test','Quick stress assessment with personalized recommendations.','7 min'],
+            ['stress-burnout-test.html','tests','Stress','#8b5cf6','Stress & Burnout Assessment Guide','Identify burnout early and learn recovery strategies.','9 min'],
+            ['emotion-temp-test-guide.html','tests','Emotion','#8b5cf6','Emotional Temperature Test Guide','Track your feelings and understand emotional patterns.','7 min'],
+            ['emotional-temperature-test-guide.html','tests','Emotion','#8b5cf6','Emotional Temperature: Measure Your Feelings','Quantify emotions to improve self-awareness and wellbeing.','8 min'],
+            ['color-personality-test-guide.html','tests','Color','#8b5cf6','Color Personality Test: What Colors Reveal','Psychology of color preference and hidden personality traits.','8 min'],
+            ['what-your-favorite-color-says-about-you.html','tests','Color','#8b5cf6','What Your Favorite Color Says About You','Deep dive into color psychology and personal meaning.','7 min'],
+            ['animal-personality-test-guide.html','tests','Animal','#8b5cf6','Animal Personality Test: Discover Your Type','Which animal matches your personality? Complete guide.','7 min'],
+            ['animal-personality-test-discover.html','tests','Animal','#8b5cf6','Discover Your Animal Personality','Fun personality quiz based on animal archetypes.','6 min'],
+            ['spirit-animal-personality-quiz.html','tests','Animal','#8b5cf6','Spirit Animal Personality Quiz','Find your spirit animal and what it means for you.','7 min'],
+            ['brain-type-test-2026.html','tests','Brain','#8b5cf6','Brain Type Test: Left vs Right Brain','Discover your dominant thinking style and cognitive strengths.','8 min'],
+            ['free-iq-test-guide.html','tests','IQ','#8b5cf6','Free IQ Test: Measure Your Intelligence','Spatial reasoning, logic puzzles, and comprehensive score analysis.','9 min'],
+            ['love-frequency-test-guide.html','tests','Love','#ec4899','Love Frequency Test: Find Your Match','Discover your emotional wavelength and romantic compatibility.','8 min'],
+            ['biorhythm-calculator-guide.html','tests','Biorhythm','#8b5cf6','Biorhythm Calculator: Life Cycles Guide','Physical, emotional, and intellectual cycle analysis.','8 min'],
+            ['biorhythm-love-compatibility.html','tests','Biorhythm','#ec4899','Biorhythm Love Compatibility','Sync your biorhythms for better relationship understanding.','7 min'],
+            ['blood-type-personality-guide.html','tests','Blood','#8b5cf6','Blood Type Personality Guide','A, B, O, AB personality traits and compatibility.','8 min'],
+            ['past-life-calculator-birthday.html','tests','Spiritual','#8b5cf6','Past Life Calculator by Birthday','Discover who you might have been in a previous life.','7 min'],
+            ['past-life-test-who-were-you.html','tests','Spiritual','#8b5cf6','Past Life Test: Who Were You?','Explore your past life connections and karmic patterns.','8 min'],
+            ['future-self-test-guide.html','tests','Future','#8b5cf6','Future Self Test: Predict Your Path','AI-powered predictions based on your personality profile.','7 min'],
+            ['future-self-prediction-quiz.html','tests','Future','#8b5cf6','Future Self Prediction Quiz','Fun quiz to explore your potential future outcomes.','6 min'],
+            ['what-will-you-be-like-future-prediction.html','tests','Future','#8b5cf6','What Will You Be Like? Future Prediction','Personality-based future self projection and analysis.','7 min'],
+            ['kpop-position-test-which-kpop-role.html','tests','K-POP','#8b5cf6','K-POP Position Test: Find Your Role','Discover if you\'re a vocalist, dancer, rapper, or visual.','7 min'],
+            ['kpop-positions-explained-guide.html','tests','K-POP','#8b5cf6','K-POP Positions Explained Guide','Complete breakdown of all K-POP group positions.','8 min'],
+            ['dev-quiz-challenge-guide.html','tests','Quiz','#8b5cf6','Dev Quiz: Code Challenge Guide','Test your programming knowledge across multiple languages.','8 min'],
+            ['quiz-app-knowledge-guide.html','tests','Quiz','#8b5cf6','Knowledge Quiz App: Brain Challenge','General knowledge trivia to test and expand your mind.','7 min'],
+
+            // === TOOLS (16) ===
+            ['pomodoro-timer-guide.html','tools','Focus','#f59e0b','Pomodoro Timer: Master Focus Sessions','25/5 technique, deep work science, and productivity optimization.','8 min'],
+            ['password-generator-guide.html','tools','Security','#f59e0b','Password Generator: Unbreakable Passwords','Entropy explained, security best practices, and manager tips.','7 min'],
+            ['qr-generator-guide.html','tools','QR','#f59e0b','QR Code Generator: Complete Guide','Create, customize, and use QR codes for any purpose.','6 min'],
+            ['bmi-calculator-guide.html','tools','Health','#f59e0b','BMI Calculator: Health Assessment Guide','Understanding BMI, body composition, and health metrics.','7 min'],
+            ['habit-tracker-guide.html','tools','Habits','#f59e0b','Habit Tracker: Build Better Routines','Visual streaks, progress analytics, and habit formation science.','8 min'],
+            ['todo-list-guide.html','tools','Productivity','#f59e0b','Smart To-Do List: Productivity Guide','Task prioritization, GTD method, and workflow tips.','7 min'],
+            ['smart-todo-list.html','tools','Productivity','#f59e0b','Smart To-Do List: Get Things Done','Digital task management with smart categorization.','6 min'],
+            ['unit-converter-guide.html','tools','Utility','#f59e0b','Unit Converter: Complete Reference Guide','Length, weight, temperature, and more unit conversions.','6 min'],
+            ['shopping-calculator-guide.html','tools','Finance','#f59e0b','Shopping Calculator: Budget Smart','Price comparison, discount calculation, and budget tips.','6 min'],
+            ['dday-counter-guide.html','tools','Planning','#f59e0b','D-Day Counter: Event Countdown Guide','Track important dates, deadlines, and milestones.','5 min'],
+            ['routine-planner-guide.html','tools','Planning','#f59e0b','Routine Planner: Optimize Your Day','Build productive daily routines with time-blocking.','7 min'],
+            ['lottery-number-guide.html','tools','Fun','#f59e0b','Lottery Number Guide: Smart Picks','Statistics-based number selection and probability analysis.','7 min'],
+            ['color-palette-generator-guide.html','tools','Design','#f59e0b','Color Palette Generator: Design Guide','Create harmonious color schemes for any project.','6 min'],
+            ['detox-timer-guide.html','tools','Wellness','#f59e0b','Digital Detox Timer: Take a Break','Scheduled screen breaks for digital wellbeing.','6 min'],
+            ['daily-tarot-reading-guide.html','tools','Spiritual','#f59e0b','Daily Tarot Reading: Beginner\'s Guide','Card meanings, spreads, and daily guidance techniques.','8 min'],
+            ['numerology-calculator-life-path.html','tools','Spiritual','#f59e0b','Numerology: Life Path Calculator','Discover your life path number and what it means.','7 min'],
+
+            // === WELLNESS (9) ===
+            ['habit-building.html','wellness','Habits','#10b981','How to Build Better Habits: Science-Backed','Atomic habits, habit stacking, and the 21-day myth debunked.','10 min'],
+            ['sleep-science.html','wellness','Sleep','#10b981','Sleep Chronotypes: Lion, Bear, Wolf, or Dolphin?','Discover your chronotype and optimize your daily schedule.','9 min'],
+            ['digital-detox.html','wellness','Focus','#10b981','Digital Detox: Reclaim Your Focus','A practical 7-day plan to reset your dopamine and attention.','8 min'],
+            ['decision-making.html','wellness','Mind','#10b981','The Science of Decision Making','Cognitive biases, decision fatigue, and practical frameworks.','9 min'],
+            ['white-noise-guide.html','wellness','Sleep','#10b981','White Noise Guide: Better Sleep & Focus','Sound masking science, noise types, and best use cases.','8 min'],
+            ['daily-affirmation-guide.html','wellness','Mental','#10b981','Daily Affirmation Guide: Rewire Your Mind','Science-backed affirmations for confidence and resilience.','7 min'],
+            ['common-dreams-meaning-guide.html','wellness','Dreams','#10b981','Common Dreams Meaning Guide','What your recurring dreams are trying to tell you.','8 min'],
+            ['2026-02-10-brain-training-games.html','wellness','Brain','#10b981','Best Free Brain Training Games 2026','Boost memory, focus, and cognitive skills with proven games.','12 min'],
+            ['2026-02-10-digital-wellness-apps.html','wellness','Apps','#10b981','Digital Wellness Apps: Complete Guide','Tools for screen time, mindfulness, and digital balance.','11 min'],
+
+            // === LOVE (2) ===
+            ['valentine-guide.html','love','Love','#ec4899','Valentine\'s Day Compatibility Guide','Zodiac, name & love match analysis for couples.','8 min'],
+            ['zodiac-compatibility.html','love','Zodiac','#ec4899','Zodiac Compatibility 2026: Complete Guide','12-sign chart with love, friendship, and work scores.','9 min']
+        ];
+
+        var CATS = [
+            {id:'all',l:'All',i:'✦'},
+            {id:'games',l:'Games',i:'🎮',c:27},
+            {id:'tests',l:'Tests',i:'🧪',c:32},
+            {id:'tools',l:'Tools',i:'🔧',c:16},
+            {id:'wellness',l:'Wellness',i:'🧠',c:9},
+            {id:'love',l:'Love',i:'❤️',c:2}
+        ];
+
+        var cat = 'all', query = '', shown = 12, BATCH = 12, filtered = [];
+
+        function init() {
+            renderFilters();
+            applyFilter();
+            setupEvents();
+        }
+
+        function renderFilters() {
+            document.getElementById('filters').innerHTML = CATS.map(function(c) {
+                return '<button class="filter-btn' + (c.id==='all'?' active':'') + '" data-cat="' + c.id + '">'
+                    + c.i + ' ' + c.l + (c.c ? ' <small style="opacity:.6">(' + c.c + ')</small>' : '') + '</button>';
+            }).join('');
+        }
+
+        function applyFilter() {
+            var q = query.toLowerCase();
+            filtered = D.filter(function(d) {
+                var catOk = cat === 'all' || d[1] === cat;
+                var qOk = !q || d[4].toLowerCase().indexOf(q) !== -1 || d[5].toLowerCase().indexOf(q) !== -1 || d[2].toLowerCase().indexOf(q) !== -1;
+                return catOk && qOk;
             });
-        });
+            shown = 12;
+            renderGrid();
+            document.getElementById('result-count').textContent = filtered.length + ' article' + (filtered.length !== 1 ? 's' : '') + (q ? ' for "' + query + '"' : '');
+        }
+
+        function renderGrid() {
+            var grid = document.getElementById('grid');
+            var slice = filtered.slice(0, shown);
+
+            if (!slice.length) {
+                grid.innerHTML = '<div class="no-results">No articles found. Try a different search or category.</div>';
+                document.getElementById('load-more').style.display = 'none';
+                return;
+            }
+
+            grid.innerHTML = slice.map(function(d, i) {
+                var hero = i === 0 && cat === 'all' && !query ? ' hero-card' : '';
+                return '<a href="/portal/blog/en/' + d[0] + '" class="card' + hero + '" style="--accent-color:' + d[3] + '">'
+                    + '<span class="card-tag" style="background:' + d[3] + '">' + d[2] + '</span>'
+                    + '<h3>' + d[4] + '</h3>'
+                    + '<p>' + d[5] + '</p>'
+                    + '<div class="card-foot"><span>' + d[6] + '</span><span class="arrow">→</span></div>'
+                    + '</a>';
+            }).join('');
+
+            // Staggered entrance
+            var cards = grid.querySelectorAll('.card');
+            if ('IntersectionObserver' in window) {
+                var obs = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(e) {
+                        if (e.isIntersecting) {
+                            var idx = Array.prototype.indexOf.call(cards, e.target);
+                            setTimeout(function() { e.target.classList.add('show'); }, idx * 50);
+                            obs.unobserve(e.target);
+                        }
+                    });
+                }, { threshold: 0.05 });
+                cards.forEach(function(c) { obs.observe(c); });
+            } else {
+                cards.forEach(function(c) { c.classList.add('show'); });
+            }
+
+            var btn = document.getElementById('load-more');
+            btn.style.display = shown >= filtered.length ? 'none' : '';
+
+            // GA4 tracking
+            cards.forEach(function(c) {
+                c.addEventListener('click', function() {
+                    if (window.gtag) gtag('event', 'view_blog', { blog_title: this.querySelector('h3').textContent, event_category: 'blog' });
+                });
+            });
+        }
+
+        function setupEvents() {
+            document.getElementById('filters').addEventListener('click', function(e) {
+                var btn = e.target.closest('.filter-btn');
+                if (!btn) return;
+                cat = btn.dataset.cat;
+                document.querySelectorAll('.filter-btn').forEach(function(f) { f.classList.remove('active'); });
+                btn.classList.add('active');
+                applyFilter();
+                document.getElementById('grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+
+            var timer;
+            document.getElementById('search').addEventListener('input', function(e) {
+                clearTimeout(timer);
+                timer = setTimeout(function() { query = e.target.value.trim(); applyFilter(); }, 200);
+            });
+
+            document.getElementById('load-more').addEventListener('click', function() {
+                shown += BATCH;
+                renderGrid();
+            });
+        }
+
+        init();
+    })();
     </script>
 </body>
 </html>
