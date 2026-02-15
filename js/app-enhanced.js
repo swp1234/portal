@@ -39,6 +39,7 @@
                     if (langMenu) langMenu.classList.add('hidden');
                     // Re-render everything with new language
                     try {
+                        updateLabelsForLang(lang);
                         renderPersonalized();
                         filterApps();
                         if (typeof renderBlog === 'function') renderBlog();
@@ -100,8 +101,40 @@
     let filteredAppsCache = [];
     let totalFilteredApps = 0;
 
+    // Sort button translations
+    var SORT_LABELS = {
+        popularity: {ko:'인기순',en:'Popular',zh:'热门',ja:'人気順',es:'Popular',fr:'Populaire',hi:'लोकप्रिय',ru:'Популярные',pt:'Popular',id:'Populer',tr:'Popüler',de:'Beliebt'},
+        latest: {ko:'최신순',en:'Latest',zh:'最新',ja:'最新順',es:'Reciente',fr:'Récent',hi:'नवीनतम',ru:'Новые',pt:'Recente',id:'Terbaru',tr:'Yeni',de:'Neueste'},
+        name: {ko:'이름순',en:'Name',zh:'名称',ja:'名前順',es:'Nombre',fr:'Nom',hi:'नाम',ru:'Имя',pt:'Nome',id:'Nama',tr:'İsim',de:'Name'}
+    };
+
+    function updateLabelsForLang(lang) {
+        // Category labels
+        if (typeof CATEGORIES !== 'undefined') {
+            catButtons.forEach(function(btn) {
+                var catKey = btn.dataset.category;
+                var cat = CATEGORIES[catKey];
+                if (cat) {
+                    var label = btn.querySelector('.cat-label');
+                    if (label) label.textContent = (lang !== 'ko' && cat.i18n && cat.i18n[lang]) ? cat.i18n[lang] : cat.name;
+                }
+            });
+        }
+        // Sort labels
+        sortButtons.forEach(function(btn) {
+            var sortKey = btn.dataset.sort;
+            var labels = SORT_LABELS[sortKey];
+            if (labels) {
+                var label = btn.querySelector('.sort-label');
+                if (label) label.textContent = labels[lang] || labels.en;
+            }
+        });
+    }
+
     // Initialize
     function init() {
+        // Set labels to current language on load
+        updateLabelsForLang(i18n.getCurrentLanguage());
         renderPersonalized();
         filterApps();
         bindEvents();
