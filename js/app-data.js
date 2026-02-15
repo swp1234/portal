@@ -1620,6 +1620,33 @@ const APP_DATA = [
             de: { name: 'Farb-Persönlichkeitstest', shortDesc: 'Entdecke deine Persönlichkeitsfarbe' },
             fr: { name: 'Test de Couleur de Personnalité', shortDesc: 'Découvrez votre couleur de personnalité' }
         }
+    },
+    {
+        id: 'aura-reading',
+        name: '오라 리딩',
+        shortDesc: '당신의 오라 색상 분석',
+        description: '10가지 질문으로 당신의 오라 색상과 에너지 유형을 분석합니다. 8가지 오라 유형 중 당신은?',
+        icon: '🔮',
+        color: '#8b5cf6',
+        category: 'test',
+        tags: ['오라', '에너지', '심리테스트', '성격', 'aura', 'energy', 'personality', 'spiritual'],
+        url: 'https://dopabrain.com/aura-reading/',
+        isNew: true,
+        isPopular: false,
+        popularity: 6,
+        i18n: {
+            en: { name: 'Aura Reading', shortDesc: 'Discover your aura color' },
+            zh: { name: '灵气解读', shortDesc: '发现你的灵气颜色' },
+            hi: { name: 'ऑरा रीडिंग', shortDesc: 'अपने ऑरा रंग की खोज करें' },
+            ru: { name: 'Чтение ауры', shortDesc: 'Откройте цвет своей ауры' },
+            ja: { name: 'オーラリーディング', shortDesc: 'あなたのオーラカラーを診断' },
+            es: { name: 'Lectura del Aura', shortDesc: 'Descubre el color de tu aura' },
+            pt: { name: 'Leitura de Aura', shortDesc: 'Descubra a cor da sua aura' },
+            id: { name: 'Pembacaan Aura', shortDesc: 'Temukan warna aura Anda' },
+            tr: { name: 'Aura Okuması', shortDesc: 'Aura renginizi keşfedin' },
+            de: { name: 'Aura-Lesung', shortDesc: 'Entdecke deine Aurafarbe' },
+            fr: { name: 'Lecture d\'Aura', shortDesc: 'Découvrez la couleur de votre aura' }
+        }
     }
 ];
 
