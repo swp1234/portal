@@ -1545,6 +1545,65 @@ body {
     font-weight: 500;
 }
 
+/* === Category Hubs Navigation === */
+.category-hubs {
+    padding: 24px 16px;
+    margin-top: 16px;
+}
+.hubs-title {
+    font-family: 'Syne', var(--font-heading);
+    font-size: 18px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.hubs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+.hub-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 16px 8px;
+    background: var(--glass-bg, rgba(255,255,255,0.035));
+    border: 1px solid var(--glass-border, rgba(255,255,255,0.07));
+    border-radius: 14px;
+    text-decoration: none;
+    color: var(--text-primary, #f0f0ff);
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.hub-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--hub-color, var(--neon-purple));
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    background: rgba(255,255,255,0.06);
+}
+.hub-icon { font-size: 24px; }
+.hub-name {
+    font-family: 'Syne', var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+}
+.hub-count {
+    font-size: 11px;
+    color: var(--hub-color, var(--neon-blue));
+    font-weight: 600;
+    opacity: 0.8;
+}
+@media (min-width: 600px) {
+    .hubs-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
 /* === Footer - Enhanced Brand Signature === */
 .portal-footer {
     text-align: center;
