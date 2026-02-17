@@ -1755,6 +1755,33 @@ const APP_DATA = [
             de: { name: 'Neujahrsgrüße-Generator', shortDesc: 'Erstelle persönliche Grüße' },
             fr: { name: 'Générateur de Vœux', shortDesc: 'Créez des vœux personnalisés' }
         }
+    },
+    {
+        id: 'road-shooter',
+        name: 'Road Shooter',
+        shortDesc: '분대 러너 슈터 게임',
+        description: '1명에서 군대까지! 도로 위에서 분대를 키우며 적을 쓰러뜨리는 액션 러너 슈터.',
+        icon: '🔫',
+        color: '#dc2626',
+        category: 'game',
+        tags: ['게임', '슈터', '러너', '액션', '군대', 'game', 'shooter', 'runner', 'army', 'action'],
+        url: 'https://dopabrain.com/road-shooter/',
+        isNew: true,
+        isPopular: false,
+        popularity: 5,
+        i18n: {
+            en: { name: 'Road Shooter', shortDesc: 'Squad runner shooter - from 1 to army!' },
+            zh: { name: 'Road Shooter', shortDesc: '小队跑酷射击 - 从1人到军队！' },
+            hi: { name: 'Road Shooter', shortDesc: 'स्क्वाड रनर शूटर - 1 से सेना तक!' },
+            ru: { name: 'Road Shooter', shortDesc: 'Отряд-раннер-шутер — от 1 до армии!' },
+            ja: { name: 'Road Shooter', shortDesc: 'スクワッドランナーシューター - 1人から軍隊へ！' },
+            es: { name: 'Road Shooter', shortDesc: 'Shooter runner de escuadrón - ¡de 1 a ejército!' },
+            pt: { name: 'Road Shooter', shortDesc: 'Shooter runner de esquadrão - de 1 a exército!' },
+            id: { name: 'Road Shooter', shortDesc: 'Squad runner shooter - dari 1 jadi tentara!' },
+            tr: { name: 'Road Shooter', shortDesc: 'Takım koşucu nişancı - 1\'den orduya!' },
+            de: { name: 'Road Shooter', shortDesc: 'Squad-Runner-Shooter - von 1 zur Armee!' },
+            fr: { name: 'Road Shooter', shortDesc: 'Shooter runner d\'escouade - de 1 à l\'armée !' }
+        }
     }
 ];
 
