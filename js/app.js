@@ -276,13 +276,13 @@
     // Create category sections with headers
     function renderCategorySections(apps) {
         const categoryInfo = {
-            'game': { icon: '🎮', label: '게임', color: '#667eea', order: 0 },
-            'brain': { icon: '🧠', label: '두뇌훈련', color: '#8b5cf6', order: 1 },
-            'test': { icon: '🔮', label: '심리테스트', color: '#f093fb', order: 2 },
-            'fortune': { icon: '✨', label: '운세점술', color: '#f39c12', order: 3 },
-            'tool': { icon: '🧮', label: '계산기', color: '#4facfe', order: 4 },
-            'wellness': { icon: '🧘', label: '웰빙', color: '#43e97b', order: 5 },
-            'dev': { icon: '💻', label: '개발자', color: '#27ae60', order: 6 }
+            'game': { icon: '🎮', label: i18n.t('filter.game'), color: '#667eea', order: 0 },
+            'brain': { icon: '🧠', label: i18n.t('filter.brain'), color: '#8b5cf6', order: 1 },
+            'test': { icon: '🔮', label: i18n.t('filter.test'), color: '#f093fb', order: 2 },
+            'fortune': { icon: '✨', label: i18n.t('filter.fortune'), color: '#f39c12', order: 3 },
+            'tool': { icon: '🧮', label: i18n.t('filter.tool'), color: '#4facfe', order: 4 },
+            'wellness': { icon: '🧘', label: i18n.t('filter.wellness'), color: '#43e97b', order: 5 },
+            'dev': { icon: '💻', label: i18n.t('filter.dev'), color: '#27ae60', order: 6 }
         };
 
         const grouped = {};
@@ -329,9 +329,9 @@
         // Featured badge with popularity
         let badgeHtml = '';
         if (app.popularity >= 8) {
-            badgeHtml = '<span class="featured-badge">🔥 핫트렌드</span>';
+            badgeHtml = `<span class="featured-badge">${i18n.t('badge.hot') || '🔥 Hot'}</span>`;
         } else if (app.isPopular) {
-            badgeHtml = '<span class="featured-badge">⭐ 인기</span>';
+            badgeHtml = `<span class="featured-badge">${i18n.t('badge.popular') || '⭐ Popular'}</span>`;
         }
 
         return `
@@ -367,9 +367,9 @@
 
         // Add popularity badge (8+ is hot)
         if (app.popularity >= 8) {
-            badges.push('<span class="badge badge-hot">🔥 인기</span>');
+            badges.push(`<span class="badge badge-hot">🔥 ${i18n.t('badge.trending') || 'Hot'}</span>`);
         } else if (app.isPopular) {
-            badges.push('<span class="badge badge-popular">인기</span>');
+            badges.push(`<span class="badge badge-popular">${i18n.t('badge.popular') || 'Popular'}</span>`);
         }
 
         // User count (fake, for social proof)
@@ -504,7 +504,7 @@
             if (searchArea) searchArea.appendChild(resultInfo);
         }
         if (searchQuery) {
-            resultInfo.textContent = `검색 결과: ${count}개`;
+            resultInfo.textContent = (i18n.t('search.results') || `Results: ${count}`).replace('{count}', count);
             resultInfo.style.display = 'block';
         } else {
             resultInfo.style.display = 'none';
@@ -521,7 +521,7 @@
                 loadMoreBtn = document.createElement('button');
                 loadMoreBtn.id = 'load-more-btn';
                 loadMoreBtn.className = 'load-more-btn';
-                loadMoreBtn.innerHTML = '<span>더보기 ↓</span>';
+                loadMoreBtn.innerHTML = `<span>${i18n.t('search.loadMore') || 'Load More ↓'}</span>`;
                 appGrid.parentNode.insertBefore(loadMoreBtn, appGrid.nextSibling);
 
                 loadMoreBtn.addEventListener('click', () => {
