@@ -1702,6 +1702,60 @@ const APP_DATA = [
             de: { name: 'Road Shooter', shortDesc: 'Squad-Runner-Shooter - von 1 zur Armee!' },
             fr: { name: 'Road Shooter', shortDesc: 'Shooter runner d\'escouade - de 1 à l\'armée !' }
         }
+    },
+    {
+        id: 'name-match',
+        name: '이름 궁합',
+        shortDesc: '두 사람의 이름 궁합 테스트',
+        description: '두 이름을 입력해 사랑, 우정, 케미, 소통, 미래 5가지 궁합을 분석합니다.',
+        icon: '💕',
+        color: '#ff4d6d',
+        category: 'test',
+        tags: ['궁합', '이름', '연애', '테스트', 'compatibility', 'name', 'love', 'match'],
+        url: 'https://dopabrain.com/name-match/',
+        isNew: true,
+        isPopular: false,
+        popularity: 8,
+        i18n: {
+            en: { name: 'Name Compatibility', shortDesc: 'Test name compatibility' },
+            zh: { name: '姓名配对', shortDesc: '测试姓名配对指数' },
+            hi: { name: 'नाम अनुकूलता', shortDesc: 'नाम अनुकूलता टेस्ट' },
+            ru: { name: 'Совместимость имён', shortDesc: 'Тест совместимости имён' },
+            ja: { name: '名前相性テスト', shortDesc: '名前の相性をチェック' },
+            es: { name: 'Compatibilidad de Nombres', shortDesc: 'Test de compatibilidad' },
+            pt: { name: 'Compatibilidade de Nomes', shortDesc: 'Teste de compatibilidade' },
+            id: { name: 'Kecocokan Nama', shortDesc: 'Tes kecocokan nama' },
+            tr: { name: 'İsim Uyumu', shortDesc: 'İsim uyumu testi' },
+            de: { name: 'Namenskompatibilität', shortDesc: 'Namenskompatibilitätstest' },
+            fr: { name: 'Compatibilité des Prénoms', shortDesc: 'Test de compatibilité' }
+        }
+    },
+    {
+        id: 'fortune-cookie',
+        name: '포춘 쿠키',
+        shortDesc: '오늘의 운세 쿠키',
+        description: '포춘 쿠키를 깨서 오늘의 운세, 행운의 숫자, 색상을 확인하세요!',
+        icon: '🥠',
+        color: '#f59e0b',
+        category: 'fortune',
+        tags: ['운세', '포춘쿠키', '행운', 'fortune', 'cookie', 'luck', 'daily'],
+        url: 'https://dopabrain.com/fortune-cookie/',
+        isNew: true,
+        isPopular: false,
+        popularity: 7,
+        i18n: {
+            en: { name: 'Fortune Cookie', shortDesc: 'Daily fortune cookie' },
+            zh: { name: '幸运饼干', shortDesc: '今日幸运饼干' },
+            hi: { name: 'फॉर्च्यून कुकी', shortDesc: 'दैनिक भाग्य कुकी' },
+            ru: { name: 'Печенье с предсказанием', shortDesc: 'Ежедневное предсказание' },
+            ja: { name: 'フォーチュンクッキー', shortDesc: '今日の運勢クッキー' },
+            es: { name: 'Galleta de la Fortuna', shortDesc: 'Galleta de la fortuna diaria' },
+            pt: { name: 'Biscoito da Sorte', shortDesc: 'Biscoito da sorte diário' },
+            id: { name: 'Kue Keberuntungan', shortDesc: 'Kue keberuntungan harian' },
+            tr: { name: 'Fal Kurabiyesi', shortDesc: 'Günlük fal kurabiyesi' },
+            de: { name: 'Glückskeks', shortDesc: 'Täglicher Glückskeks' },
+            fr: { name: 'Fortune Cookie', shortDesc: 'Fortune cookie quotidien' }
+        }
     }
 ];
 
