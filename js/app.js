@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    // Initialize i18n with error handling
+    // Initialize i18n with error handling, then start app
     (async function initI18n() {
         try {
             await i18n.loadTranslations(i18n.getCurrentLanguage());
@@ -51,6 +51,13 @@
 
         // Initialize Theme Toggle
         initTheme();
+
+        // Start app AFTER translations are loaded (prevents raw i18n keys)
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     })();
 
     // Theme Toggle Function
@@ -839,6 +846,5 @@
         });
     }
 
-    // Start
-    document.addEventListener('DOMContentLoaded', init);
+    // Start is now called from initI18n() after translations load
 })();
