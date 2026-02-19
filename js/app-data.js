@@ -1756,6 +1756,33 @@ const APP_DATA = [
             de: { name: 'Glückskeks', shortDesc: 'Täglicher Glückskeks' },
             fr: { name: 'Fortune Cookie', shortDesc: 'Fortune cookie quotidien' }
         }
+    },
+    {
+        id: 'would-you-rather',
+        name: '이것 아니면 저것',
+        shortDesc: '딜레마 선택 게임',
+        description: '두 가지 중 하나를 골라보세요! 다른 사람들은 뭘 골랐을까? 20개 재미있는 딜레마.',
+        icon: '🤔',
+        color: '#8b5cf6',
+        category: 'game',
+        tags: ['선택', '딜레마', '게임', '바이럴', 'would you rather', 'choice', 'dilemma', 'game'],
+        url: 'https://dopabrain.com/would-you-rather/',
+        isNew: true,
+        isPopular: false,
+        popularity: 8,
+        i18n: {
+            en: { name: 'Would You Rather', shortDesc: 'Dilemma choice game' },
+            zh: { name: '你选哪个？', shortDesc: '两难选择游戏' },
+            hi: { name: 'आप क्या चुनेंगे?', shortDesc: 'दुविधा चुनाव खेल' },
+            ru: { name: 'Что бы вы выбрали?', shortDesc: 'Игра-дилемма' },
+            ja: { name: 'どっちを選ぶ？', shortDesc: 'ジレンマ選択ゲーム' },
+            es: { name: '¿Qué Preferirías?', shortDesc: 'Juego de dilemas' },
+            pt: { name: 'O Que Você Prefere?', shortDesc: 'Jogo de dilemas' },
+            id: { name: 'Kamu Pilih Mana?', shortDesc: 'Game pilihan dilema' },
+            tr: { name: 'Hangisini Tercih Edersin?', shortDesc: 'İkilem seçme oyunu' },
+            de: { name: 'Was Würdest Du Lieber?', shortDesc: 'Dilemma-Wahlspiel' },
+            fr: { name: 'Tu Préfères?', shortDesc: 'Jeu de dilemmes' }
+        }
     }
 ];
 
