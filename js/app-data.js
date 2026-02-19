@@ -1783,6 +1783,33 @@ const APP_DATA = [
             de: { name: 'Was Würdest Du Lieber?', shortDesc: 'Dilemma-Wahlspiel' },
             fr: { name: 'Tu Préfères?', shortDesc: 'Jeu de dilemmes' }
         }
+    },
+    {
+        id: 'color-blindness',
+        name: '색각 테스트',
+        shortDesc: '다른 색 찾기 게임',
+        description: '다른 색 하나를 찾아라! 레벨이 올라갈수록 색 차이가 줄어듭니다. 색 감수성 점수 100점 만점!',
+        icon: '🎨',
+        color: '#00cec9',
+        category: 'brain',
+        tags: ['색각', '테스트', '색맹', '색 구별', 'color', 'blindness', 'vision', 'sensitivity'],
+        url: 'https://dopabrain.com/color-blindness/',
+        isNew: true,
+        isPopular: false,
+        popularity: 6,
+        i18n: {
+            en: { name: 'Color Sensitivity Test', shortDesc: 'Find the different color' },
+            zh: { name: '色觉测试', shortDesc: '找不同颜色' },
+            hi: { name: 'रंग संवेदनशीलता परीक्षण', shortDesc: 'अलग रंग खोजें' },
+            ru: { name: 'Тест цветового зрения', shortDesc: 'Найди другой цвет' },
+            ja: { name: '色覚テスト', shortDesc: '違う色を見つけよう' },
+            es: { name: 'Test de Sensibilidad al Color', shortDesc: 'Encuentra el color diferente' },
+            pt: { name: 'Teste de Sensibilidade de Cor', shortDesc: 'Encontre a cor diferente' },
+            id: { name: 'Tes Sensitivitas Warna', shortDesc: 'Temukan warna berbeda' },
+            tr: { name: 'Renk Hassasiyeti Testi', shortDesc: 'Farklı rengi bul' },
+            de: { name: 'Farbempfindlichkeitstest', shortDesc: 'Finde die andere Farbe' },
+            fr: { name: 'Test de Sensibilité aux Couleurs', shortDesc: 'Trouvez la couleur différente' }
+        }
     }
 ];
 
