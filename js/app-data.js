@@ -1972,6 +1972,87 @@ const APP_DATA = [
             de: { name: 'Sozialer Akku', shortDesc: 'Miss deine soziale Energie' },
             fr: { name: 'Batterie Sociale', shortDesc: 'Mesurez votre énergie sociale' }
         }
+    },
+    {
+        id: 'villain-type',
+        name: '빌런 유형',
+        shortDesc: '빌런 유형 테스트',
+        description: '당신의 내면에 숨겨진 빌런 유형은? 어둠의 심리 테스트로 알아보세요!',
+        icon: '🦹',
+        color: '#8B0000',
+        category: 'test',
+        tags: ['성격', '빌런', '심리', 'personality', 'villain', 'dark', 'psychology'],
+        url: 'https://dopabrain.com/villain-type/',
+        isNew: true,
+        isPopular: false,
+        popularity: 5,
+        i18n: {
+            en: { name: 'Villain Type', shortDesc: 'Villain type test' },
+            zh: { name: '反派类型', shortDesc: '反派类型测试' },
+            hi: { name: 'विलेन टाइप', shortDesc: 'विलेन टाइप टेस्ट' },
+            ru: { name: 'Тип Злодея', shortDesc: 'Тест типа злодея' },
+            ja: { name: 'ヴィランタイプ', shortDesc: 'ヴィランタイプ診断' },
+            es: { name: 'Tipo de Villano', shortDesc: 'Test de tipo de villano' },
+            pt: { name: 'Tipo de Vilão', shortDesc: 'Teste de tipo de vilão' },
+            id: { name: 'Tipe Penjahat', shortDesc: 'Tes tipe penjahat' },
+            tr: { name: 'Kötü Karakter Tipi', shortDesc: 'Kötü karakter tipi testi' },
+            de: { name: 'Bösewicht-Typ', shortDesc: 'Bösewicht-Typ-Test' },
+            fr: { name: 'Type de Méchant', shortDesc: 'Test de type de méchant' }
+        }
+    },
+    {
+        id: 'rizz-score',
+        name: '리즈 점수',
+        shortDesc: '리즈 점수 측정',
+        description: '당신의 리즈(매력) 점수는? 카리스마와 소셜 매력을 측정해보세요!',
+        icon: '✨',
+        color: '#FF6B35',
+        category: 'test',
+        tags: ['매력', '카리스마', '소셜', 'rizz', 'charisma', 'social', 'fun'],
+        url: 'https://dopabrain.com/rizz-score/',
+        isNew: true,
+        isPopular: false,
+        popularity: 5,
+        i18n: {
+            en: { name: 'Rizz Score', shortDesc: 'Measure your rizz level' },
+            zh: { name: '魅力值', shortDesc: '测量你的魅力值' },
+            hi: { name: 'रिज़ स्कोर', shortDesc: 'अपना रिज़ लेवल मापें' },
+            ru: { name: 'Риз Счёт', shortDesc: 'Измерь свой уровень риза' },
+            ja: { name: 'リズスコア', shortDesc: 'リズレベルを測定' },
+            es: { name: 'Puntuación Rizz', shortDesc: 'Mide tu nivel de rizz' },
+            pt: { name: 'Pontuação Rizz', shortDesc: 'Meça seu nível de rizz' },
+            id: { name: 'Skor Rizz', shortDesc: 'Ukur level rizz-mu' },
+            tr: { name: 'Rizz Puanı', shortDesc: 'Rizz seviyeni ölç' },
+            de: { name: 'Rizz-Score', shortDesc: 'Miss deinen Rizz-Level' },
+            fr: { name: 'Score Rizz', shortDesc: 'Mesurez votre niveau de rizz' }
+        }
+    },
+    {
+        id: 'sleep-animal',
+        name: '수면 동물',
+        shortDesc: '수면 동물 테스트',
+        description: '당신의 수면 유형은 어떤 동물? 크로노타입으로 알아보는 수면 습관!',
+        icon: '🌙',
+        color: '#4A3F8A',
+        category: 'test',
+        tags: ['수면', '크로노타입', '건강', 'sleep', 'chronotype', 'health', 'personality'],
+        url: 'https://dopabrain.com/sleep-animal/',
+        isNew: true,
+        isPopular: false,
+        popularity: 5,
+        i18n: {
+            en: { name: 'Sleep Animal', shortDesc: 'Sleep animal test' },
+            zh: { name: '睡眠动物', shortDesc: '睡眠动物测试' },
+            hi: { name: 'स्लीप एनिमल', shortDesc: 'स्लीप एनिमल टेस्ट' },
+            ru: { name: 'Животное Сна', shortDesc: 'Тест животного сна' },
+            ja: { name: '睡眠動物', shortDesc: '睡眠動物診断' },
+            es: { name: 'Animal de Sueño', shortDesc: 'Test de animal de sueño' },
+            pt: { name: 'Animal do Sono', shortDesc: 'Teste de animal do sono' },
+            id: { name: 'Hewan Tidur', shortDesc: 'Tes hewan tidur' },
+            tr: { name: 'Uyku Hayvanı', shortDesc: 'Uyku hayvanı testi' },
+            de: { name: 'Schlaftier', shortDesc: 'Schlaftier-Test' },
+            fr: { name: 'Animal de Sommeil', shortDesc: 'Test d\'animal de sommeil' }
+        }
     }
 ];
 
