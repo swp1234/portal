@@ -532,7 +532,7 @@
                 appGrid.parentNode.insertBefore(loadMoreBtn, appGrid.nextSibling);
 
                 loadMoreBtn.addEventListener('click', () => {
-                    currentPage++;
+                    currentPage = Math.ceil(totalFilteredApps / itemsPerPage);
                     // Re-render with new page
                     const featuredIds = ['idle-clicker', 'mbti-love', 'emotion-temp'];
                     const showFeatured = currentCategory === 'all' && !searchQuery.trim();

@@ -2053,6 +2053,87 @@ const APP_DATA = [
             de: { name: 'Schlaftier', shortDesc: 'Schlaftier-Test' },
             fr: { name: 'Animal de Sommeil', shortDesc: 'Test d\'animal de sommeil' }
         }
+    },
+    {
+        id: 'dark-core',
+        name: '다크코어 테스트',
+        shortDesc: '나의 어둠 성향은?',
+        description: '12가지 질문으로 다크 트라이어드(나르시시즘, 마키아벨리즘, 사이코패시, 사디즘)를 측정하세요.',
+        icon: '🖤',
+        color: '#8B0000',
+        category: 'test',
+        tags: ['다크코어', 'dark triad', '성격', '나르시시즘', 'dark core', 'personality'],
+        url: 'https://dopabrain.com/dark-core/',
+        isNew: true,
+        isPopular: false,
+        popularity: 0,
+        i18n: {
+            en: { name: 'Dark Core Test', shortDesc: 'How dark is your personality?' },
+            zh: { name: '暗黑人格测试', shortDesc: '你的暗黑人格有多强？' },
+            hi: { name: 'डार्क कोर टेस्ट', shortDesc: 'आपका अंधेरा पक्ष कितना गहरा है?' },
+            ru: { name: 'Тест Тёмного Ядра', shortDesc: 'Насколько тёмная ваша личность?' },
+            ja: { name: 'ダークコア診断', shortDesc: 'あなたの闇の人格は？' },
+            es: { name: 'Test del Núcleo Oscuro', shortDesc: '¿Qué tan oscura es tu personalidad?' },
+            pt: { name: 'Teste do Núcleo Sombrio', shortDesc: 'Quão sombria é a sua personalidade?' },
+            id: { name: 'Tes Inti Gelap', shortDesc: 'Seberapa gelap kepribadianmu?' },
+            tr: { name: 'Karanlık Çekirdek Testi', shortDesc: 'Kişiliğin ne kadar karanlık?' },
+            de: { name: 'Dark-Core-Test', shortDesc: 'Wie dunkel ist deine Persönlichkeit?' },
+            fr: { name: 'Test du Noyau Sombre', shortDesc: 'Quelle est la part d\'ombre en vous?' }
+        }
+    },
+    {
+        id: 'soul-age',
+        name: '영혼 나이 테스트',
+        shortDesc: '내 영혼은 몇 살?',
+        description: '12가지 질문으로 당신 영혼의 진짜 나이를 알아보세요. 갓 태어난 영혼? 초월적 존재?',
+        icon: '🔮',
+        color: '#4C1D95',
+        category: 'test',
+        tags: ['영혼나이', 'soul age', '전생', '영적', 'spiritual', '올드소울'],
+        url: 'https://dopabrain.com/soul-age/',
+        isNew: true,
+        isPopular: false,
+        popularity: 0,
+        i18n: {
+            en: { name: 'Soul Age Test', shortDesc: 'How old is your soul?' },
+            zh: { name: '灵魂年龄测试', shortDesc: '你的灵魂几岁了？' },
+            hi: { name: 'आत्मा की उम्र टेस्ट', shortDesc: 'आपकी आत्मा कितनी पुरानी है?' },
+            ru: { name: 'Тест Возраста Души', shortDesc: 'Сколько лет вашей душе?' },
+            ja: { name: '魂年齢診断', shortDesc: 'あなたの魂は何歳？' },
+            es: { name: 'Test de Edad del Alma', shortDesc: '¿Qué edad tiene tu alma?' },
+            pt: { name: 'Teste de Idade da Alma', shortDesc: 'Quantos anos tem sua alma?' },
+            id: { name: 'Tes Usia Jiwa', shortDesc: 'Berapa usia jiwamu?' },
+            tr: { name: 'Ruh Yaşı Testi', shortDesc: 'Ruhun kaç yaşında?' },
+            de: { name: 'Seelenalter-Test', shortDesc: 'Wie alt ist deine Seele?' },
+            fr: { name: 'Test d\'Âge de l\'Âme', shortDesc: 'Quel âge a votre âme?' }
+        }
+    },
+    {
+        id: 'pick-me',
+        name: '픽미 테스트',
+        shortDesc: '나의 픽미력은?',
+        description: '12가지 질문으로 당신의 픽미 에너지를 측정하세요. 메인캐릭터? 인정욕구 장인?',
+        icon: '🙋',
+        color: '#DB2777',
+        category: 'test',
+        tags: ['픽미', 'pick me', 'TikTok', '밈', '인정욕구', 'validation'],
+        url: 'https://dopabrain.com/pick-me/',
+        isNew: true,
+        isPopular: false,
+        popularity: 0,
+        i18n: {
+            en: { name: 'Pick Me Test', shortDesc: 'How much pick-me energy do you have?' },
+            zh: { name: 'Pick Me测试', shortDesc: '你有多少pick me能量？' },
+            hi: { name: 'पिक मी टेस्ट', shortDesc: 'आपमें कितनी पिक-मी ऊर्जा है?' },
+            ru: { name: 'Тест "Выбери меня"', shortDesc: 'Сколько в вас «пик ми» энергии?' },
+            ja: { name: 'ピックミー診断', shortDesc: 'あなたのピックミー度は？' },
+            es: { name: 'Test Pick Me', shortDesc: '¿Cuánta energía pick-me tienes?' },
+            pt: { name: 'Teste Pick Me', shortDesc: 'Quanta energia pick-me você tem?' },
+            id: { name: 'Tes Pick Me', shortDesc: 'Seberapa besar energi pick-me kamu?' },
+            tr: { name: 'Pick Me Testi', shortDesc: 'Ne kadar pick-me enerjin var?' },
+            de: { name: 'Pick-Me-Test', shortDesc: 'Wie viel Pick-Me-Energie hast du?' },
+            fr: { name: 'Test Pick Me', shortDesc: 'Quel est votre niveau d\'énergie pick-me?' }
+        }
     }
 ];
 
