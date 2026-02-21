@@ -2134,6 +2134,87 @@ const APP_DATA = [
             de: { name: 'Pick-Me-Test', shortDesc: 'Wie viel Pick-Me-Energie hast du?' },
             fr: { name: 'Test Pick Me', shortDesc: 'Quel est votre niveau d\'énergie pick-me?' }
         }
+    },
+    {
+        id: 'emotional-age',
+        name: '감정 나이 테스트',
+        shortDesc: '나의 감정 나이는?',
+        description: '10가지 감정 시나리오에 슬라이더로 반응하여 감정 성숙도를 측정하세요.',
+        icon: '😢',
+        color: '#E07C24',
+        category: 'test',
+        tags: ['감정나이', 'emotional age', '감정지능', '성숙도', 'EQ', 'maturity'],
+        url: 'https://dopabrain.com/emotional-age/',
+        isNew: true,
+        isPopular: false,
+        popularity: 0,
+        i18n: {
+            en: { name: 'Emotional Age Test', shortDesc: 'How old are your emotions?' },
+            zh: { name: '情感年龄测试', shortDesc: '你的情感几岁了？' },
+            hi: { name: 'भावनात्मक उम्र टेस्ट', shortDesc: 'आपकी भावनाएं कितनी परिपक्व हैं?' },
+            ru: { name: 'Тест Эмоционального Возраста', shortDesc: 'Сколько лет вашим эмоциям?' },
+            ja: { name: '感情年齢診断', shortDesc: 'あなたの感情は何歳？' },
+            es: { name: 'Test de Edad Emocional', shortDesc: '¿Qué edad tienen tus emociones?' },
+            pt: { name: 'Teste de Idade Emocional', shortDesc: 'Qual a idade das suas emoções?' },
+            id: { name: 'Tes Usia Emosional', shortDesc: 'Berapa usia emosionalmu?' },
+            tr: { name: 'Duygusal Yaş Testi', shortDesc: 'Duygularınız kaç yaşında?' },
+            de: { name: 'Emotionales Alter Test', shortDesc: 'Wie alt sind deine Emotionen?' },
+            fr: { name: 'Test d\'Âge Émotionnel', shortDesc: 'Quel âge ont vos émotions?' }
+        }
+    },
+    {
+        id: 'villain-origin',
+        name: '빌런 오리진 테스트',
+        shortDesc: '나의 빌런 기원은?',
+        description: '16개 이진 선택으로 당신의 빌런 오리진 스토리를 밝혀내세요.',
+        icon: '🦹‍♂️',
+        color: '#1B0A2E',
+        category: 'test',
+        tags: ['빌런', 'villain origin', '악당', '성격', 'archetype', 'dark'],
+        url: 'https://dopabrain.com/villain-origin/',
+        isNew: true,
+        isPopular: false,
+        popularity: 0,
+        i18n: {
+            en: { name: 'Villain Origin Test', shortDesc: 'What made you a villain?' },
+            zh: { name: '反派起源测试', shortDesc: '是什么让你成为反派？' },
+            hi: { name: 'विलेन ओरिजिन टेस्ट', shortDesc: 'आपको विलेन किसने बनाया?' },
+            ru: { name: 'Тест Происхождения Злодея', shortDesc: 'Что сделало вас злодеем?' },
+            ja: { name: 'ヴィラン起源診断', shortDesc: 'あなたをヴィランにしたものは？' },
+            es: { name: 'Test de Origen Villano', shortDesc: '¿Qué te convirtió en villano?' },
+            pt: { name: 'Teste de Origem Vilã', shortDesc: 'O que te tornou vilão?' },
+            id: { name: 'Tes Asal Usul Penjahat', shortDesc: 'Apa yang membuatmu jadi penjahat?' },
+            tr: { name: 'Kötü Karakter Köken Testi', shortDesc: 'Seni kötü yapan ne?' },
+            de: { name: 'Bösewicht-Ursprung Test', shortDesc: 'Was machte dich zum Bösewicht?' },
+            fr: { name: 'Test d\'Origine de Méchant', shortDesc: 'Qu\'est-ce qui a fait de vous un méchant?' }
+        }
+    },
+    {
+        id: 'ick-factor',
+        name: 'ick 테스트',
+        shortDesc: '나의 ick 감도는?',
+        description: '20개 행동 카드를 스와이프해서 당신의 ick 감도를 측정하세요.',
+        icon: '😬',
+        color: '#10B981',
+        category: 'test',
+        tags: ['ick', '연애', 'dating', 'swipe', 'TikTok', '취향'],
+        url: 'https://dopabrain.com/ick-factor/',
+        isNew: true,
+        isPopular: false,
+        popularity: 0,
+        i18n: {
+            en: { name: 'Ick Factor Test', shortDesc: 'How sensitive is your ick radar?' },
+            zh: { name: 'Ick因素测试', shortDesc: '你的ick雷达有多敏感？' },
+            hi: { name: 'इक फैक्टर टेस्ट', shortDesc: 'आपका इक रडार कितना संवेदनशील है?' },
+            ru: { name: 'Тест Ick-Фактор', shortDesc: 'Насколько чувствителен ваш ick-радар?' },
+            ja: { name: 'Ickファクター診断', shortDesc: 'あなたのickレーダーの感度は？' },
+            es: { name: 'Test del Factor Ick', shortDesc: '¿Qué tan sensible es tu radar ick?' },
+            pt: { name: 'Teste do Fator Ick', shortDesc: 'Quão sensível é seu radar ick?' },
+            id: { name: 'Tes Faktor Ick', shortDesc: 'Seberapa sensitif radar ick-mu?' },
+            tr: { name: 'Ick Faktörü Testi', shortDesc: 'Ick radarın ne kadar hassas?' },
+            de: { name: 'Ick-Faktor-Test', shortDesc: 'Wie empfindlich ist dein Ick-Radar?' },
+            fr: { name: 'Test du Facteur Ick', shortDesc: 'Quelle est la sensibilité de votre radar ick?' }
+        }
     }
 ];
 
