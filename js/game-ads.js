@@ -137,7 +137,7 @@ const GameAds = (() => {
 
       const btn = document.createElement('button');
       btn.className = 'ga-reward-btn';
-      btn.innerHTML = '\uD83C\uDFA5 ' + (opts.label || 'Watch Ad for 2x Score');
+      btn.innerHTML = '\uD83C\uDFA5 ' + (opts.label || window.i18n?.t('ads.watchAd') || 'Watch Ad for 2x Score');
       btn.setAttribute('aria-label', opts.label || 'Watch Ad for 2x Score');
       Object.assign(btn.style, {
         display: 'block', width: '90%', maxWidth: '320px', margin: '10px auto',
@@ -164,7 +164,7 @@ const GameAds = (() => {
             claimed = true;
             btn.style.opacity = '0.5';
             btn.style.animation = 'none';
-            btn.textContent = '\u2713 ' + (opts.claimedLabel || 'Claimed!');
+            btn.textContent = '\u2713 ' + (opts.claimedLabel || window.i18n?.t('ads.claimed') || 'Claimed!');
             btn.style.cursor = 'default';
             if (opts.onReward) opts.onReward();
           },

@@ -80,7 +80,7 @@
         const themeToggle = document.getElementById('theme-toggle');
         if (themeToggle) {
             themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
-            themeToggle.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+            themeToggle.title = theme === 'dark' ? (window.i18n?.t('theme.lightMode') || 'Switch to light mode') : (window.i18n?.t('theme.darkMode') || 'Switch to dark mode');
         }
     }
 
@@ -529,7 +529,7 @@
             if (searchArea) searchArea.appendChild(resultInfo);
         }
         if (searchQuery) {
-            resultInfo.textContent = `검색 결과: ${count}개`;
+            resultInfo.textContent = (window.i18n?.t('search.results') || 'Results:') + ' ' + count;
             resultInfo.style.display = 'block';
         } else {
             resultInfo.style.display = 'none';
@@ -546,7 +546,7 @@
                 loadMoreBtn = document.createElement('button');
                 loadMoreBtn.id = 'load-more-btn';
                 loadMoreBtn.className = 'load-more-btn';
-                loadMoreBtn.innerHTML = '<span>더보기 ↓</span>';
+                loadMoreBtn.innerHTML = '<span>' + (window.i18n?.t('search.loadMore') || 'Load More ↓') + '</span>';
                 appGrid.parentNode.insertBefore(loadMoreBtn, appGrid.nextSibling);
 
                 loadMoreBtn.addEventListener('click', () => {

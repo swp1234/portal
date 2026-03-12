@@ -86,7 +86,7 @@
         const themeToggle = document.getElementById('theme-toggle');
         if (themeToggle) {
             themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
-            themeToggle.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+            themeToggle.title = theme === 'dark' ? (window.i18n?.t('theme.lightMode') || 'Switch to light mode') : (window.i18n?.t('theme.darkMode') || 'Switch to dark mode');
         }
     }
 

@@ -112,7 +112,7 @@ const DailyStreak = (() => {
     // Haptic celebration
     if (typeof Haptic !== 'undefined') Haptic.success();
     const el = document.createElement('div');
-    el.textContent = 'DAILY TARGET CLEAR!';
+    el.textContent = window.i18n?.t('daily.targetClear') || 'DAILY TARGET CLEAR!';
     el.style.cssText = 'position:fixed;top:35%;left:50%;transform:translateX(-50%);font-size:22px;font-weight:bold;color:#10b981;z-index:9999;pointer-events:none;text-shadow:0 0 15px rgba(16,185,129,0.6);opacity:1;transition:all 1.5s ease-out;font-family:system-ui,sans-serif;';
     document.body.appendChild(el);
     requestAnimationFrame(() => {
