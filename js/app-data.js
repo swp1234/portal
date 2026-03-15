@@ -2593,6 +2593,33 @@ const APP_DATA = [
             de: { name: 'Red-Flag-Test', shortDesc: 'Was sind deine Dating-Red-Flags?' },
             fr: { name: 'Test des Red Flags', shortDesc: 'Quels sont vos red flags amoureux?' }
         }
+    },
+    {
+        id: 'dopamine-type',
+        name: '도파민 유형 테스트',
+        shortDesc: '뇌 보상 시스템 분석',
+        description: '8개 질문으로 당신의 도파민 유형을 알아보세요. 스릴 시커, 딥 다이버, 소셜 스파크 등 6가지 유형 중 나는?',
+        icon: '\u26A1',
+        color: '#f59e0b',
+        category: 'test',
+        tags: ['도파민', '뇌과학', '성격', '테스트', 'dopamine', 'brain', 'personality', 'quiz'],
+        url: 'https://dopabrain.com/dopamine-type/',
+        isNew: true,
+        isPopular: false,
+        popularity: 5,
+        i18n: {
+            en: { name: 'Dopamine Type Test', shortDesc: 'Brain reward system analysis' },
+            zh: { name: '\u591A\u5DF4\u80FA\u7C7B\u578B\u6D4B\u8BD5', shortDesc: '\u5927\u8111\u5956\u52B1\u7CFB\u7EDF\u5206\u6790' },
+            hi: { name: '\u0921\u094B\u092A\u093E\u092E\u093E\u0907\u0928 \u091F\u093E\u0907\u092A \u091F\u0947\u0938\u094D\u091F', shortDesc: '\u092E\u0938\u094D\u0924\u093F\u0937\u094D\u0915 \u0907\u0928\u093E\u092E \u092A\u094D\u0930\u0923\u093E\u0932\u0940 \u0935\u093F\u0936\u094D\u0932\u0947\u0937\u0923' },
+            ru: { name: '\u0422\u0435\u0441\u0442 \u0442\u0438\u043F\u0430 \u0434\u043E\u0444\u0430\u043C\u0438\u043D\u0430', shortDesc: '\u0410\u043D\u0430\u043B\u0438\u0437 \u0441\u0438\u0441\u0442\u0435\u043C\u044B \u0432\u043E\u0437\u043D\u0430\u0433\u0440\u0430\u0436\u0434\u0435\u043D\u0438\u044F \u043C\u043E\u0437\u0433\u0430' },
+            ja: { name: '\u30C9\u30FC\u30D1\u30DF\u30F3\u30BF\u30A4\u30D7\u30C6\u30B9\u30C8', shortDesc: '\u8133\u306E\u5831\u916C\u30B7\u30B9\u30C6\u30E0\u5206\u6790' },
+            es: { name: 'Test de Tipo de Dopamina', shortDesc: 'An\u00E1lisis del sistema de recompensa cerebral' },
+            pt: { name: 'Teste de Tipo de Dopamina', shortDesc: 'An\u00E1lise do sistema de recompensa cerebral' },
+            id: { name: 'Tes Tipe Dopamin', shortDesc: 'Analisis sistem penghargaan otak' },
+            tr: { name: 'Dopamin Tipi Testi', shortDesc: 'Beyin \u00F6d\u00FCl sistemi analizi' },
+            de: { name: 'Dopamin-Typ-Test', shortDesc: 'Analyse des Gehirn-Belohnungssystems' },
+            fr: { name: 'Test de Type de Dopamine', shortDesc: 'Analyse du syst\u00E8me de r\u00E9compense c\u00E9r\u00E9bral' }
+        }
     }
 ];
 
