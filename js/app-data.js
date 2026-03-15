@@ -2566,6 +2566,33 @@ const APP_DATA = [
             de: { name: 'Überdenker-Test', shortDesc: 'Wie viel denkst du zu viel nach?' },
             fr: { name: 'Test de Surréflexion', shortDesc: 'Combien réfléchissez-vous de trop?' }
         }
+    },
+    {
+        id: 'red-flag-test',
+        name: '레드플래그 테스트',
+        shortDesc: '나의 연애 레드플래그는?',
+        description: '연애에서 나도 모르게 보이는 레드플래그를 진단해보세요! 관계 패턴을 분석합니다.',
+        icon: '🚩',
+        color: '#dc2626',
+        category: 'test',
+        tags: ['레드플래그', '연애', '심리', '관계', 'red flag', 'dating', 'relationship', 'psychology', 'test'],
+        url: 'https://dopabrain.com/red-flag-test/',
+        isNew: true,
+        isPopular: false,
+        popularity: 0,
+        i18n: {
+            en: { name: 'Red Flag Test', shortDesc: 'What are your dating red flags?' },
+            zh: { name: '红旗测试', shortDesc: '你的恋爱红旗是什么？' },
+            hi: { name: 'रेड फ्लैग टेस्ट', shortDesc: 'आपके डेटिंग रेड फ्लैग क्या हैं?' },
+            ru: { name: 'Тест на Красные Флаги', shortDesc: 'Какие у вас красные флаги в отношениях?' },
+            ja: { name: 'レッドフラッグ診断', shortDesc: 'あなたの恋愛レッドフラッグは？' },
+            es: { name: 'Test de Banderas Rojas', shortDesc: '¿Cuáles son tus señales de alerta?' },
+            pt: { name: 'Teste de Red Flags', shortDesc: 'Quais são suas red flags no namoro?' },
+            id: { name: 'Tes Red Flag', shortDesc: 'Apa red flag kamu dalam hubungan?' },
+            tr: { name: 'Kırmızı Bayrak Testi', shortDesc: 'İlişkideki kırmızı bayrakların neler?' },
+            de: { name: 'Red-Flag-Test', shortDesc: 'Was sind deine Dating-Red-Flags?' },
+            fr: { name: 'Test des Red Flags', shortDesc: 'Quels sont vos red flags amoureux?' }
+        }
     }
 ];
 
