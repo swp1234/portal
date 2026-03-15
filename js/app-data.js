@@ -2539,6 +2539,33 @@ const APP_DATA = [
             de: { name: 'Neujahrsgeld-Rechner', shortDesc: 'Neujahrsgeld-Berechnung' },
             fr: { name: 'Calculateur d\'Étrennes', shortDesc: 'Calculateur d\'argent du Nouvel An' }
         }
+    },
+    {
+        id: 'overthinker-test',
+        name: '과대사고 테스트',
+        shortDesc: '당신의 오버씽킹 수준은?',
+        description: '당신은 얼마나 많이 생각하나요? 과대사고 성향 테스트로 당신의 오버씽킹 수준을 확인하세요!',
+        icon: '🌀',
+        color: '#7c3aed',
+        category: 'test',
+        tags: ['과대사고', 'overthinking', '오버씽킹', '심리', '생각', 'psychology', 'mind', 'test'],
+        url: 'https://dopabrain.com/overthinker-test/',
+        isNew: true,
+        isPopular: false,
+        popularity: 0,
+        i18n: {
+            en: { name: 'Overthinker Test', shortDesc: 'How much do you overthink?' },
+            zh: { name: '过度思考测试', shortDesc: '你有多爱想太多？' },
+            hi: { name: 'ओवरथिंकर टेस्ट', shortDesc: 'आप कितना ज़्यादा सोचते हैं?' },
+            ru: { name: 'Тест на Чрезмерное Обдумывание', shortDesc: 'Насколько вы склонны к перемудрению?' },
+            ja: { name: '考えすぎ診断', shortDesc: 'あなたの考えすぎ度は？' },
+            es: { name: 'Test de Sobrepensar', shortDesc: '¿Cuánto piensas de más?' },
+            pt: { name: 'Teste de Pensamento Excessivo', shortDesc: 'Quanto você pensa demais?' },
+            id: { name: 'Tes Overthinking', shortDesc: 'Seberapa banyak kamu overthinking?' },
+            tr: { name: 'Aşırı Düşünme Testi', shortDesc: 'Ne kadar fazla düşünüyorsun?' },
+            de: { name: 'Überdenker-Test', shortDesc: 'Wie viel denkst du zu viel nach?' },
+            fr: { name: 'Test de Surréflexion', shortDesc: 'Combien réfléchissez-vous de trop?' }
+        }
     }
 ];
 
