@@ -2620,6 +2620,33 @@ const APP_DATA = [
             de: { name: 'Dopamin-Typ-Test', shortDesc: 'Analyse des Gehirn-Belohnungssystems' },
             fr: { name: 'Test de Type de Dopamine', shortDesc: 'Analyse du syst\u00E8me de r\u00E9compense c\u00E9r\u00E9bral' }
         }
+    },
+    {
+        id: 'burnout-test',
+        name: '번아웃 테스트',
+        shortDesc: '나의 번아웃 유형은?',
+        description: '8개 질문으로 당신의 번아웃 유형을 알아보세요. 과잉성취, 공감, 권태, 은폐, 창의, 디지털 번아웃 중 나는?',
+        icon: '\uD83D\uDD25',
+        color: '#ef4444',
+        category: 'test',
+        tags: ['번아웃', '스트레스', '직장', '정신건강', 'burnout', 'stress', 'work', 'mental health'],
+        url: 'https://dopabrain.com/burnout-test/',
+        isNew: true,
+        isPopular: false,
+        popularity: 5,
+        i18n: {
+            en: { name: 'Burnout Test', shortDesc: "What's your burnout type?" },
+            zh: { name: '\u5012\u5C3D\u6D4B\u8BD5', shortDesc: '\u4F60\u7684\u5012\u5C3D\u7C7B\u578B\u662F\u4EC0\u4E48\uFF1F' },
+            hi: { name: '\u092C\u0930\u094D\u0928\u0906\u0909\u091F \u091F\u0947\u0938\u094D\u091F', shortDesc: '\u0906\u092A\u0915\u093E \u092C\u0930\u094D\u0928\u0906\u0909\u091F \u091F\u093E\u0907\u092A \u0915\u094D\u092F\u093E \u0939\u0948?' },
+            ru: { name: '\u0422\u0435\u0441\u0442 \u043D\u0430 \u0432\u044B\u0433\u043E\u0440\u0430\u043D\u0438\u0435', shortDesc: '\u041A\u0430\u043A\u043E\u0439 \u0443 \u0432\u0430\u0441 \u0442\u0438\u043F \u0432\u044B\u0433\u043E\u0440\u0430\u043D\u0438\u044F?' },
+            ja: { name: '\u71C3\u3048\u5C3D\u304D\u30C6\u30B9\u30C8', shortDesc: '\u3042\u306A\u305F\u306E\u71C3\u3048\u5C3D\u304D\u30BF\u30A4\u30D7\u306F\uFF1F' },
+            es: { name: 'Test de Burnout', shortDesc: '\u00BFCu\u00E1l es tu tipo de burnout?' },
+            pt: { name: 'Teste de Burnout', shortDesc: 'Qual \u00E9 o seu tipo de burnout?' },
+            id: { name: 'Tes Burnout', shortDesc: 'Apa tipe burnout Anda?' },
+            tr: { name: 'T\u00FCkenmi\u015Flik Testi', shortDesc: 'T\u00FCkenmi\u015Flik tipiniz ne?' },
+            de: { name: 'Burnout-Test', shortDesc: 'Welcher Burnout-Typ bist du?' },
+            fr: { name: 'Test de Burnout', shortDesc: 'Quel est votre type de burnout ?' }
+        }
     }
 ];
 
