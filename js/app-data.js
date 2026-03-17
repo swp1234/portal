@@ -2674,6 +2674,33 @@ const APP_DATA = [
             de: { name: 'Stressreaktion-Test', shortDesc: 'Kampf, Flucht, Erstarren oder Anpassen?' },
             fr: { name: 'Test de R\u00E9ponse au Stress', shortDesc: 'Combat, fuite, gel ou soumission ?' }
         }
+    },
+    {
+        id: 'anxiety-type',
+        name: '불안 유형 테스트',
+        shortDesc: '당신의 불안 유형은?',
+        description: '8개 질문으로 당신의 불안 유형을 알아보세요. 과잉사고, 완벽주의, 사회불안, 신체불안, 미래불안, 통제불안 중 나는?',
+        icon: '\uD83C\uDF00',
+        color: '#10b981',
+        category: 'test',
+        tags: ['불안', '심리', 'anxiety', 'anxiety type', 'worry', 'mental health', 'psychology test'],
+        url: 'https://dopabrain.com/anxiety-type/',
+        isNew: true,
+        isPopular: false,
+        popularity: 5,
+        i18n: {
+            en: { name: 'Anxiety Type Test', shortDesc: 'What Kind of Worrier Are You?' },
+            zh: { name: '\u7126\u8651\u7C7B\u578B\u6D4B\u8BD5', shortDesc: '\u4F60\u662F\u54EA\u79CD\u7C7B\u578B\u7684\u7126\u8651\u8005\uFF1F' },
+            hi: { name: '\u091A\u093F\u0902\u0924\u093E \u092A\u094D\u0930\u0915\u093E\u0930 \u091F\u0947\u0938\u094D\u091F', shortDesc: '\u0906\u092A \u0915\u093F\u0938 \u092A\u094D\u0930\u0915\u093E\u0930 \u0915\u0947 \u091A\u093F\u0902\u0924\u093E\u0915\u0930\u094D\u0924\u093E \u0939\u0948\u0902?' },
+            ru: { name: '\u0422\u0435\u0441\u0442 \u0442\u0438\u043F\u0430 \u0442\u0440\u0435\u0432\u043E\u0436\u043D\u043E\u0441\u0442\u0438', shortDesc: '\u041A\u0430\u043A\u043E\u0439 \u0443 \u0432\u0430\u0441 \u0442\u0438\u043F \u0442\u0440\u0435\u0432\u043E\u0436\u043D\u043E\u0441\u0442\u0438?' },
+            ja: { name: '\u4E0D\u5B89\u30BF\u30A4\u30D7\u8A3A\u65AD', shortDesc: '\u3042\u306A\u305F\u306F\u3069\u3093\u306A\u5FC3\u914D\u6027\uFF1F' },
+            es: { name: 'Test de Tipo de Ansiedad', shortDesc: '\u00BFQu\u00E9 tipo de ansioso eres?' },
+            pt: { name: 'Teste de Tipo de Ansiedade', shortDesc: 'Que tipo de ansioso voc\u00EA \u00E9?' },
+            id: { name: 'Tes Tipe Kecemasan', shortDesc: 'Apa tipe kecemasan Anda?' },
+            tr: { name: 'Kayg\u0131 Tipi Testi', shortDesc: 'Ne t\u00FCr bir endi\u015Felisiniz?' },
+            de: { name: 'Angsttyp-Test', shortDesc: 'Welcher Angsttyp sind Sie?' },
+            fr: { name: "Test de Type d'Anxi\u00E9t\u00E9", shortDesc: 'Quel type d\'anxieux \u00EAtes-vous ?' }
+        }
     }
 ];
 
