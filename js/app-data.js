@@ -2647,6 +2647,33 @@ const APP_DATA = [
             de: { name: 'Burnout-Test', shortDesc: 'Welcher Burnout-Typ bist du?' },
             fr: { name: 'Test de Burnout', shortDesc: 'Quel est votre type de burnout ?' }
         }
+    },
+    {
+        id: 'stress-response',
+        name: '스트레스 반응 테스트',
+        shortDesc: '당신의 스트레스 반응 유형은?',
+        description: '8개 질문으로 당신의 스트레스 반응 유형을 알아보세요. Fight, Flight, Freeze, Fawn 중 나는?',
+        icon: '\u26A1',
+        color: '#6366f1',
+        category: 'test',
+        tags: ['스트레스', '반응', '심리', 'fight', 'flight', 'freeze', 'fawn', 'stress response', 'trauma'],
+        url: 'https://dopabrain.com/stress-response/',
+        isNew: true,
+        isPopular: false,
+        popularity: 5,
+        i18n: {
+            en: { name: 'Stress Response Test', shortDesc: 'Fight, Flight, Freeze, or Fawn?' },
+            zh: { name: '\u538B\u529B\u53CD\u5E94\u6D4B\u8BD5', shortDesc: '\u4F60\u7684\u538B\u529B\u53CD\u5E94\u7C7B\u578B\u662F\u4EC0\u4E48\uFF1F' },
+            hi: { name: '\u0924\u0928\u093E\u0935 \u092A\u094D\u0930\u0924\u093F\u0915\u094D\u0930\u093F\u092F\u093E \u091F\u0947\u0938\u094D\u091F', shortDesc: '\u0906\u092A\u0915\u0940 \u0924\u0928\u093E\u0935 \u092A\u094D\u0930\u0924\u093F\u0915\u094D\u0930\u093F\u092F\u093E \u0915\u094D\u092F\u093E \u0939\u0948?' },
+            ru: { name: '\u0422\u0435\u0441\u0442 \u0441\u0442\u0440\u0435\u0441\u0441\u043E\u0432\u043E\u0439 \u0440\u0435\u0430\u043A\u0446\u0438\u0438', shortDesc: '\u041A\u0430\u043A\u043E\u0439 \u0443 \u0432\u0430\u0441 \u0442\u0438\u043F \u0441\u0442\u0440\u0435\u0441\u0441\u043E\u0432\u043E\u0439 \u0440\u0435\u0430\u043A\u0446\u0438\u0438?' },
+            ja: { name: '\u30B9\u30C8\u30EC\u30B9\u53CD\u5FDC\u30C6\u30B9\u30C8', shortDesc: '\u3042\u306A\u305F\u306E\u30B9\u30C8\u30EC\u30B9\u53CD\u5FDC\u30BF\u30A4\u30D7\u306F\uFF1F' },
+            es: { name: 'Test de Respuesta al Estr\u00E9s', shortDesc: '\u00BFLucha, huida, bloqueo o complacencia?' },
+            pt: { name: 'Teste de Resposta ao Estresse', shortDesc: 'Luta, fuga, congela ou agrada?' },
+            id: { name: 'Tes Respons Stres', shortDesc: 'Apa tipe respons stres Anda?' },
+            tr: { name: 'Stres Tepkisi Testi', shortDesc: 'Stres tepki tipiniz ne?' },
+            de: { name: 'Stressreaktion-Test', shortDesc: 'Kampf, Flucht, Erstarren oder Anpassen?' },
+            fr: { name: 'Test de R\u00E9ponse au Stress', shortDesc: 'Combat, fuite, gel ou soumission ?' }
+        }
     }
 ];
 
