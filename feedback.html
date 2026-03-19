@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - DopaBrain</title>
+    <meta name="description" content="Share your feedback, suggestions, or bug reports with DopaBrain. Help us improve our free games, tests, and tools.">
+    <link rel="canonical" href="https://dopabrain.com/portal/feedback.html">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/svg+xml" href="icon-192.svg">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #07071a;
+            color: #f0f0f5;
+            min-height: 100vh;
+            padding: 24px 16px;
+            line-height: 1.6;
+        }
+        .wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 24px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-link:hover { text-decoration: underline; }
+        h1 {
+            font-size: 26px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #667eea, #00e5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            color: #a0a0b8;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #c0c0d8;
+            margin-bottom: 6px;
+        }
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .category-btn {
+            background: rgba(102, 126, 234, 0.08);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 8px;
+            padding: 12px 8px;
+            color: #a0a0b8;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .category-btn:hover {
+            border-color: rgba(102, 126, 234, 0.5);
+            color: #f0f0f5;
+        }
+        .category-btn.active {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+            color: #667eea;
+            font-weight: 600;
+        }
+        .category-icon {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 8px;
+            padding: 12px 14px;
+            color: #f0f0f5;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+            -webkit-appearance: none;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+        }
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+        ::placeholder { color: #555; }
+        select {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+        }
+        select option {
+            background: #12122a;
+            color: #f0f0f5;
+        }
+        .optional {
+            color: #666;
+            font-weight: 400;
+            font-size: 11px;
+            margin-left: 4px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+            min-height: 44px;
+        }
+        .submit-btn:hover { opacity: 0.9; }
+        .submit-btn:active { transform: scale(0.98); }
+        .submit-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .alt-contact {
+            margin-top: 32px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(102, 126, 234, 0.1);
+            text-align: center;
+        }
+        .alt-contact p {
+            font-size: 13px;
+            color: #666;
+        }
+        .alt-contact a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .alt-contact a:hover { text-decoration: underline; }
+        .success-msg {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .success-msg .check {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 28px;
+        }
+        .success-msg h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        .success-msg p {
+            color: #a0a0b8;
+            font-size: 14px;
+        }
+        .success-msg .home-link {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 10px 24px;
+            background: rgba(102, 126, 234, 0.15);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 8px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .char-count {
+            text-align: right;
+            font-size: 11px;
+            color: #555;
+            margin-top: 4px;
+        }
+        @media (max-width: 400px) {
+            .category-grid { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+            .category-btn { padding: 10px 6px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <a href="index.html" class="back-link" id="back-link">&#8592; DopaBrain</a>
+
+        <h1 id="page-title">Feedback & Suggestions</h1>
+        <p class="subtitle" id="page-subtitle">Help us make DopaBrain better. All feedback is welcome!</p>
+
+        <form id="feedback-form">
+            <div class="form-group">
+                <label id="label-category">Category</label>
+                <div class="category-grid" id="category-grid">
+                    <button type="button" class="category-btn active" data-cat="suggestion">
+                        <span class="category-icon">&#128161;</span>
+                        <span data-cat-label="suggestion">Suggestion</span>
+                    </button>
+                    <button type="button" class="category-btn" data-cat="bug">
+                        <span class="category-icon">&#128027;</span>
+                        <span data-cat-label="bug">Bug Report</span>
+                    </button>
+                    <button type="button" class="category-btn" data-cat="other">
+                        <span class="category-icon">&#128172;</span>
+                        <span data-cat-label="other">Other</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="app-select" id="label-app">Related App <span class="optional" id="opt-text">(optional)</span></label>
+                <select id="app-select">
+                    <option value="">-- Select an app --</option>
+                    <option value="portal">Portal (Homepage)</option>
+                    <option value="eq-test">EQ Test</option>
+                    <option value="anxiety-type">Anxiety Type</option>
+                    <option value="burnout-test">Burnout Test</option>
+                    <option value="stress-response">Stress Response</option>
+                    <option value="dopamine-type">Dopamine Type</option>
+                    <option value="hsp-test">HSP Test</option>
+                    <option value="mbti-compatibility">MBTI Compatibility</option>
+                    <option value="color-personality">Color Personality</option>
+                    <option value="brain-type">Brain Type</option>
+                    <option value="games">Games</option>
+                    <option value="tools">Tools</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="message" id="label-message">Your Feedback</label>
+                <textarea id="message" placeholder="Tell us what you think..." maxlength="2000" required></textarea>
+                <div class="char-count"><span id="char-current">0</span> / 2,000</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" id="label-email">Email <span class="optional">(optional)</span></label>
+                <input type="email" id="email" placeholder="your@email.com">
+            </div>
+
+            <button type="submit" class="submit-btn" id="submit-btn">Send Feedback</button>
+        </form>
+
+        <div class="success-msg" id="success-msg">
+            <div class="check">&#10003;</div>
+            <h2 id="success-title">Thank you!</h2>
+            <p id="success-text">Your feedback has been sent. We'll review it carefully.</p>
+            <a href="index.html" class="home-link" id="success-home">Back to DopaBrain</a>
+        </div>
+
+        <div class="alt-contact">
+            <p id="alt-text">You can also reach us at <a href="mailto:woodori1234@gmail.com">woodori1234@gmail.com</a></p>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        var STRINGS = {
+            ko: { title:'건의사항 & 피드백', subtitle:'DopaBrain을 더 좋게 만들어 주세요. 모든 의견을 환영합니다!', back:'&#8592; DopaBrain', category:'카테고리', suggestion:'건의사항', bug:'버그 신고', other:'기타', app:'관련 앱', optional:'(선택)', select:'-- 앱 선택 --', message:'내용', placeholder:'의견을 자유롭게 적어주세요...', email:'이메일', send:'보내기', thankTitle:'감사합니다!', thankText:'피드백이 전송되었습니다. 소중히 검토하겠습니다.', home:'홈으로 돌아가기', alt:'이메일로도 연락하실 수 있습니다: ' },
+            en: { title:'Feedback & Suggestions', subtitle:'Help us make DopaBrain better. All feedback is welcome!', back:'&#8592; DopaBrain', category:'Category', suggestion:'Suggestion', bug:'Bug Report', other:'Other', app:'Related App', optional:'(optional)', select:'-- Select an app --', message:'Your Feedback', placeholder:'Tell us what you think...', email:'Email', send:'Send Feedback', thankTitle:'Thank you!', thankText:'Your feedback has been sent. We\'ll review it carefully.', home:'Back to DopaBrain', alt:'You can also reach us at ' },
+            ja: { title:'ご意見・ご要望', subtitle:'DopaBrainをより良くするために、ご意見をお聞かせください！', back:'&#8592; DopaBrain', category:'カテゴリー', suggestion:'提案', bug:'バグ報告', other:'その他', app:'関連アプリ', optional:'(任意)', select:'-- アプリを選択 --', message:'内容', placeholder:'ご意見をお聞かせください...', email:'メール', send:'送信する', thankTitle:'ありがとうございます！', thankText:'フィードバックが送信されました。大切に確認いたします。', home:'ホームに戻る', alt:'メールでもご連絡いただけます: ' },
+            zh: { title:'反馈与建议', subtitle:'帮助我们改善DopaBrain，欢迎所有反馈！', back:'&#8592; DopaBrain', category:'类别', suggestion:'建议', bug:'错误报告', other:'其他', app:'相关应用', optional:'(可选)', select:'-- 选择应用 --', message:'您的反馈', placeholder:'请告诉我们您的想法...', email:'邮箱', send:'提交反馈', thankTitle:'谢谢！', thankText:'您的反馈已发送，我们会认真审阅。', home:'返回首页', alt:'您也可以通过邮件联系我们: ' },
+            es: { title:'Comentarios y Sugerencias', subtitle:'Ayudanos a mejorar DopaBrain. Todos los comentarios son bienvenidos!', back:'&#8592; DopaBrain', category:'Categoria', suggestion:'Sugerencia', bug:'Reporte de error', other:'Otro', app:'App relacionada', optional:'(opcional)', select:'-- Seleccionar app --', message:'Tu opinion', placeholder:'Cuentanos que piensas...', email:'Correo', send:'Enviar', thankTitle:'Gracias!', thankText:'Tu comentario ha sido enviado. Lo revisaremos con cuidado.', home:'Volver al inicio', alt:'Tambien puedes contactarnos en ' },
+            pt: { title:'Feedback e Sugestoes', subtitle:'Ajude-nos a melhorar o DopaBrain. Todo feedback e bem-vindo!', back:'&#8592; DopaBrain', category:'Categoria', suggestion:'Sugestao', bug:'Relatar bug', other:'Outro', app:'App relacionado', optional:'(opcional)', select:'-- Selecionar app --', message:'Seu feedback', placeholder:'Conte-nos o que voce pensa...', email:'Email', send:'Enviar feedback', thankTitle:'Obrigado!', thankText:'Seu feedback foi enviado. Vamos analisa-lo com cuidado.', home:'Voltar ao inicio', alt:'Voce tambem pode nos contatar em ' },
+            fr: { title:'Commentaires et Suggestions', subtitle:'Aidez-nous a ameliorer DopaBrain. Tous les avis sont les bienvenus!', back:'&#8592; DopaBrain', category:'Categorie', suggestion:'Suggestion', bug:'Signaler un bug', other:'Autre', app:'App concernee', optional:'(facultatif)', select:'-- Choisir une app --', message:'Votre avis', placeholder:'Dites-nous ce que vous en pensez...', email:'Email', send:'Envoyer', thankTitle:'Merci!', thankText:'Votre avis a ete envoye. Nous l\'examinerons attentivement.', home:'Retour a l\'accueil', alt:'Vous pouvez aussi nous contacter a ' },
+            de: { title:'Feedback & Vorschlage', subtitle:'Helfen Sie uns, DopaBrain zu verbessern. Jedes Feedback ist willkommen!', back:'&#8592; DopaBrain', category:'Kategorie', suggestion:'Vorschlag', bug:'Fehlerbericht', other:'Sonstiges', app:'Betreffende App', optional:'(optional)', select:'-- App wahlen --', message:'Ihr Feedback', placeholder:'Teilen Sie uns Ihre Meinung mit...', email:'E-Mail', send:'Absenden', thankTitle:'Vielen Dank!', thankText:'Ihr Feedback wurde gesendet. Wir werden es sorgfaltig prufen.', home:'Zuruck zur Startseite', alt:'Sie konnen uns auch per E-Mail erreichen: ' },
+            hi: { title:'प्रतिक्रिया और सुझाव', subtitle:'DopaBrain को बेहतर बनाने में मदद करें। सभी प्रतिक्रियाओं का स्वागत है!', back:'&#8592; DopaBrain', category:'श्रेणी', suggestion:'सुझाव', bug:'बग रिपोर्ट', other:'अन्य', app:'संबंधित ऐप', optional:'(वैकल्पिक)', select:'-- ऐप चुनें --', message:'आपकी प्रतिक्रिया', placeholder:'अपनी राय बताएं...', email:'ईमेल', send:'भेजें', thankTitle:'धन्यवाद!', thankText:'आपकी प्रतिक्रिया भेज दी गई है। हम इसकी सावधानीपूर्वक समीक्षा करेंगे।', home:'होम पर वापस जाएं', alt:'आप हमसे ईमेल पर भी संपर्क कर सकते हैं: ' },
+            ru: { title:'Отзывы и предложения', subtitle:'Помогите нам сделать DopaBrain лучше. Все отзывы приветствуются!', back:'&#8592; DopaBrain', category:'Категория', suggestion:'Предложение', bug:'Сообщить об ошибке', other:'Другое', app:'Связанное приложение', optional:'(необязательно)', select:'-- Выбрать приложение --', message:'Ваш отзыв', placeholder:'Расскажите нам, что вы думаете...', email:'Email', send:'Отправить', thankTitle:'Спасибо!', thankText:'Ваш отзыв отправлен. Мы внимательно его рассмотрим.', home:'Вернуться на главную', alt:'Вы также можете связаться с нами по адресу ' },
+            id: { title:'Masukan & Saran', subtitle:'Bantu kami menjadikan DopaBrain lebih baik. Semua masukan diterima!', back:'&#8592; DopaBrain', category:'Kategori', suggestion:'Saran', bug:'Laporan bug', other:'Lainnya', app:'Aplikasi terkait', optional:'(opsional)', select:'-- Pilih aplikasi --', message:'Masukan Anda', placeholder:'Beritahu kami pendapat Anda...', email:'Email', send:'Kirim', thankTitle:'Terima kasih!', thankText:'Masukan Anda telah terkirim. Kami akan meninjau dengan cermat.', home:'Kembali ke beranda', alt:'Anda juga dapat menghubungi kami di ' },
+            tr: { title:'Geri Bildirim ve Oneriler', subtitle:'DopaBrain\'i daha iyi yapmamiza yardim edin. Tum geri bildirimler memnuniyetle karsilanir!', back:'&#8592; DopaBrain', category:'Kategori', suggestion:'Oneri', bug:'Hata bildirimi', other:'Diger', app:'Ilgili uygulama', optional:'(istege bagli)', select:'-- Uygulama secin --', message:'Geri bildiriminiz', placeholder:'Bize ne dusundugunuzu soyleyiniz...', email:'E-posta', send:'Gonder', thankTitle:'Tesekkurler!', thankText:'Geri bildiriminiz gonderildi. Dikkatlice inceleyecegiz.', home:'Ana sayfaya don', alt:'Bize e-posta ile de ulasabilirsiniz: ' }
+        };
+
+        // Detect language
+        var params = new URLSearchParams(window.location.search);
+        var lang = params.get('lang') || localStorage.getItem('dopabrain-lang') || navigator.language.slice(0, 2);
+        if (!STRINGS[lang]) lang = 'en';
+        var s = STRINGS[lang];
+
+        // Apply translations
+        document.getElementById('page-title').textContent = s.title;
+        document.getElementById('page-subtitle').textContent = s.subtitle;
+        document.getElementById('back-link').innerHTML = s.back;
+        document.getElementById('label-category').textContent = s.category;
+        document.querySelector('[data-cat-label="suggestion"]').textContent = s.suggestion;
+        document.querySelector('[data-cat-label="bug"]').textContent = s.bug;
+        document.querySelector('[data-cat-label="other"]').textContent = s.other;
+        document.getElementById('label-app').innerHTML = s.app + ' <span class="optional">' + s.optional + '</span>';
+        document.getElementById('app-select').querySelector('option[value=""]').textContent = s.select;
+        document.getElementById('label-message').textContent = s.message;
+        document.getElementById('message').placeholder = s.placeholder;
+        document.getElementById('label-email').innerHTML = s.email + ' <span class="optional">' + s.optional + '</span>';
+        document.getElementById('submit-btn').textContent = s.send;
+        document.getElementById('success-title').textContent = s.thankTitle;
+        document.getElementById('success-text').textContent = s.thankText;
+        document.getElementById('success-home').textContent = s.home;
+        document.getElementById('alt-text').innerHTML = s.alt + '<a href="mailto:woodori1234@gmail.com">woodori1234@gmail.com</a>';
+        document.title = s.title + ' - DopaBrain';
+
+        // Category selection
+        var selectedCat = 'suggestion';
+        document.getElementById('category-grid').addEventListener('click', function(e) {
+            var btn = e.target.closest('.category-btn');
+            if (!btn) return;
+            document.querySelectorAll('.category-btn').forEach(function(b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            selectedCat = btn.dataset.cat;
+        });
+
+        // Character count
+        var msg = document.getElementById('message');
+        msg.addEventListener('input', function() {
+            document.getElementById('char-current').textContent = msg.value.length;
+        });
+
+        // Form submit
+        document.getElementById('feedback-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var catLabels = { suggestion: s.suggestion, bug: s.bug, other: s.other };
+            var app = document.getElementById('app-select').value;
+            var body = msg.value.trim();
+            var email = document.getElementById('email').value.trim();
+
+            if (!body) return;
+
+            var subject = '[DopaBrain ' + catLabels[selectedCat] + ']' + (app ? ' ' + app : '');
+            var mailBody = body + (email ? '\n\n---\nReply to: ' + email : '') + (app ? '\nApp: ' + app : '');
+
+            // Open mailto
+            var mailto = 'mailto:woodori1234@gmail.com'
+                + '?subject=' + encodeURIComponent(subject)
+                + '&body=' + encodeURIComponent(mailBody);
+            window.location.href = mailto;
+
+            // Show success (after slight delay for mailto to open)
+            setTimeout(function() {
+                document.getElementById('feedback-form').style.display = 'none';
+                document.getElementById('success-msg').style.display = 'block';
+            }, 500);
+        });
+    })();
+    </script>
+</body>
+</html>
