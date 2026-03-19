@@ -2701,6 +2701,33 @@ const APP_DATA = [
             de: { name: 'Angsttyp-Test', shortDesc: 'Welcher Angsttyp sind Sie?' },
             fr: { name: "Test de Type d'Anxi\u00E9t\u00E9", shortDesc: 'Quel type d\'anxieux \u00EAtes-vous ?' }
         }
+    },
+    {
+        id: 'toxic-trait-test',
+        name: '독성 특성 테스트',
+        shortDesc: '당신의 독성 특성은?',
+        description: '8개 일상 시나리오로 당신의 독성 특성을 알아보세요. 유령, 과약속러, 수동공격자, 메인캐릭터, 취소왕, 비교충 중 나는?',
+        icon: '\uD83D\uDC80',
+        color: '#e11d48',
+        category: 'test',
+        tags: ['toxic trait', 'personality', 'quiz', 'fun', 'self-awareness', 'viral', '독성', '성격'],
+        url: 'https://dopabrain.com/toxic-trait-test/',
+        isNew: true,
+        isPopular: false,
+        popularity: 5,
+        i18n: {
+            en: { name: 'Toxic Trait Test', shortDesc: "What's Your Toxic Trait?" },
+            zh: { name: '毒性特质测试', shortDesc: '你的毒性特质是什么？' },
+            hi: { name: 'टॉक्सिक ट्रेट टेस्ट', shortDesc: 'आपकी टॉक्सिक आदत क्या है?' },
+            ru: { name: 'Тест токсичных черт', shortDesc: 'Какая у вас токсичная черта?' },
+            ja: { name: '毒性特性テスト', shortDesc: 'あなたの毒性特性は？' },
+            es: { name: 'Test de Rasgo Tóxico', shortDesc: '¿Cuál es tu rasgo tóxico?' },
+            pt: { name: 'Teste de Traço Tóxico', shortDesc: 'Qual é seu traço tóxico?' },
+            id: { name: 'Tes Sifat Toxic', shortDesc: 'Apa sifat toxic Anda?' },
+            tr: { name: 'Toksik Özellik Testi', shortDesc: 'Toksik özelliğiniz ne?' },
+            de: { name: 'Toxic-Trait-Test', shortDesc: 'Was ist dein toxisches Merkmal?' },
+            fr: { name: 'Test de Trait Toxique', shortDesc: 'Quel est votre trait toxique ?' }
+        }
     }
 ];
 
