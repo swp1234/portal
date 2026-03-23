@@ -2755,6 +2755,33 @@ const APP_DATA = [
             de: { name: 'Schattenarbeit-Quiz', shortDesc: 'Triff dein verborgenes Ich' },
             fr: { name: "Quiz de Travail de l'Ombre", shortDesc: 'Rencontrez votre moi caché' }
         }
+    },
+    {
+        id: 'inner-child-test',
+        name: '내면 아이 테스트',
+        shortDesc: '어린 시절의 상처를 치유하세요',
+        description: '어떤 어린 시절의 상처가 당신의 성인 삶을 형성하고 있을까요? 8문항으로 6가지 내면 아이 원형과 치유 확언을 발견하세요.',
+        icon: '🧸',
+        color: '#e8913a',
+        category: 'test',
+        tags: ['inner child', 'childhood wound', 'healing', 'reparenting', 'psychology', 'self-discovery', '내면 아이', '심리'],
+        url: 'https://dopabrain.com/inner-child-test/',
+        isNew: true,
+        isPopular: true,
+        popularity: 65,
+        i18n: {
+            en: { name: 'Inner Child Test', shortDesc: 'Heal Your Childhood Wounds' },
+            zh: { name: '内在小孩测试', shortDesc: '治愈你的童年创伤' },
+            hi: { name: 'इनर चाइल्ड टेस्ट', shortDesc: 'अपने बचपन के घावों को ठीक करें' },
+            ru: { name: 'Тест внутреннего ребёнка', shortDesc: 'Исцелите детские раны' },
+            ja: { name: 'インナーチャイルドテスト', shortDesc: '子ども時代の傷を癒す' },
+            es: { name: 'Test del Niño Interior', shortDesc: 'Sana tus heridas de infancia' },
+            pt: { name: 'Teste da Criança Interior', shortDesc: 'Cure suas feridas de infância' },
+            id: { name: 'Tes Anak Dalam', shortDesc: 'Sembuhkan luka masa kecil Anda' },
+            tr: { name: 'İç Çocuk Testi', shortDesc: 'Çocukluk yaralarınızı iyileştirin' },
+            de: { name: 'Inneres-Kind-Test', shortDesc: 'Heile deine Kindheitswunden' },
+            fr: { name: "Test de l'Enfant Intérieur", shortDesc: 'Guérissez vos blessures d\'enfance' }
+        }
     }
 ];
 
