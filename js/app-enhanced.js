@@ -247,8 +247,8 @@
         appGrid.classList.remove('hidden');
         emptyState.classList.add('hidden');
 
-        // Featured: idle-clicker, mbti-love, emotion-temp
-        const featuredIds = ['idle-clicker', 'mbti-love', 'emotion-temp'];
+        // Featured: data-driven top apps (updated 2026-03-23)
+        const featuredIds = ['eq-test', 'stress-response', 'burnout-test'];
         const featured = apps.filter(app => featuredIds.includes(app.id));
         const showFeaturedSection = currentCategory === 'all' && featured.length > 0 && !searchQuery.trim();
 

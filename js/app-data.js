@@ -364,7 +364,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/emotion-temp/',
         isNew: true,
         isPopular: true,
-        popularity: 8,
+        popularity: 70,
         i18n: {
             en: { name: 'Emotion Temperature', shortDesc: "What's your emotion temp?" },
             zh: { name: '情绪温度计测试', shortDesc: '你的情绪温度是几度？' },
@@ -418,7 +418,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/hsp-test/',
         isNew: true,
         isPopular: true,
-        popularity: 8,
+        popularity: 75,
         i18n: {
             en: { name: 'HSP Sensitivity Test', shortDesc: 'Are you highly sensitive?' },
             zh: { name: 'HSP 敏感度测试', shortDesc: '你是高敏感人群吗？' },
@@ -472,7 +472,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/stack-tower/',
         isNew: true,
         isPopular: true,
-        popularity: 7,
+        popularity: 55,
         i18n: {
             en: { name: 'Stack Tower', shortDesc: 'Timing block stacking game' },
             zh: { name: 'Stack Tower', shortDesc: '计时堆叠方块游戏' },
@@ -526,7 +526,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/emoji-merge/',
         isNew: true,
         isPopular: true,
-        popularity: 7,
+        popularity: 55,
         i18n: {
             en: { name: 'Emoji Merge', shortDesc: 'Emoji evolution puzzle game' },
             zh: { name: 'Emoji 合并', shortDesc: 'Emoji 进化益智游戏' },
@@ -607,7 +607,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/idle-clicker/',
         isNew: true,
         isPopular: true,
-        popularity: 7,
+        popularity: 60,
         i18n: {
             en: { name: 'Dungeon Clicker', shortDesc: 'Idle RPG dungeon game' },
             zh: { name: '地牢点击者', shortDesc: '放置型RPG地牢游戏' },
@@ -2308,8 +2308,8 @@ const APP_DATA = [
         tags: ['EQ', 'emotional intelligence', '감성지능', '공감', 'empathy', '감정'],
         url: 'https://dopabrain.com/eq-test/',
         isNew: true,
-        isPopular: false,
-        popularity: 0,
+        isPopular: true,
+        popularity: 100,
         i18n: {
             en: { name: 'EQ Emotion Reading Challenge', shortDesc: 'Test your emotional intelligence' },
             zh: { name: 'EQ情商测试', shortDesc: '测试你的情商' },
@@ -2552,7 +2552,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/overthinker-test/',
         isNew: true,
         isPopular: false,
-        popularity: 0,
+        popularity: 10,
         i18n: {
             en: { name: 'Overthinker Test', shortDesc: 'How much do you overthink?' },
             zh: { name: '过度思考测试', shortDesc: '你有多爱想太多？' },
@@ -2578,8 +2578,8 @@ const APP_DATA = [
         tags: ['레드플래그', '연애', '심리', '관계', 'red flag', 'dating', 'relationship', 'psychology', 'test'],
         url: 'https://dopabrain.com/red-flag-test/',
         isNew: true,
-        isPopular: false,
-        popularity: 0,
+        isPopular: true,
+        popularity: 75,
         i18n: {
             en: { name: 'Red Flag Test', shortDesc: 'What are your dating red flags?' },
             zh: { name: '红旗测试', shortDesc: '你的恋爱红旗是什么？' },
@@ -2605,8 +2605,8 @@ const APP_DATA = [
         tags: ['도파민', '뇌과학', '성격', '테스트', 'dopamine', 'brain', 'personality', 'quiz'],
         url: 'https://dopabrain.com/dopamine-type/',
         isNew: true,
-        isPopular: false,
-        popularity: 5,
+        isPopular: true,
+        popularity: 65,
         i18n: {
             en: { name: 'Dopamine Type Test', shortDesc: 'Brain reward system analysis' },
             zh: { name: '\u591A\u5DF4\u80FA\u7C7B\u578B\u6D4B\u8BD5', shortDesc: '\u5927\u8111\u5956\u52B1\u7CFB\u7EDF\u5206\u6790' },
@@ -2632,8 +2632,8 @@ const APP_DATA = [
         tags: ['번아웃', '스트레스', '직장', '정신건강', 'burnout', 'stress', 'work', 'mental health'],
         url: 'https://dopabrain.com/burnout-test/',
         isNew: true,
-        isPopular: false,
-        popularity: 5,
+        isPopular: true,
+        popularity: 80,
         i18n: {
             en: { name: 'Burnout Test', shortDesc: "What's your burnout type?" },
             zh: { name: '\u5012\u5C3D\u6D4B\u8BD5', shortDesc: '\u4F60\u7684\u5012\u5C3D\u7C7B\u578B\u662F\u4EC0\u4E48\uFF1F' },
@@ -2659,8 +2659,8 @@ const APP_DATA = [
         tags: ['스트레스', '반응', '심리', 'fight', 'flight', 'freeze', 'fawn', 'stress response', 'trauma'],
         url: 'https://dopabrain.com/stress-response/',
         isNew: true,
-        isPopular: false,
-        popularity: 5,
+        isPopular: true,
+        popularity: 85,
         i18n: {
             en: { name: 'Stress Response Test', shortDesc: 'Fight, Flight, Freeze, or Fawn?' },
             zh: { name: '\u538B\u529B\u53CD\u5E94\u6D4B\u8BD5', shortDesc: '\u4F60\u7684\u538B\u529B\u53CD\u5E94\u7C7B\u578B\u662F\u4EC0\u4E48\uFF1F' },
@@ -2686,8 +2686,8 @@ const APP_DATA = [
         tags: ['불안', '심리', 'anxiety', 'anxiety type', 'worry', 'mental health', 'psychology test'],
         url: 'https://dopabrain.com/anxiety-type/',
         isNew: true,
-        isPopular: false,
-        popularity: 5,
+        isPopular: true,
+        popularity: 80,
         i18n: {
             en: { name: 'Anxiety Type Test', shortDesc: 'What Kind of Worrier Are You?' },
             zh: { name: '\u7126\u8651\u7C7B\u578B\u6D4B\u8BD5', shortDesc: '\u4F60\u662F\u54EA\u79CD\u7C7B\u578B\u7684\u7126\u8651\u8005\uFF1F' },
@@ -2714,7 +2714,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/toxic-trait-test/',
         isNew: true,
         isPopular: false,
-        popularity: 5,
+        popularity: 10,
         i18n: {
             en: { name: 'Toxic Trait Test', shortDesc: "What's Your Toxic Trait?" },
             zh: { name: '毒性特质测试', shortDesc: '你的毒性特质是什么？' },
