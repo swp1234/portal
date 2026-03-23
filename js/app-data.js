@@ -2728,6 +2728,33 @@ const APP_DATA = [
             de: { name: 'Toxic-Trait-Test', shortDesc: 'Was ist dein toxisches Merkmal?' },
             fr: { name: 'Test de Trait Toxique', shortDesc: 'Quel est votre trait toxique ?' }
         }
+    },
+    {
+        id: 'shadow-work',
+        name: '섀도우 워크 퀴즈',
+        shortDesc: '숨겨진 나를 만나다',
+        description: '융 심리학 기반 8문항으로 당신의 그림자 아키타입을 발견하세요. 피플플리저, 완벽주의자, 컨트롤러, 회피자, 반항아, 돌봄형 중 나는?',
+        icon: '\uD83C\uDF11',
+        color: '#7c3aed',
+        category: 'test',
+        tags: ['shadow work', 'Jung', 'psychology', 'self-discovery', 'archetype', 'quiz', '그림자', '심리'],
+        url: 'https://dopabrain.com/shadow-work/',
+        isNew: true,
+        isPopular: true,
+        popularity: 65,
+        i18n: {
+            en: { name: 'Shadow Work Quiz', shortDesc: 'Meet Your Hidden Self' },
+            zh: { name: '阴影工作测验', shortDesc: '遇见你隐藏的自我' },
+            hi: { name: 'शैडो वर्क क्विज़', shortDesc: 'अपने छिपे हुए स्व से मिलें' },
+            ru: { name: 'Тест теневой работы', shortDesc: 'Встретьте свое скрытое я' },
+            ja: { name: 'シャドウワーククイズ', shortDesc: '隠れた自分に出会う' },
+            es: { name: 'Quiz de Trabajo de Sombra', shortDesc: 'Conoce tu yo oculto' },
+            pt: { name: 'Quiz de Trabalho de Sombra', shortDesc: 'Conheça seu eu oculto' },
+            id: { name: 'Kuis Shadow Work', shortDesc: 'Temui diri tersembunyi Anda' },
+            tr: { name: 'Gölge Çalışması Testi', shortDesc: 'Gizli benliğinizle tanışın' },
+            de: { name: 'Schattenarbeit-Quiz', shortDesc: 'Triff dein verborgenes Ich' },
+            fr: { name: "Quiz de Travail de l'Ombre", shortDesc: 'Rencontrez votre moi caché' }
+        }
     }
 ];
 
