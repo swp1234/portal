@@ -2282,7 +2282,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/emotion-iceberg/',
         isNew: true,
         isPopular: false,
-        popularity: 0,
+        popularity: 20,
         i18n: {
             en: { name: 'Emotion Iceberg Test', shortDesc: 'Discover your hidden emotions' },
             zh: { name: '情感冰山测试', shortDesc: '发现你隐藏的情感' },
@@ -2390,7 +2390,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/mbti-city/',
         isNew: true,
         isPopular: false,
-        popularity: 0,
+        popularity: 25,
         i18n: {
             en: { name: 'MBTI City Test', shortDesc: 'Which city matches your MBTI?' },
             zh: { name: 'MBTI城市测试', shortDesc: '哪个城市与你的MBTI匹配？' },
