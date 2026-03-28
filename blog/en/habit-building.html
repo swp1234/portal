@@ -768,6 +768,16 @@
             line-height: 1.7;
         }
 
+        .ad-container {
+            margin: 2.5rem 0;
+            padding: 1.25rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            text-align: center;
+            min-height: 250px;
+        }
+
         /* Footer */
         .article-footer {
             text-align: center;
@@ -894,6 +904,7 @@
             .header-nav,
             .toc,
             .cta-section,
+            .ad-container,
             .related-posts,
             .article-footer,
             .progress-bar {
@@ -1348,28 +1359,45 @@
                     <p>If your biggest derailers are stress, doomscrolling, or constant notifications, combine these habit systems with a <a href="https://dopabrain.com/portal/blog/en/digital-detox.html">digital detox plan</a> and a few fast <a href="https://dopabrain.com/portal/blog/en/stress-management-techniques-guide.html">stress regulation tools</a>. Better habits stick faster when your nervous system and environment stop working against you.</p>
                 </section>
 
+                <div class="ad-container" aria-label="Sponsored">
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-3600813755953882"
+                         data-ad-slot="1234567890"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                        try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+                    </script>
+                </div>
+
                 <!-- CTA Section -->
                 <div class="cta-section">
                     <h2>Start Building Your Habits Today</h2>
-                    <p>Choose one identity, one small habit, and one stacking point. Commit to 66 days of consistency. Your future self will thank you.</p>
+                    <p>Choose one identity, one small habit, and one stacking point. Then make it visible with a tracker so consistency stops depending on motivation.</p>
                     <a href="https://dopabrain.com/" class="cta-button">🎯 Begin Your Transformation</a>
+                    <a href="https://dopabrain.com/habit-tracker/" class="cta-button" style="margin-top:12px;">Open Habit Tracker</a>
                 </div>
 
                 <!-- Related Posts -->
                 <section>
                     <h2>Related Articles</h2>
                     <div class="related-posts">
+                        <a href="https://dopabrain.com/habit-tracker/" class="related-card">
+                            <h3>Habit Tracker</h3>
+                            <p>See your streaks, remove guesswork, and make consistency feel visible every day.</p>
+                        </a>
+                        <a href="https://dopabrain.com/pomodoro-timer/" class="related-card">
+                            <h3>Pomodoro Timer</h3>
+                            <p>Use short focus sprints to protect the habit you are trying to build.</p>
+                        </a>
                         <a href="https://dopabrain.com/portal/blog/en/digital-detox.html" class="related-card">
                             <h3>Digital Detox Guide: Reclaim Your Focus in 2026</h3>
                             <p>Break digital addiction habits and reclaim attention for what matters most with a proven 7-day detox plan.</p>
                         </a>
-                        <a href="https://dopabrain.com/portal/blog/en/stress-burnout-test.html" class="related-card">
-                            <h3>Free Burnout & Stress Assessment</h3>
-                            <p>Burnout prevents habit formation. Discover stress recovery strategies and rebuild motivation.</p>
-                        </a>
-                        <a href="https://dopabrain.com/portal/blog/en/sleep-science.html" class="related-card">
-                            <h3>Sleep Chronotypes: Lion, Bear, Wolf, or Dolphin?</h3>
-                            <p>Discover your sleep chronotype and optimize your sleep schedule for peak performance.</p>
+                        <a href="https://dopabrain.com/portal/blog/en/stress-management-techniques-guide.html" class="related-card">
+                            <h3>Stress Management Techniques That Actually Work</h3>
+                            <p>Calmer nervous systems make good habits easier to repeat when life gets noisy.</p>
                         </a>
                         <a href="https://dopabrain.com/portal/blog/en/nervous-system-regulation-techniques.html" class="related-card">
                             <h3>Nervous System Regulation Techniques</h3>
@@ -1397,11 +1425,28 @@
             document.querySelector('.progress-bar').style.width = scrolled + '%';
         });
 
+        function trackContentEvent(eventName, params) {
+            if (window.gtag) {
+                gtag('event', eventName, Object.assign({
+                    content_group: 'focus',
+                    content_slug: 'habit-building',
+                    page_path: '/portal/blog/en/habit-building.html',
+                    transport_type: 'beacon'
+                }, params || {}));
+            }
+        }
+
+        trackContentEvent('content_view', { content_type: 'blog' });
+
         // FAQ Accordion
-        document.querySelectorAll('.faq-question').forEach(question => {
+        document.querySelectorAll('.faq-question').forEach((question, index) => {
             question.addEventListener('click', function() {
                 const item = this.parentElement;
+                const willOpen = !item.classList.contains('active');
                 item.classList.toggle('active');
+                if (willOpen) {
+                    trackContentEvent('content_faq_open', { faq_index: index + 1 });
+                }
             });
         });
 
@@ -1411,22 +1456,32 @@
                 e.preventDefault();
                 const targetId = this.getAttribute('href').substring(1);
                 const targetElement = document.getElementById(targetId);
+                trackContentEvent('content_toc_click', { section_id: targetId });
                 if (targetElement) {
                     targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
 
-        // Analytics event tracking
-        document.querySelectorAll('.cta-button, .related-card').forEach(element => {
+        document.querySelectorAll('.cta-button').forEach(element => {
             element.addEventListener('click', function() {
-                if (window.gtag) {
-                    gtag('event', 'click', {
-                        'event_category': 'engagement',
-                        'event_label': this.textContent,
-                        'value': 1
-                    });
-                }
+                trackContentEvent('content_cta_click', {
+                    target_url: this.getAttribute('href') || '',
+                    target_label: this.textContent.trim()
+                });
+            });
+        });
+
+        document.querySelectorAll('.related-card').forEach(element => {
+            element.addEventListener('click', function() {
+                const section = this.closest('section');
+                const sectionTitle = section ? section.querySelector('h2') : null;
+                const heading = this.querySelector('h3');
+                trackContentEvent('content_related_click', {
+                    target_url: this.getAttribute('href') || '',
+                    target_label: heading ? heading.textContent.trim() : this.textContent.trim(),
+                    section_name: sectionTitle ? sectionTitle.textContent.trim() : ''
+                });
             });
         });
     </script>

@@ -768,6 +768,16 @@
             line-height: 1.7;
         }
 
+        .ad-container {
+            margin: 2.5rem 0;
+            padding: 1.25rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            text-align: center;
+            min-height: 250px;
+        }
+
         /* Footer */
         .article-footer {
             text-align: center;
@@ -894,6 +904,7 @@
             .header-nav,
             .toc,
             .cta-section,
+            .ad-container,
             .related-posts,
             .article-footer,
             .progress-bar {
@@ -1302,11 +1313,24 @@
                     </div>
                 </section>
 
+                <div class="ad-container" aria-label="Sponsored">
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-3600813755953882"
+                         data-ad-slot="1234567890"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                        try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+                    </script>
+                </div>
+
                 <!-- CTA Section -->
                 <div class="cta-section">
                     <h2>Start Your Digital Detox Today</h2>
                     <p>7 days to reset your dopamine, improve your focus, and reclaim your attention. Your future self will thank you for the mental clarity and freedom you'll gain.</p>
                     <a href="https://dopabrain.com/detox-timer/" class="cta-button">📱 Start Detox Timer</a>
+                    <p style="margin-top:12px;font-size:0.95rem;">After day 7, lock the reset in with a <a href="https://dopabrain.com/habit-tracker/" style="color:#fff;text-decoration:underline;">Habit Tracker</a> and short <a href="https://dopabrain.com/pomodoro-timer/" style="color:#fff;text-decoration:underline;">Pomodoro focus blocks</a>.</p>
                 </div>
 
                 <!-- Try These Tools -->
@@ -1316,6 +1340,14 @@
                         <a href="https://dopabrain.com/detox-timer/" class="related-card">
                             <h3>Detox Timer</h3>
                             <p>Track your screen-free time with our beautiful detox countdown timer.</p>
+                        </a>
+                        <a href="https://dopabrain.com/habit-tracker/" class="related-card">
+                            <h3>Habit Tracker</h3>
+                            <p>Turn your 7-day reset into a streak you can actually keep.</p>
+                        </a>
+                        <a href="https://dopabrain.com/pomodoro-timer/" class="related-card">
+                            <h3>Pomodoro Timer</h3>
+                            <p>Use short focus sprints when your brain feels less reactive and more clear.</p>
                         </a>
                         <a href="https://dopabrain.com/stress-check/" class="related-card">
                             <h3>Stress Level Check</h3>
@@ -1332,25 +1364,25 @@
                 <section>
                     <h2>Related Articles</h2>
                     <div class="related-posts">
-                        <a href="https://dopabrain.com/portal/blog/en/stress-burnout-test.html" class="related-card">
-                            <h3>Free Burnout & Stress Assessment</h3>
-                            <p>Screen addiction fuels burnout. Detox + stress management = recovery and balance.</p>
-                        </a>
-                        <a href="https://dopabrain.com/portal/blog/en/sleep-science.html" class="related-card">
-                            <h3>Sleep Chronotypes: Lion, Bear, Wolf, or Dolphin?</h3>
-                            <p>Improve sleep quality by detoxing from screens and aligning with your natural chronotype.</p>
-                        </a>
-                        <a href="https://dopabrain.com/portal/blog/en/am-i-highly-sensitive-person-signs.html" class="related-card">
-                            <h3>15 Signs You're a Highly Sensitive Person</h3>
-                            <p>HSPs are especially affected by digital overload. Learn how sensitivity shapes your detox needs.</p>
-                        </a>
                         <a href="https://dopabrain.com/portal/blog/en/habit-building.html" class="related-card">
                             <h3>How to Build Better Habits</h3>
                             <p>Use habit stacking, friction design, and identity shifts to stay off addictive apps after your detox.</p>
                         </a>
+                        <a href="https://dopabrain.com/portal/blog/en/stress-management-techniques-guide.html" class="related-card">
+                            <h3>Stress Management Techniques That Actually Work</h3>
+                            <p>When screens are your escape hatch, calming the nervous system makes detox easier to sustain.</p>
+                        </a>
+                        <a href="https://dopabrain.com/portal/blog/en/stress-burnout-test.html" class="related-card">
+                            <h3>Free Burnout & Stress Assessment</h3>
+                            <p>Screen addiction fuels burnout. Detox + stress management = recovery and balance.</p>
+                        </a>
                         <a href="https://dopabrain.com/portal/blog/en/nervous-system-regulation-techniques.html" class="related-card">
                             <h3>Nervous System Regulation Techniques</h3>
                             <p>If screens leave you wired and foggy, use body-based regulation to calm your system faster.</p>
+                        </a>
+                        <a href="https://dopabrain.com/portal/blog/en/sleep-science.html" class="related-card">
+                            <h3>Sleep Chronotypes: Lion, Bear, Wolf, or Dolphin?</h3>
+                            <p>Improve sleep quality by detoxing from screens and aligning with your natural chronotype.</p>
                         </a>
                     </div>
                 </section>
@@ -1374,11 +1406,28 @@
             document.querySelector('.progress-bar').style.width = scrolled + '%';
         });
 
+        function trackContentEvent(eventName, params) {
+            if (window.gtag) {
+                gtag('event', eventName, Object.assign({
+                    content_group: 'focus',
+                    content_slug: 'digital-detox',
+                    page_path: '/portal/blog/en/digital-detox.html',
+                    transport_type: 'beacon'
+                }, params || {}));
+            }
+        }
+
+        trackContentEvent('content_view', { content_type: 'blog' });
+
         // FAQ Accordion
-        document.querySelectorAll('.faq-question').forEach(question => {
+        document.querySelectorAll('.faq-question').forEach((question, index) => {
             question.addEventListener('click', function() {
                 const item = this.parentElement;
+                const willOpen = !item.classList.contains('active');
                 item.classList.toggle('active');
+                if (willOpen) {
+                    trackContentEvent('content_faq_open', { faq_index: index + 1 });
+                }
             });
         });
 
@@ -1388,22 +1437,32 @@
                 e.preventDefault();
                 const targetId = this.getAttribute('href').substring(1);
                 const targetElement = document.getElementById(targetId);
+                trackContentEvent('content_toc_click', { section_id: targetId });
                 if (targetElement) {
                     targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
 
-        // Analytics event tracking
-        document.querySelectorAll('.cta-button, .related-card').forEach(element => {
+        document.querySelectorAll('.cta-button').forEach(element => {
             element.addEventListener('click', function() {
-                if (window.gtag) {
-                    gtag('event', 'click', {
-                        'event_category': 'engagement',
-                        'event_label': this.textContent,
-                        'value': 1
-                    });
-                }
+                trackContentEvent('content_cta_click', {
+                    target_url: this.getAttribute('href') || '',
+                    target_label: this.textContent.trim()
+                });
+            });
+        });
+
+        document.querySelectorAll('.related-card').forEach(element => {
+            element.addEventListener('click', function() {
+                const section = this.closest('section');
+                const sectionTitle = section ? section.querySelector('h2') : null;
+                const heading = this.querySelector('h3');
+                trackContentEvent('content_related_click', {
+                    target_url: this.getAttribute('href') || '',
+                    target_label: heading ? heading.textContent.trim() : this.textContent.trim(),
+                    section_name: sectionTitle ? sectionTitle.textContent.trim() : ''
+                });
             });
         });
     </script>

@@ -106,6 +106,7 @@
     let currentPage = 1;
     let filteredAppsCache = [];
     let totalFilteredApps = 0;
+    const FEATURED_IDS = ['eq-test', 'stress-response', 'blood-type'];
 
     // Initialize
     function init() {
@@ -229,14 +230,13 @@
         appGrid.classList.remove('hidden');
         emptyState.classList.add('hidden');
 
-        // Featured: idle-clicker, mbti-love, emotion-temp
-        const featuredIds = ['idle-clicker', 'mbti-love', 'emotion-temp'];
-        const featured = apps.filter(app => featuredIds.includes(app.id));
+        // Featured: prioritize monetizable winners over legacy game promos
+        const featured = apps.filter(app => FEATURED_IDS.includes(app.id));
         const showFeaturedSection = currentCategory === 'all' && featured.length > 0 && !searchQuery.trim();
 
         // Only exclude featured from regular grid when featured section is visible
         const regular = showFeaturedSection
-            ? apps.filter(app => !featuredIds.includes(app.id))
+            ? apps.filter(app => !FEATURED_IDS.includes(app.id))
             : apps;
 
         // Show featured only if we have them and category is 'all'
@@ -534,10 +534,9 @@
                 loadMoreBtn.addEventListener('click', () => {
                     currentPage = Math.ceil(totalFilteredApps / itemsPerPage);
                     // Re-render with new page
-                    const featuredIds = ['idle-clicker', 'mbti-love', 'emotion-temp'];
                     const showFeatured = currentCategory === 'all' && !searchQuery.trim();
                     const loadMoreApps = showFeatured
-                        ? filteredAppsCache.filter(app => !featuredIds.includes(app.id))
+                        ? filteredAppsCache.filter(app => !FEATURED_IDS.includes(app.id))
                         : filteredAppsCache;
 
                     if (showFeatured) {
