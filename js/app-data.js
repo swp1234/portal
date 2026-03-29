@@ -2782,6 +2782,33 @@ const APP_DATA = [
             de: { name: 'Inneres-Kind-Test', shortDesc: 'Heile deine Kindheitswunden' },
             fr: { name: "Test de l'Enfant Intérieur", shortDesc: 'Guérissez vos blessures d\'enfance' }
         }
+    },
+    {
+        id: 'nervous-system-quiz',
+        name: '신경계 상태 퀴즈',
+        shortDesc: '나의 신경계는 지금 어디에?',
+        description: '폴리베이걸 이론 기반 15문항으로 당신의 신경계 상태를 진단하세요. 복측 미주신경(안전), 교감(투쟁/도피), 배측 미주신경(셧다운) 중 지금 나는?',
+        icon: '🌊',
+        color: '#5b21b6',
+        category: 'test',
+        tags: ['nervous system', 'polyvagal', 'trauma', 'stress', 'regulation', '신경계', '폴리베이걸', '심리'],
+        url: 'https://dopabrain.com/nervous-system-quiz/',
+        isNew: true,
+        isPopular: false,
+        popularity: 50,
+        i18n: {
+            en: { name: 'Nervous System Quiz', shortDesc: 'What State Is Your Nervous System In?' },
+            zh: { name: '神经系统状态测验', shortDesc: '你的神经系统现在处于什么状态？' },
+            hi: { name: 'नर्वस सिस्टम क्विज़', shortDesc: 'आपका नर्वस सिस्टम अभी किस अवस्था में है?' },
+            ru: { name: 'Тест нервной системы', shortDesc: 'В каком состоянии ваша нервная система?' },
+            ja: { name: '神経系状態クイズ', shortDesc: 'あなたの神経系は今どの状態？' },
+            es: { name: 'Quiz del Sistema Nervioso', shortDesc: '¿En qué estado está tu sistema nervioso?' },
+            pt: { name: 'Quiz do Sistema Nervoso', shortDesc: 'Em que estado está seu sistema nervoso?' },
+            id: { name: 'Kuis Sistem Saraf', shortDesc: 'Sistem saraf Anda sedang dalam kondisi apa?' },
+            tr: { name: 'Sinir Sistemi Testi', shortDesc: 'Sinir sisteminiz şu an hangi durumda?' },
+            de: { name: 'Nervensystem-Quiz', shortDesc: 'In welchem Zustand befindet sich Ihr Nervensystem?' },
+            fr: { name: 'Quiz du Système Nerveux', shortDesc: 'Dans quel état se trouve votre système nerveux?' }
+        }
     }
 ];
 
