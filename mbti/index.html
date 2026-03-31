@@ -220,12 +220,11 @@ footer a{color:var(--text2)}
 <section id="next-tests" style="max-width:800px;margin:32px auto;padding:0 20px">
   <h2 style="color:var(--primary-light,#a78bfa);font-size:20px;margin-bottom:12px">Next Relationship Tests</h2>
   <div style="display:flex;flex-wrap:wrap;gap:10px">
-    <a href="/mbti-love/" style="padding:10px 18px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:10px;color:var(--primary-light,#a78bfa);text-decoration:none;font-size:14px">MBTI Love Match</a>
-    <a href="/blood-type/" style="padding:10px 18px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:10px;color:var(--primary-light,#a78bfa);text-decoration:none;font-size:14px">Blood Type Personality</a>
-    <a href="/attachment-style/" style="padding:10px 18px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:10px;color:var(--primary-light,#a78bfa);text-decoration:none;font-size:14px">Attachment Style</a>
-    <a href="/zodiac-match/" style="padding:10px 18px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:10px;color:var(--primary-light,#a78bfa);text-decoration:none;font-size:14px">Zodiac Match</a>
-    <a href="/eq-test/" style="padding:10px 18px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:10px;color:var(--primary-light,#a78bfa);text-decoration:none;font-size:14px">EQ Test</a>
-    <a href="/stress-response/" style="padding:10px 18px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:10px;color:var(--primary-light,#a78bfa);text-decoration:none;font-size:14px">Stress Response</a>
+    <a href="/eq-test/" data-next-type="test" style="padding:10px 18px;background:rgba(0,188,212,0.10);border:1px solid rgba(0,188,212,0.25);border-radius:10px;color:#67e8f9;text-decoration:none;font-size:14px">EQ Test</a>
+    <a href="/attachment-style/" data-next-type="test" style="padding:10px 18px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:10px;color:var(--primary-light,#a78bfa);text-decoration:none;font-size:14px">Attachment Style</a>
+    <a href="/blood-type/" data-next-type="test" style="padding:10px 18px;background:rgba(236,72,153,0.08);border:1px solid rgba(236,72,153,0.18);border-radius:10px;color:#f9a8d4;text-decoration:none;font-size:14px">Blood Type Test</a>
+    <a href="/portal/blog/en/habit-building.html" data-next-type="blog" style="padding:10px 18px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.18);border-radius:10px;color:#86efac;text-decoration:none;font-size:14px">Habit Building Guide</a>
+    <a href="/portal/blog/en/stress-management-techniques-guide.html" data-next-type="blog" style="padding:10px 18px;background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);border-radius:10px;color:#fdba74;text-decoration:none;font-size:14px">Stress Management Guide</a>
   </div>
 </section>
 
@@ -261,6 +260,8 @@ function trackHubEvent(eventName, params){
     gtag('event', eventName, Object.assign({
       hub_name: 'mbti',
       page_path: '/portal/mbti/',
+      surface_type: 'hub',
+      surface_name: 'mbti_hub',
       transport_type: 'beacon'
     }, params || {}));
   }
@@ -523,8 +524,11 @@ document.addEventListener('click',e=>{
   }
   const nextTest=e.target.closest('#next-tests a');
   if(nextTest){
+    const nextTests = Array.from(document.querySelectorAll('#next-tests a'));
     trackHubEvent('hub_test_card_click',{
       card_type:'relationship_followup',
+      card_position: nextTests.indexOf(nextTest) + 1,
+      destination_type: nextTest.dataset.nextType || 'test',
       destination:nextTest.getAttribute('href')||'',
       target_label:nextTest.textContent.trim()
     });

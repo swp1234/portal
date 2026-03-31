@@ -215,6 +215,13 @@ footer a{color:var(--text2)}
 
 <h2 class="section-title" data-i18n="hub_tests.featured_title"><span>Featured</span> Tests</h2>
 <div class="featured">
+  <a href="/eq-test/" class="featured-card" style="--card-color:rgba(0,188,212,0.1);--card-border:#00bcd4;--icon-bg:rgba(0,188,212,0.15)" data-cat="emotion" data-app="eq-test">
+    <div class="fc-icon">&#127917;</div>
+    <span class="fc-tag" data-i18n="hub_tests.filter_emotion">Emotion</span>
+    <div class="fc-name">EQ Emotion Reading Challenge</div>
+    <p class="fc-desc">Test your emotional intelligence</p>
+    <span class="fc-play" data-i18n="hub_tests.take_test">Take Test &#8594;</span>
+  </a>
   <a href="/mbti-love/" class="featured-card" style="--card-color:rgba(239,68,68,0.1);--card-border:#ef4444;--icon-bg:rgba(239,68,68,0.15)" data-cat="mbti" data-app="mbti-love">
     <div class="fc-icon">&#128149;</div>
     <span class="fc-tag" data-i18n="hub_tests.filter_mbti">MBTI</span>
@@ -365,6 +372,8 @@ document.addEventListener('DOMContentLoaded',function(){
       gtag('event',eventName,Object.assign({
         hub_name:'tests',
         page_path:'/portal/tests/',
+        surface_type:'hub',
+        surface_name:'tests_hub',
         transport_type:'beacon'
       },params||{}));
     }
@@ -483,7 +492,13 @@ document.addEventListener('DOMContentLoaded',function(){
           var app = APP_DATA.find(function(a) { return a.id === appId; });
           if (!app) return;
           var nameEl = el.querySelector('.tc-name,.fc-name');
+          var descEl = el.querySelector('.tc-desc,.fc-desc');
           if (nameEl) nameEl.textContent = getAppName(app, lang);
+          if (descEl) {
+            descEl.textContent = (lang !== 'ko' && app.i18n && app.i18n[lang] && app.i18n[lang].shortDesc)
+              ? app.i18n[lang].shortDesc
+              : app.shortDesc;
+          }
         });
       }
     });

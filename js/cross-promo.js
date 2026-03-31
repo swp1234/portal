@@ -139,10 +139,14 @@
         document.querySelector('.cp-section').addEventListener('click', function(e) {
             var card = e.target.closest('.cp-card');
             if (card && typeof gtag === 'function') {
+                var destinationPath = card.getAttribute('href') || '';
                 gtag('event', 'cross_promo_click', {
                     event_category: 'engagement',
-                    event_label: card.getAttribute('href'),
-                    source_app: path
+                    event_label: destinationPath,
+                    source_app: path,
+                    surface_type: 'cross_promo',
+                    surface_name: path,
+                    destination_path: destinationPath
                 });
             }
         });

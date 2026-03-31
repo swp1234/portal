@@ -862,9 +862,22 @@
                     gtag('event', eventName, Object.assign({
                         hub_name: 'portal',
                         page_path: '/portal/',
+                        surface_type: 'hub',
+                        surface_name: 'portal_home',
                         transport_type: 'beacon'
                     }, params || {}));
                 }
+            }
+
+            function getContentMeta(path) {
+                var match = /^\/?portal\/blog\/([^/]+)\/([^/?#]+)/.exec((path || '').replace(/^\//, ''));
+                if (!match) {
+                    return { content_locale: '', content_slug: '' };
+                }
+                return {
+                    content_locale: match[1] || '',
+                    content_slug: (match[2] || '').replace(/\.html$/, '')
+                };
             }
 
             // CSS should be loaded by now, show content
@@ -935,9 +948,12 @@
 
                 var blogCard = e.target.closest('.blog-card');
                 if (blogCard) {
+                    var blogMeta = getContentMeta(blogCard.getAttribute('href') || '');
                     trackPortalEvent('hub_test_card_click', {
                         card_type: 'blog_card',
-                        destination: blogCard.getAttribute('href') || ''
+                        destination: blogCard.getAttribute('href') || '',
+                        content_locale: blogMeta.content_locale,
+                        content_slug: blogMeta.content_slug
                     });
                     return;
                 }
