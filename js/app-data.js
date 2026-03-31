@@ -2325,6 +2325,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'hail-mary-mode',
+        name: '헤일메리 모드 테스트',
+        shortDesc: '압박 속 마지막 승부수 유형',
+        description: '12가지 고압 상황으로 당신의 마지막 기회 문제 해결 스타일을 분석합니다. Mission Brain, Signal Keeper, Chaos Pilot, Last-Light Guardian 중 나는 누구일까요?',
+        icon: '🚨',
+        color: '#ff8c42',
+        category: 'test',
+        tags: ['hail mary', 'pressure test', 'crisis response', 'problem solving', 'stress', 'mindset', '심리테스트', '압박', '위기 대응'],
+        url: 'https://dopabrain.com/hail-mary-mode/',
+        isNew: true,
+        isPopular: true,
+        popularity: 92,
+        i18n: {
+            en: { name: 'Hail Mary Mode Test', shortDesc: 'Your last-chance problem solver type' },
+            zh: { name: 'Hail Mary 模式测试', shortDesc: '你的最后机会解题风格' },
+            hi: { name: 'हेल मैरी मोड टेस्ट', shortDesc: 'आपका आख़िरी मौके का समस्या-समाधान प्रकार' },
+            ru: { name: 'Тест Hail Mary Mode', shortDesc: 'Ваш стиль решения задач в последний шанс' },
+            ja: { name: 'ヘイルメアリーモード診断', shortDesc: '土壇場での問題解決タイプ' },
+            es: { name: 'Test Hail Mary Mode', shortDesc: 'Tu estilo para resolver bajo máxima presión' },
+            pt: { name: 'Teste Hail Mary Mode', shortDesc: 'Seu tipo de resolução no último momento' },
+            id: { name: 'Tes Mode Hail Mary', shortDesc: 'Gaya pemecahan masalah saat kesempatan terakhir' },
+            tr: { name: 'Hail Mary Modu Testi', shortDesc: 'Son şans anındaki problem çözme tipin' },
+            de: { name: 'Hail-Mary-Modus-Test', shortDesc: 'Dein Problemlöser-Typ im letzten Moment' },
+            fr: { name: 'Test Mode Hail Mary', shortDesc: 'Votre style face à la dernière chance' }
+        }
+    },
+    {
         id: 'life-in-numbers',
         name: '나의 인생 숫자',
         shortDesc: '생일로 보는 인생 통계',
