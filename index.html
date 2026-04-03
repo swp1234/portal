@@ -221,6 +221,15 @@
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
+    <script>
+        window.__navOptimizationsConfig = {
+            hubName: 'portal',
+            prefetchSelectors: [
+                '.js-prefetch-link'
+            ]
+        };
+    </script>
+    <script src="js/nav-optimizations.js" defer></script>
 
     <!-- Preload critical scripts -->
     <link rel="preload" href="js/i18n.js" as="script">
@@ -297,8 +306,8 @@
                     </div>
                     <div class="story-pills" style="margin-top:14px">
                         <span class="pill" data-i18n="header.eq_cta_title">Start with our most-shared emotion flow</span>
-                        <a href="/eq-test/" class="pill" data-i18n="header.eq_cta_eq" style="text-decoration:none">Take EQ Test</a>
-                        <a href="/portal/tests/" class="pill" data-i18n="header.eq_cta_tests" style="text-decoration:none">Browse All Tests</a>
+                        <a href="/eq-test/" class="pill js-prefetch-link" data-i18n="header.eq_cta_eq" style="text-decoration:none">Take EQ Test</a>
+                        <a href="/portal/tests/" class="pill js-prefetch-link" data-i18n="header.eq_cta_tests" style="text-decoration:none">Browse All Tests</a>
                     </div>
                 </div>
             </div>
@@ -798,12 +807,12 @@
         <nav class="category-hubs" aria-label="Browse by category">
             <h2 class="hubs-title" data-i18n="hubs.title">Browse by Category</h2>
             <div class="hubs-grid">
-                <a href="/portal/tests/" class="hub-card" style="--hub-color:#a855f7">
+                <a href="/portal/tests/" class="hub-card js-prefetch-link" style="--hub-color:#a855f7">
                     <span class="hub-icon">&#128300;</span>
                     <span class="hub-name" data-i18n="hubs.tests">Personality Tests</span>
                     <span class="hub-count">36</span>
                 </a>
-                <a href="/portal/mbti/" class="hub-card" style="--hub-color:#ec4899">
+                <a href="/portal/mbti/" class="hub-card js-prefetch-link" style="--hub-color:#ec4899">
                     <span class="hub-icon">&#128149;</span>
                     <span class="hub-name" data-i18n="hubs.mbti">MBTI Compatibility</span>
                     <span class="hub-count">256</span>
