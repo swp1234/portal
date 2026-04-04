@@ -34,6 +34,15 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+    <script>
+        window.__navOptimizationsConfig = {
+            hubName: 'blog-en',
+            prefetchSelectors: [
+                '.js-prefetch-link'
+            ]
+        };
+    </script>
+    <script src="/portal/js/nav-optimizations.js" defer></script>
 
     <style>
         :root {
@@ -597,7 +606,7 @@
 
             grid.innerHTML = slice.map(function(d, i) {
                 var hero = i === 0 && cat === 'all' && !query ? ' hero-card' : '';
-                return '<a href="/portal/blog/en/' + d[0] + '" class="card' + hero + '" style="--accent-color:' + d[3] + '">'
+                return '<a href="/portal/blog/en/' + d[0] + '" class="card js-prefetch-link' + hero + '" style="--accent-color:' + d[3] + '">'
                     + '<span class="card-tag" style="background:' + d[3] + '">' + d[2] + '</span>'
                     + '<h3>' + d[4] + '</h3>'
                     + '<p>' + d[5] + '</p>'
