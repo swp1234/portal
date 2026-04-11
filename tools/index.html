@@ -150,6 +150,22 @@ a:hover{color:var(--accent)}
 .fc-play{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:8px 20px;border-radius:99px;font-size:13px;font-weight:600;color:#000;background:linear-gradient(135deg,var(--primary),#34d399);transition:all var(--transition)}
 .featured-card:hover .fc-play{box-shadow:0 0 20px rgba(16,185,129,0.4)}
 
+/* Routine Flow */
+.routine-band{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 0 32px}
+.routine-card{position:relative;display:flex;flex-direction:column;gap:12px;min-height:172px;padding:20px 18px 18px;background:linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));border:1px solid var(--border);border-radius:var(--radius);color:var(--text);overflow:hidden;transition:all var(--transition)}
+.routine-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at top right,var(--routine-glow,rgba(16,185,129,0.16)),transparent 58%);opacity:0.95;pointer-events:none}
+.routine-card:hover{transform:translateY(-4px);border-color:var(--primary);box-shadow:0 14px 38px rgba(0,0,0,0.22)}
+.routine-card-primary{border-color:rgba(16,185,129,0.4);box-shadow:0 12px 30px rgba(16,185,129,0.14)}
+.routine-step,.routine-tag,.routine-copy,.routine-link{position:relative;z-index:1}
+.routine-step{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);font:800 14px var(--heading);letter-spacing:0.08em}
+.routine-tag{display:inline-flex;align-items:center;gap:6px;width:max-content;padding:4px 10px;border-radius:999px;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.18);font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:0.06em}
+.routine-copy{display:grid;gap:6px}
+.routine-name{font-family:var(--heading);font-size:20px;font-weight:800}
+.routine-desc{font-size:13px;line-height:1.55;color:var(--text2)}
+.routine-link{display:inline-flex;align-items:center;gap:8px;margin-top:auto;font-size:13px;font-weight:700;color:var(--text)}
+.routine-link::after{content:'\2192';font-size:14px;transition:transform var(--transition)}
+.routine-card:hover .routine-link::after{transform:translateX(4px)}
+
 /* Tool Cards Grid */
 .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
 .tool-card{display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px 12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;color:var(--text);transition:all var(--transition);position:relative}
@@ -181,12 +197,21 @@ a:hover{color:var(--accent)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease;font-size:14px;color:var(--text2);line-height:1.6}
 .faq-item.open .faq-a{max-height:200px;margin-top:10px}
 
+/* Hub Ad */
+.hub-ad-slot{margin:26px 0 34px;padding:14px 14px 10px;border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(135deg,rgba(16,185,129,0.04),rgba(168,85,247,0.04))}
+.hub-ad-slot ins{display:block!important;min-height:180px}
+
 /* CTA */
 .cta-section{text-align:center;padding:40px 20px;margin:32px 0;background:linear-gradient(135deg,rgba(16,185,129,0.06),rgba(168,85,247,0.06));border:1px solid var(--border);border-radius:var(--radius)}
 .cta-section h2{font-family:var(--heading);font-size:22px;font-weight:800;margin-bottom:8px}
 .cta-section p{color:var(--text2);margin-bottom:20px;font-size:14px}
 .cta-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:99px;font:600 15px var(--font);color:#000;background:linear-gradient(135deg,var(--primary),#34d399);transition:all var(--transition);text-decoration:none}
 .cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(16,185,129,0.3);color:#000}
+.cta-stack{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:18px}
+.cta-chip{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text);font-weight:700;transition:all var(--transition)}
+.cta-chip:hover{transform:translateY(-2px);border-color:rgba(16,185,129,0.32);background:rgba(16,185,129,0.08);color:var(--text)}
+.cta-chip-badge{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;padding:0 8px;border-radius:999px;background:rgba(16,185,129,0.14);color:var(--primary);font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase}
+.cta-chip-name{font-family:var(--heading);font-size:14px}
 
 /* Footer */
 footer{text-align:center;padding:24px;color:var(--text3);font-size:12px;border-top:1px solid var(--border);margin-top:32px}
@@ -197,7 +222,8 @@ footer a{color:var(--text2)}
 .animate{animation:fadeUp 0.5s ease both}
 
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
-@media(max-width:480px){.featured{grid-template-columns:1fr}.tools-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.routine-band{grid-template-columns:1fr}}
+@media(max-width:480px){.featured{grid-template-columns:1fr}.tools-grid{grid-template-columns:repeat(2,1fr)}.cta-stack{flex-direction:column}.cta-chip{justify-content:center}}
 </style>
 </head>
 <body>
@@ -225,28 +251,58 @@ footer a{color:var(--text2)}
 
 <h2 class="section-title" data-i18n="hub_tools.featured_title"><span>Featured</span> Tools</h2>
 <div class="featured">
-  <a href="/pomodoro-timer/" class="featured-card" style="--card-color:rgba(239,68,68,0.1);--card-border:#ef4444;--icon-bg:rgba(239,68,68,0.15)" data-cat="timer" data-app="pomodoro-timer">
+  <a href="/habit-tracker/" class="featured-card js-prefetch-link" style="--card-color:rgba(39,174,96,0.1);--card-border:#27ae60;--icon-bg:rgba(39,174,96,0.15)" data-cat="wellness" data-app="habit-tracker" data-feature-slot="1">
+    <div class="fc-icon">&#128202;</div>
+    <span class="fc-tag" data-i18n="hub_tools.filter_wellness">Wellness</span>
+    <div class="fc-name">Habit Tracker</div>
+    <p class="fc-desc" data-i18n="hub_tools.desc_habit-tracker">Track your daily habits</p>
+    <span class="fc-play" data-i18n="hub_tools.open_tool">Open Tool &rarr;</span>
+  </a>
+  <a href="/pomodoro-timer/" class="featured-card js-prefetch-link" style="--card-color:rgba(239,68,68,0.1);--card-border:#ef4444;--icon-bg:rgba(239,68,68,0.15)" data-cat="timer" data-app="pomodoro-timer" data-feature-slot="2">
     <div class="fc-icon">&#127813;</div>
-    <span class="fc-tag" data-i18n="hub_tools.feat1_tag">Timer</span>
+    <span class="fc-tag" data-i18n="hub_tools.filter_timer">Timer</span>
     <div class="fc-name">Pomodoro Timer</div>
-    <p class="fc-desc" data-i18n="hub_tools.feat1_desc">Boost productivity with 25/5 focus cycles</p>
+    <p class="fc-desc" data-i18n="hub_tools.desc_pomodoro-timer">Focus timer with breaks</p>
     <span class="fc-play" data-i18n="hub_tools.open_tool">Open Tool &rarr;</span>
   </a>
-  <a href="/bmi-calculator/" class="featured-card" style="--card-color:rgba(16,185,129,0.1);--card-border:#10b981;--icon-bg:rgba(16,185,129,0.15)" data-cat="calculator" data-app="bmi-calculator">
-    <div class="fc-icon">&#9878;&#65039;</div>
-    <span class="fc-tag" data-i18n="hub_tools.feat2_tag">Calculator</span>
-    <div class="fc-name">BMI Calculator</div>
-    <p class="fc-desc" data-i18n="hub_tools.feat2_desc">Calculate your Body Mass Index instantly</p>
-    <span class="fc-play" data-i18n="hub_tools.open_tool">Open Tool &rarr;</span>
-  </a>
-  <a href="/qr-generator/" class="featured-card" style="--card-color:rgba(59,130,246,0.1);--card-border:#3b82f6;--icon-bg:rgba(59,130,246,0.15)" data-cat="generator" data-app="qr-generator">
-    <div class="fc-icon">&#128241;</div>
-    <span class="fc-tag" data-i18n="hub_tools.feat3_tag">Generator</span>
-    <div class="fc-name">QR Generator</div>
-    <p class="fc-desc" data-i18n="hub_tools.feat3_desc">Create QR codes for any link or text</p>
+  <a href="/detox-timer/" class="featured-card js-prefetch-link" style="--card-color:rgba(0,184,148,0.1);--card-border:#00b894;--icon-bg:rgba(0,184,148,0.15)" data-cat="wellness" data-app="detox-timer" data-feature-slot="3">
+    <div class="fc-icon">&#128245;</div>
+    <span class="fc-tag" data-i18n="hub_tools.filter_wellness">Wellness</span>
+    <div class="fc-name">Detox Timer</div>
+    <p class="fc-desc" data-i18n="hub_tools.desc_detox-timer">Digital detox countdown</p>
     <span class="fc-play" data-i18n="hub_tools.open_tool">Open Tool &rarr;</span>
   </a>
 </div>
+
+<section class="routine-band" aria-label="Recommended focus routines">
+  <a href="/detox-timer/" class="routine-card js-prefetch-link" data-app="detox-timer" data-cta-surface="routine_reset" style="--routine-glow:rgba(0,184,148,0.18)">
+    <span class="routine-step">01</span>
+    <span class="routine-tag" data-i18n="hub_tools.filter_wellness">Wellness</span>
+    <div class="routine-copy">
+      <div class="routine-name">Detox Timer</div>
+      <p class="routine-desc" data-i18n="hub_tools.desc_detox-timer">Digital detox countdown</p>
+    </div>
+    <span class="routine-link" data-i18n="hub_tools.open_tool">Open Tool</span>
+  </a>
+  <a href="/habit-tracker/" class="routine-card routine-card-primary js-prefetch-link" data-app="habit-tracker" data-cta-surface="routine_streak" style="--routine-glow:rgba(39,174,96,0.18)">
+    <span class="routine-step">02</span>
+    <span class="routine-tag" data-i18n="hub_tools.filter_wellness">Wellness</span>
+    <div class="routine-copy">
+      <div class="routine-name">Habit Tracker</div>
+      <p class="routine-desc" data-i18n="hub_tools.desc_habit-tracker">Track your daily habits</p>
+    </div>
+    <span class="routine-link" data-i18n="hub_tools.open_tool">Open Tool</span>
+  </a>
+  <a href="/pomodoro-timer/" class="routine-card js-prefetch-link" data-app="pomodoro-timer" data-cta-surface="routine_focus" style="--routine-glow:rgba(239,68,68,0.18)">
+    <span class="routine-step">03</span>
+    <span class="routine-tag" data-i18n="hub_tools.filter_timer">Timer</span>
+    <div class="routine-copy">
+      <div class="routine-name">Pomodoro Timer</div>
+      <p class="routine-desc" data-i18n="hub_tools.desc_pomodoro-timer">Focus timer with breaks</p>
+    </div>
+    <span class="routine-link" data-i18n="hub_tools.open_tool">Open Tool</span>
+  </a>
+</section>
 
 <h2 class="section-title" data-i18n="hub_tools.all_title"><span>All</span> Tools</h2>
 <div class="tools-grid" id="tools-grid">
@@ -267,6 +323,15 @@ footer a{color:var(--text2)}
   <a href="/habit-tracker/" class="tool-card" data-cat="wellness" data-app="habit-tracker"><span class="tc-cat">Wellness</span><div class="tc-icon" style="background:rgba(39,174,96,0.12)">&#128202;</div><div class="tc-name">Habit Tracker</div><div class="tc-desc" data-i18n="hub_tools.desc_habit-tracker">Track your daily habits</div></a>
   <a href="/todo-list/" class="tool-card" data-cat="timer" data-app="todo-list"><span class="tc-cat">Timer</span><div class="tc-icon" style="background:rgba(59,130,246,0.12)">&#9989;</div><div class="tc-name">Todo List</div><div class="tc-desc" data-i18n="hub_tools.desc_todo-list">Simple task manager</div></a>
   <a href="/routine-planner/" class="tool-card" data-cat="timer" data-app="routine-planner"><span class="tc-cat">Timer</span><div class="tc-icon" style="background:rgba(139,92,246,0.12)">&#128203;</div><div class="tc-name">Routine Planner</div><div class="tc-desc" data-i18n="hub_tools.desc_routine-planner">Plan your daily routine</div></a>
+</div>
+
+<div class="hub-ad-slot" id="hub-inline-ad" aria-label="Sponsored">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-3600813755953882"
+       data-ad-slot="auto"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
 </div>
 
 <section class="content-section">
@@ -293,7 +358,21 @@ footer a{color:var(--text2)}
 <section class="cta-section">
   <h2 data-i18n="hub_tools.cta_title">Try Our Personality Tests</h2>
   <p data-i18n="hub_tools.cta_desc">Discover your personality type, cognitive strengths, and more with our free tests.</p>
-  <a href="/portal/tests/" class="cta-btn" data-i18n="hub_tools.cta_button">Explore Tests &rarr;</a>
+  <a href="/portal/tests/" class="cta-btn js-prefetch-link" data-cta-surface="tests_hub_primary" data-i18n="hub_tools.cta_button">Explore Tests &rarr;</a>
+  <div class="cta-stack">
+    <a href="/eq-test/" class="cta-chip js-prefetch-link" data-app="eq-test" data-cta-surface="eq_secondary">
+      <span class="cta-chip-badge">EQ</span>
+      <span class="cta-chip-name">EQ Test</span>
+    </a>
+    <a href="/attachment-style/" class="cta-chip js-prefetch-link" data-app="attachment-style" data-cta-surface="attachment_secondary">
+      <span class="cta-chip-badge">REL</span>
+      <span class="cta-chip-name">Attachment Style</span>
+    </a>
+    <a href="/blood-type/" class="cta-chip js-prefetch-link" data-app="blood-type" data-cta-surface="blood_secondary">
+      <span class="cta-chip-badge">FUN</span>
+      <span class="cta-chip-name">Blood Type</span>
+    </a>
+  </div>
 </section>
 
 </main>
@@ -310,6 +389,10 @@ footer a{color:var(--text2)}
 document.addEventListener('DOMContentLoaded',()=>{
   const loader=document.getElementById('app-loader');
   if(loader)loader.style.display='none';
+  const pushEvent = (payload) => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(payload);
+  };
 
   // Theme toggle
   const btn=document.getElementById('theme-toggle');
@@ -326,11 +409,19 @@ document.addEventListener('DOMContentLoaded',()=>{
   const filters=document.querySelectorAll('.filter-btn');
   const cards=document.querySelectorAll('.tool-card');
   const featured=document.querySelectorAll('.featured-card');
+  const routineCards=document.querySelectorAll('.routine-card');
+  const ctaLinks=document.querySelectorAll('[data-cta-surface]');
+  const faqItems=document.querySelectorAll('.faq-item');
   filters.forEach(f=>{
     f.addEventListener('click',()=>{
       filters.forEach(x=>x.classList.remove('active'));
       f.classList.add('active');
       const cat=f.dataset.filter;
+      pushEvent({
+        event:'hub_filter_select',
+        hub_name:'tools',
+        selected_filter:cat
+      });
       cards.forEach(c=>{
         if(cat==='all'||c.dataset.cat===cat){c.style.display='';c.classList.add('animate')}
         else{c.style.display='none';c.classList.remove('animate')}
@@ -343,9 +434,17 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 
   // FAQ accordion
-  document.querySelectorAll('.faq-item').forEach(item=>{
+  faqItems.forEach((item,index)=>{
     item.querySelector('.faq-q').addEventListener('click',()=>{
+      const willOpen=!item.classList.contains('open');
       item.classList.toggle('open');
+      if(willOpen){
+        pushEvent({
+          event:'hub_faq_open',
+          hub_name:'tools',
+          faq_position:index+1
+        });
+      }
     });
   });
 
@@ -354,6 +453,65 @@ document.addEventListener('DOMContentLoaded',()=>{
     entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('animate');observer.unobserve(e.target)}});
   },{threshold:0.1});
   cards.forEach(c=>observer.observe(c));
+
+  pushEvent({
+    event:'hub_view',
+    hub_name:'tools',
+    featured_count:featured.length,
+    tool_count:cards.length
+  });
+
+  featured.forEach((card,index)=>{
+    card.addEventListener('click',()=>{
+      pushEvent({
+        event:'hub_featured_click',
+        hub_name:'tools',
+        card_type:'tool_featured',
+        card_position:index+1,
+        destination:card.href,
+        target_label:card.dataset.app || ''
+      });
+    });
+  });
+
+  routineCards.forEach((card,index)=>{
+    card.addEventListener('click',()=>{
+      pushEvent({
+        event:'hub_cta_click',
+        hub_name:'tools',
+        cta_type:card.dataset.ctaSurface || 'routine_card',
+        cta_position:index+1,
+        destination:card.href,
+        target_label:card.dataset.app || ''
+      });
+    });
+  });
+
+  cards.forEach((card,index)=>{
+    card.addEventListener('click',()=>{
+      pushEvent({
+        event:'hub_tool_card_click',
+        hub_name:'tools',
+        tool_position:index+1,
+        tool_category:card.dataset.cat || '',
+        destination:card.href,
+        target_label:card.dataset.app || ''
+      });
+    });
+  });
+
+  ctaLinks.forEach(link=>{
+    if(link.classList.contains('routine-card')) return;
+    link.addEventListener('click',()=>{
+      pushEvent({
+        event:'hub_cta_click',
+        hub_name:'tools',
+        cta_type:link.dataset.ctaSurface || 'cta',
+        destination:link.href,
+        target_label:link.dataset.app || ''
+      });
+    });
+  });
 
   // i18n
   try {
@@ -367,12 +525,30 @@ document.addEventListener('DOMContentLoaded',()=>{
           var appId = el.dataset.app;
           var app = APP_DATA.find(function(a) { return a.id === appId; });
           if (!app) return;
-          var nameEl = el.querySelector('.gc-name,.fc-name,.tc-name');
+          var nameEl = el.querySelector('.gc-name,.fc-name,.tc-name,.routine-name,.cta-chip-name');
           if (nameEl) nameEl.textContent = getAppName(app, lang);
         });
       }
     });
   } catch(e) { console.error('i18n:', e); }
+
+  const initInlineAd=(retries=8)=>{
+    const inlineAd=document.querySelector('#hub-inline-ad .adsbygoogle');
+    if(!inlineAd)return;
+    if(window.adsbygoogle){
+      try{
+        (adsbygoogle=window.adsbygoogle||[]).push({});
+        pushEvent({
+          event:'hub_ad_impression',
+          hub_name:'tools',
+          ad_surface:'inline_tools_grid'
+        });
+      }catch(e){}
+      return;
+    }
+    if(retries>0)window.setTimeout(()=>initInlineAd(retries-1),500);
+  };
+  initInlineAd();
 });
 </script>
 </body>
