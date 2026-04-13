@@ -3,10 +3,9 @@
  * Drop-in retention module for any game.
  *
  * Usage:
- *   <script src="/_common/js/daily-streak.js"></script>
- *   DailyStreak.init({ gameId: 'snake-game', bestScoreKey: 'snake_highscore' });
- *   // On game end:
- *   DailyStreak.report(score);
+ *   1. Load this file from your game page.
+ *   2. Initialize the streak module with a `gameId` and score storage key.
+ *   3. Report the latest run score so the streak and target logic can update.
  */
 const DailyStreak = (() => {
   let cfg = { gameId: '', bestScoreKey: '', targetRatio: 0.8, unit: '' };

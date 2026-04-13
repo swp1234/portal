@@ -269,7 +269,7 @@
 
     <div class="container">
         <!-- Ad Banner Top -->
-        <div class="ad-banner ad-top">
+        <div class="ad-banner ad-top" data-ad-surface="portal_top_banner">
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-3600813755953882"
@@ -322,8 +322,29 @@
                     </div>
                     <div class="story-pills" style="margin-top:14px">
                         <span class="pill" data-i18n="header.eq_cta_title">Start with our most-shared emotion flow</span>
-                        <a href="/eq-test/" class="pill js-prefetch-link" data-i18n="header.eq_cta_eq" style="text-decoration:none">Take EQ Test</a>
-                        <a href="/portal/tests/" class="pill js-prefetch-link" data-i18n="header.eq_cta_tests" style="text-decoration:none">Browse All Tests</a>
+                        <a href="/eq-test/" class="pill js-prefetch-link" data-cta-surface="hero_eq_pill" data-i18n="header.eq_cta_eq" style="text-decoration:none">Take EQ Test</a>
+                        <a href="/portal/tests/" class="pill js-prefetch-link" data-cta-surface="hero_tests_pill" data-i18n="header.eq_cta_tests" style="text-decoration:none">Browse All Tests</a>
+                        <a href="/portal/mbti/" class="pill js-prefetch-link" data-cta-surface="hero_mbti_pill" data-i18n="hubs.mbti" style="text-decoration:none">MBTI Compatibility</a>
+                    </div>
+                    <div class="hero-winners" aria-label="Recommended starting points">
+                        <a href="/eq-test/" class="hero-winner-card js-prefetch-link" data-app="eq-test" data-cta-surface="hero_eq_primary" style="--winner-glow:rgba(168,85,247,0.24);--winner-border:#a855f7">
+                            <span class="hero-winner-badge">EQ</span>
+                            <span class="hero-winner-name">EQ Test</span>
+                            <span class="hero-winner-desc">Emotional intelligence quiz</span>
+                            <span class="hero-winner-meta">Test</span>
+                        </a>
+                        <a href="/attachment-style/" class="hero-winner-card js-prefetch-link" data-app="attachment-style" data-cta-surface="hero_attachment_primary" style="--winner-glow:rgba(255,45,120,0.22);--winner-border:#ff2d78">
+                            <span class="hero-winner-badge">REL</span>
+                            <span class="hero-winner-name">Attachment Style</span>
+                            <span class="hero-winner-desc">Relationship pattern test</span>
+                            <span class="hero-winner-meta">Love</span>
+                        </a>
+                        <a href="/blood-type/" class="hero-winner-card js-prefetch-link" data-app="blood-type" data-cta-surface="hero_blood_primary" style="--winner-glow:rgba(0,229,255,0.2);--winner-border:#00e5ff">
+                            <span class="hero-winner-badge">Viral</span>
+                            <span class="hero-winner-name">Blood Type</span>
+                            <span class="hero-winner-desc">Shareable personality read</span>
+                            <span class="hero-winner-meta">Test</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -823,22 +844,22 @@
         <nav class="category-hubs" aria-label="Browse by category">
             <h2 class="hubs-title" data-i18n="hubs.title">Browse by Category</h2>
             <div class="hubs-grid">
-                <a href="/portal/tests/" class="hub-card js-prefetch-link" style="--hub-color:#a855f7">
+                <a href="/portal/tests/" class="hub-card js-prefetch-link" data-cta-surface="tests_hub" style="--hub-color:#a855f7">
                     <span class="hub-icon">&#128300;</span>
                     <span class="hub-name" data-i18n="hubs.tests">Personality Tests</span>
                     <span class="hub-count">36</span>
                 </a>
-                <a href="/portal/mbti/" class="hub-card js-prefetch-link" style="--hub-color:#ec4899">
+                <a href="/portal/mbti/" class="hub-card js-prefetch-link" data-cta-surface="mbti_hub" style="--hub-color:#ec4899">
                     <span class="hub-icon">&#128149;</span>
                     <span class="hub-name" data-i18n="hubs.mbti">MBTI Compatibility</span>
                     <span class="hub-count">256</span>
                 </a>
-                <a href="/portal/tools/" class="hub-card" style="--hub-color:#10b981">
+                <a href="/portal/tools/" class="hub-card js-prefetch-link" data-cta-surface="tools_hub" style="--hub-color:#10b981">
                     <span class="hub-icon">&#128736;</span>
                     <span class="hub-name" data-i18n="hubs.tools">Online Tools</span>
                     <span class="hub-count">15+</span>
                 </a>
-                <a href="/portal/games/" class="hub-card" style="--hub-color:#00e5ff">
+                <a href="/portal/games/" class="hub-card js-prefetch-link" data-cta-surface="games_hub" style="--hub-color:#00e5ff">
                     <span class="hub-icon">&#127918;</span>
                     <span class="hub-name" data-i18n="hubs.games">Free Games</span>
                     <span class="hub-count">21</span>
@@ -865,7 +886,7 @@
         </footer>
 
         <!-- Ad Banner Bottom -->
-        <div class="ad-banner ad-inline-bottom">
+        <div class="ad-banner ad-inline-bottom" data-ad-surface="portal_bottom_inline">
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-3600813755953882"
@@ -923,13 +944,48 @@
 
             trackPortalEvent('hub_view', { page_type: 'portal_home' });
 
-            document.querySelectorAll('.adsbygoogle').forEach(function() {
+            document.querySelectorAll('.ad-banner').forEach(function(banner) {
+                var adNode = banner.querySelector('.adsbygoogle');
+                if (!adNode) return;
                 try {
                     (adsbygoogle = window.adsbygoogle || []).push({});
+                    trackPortalEvent('hub_ad_impression', {
+                        ad_surface: banner.dataset.adSurface || 'portal_ad'
+                    });
                 } catch (e) {}
             });
 
+            window.updatePortalWinnerCards = function() {
+                if (typeof APP_DATA === 'undefined' || typeof getAppName !== 'function') return;
+                var lang = (typeof i18n !== 'undefined' && typeof i18n.getCurrentLanguage === 'function')
+                    ? i18n.getCurrentLanguage()
+                    : 'ko';
+                document.querySelectorAll('.hero-winner-card[data-app]').forEach(function(card) {
+                    var appId = card.dataset.app || '';
+                    var app = APP_DATA.find(function(item) { return item.id === appId; });
+                    if (!app) return;
+                    var nameEl = card.querySelector('.hero-winner-name');
+                    var descEl = card.querySelector('.hero-winner-desc');
+                    var metaEl = card.querySelector('.hero-winner-meta');
+                    if (nameEl) nameEl.textContent = getAppName(app, lang);
+                    if (descEl && typeof getAppDesc === 'function') descEl.textContent = getAppDesc(app, lang);
+                    if (metaEl && typeof getCategoryName === 'function') metaEl.textContent = getCategoryName(app.category || '', lang);
+                });
+            };
+
+            window.updatePortalWinnerCards();
+
             document.addEventListener('click', function(e) {
+                var surfaceCta = e.target.closest('[data-cta-surface]');
+                if (surfaceCta) {
+                    trackPortalEvent('hub_cta_click', {
+                        cta_type: surfaceCta.dataset.ctaSurface || 'portal_cta',
+                        destination: surfaceCta.getAttribute('href') || '',
+                        app_id: surfaceCta.dataset.app || ''
+                    });
+                    return;
+                }
+
                 var catBtn = e.target.closest('.cat-btn');
                 if (catBtn) {
                     trackPortalEvent('hub_filter_select', {

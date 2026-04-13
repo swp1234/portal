@@ -42,6 +42,7 @@
                         renderPersonalized();
                         filterApps();
                         if (typeof renderBlog === 'function') renderBlog();
+                        if (typeof window.updatePortalWinnerCards === 'function') window.updatePortalWinnerCards();
                     } catch (e) {
                         console.warn('Re-render after language change failed:', e.message);
                     }

@@ -3,16 +3,9 @@
  * Drop-in milestone module for any game.
  *
  * Usage:
- *   <script src="/_common/js/achievements.js"></script>
- *   GameAchievements.init({
- *     gameId: 'snake-game',
- *     defs: [
- *       { id: 'score_100', stat: 'bestScore', target: 100, icon: '\uD83C\uDFC6' },
- *       { id: 'games_10', stat: 'totalGames', target: 10, icon: '\uD83C\uDFAE' },
- *     ]
- *   });
- *   // After game ends:
- *   GameAchievements.report({ bestScore: 150, totalGames: 12 });
+ *   1. Load this file from your game page.
+ *   2. Initialize the achievement module with a `gameId` and milestone definitions.
+ *   3. After each run, send updated stats to the module so it can unlock milestones.
  */
 const GameAchievements = (() => {
   let cfg = { gameId: '', defs: [] };
