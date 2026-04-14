@@ -120,6 +120,26 @@ a:hover{color:var(--accent)}
 .hero-sub{font-size:clamp(14px,3vw,18px);color:var(--text2);margin-bottom:16px}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;background:var(--surface);border:1px solid var(--border);border-radius:99px;font-size:13px;color:var(--primary);font-weight:600}
 .hero-badge::before{content:'';width:8px;height:8px;background:var(--primary);border-radius:50%;animation:pulse 2s ease infinite}
+.quick-start-panel{max-width:980px;margin:24px auto 0;padding:22px;border:1px solid var(--border);border-radius:24px;background:linear-gradient(135deg,rgba(16,185,129,0.06),rgba(168,85,247,0.05));backdrop-filter:blur(14px);box-shadow:0 20px 48px rgba(0,0,0,0.18)}
+.quick-start-head{display:grid;gap:6px;max-width:700px;margin:0 auto 18px}
+.quick-start-kicker{font-size:11px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:var(--primary)}
+.quick-start-head h2{font-family:var(--heading);font-size:clamp(22px,4.5vw,32px);font-weight:800;line-height:1.08}
+.quick-start-sub{font-size:14px;color:var(--text2);line-height:1.6}
+.quick-start-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.quick-start-card{position:relative;display:flex;flex-direction:column;gap:12px;min-height:192px;padding:18px;border:1px solid rgba(255,255,255,0.1);border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03));color:var(--text);text-align:left;overflow:hidden;transition:transform var(--transition),border-color var(--transition),box-shadow var(--transition)}
+.quick-start-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at top right,var(--quick-color,rgba(16,185,129,0.18)),transparent 58%);pointer-events:none}
+.quick-start-card:hover{transform:translateY(-5px);border-color:var(--quick-border,var(--primary));box-shadow:0 14px 36px rgba(0,0,0,0.22);color:var(--text)}
+.quick-start-card:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.quick-start-top,.quick-start-copy,.quick-start-link{position:relative;z-index:1}
+.quick-start-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.quick-start-tag{display:inline-flex;align-items:center;justify-content:center;padding:4px 10px;border-radius:999px;background:rgba(16,185,129,0.14);border:1px solid rgba(16,185,129,0.2);font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--primary)}
+.quick-start-time{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text2)}
+.quick-start-copy{display:grid;gap:6px}
+.quick-start-name{font-family:var(--heading);font-size:22px;font-weight:800}
+.quick-start-desc{font-size:13px;color:var(--text2);line-height:1.6}
+.quick-start-link{display:inline-flex;align-items:center;gap:8px;margin-top:auto;font-size:13px;font-weight:800;color:var(--text)}
+.quick-start-link::after{content:'\2192';font-size:14px;transition:transform var(--transition)}
+.quick-start-card:hover .quick-start-link::after{transform:translateX(4px)}
 
 /* Theme toggle */
 .theme-btn{position:fixed;top:16px;right:16px;z-index:1000;width:44px;height:44px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);transition:all var(--transition)}
@@ -222,7 +242,7 @@ footer a{color:var(--text2)}
 .animate{animation:fadeUp 0.5s ease both}
 
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
-@media(max-width:720px){.routine-band{grid-template-columns:1fr}}
+@media(max-width:720px){.quick-start-grid,.routine-band{grid-template-columns:1fr}}
 @media(max-width:480px){.featured{grid-template-columns:1fr}.tools-grid{grid-template-columns:repeat(2,1fr)}.cta-stack{flex-direction:column}.cta-chip{justify-content:center}}
 </style>
 </head>
@@ -237,6 +257,48 @@ footer a{color:var(--text2)}
   <h1 data-i18n="hub_tools.title">Free Online Tools</h1>
   <p class="hero-sub" data-i18n="hub_tools.subtitle">Calculators, timers, and utilities. Always free.</p>
   <span class="hero-badge" data-i18n="hub_tools.badge">15+ Tools Available</span>
+  <section class="quick-start-panel" aria-labelledby="quick-start-title">
+    <div class="quick-start-head">
+      <p class="quick-start-kicker" data-i18n="hub_tools.quick_kicker">Start Here</p>
+      <h2 id="quick-start-title" data-i18n="hub_tools.quick_title">Pick the tool that matches your next 10 minutes</h2>
+      <p class="quick-start-sub" data-i18n="hub_tools.quick_subtitle">Choose the fastest path: focus, reset your screen time, or build one streak today.</p>
+    </div>
+    <div class="quick-start-grid">
+      <a href="/pomodoro-timer/" class="quick-start-card js-prefetch-link" data-app="pomodoro-timer" data-cta-surface="hero_focus_sprint" style="--quick-color:rgba(239,68,68,0.22);--quick-border:#ef4444">
+        <div class="quick-start-top">
+          <span class="quick-start-tag" data-i18n="hub_tools.filter_timer">Timer</span>
+          <span class="quick-start-time" data-i18n="hub_tools.quick_focus_time">25 min sprint</span>
+        </div>
+        <div class="quick-start-copy">
+          <div class="quick-start-name">Pomodoro Timer</div>
+          <p class="quick-start-desc" data-i18n="hub_tools.desc_pomodoro-timer">Focus timer with breaks</p>
+        </div>
+        <span class="quick-start-link" data-i18n="hub_tools.open_tool">Open Tool</span>
+      </a>
+      <a href="/detox-timer/" class="quick-start-card js-prefetch-link" data-app="detox-timer" data-cta-surface="hero_reset_scroll" style="--quick-color:rgba(0,184,148,0.22);--quick-border:#00b894">
+        <div class="quick-start-top">
+          <span class="quick-start-tag" data-i18n="hub_tools.filter_wellness">Wellness</span>
+          <span class="quick-start-time" data-i18n="hub_tools.quick_reset_time">2 min reset</span>
+        </div>
+        <div class="quick-start-copy">
+          <div class="quick-start-name">Detox Timer</div>
+          <p class="quick-start-desc" data-i18n="hub_tools.desc_detox-timer">Digital detox countdown</p>
+        </div>
+        <span class="quick-start-link" data-i18n="hub_tools.open_tool">Open Tool</span>
+      </a>
+      <a href="/habit-tracker/" class="quick-start-card js-prefetch-link" data-app="habit-tracker" data-cta-surface="hero_build_streak" style="--quick-color:rgba(39,174,96,0.22);--quick-border:#27ae60">
+        <div class="quick-start-top">
+          <span class="quick-start-tag" data-i18n="hub_tools.filter_wellness">Wellness</span>
+          <span class="quick-start-time" data-i18n="hub_tools.quick_streak_time">1 minute setup</span>
+        </div>
+        <div class="quick-start-copy">
+          <div class="quick-start-name">Habit Tracker</div>
+          <p class="quick-start-desc" data-i18n="hub_tools.desc_habit-tracker">Track your daily habits</p>
+        </div>
+        <span class="quick-start-link" data-i18n="hub_tools.open_tool">Open Tool</span>
+      </a>
+    </div>
+  </section>
 </header>
 
 <nav class="filters" aria-label="Tool categories">
@@ -409,6 +471,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const filters=document.querySelectorAll('.filter-btn');
   const cards=document.querySelectorAll('.tool-card');
   const featured=document.querySelectorAll('.featured-card');
+  const quickStartCards=document.querySelectorAll('.quick-start-card');
   const routineCards=document.querySelectorAll('.routine-card');
   const ctaLinks=document.querySelectorAll('[data-cta-surface]');
   const faqItems=document.querySelectorAll('.faq-item');
@@ -457,6 +520,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   pushEvent({
     event:'hub_view',
     hub_name:'tools',
+    quick_start_count:quickStartCards.length,
     featured_count:featured.length,
     tool_count:cards.length
   });
@@ -525,7 +589,7 @@ document.addEventListener('DOMContentLoaded',()=>{
           var appId = el.dataset.app;
           var app = APP_DATA.find(function(a) { return a.id === appId; });
           if (!app) return;
-          var nameEl = el.querySelector('.gc-name,.fc-name,.tc-name,.routine-name,.cta-chip-name');
+          var nameEl = el.querySelector('.gc-name,.fc-name,.tc-name,.routine-name,.cta-chip-name,.quick-start-name');
           if (nameEl) nameEl.textContent = getAppName(app, lang);
         });
       }
