@@ -590,7 +590,9 @@ document.addEventListener('DOMContentLoaded',()=>{
           var app = APP_DATA.find(function(a) { return a.id === appId; });
           if (!app) return;
           var nameEl = el.querySelector('.gc-name,.fc-name,.tc-name,.routine-name,.cta-chip-name,.quick-start-name');
+          var descEl = el.querySelector('.fc-desc,.tc-desc,.routine-desc,.quick-start-desc');
           if (nameEl) nameEl.textContent = getAppName(app, lang);
+          if (descEl && typeof getAppDesc === 'function') descEl.textContent = getAppDesc(app, lang);
         });
       }
     });
