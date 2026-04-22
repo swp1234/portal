@@ -285,11 +285,11 @@ footer a{color:var(--text2)}
 <section style="max-width:900px;margin:32px auto;padding:0 20px">
   <h2 style="color:var(--cyan,#00e5ff);font-size:20px;margin-bottom:12px" data-i18n="hub_games.try_tests">Take a Quick Test</h2>
   <div style="display:flex;flex-wrap:wrap;gap:10px">
-    <a href="/eq-test/" style="padding:10px 18px;background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.15);border-radius:10px;color:var(--cyan,#00e5ff);text-decoration:none;font-size:14px">EQ Test</a>
-    <a href="/toxic-trait-test/" style="padding:10px 18px;background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.15);border-radius:10px;color:var(--cyan,#00e5ff);text-decoration:none;font-size:14px">Toxic Trait Test</a>
-    <a href="/mental-age/" style="padding:10px 18px;background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.15);border-radius:10px;color:var(--cyan,#00e5ff);text-decoration:none;font-size:14px">Mental Age Test</a>
-    <a href="/stress-response/" style="padding:10px 18px;background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.15);border-radius:10px;color:var(--cyan,#00e5ff);text-decoration:none;font-size:14px">Stress Response</a>
-    <a href="/hsp-test/" style="padding:10px 18px;background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.15);border-radius:10px;color:var(--cyan,#00e5ff);text-decoration:none;font-size:14px">HSP Test</a>
+    <a href="/eq-test/" data-app="eq-test" style="padding:10px 18px;background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.15);border-radius:10px;color:var(--cyan,#00e5ff);text-decoration:none;font-size:14px">EQ Test</a>
+    <a href="/toxic-trait-test/" data-app="toxic-trait-test" style="padding:10px 18px;background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.15);border-radius:10px;color:var(--cyan,#00e5ff);text-decoration:none;font-size:14px">Toxic Trait Test</a>
+    <a href="/mental-age/" data-app="mental-age" style="padding:10px 18px;background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.15);border-radius:10px;color:var(--cyan,#00e5ff);text-decoration:none;font-size:14px">Mental Age Test</a>
+    <a href="/stress-response/" data-app="stress-response" style="padding:10px 18px;background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.15);border-radius:10px;color:var(--cyan,#00e5ff);text-decoration:none;font-size:14px">Stress Response</a>
+    <a href="/hsp-test/" data-app="hsp-test" style="padding:10px 18px;background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.15);border-radius:10px;color:var(--cyan,#00e5ff);text-decoration:none;font-size:14px">HSP Test</a>
   </div>
 </section>
 
@@ -357,15 +357,29 @@ document.addEventListener('DOMContentLoaded',()=>{
       document.querySelectorAll('[data-i18n]').forEach(function(el) {
         el.textContent = i18n.t(el.getAttribute('data-i18n'));
       });
+      document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+        el.innerHTML = i18n.t(el.getAttribute('data-i18n-html'));
+      });
       // Render app names from APP_DATA
       if (typeof APP_DATA !== 'undefined' && typeof getAppName === 'function') {
         var lang = i18n.getCurrentLanguage();
+        var gameCategoryLabels = {
+          puzzle: i18n.t('hub_games.filter_puzzle'),
+          action: i18n.t('hub_games.filter_action'),
+          brain: i18n.t('hub_games.filter_brain'),
+          classic: i18n.t('hub_games.filter_classic')
+        };
         document.querySelectorAll('[data-app]').forEach(function(el) {
           var appId = el.dataset.app;
           var app = APP_DATA.find(function(a) { return a.id === appId; });
           if (!app) return;
           var nameEl = el.querySelector('.gc-name,.fc-name,.tc-name');
+          var descEl = el.querySelector('.gc-desc,.fc-desc,.tc-desc');
+          var tagEl = el.querySelector('.gc-cat,.fc-tag');
           if (nameEl) nameEl.textContent = getAppName(app, lang);
+          else el.textContent = getAppName(app, lang);
+          if (descEl && typeof getAppDesc === 'function') descEl.textContent = getAppDesc(app, lang);
+          if (tagEl && gameCategoryLabels[el.dataset.cat]) tagEl.textContent = gameCategoryLabels[el.dataset.cat];
         });
       }
     });
