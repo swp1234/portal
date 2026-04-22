@@ -127,8 +127,16 @@ a{color:var(--cyan);text-decoration:none}
 .modal-detail h4{font-size:12px;font-weight:600;color:var(--green);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px}
 .modal-detail.challenge h4{color:var(--orange)}
 .modal-detail p{font-size:12px;color:var(--text2);line-height:1.5}
+.modal-next{margin-bottom:16px}
+.modal-next-card{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:14px;background:linear-gradient(135deg,rgba(0,229,255,0.08),rgba(168,85,247,0.08));border:1px solid rgba(168,85,247,0.16)}
+.modal-next-icon{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);flex-shrink:0}
+.modal-next-copy{min-width:0}
+.modal-next-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.modal-next-desc{font-size:13px;color:var(--text2);line-height:1.6}
 .modal-cta{display:block;text-align:center;padding:12px;border-radius:12px;font:600 14px var(--font);color:#fff;background:linear-gradient(135deg,var(--purple),#7c3aed);transition:all var(--transition);text-decoration:none}
 .modal-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(168,85,247,0.3);color:#fff}
+.modal-secondary-cta{display:block;text-align:center;margin-top:10px;color:#67e8f9;text-decoration:none;font-size:14px;font-weight:600}
+.modal-secondary-cta:hover{color:#a5f3fc}
 
 /* Top Pairs */
 .top-pairs{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:32px}
@@ -340,8 +348,17 @@ footer a{color:var(--text2)}
       <div class="modal-detail"><h4 data-i18n="hub_mbti.modal_strengths">&#9989; Strengths</h4><p id="modal-str"></p></div>
       <div class="modal-detail challenge"><h4 data-i18n="hub_mbti.modal_challenges">&#9888;&#65039; Challenges</h4><p id="modal-chl"></p></div>
     </div>
-    <a href="/mbti-love/" class="modal-cta js-prefetch-link" data-cta-surface="modal_mbti_primary" data-i18n="hub_mbti.modal_cta">Try Compatibility Test &rarr;</a>
-    <a href="/eq-test/" class="js-prefetch-link" data-cta-surface="modal_eq_secondary" style="display:block;text-align:center;margin-top:10px;color:#67e8f9;text-decoration:none;font-size:14px;font-weight:600" data-i18n="hub_tests.name_eq-test">EQ Test</a>
+    <div class="modal-next" id="modal-next">
+      <div class="modal-next-card">
+        <div class="modal-next-icon" id="modal-next-icon">&#129504;</div>
+        <div class="modal-next-copy">
+          <div class="modal-next-title" id="modal-next-title">EQ Test</div>
+          <div class="modal-next-desc" id="modal-next-desc">Test your emotional intelligence in 3 minutes.</div>
+        </div>
+      </div>
+    </div>
+    <a href="/mbti-love/" class="modal-cta js-prefetch-link" id="modal-primary-cta" data-cta-surface="modal_mbti_primary" data-cta-key="mbti-love">MBTI Love &rarr;</a>
+    <a href="/eq-test/" class="modal-secondary-cta js-prefetch-link" id="modal-secondary-cta" data-cta-surface="modal_eq_secondary" data-cta-key="eq-test" data-i18n="hub_tests.name_eq-test">EQ Test</a>
   </div>
 </div>
 
@@ -550,6 +567,60 @@ matrix.innerHTML=h;
 // Modal
 const overlay=document.getElementById('modal-overlay');
 const closeBtn=document.getElementById('modal-close');
+const modalNextIcon=document.getElementById('modal-next-icon');
+const modalNextTitle=document.getElementById('modal-next-title');
+const modalNextDesc=document.getElementById('modal-next-desc');
+const modalPrimaryCta=document.getElementById('modal-primary-cta');
+const modalSecondaryCta=document.getElementById('modal-secondary-cta');
+const MODAL_FOLLOWUP_RULES={
+  high:{primary:'mbti-love',secondary:'eq-test'},
+  mid:{primary:'eq-test',secondary:'attachment-style'},
+  low:{primary:'attachment-style',secondary:'eq-test'}
+};
+function getScoreBucket(score){
+  if(score>=4)return'high';
+  if(score===3)return'mid';
+  return'low';
+}
+function getAppMeta(appId){
+  if(typeof APP_DATA==='undefined')return null;
+  const app=APP_DATA.find(function(item){return item.id===appId});
+  if(!app)return null;
+  const lang=i18n.getCurrentLanguage();
+  return {
+    id:app.id,
+    icon:app.icon||'&#129504;',
+    name:typeof getAppName==='function'?getAppName(app,lang):app.name,
+    desc:typeof getAppDesc==='function'?getAppDesc(app,lang):app.shortDesc,
+    url:app.url
+  };
+}
+function renderModalFollowups(score){
+  const rule=MODAL_FOLLOWUP_RULES[getScoreBucket(score)]||MODAL_FOLLOWUP_RULES.mid;
+  const primary=getAppMeta(rule.primary);
+  const secondary=getAppMeta(rule.secondary);
+  if(primary&&modalPrimaryCta){
+    modalNextIcon.textContent=primary.icon||'🧠';
+    modalNextTitle.textContent=primary.name;
+    modalNextDesc.textContent=primary.desc;
+    modalPrimaryCta.href=primary.url;
+    modalPrimaryCta.dataset.ctaSurface='modal_primary_'+primary.id.replace(/-/g,'_');
+    modalPrimaryCta.dataset.ctaKey=primary.id;
+    modalPrimaryCta.textContent=primary.name+' →';
+  }
+  if(secondary&&modalSecondaryCta){
+    modalSecondaryCta.href=secondary.url;
+    modalSecondaryCta.dataset.ctaSurface='modal_secondary_'+secondary.id.replace(/-/g,'_');
+    modalSecondaryCta.dataset.ctaKey=secondary.id;
+    modalSecondaryCta.textContent=secondary.name;
+  }
+  trackHubEvent('hub_cta_view',{
+    cta_type:'modal_followup',
+    score_bucket:getScoreBucket(score),
+    primary_destination:primary?primary.url:'',
+    secondary_destination:secondary?secondary.url:''
+  });
+}
 function showModal(t1,t2){
   const key=t1+'-'+t2;
   const d=D[key];
@@ -562,6 +633,7 @@ function showModal(t1,t2){
   document.getElementById('modal-desc').textContent=d.desc;
   document.getElementById('modal-str').textContent=d.str;
   document.getElementById('modal-chl').textContent=d.chl;
+  renderModalFollowups(d.score);
   overlay.classList.add('active');
   document.body.style.overflow='hidden';
   gtag('event','mbti_compat_view',{type_1:t1,type_2:t2,score:d.score});
