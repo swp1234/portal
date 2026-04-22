@@ -2,6 +2,7 @@ class I18n {
     constructor() {
         this.translations = {};
         this.supportedLanguages = ['ko', 'en', 'ja', 'es', 'pt', 'zh', 'id', 'tr', 'de', 'fr', 'hi', 'ru'];
+        this.localeVersion = '20260422b';
         this.currentLang = this.detectLanguage();
     }
 
@@ -18,7 +19,9 @@ class I18n {
 
     async loadTranslations(lang) {
         try {
-            const response = await fetch(`/portal/js/locales/${lang}.json`);
+            const response = await fetch(`/portal/js/locales/${lang}.json?v=${this.localeVersion}`, {
+                cache: 'reload'
+            });
             if (!response.ok) throw new Error('Not found');
             this.translations[lang] = await response.json();
             return true;
@@ -133,3 +136,17 @@ const i18n = new I18n();
         appLoader.style.transition = 'opacity 0.4s ease-out, visibility 0.4s ease-out';
     }
 })();
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.getRegistration('/portal/').then((registration) => {
+            if (registration) {
+                registration.update().catch(() => {
+                    // Update checks are best-effort only.
+                });
+            }
+        }).catch(() => {
+            // Registration lookup failed, but the page still works.
+        });
+    });
+}

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dopabrain-portal-v1';
+const CACHE_NAME = 'dopabrain-portal-v2';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -33,6 +33,26 @@ self.addEventListener('activate', (event) => {
 
 // Fetch - Network first, fallback to cache
 self.addEventListener('fetch', (event) => {
+    if (event.request.method !== 'GET') {
+        return;
+    }
+
+    const requestUrl = new URL(event.request.url);
+    const isSameOrigin = requestUrl.origin === self.location.origin;
+    const isLocaleJson = requestUrl.pathname.includes('/js/locales/') && requestUrl.pathname.endsWith('.json');
+    const isHtmlNavigation = event.request.mode === 'navigate' || requestUrl.pathname.endsWith('.html');
+
+    if (!isSameOrigin) {
+        return;
+    }
+
+    if (isLocaleJson || isHtmlNavigation) {
+        event.respondWith(
+            fetch(event.request).catch(() => caches.match(event.request))
+        );
+        return;
+    }
+
     event.respondWith(
         fetch(event.request)
             .then(response => {
