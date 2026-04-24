@@ -40,7 +40,7 @@
         "description": "情绪温度计、MBTI恋爱配对、HSP、爱情频率、K-POP位置、前世职业、情人节配对测试完整指南",
         "image": "https://dopabrain.com/portal/icon-512.svg",
         "datePublished": "2026-02-08",
-        "dateModified": "2026-02-08",
+        "dateModified": "2026-04-24",
         "inLanguage": "zh-CN",
         "author": {
             "@type": "Organization",
@@ -515,6 +515,60 @@
             font-weight: 600;
         }
 
+        .quick-test-rail {
+            margin: 0 0 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.12) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.18);
+            border-radius: 14px;
+        }
+
+        .quick-test-rail h2 {
+            margin-top: 0;
+            color: var(--text-primary);
+            font-size: 1.7rem;
+        }
+
+        .quick-test-rail p {
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+        }
+
+        .quick-test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-test-card {
+            display: block;
+            padding: 1.1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .quick-test-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(6, 182, 212, 0.35);
+            background: rgba(6, 182, 212, 0.1);
+        }
+
+        .quick-test-card strong {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: var(--secondary);
+        }
+
+        .quick-test-card span {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
         .test-card ul {
             margin: 1.2rem 0 1.5rem 1.8rem;
         }
@@ -829,6 +883,19 @@
             line-height: 1.7;
         }
 
+        .inline-ad {
+            margin: 3rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(139, 92, 246, 0.12);
+            border-radius: 12px;
+        }
+
+        .inline-ad ins {
+            display: block !important;
+            min-height: 250px;
+        }
+
         /* Footer */
         .article-footer {
             text-align: center;
@@ -932,6 +999,10 @@
                 padding: 1.5rem;
             }
 
+            .quick-test-rail {
+                padding: 1.4rem;
+            }
+
             .cta-button {
                 width: 100%;
                 justify-content: center;
@@ -1023,6 +1094,29 @@
 
             <!-- Article Content -->
             <main class="article-content">
+            <section class="quick-test-rail" aria-label="快速开始推荐测试">
+                <h2>先选一个最适合现在的测试</h2>
+                <p>如果您不是来慢慢阅读，而是想马上开始，下面四个入口最适合从这篇文章继续。</p>
+                <div class="quick-test-grid">
+                    <a href="https://dopabrain.com/eq-test/" class="quick-test-card" data-content-surface="quick_eq" data-target-slug="eq-test">
+                        <strong>EQ情商测试</strong>
+                        <span>先了解自己如何识别和处理情绪。</span>
+                    </a>
+                    <a href="https://dopabrain.com/mbti-love/" class="quick-test-card" data-content-surface="quick_mbti_love" data-target-slug="mbti-love">
+                        <strong>MBTI恋爱配对</strong>
+                        <span>适合想看关系兼容性和沟通模式的人。</span>
+                    </a>
+                    <a href="https://dopabrain.com/hsp-test/" class="quick-test-card" data-content-surface="quick_hsp" data-target-slug="hsp-test">
+                        <strong>HSP高敏感测试</strong>
+                        <span>确认你是不是更容易受环境和情绪影响。</span>
+                    </a>
+                    <a href="https://dopabrain.com/attachment-style/" class="quick-test-card" data-content-surface="quick_attachment" data-target-slug="attachment-style">
+                        <strong>依恋风格测试</strong>
+                        <span>把恋爱里的靠近、回避和安全感看清楚。</span>
+                    </a>
+                </div>
+            </section>
+
             <!-- Section 1: Why Trending -->
             <section id="why-trending">
                 <h2>2026年性格测试为什么这么火热？</h2>
@@ -1567,22 +1661,26 @@
             <div class="cta-section">
                 <h2>立即开始您的性格测试之旅！</h2>
                 <p>从上面的7个测试中选择一个开始。每个测试都是深入了解自己的机会。</p>
-                <a href="https://dopabrain.com/" class="cta-button">🎯 查看所有心理测试</a>
+                <a href="https://dopabrain.com/portal/tests/" class="cta-button" data-content-surface="bottom_tests_hub" data-target-slug="portal-tests">🎯 查看所有心理测试</a>
+            </div>
+
+            <div class="inline-ad" data-content-surface="before_related_ad">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
             </div>
 
             <!-- Related Posts -->
             <section>
                 <h2>相关文章</h2>
                 <div class="related-posts">
-                    <a href="/portal/blog/zh/free-games.html" class="related-card">
+                    <a href="/portal/blog/zh/free-games.html" class="related-card" data-content-surface="related_free_games" data-target-slug="zh-free-games">
                         <h3>2026年免费在线游戏TOP 5</h3>
                         <p>无需下载，打开浏览器即玩的5款热门游戏。Sky Runner、Stack Tower、Zigzag Runner等，让您随时随地享受游戏乐趣。</p>
                     </a>
-                    <a href="/portal/blog/zh/love-compatibility.html" class="related-card">
+                    <a href="/portal/blog/zh/love-compatibility.html" class="related-card" data-content-surface="related_love_compatibility" data-target-slug="zh-love-compatibility">
                         <h3>2026年星座配对完全指南</h3>
                         <p>12星座配对分析、四大元素配对、姓名配对等。爱情爱好者的必读指南。</p>
                     </a>
-                    <a href="https://dopabrain.com/portal/" class="related-card">
+                    <a href="https://dopabrain.com/portal/" class="related-card" data-content-surface="related_portal" data-target-slug="portal">
                         <h3>DopaBrain 心理测试集合</h3>
                         <p>浏览更多心理测试、游戏和心理学文章。发现您喜欢的内容。</p>
                     </a>
@@ -1616,6 +1714,22 @@
             });
         });
 
+        const contentMeta = {
+            content_group: 'zh_personality',
+            content_slug: 'zh-personality-tests',
+            page_language: 'zh-CN'
+        };
+
+        function pushContentEvent(eventName, params) {
+            const payload = Object.assign({ event: eventName }, contentMeta, params || {});
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push(payload);
+        }
+
+        pushContentEvent('content_view', {
+            content_type: 'blog_article'
+        });
+
         // Smooth scroll for TOC links
         document.querySelectorAll('.toc a').forEach(link => {
             link.addEventListener('click', function(e) {
@@ -1624,22 +1738,79 @@
                 const targetElement = document.getElementById(targetId);
                 if (targetElement) {
                     targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        // Analytics event tracking
-        document.querySelectorAll('.cta-button, .related-card, .test-link').forEach(element => {
-            element.addEventListener('click', function() {
-                if (window.gtag) {
-                    gtag('event', 'click', {
-                        'event_category': 'engagement',
-                        'event_label': this.textContent,
-                        'value': 1
+                    pushContentEvent('content_toc_click', {
+                        target_section: targetId,
+                        target_label: this.textContent.trim()
                     });
                 }
             });
         });
+
+        function getSlugFromHref(href) {
+            try {
+                const url = new URL(href, window.location.origin);
+                const parts = url.pathname.split('/').filter(Boolean);
+                return parts[parts.length - 1] || 'home';
+            } catch (error) {
+                return 'unknown';
+            }
+        }
+
+        document.querySelectorAll('.quick-test-card').forEach((element, index) => {
+            element.addEventListener('click', function() {
+                pushContentEvent('content_cta_click', {
+                    cta_surface: this.dataset.contentSurface || 'quick_test',
+                    cta_position: index + 1,
+                    target_slug: this.dataset.targetSlug || getSlugFromHref(this.href),
+                    destination: this.href,
+                    target_label: this.textContent.trim().replace(/\s+/g, ' ').slice(0, 120)
+                });
+            });
+        });
+
+        document.querySelectorAll('.test-link').forEach((element, index) => {
+            element.addEventListener('click', function() {
+                const section = this.closest('section');
+                pushContentEvent('content_test_click', {
+                    link_position: index + 1,
+                    source_section: section ? section.id : '',
+                    target_slug: getSlugFromHref(this.href),
+                    destination: this.href,
+                    target_label: this.textContent.trim()
+                });
+            });
+        });
+
+        document.querySelectorAll('.cta-button').forEach((element, index) => {
+            element.addEventListener('click', function() {
+                pushContentEvent('content_cta_click', {
+                    cta_surface: this.dataset.contentSurface || 'bottom_cta',
+                    cta_position: index + 1,
+                    target_slug: this.dataset.targetSlug || getSlugFromHref(this.href),
+                    destination: this.href,
+                    target_label: this.textContent.trim()
+                });
+            });
+        });
+
+        document.querySelectorAll('.related-card').forEach((element, index) => {
+            element.addEventListener('click', function() {
+                pushContentEvent('content_related_click', {
+                    related_position: index + 1,
+                    related_surface: this.dataset.contentSurface || 'related',
+                    target_slug: this.dataset.targetSlug || getSlugFromHref(this.href),
+                    destination: this.href,
+                    target_label: this.querySelector('h3') ? this.querySelector('h3').textContent.trim() : this.textContent.trim().slice(0, 120)
+                });
+            });
+        });
+
+        try {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            pushContentEvent('content_ad_impression', {
+                ad_surface: 'before_related_ad'
+            });
+        } catch (error) {}
     </script>
     <script src="/portal/js/cross-promo.js" defer></script>
 </body>
