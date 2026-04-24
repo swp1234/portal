@@ -39,7 +39,7 @@
         "description": "学习情绪识别、认知行为疗法、正念冥想、情绪日记等科学方法，掌控你的内心世界。",
         "image": "https://dopabrain.com/portal/icon-512.svg",
         "datePublished": "2026-02-08",
-        "dateModified": "2026-02-08",
+        "dateModified": "2026-04-24",
         "inLanguage": "zh-CN",
         "author": {
             "@type": "Organization",
@@ -333,6 +333,60 @@
         .toc a:hover {
             color: var(--secondary);
             padding-left: 0.5rem;
+        }
+
+        .quick-emotion-rail {
+            margin: 0 0 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.14) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            border-radius: 14px;
+        }
+
+        .quick-emotion-rail h2 {
+            margin-top: 0;
+            color: var(--text-primary);
+            font-size: 1.7rem;
+        }
+
+        .quick-emotion-rail p {
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+        }
+
+        .quick-emotion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-emotion-card {
+            display: block;
+            padding: 1.1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .quick-emotion-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(236, 72, 153, 0.35);
+            background: rgba(236, 72, 153, 0.1);
+        }
+
+        .quick-emotion-card strong {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: var(--accent);
+        }
+
+        .quick-emotion-card span {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.5;
         }
 
         /* Article content */
@@ -702,6 +756,19 @@
             line-height: 1.7;
         }
 
+        .inline-ad {
+            margin: 3rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(236, 72, 153, 0.12);
+            border-radius: 12px;
+        }
+
+        .inline-ad ins {
+            display: block !important;
+            min-height: 250px;
+        }
+
         /* Footer */
         .article-footer {
             text-align: center;
@@ -768,6 +835,10 @@
                 padding: 2rem 1.5rem;
             }
 
+            .quick-emotion-rail {
+                padding: 1.4rem;
+            }
+
             .article-content h2 {
                 font-size: 1.6rem;
             }
@@ -811,6 +882,7 @@
             .header-nav,
             .toc,
             .cta-section,
+            .inline-ad,
             .related-posts,
             .article-footer,
             .progress-bar {
@@ -870,6 +942,29 @@
 
             <!-- Article Content -->
             <main class="article-content">
+            <section class="quick-emotion-rail" aria-label="快速开始情绪测试">
+                <h2>先用一个测试定位当前状态</h2>
+                <p>如果你现在就想知道该从哪里开始，先选一个最贴近当下感受的入口。</p>
+                <div class="quick-emotion-grid">
+                    <a href="https://dopabrain.com/emotion-temp/" class="quick-emotion-card" data-content-surface="quick_emotion_temp" data-target-slug="emotion-temp">
+                        <strong>情绪温度计</strong>
+                        <span>把模糊的感受转成更具体的情绪类型。</span>
+                    </a>
+                    <a href="https://dopabrain.com/eq-test/" class="quick-emotion-card" data-content-surface="quick_eq" data-target-slug="eq-test">
+                        <strong>EQ情商测试</strong>
+                        <span>检查你识别、理解和调节情绪的能力。</span>
+                    </a>
+                    <a href="https://dopabrain.com/stress-check/" class="quick-emotion-card" data-content-surface="quick_stress_check" data-target-slug="stress-check">
+                        <strong>压力水平测试</strong>
+                        <span>先确认压力是否已经影响睡眠、专注和身体感受。</span>
+                    </a>
+                    <a href="https://dopabrain.com/hsp-test/" class="quick-emotion-card" data-content-surface="quick_hsp" data-target-slug="hsp-test">
+                        <strong>HSP高敏感测试</strong>
+                        <span>了解自己是不是更容易被情绪和环境放大影响。</span>
+                    </a>
+                </div>
+            </section>
+
             <!-- Section 1: Why Matter -->
             <section id="why-matter">
                 <h2>为什么情绪管理如此重要？</h2>
@@ -1300,22 +1395,26 @@
             <div class="cta-section">
                 <h2>现在开始你的情绪管理之旅</h2>
                 <p>选择一个方法，今天就开始练习。无论是情绪日记、正念冥想还是认知重组，关键是采取行动。</p>
-                <a href="https://dopabrain.com/" class="cta-button">🧠 探索更多心理健康工具</a>
+                <a href="https://dopabrain.com/portal/tests/" class="cta-button" data-content-surface="bottom_tests_hub" data-target-slug="portal-tests">🧠 探索更多心理健康工具</a>
+            </div>
+
+            <div class="inline-ad" data-content-surface="before_related_ad">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
             </div>
 
             <!-- Related Posts -->
             <section>
                 <h2>相关文章</h2>
                 <div class="related-posts">
-                    <a href="/portal/blog/zh/focus-methods.html" class="related-card">
+                    <a href="/portal/blog/zh/focus-methods.html" class="related-card" data-content-surface="related_focus_methods" data-target-slug="zh-focus-methods">
                         <h3>提升专注力的10种科学方法</h3>
                         <p>管理多巴胺、番茄工作法、深度工作、手机成瘾解决方案。提升工作效率和学习能力。</p>
                     </a>
-                    <a href="/portal/blog/zh/sleep-guide.html" class="related-card">
+                    <a href="/portal/blog/zh/sleep-guide.html" class="related-card" data-content-surface="related_sleep_guide" data-target-slug="zh-sleep-guide">
                         <h3>科学睡眠指南：如何获得高质量睡眠</h3>
                         <p>睡眠周期、褪黑素、睡前习惯、失眠解决方案。建立健康的睡眠习惯。</p>
                     </a>
-                    <a href="/portal/blog/zh/relationship-tips.html" class="related-card">
+                    <a href="/portal/blog/zh/relationship-tips.html" class="related-card" data-content-surface="related_relationship_tips" data-target-slug="zh-relationship-tips">
                         <h3>人际关系沟通技巧：建立更好的连接</h3>
                         <p>非暴力沟通、倾听技巧、冲突解决、职场和亲密关系维护。</p>
                     </a>
@@ -1349,6 +1448,22 @@
             });
         });
 
+        const contentMeta = {
+            content_group: 'zh_emotion',
+            content_slug: 'zh-emotion-management',
+            page_language: 'zh-CN'
+        };
+
+        function pushContentEvent(eventName, params) {
+            const payload = Object.assign({ event: eventName }, contentMeta, params || {});
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push(payload);
+        }
+
+        pushContentEvent('content_view', {
+            content_type: 'blog_article'
+        });
+
         // Smooth scroll for TOC links
         document.querySelectorAll('.toc a').forEach(link => {
             link.addEventListener('click', function(e) {
@@ -1357,22 +1472,66 @@
                 const targetElement = document.getElementById(targetId);
                 if (targetElement) {
                     targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        // Analytics event tracking
-        document.querySelectorAll('.cta-button, .related-card').forEach(element => {
-            element.addEventListener('click', function() {
-                if (window.gtag) {
-                    gtag('event', 'click', {
-                        'event_category': 'engagement',
-                        'event_label': this.textContent,
-                        'value': 1
+                    pushContentEvent('content_toc_click', {
+                        target_section: targetId,
+                        target_label: this.textContent.trim()
                     });
                 }
             });
         });
+
+        function getSlugFromHref(href) {
+            try {
+                const url = new URL(href, window.location.origin);
+                const parts = url.pathname.split('/').filter(Boolean);
+                return parts[parts.length - 1] || 'home';
+            } catch (error) {
+                return 'unknown';
+            }
+        }
+
+        document.querySelectorAll('.quick-emotion-card').forEach((element, index) => {
+            element.addEventListener('click', function() {
+                pushContentEvent('content_cta_click', {
+                    cta_surface: this.dataset.contentSurface || 'quick_emotion',
+                    cta_position: index + 1,
+                    target_slug: this.dataset.targetSlug || getSlugFromHref(this.href),
+                    destination: this.href,
+                    target_label: this.textContent.trim().replace(/\s+/g, ' ').slice(0, 120)
+                });
+            });
+        });
+
+        document.querySelectorAll('.cta-button').forEach((element, index) => {
+            element.addEventListener('click', function() {
+                pushContentEvent('content_cta_click', {
+                    cta_surface: this.dataset.contentSurface || 'bottom_cta',
+                    cta_position: index + 1,
+                    target_slug: this.dataset.targetSlug || getSlugFromHref(this.href),
+                    destination: this.href,
+                    target_label: this.textContent.trim()
+                });
+            });
+        });
+
+        document.querySelectorAll('.related-card').forEach((element, index) => {
+            element.addEventListener('click', function() {
+                pushContentEvent('content_related_click', {
+                    related_position: index + 1,
+                    related_surface: this.dataset.contentSurface || 'related',
+                    target_slug: this.dataset.targetSlug || getSlugFromHref(this.href),
+                    destination: this.href,
+                    target_label: this.querySelector('h3') ? this.querySelector('h3').textContent.trim() : this.textContent.trim().slice(0, 120)
+                });
+            });
+        });
+
+        try {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            pushContentEvent('content_ad_impression', {
+                ad_surface: 'before_related_ad'
+            });
+        } catch (error) {}
     </script>
     <script src="/portal/js/cross-promo.js" defer></script>
 </body>
