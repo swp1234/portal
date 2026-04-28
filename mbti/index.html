@@ -280,11 +280,11 @@ footer a{color:var(--text2)}
   <div class="pair-card"><div class="pair-header"><span class="pair-types">ISTJ &amp; ESTP</span><span class="pair-score">&#128149;&#128149;&#128149;&#128149;</span></div><div class="pair-title" data-i18n="hub_mbti.pair6_title">Practical Partners</div><p class="pair-desc" data-i18n="hub_mbti.pair6_desc">Both grounded in reality with a shared preference for action over theory. ISTJ brings structure and reliability while ESTP adds adaptability and quick thinking.</p></div>
 </div>
 
-<div class="inline-ad" aria-label="Sponsored">
+<div class="inline-ad" id="mbti-inline-ad" data-ad-surface="mbti_mid_inline" aria-label="Sponsored">
   <ins class="adsbygoogle"
        style="display:block"
        data-ad-client="ca-pub-3600813755953882"
-       data-ad-slot="1234567890"
+       data-ad-slot="auto"
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
 </div>
@@ -725,8 +725,16 @@ document.addEventListener('click',e=>{
   }
 });
 
-document.querySelectorAll('.adsbygoogle').forEach(function(){
-  try{(adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}
+document.querySelectorAll('.inline-ad').forEach(function(adWrap){
+  var adNode = adWrap.querySelector('.adsbygoogle');
+  if(!adNode) return;
+  try{
+    (adsbygoogle=window.adsbygoogle||[]).push({});
+    trackHubEvent('hub_ad_impression',{
+      ad_surface: adWrap.dataset.adSurface || 'mbti_inline_ad',
+      ad_slot: adNode.dataset.adSlot || ''
+    });
+  }catch(e){}
 });
 
 // i18n

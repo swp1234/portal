@@ -266,11 +266,11 @@ footer a{color:var(--text2)}
   </a>
 </div>
 
-<div class="inline-ad" aria-label="Sponsored">
+<div class="inline-ad" id="tests-inline-ad" data-ad-surface="tests_featured_inline" aria-label="Sponsored">
   <ins class="adsbygoogle"
        style="display:block"
        data-ad-client="ca-pub-3600813755953882"
-       data-ad-slot="1234567890"
+       data-ad-slot="auto"
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
 </div>
@@ -433,8 +433,16 @@ document.addEventListener('DOMContentLoaded',function(){
 
   trackHubEvent('hub_view',{page_type:'tests_hub'});
 
-  document.querySelectorAll('.adsbygoogle').forEach(function(){
-    try{(adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}
+  document.querySelectorAll('.inline-ad').forEach(function(adWrap){
+    var adNode=adWrap.querySelector('.adsbygoogle');
+    if(!adNode)return;
+    try{
+      (adsbygoogle=window.adsbygoogle||[]).push({});
+      trackHubEvent('hub_ad_impression',{
+        ad_surface:adWrap.dataset.adSurface||'tests_inline_ad',
+        ad_slot:adNode.dataset.adSlot||''
+      });
+    }catch(e){}
   });
 
   // Theme toggle
