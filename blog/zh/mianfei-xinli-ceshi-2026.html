@@ -41,7 +41,7 @@
         "description": "精选7项免费在线性格测试：脑型测试、色彩性格测试、动物性格测试、HSP高敏感测试、MBTI爱情配对、压力测试、情绪温度测试完全指南。",
         "image": "https://dopabrain.com/portal/icon-512.svg",
         "datePublished": "2026-02-13",
-        "dateModified": "2026-02-13",
+        "dateModified": "2026-04-28",
         "inLanguage": "zh",
         "author": {
             "@type": "Organization",
@@ -569,6 +569,60 @@
             line-height: 1.7;
         }
 
+        .quick-test-rail {
+            margin: 0 0 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.12) 0%, rgba(16, 185, 129, 0.09) 100%);
+            border: 1px solid rgba(236, 72, 153, 0.18);
+            border-radius: 14px;
+        }
+
+        .quick-test-rail h2 {
+            margin-top: 0;
+            color: var(--text-primary);
+            font-size: 1.7rem;
+        }
+
+        .quick-test-rail p {
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+        }
+
+        .quick-test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-test-card {
+            display: block;
+            padding: 1.1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .quick-test-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(236, 72, 153, 0.35);
+            background: rgba(236, 72, 153, 0.1);
+        }
+
+        .quick-test-card strong {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: var(--primary-light);
+        }
+
+        .quick-test-card span {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
         .cta-section {
             background: linear-gradient(135deg, rgba(236, 72, 153, 0.12) 0%, rgba(219, 39, 119, 0.08) 100%);
             border: 1px solid var(--border-color);
@@ -668,6 +722,19 @@
             line-height: 1.7;
         }
 
+        .inline-ad {
+            margin: 3rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(236, 72, 153, 0.12);
+            border-radius: 12px;
+        }
+
+        .inline-ad ins {
+            display: block !important;
+            min-height: 250px;
+        }
+
         .article-footer {
             text-align: center;
             padding: 3rem 0;
@@ -753,6 +820,10 @@
             .guide-grid {
                 grid-template-columns: 1fr;
             }
+
+            .quick-test-rail {
+                padding: 1.4rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -793,6 +864,8 @@
             .toc,
             .cta-section,
             .related-posts,
+            .quick-test-rail,
+            .inline-ad,
             .article-footer,
             .progress-bar {
                 display: none;
@@ -844,6 +917,29 @@
             </nav>
 
             <main class="article-content">
+                <section class="quick-test-rail" aria-label="快速开始推荐测试">
+                    <h2>先从一个最适合现在的测试开始</h2>
+                    <p>如果你是通过搜索来到这里，可以先选择一个入口完成测试，再回来看完整推荐。</p>
+                    <div class="quick-test-grid">
+                        <a href="https://dopabrain.com/portal/tests/" class="quick-test-card" data-content-surface="quick_tests_hub" data-target-slug="portal-tests">
+                            <strong>心理测试中心</strong>
+                            <span>一次查看全部免费测试，适合还没决定从哪里开始的人。</span>
+                        </a>
+                        <a href="https://dopabrain.com/portal/mbti/" class="quick-test-card" data-content-surface="quick_mbti_hub" data-target-slug="portal-mbti">
+                            <strong>MBTI 16型入口</strong>
+                            <span>查看16型人格、关系组合和类型解读。</span>
+                        </a>
+                        <a href="https://dopabrain.com/brain-type/" class="quick-test-card" data-content-surface="quick_brain_type" data-target-slug="brain-type">
+                            <strong>脑型测试</strong>
+                            <span>快速了解你的思维方式和决策偏好。</span>
+                        </a>
+                        <a href="https://dopabrain.com/hsp-test/" class="quick-test-card" data-content-surface="quick_hsp" data-target-slug="hsp-test">
+                            <strong>HSP高敏感测试</strong>
+                            <span>判断你是否容易受环境、情绪和细节影响。</span>
+                        </a>
+                    </div>
+                </section>
+
                 <section id="why-test">
                     <h2>为什么2026年性格测试如此火爆</h2>
                     <p>
@@ -1080,21 +1176,30 @@
                 <div class="cta-section">
                     <h2>现在就开始免费测试吧</h2>
                     <p>无需注册，完全免费。手机、电脑随时可用。你属于哪种性格类型？</p>
-                    <a href="https://dopabrain.com/" class="cta-button">🧠 查看全部测试</a>
+                    <a href="https://dopabrain.com/portal/tests/" class="cta-button" data-content-surface="bottom_tests_hub" data-target-slug="portal-tests">🧠 查看全部心理测试</a>
+                </div>
+
+                <div class="inline-ad" data-content-surface="before_related_ad" aria-label="Sponsored">
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-3600813755953882"
+                        data-ad-slot="auto"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
                 </div>
 
                 <section>
                     <h2>相关内容推荐</h2>
                     <div class="related-posts">
-                        <a href="https://dopabrain.com/portal/blog/zh/yalice-ceshi-zhinan.html" class="related-card">
+                        <a href="https://dopabrain.com/portal/blog/zh/yalice-ceshi-zhinan.html" class="related-card" data-content-surface="related_stress_guide" data-target-slug="zh-yalice-ceshi-zhinan">
                             <h3>压力测试完全指南</h3>
                             <p>测量你的压力水平，获取个性化的减压建议。</p>
                         </a>
-                        <a href="https://dopabrain.com/portal/blog/zh/2026-zuijia-naoli-youxi.html" class="related-card">
+                        <a href="https://dopabrain.com/portal/blog/zh/2026-zuijia-naoli-youxi.html" class="related-card" data-content-surface="related_brain_games" data-target-slug="zh-2026-zuijia-naoli-youxi">
                             <h3>2026最佳脑力游戏</h3>
                             <p>边玩边训练大脑。精选免费脑力训练游戏推荐。</p>
                         </a>
-                        <a href="https://dopabrain.com/portal/blog/zh/danao-leixing-ceshi.html" class="related-card">
+                        <a href="https://dopabrain.com/portal/blog/zh/danao-leixing-ceshi.html" class="related-card" data-content-surface="related_brain_type_guide" data-target-slug="zh-danao-leixing-ceshi">
                             <h3>大脑类型测试详解</h3>
                             <p>你是左脑型还是右脑型？深度解析你的认知风格。</p>
                         </a>
@@ -1111,6 +1216,32 @@
     </footer>
 
     <script>
+        const contentMeta = {
+            content_group: 'zh_psych_tests',
+            content_slug: 'zh-mianfei-xinli-ceshi-2026',
+            page_language: 'zh-CN'
+        };
+
+        function pushContentEvent(eventName, params) {
+            const payload = Object.assign({ event: eventName }, contentMeta, params || {});
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push(payload);
+        }
+
+        function getSlugFromHref(href) {
+            try {
+                const url = new URL(href, window.location.origin);
+                const parts = url.pathname.split('/').filter(Boolean);
+                return parts[parts.length - 1] || 'home';
+            } catch (error) {
+                return 'unknown';
+            }
+        }
+
+        pushContentEvent('content_view', {
+            content_type: 'blog_article'
+        });
+
         window.addEventListener('scroll', function() {
             const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -1125,21 +1256,72 @@
                 const targetElement = document.getElementById(targetId);
                 if (targetElement) {
                     targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        document.querySelectorAll('.cta-button, .related-card, .game-link').forEach(element => {
-            element.addEventListener('click', function() {
-                if (window.gtag) {
-                    gtag('event', 'click', {
-                        'event_category': 'engagement',
-                        'event_label': this.textContent,
-                        'value': 1
+                    pushContentEvent('content_toc_click', {
+                        target_section: targetId,
+                        target_label: this.textContent.trim()
                     });
                 }
             });
         });
+
+        document.querySelectorAll('.quick-test-card').forEach((element, index) => {
+            element.addEventListener('click', function() {
+                pushContentEvent('content_cta_click', {
+                    cta_surface: this.dataset.contentSurface || 'quick_test',
+                    cta_position: index + 1,
+                    target_slug: this.dataset.targetSlug || getSlugFromHref(this.href),
+                    destination: this.href,
+                    target_label: this.textContent.trim().replace(/\s+/g, ' ').slice(0, 120)
+                });
+            });
+        });
+
+        document.querySelectorAll('.game-link').forEach((element, index) => {
+            element.addEventListener('click', function() {
+                const section = this.closest('section');
+                pushContentEvent('content_test_click', {
+                    link_position: index + 1,
+                    source_section: section ? section.id : '',
+                    target_slug: getSlugFromHref(this.href),
+                    destination: this.href,
+                    target_label: this.textContent.trim()
+                });
+            });
+        });
+
+        document.querySelectorAll('.cta-button').forEach((element, index) => {
+            element.addEventListener('click', function() {
+                pushContentEvent('content_cta_click', {
+                    cta_surface: this.dataset.contentSurface || 'bottom_cta',
+                    cta_position: index + 1,
+                    target_slug: this.dataset.targetSlug || getSlugFromHref(this.href),
+                    destination: this.href,
+                    target_label: this.textContent.trim()
+                });
+            });
+        });
+
+        document.querySelectorAll('.related-card').forEach((element, index) => {
+            element.addEventListener('click', function() {
+                pushContentEvent('content_related_click', {
+                    related_position: index + 1,
+                    related_surface: this.dataset.contentSurface || 'related',
+                    target_slug: this.dataset.targetSlug || getSlugFromHref(this.href),
+                    destination: this.href,
+                    target_label: this.querySelector('h3') ? this.querySelector('h3').textContent.trim() : this.textContent.trim().slice(0, 120)
+                });
+            });
+        });
+
+        if (document.querySelector('.inline-ad .adsbygoogle')) {
+            try {
+                (adsbygoogle = window.adsbygoogle || []).push({});
+                pushContentEvent('content_ad_impression', {
+                    ad_surface: 'before_related_ad',
+                    ad_slot: 'auto'
+                });
+            } catch (error) {}
+        }
     </script>
     <script src="/portal/js/cross-promo.js" defer></script>
 </body>
