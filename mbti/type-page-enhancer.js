@@ -16,6 +16,16 @@
     }, params || {}));
   }
 
+  var heroStrip = document.createElement('div');
+  heroStrip.className = 'type-hero-strip';
+  heroStrip.setAttribute('aria-label', mbtiType + ' fast actions');
+  heroStrip.innerHTML = [
+    '<a href="/mbti-love/" data-hero-action="love_match">Love match</a>',
+    '<a href="/mbti-career/" data-hero-action="career_fit">Career fit</a>',
+    '<a href="/portal/mbti/" data-hero-action="all_types">All 16 types</a>'
+  ].join('');
+  heroTags.insertAdjacentElement('afterend', heroStrip);
+
   var rail = document.createElement('section');
   rail.className = 'type-action-rail';
   rail.setAttribute('aria-label', mbtiType + ' next steps');
@@ -40,6 +50,49 @@
   hero.insertAdjacentElement('afterend', rail);
 
   track('mbti_type_view', { surface: 'type_page' });
+  track('mbti_type_hero_strip_view', { surface: 'hero_fast_actions' });
+
+  heroStrip.querySelectorAll('[data-hero-action]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      track('mbti_type_hero_click', {
+        surface: 'hero_fast_actions',
+        target_slug: link.dataset.heroAction || '',
+        link_url: link.getAttribute('href') || ''
+      });
+    });
+  });
+
+  function injectInlineAd() {
+    if (document.querySelector('.type-inline-ad')) return;
+
+    var overview = document.querySelector('.overview-text');
+    if (!overview || !overview.parentNode) return;
+
+    var afterNode = overview;
+    while (afterNode.nextElementSibling && afterNode.nextElementSibling.classList.contains('overview-text')) {
+      afterNode = afterNode.nextElementSibling;
+    }
+
+    var ad = document.createElement('aside');
+    ad.className = 'type-inline-ad';
+    ad.dataset.adSurface = 'after_overview_ad';
+    ad.setAttribute('aria-label', 'Sponsored');
+    ad.innerHTML = '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>';
+    afterNode.insertAdjacentElement('afterend', ad);
+
+    track('mbti_type_ad_impression', {
+      surface: 'after_overview_ad',
+      ad_slot: 'auto'
+    });
+
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (error) {
+      ad.dataset.adError = '1';
+    }
+  }
+
+  injectInlineAd();
 
   function sendRailView() {
     if (rail.dataset.viewed === '1') return;
