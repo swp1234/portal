@@ -42,7 +42,7 @@
         "description": "2026年浏览器游戏完整指南。放置类游戏、点击类游戏、益智游戏无需安装。",
         "image": "https://dopabrain.com/portal/icon-512.svg",
         "datePublished": "2026-02-10",
-        "dateModified": "2026-02-10",
+        "dateModified": "2026-05-07",
         "inLanguage": "zh",
         "author": {
             "@type": "Organization",
@@ -444,6 +444,85 @@
             box-shadow: 0 12px 24px rgba(59, 130, 246, 0.35);
         }
 
+        .quick-play {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.14), rgba(16, 185, 129, 0.08));
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 0 0 2.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .quick-play h2 {
+            margin: 0 0 0.6rem;
+            padding: 0;
+            border: 0;
+            color: var(--text-primary);
+            font-size: 1.45rem;
+        }
+
+        .quick-play h2::before {
+            display: none;
+        }
+
+        .quick-play p {
+            margin-bottom: 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+        }
+
+        .quick-play-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+            gap: 0.9rem;
+        }
+
+        .quick-play-card {
+            display: block;
+            min-height: 112px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.045);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .quick-play-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(96, 165, 250, 0.5);
+            background: rgba(59, 130, 246, 0.12);
+        }
+
+        .quick-play-card strong {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: var(--primary-light);
+            font-size: 0.96rem;
+        }
+
+        .quick-play-card span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.84rem;
+            line-height: 1.5;
+        }
+
+        .ad-container {
+            margin: 3rem 0;
+            padding: 1rem;
+            min-height: 250px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .ad-container .adsbygoogle {
+            min-height: 220px;
+        }
+
         .guide-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -585,6 +664,10 @@
                 font-size: 1.6rem;
             }
 
+            .quick-play {
+                padding: 1.15rem;
+            }
+
             .cta-button {
                 width: 100%;
                 justify-content: center;
@@ -632,6 +715,29 @@
             </nav>
 
             <main class="article-content">
+                <section class="quick-play" aria-label="快速开始游戏">
+                    <h2>先玩一局，再读攻略</h2>
+                    <p>如果你只是想马上试试浏览器游戏，先从这些无需下载的短局入口开始。</p>
+                    <div class="quick-play-grid">
+                        <a href="https://dopabrain.com/idle-clicker/" class="quick-play-card" data-content-surface="quick_idle_clicker" data-target-slug="idle-clicker">
+                            <strong>闲置点击器</strong>
+                            <span>轻松点击，适合边休息边观察成长。</span>
+                        </a>
+                        <a href="https://dopabrain.com/stack-tower/" class="quick-play-card" data-content-surface="quick_stack_tower" data-target-slug="stack-tower">
+                            <strong>堆叠塔</strong>
+                            <span>安静、精准、适合短时间专注。</span>
+                        </a>
+                        <a href="https://dopabrain.com/emoji-merge/" class="quick-play-card" data-content-surface="quick_emoji_merge" data-target-slug="emoji-merge">
+                            <strong>表情符号合并</strong>
+                            <span>轻量合成游戏，立即看到反馈。</span>
+                        </a>
+                        <a href="https://dopabrain.com/portal/games/" class="quick-play-card" data-content-surface="quick_games_hub" data-target-slug="portal-games">
+                            <strong>更多免费游戏</strong>
+                            <span>浏览完整游戏库，按心情挑一款。</span>
+                        </a>
+                    </div>
+                </section>
+
                 <section id="why-browser">
                     <h2>为什么浏览器游戏成为未来</h2>
                     <p>
@@ -678,7 +784,7 @@
                             <strong>巨大数字：</strong> 观看指数增长的满足感
                         </div>
 
-                        <a href="https://dopabrain.com/idle-clicker/" class="game-link">💰 现在玩闲置点击器</a>
+                        <a href="https://dopabrain.com/idle-clicker/" class="game-link" data-content-surface="game_idle_clicker" data-target-slug="idle-clicker">💰 现在玩闲置点击器</a>
                     </div>
 
                     <p>
@@ -735,7 +841,7 @@
                             <strong>精确控制：</strong> 每个像素都很重要
                         </div>
 
-                        <a href="https://dopabrain.com/stack-tower/" class="game-link">🏗️ 玩堆叠塔</a>
+                        <a href="https://dopabrain.com/stack-tower/" class="game-link" data-content-surface="game_stack_tower" data-target-slug="stack-tower">🏗️ 玩堆叠塔</a>
                     </div>
 
                     <div class="game-card">
@@ -754,7 +860,7 @@
                             <strong>精美图形：</strong> 令人满意的视觉反馈
                         </div>
 
-                        <a href="https://dopabrain.com/emoji-merge/" class="game-link">😊 玩表情符号合并</a>
+                        <a href="https://dopabrain.com/emoji-merge/" class="game-link" data-content-surface="game_emoji_merge" data-target-slug="emoji-merge">😊 玩表情符号合并</a>
                     </div>
                 </section>
 
@@ -810,17 +916,27 @@
                 <div class="cta-section">
                     <h2>现在就开始游玩</h2>
                     <p>无需下载，无需安装。点击即玩。你会选择哪个游戏？</p>
-                    <a href="https://dopabrain.com/" class="cta-button">🎮 探索所有游戏</a>
+                    <a href="https://dopabrain.com/portal/games/" class="cta-button" data-content-surface="bottom_games_hub" data-target-slug="portal-games">🎮 探索所有游戏</a>
+                </div>
+
+                <div class="ad-container" data-ad-surface="before_related_ad" aria-label="Sponsored">
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-3600813755953882"
+                        data-ad-slot="auto"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                 </div>
 
                 <section>
                     <h2>推荐文章</h2>
                     <div class="related-posts">
-                        <a href="https://dopabrain.com/portal/blog/zh/danao-leixing-ceshi.html" class="related-card">
+                        <a href="https://dopabrain.com/portal/blog/zh/danao-leixing-ceshi.html" class="related-card" data-content-surface="related_brain_type_guide" data-target-slug="zh-danao-leixing-ceshi">
                             <h3>大脑类型测试2026</h3>
                             <p>发现你的认知特征。心理学测试与详细解释。</p>
                         </a>
-                        <a href="https://dopabrain.com/portal/blog/en/best-browser-games-2026.html" class="related-card">
+                        <a href="https://dopabrain.com/portal/blog/en/best-browser-games-2026.html" class="related-card" data-content-surface="related_en_browser_games" data-target-slug="en-best-browser-games-2026">
                             <h3>Best Browser Games 2026</h3>
                             <p>英文版本。10款热门游戏和获胜策略。</p>
                         </a>
@@ -837,6 +953,33 @@
     </footer>
 
     <script>
+        function pushContentEvent(eventName, params) {
+            if (typeof gtag !== 'function') {
+                return;
+            }
+
+            gtag('event', eventName, Object.assign({
+                content_group: 'zh_browser_games',
+                content_slug: 'zh-liulanqi-youxi-2026',
+                page_language: 'zh',
+                page_path: window.location.pathname
+            }, params || {}));
+        }
+
+        function getSlugFromHref(href) {
+            try {
+                var url = new URL(href, window.location.origin);
+                var parts = url.pathname.split('/').filter(Boolean);
+                return parts[parts.length - 1] || 'home';
+            } catch (error) {
+                return 'unknown';
+            }
+        }
+
+        pushContentEvent('content_view', {
+            content_type: 'blog_article'
+        });
+
         window.addEventListener('scroll', function() {
             const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -844,15 +987,44 @@
             document.querySelector('.progress-bar').style.width = scrolled + '%';
         });
 
-        document.querySelectorAll('.cta-button, .related-card, .game-link').forEach(element => {
-            element.addEventListener('click', function() {
-                if (window.gtag) {
-                    gtag('event', 'click', {
-                        'event_category': 'engagement',
-                        'event_label': this.textContent,
-                        'value': 1
-                    });
-                }
+        document.querySelectorAll('.toc a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                pushContentEvent('content_toc_click', {
+                    target_section: this.getAttribute('href').replace('#', ''),
+                    target_label: this.textContent.trim()
+                });
+            });
+        });
+
+        document.querySelectorAll('.quick-play-card, .game-link, .cta-button').forEach(function(link, index) {
+            link.addEventListener('click', function() {
+                pushContentEvent('content_cta_click', {
+                    cta_surface: this.dataset.contentSurface || 'article_cta',
+                    cta_position: index + 1,
+                    target_slug: this.dataset.targetSlug || getSlugFromHref(this.href),
+                    destination: this.href,
+                    target_label: this.textContent.trim().replace(/\s+/g, ' ').slice(0, 120)
+                });
+            });
+        });
+
+        document.querySelectorAll('.related-card').forEach(function(link, index) {
+            link.addEventListener('click', function() {
+                pushContentEvent('content_related_click', {
+                    related_surface: this.dataset.contentSurface || 'related_card',
+                    related_position: index + 1,
+                    target_slug: this.dataset.targetSlug || getSlugFromHref(this.href),
+                    destination: this.href,
+                    target_label: this.textContent.trim().replace(/\s+/g, ' ').slice(0, 120)
+                });
+            });
+        });
+
+        document.querySelectorAll('.ad-container[data-ad-surface] .adsbygoogle').forEach(function(slot) {
+            var container = slot.closest('.ad-container');
+            pushContentEvent('content_ad_impression', {
+                ad_surface: container ? container.dataset.adSurface : 'article_ad',
+                ad_slot: slot.getAttribute('data-ad-slot') || 'auto'
             });
         });
     </script>
