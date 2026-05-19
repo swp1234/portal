@@ -41,7 +41,7 @@
         "description": "免费在线贪吃蛇游戏攻略。掌握经典贪吃蛇高分技巧与策略，从入门到精通的完整指南。学习移动技巧、得分系统与进阶战术。",
         "image": "https://dopabrain.com/snake-game/icon-512.svg",
         "datePublished": "2026-02-15",
-        "dateModified": "2026-02-15",
+        "dateModified": "2026-05-19",
         "inLanguage": "zh-Hans",
         "author": { "@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com/" },
         "publisher": { "@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com/", "logo": { "@type": "ImageObject", "url": "https://dopabrain.com/portal/img/og/snake-game.png" } },
@@ -115,6 +115,14 @@
         .cta-btn { display: inline-block; padding: 14px 32px; background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 16px; transition: all 0.3s; margin: 4px; }
         .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(34,197,94,0.3); color: #fff; }
         .cta-btn.secondary { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .quick-game-rail { margin: 28px 0; padding: 20px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.24); border-radius: 14px; backdrop-filter: blur(10px); }
+        .quick-game-rail h2 { margin: 0 0 8px; padding: 0; border: 0; color: var(--primary-light); font-size: 20px; }
+        .quick-game-rail p { margin-bottom: 14px; font-size: 15px; }
+        .quick-game-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+        .quick-game-card { display: block; min-height: 92px; padding: 14px; background: rgba(10,10,10,0.72); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; color: var(--text-primary); text-decoration: none; transition: transform 0.2s, background 0.2s, border-color 0.2s; }
+        .quick-game-card:hover { transform: translateY(-1px); background: rgba(34,197,94,0.14); border-color: var(--primary); color: var(--text-primary); }
+        .quick-game-card strong { display: block; margin-bottom: 4px; color: var(--primary-light); font-size: 15px; }
+        .quick-game-card span { display: block; color: var(--text-secondary); font-size: 13px; line-height: 1.5; }
         .info-card { background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin: 20px 0; backdrop-filter: blur(10px); }
         .info-card h4 { color: var(--primary-light); margin-bottom: 10px; font-size: 16px; }
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 20px 0; }
@@ -143,7 +151,7 @@
         footer { text-align: center; padding: 32px 0; border-top: 1px solid var(--border-color); margin-top: 40px; }
         footer a { color: var(--primary-light); text-decoration: none; }
         footer p { margin-bottom: 8px; }
-        @media (max-width: 480px) { h1 { font-size: 28px; } .stat-grid { grid-template-columns: 1fr; } .container { padding: 20px 16px 40px; } .data-table { font-size: 13px; } .data-table th, .data-table td { padding: 8px 10px; } }
+        @media (max-width: 480px) { h1 { font-size: 28px; } .stat-grid, .quick-game-grid { grid-template-columns: 1fr; } .container { padding: 20px 16px 40px; } .data-table { font-size: 13px; } .data-table th, .data-table td { padding: 8px 10px; } }
     </style>
 </head>
 <body>
@@ -170,6 +178,29 @@
                 <div class="stat-item"><span class="stat-value">&infin;</span><span class="stat-label">挑战上限</span></div>
             </div>
 
+            <section class="quick-game-rail" aria-labelledby="quick-game-title">
+                <h2 id="quick-game-title">先玩一局，再看技巧</h2>
+                <p>如果你只是想快速开始，先进入游戏；如果想换一种节奏，也可以打开更多轻量小游戏。</p>
+                <div class="quick-game-grid">
+                    <a href="https://dopabrain.com/snake-game/" class="quick-game-card" data-content-surface="quick_snake_game" data-target-slug="snake-game">
+                        <strong>开始贪吃蛇</strong>
+                        <span>直接进入经典模式，练习转向、路线和得分节奏。</span>
+                    </a>
+                    <a href="https://dopabrain.com/portal/games/" class="quick-game-card" data-content-surface="quick_games_hub" data-target-slug="portal-games">
+                        <strong>浏览所有游戏</strong>
+                        <span>从反应、记忆、拼图和休闲游戏里挑一个。</span>
+                    </a>
+                    <a href="https://dopabrain.com/block-puzzle/" class="quick-game-card" data-content-surface="quick_block_puzzle" data-target-slug="block-puzzle">
+                        <strong>换成方块拼图</strong>
+                        <span>更慢节奏，适合休息时训练空间感。</span>
+                    </a>
+                    <a href="https://dopabrain.com/reaction-test/" class="quick-game-card" data-content-surface="quick_reaction_test" data-target-slug="reaction-test">
+                        <strong>测试反应速度</strong>
+                        <span>用几十秒测一下点击速度和专注状态。</span>
+                    </a>
+                </div>
+            </section>
+
             <!-- Table of Contents -->
             <div class="toc">
                 <h3>目录</h3>
@@ -189,11 +220,11 @@
             <div class="cta-box">
                 <h3>立即免费玩经典贪吃蛇</h3>
                 <p>在浏览器中重温经典。两种游戏模式、流畅触摸控制，无需下载即可开始。</p>
-                <a href="https://dopabrain.com/snake-game/" class="cta-btn">开始游戏 &rarr;</a>
+                <a href="https://dopabrain.com/snake-game/" class="cta-btn" data-content-surface="intro_snake_game" data-target-slug="snake-game">开始游戏 &rarr;</a>
             </div>
 
             <!-- AdSense Top -->
-            <div class="ad-container">
+            <div class="ad-container" data-ad-surface="top_ad">
                 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
@@ -344,11 +375,11 @@
             <div class="cta-box">
                 <h3>准备好挑战了吗？</h3>
                 <p>运用这些策略，看看你能在经典贪吃蛇中拿到多高的分数。</p>
-                <a href="https://dopabrain.com/snake-game/" class="cta-btn">立即开始挑战 &rarr;</a>
+                <a href="https://dopabrain.com/snake-game/" class="cta-btn" data-content-surface="mid_snake_game" data-target-slug="snake-game">立即开始挑战 &rarr;</a>
             </div>
 
             <!-- AdSense Middle -->
-            <div class="ad-container">
+            <div class="ad-container" data-ad-surface="mid_ad">
                 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
@@ -507,12 +538,12 @@
             <h2>📖 相关文章</h2>
 
             <div class="related-links">
-                <a href="https://dopabrain.com/snake-game/">玩贪吃蛇游戏</a>
-                <a href="https://dopabrain.com/portal/blog/zh/pong-game-guide.html">乒乓球游戏攻略</a>
-                <a href="https://dopabrain.com/portal/blog/zh/block-puzzle-game-guide.html">方块拼图攻略</a>
-                <a href="https://dopabrain.com/portal/blog/en/minesweeper-strategy-guide.html">扫雷策略指南</a>
-                <a href="https://dopabrain.com/portal/blog/zh/casual-games-for-breaks.html">休闲游戏精选</a>
-                <a href="https://dopabrain.com/portal/">探索所有游戏</a>
+                <a href="https://dopabrain.com/snake-game/" data-content-surface="related_snake_game" data-target-slug="snake-game">玩贪吃蛇游戏</a>
+                <a href="https://dopabrain.com/portal/blog/zh/pong-game-guide.html" data-content-surface="related_pong_guide" data-target-slug="zh-pong-game-guide">乒乓球游戏攻略</a>
+                <a href="https://dopabrain.com/portal/blog/zh/block-puzzle-game-guide.html" data-content-surface="related_block_puzzle_guide" data-target-slug="zh-block-puzzle-game-guide">方块拼图攻略</a>
+                <a href="https://dopabrain.com/portal/blog/en/minesweeper-strategy-guide.html" data-content-surface="related_minesweeper_guide" data-target-slug="en-minesweeper-strategy-guide">扫雷策略指南</a>
+                <a href="https://dopabrain.com/portal/blog/zh/casual-games-for-breaks.html" data-content-surface="related_casual_games" data-target-slug="zh-casual-games-for-breaks">休闲游戏精选</a>
+                <a href="https://dopabrain.com/portal/games/" data-content-surface="related_games_hub" data-target-slug="portal-games">探索所有游戏</a>
             </div>
 
         </article>
@@ -528,6 +559,20 @@
     </div>
 
     <script>
+        function trackContentEvent(eventName, params) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', eventName, Object.assign({
+                    content_group: 'zh_games',
+                    content_slug: 'zh-snake-game-guide',
+                    page_language: 'zh-Hans',
+                    page_path: '/portal/blog/zh/snake-game-guide.html',
+                    transport_type: 'beacon'
+                }, params || {}));
+            }
+        }
+
+        trackContentEvent('content_view', { content_type: 'blog' });
+
         // Progress bar on scroll
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
@@ -535,6 +580,81 @@
             const scrolled = (winScroll / height) * 100;
             document.getElementById('progressBar').style.width = scrolled + '%';
         });
+
+        document.querySelectorAll('.cta-btn').forEach(function(link) {
+            link.addEventListener('click', function() {
+                trackContentEvent('content_cta_click', {
+                    target_url: this.getAttribute('href') || '',
+                    target_label: this.textContent.trim(),
+                    cta_surface: this.dataset.contentSurface || '',
+                    target_slug: this.dataset.targetSlug || ''
+                });
+            });
+        });
+
+        document.querySelectorAll('.quick-game-card').forEach(function(link) {
+            link.addEventListener('click', function() {
+                trackContentEvent('content_game_click', {
+                    target_url: this.getAttribute('href') || '',
+                    target_label: this.textContent.trim(),
+                    cta_surface: this.dataset.contentSurface || '',
+                    target_slug: this.dataset.targetSlug || '',
+                    section_name: '先玩一局，再看技巧'
+                });
+            });
+        });
+
+        document.querySelectorAll('.toc a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                trackContentEvent('content_toc_click', {
+                    target_url: this.getAttribute('href') || '',
+                    target_label: this.textContent.trim(),
+                    section_id: (this.getAttribute('href') || '').replace('#', '')
+                });
+            });
+        });
+
+        document.querySelectorAll('.related-links a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                trackContentEvent('content_related_click', {
+                    target_url: this.getAttribute('href') || '',
+                    target_label: this.textContent.trim(),
+                    cta_surface: this.dataset.contentSurface || '',
+                    target_slug: this.dataset.targetSlug || '',
+                    section_name: '相关文章'
+                });
+            });
+        });
+
+        (function observeAds() {
+            var seenAds = [];
+            function markSeen(element) {
+                if (!element || seenAds.indexOf(element) !== -1) return;
+                seenAds.push(element);
+                var ad = element.querySelector('.adsbygoogle');
+                trackContentEvent('content_ad_impression', {
+                    ad_surface: element.dataset.adSurface || 'unknown',
+                    ad_slot: ad ? ad.dataset.adSlot || '' : ''
+                });
+            }
+
+            var adShells = document.querySelectorAll('[data-ad-surface]');
+            if (!('IntersectionObserver' in window)) {
+                adShells.forEach(markSeen);
+                return;
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        markSeen(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.25 });
+
+            adShells.forEach(function(shell) { observer.observe(shell); });
+        })();
     </script>
     <script src="/portal/js/cross-promo.js" defer></script>
 </body>
