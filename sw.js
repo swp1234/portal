@@ -1,10 +1,14 @@
-const CACHE_NAME = 'dopabrain-portal-v2';
+const CACHE_NAME = 'dopabrain-portal-v3';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './css/style.css',
+    './js/i18n.js',
+    './js/nav-optimizations.js',
     './js/app.js',
     './js/app-data.js',
+    './js/personalize.js',
+    './js/cross-promo.js',
     './manifest.json',
     './icon-192.svg',
     './icon-512.svg'

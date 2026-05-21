@@ -9,7 +9,7 @@
     // ─── Storage helpers ──────────────────────────────────────
     function loadData() {
         try {
-            return JSON.parse(localStorage.getItem(STORAGE_KEY)) || createDefault();
+            return normalizeData(JSON.parse(localStorage.getItem(STORAGE_KEY)));
         } catch (e) {
             return createDefault();
         }
@@ -22,7 +22,26 @@
     }
 
     function createDefault() {
-        return { clicks: {}, recent: [], catClicks: {}, firstVisit: Date.now() };
+        return { clicks: {}, visits: {}, recent: [], catClicks: {}, firstVisit: Date.now(), lastVisit: 0 };
+    }
+
+    function normalizeData(data) {
+        if (!data || typeof data !== 'object') return createDefault();
+
+        data.clicks = data.clicks || {};
+        data.visits = data.visits || {};
+        data.recent = Array.isArray(data.recent) ? data.recent : [];
+        data.catClicks = data.catClicks || {};
+        data.firstVisit = data.firstVisit || Date.now();
+        data.lastVisit = data.lastVisit || 0;
+
+        return data;
+    }
+
+    function updateRecent(data, appId) {
+        data.recent = data.recent.filter(function (id) { return id !== appId; });
+        data.recent.unshift(appId);
+        if (data.recent.length > MAX_HISTORY) data.recent = data.recent.slice(0, MAX_HISTORY);
     }
 
     // ─── Click Tracking ───────────────────────────────────────
@@ -37,11 +56,21 @@
             data.catClicks[category] = (data.catClicks[category] || 0) + 1;
         }
 
-        // Recent history (ordered, no duplicates)
-        data.recent = data.recent.filter(function (id) { return id !== appId; });
-        data.recent.unshift(appId);
-        if (data.recent.length > MAX_HISTORY) data.recent = data.recent.slice(0, MAX_HISTORY);
+        data.lastVisit = Date.now();
+        updateRecent(data, appId);
 
+        saveData(data);
+    }
+
+    function trackVisit(appId, category) {
+        if (!appId) return;
+
+        var data = loadData();
+        data.visits[appId] = (data.visits[appId] || 0) + 1;
+        data.lastVisit = Date.now();
+        if (category) data.lastCategory = category;
+
+        updateRecent(data, appId);
         saveData(data);
     }
 
@@ -154,32 +183,36 @@
             var clicks = data.clicks[app.id] || 0;
             score += Math.min(clicks * 3, 30);
 
-            // 2. Recency bonus (max +20)
+            // 2. Visit frequency (max +12)
+            var visits = data.visits[app.id] || 0;
+            score += Math.min(visits * 1.5, 12);
+
+            // 3. Recency bonus (max +20)
             var recentIdx = data.recent.indexOf(app.id);
             if (recentIdx >= 0) {
                 score += Math.max(20 - recentIdx * 2, 0);
             }
 
-            // 3. Favorite category bonus (+10)
+            // 4. Favorite category bonus (+10)
             if (favCat && app.category === favCat) {
                 score += 10;
             }
 
-            // 4. Time-based boost (+15)
+            // 5. Time-based boost (+15)
             if (boostSet[app.id]) {
                 score += 15;
             }
 
-            // 5. Time-based category boost (+8)
+            // 6. Time-based category boost (+8)
             if (boostCatSet[app.category]) {
                 score += 8;
             }
 
-            // 6. isNew / isPopular base priority (so they don't completely disappear)
+            // 7. isNew / isPopular base priority (so they don't completely disappear)
             if (app.isNew) score += 5;
             if (app.isPopular) score += 3;
 
-            // 7. Discovery bonus: apps never clicked get a small bump
+            // 8. Discovery bonus: apps never clicked get a small bump
             //    so the user sees variety (avoid filter bubble)
             if (clicks === 0 && recentIdx < 0) {
                 score += 2;
@@ -287,6 +320,7 @@
     // ─── Public API ───────────────────────────────────────────
     window.Personalize = {
         trackClick: trackClick,
+        trackVisit: trackVisit,
         scoreApps: scoreApps,
         getRecentApps: getRecentApps,
         getRecommended: getRecommended,

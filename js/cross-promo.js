@@ -6,6 +6,8 @@
     // Detect current app from URL
     var path = window.location.pathname.replace(/\/$/, '').split('/').pop();
     if (!path || path === 'portal') return;
+    var STORAGE_KEY = 'dopabrain_personalize';
+    var MAX_HISTORY = 50;
 
     // Wait for APP_DATA or load it
     function init() {
@@ -52,9 +54,85 @@
         return app.shortDesc;
     }
 
+    function scheduleBackground(task) {
+        if (window.scheduler && typeof window.scheduler.postTask === 'function') {
+            window.scheduler.postTask(task, { priority: 'background' }).catch(function() {
+                task();
+            });
+        } else if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(task, { timeout: 1000 });
+        } else {
+            window.setTimeout(task, 0);
+        }
+    }
+
+    function createPersonalizeDefault() {
+        return { clicks: {}, visits: {}, recent: [], catClicks: {}, firstVisit: Date.now(), lastVisit: 0 };
+    }
+
+    function normalizePersonalizeData(data) {
+        if (!data || typeof data !== 'object') return createPersonalizeDefault();
+
+        data.clicks = data.clicks || {};
+        data.visits = data.visits || {};
+        data.recent = Array.isArray(data.recent) ? data.recent : [];
+        data.catClicks = data.catClicks || {};
+        data.firstVisit = data.firstVisit || Date.now();
+        data.lastVisit = data.lastVisit || 0;
+
+        return data;
+    }
+
+    function loadPersonalizeData() {
+        try {
+            return normalizePersonalizeData(JSON.parse(localStorage.getItem(STORAGE_KEY)));
+        } catch(e) {
+            return createPersonalizeDefault();
+        }
+    }
+
+    function savePersonalizeData(data) {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        } catch(e) {}
+    }
+
+    function updateRecent(data, appId) {
+        data.recent = data.recent.filter(function(id) { return id !== appId; });
+        data.recent.unshift(appId);
+        if (data.recent.length > MAX_HISTORY) data.recent = data.recent.slice(0, MAX_HISTORY);
+    }
+
+    function rememberAppVisit(app) {
+        if (!app || !app.id) return;
+
+        scheduleBackground(function() {
+            var data = loadPersonalizeData();
+            data.visits[app.id] = (data.visits[app.id] || 0) + 1;
+            data.lastVisit = Date.now();
+            if (app.category) data.lastCategory = app.category;
+            updateRecent(data, app.id);
+            savePersonalizeData(data);
+        });
+    }
+
+    function rememberAppClick(appId, category) {
+        if (!appId) return;
+
+        scheduleBackground(function() {
+            var data = loadPersonalizeData();
+            data.clicks[appId] = (data.clicks[appId] || 0) + 1;
+            if (category) data.catClicks[category] = (data.catClicks[category] || 0) + 1;
+            data.lastVisit = Date.now();
+            updateRecent(data, appId);
+            savePersonalizeData(data);
+        });
+    }
+
     function render(apps) {
         var current = apps.find(function(a) { return a.id === path; });
         if (!current) return;
+        rememberAppVisit(current);
 
         // Get related apps: same category first, then popular
         var sameCategory = apps.filter(function(a) {
@@ -119,7 +197,7 @@
         var html = '<nav class="cp-section" aria-label="' + title + '"><div class="cp-title">' + title + '</div><div class="cp-grid">';
         picks.forEach(function(app) {
             var url = app.url.replace('https://dopabrain.com', '');
-            html += '<a href="' + url + '" class="cp-card" aria-label="' + getAppName(app) + '">'
+            html += '<a href="' + url + '" class="cp-card" aria-label="' + getAppName(app) + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '">'
                 + '<div class="cp-icon" style="background:linear-gradient(135deg,' + app.color + '22,' + app.color + '08)">' + app.icon + '</div>'
                 + '<div><div class="cp-name">' + getAppName(app) + '</div>'
                 + '<div class="cp-desc">' + getAppDesc(app) + '</div></div></a>';
@@ -138,6 +216,9 @@
         // Track cross-promo clicks
         document.querySelector('.cp-section').addEventListener('click', function(e) {
             var card = e.target.closest('.cp-card');
+            if (card) {
+                rememberAppClick(card.getAttribute('data-destination-id'), card.getAttribute('data-destination-category'));
+            }
             if (card && typeof gtag === 'function') {
                 var destinationPath = card.getAttribute('href') || '';
                 gtag('event', 'cross_promo_click', {

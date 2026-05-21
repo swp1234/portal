@@ -197,7 +197,21 @@
         const card = e.target.closest('.p-card');
         if (card && card.dataset.id && typeof Personalize !== 'undefined') {
             const app = APP_DATA.find(a => a.id === card.dataset.id);
-            if (app) Personalize.trackClick(card.dataset.id, app.category);
+            if (app) {
+                Personalize.trackClick(card.dataset.id, app.category);
+
+                if (typeof gtag === 'function') {
+                    const block = card.closest('#recent-apps') ? 'recent' : 'recommended';
+                    gtag('event', 'hub_personalized_click', {
+                        event_category: 'engagement',
+                        event_label: card.dataset.id,
+                        source_app: 'portal',
+                        surface_type: 'personalized_hub',
+                        surface_name: block,
+                        destination_path: card.getAttribute('href') || ''
+                    });
+                }
+            }
         }
     });
 
