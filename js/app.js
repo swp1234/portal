@@ -107,7 +107,7 @@
     let currentPage = 1;
     let filteredAppsCache = [];
     let totalFilteredApps = 0;
-    const FEATURED_IDS = ['eq-test', 'stress-response', 'blood-type'];
+    const FEATURED_IDS = ['brain-type', 'animal-personality', 'eq-test'];
 
     // Initialize
     function init() {

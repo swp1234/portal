@@ -391,7 +391,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/mbti-love/',
         isNew: true,
         isPopular: true,
-        popularity: 35,
+        popularity: 84,
         i18n: {
             en: { name: 'MBTI Love Match', shortDesc: "What's your love style? 💕" },
             zh: { name: 'MBTI 恋爱配对', shortDesc: '你的恋爱风格是？💕' },
@@ -418,7 +418,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/hsp-test/',
         isNew: true,
         isPopular: true,
-        popularity: 75,
+        popularity: 90,
         i18n: {
             en: { name: 'HSP Sensitivity Test', shortDesc: 'Are you highly sensitive?' },
             zh: { name: 'HSP 敏感度测试', shortDesc: '你是高敏感人群吗？' },
@@ -661,7 +661,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/brain-type/',
         isNew: true,
         isPopular: true,
-        popularity: 22,
+        popularity: 100,
         i18n: {
             en: { name: 'Brain Type Test', shortDesc: 'What is your brain type?' },
             zh: { name: '脑型测试', shortDesc: '你的大脑类型是什么？' },
@@ -850,7 +850,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/stress-check/',
         isNew: false,
         isPopular: true,
-        popularity: 25,
+        popularity: 73,
         i18n: {
             en: { name: 'Stress Level Check', shortDesc: 'Measure your stress level' },
             zh: { name: '压力水平检查', shortDesc: '测量您的压力水平' },
@@ -1579,7 +1579,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/animal-personality/',
         isNew: true,
         isPopular: true,
-        popularity: 22,
+        popularity: 96,
         i18n: {
             en: { name: 'Animal Personality Test', shortDesc: 'Find your inner animal' },
             zh: { name: '内心动物测试', shortDesc: '找到你的内在动物' },
@@ -1606,7 +1606,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/color-personality/',
         isNew: true,
         isPopular: true,
-        popularity: 30,
+        popularity: 88,
         i18n: {
             en: { name: 'Color Personality Test', shortDesc: 'Discover your personality color' },
             zh: { name: '性格色彩测试', shortDesc: '发现你的性格颜色' },
@@ -1659,8 +1659,8 @@ const APP_DATA = [
         tags: ['정신나이', '심리테스트', '뇌나이', '멘탈에이지', 'mental age', 'brain age', 'psychology'],
         url: 'https://dopabrain.com/mental-age/',
         isNew: true,
-        isPopular: false,
-        popularity: 18,
+        isPopular: true,
+        popularity: 68,
         i18n: {
             en: { name: 'Mental Age Test', shortDesc: 'How old is your mind?' },
             zh: { name: '心理年龄测试', shortDesc: '你的心理年龄是多少？' },
@@ -1904,7 +1904,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/attachment-style/',
         isNew: true,
         isPopular: true,
-        popularity: 72,
+        popularity: 82,
         i18n: {
             en: { name: 'Attachment Style', shortDesc: 'Attachment style test' },
             zh: { name: '依恋类型', shortDesc: '依恋类型测试' },
@@ -2309,7 +2309,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/eq-test/',
         isNew: true,
         isPopular: true,
-        popularity: 100,
+        popularity: 94,
         i18n: {
             en: { name: 'EQ Emotion Reading Challenge', shortDesc: 'Test your emotional intelligence' },
             zh: { name: 'EQ情商测试', shortDesc: '测试你的情商' },
@@ -2336,7 +2336,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/hail-mary-mode/',
         isNew: true,
         isPopular: true,
-        popularity: 92,
+        popularity: 76,
         i18n: {
             en: { name: 'Hail Mary Mode Test', shortDesc: 'Your last-chance problem solver type' },
             zh: { name: 'Hail Mary 模式测试', shortDesc: '你的最后机会解题风格' },
@@ -2660,7 +2660,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/burnout-test/',
         isNew: true,
         isPopular: true,
-        popularity: 80,
+        popularity: 72,
         i18n: {
             en: { name: 'Burnout Test', shortDesc: "What's your burnout type?" },
             zh: { name: '\u5012\u5C3D\u6D4B\u8BD5', shortDesc: '\u4F60\u7684\u5012\u5C3D\u7C7B\u578B\u662F\u4EC0\u4E48\uFF1F' },
@@ -2687,7 +2687,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/stress-response/',
         isNew: true,
         isPopular: true,
-        popularity: 85,
+        popularity: 78,
         i18n: {
             en: { name: 'Stress Response Test', shortDesc: 'Fight, Flight, Freeze, or Fawn?' },
             zh: { name: '\u538B\u529B\u53CD\u5E94\u6D4B\u8BD5', shortDesc: '\u4F60\u7684\u538B\u529B\u53CD\u5E94\u7C7B\u578B\u662F\u4EC0\u4E48\uFF1F' },
@@ -2714,7 +2714,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/anxiety-type/',
         isNew: true,
         isPopular: true,
-        popularity: 80,
+        popularity: 71,
         i18n: {
             en: { name: 'Anxiety Type Test', shortDesc: 'What Kind of Worrier Are You?' },
             zh: { name: '\u7126\u8651\u7C7B\u578B\u6D4B\u8BD5', shortDesc: '\u4F60\u662F\u54EA\u79CD\u7C7B\u578B\u7684\u7126\u8651\u8005\uFF1F' },

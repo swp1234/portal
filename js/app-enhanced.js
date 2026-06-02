@@ -247,8 +247,8 @@
         appGrid.classList.remove('hidden');
         emptyState.classList.add('hidden');
 
-        // Featured: data-driven top apps (updated 2026-03-23)
-        const featuredIds = ['eq-test', 'stress-response', 'burnout-test'];
+        // Featured: data-driven top apps (updated 2026-06-02)
+        const featuredIds = ['brain-type', 'animal-personality', 'eq-test'];
         const featured = apps.filter(app => featuredIds.includes(app.id));
         const showFeaturedSection = currentCategory === 'all' && featured.length > 0 && !searchQuery.trim();
 
@@ -552,7 +552,7 @@
                 loadMoreBtn.addEventListener('click', () => {
                     currentPage++;
                     // Re-render with new page
-                    const featuredIds = ['idle-clicker', 'mbti-love', 'emotion-temp'];
+                    const featuredIds = ['brain-type', 'animal-personality', 'eq-test'];
                     const showFeatured = currentCategory === 'all' && !searchQuery.trim();
                     const loadMoreApps = showFeatured
                         ? filteredAppsCache.filter(app => !featuredIds.includes(app.id))
