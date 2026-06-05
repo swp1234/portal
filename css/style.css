@@ -73,6 +73,7 @@
 html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
 }
 
 body {
@@ -1270,10 +1271,7 @@ body {
 /* Card glow effect on hover */
 .card-glow {
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
+    inset: 0;
     background: radial-gradient(circle at center, var(--card-color, #00e5ff) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.4s ease;
@@ -3052,6 +3050,73 @@ input[type="submit"],
     color: var(--text-secondary);
     position: relative;
     z-index: 1;
+}
+
+/* Static directory exposed for users, crawlers, and no-JS fallbacks */
+.app-directory-seo {
+    margin: 28px 0 24px;
+}
+
+.app-directory-seo details {
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius);
+    background: var(--surface-glass);
+    overflow: hidden;
+}
+
+.app-directory-seo summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+    padding: 18px 20px;
+    cursor: pointer;
+    color: var(--text);
+}
+
+.app-directory-seo summary span {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.app-directory-seo summary strong {
+    font-size: 18px;
+    line-height: 1.35;
+}
+
+.app-directory-seo p {
+    margin: 0;
+    padding: 0 20px 14px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.app-directory-seo ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 8px 12px;
+    margin: 0;
+    padding: 0 20px 20px;
+    list-style: none;
+}
+
+.app-directory-seo a {
+    display: block;
+    min-height: 44px;
+    padding: 11px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.035);
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.app-directory-seo a:hover,
+.app-directory-seo a:focus-visible {
+    border-color: var(--primary);
+    background: rgba(0, 229, 255, 0.08);
 }
 
 /* Selection Color */
