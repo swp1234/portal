@@ -58,7 +58,7 @@
       "image": "https://dopabrain.com/portal/img/og/anxiety-type.png",
       "inLanguage": "ru",
       "datePublished": "2026-03-25",
-      "dateModified": "2026-03-25",
+      "dateModified": "2026-06-05",
       "author": {
         "@type": "Organization",
         "name": "DopaBrain"
@@ -386,12 +386,92 @@
             }
 
             .comparison-table {
+                display: block;
                 font-size: 0.9rem;
+                max-width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
             }
 
             .comparison-table th,
             .comparison-table td {
                 padding: 10px;
+            }
+        }
+
+        .quick-rail {
+            margin: 28px 0;
+            padding: 22px;
+            background: var(--card-bg, var(--surface, rgba(255, 255, 255, 0.05)));
+            border: 1px solid var(--border-color, var(--border, rgba(255, 255, 255, 0.12)));
+            border-radius: 12px;
+        }
+
+        .quick-rail h2 {
+            margin: 0 0 8px;
+            padding: 0;
+            border: 0;
+            font-size: 22px;
+            color: var(--primary-light, var(--accent, var(--link, #60a5fa)));
+        }
+
+        .quick-rail p {
+            margin-bottom: 16px;
+            color: var(--text-secondary, #a0a0a0);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .quick-card {
+            display: block;
+            min-height: 112px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid var(--border-color, var(--border, rgba(255, 255, 255, 0.12)));
+            border-radius: 10px;
+            color: var(--text-primary, var(--text, #f8f8f8));
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: var(--primary, var(--accent, #60a5fa));
+            text-decoration: none;
+        }
+
+        .quick-card strong {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--primary-light, var(--accent, var(--link, #60a5fa)));
+            font-size: 15px;
+        }
+
+        .quick-card span {
+            display: block;
+            color: var(--text-secondary, #a0a0a0);
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .ad-container {
+            max-width: 760px;
+            margin: 28px auto;
+            padding: 18px 0;
+            border-top: 1px solid var(--border-color, var(--border, rgba(255, 255, 255, 0.12)));
+            border-bottom: 1px solid var(--border-color, var(--border, rgba(255, 255, 255, 0.12)));
+        }
+
+        @media (max-width: 640px) {
+            .quick-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -417,6 +497,30 @@
         <p>RSD получает признание по мере того, как исследователи и клиницисты лучше понимают мозг с СДВГ. Хотя еще не включена в DSM-5, RSD широко признается специалистами по СДВГ как один из самых изнурительных аспектов состояния — часто более нарушающий, чем сами трудности с вниманием. Исследования предполагают, что до 99% взрослых с СДВГ испытывают некоторую степень чувствительности к отвержению.</p>
 
         <p>В этом всеобъемлющем руководстве мы рассмотрим, что на самом деле представляет собой RSD, как ее распознать, почему она так тесно связана с СДВГ, и самое главное — научно обоснованные стратегии для управления ей.</p>
+
+
+            <section class="quick-rail" aria-labelledby="ru-rsd-next-step">
+                <h2 id="ru-rsd-next-step">Next Calm Step</h2>
+                <p>Start with a short tool if the article feels intense, then return to the guide with a little more context.</p>
+                <div class="quick-grid">
+                <a href="/anxiety-type/" class="quick-card" data-content-surface="quick_rail" data-target-slug="anxiety-type">
+                    <strong>Anxiety Type Test</strong>
+                    <span>Map the anxiety pattern behind rejection fear.</span>
+                </a>
+                <a href="/eq-test/" class="quick-card" data-content-surface="quick_rail" data-target-slug="eq-test">
+                    <strong>EQ Test</strong>
+                    <span>Check emotion naming and regulation strengths.</span>
+                </a>
+                <a href="/hsp-test/" class="quick-card" data-content-surface="quick_rail" data-target-slug="hsp-test">
+                    <strong>HSP Test</strong>
+                    <span>Explore sensitivity without turning it into self-blame.</span>
+                </a>
+                <a href="/stress-response/" class="quick-card" data-content-surface="quick_rail" data-target-slug="stress-response">
+                    <strong>Stress Response</strong>
+                    <span>Understand fight, flight, freeze, and fawn reactions.</span>
+                </a>
+                </div>
+            </section>
 
         <h2>Что такое дисфория чувствительности к отвержению?</h2>
 
@@ -762,6 +866,13 @@
                 <div class="faq-answer">Во время эпизода RSD немедленные стратегии включают: техники заземления, такие как осведомленность о чувствах 5-4-3-2-1, физическое движение для разрядки эмоциональной энергии, напоминание себе "Это RSD, это чувство пройдет", обращение к доверенному лицу, которое понимает RSD, избегание импульсивных реакций (не отправляйте это сообщение), самосострадание вместо самокритики и отвлечение до снижения интенсивности. Острая эмоциональная боль обычно достигает пика в течение 30-60 минут, хотя последствия могут длиться дольше. Построение плана кризиса в спокойные моменты помогает вам реагировать более эффективно во время эпизодов.</div>
             </div>
         </div>
+            <div class="ad-container" data-ad-surface="ru_rsd_bottom_ad">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
 
         <div class="related-section">
             <h2>Связанные ресурсы</h2>
@@ -806,6 +917,59 @@
         </div>
     </article>
 
+    <script>
+    (function(){
+        var contentMeta = {
+            content_group: 'ru_rejection_sensitivity',
+            content_slug: 'ru-rejection-sensitivity-dysphoria',
+            page_language: 'ru',
+            page_path: '/portal/blog/ru/rejection-sensitivity-dysphoria.html'
+        };
+
+        function trackContentEvent(eventName, params) {
+            if (typeof gtag !== 'function') return;
+            gtag('event', eventName, Object.assign({
+                content_type: 'blog',
+                transport_type: 'beacon'
+            }, contentMeta, params || {}));
+        }
+
+        function slugFromHref(href) {
+            if (!href) return '';
+            try {
+                var path = new URL(href, window.location.origin).pathname;
+                var parts = path.replace(/^\/+|\/+$/g, '').split('/');
+                return parts.pop() || 'home';
+            } catch (error) {
+                return '';
+            }
+        }
+
+        function bindClick(selector, eventName, extra) {
+            document.querySelectorAll(selector).forEach(function(element) {
+                element.addEventListener('click', function() {
+                    var href = element.getAttribute('href') || '';
+                    trackContentEvent(eventName, Object.assign({
+                        target_slug: element.getAttribute('data-target-slug') || slugFromHref(href),
+                        link_text: (element.textContent || '').trim().slice(0, 80)
+                    }, extra || {}));
+                });
+            });
+        }
+
+        trackContentEvent('content_view');
+        bindClick('.quick-card', 'content_test_click', { section_name: 'quick_rail' });
+        bindClick('.cta-btn, .cta-button, .game-link, .test-cta a', 'content_cta_click', { section_name: 'primary_cta' });
+        bindClick('.toc a', 'content_toc_click', { section_name: 'table_of_contents' });
+        bindClick('.related-links a, .related-card, .related-link, .link-item', 'content_related_click', { section_name: 'related_links' });
+
+        document.querySelectorAll('[data-ad-surface]').forEach(function(element) {
+            trackContentEvent('content_ad_impression', {
+                ad_surface: element.getAttribute('data-ad-surface')
+            });
+        });
+    })();
+    </script>
     <script src="/portal/js/cross-promo.js" defer></script>
 </body>
 </html>
