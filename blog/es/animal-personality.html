@@ -43,7 +43,7 @@
         "description": "Diagnóstico de personalidad basado en animales. Descubre si eres un león, lobo, gato, conejo o elefante.",
         "image": "https://dopabrain.com/portal/icon-512.svg",
         "datePublished": "2026-02-10",
-        "dateModified": "2026-02-10",
+        "dateModified": "2026-06-06",
         "inLanguage": "es",
         "author": {
             "@type": "Organization",
@@ -61,6 +61,37 @@
             "@type": "WebPage",
             "@id": "https://dopabrain.com/portal/blog/es/animal-personality.html"
         }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Es este test de personalidad animal un diagnostico clinico?",
+                "acceptedAnswer": { "@type": "Answer", "text": "No. El test de personalidad animal es una herramienta de autoconocimiento y entretenimiento. Puede ayudarte a nombrar patrones, pero no reemplaza una evaluacion psicologica profesional." }
+            },
+            {
+                "@type": "Question",
+                "name": "Puedo compartir mi resultado?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Si. El test de DopaBrain genera un resultado rapido y facil de compartir para comparar tu animal con amigos o pareja." }
+            }
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "DopaBrain", "item": "https://dopabrain.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Blog ES", "item": "https://dopabrain.com/portal/blog/es/" },
+            { "@type": "ListItem", "position": 3, "name": "Test de Personalidad Animal", "item": "https://dopabrain.com/portal/blog/es/animal-personality.html" }
+        ]
     }
     </script>
 
@@ -106,6 +137,7 @@
 
         html {
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         body {
@@ -280,6 +312,7 @@
             grid-template-columns: 280px 1fr;
             gap: 3rem;
             margin: 3rem auto;
+            min-width: 0;
         }
 
         .toc {
@@ -340,6 +373,9 @@
 
         .article-content {
             margin: 0;
+            max-width: 100%;
+            min-width: 0;
+            overflow-wrap: break-word;
         }
 
         .article-content section {
@@ -741,6 +777,50 @@
             box-shadow: 0 18px 36px rgba(139, 92, 246, 0.4);
         }
 
+        .quick-action-rail {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0 3rem;
+        }
+
+        .quick-action-card {
+            background: rgba(139, 92, 246, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.18);
+            border-radius: 14px;
+            padding: 1.25rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .quick-action-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(139, 92, 246, 0.36);
+            background: rgba(139, 92, 246, 0.13);
+        }
+
+        .quick-action-card strong {
+            display: block;
+            margin-bottom: 0.35rem;
+            color: var(--primary-light);
+        }
+
+        .quick-action-card span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .article-inline-ad {
+            margin: 3rem 0;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
         .related-posts {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -797,6 +877,7 @@
             .article-wrapper {
                 grid-template-columns: 1fr;
                 gap: 2rem;
+                width: 100%;
             }
 
             .toc {
@@ -884,6 +965,10 @@
             .cta-button {
                 width: 100%;
                 justify-content: center;
+            }
+
+            .quick-action-rail {
+                grid-template-columns: 1fr;
             }
 
             .header-nav {
@@ -982,6 +1067,37 @@
 
                     <div class="highlight-box success">
                         <p>✨ <strong>Nota importante:</strong> Este diagnóstico es una herramienta de autoconocimiento. No te limita ni define completamente quién eres. El crecimiento y el cambio siempre son posibles.</p>
+                    </div>
+
+                    <div class="quick-action-rail" aria-label="Tests recomendados">
+                        <a href="https://dopabrain.com/animal-personality/?lang=es&utm_source=portal_blog&utm_medium=es_animal_article&utm_campaign=animal_mx&utm_content=quick_animal"
+                           class="quick-action-card"
+                           data-content-surface="quick_animal_personality"
+                           data-target-slug="animal-personality">
+                            <strong>Hacer el test animal</strong>
+                            <span>Resultados rapidos, en espanol y faciles de compartir.</span>
+                        </a>
+                        <a href="https://dopabrain.com/portal/blog/es/spirit-animal-personality-quiz.html"
+                           class="quick-action-card"
+                           data-content-surface="quick_spirit_animal_article"
+                           data-target-slug="es-spirit-animal-personality-quiz">
+                            <strong>Animal espiritual</strong>
+                            <span>Compara el resultado con una lectura de arquetipos.</span>
+                        </a>
+                        <a href="https://dopabrain.com/brain-type/?lang=es&utm_source=portal_blog&utm_medium=es_animal_article&utm_campaign=animal_mx&utm_content=quick_brain"
+                           class="quick-action-card"
+                           data-content-surface="quick_brain_type"
+                           data-target-slug="brain-type">
+                            <strong>Tipo de cerebro</strong>
+                            <span>Otra capa para entender tu estilo de decision.</span>
+                        </a>
+                        <a href="https://dopabrain.com/mbti-love/?lang=es&utm_source=portal_blog&utm_medium=es_animal_article&utm_campaign=animal_mx&utm_content=quick_love"
+                           class="quick-action-card"
+                           data-content-surface="quick_mbti_love"
+                           data-target-slug="mbti-love">
+                            <strong>Compatibilidad</strong>
+                            <span>Conecta tu animal con patrones de relacion.</span>
+                        </a>
                     </div>
                 </section>
 
@@ -1354,22 +1470,38 @@
                 <div class="cta-section">
                     <h2>Descubre tu tipo animal hoy</h2>
                     <p>¿Cuál es tu animal interior? Realiza nuestro test de personalidad gratuito ahora mismo.</p>
-                    <a href="https://dopabrain.com/" class="cta-button">🎯 Hacer el test</a>
+                    <a href="https://dopabrain.com/animal-personality/?lang=es&utm_source=portal_blog&utm_medium=es_animal_article&utm_campaign=animal_mx&utm_content=bottom_cta"
+                       class="cta-button"
+                       data-content-surface="bottom_animal_personality"
+                       data-target-slug="animal-personality">🎯 Hacer el test</a>
+                </div>
+
+                <div class="article-inline-ad" data-ad-surface="es_animal_mid_article">
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-3600813755953882"
+                         data-ad-slot="auto"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
                 </div>
 
                 <!-- Related Posts -->
                 <section>
                     <h2>Artículos Relacionados</h2>
                     <div class="related-posts">
-                        <a href="https://dopabrain.com/portal/blog/es/personality-tests.html" class="related-card">
+                        <a href="https://dopabrain.com/portal/blog/es/personality-tests.html" class="related-card" data-content-surface="related_personality_tests" data-target-slug="es-personality-tests">
                             <h3>7 mejores tests de personalidad gratis 2026</h3>
                             <p>MBTI, test de estrés, compatibilidad amorosa y más.</p>
                         </a>
-                        <a href="https://dopabrain.com/portal/blog/es/test-estres-online.html" class="related-card">
+                        <a href="https://dopabrain.com/portal/blog/es/spirit-animal-personality-quiz.html" class="related-card" data-content-surface="related_spirit_animal" data-target-slug="es-spirit-animal-personality-quiz">
+                            <h3>Test de animal espiritual</h3>
+                            <p>Una lectura complementaria para compartir tu resultado.</p>
+                        </a>
+                        <a href="https://dopabrain.com/portal/blog/es/test-estres-online.html" class="related-card" data-content-surface="related_stress_test" data-target-slug="es-test-estres-online">
                             <h3>Test de Estrés Online - ¿Cuál es tu nivel?</h3>
                             <p>Diagnóstico rápido de tu estado emocional.</p>
                         </a>
-                        <a href="https://dopabrain.com/portal/blog/es/love-compatibility.html" class="related-card">
+                        <a href="https://dopabrain.com/portal/blog/es/love-compatibility.html" class="related-card" data-content-surface="related_love_compatibility" data-target-slug="es-love-compatibility">
                             <h3>Test de Compatibilidad Amorosa 2026</h3>
                             <p>Descubre tu compatibilidad con tu pareja.</p>
                         </a>
@@ -1415,16 +1547,68 @@
             });
         });
 
-        // Analytics event tracking
-        document.querySelectorAll('.cta-button, .related-card').forEach(element => {
+        const contentMeta = {
+            content_group: 'es_animal',
+            content_slug: 'es-animal-personality',
+            page_language: 'es',
+            page_path: '/portal/blog/es/animal-personality.html'
+        };
+
+        function trackContentEvent(name, params = {}) {
+            if (typeof gtag !== 'function') return;
+            gtag('event', name, { ...contentMeta, ...params });
+        }
+
+        trackContentEvent('content_view');
+
+        document.querySelectorAll('.quick-action-card').forEach((element) => {
             element.addEventListener('click', function() {
-                if (window.gtag) {
-                    gtag('event', 'click', {
-                        'event_category': 'engagement',
-                        'event_label': this.textContent,
-                        'value': 1
-                    });
-                }
+                trackContentEvent('content_test_click', {
+                    content_surface: this.dataset.contentSurface || 'quick_action',
+                    target_slug: this.dataset.targetSlug || '',
+                    link_url: this.href
+                });
+            });
+        });
+
+        document.querySelectorAll('.cta-button').forEach((element) => {
+            element.addEventListener('click', function() {
+                trackContentEvent('content_cta_click', {
+                    content_surface: this.dataset.contentSurface || 'cta',
+                    target_slug: this.dataset.targetSlug || '',
+                    link_url: this.href
+                });
+            });
+        });
+
+        document.querySelectorAll('.related-card').forEach((element) => {
+            element.addEventListener('click', function() {
+                trackContentEvent('content_related_click', {
+                    content_surface: this.dataset.contentSurface || 'related',
+                    target_slug: this.dataset.targetSlug || '',
+                    link_url: this.href
+                });
+            });
+        });
+
+        document.querySelectorAll('.toc a').forEach((element) => {
+            element.addEventListener('click', function() {
+                trackContentEvent('content_toc_click', {
+                    content_surface: 'toc',
+                    target_slug: this.getAttribute('href') || ''
+                });
+            });
+        });
+
+        document.querySelectorAll('.article-inline-ad .adsbygoogle').forEach((ad) => {
+            try {
+                (window.adsbygoogle = window.adsbygoogle || []).push({});
+            } catch (error) {
+                console.warn('AdSense init skipped:', error.message);
+            }
+            trackContentEvent('content_ad_impression', {
+                ad_surface: ad.closest('.article-inline-ad')?.dataset.adSurface || 'article_inline',
+                ad_slot: ad.dataset.adSlot || 'auto'
             });
         });
     </script>
