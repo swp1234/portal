@@ -15,6 +15,9 @@
         fr: ['brain-type', 'eq-test', 'mbti-city', 'hsp-test'],
         id: ['eq-test', 'hsp-test', 'attachment-style', 'brain-type'],
         de: ['brain-type', 'hsp-test', 'eq-test', 'mbti-city'],
+        my: ['brain-type', 'iq-test', 'mental-age', 'rizz-score'],
+        pt: ['animal-personality', 'eq-test', 'attachment-style', 'brain-type'],
+        ru: ['stress-check', 'animal-personality', 'brain-type', 'puzzle-2048'],
         en: ['past-life', 'eq-test', 'attachment-style', 'animal-personality'],
         ko: ['mbti-city', 'animal-personality', 'brain-type', 'eq-test']
     };
@@ -25,6 +28,9 @@
         fr: 'Continuez avec un test rapide',
         id: 'Lanjutkan dengan tes singkat',
         de: 'Weiter mit einem kurzen Test',
+        my: 'Continue with a quick test',
+        pt: 'Continue com um teste rapido',
+        ru: 'Продолжите быстрым тестом',
         en: 'Continue with a quick test',
         ko: '이어서 해볼 인기 테스트'
     };
@@ -56,6 +62,9 @@
         if (value === 'fr') return 'fr';
         if (value === 'de') return 'de';
         if (value === 'id') return 'id';
+        if (value === 'my' || value === 'malaysia' || value === 'ms') return 'my';
+        if (value === 'pt' || value === 'br' || value === 'brazil' || value === 'portugal') return 'pt';
+        if (value === 'ru' || value === 'russia') return 'ru';
         if (value === 'ko' || value === 'kr') return 'ko';
         if (value === 'en' || value === 'us' || value === 'uk' || value === 'gb') return 'en';
         return '';
@@ -82,8 +91,11 @@
         if (/^fr(?:-|$)/.test(lang) || timezone === 'Europe/Paris') return 'fr';
         if (/^de(?:-|$)/.test(lang) || timezone === 'Europe/Berlin') return 'de';
         if (/^id(?:-|$)/.test(lang) || timezone === 'Asia/Jakarta') return 'id';
+        if (/^ms(?:-|$)/.test(lang) || timezone === 'Asia/Kuala_Lumpur') return 'my';
+        if (/^pt(?:-|$)/.test(lang) || /America\/Sao_Paulo|Europe\/Lisbon/i.test(timezone)) return 'pt';
+        if (/^ru(?:-|$)/.test(lang) || /Europe\/Moscow/i.test(timezone)) return 'ru';
         if (/^ko(?:-|$)/.test(lang) || timezone === 'Asia/Seoul') return 'ko';
-        if (/^en(?:-|$)/.test(lang) && /America\//.test(timezone)) return 'en';
+        if (/^en(?:-|$)/.test(lang) && /America\/|Europe\/London|Australia\//.test(timezone)) return 'en';
         return 'global';
     }
 

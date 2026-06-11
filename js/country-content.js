@@ -9,6 +9,9 @@
         fr: 'fr', france: 'fr',
         de: 'de', germany: 'de',
         id: 'id', indonesia: 'id',
+        my: 'my', malaysia: 'my', ms: 'my',
+        pt: 'pt', br: 'pt', brazil: 'pt', portugal: 'pt',
+        ru: 'ru', russia: 'ru',
         ko: 'ko', kr: 'ko', korea: 'ko',
         en: 'en', us: 'en', usa: 'en', gb: 'en', uk: 'en'
     };
@@ -18,6 +21,7 @@
             label: 'Mexico',
             title: 'Popular in Mexico',
             desc: 'Recent Mexico sessions stay longest on shareable personality paths, with Animal Personality leading the group.',
+            preferences: ['Shareable result quizzes', 'Animal identity', 'Spanish-first copy', 'Fast completion'],
             items: [
                 { key: 'mx-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=es', icon: '🦁', badge: 'MX #1', title: 'Test de Personalidad Animal', desc: 'La ruta con mejor retencion reciente en Mexico.', accent: '#22c55e' },
                 { key: 'mx-city', type: 'app', appId: 'mbti-city', href: '/mbti-city/?lang=es', icon: '🏙️', badge: 'City', title: 'Test de Ciudad MBTI', desc: 'Una segunda prueba visual para seguir explorando.', accent: '#1A535C' },
@@ -29,6 +33,7 @@
             label: 'Chinese',
             title: '中文热门内容',
             desc: '中文读者最近在 2048 攻略、情绪调节和多巴胺重置内容上停留更久。',
+            preferences: ['长篇攻略', '情绪调节', 'HSP / EQ 测试', '2048 策略'],
             items: [
                 { key: 'zh-2048-guide', type: 'blog', href: '/portal/blog/zh/2048-strategy-guide.html', icon: '🔢', badge: '攻略', title: '2048策略指南', desc: '高停留时长的中文游戏攻略入口。', accent: '#f59e0b' },
                 { key: 'zh-emotion', type: 'blog', href: '/portal/blog/zh/emotional-regulation-techniques.html', icon: '🧘', badge: '情绪', title: '情绪调节技巧', desc: '把长阅读转成下一步自测。', accent: '#10b981' },
@@ -40,6 +45,7 @@
             label: 'Japan',
             title: '日本で人気の導線',
             desc: 'Japan traffic is strongest on MBTI City and self-discovery follow-ups.',
+            preferences: ['MBTI identity', 'Attachment & anxiety', 'Long result sessions', 'Self-discovery tests'],
             items: [
                 { key: 'ja-city', type: 'app', appId: 'mbti-city', href: '/mbti-city/?lang=ja', icon: '🏙️', badge: 'JP #1', title: 'MBTI都市診断', desc: '最近の日本セッションで最も長く読まれた入口。', accent: '#1A535C' },
                 { key: 'ja-city-guide', type: 'blog', href: '/portal/blog/ja/mbti-city-seikaku-toshi.html', icon: '🗺️', badge: 'Guide', title: 'MBTI都市ガイド', desc: '診断前後に読みやすい関連ガイド。', accent: '#3b82f6' },
@@ -51,6 +57,7 @@
             label: 'France',
             title: 'Populaire en France',
             desc: 'French readers are clustering around brain-type and self-knowledge content.',
+            preferences: ['Profil cognitif', 'Tests courts', 'HSP / EQ follow-up', 'Guides de connaissance de soi'],
             items: [
                 { key: 'fr-brain-guide', type: 'blog', href: '/portal/blog/fr/test-type-cerveau.html', icon: '🧠', badge: 'FR #1', title: 'Test de Type de Cerveau', desc: 'La page francaise avec le meilleur engagement recent.', accent: '#6366f1' },
                 { key: 'fr-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=fr', icon: '🧠', badge: 'Test', title: 'Test de Type de Cerveau', desc: 'Passez directement du guide au test.', accent: '#8b5cf6' },
@@ -62,6 +69,7 @@
             label: 'Indonesia',
             title: 'Populer di Indonesia',
             desc: 'Indonesia traffic is responding to emotional regulation and practical self-check paths.',
+            preferences: ['Regulasi emosi', 'EQ practical check', 'Relationship follow-up', 'MBTI curiosity'],
             items: [
                 { key: 'id-emotion', type: 'blog', href: '/portal/blog/id/emotional-regulation-techniques.html', icon: '🧘', badge: 'ID #1', title: 'Teknik Regulasi Emosi', desc: 'Artikel dengan waktu baca kuat untuk pengunjung Indonesia.', accent: '#10b981' },
                 { key: 'id-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=id', icon: '🎭', badge: 'EQ', title: 'Tes EQ', desc: 'Lanjutkan dari regulasi emosi ke tes singkat.', accent: '#00bcd4' },
@@ -73,6 +81,7 @@
             label: 'Germany',
             title: 'Beliebt in Deutschland',
             desc: 'German organic sessions are strongest on personality-test discovery and brain-style follow-ups.',
+            preferences: ['Personality discovery', 'HSP sensitivity', 'Emotional regulation', 'Stress response'],
             items: [
                 { key: 'de-tests-guide', type: 'blog', href: '/portal/blog/de/personality-tests.html', icon: '🧪', badge: 'DE #1', title: 'Beste Persönlichkeitstests', desc: 'Der beste Einstieg fur deutsche Suchbesuche.', accent: '#8b5cf6' },
                 { key: 'de-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=de', icon: '🧠', badge: 'Test', title: 'Gehirn-Typ-Test', desc: 'Vom Ratgeber direkt in den Test.', accent: '#6366f1' },
@@ -81,9 +90,10 @@
             ]
         },
         en: {
-            label: 'United States',
-            title: 'Popular in the U.S.',
+            label: 'English markets',
+            title: 'Popular in English markets',
             desc: 'English traffic is currently strongest on past-life curiosity and lightweight personality paths.',
+            preferences: ['Curiosity quizzes', 'Past-life content', 'MBTI compatibility', 'Short emotional checks'],
             items: [
                 { key: 'en-past-life-guide', type: 'blog', href: '/portal/blog/en/past-life-calculator-birthday.html', icon: '🔮', badge: 'US #1', title: 'Past Life Calculator by Birthday', desc: 'The strongest recent English landing-page cluster.', accent: '#8b5cf6' },
                 { key: 'en-past-life', type: 'app', appId: 'past-life', href: '/past-life/?lang=en', icon: '🕰️', badge: 'Try', title: 'Past Life Test', desc: 'Turn curiosity into a quick result flow.', accent: '#a855f7' },
@@ -95,6 +105,7 @@
             label: 'Korea',
             title: '한국 인기 추천',
             desc: '한국어 방문자는 MBTI, 성격 테스트, 감정형 테스트로 바로 이동할 때 흐름이 좋습니다.',
+            preferences: ['실용 도구', 'MBTI/성격', '감정형 테스트', '빠른 결과'],
             items: [
                 { key: 'ko-mbti', type: 'hub', href: '/portal/mbti/?lang=ko', icon: '💞', badge: 'MBTI', title: 'MBTI 궁합 허브', desc: '256가지 궁합표와 후속 테스트로 이어집니다.', accent: '#ff2d78' },
                 { key: 'ko-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=ko', icon: '🦁', badge: 'Hot', title: '동물 성격 테스트', desc: '공유하기 쉬운 결과형 성격 테스트입니다.', accent: '#22c55e' },
@@ -102,10 +113,47 @@
                 { key: 'ko-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=ko', icon: '🎭', badge: 'EQ', title: 'EQ 감성지능 테스트', desc: '감정/관계 관심을 짧은 테스트로 연결합니다.', accent: '#00bcd4' }
             ]
         },
+        my: {
+            label: 'Malaysia',
+            title: 'Popular in Malaysia',
+            desc: 'Malaysia is showing an emerging preference for deep test exploration across brain, IQ, mental-age, and identity quizzes.',
+            preferences: ['Deep test hopping', 'IQ / brain checks', 'Mental age', 'Identity quizzes'],
+            items: [
+                { key: 'my-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=en', icon: '🧠', badge: 'Brain', title: 'Brain Type Test', desc: 'A strong next stop for exploratory test sessions.', accent: '#6366f1' },
+                { key: 'my-iq', type: 'app', appId: 'iq-test', href: '/iq-test/?lang=en', icon: '🧩', badge: 'IQ', title: 'Quick IQ Test', desc: 'For visitors who move between cognitive tests.', accent: '#3498db' },
+                { key: 'my-mental-age', type: 'app', appId: 'mental-age', href: '/mental-age/?lang=en', icon: '🧠', badge: 'Age', title: 'Mental Age Test', desc: 'A lighter self-discovery follow-up.', accent: '#6366f1' },
+                { key: 'my-rizz', type: 'app', appId: 'rizz-score', href: '/rizz-score/?lang=en', icon: '✨', badge: 'Fun', title: 'Rizz Score', desc: 'A playful identity quiz after serious tests.', accent: '#ff8c42' }
+            ]
+        },
+        pt: {
+            label: 'Portuguese markets',
+            title: 'Popular in Portuguese markets',
+            desc: 'Portuguese-language traffic is small but leans toward animal identity, personality, and relationship/self-work content.',
+            preferences: ['Animal identity', 'Personality tests', 'Self-work', 'Relationship insight'],
+            items: [
+                { key: 'pt-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=pt', icon: '🦁', badge: 'Animal', title: 'Teste de Personalidade Animal', desc: 'A strong shareable identity path for Portuguese readers.', accent: '#22c55e' },
+                { key: 'pt-tests', type: 'blog', href: '/portal/blog/pt/personality-tests.html', icon: '🧪', badge: 'Tests', title: 'Melhores testes de personalidade', desc: 'A broad discovery page for test-curious visitors.', accent: '#8b5cf6' },
+                { key: 'pt-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=pt', icon: '🎭', badge: 'EQ', title: 'Teste de EQ', desc: 'A short emotional-intelligence follow-up.', accent: '#00bcd4' },
+                { key: 'pt-attachment', type: 'app', appId: 'attachment-style', href: '/attachment-style/?lang=pt', icon: '💔', badge: 'Relacao', title: 'Estilo de Apego', desc: 'Relationship insight after personality discovery.', accent: '#ec4899' }
+            ]
+        },
+        ru: {
+            label: 'Russia',
+            title: 'Популярно для русскоязычных',
+            desc: 'Russian-language signals are still early, with browser games and lightweight self-tests as the safest route.',
+            preferences: ['Browser games', 'Quick tests', 'Stress checks', 'Light discovery'],
+            items: [
+                { key: 'ru-games', type: 'blog', href: '/portal/blog/ru/besplatnye-brauzernye-igry-2026.html', icon: '🎮', badge: 'Games', title: 'Браузерные игры', desc: 'A practical entry for Russian game traffic.', accent: '#3b82f6' },
+                { key: 'ru-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=ru', icon: '⚡', badge: 'Stress', title: 'Тест стресса', desc: 'A short self-check with low friction.', accent: '#6366f1' },
+                { key: 'ru-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=ru', icon: '🦁', badge: 'Animal', title: 'Тест: какое вы животное?', desc: 'A shareable identity result path.', accent: '#22c55e' },
+                { key: 'ru-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=ru', icon: '🧠', badge: 'Brain', title: 'Тест типа мозга', desc: 'A deeper follow-up for self-knowledge.', accent: '#6366f1' }
+            ]
+        },
         global: {
             label: 'Global',
             title: 'Popular around the world',
             desc: 'Start with the highest-retention paths before browsing the full library.',
+            preferences: ['Shareable results', 'MBTI identity', 'Emotion checks', 'Relationship insight'],
             items: [
                 { key: 'global-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/', icon: '🦁', badge: 'Hot', title: 'Animal Personality', desc: 'A shareable personality result that keeps users moving.', accent: '#22c55e' },
                 { key: 'global-city', type: 'app', appId: 'mbti-city', href: '/mbti-city/', icon: '🏙️', badge: 'Stay', title: 'MBTI City Test', desc: 'A visual MBTI follow-up with strong session depth.', accent: '#1A535C' },
@@ -161,8 +209,11 @@
         if (/^fr(?:-|$)/.test(primary) || timezone === 'Europe/Paris') return 'fr';
         if (/^de(?:-|$)/.test(primary) || timezone === 'Europe/Berlin') return 'de';
         if (/^id(?:-|$)/.test(primary) || timezone === 'Asia/Jakarta') return 'id';
+        if (/^ms(?:-|$)/.test(primary) || timezone === 'Asia/Kuala_Lumpur') return 'my';
+        if (/^pt(?:-|$)/.test(primary) || /America\/Sao_Paulo|Europe\/Lisbon/i.test(timezone)) return 'pt';
+        if (/^ru(?:-|$)/.test(primary) || /Europe\/Moscow/i.test(timezone)) return 'ru';
         if (/^ko(?:-|$)/.test(primary) || timezone === 'Asia/Seoul') return 'ko';
-        if (/^en(?:-|$)/.test(primary) && /America\//.test(timezone)) return 'en';
+        if (/^en(?:-|$)/.test(primary) && /America\/|Europe\/London|Australia\//.test(timezone)) return 'en';
         if (allLangs.indexOf('zh') === 0) return 'zh';
 
         return 'global';
@@ -189,6 +240,10 @@
         return MARKETS[market] || MARKETS.global;
     }
 
+    function getPreferenceProfile(config) {
+        return (config.preferences || []).join('|');
+    }
+
     function track(name, params) {
         if (typeof gtag !== 'function') return;
         try {
@@ -209,17 +264,29 @@
         var config = getMarketConfig(market);
         var limit = options.limit || 4;
         var items = config.items.slice(0, limit);
+        var preferences = config.preferences || [];
+        var preferenceProfile = getPreferenceProfile(config);
 
         el.dataset.detectedMarket = market;
         el.dataset.countryLabel = config.label;
+        el.dataset.preferenceProfile = preferenceProfile;
         el.classList.add('is-visible');
 
         var html = ''
             + '<div class="country-rail-copy">'
             + '<span class="country-rail-kicker">' + escapeHtml(config.label) + '</span>'
             + '<h2 class="country-rail-title">' + escapeHtml(config.title) + '</h2>'
-            + '<p class="country-rail-desc">' + escapeHtml(config.desc) + '</p>'
-            + '</div>'
+            + '<p class="country-rail-desc">' + escapeHtml(config.desc) + '</p>';
+
+        if (preferences.length) {
+            html += '<div class="country-preferences" aria-label="Country content preferences">';
+            preferences.slice(0, 4).forEach(function(pref) {
+                html += '<span class="country-pref-chip">' + escapeHtml(pref) + '</span>';
+            });
+            html += '</div>';
+        }
+
+        html += '</div>'
             + '<div class="country-rail-grid">';
 
         items.forEach(function(item, index) {
@@ -254,6 +321,7 @@
                     detected_market: el.dataset.detectedMarket || '',
                     market_label: el.dataset.countryLabel || '',
                     surface_name: surface,
+                    preference_profile: el.dataset.preferenceProfile || '',
                     content_key: card.dataset.countryKey || '',
                     content_type: card.dataset.contentType || '',
                     app_id: card.dataset.app || '',
@@ -267,6 +335,8 @@
             detected_market: market,
             market_label: config.label,
             surface_name: surface,
+            preference_profile: preferenceProfile,
+            preference_count: preferences.length,
             item_count: items.length
         });
 
