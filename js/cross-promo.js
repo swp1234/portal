@@ -8,6 +8,26 @@
     var STORAGE_KEY = 'dopabrain_personalize';
     var MAX_HISTORY = 50;
     var BLOG_BRIDGE_IDS = ['animal-personality', 'mbti-city', 'attachment-style', 'eq-test'];
+    var BLOG_BRIDGE_BY_MARKET = {
+        mx: ['animal-personality', 'mbti-city', 'attachment-style', 'eq-test'],
+        zh: ['puzzle-2048', 'dopamine-type', 'hsp-test', 'eq-test'],
+        ja: ['mbti-city', 'mental-age', 'brain-type', 'eq-test'],
+        fr: ['brain-type', 'eq-test', 'mbti-city', 'hsp-test'],
+        id: ['eq-test', 'hsp-test', 'attachment-style', 'brain-type'],
+        de: ['brain-type', 'hsp-test', 'eq-test', 'mbti-city'],
+        en: ['past-life', 'eq-test', 'attachment-style', 'animal-personality'],
+        ko: ['mbti-city', 'animal-personality', 'brain-type', 'eq-test']
+    };
+    var BLOG_BRIDGE_TITLES = {
+        mx: 'Continua con una prueba rapida',
+        zh: '继续探索热门测试',
+        ja: '次におすすめの診断',
+        fr: 'Continuez avec un test rapide',
+        id: 'Lanjutkan dengan tes singkat',
+        de: 'Weiter mit einem kurzen Test',
+        en: 'Continue with a quick test',
+        ko: '이어서 해볼 인기 테스트'
+    };
 
     function getDeviceType() {
         if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return 'touch';
@@ -21,6 +41,62 @@
         if (pathname.indexOf('/portal/blog/') === 0) return 'blog';
         if (pathname.indexOf('/portal/') === 0) return 'portal';
         return 'app';
+    }
+
+    function getBlogLocale() {
+        var match = /^\/portal\/blog\/([^/]+)\//.exec(window.location.pathname || '');
+        return match ? match[1].toLowerCase() : '';
+    }
+
+    function normalizeMarket(value) {
+        value = String(value || '').toLowerCase().replace(/[^a-z]/g, '');
+        if (value === 'mx' || value === 'mexico' || value === 'es') return 'mx';
+        if (value === 'zh' || value === 'cn' || value === 'china' || value === 'tw' || value === 'hk') return 'zh';
+        if (value === 'ja' || value === 'jp') return 'ja';
+        if (value === 'fr') return 'fr';
+        if (value === 'de') return 'de';
+        if (value === 'id') return 'id';
+        if (value === 'ko' || value === 'kr') return 'ko';
+        if (value === 'en' || value === 'us' || value === 'uk' || value === 'gb') return 'en';
+        return '';
+    }
+
+    function detectMarket() {
+        try {
+            var params = new URLSearchParams(window.location.search || '');
+            var override = normalizeMarket(params.get('market') || params.get('country') || params.get('cc'));
+            if (override) return override;
+        } catch(e) {}
+
+        var localeMarket = normalizeMarket(getBlogLocale());
+        if (localeMarket) return localeMarket;
+
+        var lang = '';
+        var timezone = '';
+        try { lang = (navigator.language || '').toLowerCase(); } catch(e) {}
+        try { timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch(e) {}
+
+        if (/^es(?:-|$)/.test(lang) || /America\/Mexico/i.test(timezone)) return 'mx';
+        if (/^zh(?:-|$)/.test(lang) || /Asia\/(Shanghai|Hong_Kong|Taipei|Macau|Chongqing|Urumqi)/i.test(timezone)) return 'zh';
+        if (/^ja(?:-|$)/.test(lang) || timezone === 'Asia/Tokyo') return 'ja';
+        if (/^fr(?:-|$)/.test(lang) || timezone === 'Europe/Paris') return 'fr';
+        if (/^de(?:-|$)/.test(lang) || timezone === 'Europe/Berlin') return 'de';
+        if (/^id(?:-|$)/.test(lang) || timezone === 'Asia/Jakarta') return 'id';
+        if (/^ko(?:-|$)/.test(lang) || timezone === 'Asia/Seoul') return 'ko';
+        if (/^en(?:-|$)/.test(lang) && /America\//.test(timezone)) return 'en';
+        return 'global';
+    }
+
+    function getBlogBridgeStrategy() {
+        var locale = getBlogLocale();
+        var market = detectMarket();
+        var ids = BLOG_BRIDGE_BY_MARKET[market] || BLOG_BRIDGE_IDS;
+        return {
+            locale: locale,
+            market: market,
+            ids: ids,
+            title: BLOG_BRIDGE_TITLES[market] || BLOG_BRIDGE_TITLES.en
+        };
     }
 
     function sendQualityEvent(name, params) {
@@ -300,7 +376,8 @@
         if (window.location.pathname.indexOf('/portal/blog/') !== 0) return;
         if (document.querySelector('.cp-section')) return;
 
-        var picks = BLOG_BRIDGE_IDS
+        var bridge = getBlogBridgeStrategy();
+        var picks = bridge.ids
             .map(function(id) { return apps.find(function(app) { return app.id === id; }); })
             .filter(Boolean);
         if (picks.length === 0) return;
@@ -326,8 +403,8 @@
         ].join('');
         document.head.appendChild(style);
 
-        var title = 'Continue with a quick test';
-        var html = '<nav class="cp-section cp-blog-bridge" aria-label="' + title + '"><div class="cp-title">' + title + '</div><div class="cp-grid">';
+        var title = bridge.title;
+        var html = '<nav class="cp-section cp-blog-bridge" aria-label="' + title + '" data-detected-market="' + bridge.market + '" data-content-locale="' + bridge.locale + '"><div class="cp-title">' + title + '</div><div class="cp-grid">';
         picks.forEach(function(app) {
             var url = app.url.replace('https://dopabrain.com', '');
             html += '<a href="' + url + '" class="cp-card" aria-label="' + getAppName(app) + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '">'
@@ -340,7 +417,21 @@
         var anchor = document.querySelector('article') || document.querySelector('main') || document.body;
         anchor.insertAdjacentHTML('beforeend', html);
 
-        document.querySelector('.cp-blog-bridge').addEventListener('click', function(e) {
+        var bridgeEl = document.querySelector('.cp-blog-bridge');
+        if (typeof gtag === 'function') {
+            gtag('event', 'cross_promo_view', {
+                event_category: 'engagement',
+                source_app: 'blog',
+                surface_type: 'cross_promo',
+                surface_name: 'blog_bridge',
+                detected_market: bridge.market,
+                content_locale: bridge.locale,
+                item_count: picks.length,
+                transport_type: 'beacon'
+            });
+        }
+
+        bridgeEl.addEventListener('click', function(e) {
             var card = e.target.closest('.cp-card');
             if (!card) return;
             rememberAppClick(card.getAttribute('data-destination-id'), card.getAttribute('data-destination-category'));
@@ -352,7 +443,10 @@
                     source_app: 'blog',
                     surface_type: 'cross_promo',
                     surface_name: 'blog_bridge',
-                    destination_path: destinationPath
+                    destination_path: destinationPath,
+                    detected_market: bridge.market,
+                    content_locale: bridge.locale,
+                    bridge_strategy: bridge.ids.join(',')
                 });
             }
         });
