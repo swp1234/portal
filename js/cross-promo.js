@@ -18,6 +18,8 @@
         my: ['brain-type', 'iq-test', 'mental-age', 'rizz-score'],
         pt: ['animal-personality', 'eq-test', 'attachment-style', 'brain-type'],
         ru: ['stress-check', 'animal-personality', 'brain-type', 'puzzle-2048'],
+        hi: ['brain-type', 'iq-test', 'eq-test', 'anxiety-type'],
+        tr: ['red-flag-test', 'anxiety-type', 'social-battery', 'brainrot-score'],
         en: ['past-life', 'eq-test', 'attachment-style', 'animal-personality'],
         ko: ['mbti-city', 'animal-personality', 'brain-type', 'eq-test']
     };
@@ -31,6 +33,8 @@
         my: 'Continue with a quick test',
         pt: 'Continue com um teste rapido',
         ru: 'Продолжите быстрым тестом',
+        hi: 'अगला छोटा टेस्ट चुनें',
+        tr: 'Kısa bir testle devam edin',
         en: 'Continue with a quick test',
         ko: '이어서 해볼 인기 테스트'
     };
@@ -65,6 +69,8 @@
         if (value === 'my' || value === 'malaysia' || value === 'ms') return 'my';
         if (value === 'pt' || value === 'br' || value === 'brazil' || value === 'portugal') return 'pt';
         if (value === 'ru' || value === 'russia') return 'ru';
+        if (value === 'hi' || value === 'hindi' || value === 'in' || value === 'india') return 'hi';
+        if (value === 'tr' || value === 'turkey' || value === 'turkiye') return 'tr';
         if (value === 'ko' || value === 'kr') return 'ko';
         if (value === 'en' || value === 'us' || value === 'uk' || value === 'gb') return 'en';
         return '';
@@ -94,6 +100,8 @@
         if (/^ms(?:-|$)/.test(lang) || timezone === 'Asia/Kuala_Lumpur') return 'my';
         if (/^pt(?:-|$)/.test(lang) || /America\/Sao_Paulo|Europe\/Lisbon/i.test(timezone)) return 'pt';
         if (/^ru(?:-|$)/.test(lang) || /Europe\/Moscow/i.test(timezone)) return 'ru';
+        if (/^hi(?:-|$)/.test(lang) || /Asia\/(Kolkata|Calcutta)/i.test(timezone)) return 'hi';
+        if (/^tr(?:-|$)/.test(lang) || timezone === 'Europe/Istanbul') return 'tr';
         if (/^ko(?:-|$)/.test(lang) || timezone === 'Asia/Seoul') return 'ko';
         if (/^en(?:-|$)/.test(lang) && /America\/|Europe\/London|Australia\//.test(timezone)) return 'en';
         return 'global';

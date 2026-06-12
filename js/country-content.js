@@ -12,6 +12,8 @@
         my: 'my', malaysia: 'my', ms: 'my',
         pt: 'pt', br: 'pt', brazil: 'pt', portugal: 'pt',
         ru: 'ru', russia: 'ru',
+        hi: 'hi', hindi: 'hi', 'in': 'hi', india: 'hi',
+        tr: 'tr', turkey: 'tr', turkiye: 'tr',
         ko: 'ko', kr: 'ko', korea: 'ko',
         en: 'en', us: 'en', usa: 'en', gb: 'en', uk: 'en'
     };
@@ -149,6 +151,30 @@
                 { key: 'ru-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=ru', icon: '🧠', badge: 'Brain', title: 'Тест типа мозга', desc: 'A deeper follow-up for self-knowledge.', accent: '#6366f1' }
             ]
         },
+        hi: {
+            label: 'India',
+            title: 'भारत के लिए लोकप्रिय',
+            desc: 'भारत के लिए तेज़ mobile-first self-discovery रास्ते: brain, IQ, EQ और anxiety checks.',
+            preferences: ['AI self-discovery', 'IQ / brain checks', 'EQ and anxiety', 'Mobile-first quick tests'],
+            items: [
+                { key: 'hi-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=hi', icon: '🧠', badge: 'Brain', title: 'ब्रेन टाइप टेस्ट', desc: 'सोचने के तरीके को तेज़ result flow में समझें.', accent: '#6366f1' },
+                { key: 'hi-iq', type: 'app', appId: 'iq-test', href: '/iq-test/?lang=hi', icon: '🧩', badge: 'IQ', title: 'तेज़ IQ टेस्ट', desc: 'Pattern और logic curiosity के लिए छोटा cognitive check.', accent: '#3498db' },
+                { key: 'hi-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=hi', icon: '🎭', badge: 'EQ', title: 'EQ भावनात्मक बुद्धि टेस्ट', desc: 'Self-awareness को emotional intelligence से जोड़ें.', accent: '#00bcd4' },
+                { key: 'hi-anxiety', type: 'app', appId: 'anxiety-type', href: '/anxiety-type/?lang=hi', icon: '🌀', badge: 'Calm', title: 'चिंता प्रकार टेस्ट', desc: 'Mental-health intent को हल्के self-check में बदलें.', accent: '#10b981' }
+            ]
+        },
+        tr: {
+            label: 'Turkey',
+            title: 'Türkiye için popüler',
+            desc: 'Türkiye için kısa, sosyal ve kendini tanıma odaklı testler öne çıkarılıyor.',
+            preferences: ['İlişki farkındalığı', 'Stres / kaygı', 'Sosyal enerji', 'Kısa viral testler'],
+            items: [
+                { key: 'tr-red-flag', type: 'app', appId: 'red-flag-test', href: '/red-flag-test/?lang=tr', icon: '🚩', badge: 'İlişki', title: 'Kırmızı Bayrak Testi', desc: 'Sosyal paylaşımı kolay ilişki farkındalığı testi.', accent: '#dc2626' },
+                { key: 'tr-anxiety', type: 'app', appId: 'anxiety-type', href: '/anxiety-type/?lang=tr', icon: '🌀', badge: 'Kaygı', title: 'Kaygı Tipi Testi', desc: 'Kısa ve güvenli bir duygusal self-check.', accent: '#10b981' },
+                { key: 'tr-social', type: 'app', appId: 'social-battery', href: '/social-battery/?lang=tr', icon: '🔋', badge: 'Sosyal', title: 'Sosyal Batarya', desc: 'Enerji ve içe dönüklük merakını hızlı sonuca çevirir.', accent: '#f59e0b' },
+                { key: 'tr-brainrot', type: 'app', appId: 'brainrot-score', href: '/brainrot-score/?lang=tr', icon: '🧠', badge: 'Meme', title: 'Brain Rot Skoru', desc: 'Mizah ve kısa video kültürüne uygun viral test.', accent: '#06b6d4' }
+            ]
+        },
         global: {
             label: 'Global',
             title: 'Popular around the world',
@@ -212,6 +238,8 @@
         if (/^ms(?:-|$)/.test(primary) || timezone === 'Asia/Kuala_Lumpur') return 'my';
         if (/^pt(?:-|$)/.test(primary) || /America\/Sao_Paulo|Europe\/Lisbon/i.test(timezone)) return 'pt';
         if (/^ru(?:-|$)/.test(primary) || /Europe\/Moscow/i.test(timezone)) return 'ru';
+        if (/^hi(?:-|$)/.test(primary) || /Asia\/(Kolkata|Calcutta)/i.test(timezone)) return 'hi';
+        if (/^tr(?:-|$)/.test(primary) || timezone === 'Europe/Istanbul') return 'tr';
         if (/^ko(?:-|$)/.test(primary) || timezone === 'Asia/Seoul') return 'ko';
         if (/^en(?:-|$)/.test(primary) && /America\/|Europe\/London|Australia\//.test(timezone)) return 'en';
         if (allLangs.indexOf('zh') === 0) return 'zh';
