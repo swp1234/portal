@@ -14,6 +14,7 @@
         ru: 'ru', russia: 'ru',
         hi: 'hi', hindi: 'hi', 'in': 'hi', india: 'hi',
         tr: 'tr', turkey: 'tr', turkiye: 'tr',
+        sg: 'sg', singapore: 'sg',
         ko: 'ko', kr: 'ko', korea: 'ko',
         en: 'en', us: 'en', usa: 'en', gb: 'en', uk: 'en'
     };
@@ -101,6 +102,18 @@
                 { key: 'en-past-life', type: 'app', appId: 'past-life', href: '/past-life/?lang=en', icon: '🕰️', badge: 'Try', title: 'Past Life Test', desc: 'Turn curiosity into a quick result flow.', accent: '#a855f7' },
                 { key: 'en-mbti', type: 'hub', href: '/portal/mbti/?lang=en', icon: '💞', badge: 'Hub', title: 'MBTI Compatibility Hub', desc: 'A denser follow-up path for relationship intent.', accent: '#ff2d78' },
                 { key: 'en-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=en', icon: '🎭', badge: 'EQ', title: 'EQ Test', desc: 'Short self-check with better engagement than the root page.', accent: '#00bcd4' }
+            ]
+        },
+        sg: {
+            label: 'Singapore',
+            title: 'Quick picks for Singapore',
+            desc: 'Recent Singapore desktop traffic is high-volume but shallow, so route it straight into short result flows.',
+            preferences: ['Fast result tests', 'English-first paths', 'Shareable identity', 'Low-friction follow-up'],
+            items: [
+                { key: 'sg-past-life', type: 'app', appId: 'past-life', href: '/past-life/?lang=en', icon: 'PL', badge: 'Fast', title: 'Past Life Test', desc: 'A quick curiosity result for English visitors.', accent: '#a855f7' },
+                { key: 'sg-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=en', icon: 'AP', badge: 'Share', title: 'Animal Personality', desc: 'A shareable identity quiz with proven retention.', accent: '#22c55e' },
+                { key: 'sg-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=en', icon: 'EQ', badge: 'EQ', title: 'EQ Test', desc: 'Short emotional-intelligence flow for second clicks.', accent: '#00bcd4' },
+                { key: 'sg-attachment', type: 'app', appId: 'attachment-style', href: '/attachment-style/?lang=en', icon: 'AS', badge: 'Deep', title: 'Attachment Style', desc: 'A relationship self-check after a quick result.', accent: '#ec4899' }
             ]
         },
         ko: {
@@ -240,6 +253,7 @@
         if (/^ru(?:-|$)/.test(primary) || /Europe\/Moscow/i.test(timezone)) return 'ru';
         if (/^hi(?:-|$)/.test(primary) || /Asia\/(Kolkata|Calcutta)/i.test(timezone)) return 'hi';
         if (/^tr(?:-|$)/.test(primary) || timezone === 'Europe/Istanbul') return 'tr';
+        if (timezone === 'Asia/Singapore') return 'sg';
         if (/^ko(?:-|$)/.test(primary) || timezone === 'Asia/Seoul') return 'ko';
         if (/^en(?:-|$)/.test(primary) && /America\/|Europe\/London|Australia\//.test(timezone)) return 'en';
         if (allLangs.indexOf('zh') === 0) return 'zh';

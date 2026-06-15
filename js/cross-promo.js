@@ -20,6 +20,7 @@
         ru: ['stress-check', 'animal-personality', 'brain-type', 'puzzle-2048'],
         hi: ['brain-type', 'iq-test', 'eq-test', 'anxiety-type'],
         tr: ['red-flag-test', 'anxiety-type', 'social-battery', 'brainrot-score'],
+        sg: ['past-life', 'animal-personality', 'eq-test', 'attachment-style'],
         en: ['past-life', 'eq-test', 'attachment-style', 'animal-personality'],
         ko: ['mbti-city', 'animal-personality', 'brain-type', 'eq-test']
     };
@@ -35,6 +36,7 @@
         ru: 'Продолжите быстрым тестом',
         hi: 'अगला छोटा टेस्ट चुनें',
         tr: 'Kısa bir testle devam edin',
+        sg: 'Start a quick result test',
         en: 'Continue with a quick test',
         ko: '이어서 해볼 인기 테스트'
     };
@@ -71,6 +73,7 @@
         if (value === 'ru' || value === 'russia') return 'ru';
         if (value === 'hi' || value === 'hindi' || value === 'in' || value === 'india') return 'hi';
         if (value === 'tr' || value === 'turkey' || value === 'turkiye') return 'tr';
+        if (value === 'sg' || value === 'singapore') return 'sg';
         if (value === 'ko' || value === 'kr') return 'ko';
         if (value === 'en' || value === 'us' || value === 'uk' || value === 'gb') return 'en';
         return '';
@@ -81,6 +84,10 @@
             var params = new URLSearchParams(window.location.search || '');
             var override = normalizeMarket(params.get('market') || params.get('country') || params.get('cc'));
             if (override) return override;
+        } catch(e) {}
+
+        try {
+            if ((Intl.DateTimeFormat().resolvedOptions().timeZone || '') === 'Asia/Singapore') return 'sg';
         } catch(e) {}
 
         var localeMarket = normalizeMarket(getBlogLocale());
@@ -102,6 +109,7 @@
         if (/^ru(?:-|$)/.test(lang) || /Europe\/Moscow/i.test(timezone)) return 'ru';
         if (/^hi(?:-|$)/.test(lang) || /Asia\/(Kolkata|Calcutta)/i.test(timezone)) return 'hi';
         if (/^tr(?:-|$)/.test(lang) || timezone === 'Europe/Istanbul') return 'tr';
+        if (timezone === 'Asia/Singapore') return 'sg';
         if (/^ko(?:-|$)/.test(lang) || timezone === 'Asia/Seoul') return 'ko';
         if (/^en(?:-|$)/.test(lang) && /America\/|Europe\/London|Australia\//.test(timezone)) return 'en';
         return 'global';
@@ -128,6 +136,8 @@
                 page_path: window.location.pathname || '/',
                 referrer_state: document.referrer ? 'has_referrer' : 'direct_or_empty',
                 device_hint: getDeviceType(),
+                detected_market: detectMarket(),
+                quality_version: '2026-06-15',
                 transport_type: 'beacon'
             }, params || {}));
         } catch(e) {}
@@ -156,9 +166,18 @@
 
         bindOnce('click', 'click', document);
         bindOnce('keydown', 'key', document);
-        bindOnce('scroll', 'scroll', window);
         bindOnce('touchstart', 'touch', document);
-        window.setTimeout(function() { markEngaged('timer_8s'); }, 8000);
+        window.addEventListener('scroll', function() {
+            var doc = document.documentElement || document.body;
+            var max = Math.max(1, (doc.scrollHeight || 0) - window.innerHeight);
+            var depth = Math.round(((window.scrollY || doc.scrollTop || 0) / max) * 100);
+            if (depth >= 45 && Date.now() - startedAt >= 3000) {
+                markEngaged('scroll_45');
+            }
+        }, { passive: true });
+        window.setTimeout(function() {
+            if (!document.hidden) markEngaged('timer_20s_visible');
+        }, 20000);
     }
 
     initTrafficQualitySignals();
@@ -409,6 +428,11 @@
             '.cp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}',
             '.cp-card{display:flex;align-items:center;gap:10px;min-height:72px;padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;text-decoration:none;color:inherit;transition:all 0.2s ease}',
             '.cp-card:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.16);transform:translateY(-1px)}',
+            '.cp-scan-recovery{margin:20px auto 28px;padding:16px;border:1px solid rgba(0,229,255,0.16);border-radius:14px;background:rgba(0,229,255,0.05)}',
+            '.cp-scan-recovery .cp-title{text-align:left;margin-bottom:10px}',
+            '.cp-scan-recovery .cp-grid{grid-template-columns:repeat(4,minmax(0,1fr))}',
+            '.cp-scan-recovery .cp-card{min-height:64px;padding:10px}',
+            '.cp-scan-recovery .cp-desc{display:none}',
             '.cp-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}',
             '.cp-name{font-size:13px;font-weight:700;color:rgba(255,255,255,0.92);line-height:1.3}',
             '.cp-desc{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;line-height:1.35}',
@@ -423,52 +447,66 @@
         ].join('');
         document.head.appendChild(style);
 
-        var title = bridge.title;
-        var html = '<nav class="cp-section cp-blog-bridge" aria-label="' + title + '" data-detected-market="' + bridge.market + '" data-content-locale="' + bridge.locale + '"><div class="cp-title">' + title + '</div><div class="cp-grid">';
-        picks.forEach(function(app) {
-            var url = app.url.replace('https://dopabrain.com', '');
-            html += '<a href="' + url + '" class="cp-card" aria-label="' + getAppName(app) + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '">'
-                + '<div class="cp-icon" style="background:linear-gradient(135deg,' + app.color + '22,' + app.color + '08)">' + app.icon + '</div>'
-                + '<div><div class="cp-name">' + getAppName(app) + '</div>'
-                + '<div class="cp-desc">' + getAppDesc(app) + '</div></div></a>';
-        });
-        html += '</div></nav>';
-
-        var anchor = document.querySelector('article') || document.querySelector('main') || document.body;
-        anchor.insertAdjacentHTML('beforeend', html);
-
-        var bridgeEl = document.querySelector('.cp-blog-bridge');
-        if (typeof gtag === 'function') {
-            gtag('event', 'cross_promo_view', {
-                event_category: 'engagement',
-                source_app: 'blog',
-                surface_type: 'cross_promo',
-                surface_name: 'blog_bridge',
-                detected_market: bridge.market,
-                content_locale: bridge.locale,
-                item_count: picks.length,
-                transport_type: 'beacon'
+        function buildBridgeHtml(extraClass, surfaceName) {
+            var title = bridge.title;
+            var html = '<nav class="cp-section cp-blog-bridge ' + extraClass + '" aria-label="' + title + '" data-detected-market="' + bridge.market + '" data-content-locale="' + bridge.locale + '" data-surface-name="' + surfaceName + '"><div class="cp-title">' + title + '</div><div class="cp-grid">';
+            picks.forEach(function(app) {
+                var url = app.url.replace('https://dopabrain.com', '');
+                html += '<a href="' + url + '" class="cp-card" aria-label="' + getAppName(app) + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '">'
+                    + '<div class="cp-icon" style="background:linear-gradient(135deg,' + app.color + '22,' + app.color + '08)">' + app.icon + '</div>'
+                    + '<div><div class="cp-name">' + getAppName(app) + '</div>'
+                    + '<div class="cp-desc">' + getAppDesc(app) + '</div></div></a>';
             });
+            html += '</div></nav>';
+            return html;
         }
 
-        bridgeEl.addEventListener('click', function(e) {
-            var card = e.target.closest('.cp-card');
-            if (!card) return;
-            rememberAppClick(card.getAttribute('data-destination-id'), card.getAttribute('data-destination-category'));
+        var anchor = document.querySelector('article') || document.querySelector('main') || document.body;
+        var hasQuickRail = !!document.querySelector('.quick-actions,[data-content-surface="quick_rail"]');
+        var scanRecovery = bridge.market === 'sg' && getDeviceType() === 'desktop' && !document.referrer && !hasQuickRail;
+
+        if (scanRecovery) {
+            var firstPara = anchor.querySelector('p');
+            var recoveryHtml = buildBridgeHtml('cp-scan-recovery', 'blog_scan_recovery');
+            if (firstPara) firstPara.insertAdjacentHTML('afterend', recoveryHtml);
+            else anchor.insertAdjacentHTML('afterbegin', recoveryHtml);
+        }
+
+        anchor.insertAdjacentHTML('beforeend', buildBridgeHtml('', 'blog_bridge'));
+
+        document.querySelectorAll('.cp-blog-bridge').forEach(function(bridgeEl) {
+            var surfaceName = bridgeEl.dataset.surfaceName || 'blog_bridge';
             if (typeof gtag === 'function') {
-                var destinationPath = card.getAttribute('href') || '';
-                gtag('event', 'cross_promo_click', {
+                gtag('event', 'cross_promo_view', {
                     event_category: 'engagement',
-                    event_label: destinationPath,
                     source_app: 'blog',
                     surface_type: 'cross_promo',
-                    surface_name: 'blog_bridge',
-                    destination_path: destinationPath,
+                    surface_name: surfaceName,
                     detected_market: bridge.market,
                     content_locale: bridge.locale,
-                    bridge_strategy: bridge.ids.join(',')
+                    item_count: picks.length,
+                    transport_type: 'beacon'
                 });
             }
+            bridgeEl.addEventListener('click', function(e) {
+                var card = e.target.closest('.cp-card');
+                if (!card) return;
+                rememberAppClick(card.getAttribute('data-destination-id'), card.getAttribute('data-destination-category'));
+                if (typeof gtag === 'function') {
+                    var destinationPath = card.getAttribute('href') || '';
+                    gtag('event', 'cross_promo_click', {
+                        event_category: 'engagement',
+                        event_label: destinationPath,
+                        source_app: 'blog',
+                        surface_type: 'cross_promo',
+                        surface_name: surfaceName,
+                        destination_path: destinationPath,
+                        detected_market: bridge.market,
+                        content_locale: bridge.locale,
+                        bridge_strategy: bridge.ids.join(',')
+                    });
+                }
+            });
         });
     }
 
