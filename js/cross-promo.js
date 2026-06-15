@@ -145,16 +145,34 @@
 
     function initTrafficQualitySignals() {
         var startedAt = Date.now();
+        var market = detectMarket();
+        var device = getDeviceType();
+        var scanRisk = market === 'sg' && device === 'desktop' && !document.referrer;
+        var viewSent = false;
         var engaged = false;
 
-        sendQualityEvent('traffic_quality_view');
+        function sendView(reason) {
+            if (viewSent) return;
+            viewSent = true;
+            sendQualityEvent('traffic_quality_view', {
+                quality_view_reason: reason,
+                view_after_ms: Math.max(0, Date.now() - startedAt),
+                scan_risk: scanRisk ? 'sg_desktop_direct' : ''
+            });
+        }
+
+        window.setTimeout(function() {
+            if (!document.hidden) sendView(scanRisk ? 'delayed_scan_guard' : 'delayed_visible');
+        }, scanRisk ? 3000 : 1200);
 
         function markEngaged(reason) {
             if (engaged) return;
             engaged = true;
+            sendView('engagement_' + reason);
             sendQualityEvent('traffic_quality_engaged', {
                 quality_signal: reason,
-                engaged_after_ms: Math.max(0, Date.now() - startedAt)
+                engaged_after_ms: Math.max(0, Date.now() - startedAt),
+                scan_risk: scanRisk ? 'sg_desktop_direct' : ''
             });
         }
 
@@ -168,6 +186,7 @@
         bindOnce('keydown', 'key', document);
         bindOnce('touchstart', 'touch', document);
         window.addEventListener('scroll', function() {
+            if (scanRisk) return;
             var doc = document.documentElement || document.body;
             var max = Math.max(1, (doc.scrollHeight || 0) - window.innerHeight);
             var depth = Math.round(((window.scrollY || doc.scrollTop || 0) / max) * 100);
@@ -474,9 +493,10 @@
 
         anchor.insertAdjacentHTML('beforeend', buildBridgeHtml('', 'blog_bridge'));
 
-        document.querySelectorAll('.cp-blog-bridge').forEach(function(bridgeEl) {
-            var surfaceName = bridgeEl.dataset.surfaceName || 'blog_bridge';
-            if (typeof gtag === 'function') {
+        function trackBridgeView(surfaceName, itemCount) {
+            if (typeof gtag !== 'function') return;
+            var fire = function() {
+                if (document.hidden) return;
                 gtag('event', 'cross_promo_view', {
                     event_category: 'engagement',
                     source_app: 'blog',
@@ -484,10 +504,21 @@
                     surface_name: surfaceName,
                     detected_market: bridge.market,
                     content_locale: bridge.locale,
-                    item_count: picks.length,
+                    item_count: itemCount,
+                    view_delay_ms: bridge.market === 'sg' && getDeviceType() === 'desktop' && !document.referrer ? 3000 : 0,
                     transport_type: 'beacon'
                 });
+            };
+            if (bridge.market === 'sg' && getDeviceType() === 'desktop' && !document.referrer) {
+                window.setTimeout(fire, 3000);
+            } else {
+                fire();
             }
+        }
+
+        document.querySelectorAll('.cp-blog-bridge').forEach(function(bridgeEl) {
+            var surfaceName = bridgeEl.dataset.surfaceName || 'blog_bridge';
+            trackBridgeView(surfaceName, picks.length);
             bridgeEl.addEventListener('click', function(e) {
                 var card = e.target.closest('.cp-card');
                 if (!card) return;
