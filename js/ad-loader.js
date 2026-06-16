@@ -4,7 +4,8 @@
 (function() {
     'use strict';
 
-    var VERSION = '2026-06-15-sg-scan-delay';
+    var VERSION = '2026-06-16-sg-scan-delay-8s';
+    var SCAN_GUARD_DELAY_MS = 8000;
     var CLIENT_ID = 'ca-pub-3600813755953882';
     var ADSENSE_SRC = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + CLIENT_ID;
     var startedAt = Date.now();
@@ -125,6 +126,6 @@
     }, { once: true, passive: true });
 
     window.setTimeout(function() {
-        requestWhenVisible('delayed_visible_3000');
-    }, 3000);
+        requestWhenVisible('delayed_visible_8000');
+    }, SCAN_GUARD_DELAY_MS);
 })();

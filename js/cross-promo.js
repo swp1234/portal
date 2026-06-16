@@ -7,6 +7,7 @@
     var path = window.location.pathname.replace(/\/$/, '').split('/').pop();
     var STORAGE_KEY = 'dopabrain_personalize';
     var MAX_HISTORY = 50;
+    var SCAN_GUARD_DELAY_MS = 8000;
     var BLOG_BRIDGE_IDS = ['animal-personality', 'mbti-city', 'attachment-style', 'eq-test'];
     var BLOG_BRIDGE_BY_MARKET = {
         mx: ['animal-personality', 'mbti-city', 'attachment-style', 'eq-test'],
@@ -137,7 +138,7 @@
                 referrer_state: document.referrer ? 'has_referrer' : 'direct_or_empty',
                 device_hint: getDeviceType(),
                 detected_market: detectMarket(),
-                quality_version: '2026-06-15',
+                quality_version: '2026-06-16',
                 transport_type: 'beacon'
             }, params || {}));
         } catch(e) {}
@@ -162,11 +163,12 @@
         }
 
         window.setTimeout(function() {
-            if (!document.hidden) sendView(scanRisk ? 'delayed_scan_guard' : 'delayed_visible');
-        }, scanRisk ? 3000 : 1200);
+            if (!document.hidden) sendView(scanRisk ? 'delayed_scan_guard_8s' : 'delayed_visible');
+        }, scanRisk ? SCAN_GUARD_DELAY_MS : 1200);
 
         function markEngaged(reason) {
             if (engaged) return;
+            if (scanRisk && reason === 'timer_20s_visible') return;
             engaged = true;
             sendView('engagement_' + reason);
             sendQualityEvent('traffic_quality_engaged', {
@@ -505,12 +507,12 @@
                     detected_market: bridge.market,
                     content_locale: bridge.locale,
                     item_count: itemCount,
-                    view_delay_ms: bridge.market === 'sg' && getDeviceType() === 'desktop' && !document.referrer ? 3000 : 0,
+                    view_delay_ms: bridge.market === 'sg' && getDeviceType() === 'desktop' && !document.referrer ? SCAN_GUARD_DELAY_MS : 0,
                     transport_type: 'beacon'
                 });
             };
             if (bridge.market === 'sg' && getDeviceType() === 'desktop' && !document.referrer) {
-                window.setTimeout(fire, 3000);
+                window.setTimeout(fire, SCAN_GUARD_DELAY_MS);
             } else {
                 fire();
             }
