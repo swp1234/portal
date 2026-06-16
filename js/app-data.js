@@ -2819,7 +2819,7 @@ const APP_DATA = [
         color: '#5b21b6',
         category: 'test',
         tags: ['nervous system', 'polyvagal', 'trauma', 'stress', 'regulation', '신경계', '폴리베이걸', '심리'],
-        url: 'https://dopabrain.com/nervous-system-quiz/',
+        url: 'https://dopabrain.com/stress-response/',
         isNew: true,
         isPopular: false,
         popularity: 50,
