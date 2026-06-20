@@ -48,84 +48,8 @@
     <script src="/portal/js/ad-loader.js"></script>
 
     <!-- JSON-LD Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "Rejection Sensitivity Dysphoria (RSD): Signs, ADHD Connection & Coping Strategies",
-      "description": "Rejection Sensitivity Dysphoria (RSD) explained: signs, ADHD connection, neuroscience, and 8 evidence-based coping strategies for managing intense fear of rejection.",
-      "image": "https://dopabrain.com/portal/img/og/anxiety-type.png",
-      "datePublished": "2026-03-25",
-      "dateModified": "2026-03-25",
-      "author": {
-        "@type": "Organization",
-        "name": "DopaBrain"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "DopaBrain",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://dopabrain.com/portal/img/logo.png"
-        }
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://dopabrain.com/portal/blog/en/rejection-sensitivity-dysphoria.html"
-      }
-    }
-    </script>
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is the difference between RSD and social anxiety?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "While both involve fear of negative evaluation, RSD is characterized by extreme emotional dysregulation in response to perceived rejection—an intense, immediate emotional pain that feels unbearable. Social anxiety involves persistent worry about social situations and being judged, but the emotional response is typically anxiety-based rather than the acute emotional pain of RSD. People with RSD may be socially confident until they perceive rejection, while social anxiety affects comfort in social situations generally."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can you have RSD without ADHD?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, while RSD is extremely common in people with ADHD (affecting up to 99% of ADHD adults according to some studies), it can occur in people without ADHD. RSD may also co-occur with autism spectrum disorder, borderline personality disorder, complex PTSD, or exist as a standalone sensitivity. However, the neurobiological connection between ADHD and RSD is particularly strong due to shared dopamine dysregulation and executive function challenges."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is rejection sensitivity dysphoria in the DSM-5?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No, RSD is not currently included in the DSM-5 as a formal diagnosis. It's a term coined by Dr. William Dodson to describe a common experience among people with ADHD. While not an official diagnosis, RSD is widely recognized in the ADHD clinical community as a valid and debilitating experience. Symptoms of RSD may be documented under emotional dysregulation, mood disorders, or as part of ADHD presentation."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What triggers rejection sensitivity dysphoria?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "RSD can be triggered by both real and perceived rejection: criticism at work, unanswered texts, social exclusion, romantic rejection, perceived disapproval in someone's tone or facial expression, being ignored or interrupted, failure to meet expectations (self-imposed or external), and comparison to others. The key feature is that the trigger doesn't have to be an actual rejection—the perception alone is enough to activate the intense emotional response."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do you calm down from an RSD episode?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "During an RSD episode, immediate strategies include: grounding techniques like 5-4-3-2-1 sensory awareness, physical movement to discharge the emotional energy, reminding yourself 'This is RSD, this feeling will pass', reaching out to a trusted person who understands RSD, avoiding impulsive reactions (don't send that text), self-compassion rather than self-criticism, and distraction until the intensity decreases. The acute emotional pain typically peaks within 30-60 minutes, though the aftermath can last longer. Building a crisis plan during calm moments helps you respond more effectively during episodes."
-          }
-        }
-      ]
-    }
-    </script>
-
-    <style>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -392,9 +316,177 @@
                 padding: 10px;
             }
         }
+
+
+        /* Indexing batch support */
+        .indexing-quick-rail {
+            margin: 0 0 3rem;
+        }
+
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 96px;
+            padding: 1rem;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary, #8ab4ff);
+            background: rgba(255, 255, 255, 0.08);
+            text-decoration: none;
+        }
+
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary, #fff);
+            margin-bottom: 0.35rem;
+        }
+
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary, #cbd5e1);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .indexing-auto-ad {
+            min-height: 120px;
+            margin: 2.5rem 0;
+            padding: 1rem;
+            border: 1px dashed var(--border-color, rgba(255, 255, 255, 0.18));
+            border-radius: 8px;
+        }
+
+        /* Indexing table overflow support */
+        .indexing-quick-rail,
+        .indexing-auto-ad,
+        .indexing-followup-section {
+            max-width: 100%;
+            overflow-wrap: anywhere;
+        }
+
+        table {
+            max-width: 100%;
+        }
+
+        .compare-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing body overflow guard */
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        main,
+        article,
+        section,
+        .container,
+        .content,
+        .article-content,
+        .blog-content {
+            max-width: 100%;
+        }
+
+        p,
+        li,
+        a,
+        h1,
+        h2,
+        h3,
+        h4,
+        td,
+        th {
+            overflow-wrap: anywhere;
+        }
+
+        .compare-table,
+        .comparison-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing spectrum overflow guard */
+        .spectrum-labels {
+            max-width: 100%;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .spectrum-label {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .indexing-followup-section {
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+        }
+
+        .indexing-followup-section .related-links {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .indexing-followup-section .related-links a {
+            display: block;
+            min-height: 44px;
+            padding: 0.8rem 0.9rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 760px) {
+            .indexing-quick-rail .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .indexing-followup-section .related-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
     </style>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Rejection Sensitivity Dysphoria (RSD): Signs, ADHD Connection & Coping Strategies","description":"Rejection Sensitivity Dysphoria (RSD) explained: signs, ADHD connection, neuroscience, and 8 evidence-based coping strategies for managing intense fear of rejection.","image":"https://dopabrain.com/portal/img/og/anxiety-type.png","datePublished":"2026-03-25","dateModified":"2026-06-19","inLanguage":"en","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/en/rejection-sensitivity-dysphoria.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog EN","item":"https://dopabrain.com/portal/blog/en/"},{"@type":"ListItem","position":3,"name":"Rejection Sensitivity Dysphoria (RSD): Signs, ADHD Connection & Coping Strategies","item":"https://dopabrain.com/portal/blog/en/rejection-sensitivity-dysphoria.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
 </head>
 <body>
+                <section class="indexing-quick-rail" aria-labelledby="indexing-quick-rail-title">
+                    <h2 id="indexing-quick-rail-title">Quick next paths</h2>
+                    <div class="quick-grid">
+                        <a class="quick-card" href="/animal-personality/?lang=en" data-content-surface="quick_rail" data-target-slug="animal-personality"><strong>Animal personality</strong><span>Find your result</span></a>
+                        <a class="quick-card" href="/brain-type/?lang=en" data-content-surface="quick_rail" data-target-slug="brain-type"><strong>Brain type</strong><span>Compare thinking style</span></a>
+                        <a class="quick-card" href="/eq-test/?lang=en" data-content-surface="quick_rail" data-target-slug="eq-test"><strong>EQ test</strong><span>Read emotional patterns</span></a>
+                        <a class="quick-card" href="/attachment-style/?lang=en" data-content-surface="quick_rail" data-target-slug="attachment-style"><strong>Attachment style</strong><span>Check relationship habits</span></a>
+                    </div>
+                </section>
+
     <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="/portal/">Home</a>
         <span>›</span>
@@ -804,6 +896,55 @@
         </div>
     </article>
 
+
+    <script>
+        (function indexingContentTelemetry() {
+            function track(name, params) {
+                if (typeof gtag !== 'function') return;
+                gtag('event', name, Object.assign({
+                    event_category: 'content',
+                    page_path: location.pathname,
+                    content_locale: "en",
+                    content_id: "rejection-sensitivity-dysphoria.html"
+                }, params || {}));
+            }
+
+            function emitInitialContentEvents() {
+                track('content_view');
+                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
+                    track('content_ad_impression', {
+                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
+                        ad_index: index + 1
+                    });
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', emitInitialContentEvents, { once: true });
+            } else {
+                emitInitialContentEvents();
+            }
+
+            document.addEventListener('click', function(event) {
+                var target = event.target && event.target.closest ? event.target.closest('a,button') : null;
+                if (!target) return;
+                if (target.closest('.quick-card')) {
+                    track('content_test_click', { link_url: target.href || '', target_slug: target.getAttribute('data-target-slug') || '' });
+                } else if (target.closest('.cta-section') || target.closest('.cta-box') || target.closest('.test-cta') || target.classList.contains('cta-btn') || target.classList.contains('cta-button') || target.classList.contains('game-link') || target.getAttribute('data-content-surface') === 'cta') {
+                    track('content_cta_click', { link_url: target.href || '' });
+                } else if (target.closest('.related-posts') || target.closest('.related-links') || target.classList.contains('related-link') || target.classList.contains('related-card') || target.closest('.related-card')) {
+                    track('content_related_click', { link_url: target.href || '' });
+                } else if (target.closest('.toc')) {
+                    track('content_toc_click', { target: target.getAttribute('href') || '' });
+                }
+            }, true);
+        })();
+    </script>
+
     <script src="/portal/js/cross-promo.js" defer></script>
+
+                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                </div>
 </body>
 </html>

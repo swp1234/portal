@@ -51,84 +51,8 @@
     <script src="/portal/js/ad-loader.js"></script>
 
     <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "@language": "fr",
-      "headline": "Style d'Attachement Anxieux dans les Relations : Signes, Causes et Comment Guérir",
-      "description": "Découvrez les signes du style d'attachement anxieux, ses causes et les stratégies de guérison fondées sur des preuves. Apprenez comment l'attachement préoccupé affecte les relations et comment construire la sécurité.",
-      "image": "https://dopabrain.com/portal/img/og/attachment-style.png",
-      "author": {
-        "@type": "Organization",
-        "name": "DopaBrain"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "DopaBrain",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://dopabrain.com/portal/img/logo.png"
-        }
-      },
-      "datePublished": "2026-03-25",
-      "dateModified": "2026-03-25",
-      "inLanguage": "fr"
-    }
-    </script>
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "@language": "fr",
-      "inLanguage": "fr",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "L'attachement anxieux peut-il changer avec le temps ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Oui, les styles d'attachement ne sont pas fixes. Avec la conscience de soi, la thérapie et des relations sécurisantes, l'attachement anxieux peut évoluer vers un attachement sécure. Les recherches montrent qu'environ 25% des personnes connaissent des changements significatifs de style d'attachement au cours de leur vie, en particulier grâce à des expériences relationnelles correctives et un travail de guérison dédié."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Qu'est-ce qui cause l'attachement anxieux dans l'enfance ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "L'attachement anxieux se développe généralement à partir de soins incohérents dans l'enfance. Lorsqu'un soignant est parfois réactif et d'autres fois indisponible ou imprévisible, les enfants apprennent que l'amour et la sécurité ne sont pas fiables. Cela crée un système d'attachement hypervigilant qui recherche constamment des signes d'abandon."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Pourquoi les attachements anxieux et évitants s'attirent-ils mutuellement ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Les styles d'attachement anxieux et évitant créent souvent une correspondance inconsciente car ils confirment les croyances fondamentales de chacun. La poursuite du partenaire anxieux confirme la croyance de l'évitant que les gens sont intrusifs, tandis que la distance de l'évitant confirme la peur d'abandon du partenaire anxieux. Cela crée une dynamique douloureuse de poursuite-retrait appelée le piège anxieux-évitant."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "L'attachement anxieux est-il la même chose que la codépendance ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Bien qu'ils se chevauchent, ils ne sont pas identiques. L'attachement anxieux est un modèle relationnel spécifique enraciné dans les expériences d'attachement précoces, tandis que la codépendance est un modèle plus large de perte de soi dans les relations et de dérivation de l'estime de soi des autres. Beaucoup de personnes ayant un attachement anxieux développent des modèles codépendants, mais tous les codépendants n'ont pas d'attachement anxieux."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Combien de temps faut-il pour guérir l'attachement anxieux ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "La guérison de l'attachement anxieux est un processus graduel qui prend généralement 1 à 3 ans de travail constant, bien que beaucoup de gens remarquent des améliorations en quelques mois. La chronologie dépend de facteurs tels que l'historique de traumatisme, l'accès à la thérapie, la qualité des relations actuelles et l'engagement envers la croissance personnelle. Les progrès ne sont pas linéaires—attendez-vous à des revers et des percées en cours de route."
-          }
-        }
-      ]
-    }
-    </script>
-
-    <style>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -426,9 +350,177 @@
                 transition-duration: 0.01ms !important;
             }
         }
+
+
+        /* Indexing batch support */
+        .indexing-quick-rail {
+            margin: 0 0 3rem;
+        }
+
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 96px;
+            padding: 1rem;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary, #8ab4ff);
+            background: rgba(255, 255, 255, 0.08);
+            text-decoration: none;
+        }
+
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary, #fff);
+            margin-bottom: 0.35rem;
+        }
+
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary, #cbd5e1);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .indexing-auto-ad {
+            min-height: 120px;
+            margin: 2.5rem 0;
+            padding: 1rem;
+            border: 1px dashed var(--border-color, rgba(255, 255, 255, 0.18));
+            border-radius: 8px;
+        }
+
+        /* Indexing table overflow support */
+        .indexing-quick-rail,
+        .indexing-auto-ad,
+        .indexing-followup-section {
+            max-width: 100%;
+            overflow-wrap: anywhere;
+        }
+
+        table {
+            max-width: 100%;
+        }
+
+        .compare-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing body overflow guard */
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        main,
+        article,
+        section,
+        .container,
+        .content,
+        .article-content,
+        .blog-content {
+            max-width: 100%;
+        }
+
+        p,
+        li,
+        a,
+        h1,
+        h2,
+        h3,
+        h4,
+        td,
+        th {
+            overflow-wrap: anywhere;
+        }
+
+        .compare-table,
+        .comparison-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing spectrum overflow guard */
+        .spectrum-labels {
+            max-width: 100%;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .spectrum-label {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .indexing-followup-section {
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+        }
+
+        .indexing-followup-section .related-links {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .indexing-followup-section .related-links a {
+            display: block;
+            min-height: 44px;
+            padding: 0.8rem 0.9rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 760px) {
+            .indexing-quick-rail .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .indexing-followup-section .related-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
     </style>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Style d'Attachement Anxieux dans les Relations : Signes, Causes et Comment Guérir","description":"Découvrez les signes du style d'attachement anxieux, ses causes et les stratégies de guérison fondées sur des preuves. Apprenez comment l'attachement préoccupé affecte les relations et comment construire la sécurité.","image":"https://dopabrain.com/portal/img/og/attachment-style.png","datePublished":"2026-03-25","dateModified":"2026-06-19","inLanguage":"fr","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/fr/anxious-attachment-style-relationships.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog FR","item":"https://dopabrain.com/portal/blog/fr/"},{"@type":"ListItem","position":3,"name":"Style d'Attachement Anxieux dans les Relations : Signes, Causes et Comment Guérir","item":"https://dopabrain.com/portal/blog/fr/anxious-attachment-style-relationships.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
 </head>
 <body>
+                <section class="indexing-quick-rail" aria-labelledby="indexing-quick-rail-title">
+                    <h2 id="indexing-quick-rail-title">Quick next paths</h2>
+                    <div class="quick-grid">
+                        <a class="quick-card" href="/animal-personality/?lang=fr" data-content-surface="quick_rail" data-target-slug="animal-personality"><strong>Animal personality</strong><span>Find your result</span></a>
+                        <a class="quick-card" href="/brain-type/?lang=fr" data-content-surface="quick_rail" data-target-slug="brain-type"><strong>Brain type</strong><span>Compare thinking style</span></a>
+                        <a class="quick-card" href="/eq-test/?lang=fr" data-content-surface="quick_rail" data-target-slug="eq-test"><strong>EQ test</strong><span>Read emotional patterns</span></a>
+                        <a class="quick-card" href="/attachment-style/?lang=fr" data-content-surface="quick_rail" data-target-slug="attachment-style"><strong>Attachment style</strong><span>Check relationship habits</span></a>
+                    </div>
+                </section>
+
     <div class="container">
         <!-- Breadcrumb -->
         <nav class="breadcrumb" aria-label="Fil d'Ariane">
@@ -768,6 +860,65 @@
     </div>
 
     <!-- Cross-Promo Script -->
+
+    <script>
+        (function indexingContentTelemetry() {
+            function track(name, params) {
+                if (typeof gtag !== 'function') return;
+                gtag('event', name, Object.assign({
+                    event_category: 'content',
+                    page_path: location.pathname,
+                    content_locale: "fr",
+                    content_id: "anxious-attachment-style-relationships.html"
+                }, params || {}));
+            }
+
+            function emitInitialContentEvents() {
+                track('content_view');
+                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
+                    track('content_ad_impression', {
+                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
+                        ad_index: index + 1
+                    });
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', emitInitialContentEvents, { once: true });
+            } else {
+                emitInitialContentEvents();
+            }
+
+            document.addEventListener('click', function(event) {
+                var target = event.target && event.target.closest ? event.target.closest('a,button') : null;
+                if (!target) return;
+                if (target.closest('.quick-card')) {
+                    track('content_test_click', { link_url: target.href || '', target_slug: target.getAttribute('data-target-slug') || '' });
+                } else if (target.closest('.cta-section') || target.closest('.cta-box') || target.closest('.test-cta') || target.classList.contains('cta-btn') || target.classList.contains('cta-button') || target.classList.contains('game-link') || target.getAttribute('data-content-surface') === 'cta') {
+                    track('content_cta_click', { link_url: target.href || '' });
+                } else if (target.closest('.related-posts') || target.closest('.related-links') || target.classList.contains('related-link') || target.classList.contains('related-card') || target.closest('.related-card')) {
+                    track('content_related_click', { link_url: target.href || '' });
+                } else if (target.closest('.toc')) {
+                    track('content_toc_click', { target: target.getAttribute('href') || '' });
+                }
+            }, true);
+        })();
+    </script>
+
     <script src="/portal/js/cross-promo.js" defer></script>
+
+                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                </div>
+
+                <section class="indexing-followup-section" aria-labelledby="indexing-followup-title">
+                    <h2 id="indexing-followup-title">Continue with DopaBrain</h2>
+                    <a class="cta-button" href="/animal-personality/?lang=fr" data-content-surface="cta" data-target-slug="animal-personality">Animal personality</a>
+                    <ul class="related-links">
+                        <li><a class="related-link" href="/brain-type/?lang=fr" data-content-surface="related" data-target-slug="brain-type">Brain type</a></li>
+                        <li><a class="related-link" href="/eq-test/?lang=fr" data-content-surface="related" data-target-slug="eq-test">EQ test</a></li>
+                        <li><a class="related-link" href="/attachment-style/?lang=fr" data-content-surface="related" data-target-slug="attachment-style">Attachment style</a></li>
+                    </ul>
+                </section>
 </body>
 </html>

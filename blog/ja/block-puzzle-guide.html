@@ -30,58 +30,8 @@
     <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/block-puzzle-guide.html">
 
     <!-- Schema.org Article -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "ブロックパズル攻略ガイド：無料パズルゲームの高得点戦略",
-        "description": "ブロックパズルで高得点を出すための完全攻略ガイド。スコアリング理論、コンボ戦略、フィールド管理、上級テクニックを徹底解説。初心者から上級者まで使えるスコアアップ術。",
-        "image": "https://dopabrain.com/portal/icon-512.svg",
-        "datePublished": "2026-02-15",
-        "dateModified": "2026-02-15",
-        "inLanguage": "ja",
-        "author": { "@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com/" },
-        "publisher": { "@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com/", "logo": { "@type": "ImageObject", "url": "https://dopabrain.com/portal/icon-512.svg" } },
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://dopabrain.com/portal/blog/ja/block-puzzle-guide.html" }
-    }
-    </script>
-
-    <!-- Schema.org FAQPage -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "ブロックパズルで高得点を出すコツは？",
-                "acceptedAnswer": { "@type": "Answer", "text": "高得点を出すには、フィールドを常に低く平らに保ち、Iピース用に端の1列を空けてテトリス消し（4ライン同時消し・800点）を繰り返すことが基本です。さらにコンボ連鎖を途切れさせず繋げることで、ボーナス倍率が加算されスコアが飛躍的に伸びます。ネクストプレビューとホールド機能を常に活用し、2手先を読んだ配置を意識しましょう。" }
-            },
-            {
-                "@type": "Question",
-                "name": "ブロックパズルのコンボシステムはどう機能しますか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "コンボシステムは、連続してライン消しを成功させるたびにボーナスポイントが加算される仕組みです。ライン消しなしでピースを置くとコンボが途切れます。1連鎖ごとに+50ポイントのボーナスが加算されるため、5連鎖なら追加250ポイントを獲得できます。複数の消えかけラインを仕込んでおき、連続で消していくことがコンボ戦略の核心です。" }
-            },
-            {
-                "@type": "Question",
-                "name": "初心者がまず覚えるべき戦略は何ですか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "初心者が最初に身につけるべきは3つの基本戦略です。第一に、フィールドの表面を常に平らに保つこと。凸凹の塔は穴の原因になります。第二に、端から中央に向かって積み上げること。第三に、Iピース専用に端1列を空けてテトリス消しを狙うこと。この3つを意識するだけで、スコアは格段に向上します。" }
-            },
-            {
-                "@type": "Question",
-                "name": "フィールドが積み上がったときの対処法は？",
-                "acceptedAnswer": { "@type": "Answer", "text": "スタックが危険な高さに達したら、テトリス消しへの執着を捨てて生存を最優先にしましょう。シングル消しでも構わず、消せるラインをどんどん消してフィールドを下げます。ホールド機能で不要なピースを交換し、埋めやすい隙間から優先的に処理します。フィールドが半分以下に下がったら、再びテトリス戦略に切り替えましょう。" }
-            },
-            {
-                "@type": "Question",
-                "name": "ブロックパズルは脳トレになりますか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "はい、ブロックパズルは優れた脳トレーニングです。空間認識力、メンタルローテーション能力、先読み力、瞬間判断力を同時に鍛えることができます。研究によると、落ちものパズルを定期的にプレイすることで脳の灰白質が増加し、認知機能が向上する可能性が示されています。楽しみながら脳を鍛えられる理想的なゲームです。" }
-            }
-        ]
-    }
-    </script>
-
-    <!-- Google Analytics -->
+<!-- Schema.org FAQPage -->
+<!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
 
@@ -160,9 +110,177 @@
             .data-table { font-size: 13px; }
             .data-table th, .data-table td { padding: 8px 10px; }
         }
+
+
+        /* Indexing batch support */
+        .indexing-quick-rail {
+            margin: 0 0 3rem;
+        }
+
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 96px;
+            padding: 1rem;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary, #8ab4ff);
+            background: rgba(255, 255, 255, 0.08);
+            text-decoration: none;
+        }
+
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary, #fff);
+            margin-bottom: 0.35rem;
+        }
+
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary, #cbd5e1);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .indexing-auto-ad {
+            min-height: 120px;
+            margin: 2.5rem 0;
+            padding: 1rem;
+            border: 1px dashed var(--border-color, rgba(255, 255, 255, 0.18));
+            border-radius: 8px;
+        }
+
+        /* Indexing table overflow support */
+        .indexing-quick-rail,
+        .indexing-auto-ad,
+        .indexing-followup-section {
+            max-width: 100%;
+            overflow-wrap: anywhere;
+        }
+
+        table {
+            max-width: 100%;
+        }
+
+        .compare-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing body overflow guard */
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        main,
+        article,
+        section,
+        .container,
+        .content,
+        .article-content,
+        .blog-content {
+            max-width: 100%;
+        }
+
+        p,
+        li,
+        a,
+        h1,
+        h2,
+        h3,
+        h4,
+        td,
+        th {
+            overflow-wrap: anywhere;
+        }
+
+        .compare-table,
+        .comparison-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing spectrum overflow guard */
+        .spectrum-labels {
+            max-width: 100%;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .spectrum-label {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .indexing-followup-section {
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+        }
+
+        .indexing-followup-section .related-links {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .indexing-followup-section .related-links a {
+            display: block;
+            min-height: 44px;
+            padding: 0.8rem 0.9rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 760px) {
+            .indexing-quick-rail .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .indexing-followup-section .related-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
     </style>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"ブロックパズル攻略ガイド：無料パズルゲームの高得点戦略","description":"ブロックパズル攻略ガイド決定版。無料パズルゲームで高得点を狙うための戦略・テクニック・コンボ理論を徹底解説。初心者から上級者まで使えるスコアアップ術。","image":"https://dopabrain.com/portal/icon-512.svg","datePublished":"2026-02-15","dateModified":"2026-06-19","inLanguage":"ja","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/ja/block-puzzle-guide.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog JA","item":"https://dopabrain.com/portal/blog/ja/"},{"@type":"ListItem","position":3,"name":"ブロックパズル攻略ガイド：無料パズルゲームの高得点戦略","item":"https://dopabrain.com/portal/blog/ja/block-puzzle-guide.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
 </head>
 <body>
+                <section class="indexing-quick-rail" aria-labelledby="indexing-quick-rail-title">
+                    <h2 id="indexing-quick-rail-title">Quick next paths</h2>
+                    <div class="quick-grid">
+                        <a class="quick-card" href="/animal-personality/?lang=ja" data-content-surface="quick_rail" data-target-slug="animal-personality"><strong>Animal personality</strong><span>Find your result</span></a>
+                        <a class="quick-card" href="/brain-type/?lang=ja" data-content-surface="quick_rail" data-target-slug="brain-type"><strong>Brain type</strong><span>Compare thinking style</span></a>
+                        <a class="quick-card" href="/eq-test/?lang=ja" data-content-surface="quick_rail" data-target-slug="eq-test"><strong>EQ test</strong><span>Read emotional patterns</span></a>
+                        <a class="quick-card" href="/attachment-style/?lang=ja" data-content-surface="quick_rail" data-target-slug="attachment-style"><strong>Attachment style</strong><span>Check relationship habits</span></a>
+                    </div>
+                </section>
+
     <div class="progress-bar" id="progressBar"></div>
 
     <div class="container">
@@ -399,7 +517,11 @@
             </div>
         </article>
 
-        <footer>
+
+                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                </div>
+<footer>
             <p>&copy; 2026 <a href="https://dopabrain.com/">DopaBrain</a> &bull; すべての権利を保有</p>
             <p style="margin-top:8px; font-size:13px;">ブロックパズル攻略で高得点を目指そう</p>
         </footer>
@@ -419,6 +541,51 @@
             document.getElementById('progressBar').style.width = progress + '%';
         });
     </script>
+
+    <script>
+        (function indexingContentTelemetry() {
+            function track(name, params) {
+                if (typeof gtag !== 'function') return;
+                gtag('event', name, Object.assign({
+                    event_category: 'content',
+                    page_path: location.pathname,
+                    content_locale: "ja",
+                    content_id: "block-puzzle-guide.html"
+                }, params || {}));
+            }
+
+            function emitInitialContentEvents() {
+                track('content_view');
+                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
+                    track('content_ad_impression', {
+                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
+                        ad_index: index + 1
+                    });
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', emitInitialContentEvents, { once: true });
+            } else {
+                emitInitialContentEvents();
+            }
+
+            document.addEventListener('click', function(event) {
+                var target = event.target && event.target.closest ? event.target.closest('a,button') : null;
+                if (!target) return;
+                if (target.closest('.quick-card')) {
+                    track('content_test_click', { link_url: target.href || '', target_slug: target.getAttribute('data-target-slug') || '' });
+                } else if (target.closest('.cta-section') || target.closest('.cta-box') || target.closest('.test-cta') || target.classList.contains('cta-btn') || target.classList.contains('cta-button') || target.classList.contains('game-link') || target.getAttribute('data-content-surface') === 'cta') {
+                    track('content_cta_click', { link_url: target.href || '' });
+                } else if (target.closest('.related-posts') || target.closest('.related-links') || target.classList.contains('related-link') || target.classList.contains('related-card') || target.closest('.related-card')) {
+                    track('content_related_click', { link_url: target.href || '' });
+                } else if (target.closest('.toc')) {
+                    track('content_toc_click', { target: target.getAttribute('href') || '' });
+                }
+            }, true);
+        })();
+    </script>
+
     <script src="/portal/js/cross-promo.js" defer></script>
 </body>
 </html>

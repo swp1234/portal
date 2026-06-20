@@ -51,81 +51,8 @@
     <script src="/portal/js/ad-loader.js"></script>
 
     <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "关系中的焦虑依恋风格：迹象、原因及如何治愈",
-      "description": "发现焦虑依恋风格的迹象、原因和循证治疗策略。了解先占型依恋如何影响关系以及如何建立安全感。",
-      "image": "https://dopabrain.com/portal/img/og/attachment-style.png",
-      "author": {
-        "@type": "Organization",
-        "name": "DopaBrain"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "DopaBrain",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://dopabrain.com/portal/img/logo.png"
-        }
-      },
-      "datePublished": "2026-03-25",
-      "dateModified": "2026-03-25",
-      "inLanguage": "zh"
-    }
-    </script>
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "焦虑依恋会随时间改变吗？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "是的，依恋风格不是固定的。通过自我意识、治疗和安全的关系，焦虑依恋可以转向安全依恋。研究表明，大约25%的人在一生中经历显著的依恋风格变化，特别是通过矫正性关系体验和专注的治疗工作。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "童年时期是什么导致了焦虑依恋？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "焦虑依恋通常源于童年时期不一致的照顾。当照顾者有时有回应，有时又不可用或不可预测时，孩子会了解到爱和安全是不可靠的。这创造了一个高度警觉的依恋系统，不断扫描被遗弃的迹象。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "为什么焦虑型和回避型依恋会相互吸引？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "焦虑型和回避型依恋风格经常产生无意识的匹配，因为它们确认了彼此的核心信念。焦虑伴侣的追求确认了回避者认为人们具有侵入性的信念，而回避者的距离确认了焦虑伴侣对被遗弃的恐惧。这创造了一个痛苦的推拉动态，称为焦虑-回避陷阱。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "焦虑依恋与共依存相同吗？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "虽然它们有重叠，但并不完全相同。焦虑依恋是一种根植于早期依恋经历的特定关系模式，而共依存是一种在关系中失去自我并从他人那里获得自我价值的更广泛模式。许多焦虑依恋的人会发展出共依存模式，但并非所有共依存者都有焦虑依恋。"
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "治愈焦虑依恋需要多长时间？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "治愈焦虑依恋是一个渐进的过程，通常需要1-3年的持续努力，尽管许多人在几个月内就注意到了改善。时间线取决于创伤史、获得治疗的机会、当前关系的质量以及对个人成长的承诺等因素。进步不是线性的——沿途会有挫折和突破。"
-          }
-        }
-      ]
-    }
-    </script>
-
-    <style>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -423,9 +350,177 @@
                 transition-duration: 0.01ms !important;
             }
         }
+
+
+        /* Indexing batch support */
+        .indexing-quick-rail {
+            margin: 0 0 3rem;
+        }
+
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 96px;
+            padding: 1rem;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary, #8ab4ff);
+            background: rgba(255, 255, 255, 0.08);
+            text-decoration: none;
+        }
+
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary, #fff);
+            margin-bottom: 0.35rem;
+        }
+
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary, #cbd5e1);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .indexing-auto-ad {
+            min-height: 120px;
+            margin: 2.5rem 0;
+            padding: 1rem;
+            border: 1px dashed var(--border-color, rgba(255, 255, 255, 0.18));
+            border-radius: 8px;
+        }
+
+        /* Indexing table overflow support */
+        .indexing-quick-rail,
+        .indexing-auto-ad,
+        .indexing-followup-section {
+            max-width: 100%;
+            overflow-wrap: anywhere;
+        }
+
+        table {
+            max-width: 100%;
+        }
+
+        .compare-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing body overflow guard */
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        main,
+        article,
+        section,
+        .container,
+        .content,
+        .article-content,
+        .blog-content {
+            max-width: 100%;
+        }
+
+        p,
+        li,
+        a,
+        h1,
+        h2,
+        h3,
+        h4,
+        td,
+        th {
+            overflow-wrap: anywhere;
+        }
+
+        .compare-table,
+        .comparison-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing spectrum overflow guard */
+        .spectrum-labels {
+            max-width: 100%;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .spectrum-label {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .indexing-followup-section {
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+        }
+
+        .indexing-followup-section .related-links {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .indexing-followup-section .related-links a {
+            display: block;
+            min-height: 44px;
+            padding: 0.8rem 0.9rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 760px) {
+            .indexing-quick-rail .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .indexing-followup-section .related-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
     </style>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"关系中的焦虑依恋风格：迹象、原因及如何治愈","description":"发现焦虑依恋风格的迹象、原因和循证治疗策略。了解先占型依恋如何影响关系以及如何建立安全感。","image":"https://dopabrain.com/portal/img/og/attachment-style.png","datePublished":"2026-03-25","dateModified":"2026-06-20","inLanguage":"zh","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/zh/anxious-attachment-style-relationships.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog ZH","item":"https://dopabrain.com/portal/blog/zh/"},{"@type":"ListItem","position":3,"name":"关系中的焦虑依恋风格：迹象、原因及如何治愈","item":"https://dopabrain.com/portal/blog/zh/anxious-attachment-style-relationships.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
 </head>
 <body>
+                <section class="indexing-quick-rail" aria-labelledby="indexing-quick-rail-title">
+                    <h2 id="indexing-quick-rail-title">先看依恋模式</h2>
+                    <div class="quick-grid">
+                        <a class="quick-card" href="/attachment-style/?lang=zh" data-content-surface="quick_attachment_style" data-target-slug="attachment-style"><strong>依恋风格测试</strong><span>确认焦虑、回避或安全倾向</span></a>
+                        <a class="quick-card" href="/red-flag-test/?lang=zh" data-content-surface="quick_red_flag_test" data-target-slug="red-flag-test"><strong>红旗测试</strong><span>分辨关系中的警讯</span></a>
+                        <a class="quick-card" href="/eq-test/?lang=zh" data-content-surface="quick_eq_test" data-target-slug="eq-test"><strong>EQ测试</strong><span>练习表达情绪需求</span></a>
+                        <a class="quick-card" href="/anxiety-type/?lang=zh" data-content-surface="quick_anxiety_type" data-target-slug="anxiety-type"><strong>焦虑类型测试</strong><span>了解触发点和安全感需求</span></a>
+                    </div>
+                </section>
+
     <div class="container">
         <!-- Breadcrumb -->
         <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -765,6 +860,65 @@
     </div>
 
     <!-- Cross-Promo Script -->
+
+    <script>
+        (function indexingContentTelemetry() {
+            function track(name, params) {
+                if (typeof gtag !== 'function') return;
+                gtag('event', name, Object.assign({
+                    event_category: 'content',
+                    page_path: location.pathname,
+                    content_locale: "zh",
+                    content_id: "anxious-attachment-style-relationships.html"
+                }, params || {}));
+            }
+
+            function emitInitialContentEvents() {
+                track('content_view');
+                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
+                    track('content_ad_impression', {
+                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
+                        ad_index: index + 1
+                    });
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', emitInitialContentEvents, { once: true });
+            } else {
+                emitInitialContentEvents();
+            }
+
+            document.addEventListener('click', function(event) {
+                var target = event.target && event.target.closest ? event.target.closest('a,button') : null;
+                if (!target) return;
+                if (target.closest('.quick-card')) {
+                    track('content_test_click', { link_url: target.href || '', target_slug: target.getAttribute('data-target-slug') || '' });
+                } else if (target.closest('.cta-section') || target.closest('.cta-box') || target.closest('.test-cta') || target.classList.contains('cta-btn') || target.classList.contains('cta-button') || target.classList.contains('game-link') || target.getAttribute('data-content-surface') === 'cta') {
+                    track('content_cta_click', { link_url: target.href || '' });
+                } else if (target.closest('.related-posts') || target.closest('.related-links') || target.classList.contains('related-link') || target.classList.contains('related-card') || target.closest('.related-card')) {
+                    track('content_related_click', { link_url: target.href || '' });
+                } else if (target.closest('.toc')) {
+                    track('content_toc_click', { target: target.getAttribute('href') || '' });
+                }
+            }, true);
+        })();
+    </script>
+
     <script src="/portal/js/cross-promo.js" defer></script>
+
+                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                </div>
+
+                <section class="indexing-followup-section" aria-labelledby="indexing-followup-title">
+                    <h2 id="indexing-followup-title">Continue with DopaBrain</h2>
+                    <a class="cta-button" href="/animal-personality/?lang=zh" data-content-surface="cta" data-target-slug="animal-personality">Animal personality</a>
+                    <ul class="related-links">
+                        <li><a class="related-link" href="/brain-type/?lang=zh" data-content-surface="related" data-target-slug="brain-type">Brain type</a></li>
+                        <li><a class="related-link" href="/eq-test/?lang=zh" data-content-surface="related" data-target-slug="eq-test">EQ test</a></li>
+                        <li><a class="related-link" href="/attachment-style/?lang=zh" data-content-surface="related" data-target-slug="attachment-style">Attachment style</a></li>
+                    </ul>
+                </section>
 </body>
 </html>

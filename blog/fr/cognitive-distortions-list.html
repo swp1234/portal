@@ -51,84 +51,8 @@
     <script src="/portal/js/ad-loader.js"></script>
 
     <!-- JSON-LD Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "@language": "fr",
-      "headline": "15 Distorsions Cognitives : La Liste Complète et Comment les Remettre en Question (Guide TCC)",
-      "description": "Guide complet de 15 distorsions cognitives avec exemples et techniques de TCC. Apprenez à identifier les erreurs de pensée et à remettre en question les schémas de pensée déformés avec des stratégies éprouvées.",
-      "image": "https://dopabrain.com/portal/img/og/overthinker-test.png",
-      "author": {
-        "@type": "Organization",
-        "name": "DopaBrain"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "DopaBrain",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://dopabrain.com/portal/img/og/overthinker-test.png"
-        }
-      },
-      "datePublished": "2026-03-25",
-      "dateModified": "2026-03-25",
-      "inLanguage": "fr"
-    }
-    </script>
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "@language": "fr",
-      "inLanguage": "fr",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Que sont les distorsions cognitives ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Les distorsions cognitives sont des erreurs systématiques de pensée qui déforment votre perception de la réalité. Identifiées pour la première fois par le psychiatre Aaron Beck et popularisées par le Dr David Burns, ces schémas de pensée automatiques filtrent l'information de manière irrationnelle, conduisant souvent à des émotions et des comportements négatifs. Les exemples courants incluent la pensée tout ou rien, la catastrophisation et la surgénéralisation."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Combien y a-t-il de distorsions cognitives ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Bien que le Dr David Burns ait initialement identifié 10 distorsions cognitives dans son livre 'Feeling Good', la liste s'est étendue à 15 schémas communément reconnus. Ceux-ci incluent la pensée tout ou rien, la surgénéralisation, le filtre mental, la disqualification du positif, les conclusions hâtives, la magnification/catastrophisation, le raisonnement émotionnel, les déclarations 'devrait', l'étiquetage, la personnalisation, le blâme, avoir toujours raison, le sophisme du changement, le sophisme de la récompense céleste et le sophisme de l'équité."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Les distorsions cognitives peuvent-elles être corrigées ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Oui, les distorsions cognitives peuvent être corrigées grâce aux techniques de thérapie cognitivo-comportementale (TCC). Le processus implique : 1) Identifier la pensée déformée, 2) Examiner les preuves pour et contre, 3) Trouver des explications alternatives, 4) Évaluer l'utilité de la pensée, et 5) Créer une perspective équilibrée. Avec de la pratique, vous pouvez réentraîner votre cerveau à penser de manière plus réaliste et réduire les schémas de pensée négative automatiques."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Quelle est la distorsion cognitive la plus courante ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "La pensée tout ou rien (également appelée pensée en noir et blanc) est l'une des distorsions cognitives les plus courantes. Ce schéma consiste à voir les situations dans des catégories extrêmes sans terrain d'entente—les choses sont soit parfaites soit un échec total. Elle est particulièrement fréquente chez les perfectionnistes, les personnes souffrant de troubles anxieux et celles souffrant de dépression. Suivent de près la catastrophisation et la surgénéralisation."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Comment savoir quelles distorsions cognitives j'ai ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Pour identifier vos distorsions cognitives : 1) Tenez un journal de pensées suivant les pensées négatives automatiques, 2) Remarquez vos réactions émotionnelles—les émotions négatives fortes signalent souvent une pensée déformée, 3) Passez en revue les 15 types de distorsions cognitives et associez vos pensées aux schémas, 4) Posez-vous des questions clés comme 'Est-ce que je pense en extrêmes ?' ou 'Est-ce que je prédis l'avenir ?', et 5) Envisagez de passer une évaluation de surpenseur ou de type d'anxiété pour mieux comprendre vos schémas de pensée."
-          }
-        }
-      ]
-    }
-    </script>
-
-    <style>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -411,9 +335,177 @@
                 padding: 1.5rem;
             }
         }
+
+
+        /* Indexing batch support */
+        .indexing-quick-rail {
+            margin: 0 0 3rem;
+        }
+
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 96px;
+            padding: 1rem;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary, #8ab4ff);
+            background: rgba(255, 255, 255, 0.08);
+            text-decoration: none;
+        }
+
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary, #fff);
+            margin-bottom: 0.35rem;
+        }
+
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary, #cbd5e1);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .indexing-auto-ad {
+            min-height: 120px;
+            margin: 2.5rem 0;
+            padding: 1rem;
+            border: 1px dashed var(--border-color, rgba(255, 255, 255, 0.18));
+            border-radius: 8px;
+        }
+
+        /* Indexing table overflow support */
+        .indexing-quick-rail,
+        .indexing-auto-ad,
+        .indexing-followup-section {
+            max-width: 100%;
+            overflow-wrap: anywhere;
+        }
+
+        table {
+            max-width: 100%;
+        }
+
+        .compare-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing body overflow guard */
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        main,
+        article,
+        section,
+        .container,
+        .content,
+        .article-content,
+        .blog-content {
+            max-width: 100%;
+        }
+
+        p,
+        li,
+        a,
+        h1,
+        h2,
+        h3,
+        h4,
+        td,
+        th {
+            overflow-wrap: anywhere;
+        }
+
+        .compare-table,
+        .comparison-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing spectrum overflow guard */
+        .spectrum-labels {
+            max-width: 100%;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .spectrum-label {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .indexing-followup-section {
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+        }
+
+        .indexing-followup-section .related-links {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .indexing-followup-section .related-links a {
+            display: block;
+            min-height: 44px;
+            padding: 0.8rem 0.9rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 760px) {
+            .indexing-quick-rail .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .indexing-followup-section .related-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
     </style>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"15 Distorsions Cognitives : La Liste Complète et Comment les Remettre en Question","description":"Guide complet de 15 distorsions cognitives avec exemples et techniques de TCC. Apprenez à identifier les erreurs de pensée et à remettre en question les schémas de pensée déformés avec des stratégies éprouvées.","image":"https://dopabrain.com/portal/img/og/overthinker-test.png","datePublished":"2026-03-25","dateModified":"2026-06-19","inLanguage":"fr","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/fr/cognitive-distortions-list.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog FR","item":"https://dopabrain.com/portal/blog/fr/"},{"@type":"ListItem","position":3,"name":"15 Distorsions Cognitives : La Liste Complète et Comment les Remettre en Question","item":"https://dopabrain.com/portal/blog/fr/cognitive-distortions-list.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
 </head>
 <body>
+                <section class="indexing-quick-rail" aria-labelledby="indexing-quick-rail-title">
+                    <h2 id="indexing-quick-rail-title">Quick next paths</h2>
+                    <div class="quick-grid">
+                        <a class="quick-card" href="/animal-personality/?lang=fr" data-content-surface="quick_rail" data-target-slug="animal-personality"><strong>Animal personality</strong><span>Find your result</span></a>
+                        <a class="quick-card" href="/brain-type/?lang=fr" data-content-surface="quick_rail" data-target-slug="brain-type"><strong>Brain type</strong><span>Compare thinking style</span></a>
+                        <a class="quick-card" href="/eq-test/?lang=fr" data-content-surface="quick_rail" data-target-slug="eq-test"><strong>EQ test</strong><span>Read emotional patterns</span></a>
+                        <a class="quick-card" href="/attachment-style/?lang=fr" data-content-surface="quick_rail" data-target-slug="attachment-style"><strong>Attachment style</strong><span>Check relationship habits</span></a>
+                    </div>
+                </section>
+
     <div class="container">
         <!-- Breadcrumb -->
         <nav class="breadcrumb" aria-label="Fil d'Ariane">
@@ -786,6 +878,65 @@
         </div>
     </div>
 
+
+    <script>
+        (function indexingContentTelemetry() {
+            function track(name, params) {
+                if (typeof gtag !== 'function') return;
+                gtag('event', name, Object.assign({
+                    event_category: 'content',
+                    page_path: location.pathname,
+                    content_locale: "fr",
+                    content_id: "cognitive-distortions-list.html"
+                }, params || {}));
+            }
+
+            function emitInitialContentEvents() {
+                track('content_view');
+                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
+                    track('content_ad_impression', {
+                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
+                        ad_index: index + 1
+                    });
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', emitInitialContentEvents, { once: true });
+            } else {
+                emitInitialContentEvents();
+            }
+
+            document.addEventListener('click', function(event) {
+                var target = event.target && event.target.closest ? event.target.closest('a,button') : null;
+                if (!target) return;
+                if (target.closest('.quick-card')) {
+                    track('content_test_click', { link_url: target.href || '', target_slug: target.getAttribute('data-target-slug') || '' });
+                } else if (target.closest('.cta-section') || target.closest('.cta-box') || target.closest('.test-cta') || target.classList.contains('cta-btn') || target.classList.contains('cta-button') || target.classList.contains('game-link') || target.getAttribute('data-content-surface') === 'cta') {
+                    track('content_cta_click', { link_url: target.href || '' });
+                } else if (target.closest('.related-posts') || target.closest('.related-links') || target.classList.contains('related-link') || target.classList.contains('related-card') || target.closest('.related-card')) {
+                    track('content_related_click', { link_url: target.href || '' });
+                } else if (target.closest('.toc')) {
+                    track('content_toc_click', { target: target.getAttribute('href') || '' });
+                }
+            }, true);
+        })();
+    </script>
+
     <script src="/portal/js/cross-promo.js" defer></script>
+
+                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                </div>
+
+                <section class="indexing-followup-section" aria-labelledby="indexing-followup-title">
+                    <h2 id="indexing-followup-title">Continue with DopaBrain</h2>
+                    <a class="cta-button" href="/animal-personality/?lang=fr" data-content-surface="cta" data-target-slug="animal-personality">Animal personality</a>
+                    <ul class="related-links">
+                        <li><a class="related-link" href="/brain-type/?lang=fr" data-content-surface="related" data-target-slug="brain-type">Brain type</a></li>
+                        <li><a class="related-link" href="/eq-test/?lang=fr" data-content-surface="related" data-target-slug="eq-test">EQ test</a></li>
+                        <li><a class="related-link" href="/attachment-style/?lang=fr" data-content-surface="related" data-target-slug="attachment-style">Attachment style</a></li>
+                    </ul>
+                </section>
 </body>
 </html>

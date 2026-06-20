@@ -52,92 +52,8 @@
     <script src="/portal/js/ad-loader.js"></script>
 
     <!-- JSON-LD -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "Hipervigilancia: señales, trauma y cómo calmar tu sistema nervioso",
-      "description": "Aprende a reconocer los signos de hipervigilancia, su conexión con el trauma y técnicas respaldadas por la ciencia para calmar tu sistema nervioso.",
-      "image": "https://dopabrain.com/portal/blog/assets/hypervigilance-trauma-signs-coping.jpg",
-      "datePublished": "2026-03-25",
-      "dateModified": "2026-03-25",
-      "author": {
-        "@type": "Organization",
-        "name": "DopaBrain"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "DopaBrain",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://dopabrain.com/portal/icons/icon-192.png"
-        }
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://dopabrain.com/portal/blog/es/hypervigilance-trauma-signs-coping.html"
-      }
-    }
-    </script>
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "¿Qué es exactamente la hipervigilancia?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "La hipervigilancia es un estado de alerta elevada en el que tu sistema nervioso escanea constantemente el entorno en busca de amenazas. Es una respuesta de supervivencia que puede volverse crónica tras experiencias traumáticas, haciendo que tu cerebro permanezca en modo de alerta incluso cuando estás seguro o segura."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿La hipervigilancia es lo mismo que la ansiedad?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Aunque están relacionadas, no son lo mismo. La ansiedad suele centrarse en preocupaciones futuras, mientras que la hipervigilancia es un estado de hiperactivación físico constante orientado a detectar amenazas presentes. La hipervigilancia es a menudo un síntoma de TEPT o trauma, no necesariamente de un trastorno de ansiedad general."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Cuánto tiempo dura la hipervigilancia?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Sin tratamiento, la hipervigilancia relacionada con el trauma puede persistir durante años o incluso décadas. Con apoyo adecuado —como terapia centrada en el trauma, trabajo somático y técnicas de regulación del sistema nervioso— muchas personas experimentan mejoras significativas en meses."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Puedo superar la hipervigilancia por mi cuenta?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Las técnicas de autorregulación como la respiración diafragmática, los ejercicios de enraizamiento y las prácticas de mindfulness pueden ayudar a manejar los síntomas. Sin embargo, la hipervigilancia profundamente arraigada relacionada con el trauma generalmente requiere apoyo profesional para abordar las causas subyacentes de forma segura."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿Qué tipo de terapia funciona mejor para la hipervigilancia?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Los tratamientos basados en evidencia incluyen EMDR (Desensibilización y Reprocesamiento por Movimientos Oculares), terapia cognitivo-conductual centrada en el trauma (TCC-T), Somatic Experiencing y terapias centradas en el cuerpo. La mejor opción depende de tu historial específico y preferencias personales."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "¿La hipervigilancia puede afectar las relaciones?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Sí, de manera significativa. La hipervigilancia puede hacer que malinterpretes expresiones neutrales como amenazantes, que reacciones de manera exagerada ante conflictos menores, que tengas dificultades para confiar en los demás o para relajarte en compañía, y que te agotes social y emocionalmente. Reconocer este patrón es el primer paso para sanar las relaciones."
-          }
-        }
-      ]
-    }
-    </script>
-
-    <style>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -571,7 +487,165 @@
         @media (prefers-reduced-motion: reduce) {
             * { transition: none !important; animation: none !important; }
         }
+
+
+        /* Indexing batch support */
+        .indexing-quick-rail {
+            margin: 0 0 3rem;
+        }
+
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 96px;
+            padding: 1rem;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary, #8ab4ff);
+            background: rgba(255, 255, 255, 0.08);
+            text-decoration: none;
+        }
+
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary, #fff);
+            margin-bottom: 0.35rem;
+        }
+
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary, #cbd5e1);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .indexing-auto-ad {
+            min-height: 120px;
+            margin: 2.5rem 0;
+            padding: 1rem;
+            border: 1px dashed var(--border-color, rgba(255, 255, 255, 0.18));
+            border-radius: 8px;
+        }
+
+        /* Indexing table overflow support */
+        .indexing-quick-rail,
+        .indexing-auto-ad,
+        .indexing-followup-section {
+            max-width: 100%;
+            overflow-wrap: anywhere;
+        }
+
+        table {
+            max-width: 100%;
+        }
+
+        .compare-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing body overflow guard */
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        main,
+        article,
+        section,
+        .container,
+        .content,
+        .article-content,
+        .blog-content {
+            max-width: 100%;
+        }
+
+        p,
+        li,
+        a,
+        h1,
+        h2,
+        h3,
+        h4,
+        td,
+        th {
+            overflow-wrap: anywhere;
+        }
+
+        .compare-table,
+        .comparison-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing spectrum overflow guard */
+        .spectrum-labels {
+            max-width: 100%;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .spectrum-label {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .indexing-followup-section {
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+        }
+
+        .indexing-followup-section .related-links {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .indexing-followup-section .related-links a {
+            display: block;
+            min-height: 44px;
+            padding: 0.8rem 0.9rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 760px) {
+            .indexing-quick-rail .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .indexing-followup-section .related-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
     </style>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Hipervigilancia: señales, trauma y cómo calmar tu sistema nervioso","description":"Aprende a reconocer los signos de hipervigilancia, su conexión con el trauma y técnicas respaldadas por la ciencia para calmar tu sistema nervioso.","image":"https://dopabrain.com/portal/blog/assets/hypervigilance-trauma-signs-coping.jpg","datePublished":"2026-03-25","dateModified":"2026-06-19","inLanguage":"es","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/es/hypervigilance-trauma-signs-coping.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog ES","item":"https://dopabrain.com/portal/blog/es/"},{"@type":"ListItem","position":3,"name":"Hipervigilancia: señales, trauma y cómo calmar tu sistema nervioso","item":"https://dopabrain.com/portal/blog/es/hypervigilance-trauma-signs-coping.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
 </head>
 <body>
     <a href="#main-content" class="skip-link">Ir al contenido principal</a>
@@ -588,6 +662,16 @@
 
         <!-- Article -->
         <main id="main-content">
+                <section class="indexing-quick-rail" aria-labelledby="indexing-quick-rail-title">
+                    <h2 id="indexing-quick-rail-title">Quick next paths</h2>
+                    <div class="quick-grid">
+                        <a class="quick-card" href="/animal-personality/?lang=es" data-content-surface="quick_rail" data-target-slug="animal-personality"><strong>Animal personality</strong><span>Find your result</span></a>
+                        <a class="quick-card" href="/brain-type/?lang=es" data-content-surface="quick_rail" data-target-slug="brain-type"><strong>Brain type</strong><span>Compare thinking style</span></a>
+                        <a class="quick-card" href="/eq-test/?lang=es" data-content-surface="quick_rail" data-target-slug="eq-test"><strong>EQ test</strong><span>Read emotional patterns</span></a>
+                        <a class="quick-card" href="/attachment-style/?lang=es" data-content-surface="quick_rail" data-target-slug="attachment-style"><strong>Attachment style</strong><span>Check relationship habits</span></a>
+                    </div>
+                </section>
+
             <article>
                 <header class="article-header">
                     <div class="article-tag">Trauma y Sistema Nervioso</div>
@@ -890,15 +974,15 @@
                 <h2>Recursos relacionados</h2>
                 <p>Sigue explorando temas de salud mental y bienestar:</p>
                 <div class="resource-grid">
-                    <a href="/portal/blog/es/emotional-dysregulation-signs-causes-treatment.html" class="resource-card">
+                    <a href="/eq-test/?lang=es" class="resource-card">
                         <div class="resource-title">Desregulación emocional</div>
                         <div class="resource-desc">Señales, causas y estrategias de tratamiento</div>
                     </a>
-                    <a href="/portal/blog/es/cptsd-vs-ptsd-differences-symptoms-healing.html" class="resource-card">
+                    <a href="/trauma-response/?lang=es" class="resource-card">
                         <div class="resource-title">TEPT-C vs TEPT</div>
                         <div class="resource-desc">Diferencias, síntomas y caminos de sanación</div>
                     </a>
-                    <a href="/portal/blog/es/rumination-anxiety-break-cycle.html" class="resource-card">
+                    <a href="/stress-check/?lang=es" class="resource-card">
                         <div class="resource-title">Rumiación y ansiedad</div>
                         <div class="resource-desc">Cómo romper el ciclo del pensamiento repetitivo</div>
                     </a>
@@ -908,8 +992,67 @@
                     </a>
                 </div>
             </section>
-        </main>
+
+                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                </div>
+
+                <section class="indexing-followup-section" aria-labelledby="indexing-followup-title">
+                    <h2 id="indexing-followup-title">Continue with DopaBrain</h2>
+                    <a class="cta-button" href="/animal-personality/?lang=es" data-content-surface="cta" data-target-slug="animal-personality">Animal personality</a>
+                    <ul class="related-links">
+                        <li><a class="related-link" href="/brain-type/?lang=es" data-content-surface="related" data-target-slug="brain-type">Brain type</a></li>
+                        <li><a class="related-link" href="/eq-test/?lang=es" data-content-surface="related" data-target-slug="eq-test">EQ test</a></li>
+                        <li><a class="related-link" href="/attachment-style/?lang=es" data-content-surface="related" data-target-slug="attachment-style">Attachment style</a></li>
+                    </ul>
+                </section>
+</main>
     </div>
+
+
+    <script>
+        (function indexingContentTelemetry() {
+            function track(name, params) {
+                if (typeof gtag !== 'function') return;
+                gtag('event', name, Object.assign({
+                    event_category: 'content',
+                    page_path: location.pathname,
+                    content_locale: "es",
+                    content_id: "hypervigilance-trauma-signs-coping.html"
+                }, params || {}));
+            }
+
+            function emitInitialContentEvents() {
+                track('content_view');
+                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
+                    track('content_ad_impression', {
+                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
+                        ad_index: index + 1
+                    });
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', emitInitialContentEvents, { once: true });
+            } else {
+                emitInitialContentEvents();
+            }
+
+            document.addEventListener('click', function(event) {
+                var target = event.target && event.target.closest ? event.target.closest('a') : null;
+                if (!target) return;
+                if (target.closest('.quick-card')) {
+                    track('content_test_click', { link_url: target.href, target_slug: target.getAttribute('data-target-slug') || '' });
+                } else if (target.closest('.cta-section') || target.closest('.cta-box') || target.closest('.test-cta') || target.classList.contains('cta-btn') || target.classList.contains('cta-button') || target.classList.contains('game-link') || target.getAttribute('data-content-surface') === 'cta') {
+                    track('content_cta_click', { link_url: target.href });
+                } else if (target.closest('.related-posts') || target.closest('.related-links') || target.classList.contains('related-link') || target.classList.contains('related-card') || target.closest('.related-card')) {
+                    track('content_related_click', { link_url: target.href });
+                } else if (target.closest('.toc')) {
+                    track('content_toc_click', { target: target.getAttribute('href') || '' });
+                }
+            }, true);
+        })();
+    </script>
 
     <script src="/portal/js/cross-promo.js" defer></script>
 </body>

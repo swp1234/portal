@@ -31,34 +31,8 @@
     <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/minesweeper-strategy.html">
 
     <!-- Schema.org Article JSON-LD -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "माइनस्वीपर गेम की रणनीति: शुरुआती से विशेषज्ञ तक",
-        "description": "क्लासिक लॉजिक गेम माइनस्वीपर में रणनीति और तकनीकों की पूरी मार्गदर्शिका",
-        "image": "https://dopabrain.com/portal/img/og/minesweeper.png",
-        "datePublished": "2026-02-10",
-        "dateModified": "2026-02-10",
-        "inLanguage": "hi",
-        "author": {
-            "@type": "Organization",
-            "name": "DopaBrain"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "DopaBrain",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://dopabrain.com/portal/img/og/minesweeper.png"
-            }
-        },
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https://dopabrain.com/portal/blog/hi/minesweeper-strategy.html"
-        }
-    }
-    </script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"माइनस्वीपर: महारत","description":"माइनस्वीपर गेम की रणनीति: शुरुआती से विशेषज्ञ तक। क्लासिक लॉजिक गेम में जीतने के लिए सिद्ध तकनीकें सीखें।","image":"https://dopabrain.com/portal/img/og/minesweeper.png","datePublished":"2026-02-10","dateModified":"2026-06-19","inLanguage":"hi","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/hi/minesweeper-strategy.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog HI","item":"https://dopabrain.com/portal/blog/hi/"},{"@type":"ListItem","position":3,"name":"माइनस्वीपर: महारत","item":"https://dopabrain.com/portal/blog/hi/minesweeper-strategy.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
 
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
@@ -377,6 +351,65 @@
             .toc { display: none; }
             .article-header h1 { font-size: 2.8rem; }
         }
+
+
+        /* Indexing batch support */
+        .indexing-quick-rail {
+            margin: 0 0 3rem;
+        }
+
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 96px;
+            padding: 1rem;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary, #8ab4ff);
+            background: rgba(255, 255, 255, 0.08);
+            text-decoration: none;
+        }
+
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary, #fff);
+            margin-bottom: 0.35rem;
+        }
+
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary, #cbd5e1);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .indexing-auto-ad {
+            min-height: 120px;
+            margin: 2.5rem 0;
+            padding: 1rem;
+            border: 1px dashed var(--border-color, rgba(255, 255, 255, 0.18));
+            border-radius: 8px;
+        }
+
+        @media (max-width: 760px) {
+            .indexing-quick-rail .quick-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -419,6 +452,16 @@
             </nav>
 
             <main class="article-content">
+                <section class="indexing-quick-rail" aria-labelledby="indexing-quick-rail-title">
+                    <h2 id="indexing-quick-rail-title">Quick next paths</h2>
+                    <div class="quick-grid">
+                        <a class="quick-card" href="/puzzle-2048/?lang=hi" data-content-surface="quick_rail" data-target-slug="puzzle-2048"><strong>2048</strong><span>Play a number puzzle</span></a>
+                        <a class="quick-card" href="/reaction-test/?lang=hi" data-content-surface="quick_rail" data-target-slug="reaction-test"><strong>Reaction test</strong><span>Measure speed</span></a>
+                        <a class="quick-card" href="/minesweeper/?lang=hi" data-content-surface="quick_rail" data-target-slug="minesweeper"><strong>Minesweeper</strong><span>Practice logic</span></a>
+                        <a class="quick-card" href="/brick-breaker/?lang=hi" data-content-surface="quick_rail" data-target-slug="brick-breaker"><strong>Brick breaker</strong><span>Take a quick break</span></a>
+                    </div>
+                </section>
+
                 <section id="intro">
                     <h2>माइनस्वीपर का परिचय</h2>
                     <p>
@@ -598,7 +641,11 @@
                     </ul>
                 </section>
 
-                <div class="cta-section">
+
+                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                </div>
+<div class="cta-section">
                     <h2>अभ्यास शुरू करें</h2>
                     <p>क्या आप ये रणनीतियां लागू करने के लिए तैयार हैं? DopaBrain पर माइनस्वीपर खेलें और अपने मस्तिष्क को प्रशिक्षित करें!</p>
                     <a href="https://dopabrain.com/" class="cta-button">🎮 माइनस्वीपर खेलें</a>
@@ -607,11 +654,11 @@
                 <section>
                     <h2>समान लेख</h2>
                     <div class="related-posts">
-                        <a href="free-games.html" class="related-card">
+                        <a href="/portal/blog/hi/free-games.html" class="related-card">
                             <h3>शीर्ष 5 मुफ्त ब्राउज़र गेम 2026</h3>
                             <p>मस्तिष्क प्रशिक्षण और मनोरंजन के लिए सर्वश्रेष्ठ गेम।</p>
                         </a>
-                        <a href="brain-type-test.html" class="related-card">
+                        <a href="/portal/blog/hi/brain-type-test.html" class="related-card">
                             <h3>मस्तिष्क प्रकार परीक्षा</h3>
                             <p>जानें कि आपका मस्तिष्क किस प्रकार का है: तार्किक, रचनात्मक या संतुलित।</p>
                         </a>
@@ -645,6 +692,43 @@
             });
         });
     </script>
+
+    <script>
+        (function indexingContentTelemetry() {
+            function track(name, params) {
+                if (typeof gtag !== 'function') return;
+                gtag('event', name, Object.assign({
+                    event_category: 'content',
+                    page_path: location.pathname,
+                    content_locale: "hi",
+                    content_id: "minesweeper-strategy.html"
+                }, params || {}));
+            }
+
+            track('content_view');
+            document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
+                track('content_ad_impression', {
+                    ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
+                    ad_index: index + 1
+                });
+            });
+
+            document.addEventListener('click', function(event) {
+                var target = event.target && event.target.closest ? event.target.closest('a') : null;
+                if (!target) return;
+                if (target.closest('.quick-card')) {
+                    track('content_test_click', { link_url: target.href, target_slug: target.getAttribute('data-target-slug') || '' });
+                } else if (target.closest('.cta-section') || target.classList.contains('cta-button') || target.getAttribute('data-content-surface') === 'cta') {
+                    track('content_cta_click', { link_url: target.href });
+                } else if (target.closest('.related-posts') || target.closest('.related-links') || target.classList.contains('related-link') || target.classList.contains('related-card') || target.closest('.related-card')) {
+                    track('content_related_click', { link_url: target.href });
+                } else if (target.closest('.toc')) {
+                    track('content_toc_click', { target: target.getAttribute('href') || '' });
+                }
+            }, true);
+        })();
+    </script>
+
     <script src="/portal/js/cross-promo.js" defer></script>
 </body>
 </html>

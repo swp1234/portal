@@ -42,58 +42,8 @@
     <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/todo-list-guide.html">
 
     <!-- Schema.org Article JSON-LD -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "Guía de Lista de Tareas: Cómo Aumentar tu Productividad con Gestión de Tareas",
-        "description": "Guía completa para dominar la gestión de tareas. Aprende a organizar, priorizar y completar tus tareas con métodos probados como GTD, Eisenhower y Pomodoro.",
-        "image": "https://dopabrain.com/portal/icon-512.svg",
-        "datePublished": "2026-02-15",
-        "dateModified": "2026-02-15",
-        "inLanguage": "es",
-        "author": { "@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com/" },
-        "publisher": { "@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com/", "logo": { "@type": "ImageObject", "url": "https://dopabrain.com/portal/icon-512.svg" } },
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://dopabrain.com/portal/blog/es/lista-tareas-guia.html" }
-    }
-    </script>
-
-    <!-- Schema.org FAQPage JSON-LD -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "¿Cómo funciona la lista de tareas de DopaBrain?",
-                "acceptedAnswer": { "@type": "Answer", "text": "La lista de tareas de DopaBrain te permite añadir tareas con título, nivel de prioridad (alta, media o baja), categoría (trabajo, personal, salud o aprendizaje) y fecha de vencimiento opcional. Puedes filtrar tareas por estado (todas, activas, completadas, hoy, esta semana) y buscar por palabra clave. La app muestra tu progreso diario con una barra visual, estadísticas semanales con un gráfico de barras, y guarda todo localmente en tu navegador sin necesidad de crear cuenta." }
-            },
-            {
-                "@type": "Question",
-                "name": "¿La lista de tareas online es realmente gratuita?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Sí, la lista de tareas de DopaBrain es completamente gratuita, sin costes ocultos, sin versión premium y sin necesidad de registro. Todas las funciones incluyendo gestión de prioridades, filtrado por categorías, fechas de vencimiento, búsqueda, estadísticas semanales y análisis de productividad con IA están disponibles para todos los usuarios. Tus datos se almacenan localmente en tu navegador, lo que significa que son privados y accesibles sin conexión." }
-            },
-            {
-                "@type": "Question",
-                "name": "¿Cómo debo priorizar mis tareas?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Utiliza el sistema de tres niveles: Alta (rojo) para tareas urgentes e importantes que deben hacerse hoy, Media (amarillo) para tareas importantes pero no urgentes que puedes programar esta semana, y Baja (verde) para tareas que pueden esperar o delegarse. Una buena regla es limitar a 3 tareas de alta prioridad por día. Esto evita la sobrecarga y garantiza que tu trabajo más crítico se complete primero, siguiendo el principio de la Matriz de Eisenhower." }
-            },
-            {
-                "@type": "Question",
-                "name": "¿Qué es el método GTD y cómo puedo usarlo con esta app?",
-                "acceptedAnswer": { "@type": "Answer", "text": "GTD (Getting Things Done) es un método de productividad creado por David Allen. La idea central es sacar cada tarea de tu cabeza y colocarla en un sistema de confianza para que tu mente se enfoque en ejecutar, no en recordar. Con la lista de tareas de DopaBrain, puedes implementar GTD usando la app como bandeja de entrada, asignando categorías como contextos de proyecto, estableciendo prioridades para clarificar las próximas acciones, y usando las estadísticas semanales para la revisión periódica." }
-            },
-            {
-                "@type": "Question",
-                "name": "¿Puedo usar la lista de tareas en mi teléfono móvil?",
-                "acceptedAnswer": { "@type": "Answer", "text": "Sí. La lista de tareas es una Progressive Web App (PWA) que funciona en cualquier dispositivo con navegador. En móvil, puedes añadirla a tu pantalla de inicio para tener una experiencia similar a una app nativa con soporte offline. La interfaz es totalmente responsive con botones táctiles de 44px, y el service worker almacena los recursos en caché para que la app cargue instantáneamente incluso con conexiones lentas." }
-            }
-        ]
-    }
-    </script>
-
-    <!-- Google Analytics -->
+<!-- Schema.org FAQPage JSON-LD -->
+<!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
 
@@ -176,9 +126,177 @@
             .data-table { font-size: 13px; }
             .data-table th, .data-table td { padding: 8px 10px; }
         }
+
+
+        /* Indexing batch support */
+        .indexing-quick-rail {
+            margin: 0 0 3rem;
+        }
+
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 96px;
+            padding: 1rem;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary, #8ab4ff);
+            background: rgba(255, 255, 255, 0.08);
+            text-decoration: none;
+        }
+
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary, #fff);
+            margin-bottom: 0.35rem;
+        }
+
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary, #cbd5e1);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .indexing-auto-ad {
+            min-height: 120px;
+            margin: 2.5rem 0;
+            padding: 1rem;
+            border: 1px dashed var(--border-color, rgba(255, 255, 255, 0.18));
+            border-radius: 8px;
+        }
+
+        /* Indexing table overflow support */
+        .indexing-quick-rail,
+        .indexing-auto-ad,
+        .indexing-followup-section {
+            max-width: 100%;
+            overflow-wrap: anywhere;
+        }
+
+        table {
+            max-width: 100%;
+        }
+
+        .compare-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing body overflow guard */
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        main,
+        article,
+        section,
+        .container,
+        .content,
+        .article-content,
+        .blog-content {
+            max-width: 100%;
+        }
+
+        p,
+        li,
+        a,
+        h1,
+        h2,
+        h3,
+        h4,
+        td,
+        th {
+            overflow-wrap: anywhere;
+        }
+
+        .compare-table,
+        .comparison-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing spectrum overflow guard */
+        .spectrum-labels {
+            max-width: 100%;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .spectrum-label {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .indexing-followup-section {
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+        }
+
+        .indexing-followup-section .related-links {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .indexing-followup-section .related-links a {
+            display: block;
+            min-height: 44px;
+            padding: 0.8rem 0.9rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 760px) {
+            .indexing-quick-rail .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .indexing-followup-section .related-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
     </style>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Guía de Lista de Tareas: Cómo Aumentar tu Productividad con Gestión de Tareas","description":"Guía completa de lista de tareas: aprende a organizar, priorizar y gestionar tus tareas con herramientas gratuitas. Aumenta tu productividad con métodos GTD, Eisenhower y Pomodoro.","image":"https://dopabrain.com/portal/icon-512.svg","datePublished":"2026-02-15","dateModified":"2026-06-19","inLanguage":"es","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/es/lista-tareas-guia.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog ES","item":"https://dopabrain.com/portal/blog/es/"},{"@type":"ListItem","position":3,"name":"Guía de Lista de Tareas: Cómo Aumentar tu Productividad con Gestión de Tareas","item":"https://dopabrain.com/portal/blog/es/lista-tareas-guia.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
 </head>
 <body>
+                <section class="indexing-quick-rail" aria-labelledby="indexing-quick-rail-title">
+                    <h2 id="indexing-quick-rail-title">Quick next paths</h2>
+                    <div class="quick-grid">
+                        <a class="quick-card" href="/animal-personality/?lang=es" data-content-surface="quick_rail" data-target-slug="animal-personality"><strong>Animal personality</strong><span>Find your result</span></a>
+                        <a class="quick-card" href="/brain-type/?lang=es" data-content-surface="quick_rail" data-target-slug="brain-type"><strong>Brain type</strong><span>Compare thinking style</span></a>
+                        <a class="quick-card" href="/eq-test/?lang=es" data-content-surface="quick_rail" data-target-slug="eq-test"><strong>EQ test</strong><span>Read emotional patterns</span></a>
+                        <a class="quick-card" href="/attachment-style/?lang=es" data-content-surface="quick_rail" data-target-slug="attachment-style"><strong>Attachment style</strong><span>Check relationship habits</span></a>
+                    </div>
+                </section>
+
     <div class="progress-bar" id="progressBar"></div>
 
     <div class="container">
@@ -265,7 +383,7 @@
                 <ins class="adsbygoogle"
                     style="display:block"
                     data-ad-client="ca-pub-3600813755953882"
-                    data-ad-slot="1234567890"
+                    data-ad-slot="auto"
                     data-ad-format="auto"
                     data-full-width-responsive="true"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -362,7 +480,7 @@
                 <ins class="adsbygoogle"
                     style="display:block"
                     data-ad-client="ca-pub-3600813755953882"
-                    data-ad-slot="9876543210"
+                    data-ad-slot="auto"
                     data-ad-format="auto"
                     data-full-width-responsive="true"></ins>
                 <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -418,7 +536,11 @@
             </div>
         </article>
 
-        <footer>
+
+                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                </div>
+<footer>
             <p>&copy; 2026 <a href="https://dopabrain.com/">DopaBrain</a>. Todos los derechos reservados.</p>
             <p><a href="https://dopabrain.com/portal/">Volver al Portal</a> &bull; <a href="https://dopabrain.com/portal/blog/es/">Más Artículos en Español</a></p>
         </footer>
@@ -432,6 +554,51 @@
             document.getElementById('progressBar').style.width = progress + '%';
         });
     </script>
+
+    <script>
+        (function indexingContentTelemetry() {
+            function track(name, params) {
+                if (typeof gtag !== 'function') return;
+                gtag('event', name, Object.assign({
+                    event_category: 'content',
+                    page_path: location.pathname,
+                    content_locale: "es",
+                    content_id: "lista-tareas-guia.html"
+                }, params || {}));
+            }
+
+            function emitInitialContentEvents() {
+                track('content_view');
+                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
+                    track('content_ad_impression', {
+                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
+                        ad_index: index + 1
+                    });
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', emitInitialContentEvents, { once: true });
+            } else {
+                emitInitialContentEvents();
+            }
+
+            document.addEventListener('click', function(event) {
+                var target = event.target && event.target.closest ? event.target.closest('a') : null;
+                if (!target) return;
+                if (target.closest('.quick-card')) {
+                    track('content_test_click', { link_url: target.href, target_slug: target.getAttribute('data-target-slug') || '' });
+                } else if (target.closest('.cta-section') || target.closest('.cta-box') || target.closest('.test-cta') || target.classList.contains('cta-btn') || target.classList.contains('cta-button') || target.classList.contains('game-link') || target.getAttribute('data-content-surface') === 'cta') {
+                    track('content_cta_click', { link_url: target.href });
+                } else if (target.closest('.related-posts') || target.closest('.related-links') || target.classList.contains('related-link') || target.classList.contains('related-card') || target.closest('.related-card')) {
+                    track('content_related_click', { link_url: target.href });
+                } else if (target.closest('.toc')) {
+                    track('content_toc_click', { target: target.getAttribute('href') || '' });
+                }
+            }, true);
+        })();
+    </script>
+
     <script src="/portal/js/cross-promo.js" defer></script>
 </body>
 </html>

@@ -31,34 +31,8 @@
     <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/suushijutsu-unmei-no-kazu.html">
 
     <!-- Schema.org Article JSON-LD -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "無料数秘術 - あなたの運命の数字を発見しよう",
-        "description": "完全な数秘術ガイド：運命の数字の計算、意味、相性、人生の道の解説",
-        "image": "https://dopabrain.com/portal/icon-512.svg",
-        "datePublished": "2026-02-10",
-        "dateModified": "2026-02-10",
-        "inLanguage": "ja",
-        "author": {
-            "@type": "Organization",
-            "name": "DopaBrain"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "DopaBrain",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://dopabrain.com/portal/icon-512.svg"
-            }
-        },
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "https://dopabrain.com/portal/blog/ja/suushijutsu-unmei-no-kazu.html"
-        }
-    }
-    </script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"無料数秘術：あなたの 運命の数字 を発見しよう","description":"無料数秘術：あなたの運命の数字を発見しましょう。完全な計算ガイド、各数字の意味、相性、人生の道を解説します。","image":"https://dopabrain.com/portal/icon-512.svg","datePublished":"2026-02-10","dateModified":"2026-06-19","inLanguage":"ja","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/ja/suushijutsu-unmei-no-kazu.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog JA","item":"https://dopabrain.com/portal/blog/ja/"},{"@type":"ListItem","position":3,"name":"無料数秘術：あなたの 運命の数字 を発見しよう","item":"https://dopabrain.com/portal/blog/ja/suushijutsu-unmei-no-kazu.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
 
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
@@ -679,6 +653,65 @@
             body { background: white; color: black; }
             .header-nav, .toc, .cta-section, .related-posts, .article-footer, .progress-bar { display: none; }
         }
+
+
+        /* Indexing batch support */
+        .indexing-quick-rail {
+            margin: 0 0 3rem;
+        }
+
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 96px;
+            padding: 1rem;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary, #8ab4ff);
+            background: rgba(255, 255, 255, 0.08);
+            text-decoration: none;
+        }
+
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary, #fff);
+            margin-bottom: 0.35rem;
+        }
+
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary, #cbd5e1);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .indexing-auto-ad {
+            min-height: 120px;
+            margin: 2.5rem 0;
+            padding: 1rem;
+            border: 1px dashed var(--border-color, rgba(255, 255, 255, 0.18));
+            border-radius: 8px;
+        }
+
+        @media (max-width: 760px) {
+            .indexing-quick-rail .quick-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -723,6 +756,16 @@
             </nav>
 
             <main class="article-content">
+                <section class="indexing-quick-rail" aria-labelledby="indexing-quick-rail-title">
+                    <h2 id="indexing-quick-rail-title">Quick next paths</h2>
+                    <div class="quick-grid">
+                        <a class="quick-card" href="/numerology/?lang=ja" data-content-surface="quick_rail" data-target-slug="numerology"><strong>Numerology</strong><span>Calculate your number</span></a>
+                        <a class="quick-card" href="/life-in-numbers/?lang=ja" data-content-surface="quick_rail" data-target-slug="life-in-numbers"><strong>Life numbers</strong><span>Map personal patterns</span></a>
+                        <a class="quick-card" href="/fortune-cookie/?lang=ja" data-content-surface="quick_rail" data-target-slug="fortune-cookie"><strong>Fortune cookie</strong><span>Get a quick prompt</span></a>
+                        <a class="quick-card" href="/daily-tarot/?lang=ja" data-content-surface="quick_rail" data-target-slug="daily-tarot"><strong>Daily tarot</strong><span>Reflect on next steps</span></a>
+                    </div>
+                </section>
+
                 <section id="what-is">
                     <h2>数秘術とは何か、そして人気の理由</h2>
                     <p>
@@ -1042,7 +1085,11 @@
                     </div>
                 </section>
 
-                <div class="cta-section">
+
+                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                </div>
+<div class="cta-section">
                     <h2>今すぐあなたの運命を発見しましょう</h2>
                     <p>運命の数字を計算して、あなたの個性に隠された秘密を発見してください。数秘術は自己発見と個人的な成長のための強力なツールです。</p>
                     <a href="https://dopabrain.com/" class="cta-button">🔮 個人的な成長ツールを探索する</a>
@@ -1051,15 +1098,15 @@
                 <section>
                     <h2>関連記事</h2>
                     <div class="related-posts">
-                        <a href="ja/personality-tests.html" class="related-card">
+                        <a href="/portal/blog/ja/personality-tests.html" class="related-card">
                             <h3>性格テスト：あなたの特性を理解する</h3>
                             <p>様々な性格テストの完全ガイドとあなたについて何を明かすかを知る。</p>
                         </a>
-                        <a href="ja/blood-type-personality.html" class="related-card">
+                        <a href="/portal/blog/ja/blood-type-personality.html" class="related-card">
                             <h3>血液型と性格：信頼性は？</h3>
                             <p>血液型と性格の関係、科学的根拠、そして日本文化での重要性を探ります。</p>
                         </a>
-                        <a href="ja/stress-relief-test-guide.html" class="related-card">
+                        <a href="/portal/blog/ja/stress-relief-test-guide.html" class="related-card">
                             <h3>ストレス緩和テスト：心の健康をチェック</h3>
                             <p>ストレスレベルを評価し、より健康な心を達成するための実用的なアドバイスを得ます。</p>
                         </a>
@@ -1113,6 +1160,43 @@
             });
         });
     </script>
+
+    <script>
+        (function indexingContentTelemetry() {
+            function track(name, params) {
+                if (typeof gtag !== 'function') return;
+                gtag('event', name, Object.assign({
+                    event_category: 'content',
+                    page_path: location.pathname,
+                    content_locale: "ja",
+                    content_id: "suushijutsu-unmei-no-kazu.html"
+                }, params || {}));
+            }
+
+            track('content_view');
+            document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
+                track('content_ad_impression', {
+                    ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
+                    ad_index: index + 1
+                });
+            });
+
+            document.addEventListener('click', function(event) {
+                var target = event.target && event.target.closest ? event.target.closest('a') : null;
+                if (!target) return;
+                if (target.closest('.quick-card')) {
+                    track('content_test_click', { link_url: target.href, target_slug: target.getAttribute('data-target-slug') || '' });
+                } else if (target.closest('.cta-section') || target.classList.contains('cta-button') || target.getAttribute('data-content-surface') === 'cta') {
+                    track('content_cta_click', { link_url: target.href });
+                } else if (target.closest('.related-posts') || target.closest('.related-links') || target.classList.contains('related-link') || target.classList.contains('related-card') || target.closest('.related-card')) {
+                    track('content_related_click', { link_url: target.href });
+                } else if (target.closest('.toc')) {
+                    track('content_toc_click', { target: target.getAttribute('href') || '' });
+                }
+            }, true);
+        })();
+    </script>
+
     <script src="/portal/js/cross-promo.js" defer></script>
 </body>
 </html>

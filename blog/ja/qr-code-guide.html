@@ -34,58 +34,8 @@
     <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/qr-generator-guide.html">
 
     <!-- Schema.org Article -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "QRコード作成ガイド：無料でカスタムQRコードを作る方法",
-        "description": "QRコードを無料で簡単に作成する方法を徹底解説。URL、テキスト、WiFi、連絡先を瞬時にQR変換。色のカスタマイズやPNGダウンロードにも対応した2026年版QRコード活用ガイド。",
-        "image": "https://dopabrain.com/portal/icon-512.svg",
-        "datePublished": "2026-02-15",
-        "dateModified": "2026-02-15",
-        "inLanguage": "ja",
-        "author": { "@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com/" },
-        "publisher": { "@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com/", "logo": { "@type": "ImageObject", "url": "https://dopabrain.com/portal/icon-512.svg" } },
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://dopabrain.com/portal/blog/ja/qr-code-guide.html" }
-    }
-    </script>
-
-    <!-- Schema.org FAQ -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "QRコードとは何ですか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "QRコード（Quick Response Code）は、1994年に日本のデンソーウェーブが開発した二次元バーコードです。従来のバーコードが横方向のみのデータを持つのに対し、QRコードは縦横両方向にデータを格納できるため、数千文字の情報を小さな正方形のパターンに収めることができます。スマートフォンのカメラで読み取るだけで、URL、テキスト、WiFi設定、連絡先情報などに瞬時にアクセスできます。" }
-            },
-            {
-                "@type": "Question",
-                "name": "QRコードは無料で作れますか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "はい、DopaBrainのQRコード生成ツールを使えば、完全無料でQRコードを作成できます。URL、テキスト、WiFi接続情報、連絡先（vCard）など、さまざまな種類のQRコードを生成でき、前景色と背景色のカスタマイズ、サイズの調整、PNG形式でのダウンロードまですべて無料です。アカウント登録も不要で、ブラウザ上ですべて完結します。" }
-            },
-            {
-                "@type": "Question",
-                "name": "QRコードの色を変更できますか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "はい、DopaBrainのQRコード生成ツールでは、前景色（ドットの色）と背景色を自由にカスタマイズできます。ブランドカラーに合わせたQRコードを作成できるため、名刺やチラシ、ポスターなどのデザインに自然に溶け込ませることが可能です。ただし、読み取り精度を保つために、前景色と背景色のコントラスト比を十分に確保することが重要です。" }
-            },
-            {
-                "@type": "Question",
-                "name": "QRコードには有効期限がありますか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "静的QRコード（URLやテキストが直接埋め込まれたもの）には有効期限がありません。一度作成すれば、印刷物やデジタル媒体に使用し続けることができます。QRコード自体はデータをパターンとしてエンコードしているだけなので、リンク先のWebサイトが存在する限り、永久に機能します。ただし、リンク先のURLが変更・削除された場合は、QRコードを読み取ってもアクセスできなくなります。" }
-            },
-            {
-                "@type": "Question",
-                "name": "WiFi接続用のQRコードはどう作りますか？",
-                "acceptedAnswer": { "@type": "Answer", "text": "DopaBrainのQRコード生成ツールで「WiFi」モードを選択し、ネットワーク名（SSID）、パスワード、暗号化方式（WPA/WPA2/WEPなど）を入力するだけで、WiFi接続用QRコードを瞬時に生成できます。来客やお客様がこのQRコードをスマートフォンのカメラで読み取るだけで、パスワードを手入力せずにWiFiに接続できます。カフェ、ホテル、オフィスの受付などで特に便利です。" }
-            }
-        ]
-    }
-    </script>
-
-    <!-- Google Analytics -->
+<!-- Schema.org FAQ -->
+<!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
 
@@ -158,9 +108,187 @@
             .container { padding: 20px 16px 40px; }
             .cta-box { padding: 20px 16px; }
         }
+
+
+        /* Indexing batch support */
+        .indexing-quick-rail {
+            margin: 0 0 3rem;
+        }
+
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 96px;
+            padding: 1rem;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary, #8ab4ff);
+            background: rgba(255, 255, 255, 0.08);
+            text-decoration: none;
+        }
+
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary, #fff);
+            margin-bottom: 0.35rem;
+        }
+
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary, #cbd5e1);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .indexing-auto-ad {
+            min-height: 120px;
+            margin: 2.5rem 0;
+            padding: 1rem;
+            border: 1px dashed var(--border-color, rgba(255, 255, 255, 0.18));
+            border-radius: 8px;
+        }
+
+        /* Indexing table overflow support */
+        .indexing-quick-rail,
+        .indexing-auto-ad,
+        .indexing-followup-section {
+            max-width: 100%;
+            overflow-wrap: anywhere;
+        }
+
+        table {
+            max-width: 100%;
+        }
+
+        .compare-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .indexing-followup-section {
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+        }
+
+        .indexing-followup-section .related-links {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .indexing-followup-section .related-links a {
+            display: block;
+            min-height: 44px;
+            padding: 0.8rem 0.9rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 760px) {
+            .indexing-quick-rail .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .indexing-followup-section .related-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+
+        /* Indexing body overflow guard */
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        main,
+        article,
+        section,
+        .container,
+        .content,
+        .article-content,
+        .blog-content {
+            max-width: 100%;
+        }
+
+        p,
+        li,
+        a,
+        h1,
+        h2,
+        h3,
+        h4,
+        td,
+        th {
+            overflow-wrap: anywhere;
+        }
+
+        .compare-table,
+        .comparison-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+
+
+        /* Indexing spectrum overflow guard */
+        .spectrum-labels {
+            max-width: 100%;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .spectrum-label {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        @media (max-width: 760px) {
+            .spectrum-labels {
+                grid-template-columns: 1fr;
+            }
+        }
+
     </style>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"QRコード作成ガイド：無料でカスタムQRコードを作る方法","description":"QRコードを無料で簡単に作成する方法を徹底解説。URL、テキスト、WiFi、連絡先を瞬時にQR変換。色のカスタマイズやPNGダウンロードも対応。2026年版QRコード活用ガイド。","image":"https://dopabrain.com/portal/icon-512.svg","datePublished":"2026-02-15","dateModified":"2026-06-19","inLanguage":"ja","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/ja/qr-code-guide.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog JA","item":"https://dopabrain.com/portal/blog/ja/"},{"@type":"ListItem","position":3,"name":"QRコード作成ガイド：無料でカスタムQRコードを作る方法","item":"https://dopabrain.com/portal/blog/ja/qr-code-guide.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
 </head>
 <body>
+                <section class="indexing-quick-rail" aria-labelledby="indexing-quick-rail-title">
+                    <h2 id="indexing-quick-rail-title">Quick next paths</h2>
+                    <div class="quick-grid">
+                        <a class="quick-card" href="/animal-personality/?lang=ja" data-content-surface="quick_rail" data-target-slug="animal-personality"><strong>Animal personality</strong><span>Find your result</span></a>
+                        <a class="quick-card" href="/brain-type/?lang=ja" data-content-surface="quick_rail" data-target-slug="brain-type"><strong>Brain type</strong><span>Compare thinking style</span></a>
+                        <a class="quick-card" href="/eq-test/?lang=ja" data-content-surface="quick_rail" data-target-slug="eq-test"><strong>EQ test</strong><span>Read emotional patterns</span></a>
+                        <a class="quick-card" href="/attachment-style/?lang=ja" data-content-surface="quick_rail" data-target-slug="attachment-style"><strong>Attachment style</strong><span>Check relationship habits</span></a>
+                    </div>
+                </section>
+
     <div id="progressBar" class="progress-bar" style="width:0%"></div>
 
     <div class="container">
@@ -383,13 +511,27 @@
         </article>
     </div>
 
-    <footer>
+
+                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                </div>
+
+                <section class="indexing-followup-section" aria-labelledby="indexing-followup-title">
+                    <h2 id="indexing-followup-title">Continue with DopaBrain</h2>
+                    <a class="cta-button" href="/animal-personality/?lang=ja" data-content-surface="cta" data-target-slug="animal-personality">Animal personality</a>
+                    <ul class="related-links">
+                        <li><a class="related-link" href="/brain-type/?lang=ja" data-content-surface="related" data-target-slug="brain-type">Brain type</a></li>
+                        <li><a class="related-link" href="/eq-test/?lang=ja" data-content-surface="related" data-target-slug="eq-test">EQ test</a></li>
+                        <li><a class="related-link" href="/attachment-style/?lang=ja" data-content-surface="related" data-target-slug="attachment-style">Attachment style</a></li>
+                    </ul>
+                </section>
+<footer>
         <p>&copy; 2026 <a href="https://dopabrain.com/">DopaBrain</a> &bull; All rights reserved.</p>
         <p>
             <a href="https://dopabrain.com/">ホーム</a> &bull;
             <a href="https://dopabrain.com/portal/blog/ja/">ブログ</a> &bull;
             <a href="https://dopabrain.com/portal/">全アプリ＆ゲーム</a> &bull;
-            <a href="https://dopabrain.com/privacy.html">プライバシーポリシー</a>
+            <a href="/portal/privacy-policy.html">プライバシーポリシー</a>
         </p>
     </footer>
 
@@ -402,6 +544,51 @@
             document.getElementById('progressBar').style.width = progress + '%';
         });
     </script>
+
+    <script>
+        (function indexingContentTelemetry() {
+            function track(name, params) {
+                if (typeof gtag !== 'function') return;
+                gtag('event', name, Object.assign({
+                    event_category: 'content',
+                    page_path: location.pathname,
+                    content_locale: "ja",
+                    content_id: "qr-code-guide.html"
+                }, params || {}));
+            }
+
+            function emitInitialContentEvents() {
+                track('content_view');
+                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
+                    track('content_ad_impression', {
+                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
+                        ad_index: index + 1
+                    });
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', emitInitialContentEvents, { once: true });
+            } else {
+                emitInitialContentEvents();
+            }
+
+            document.addEventListener('click', function(event) {
+                var target = event.target && event.target.closest ? event.target.closest('a') : null;
+                if (!target) return;
+                if (target.closest('.quick-card')) {
+                    track('content_test_click', { link_url: target.href, target_slug: target.getAttribute('data-target-slug') || '' });
+                } else if (target.closest('.cta-section') || target.closest('.cta-box') || target.closest('.test-cta') || target.classList.contains('cta-btn') || target.classList.contains('cta-button') || target.classList.contains('game-link') || target.getAttribute('data-content-surface') === 'cta') {
+                    track('content_cta_click', { link_url: target.href });
+                } else if (target.closest('.related-posts') || target.closest('.related-links') || target.classList.contains('related-link') || target.classList.contains('related-card') || target.closest('.related-card')) {
+                    track('content_related_click', { link_url: target.href });
+                } else if (target.closest('.toc')) {
+                    track('content_toc_click', { target: target.getAttribute('href') || '' });
+                }
+            }, true);
+        })();
+    </script>
+
     <script src="/portal/js/cross-promo.js" defer></script>
 </body>
 </html>

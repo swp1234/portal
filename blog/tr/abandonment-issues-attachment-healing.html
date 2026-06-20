@@ -51,81 +51,8 @@
     <script src="/portal/js/ad-loader.js"></script>
 
     <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "Terk Edilme Sorunları: Belirtiler, Nedenler ve Nasıl İyileşir",
-      "description": "Terk edilme sorunlarının belirtilerini, temel nedenlerini ve kanıta dayalı iyileşme stratejilerini keşfedin. Çocukluk dönemi terk edilmesinin yetişkin ilişkilerini nasıl şekillendirdiğini ve duygusal güvenliği nasıl inşa edeceğinizi öğrenin.",
-      "image": "https://dopabrain.com/portal/img/og/attachment-style.png",
-      "author": {
-        "@type": "Organization",
-        "name": "DopaBrain"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "DopaBrain",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://dopabrain.com/portal/img/logo.png"
-        }
-      },
-      "datePublished": "2026-03-25",
-      "dateModified": "2026-03-25",
-      "inLanguage": "tr"
-    }
-    </script>
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Terk edilme sorunlarının ana belirtileri nelerdir?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yaygın belirtiler arasında yalnız kalma korkusu, reddedilmekten kaçınmak için başkalarını memnun etme, başkalarına güvenmede zorluk, algılanan terk edilmeye yönelik yoğun tepkiler, ilişkileri sabote etme ve sürekli güvence ihtiyacı bulunur. Terk edilme sorunları olan kişiler genellikle sağlıksız ilişkilerde kalırlar çünkü ayrılmak kalmaktan daha korkutucu gelir."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Çocukluk dönemi terk edilmesi ruh sağlığı sorunlarına neden olabilir mi?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Evet, erken dönem terk edilme deneyimleri yetişkinlikte anksiyete bozuklukları, depresyon, karmaşık PTSD, borderline kişilik bozukluğu özellikleri ve bağlanmayla ilgili zorluklar ile güçlü bir şekilde bağlantılıdır. Gelişmekte olan beyin terk edilmeyi bir hayatta kalma tehdidi olarak kodlar ve stres tepki sistemlerinde ve duygusal düzenleme kapasitesinde kalıcı değişiklikler yaratır."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Terk edilme sorunları ile kaygılı bağlanma arasındaki fark nedir?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Terk edilme sorunları, geride bırakılma veya reddedilme geçmiş deneyimlerinden kaynaklanan duygusal yaralar ve korkularıdır. Kaygılı bağlanma ise bu yaraların sonucunda genellikle gelişen belirli ilişkisel kalıptır. Terk edilme sorunları olan herkes kaygılı bağlanmaya sahip değildir ve kaygılı bağlanma, açık bir terk edilme olmadan tutarsız bakımdan kaynaklanabilir."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Terk edilme sorunlarınız olduğunda insanları uzaklaştırmayı nasıl durdurursunuz?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "İlk olarak, insanları uzaklaştırmanın koruyucu bir mekanizma olduğunu kabul edin—zihniniz 'onlar beni terk etmeden önce ben onları terk edeceğim' düşünür. İyileşme, bu kalıbın farkına varmayı, felaket düşüncesine meydan okumayı, küçük dozlarda savunmasızlık uygulamayı, travma konusunda bilgili bir terapistle çalışmayı ve iyileşme sürecinize tahammül edebilecek sabırlı partnerler seçmeyi gerektirir."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Terk edilme sorunları tamamen iyileştirilebilir mi?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Terk edilme deneyimlerinin hatırası kaybolmasa da, duygusal yükleri ve hayatınız üzerindeki kontrolleri önemli ölçüde azaltılabilir. Özel terapötik çalışma, güvenli ilişkiler ve öz-şefkat uygulamalarıyla, çoğu insan kazanılmış güvenli bağlanma geliştirir ve sürekli korku olmadan bağlantıya güvenmeyi öğrenir. Tam iyileşme mümkündür, ancak hızlı bir çözümden ziyade kademeli bir yolculuktur."
-          }
-        }
-      ]
-    }
-    </script>
-
-    <style>
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -423,9 +350,177 @@
                 transition-duration: 0.01ms !important;
             }
         }
+
+
+        /* Indexing batch support */
+        .indexing-quick-rail {
+            margin: 0 0 3rem;
+        }
+
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 96px;
+            padding: 1rem;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary, #8ab4ff);
+            background: rgba(255, 255, 255, 0.08);
+            text-decoration: none;
+        }
+
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary, #fff);
+            margin-bottom: 0.35rem;
+        }
+
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary, #cbd5e1);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .indexing-auto-ad {
+            min-height: 120px;
+            margin: 2.5rem 0;
+            padding: 1rem;
+            border: 1px dashed var(--border-color, rgba(255, 255, 255, 0.18));
+            border-radius: 8px;
+        }
+
+        /* Indexing table overflow support */
+        .indexing-quick-rail,
+        .indexing-auto-ad,
+        .indexing-followup-section {
+            max-width: 100%;
+            overflow-wrap: anywhere;
+        }
+
+        table {
+            max-width: 100%;
+        }
+
+        .compare-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing body overflow guard */
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        main,
+        article,
+        section,
+        .container,
+        .content,
+        .article-content,
+        .blog-content {
+            max-width: 100%;
+        }
+
+        p,
+        li,
+        a,
+        h1,
+        h2,
+        h3,
+        h4,
+        td,
+        th {
+            overflow-wrap: anywhere;
+        }
+
+        .compare-table,
+        .comparison-table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Indexing spectrum overflow guard */
+        .spectrum-labels {
+            max-width: 100%;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .spectrum-label {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .indexing-followup-section {
+            margin: 2.5rem 0;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            background: var(--card-bg, rgba(255, 255, 255, 0.06));
+        }
+
+        .indexing-followup-section .related-links {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .indexing-followup-section .related-links a {
+            display: block;
+            min-height: 44px;
+            padding: 0.8rem 0.9rem;
+            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 760px) {
+            .indexing-quick-rail .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .indexing-followup-section .related-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
     </style>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Terk Edilme Sorunları: Belirtiler, Nedenler ve Nasıl İyileşir","description":"Terk edilme sorunlarının belirtilerini, temel nedenlerini ve kanıta dayalı iyileşme stratejilerini keşfedin. Çocukluk dönemi terk edilmesinin yetişkin ilişkilerini nasıl şekillendirdiğini ve duygusal güvenliği nasıl inşa edeceğinizi öğrenin.","image":"https://dopabrain.com/portal/img/og/attachment-style.png","datePublished":"2026-03-25","dateModified":"2026-06-19","inLanguage":"tr","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/tr/abandonment-issues-attachment-healing.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog TR","item":"https://dopabrain.com/portal/blog/tr/"},{"@type":"ListItem","position":3,"name":"Terk Edilme Sorunları: Belirtiler, Nedenler ve Nasıl İyileşir","item":"https://dopabrain.com/portal/blog/tr/abandonment-issues-attachment-healing.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
 </head>
 <body>
+                <section class="indexing-quick-rail" aria-labelledby="indexing-quick-rail-title">
+                    <h2 id="indexing-quick-rail-title">Quick next paths</h2>
+                    <div class="quick-grid">
+                        <a class="quick-card" href="/animal-personality/?lang=tr" data-content-surface="quick_rail" data-target-slug="animal-personality"><strong>Animal personality</strong><span>Find your result</span></a>
+                        <a class="quick-card" href="/brain-type/?lang=tr" data-content-surface="quick_rail" data-target-slug="brain-type"><strong>Brain type</strong><span>Compare thinking style</span></a>
+                        <a class="quick-card" href="/eq-test/?lang=tr" data-content-surface="quick_rail" data-target-slug="eq-test"><strong>EQ test</strong><span>Read emotional patterns</span></a>
+                        <a class="quick-card" href="/attachment-style/?lang=tr" data-content-surface="quick_rail" data-target-slug="attachment-style"><strong>Attachment style</strong><span>Check relationship habits</span></a>
+                    </div>
+                </section>
+
     <div class="container">
         <!-- Breadcrumb -->
         <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -748,6 +843,65 @@
     </div>
 
     <!-- Cross-Promo Script -->
+
+    <script>
+        (function indexingContentTelemetry() {
+            function track(name, params) {
+                if (typeof gtag !== 'function') return;
+                gtag('event', name, Object.assign({
+                    event_category: 'content',
+                    page_path: location.pathname,
+                    content_locale: "tr",
+                    content_id: "abandonment-issues-attachment-healing.html"
+                }, params || {}));
+            }
+
+            function emitInitialContentEvents() {
+                track('content_view');
+                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
+                    track('content_ad_impression', {
+                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
+                        ad_index: index + 1
+                    });
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', emitInitialContentEvents, { once: true });
+            } else {
+                emitInitialContentEvents();
+            }
+
+            document.addEventListener('click', function(event) {
+                var target = event.target && event.target.closest ? event.target.closest('a,button') : null;
+                if (!target) return;
+                if (target.closest('.quick-card')) {
+                    track('content_test_click', { link_url: target.href || '', target_slug: target.getAttribute('data-target-slug') || '' });
+                } else if (target.closest('.cta-section') || target.closest('.cta-box') || target.closest('.test-cta') || target.classList.contains('cta-btn') || target.classList.contains('cta-button') || target.classList.contains('game-link') || target.getAttribute('data-content-surface') === 'cta') {
+                    track('content_cta_click', { link_url: target.href || '' });
+                } else if (target.closest('.related-posts') || target.closest('.related-links') || target.classList.contains('related-link') || target.classList.contains('related-card') || target.closest('.related-card')) {
+                    track('content_related_click', { link_url: target.href || '' });
+                } else if (target.closest('.toc')) {
+                    track('content_toc_click', { target: target.getAttribute('href') || '' });
+                }
+            }, true);
+        })();
+    </script>
+
     <script src="/portal/js/cross-promo.js" defer></script>
+
+                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                </div>
+
+                <section class="indexing-followup-section" aria-labelledby="indexing-followup-title">
+                    <h2 id="indexing-followup-title">Continue with DopaBrain</h2>
+                    <a class="cta-button" href="/animal-personality/?lang=tr" data-content-surface="cta" data-target-slug="animal-personality">Animal personality</a>
+                    <ul class="related-links">
+                        <li><a class="related-link" href="/brain-type/?lang=tr" data-content-surface="related" data-target-slug="brain-type">Brain type</a></li>
+                        <li><a class="related-link" href="/eq-test/?lang=tr" data-content-surface="related" data-target-slug="eq-test">EQ test</a></li>
+                        <li><a class="related-link" href="/attachment-style/?lang=tr" data-content-surface="related" data-target-slug="attachment-style">Attachment style</a></li>
+                    </ul>
+                </section>
 </body>
 </html>
