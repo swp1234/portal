@@ -2836,6 +2836,176 @@ const APP_DATA = [
             de: { name: 'Nervensystem-Quiz', shortDesc: 'In welchem Zustand befindet sich Ihr Nervensystem?' },
             fr: { name: 'Quiz du Système Nerveux', shortDesc: 'Dans quel état se trouve votre système nerveux?' }
         }
+    },
+    {
+        id: 'file-extension-converter',
+        name: 'File Extension Converter',
+        shortDesc: 'Rename file extensions, inspect MIME types, and download a renamed copy safely in your browser.',
+        description: 'Rename file extensions, inspect MIME types, and download a renamed copy safely in your browser.',
+        icon: 'EX',
+        color: '#14b8a6',
+        category: 'tool',
+        tags: ['file extension converter', 'change file extension', 'rename file extension', 'mime type checker'],
+        url: 'https://dopabrain.com/file-extension-converter/',
+        isNew: true,
+        isPopular: false,
+        popularity: 24,
+        i18n: {
+            en: { name: 'File Extension Converter', shortDesc: 'Extension Converter' }
+        }
+    },
+    {
+        id: 'file-size-converter',
+        name: 'File Size Converter',
+        shortDesc: 'Convert bytes, KB, MB, GB, TB, and binary KiB/MiB/GiB units instantly with copyable results.',
+        description: 'Convert bytes, KB, MB, GB, TB, and binary KiB/MiB/GiB units instantly with copyable results.',
+        icon: 'FI',
+        color: '#2563eb',
+        category: 'tool',
+        tags: ['file size converter', 'mb to gb', 'kb to mb', 'bytes converter', 'kib mib gib'],
+        url: 'https://dopabrain.com/file-size-converter/',
+        isNew: true,
+        isPopular: false,
+        popularity: 23,
+        i18n: {
+            en: { name: 'File Size Converter', shortDesc: 'File Size' }
+        }
+    },
+    {
+        id: 'image-format-converter',
+        name: 'Image Format Converter',
+        shortDesc: 'Convert images locally to PNG, JPEG, or WebP with quality control and no upload required.',
+        description: 'Convert images locally to PNG, JPEG, or WebP with quality control and no upload required.',
+        icon: 'IM',
+        color: '#7c3aed',
+        category: 'tool',
+        tags: ['image format converter', 'png to jpg', 'jpg to webp', 'webp converter', 'local image converter'],
+        url: 'https://dopabrain.com/image-format-converter/',
+        isNew: true,
+        isPopular: false,
+        popularity: 22,
+        i18n: {
+            en: { name: 'Image Format Converter', shortDesc: 'Image Converter' }
+        }
+    },
+    {
+        id: 'image-size-converter',
+        name: 'Image Size Converter',
+        shortDesc: 'Resize image dimensions, keep aspect ratio, estimate print size, and export a resized copy.',
+        description: 'Resize image dimensions, keep aspect ratio, estimate print size, and export a resized copy.',
+        icon: 'IM',
+        color: '#db2777',
+        category: 'tool',
+        tags: ['image size converter', 'image resize calculator', 'pixel size converter', 'dpi calculator'],
+        url: 'https://dopabrain.com/image-size-converter/',
+        isNew: true,
+        isPopular: false,
+        popularity: 21,
+        i18n: {
+            en: { name: 'Image Size Converter', shortDesc: 'Image Size' }
+        }
+    },
+    {
+        id: 'aspect-ratio-calculator',
+        name: 'Aspect Ratio Calculator',
+        shortDesc: 'Calculate aspect ratios, missing dimensions, and common video or social media sizes instantly.',
+        description: 'Calculate aspect ratios, missing dimensions, and common video or social media sizes instantly.',
+        icon: 'AS',
+        color: '#0f766e',
+        category: 'tool',
+        tags: ['aspect ratio calculator', '16 9 calculator', 'image ratio calculator', 'video size calculator'],
+        url: 'https://dopabrain.com/aspect-ratio-calculator/',
+        isNew: true,
+        isPopular: false,
+        popularity: 20,
+        i18n: {
+            en: { name: 'Aspect Ratio Calculator', shortDesc: 'Aspect Ratio' }
+        }
+    },
+    {
+        id: 'data-transfer-calculator',
+        name: 'Data Transfer Calculator',
+        shortDesc: 'Estimate download and upload time from file size and internet speed in seconds or hours.',
+        description: 'Estimate download and upload time from file size and internet speed in seconds or hours.',
+        icon: 'TR',
+        color: '#0891b2',
+        category: 'tool',
+        tags: ['download time calculator', 'data transfer calculator', 'upload time calculator', 'mbps to mb'],
+        url: 'https://dopabrain.com/data-transfer-calculator/',
+        isNew: true,
+        isPopular: false,
+        popularity: 19,
+        i18n: {
+            en: { name: 'Data Transfer Calculator', shortDesc: 'Transfer Time' }
+        }
+    },
+    {
+        id: 'unix-timestamp-converter',
+        name: 'Unix Timestamp Converter',
+        shortDesc: 'Convert Unix timestamps to readable dates and turn local dates back into seconds or milliseconds.',
+        description: 'Convert Unix timestamps to readable dates and turn local dates back into seconds or milliseconds.',
+        icon: 'UN',
+        color: '#475569',
+        category: 'tool',
+        tags: ['unix timestamp converter', 'epoch time converter', 'timestamp to date', 'date to timestamp'],
+        url: 'https://dopabrain.com/unix-timestamp-converter/',
+        isNew: true,
+        isPopular: false,
+        popularity: 18,
+        i18n: {
+            en: { name: 'Unix Timestamp Converter', shortDesc: 'Unix Time' }
+        }
+    },
+    {
+        id: 'timezone-converter',
+        name: 'Time Zone Converter',
+        shortDesc: 'Convert a meeting time across UTC, US, Europe, and Asia time zones without an external API.',
+        description: 'Convert a meeting time across UTC, US, Europe, and Asia time zones without an external API.',
+        icon: 'TI',
+        color: '#4338ca',
+        category: 'tool',
+        tags: ['time zone converter', 'timezone calculator', 'meeting time converter', 'utc to local time'],
+        url: 'https://dopabrain.com/timezone-converter/',
+        isNew: true,
+        isPopular: false,
+        popularity: 17,
+        i18n: {
+            en: { name: 'Time Zone Converter', shortDesc: 'Time Zone' }
+        }
+    },
+    {
+        id: 'text-case-converter',
+        name: 'Text Case Converter',
+        shortDesc: 'Convert text to uppercase, lowercase, title case, sentence case, camelCase, snake_case, and kebab-case.',
+        description: 'Convert text to uppercase, lowercase, title case, sentence case, camelCase, snake_case, and kebab-case.',
+        icon: 'CA',
+        color: '#ea580c',
+        category: 'tool',
+        tags: ['text case converter', 'uppercase lowercase', 'title case converter', 'camel case', 'snake case'],
+        url: 'https://dopabrain.com/text-case-converter/',
+        isNew: true,
+        isPopular: false,
+        popularity: 16,
+        i18n: {
+            en: { name: 'Text Case Converter', shortDesc: 'Case Converter' }
+        }
+    },
+    {
+        id: 'json-formatter',
+        name: 'JSON Formatter',
+        shortDesc: 'Validate, format, and minify JSON locally in your browser with clear error messages.',
+        description: 'Validate, format, and minify JSON locally in your browser with clear error messages.',
+        icon: 'JS',
+        color: '#16a34a',
+        category: 'tool',
+        tags: ['json formatter', 'json validator', 'json beautifier', 'json minifier', 'format json online'],
+        url: 'https://dopabrain.com/json-formatter/',
+        isNew: true,
+        isPopular: false,
+        popularity: 15,
+        i18n: {
+            en: { name: 'JSON Formatter', shortDesc: 'JSON Formatter' }
+        }
     }
 ];
 
