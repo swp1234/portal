@@ -11,7 +11,7 @@
     var BLOG_BRIDGE_IDS = ['animal-personality', 'mbti-city', 'attachment-style', 'eq-test'];
     var BLOG_BRIDGE_BY_MARKET = {
         mx: ['animal-personality', 'mbti-city', 'attachment-style', 'eq-test'],
-        zh: ['puzzle-2048', 'dopamine-type', 'hsp-test', 'eq-test'],
+        zh: ['puzzle-2048', 'attachment-style', 'color-personality', 'hsp-test'],
         ja: ['mbti-city', 'mental-age', 'brain-type', 'eq-test'],
         fr: ['brain-type', 'eq-test', 'mbti-city', 'hsp-test'],
         id: ['eq-test', 'hsp-test', 'attachment-style', 'brain-type'],
@@ -27,7 +27,7 @@
     };
     var BLOG_BRIDGE_TITLES = {
         mx: 'Continua con una prueba rapida',
-        zh: '继续探索热门测试',
+        zh: '继续探索中文热门路径',
         ja: '次におすすめの診断',
         fr: 'Continuez avec un test rapide',
         id: 'Lanjutkan dengan tes singkat',
@@ -473,6 +473,9 @@
             var html = '<nav class="cp-section cp-blog-bridge ' + extraClass + '" aria-label="' + title + '" data-detected-market="' + bridge.market + '" data-content-locale="' + bridge.locale + '" data-surface-name="' + surfaceName + '"><div class="cp-title">' + title + '</div><div class="cp-grid">';
             picks.forEach(function(app) {
                 var url = app.url.replace('https://dopabrain.com', '');
+                if (bridge.locale && !/[?&]lang=/.test(url)) {
+                    url += (url.indexOf('?') === -1 ? '?' : '&') + 'lang=' + encodeURIComponent(bridge.locale);
+                }
                 html += '<a href="' + url + '" class="cp-card" aria-label="' + getAppName(app) + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '">'
                     + '<div class="cp-icon" style="background:linear-gradient(135deg,' + app.color + '22,' + app.color + '08)">' + app.icon + '</div>'
                     + '<div><div class="cp-name">' + getAppName(app) + '</div>'
