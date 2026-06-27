@@ -250,6 +250,39 @@
         return app.shortDesc;
     }
 
+    function getCurrentLang() {
+        try {
+            var params = new URLSearchParams(window.location.search || '');
+            var queryLang = params.get('lang');
+            if (/^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(queryLang || '')) {
+                return queryLang;
+            }
+        } catch(e) {}
+
+        try {
+            if (typeof i18n !== 'undefined' && i18n.getCurrentLanguage) {
+                var i18nLang = i18n.getCurrentLanguage();
+                if (/^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(i18nLang || '')) {
+                    return i18nLang;
+                }
+            }
+        } catch(e) {}
+
+        try {
+            var navLang = (navigator.language || 'en').slice(0, 2);
+            if (/^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(navLang)) {
+                return navLang;
+            }
+        } catch(e) {}
+
+        return 'en';
+    }
+
+    function withLangParam(url, lang) {
+        if (!lang || /[?&]lang=/.test(url)) return url;
+        return url + (url.indexOf('?') === -1 ? '?' : '&') + 'lang=' + encodeURIComponent(lang);
+    }
+
     function scheduleBackground(task) {
         if (window.scheduler && typeof window.scheduler.postTask === 'function') {
             window.scheduler.postTask(task, { priority: 'background' }).catch(function() {
@@ -388,14 +421,13 @@
             id: 'Mungkin kamu juga suka', tr: 'Bunları da beğenebilirsiniz', de: 'Das könnte dir auch gefallen',
             fr: 'Vous aimerez aussi', hi: 'आपको यह भी पसंद आएगा', ru: 'Вам также понравится'
         };
-        var lang = 'en';
-        try { if (typeof i18n !== 'undefined' && i18n.getCurrentLanguage) lang = i18n.getCurrentLanguage(); else lang = (navigator.language || 'en').slice(0, 2); } catch(e) {}
+        var lang = getCurrentLang();
         var title = titles[lang] || titles.en;
 
         // Build HTML
         var html = '<nav class="cp-section" aria-label="' + title + '"><div class="cp-title">' + title + '</div><div class="cp-grid">';
         picks.forEach(function(app) {
-            var url = app.url.replace('https://dopabrain.com', '');
+            var url = withLangParam(app.url.replace('https://dopabrain.com', ''), lang);
             html += '<a href="' + url + '" class="cp-card" aria-label="' + getAppName(app) + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '">'
                 + '<div class="cp-icon" style="background:linear-gradient(135deg,' + app.color + '22,' + app.color + '08)">' + app.icon + '</div>'
                 + '<div><div class="cp-name">' + getAppName(app) + '</div>'
@@ -472,10 +504,7 @@
             var title = bridge.title;
             var html = '<nav class="cp-section cp-blog-bridge ' + extraClass + '" aria-label="' + title + '" data-detected-market="' + bridge.market + '" data-content-locale="' + bridge.locale + '" data-surface-name="' + surfaceName + '"><div class="cp-title">' + title + '</div><div class="cp-grid">';
             picks.forEach(function(app) {
-                var url = app.url.replace('https://dopabrain.com', '');
-                if (bridge.locale && !/[?&]lang=/.test(url)) {
-                    url += (url.indexOf('?') === -1 ? '?' : '&') + 'lang=' + encodeURIComponent(bridge.locale);
-                }
+                var url = withLangParam(app.url.replace('https://dopabrain.com', ''), bridge.locale);
                 html += '<a href="' + url + '" class="cp-card" aria-label="' + getAppName(app) + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '">'
                     + '<div class="cp-icon" style="background:linear-gradient(135deg,' + app.color + '22,' + app.color + '08)">' + app.icon + '</div>'
                     + '<div><div class="cp-name">' + getAppName(app) + '</div>'
