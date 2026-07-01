@@ -35,12 +35,12 @@
         zh: {
             label: 'Chinese',
             title: '中文热门内容',
-            desc: '中文读者最近在 2048 攻略、回避型依恋、颜色性格和 HSP 自测路径上停留更久。',
-            preferences: ['2048 策略', '依恋模式', '颜色性格', 'HSP 自测'],
+            desc: '中文读者最近在颜色性格、阴影工作、回避型依恋和 HSP 自测路径上停留更久。',
+            preferences: ['颜色性格', '阴影工作', '依恋模式', 'HSP 自测'],
             items: [
-                { key: 'zh-2048-guide', type: 'blog', href: '/portal/blog/zh/2048-strategy-guide.html', icon: '🔢', badge: '攻略', title: '2048策略指南', desc: '高停留时长的中文游戏攻略入口。', accent: '#f59e0b' },
+                { key: 'zh-color', type: 'app', appId: 'color-personality', href: '/color-personality/?lang=zh', icon: '🎨', badge: '颜色', title: '颜色性格测试', desc: '承接近期最高互动的颜色偏好阅读路径。', accent: '#9b59b6' },
+                { key: 'zh-shadow', type: 'app', appId: 'shadow-work', href: '/shadow-work/?lang=zh', icon: '🌓', badge: '阴影', title: '阴影工作测试', desc: '把高互动阴影工作文章转成个人原型结果。', accent: '#7c3aed' },
                 { key: 'zh-avoidant', type: 'blog', href: '/portal/blog/zh/avoidant-attachment-dating-guide.html', icon: '💞', badge: '关系', title: '回避型依恋指南', desc: '近期移动端互动最强的亲密关系阅读路径。', accent: '#ec4899' },
-                { key: 'zh-color', type: 'app', appId: 'color-personality', href: '/color-personality/?lang=zh', icon: '🎨', badge: '结果', title: '颜色性格测试', desc: '把颜色偏好兴趣转成可分享的结果页。', accent: '#9b59b6' },
                 { key: 'zh-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=zh', icon: 'HSP', badge: '自测', title: 'HSP 高敏感测试', desc: '承接高敏感与自我理解的后续测试。', accent: '#7c3aed' }
             ]
         },

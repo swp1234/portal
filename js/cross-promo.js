@@ -11,7 +11,7 @@
     var BLOG_BRIDGE_IDS = ['animal-personality', 'mbti-city', 'attachment-style', 'eq-test'];
     var BLOG_BRIDGE_BY_MARKET = {
         mx: ['animal-personality', 'mbti-city', 'attachment-style', 'eq-test'],
-        zh: ['puzzle-2048', 'attachment-style', 'color-personality', 'hsp-test'],
+        zh: ['color-personality', 'shadow-work', 'attachment-style', 'hsp-test'],
         ja: ['mbti-city', 'mental-age', 'brain-type', 'eq-test'],
         fr: ['brain-type', 'eq-test', 'mbti-city', 'hsp-test'],
         id: ['eq-test', 'hsp-test', 'attachment-style', 'brain-type'],
