@@ -9,6 +9,8 @@
     var MAX_HISTORY = 50;
     var SCAN_GUARD_DELAY_MS = 8000;
     var BLOG_BRIDGE_IDS = ['animal-personality', 'mbti-city', 'attachment-style', 'eq-test'];
+    var EN_TOOL_BLOG_PATTERN = /\/portal\/blog\/en\/(?:qr-generator-guide|unit-converter-guide|password-generator-guide|typing-speed-test-guide|habit-tracker-guide|pomodoro-timer-guide|todo-list-guide|json-formatter-guide|free-games)\.html$/;
+    var EN_TOOL_BRIDGE_IDS = ['qr-generator', 'unit-converter', 'password-generator', 'typing-speed'];
     var BLOG_BRIDGE_BY_MARKET = {
         mx: ['animal-personality', 'mbti-city', 'attachment-style', 'eq-test'],
         zh: ['color-personality', 'shadow-work', 'attachment-style', 'hsp-test'],
@@ -17,7 +19,7 @@
         id: ['eq-test', 'hsp-test', 'attachment-style', 'brain-type'],
         de: ['brain-type', 'hsp-test', 'eq-test', 'mbti-city'],
         my: ['brain-type', 'iq-test', 'mental-age', 'rizz-score'],
-        pt: ['animal-personality', 'eq-test', 'attachment-style', 'brain-type'],
+        pt: ['mental-age', 'animal-personality', 'eq-test', 'attachment-style'],
         ru: ['stress-check', 'animal-personality', 'brain-type', 'puzzle-2048'],
         hi: ['brain-type', 'iq-test', 'eq-test', 'anxiety-type'],
         tr: ['red-flag-test', 'anxiety-type', 'social-battery', 'brainrot-score'],
@@ -120,11 +122,18 @@
         var locale = getBlogLocale();
         var market = detectMarket();
         var ids = BLOG_BRIDGE_BY_MARKET[market] || BLOG_BRIDGE_IDS;
+        var title = BLOG_BRIDGE_TITLES[market] || BLOG_BRIDGE_TITLES.en;
+
+        if (locale === 'en' && EN_TOOL_BLOG_PATTERN.test(window.location.pathname || '')) {
+            ids = EN_TOOL_BRIDGE_IDS;
+            title = 'Continue with a free tool';
+        }
+
         return {
             locale: locale,
             market: market,
             ids: ids,
-            title: BLOG_BRIDGE_TITLES[market] || BLOG_BRIDGE_TITLES.en
+            title: title
         };
     }
 

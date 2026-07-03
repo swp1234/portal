@@ -95,13 +95,13 @@
         en: {
             label: 'English markets',
             title: 'Popular in English markets',
-            desc: 'English traffic is currently strongest on past-life curiosity and lightweight personality paths.',
-            preferences: ['Curiosity quizzes', 'Past-life content', 'MBTI compatibility', 'Short emotional checks'],
+            desc: 'Recent US and English-market sessions are using practical browser tools heavily, led by QR creation and quick utilities.',
+            preferences: ['QR and utility tasks', 'No-signup tools', 'Desktop workflows', 'Quick productivity checks'],
             items: [
-                { key: 'en-past-life-guide', type: 'blog', href: '/portal/blog/en/past-life-calculator-birthday.html', icon: '🔮', badge: 'US #1', title: 'Past Life Calculator by Birthday', desc: 'The strongest recent English landing-page cluster.', accent: '#8b5cf6' },
-                { key: 'en-past-life', type: 'app', appId: 'past-life', href: '/past-life/?lang=en', icon: '🕰️', badge: 'Try', title: 'Past Life Test', desc: 'Turn curiosity into a quick result flow.', accent: '#a855f7' },
-                { key: 'en-mbti', type: 'hub', href: '/portal/mbti/?lang=en', icon: '💞', badge: 'Hub', title: 'MBTI Compatibility Hub', desc: 'A denser follow-up path for relationship intent.', accent: '#ff2d78' },
-                { key: 'en-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=en', icon: '🎭', badge: 'EQ', title: 'EQ Test', desc: 'Short self-check with better engagement than the root page.', accent: '#00bcd4' }
+                { key: 'en-qr', type: 'app', appId: 'qr-generator', href: '/qr-generator/?lang=en', icon: 'QR', badge: 'US #1', title: 'QR Code Generator', desc: 'The strongest recent English utility signal: create and download QR codes fast.', accent: '#1abc9c' },
+                { key: 'en-unit', type: 'app', appId: 'unit-converter', href: '/unit-converter/?lang=en', icon: 'UC', badge: 'Tool', title: 'Unit Converter', desc: 'A practical follow-up for desktop utility sessions.', accent: '#10b981' },
+                { key: 'en-password', type: 'app', appId: 'password-generator', href: '/password-generator/?lang=en', icon: 'PW', badge: 'Security', title: 'Password Generator', desc: 'One-click secure password creation for high-intent visitors.', accent: '#f59e0b' },
+                { key: 'en-typing', type: 'app', appId: 'typing-speed', href: '/typing-speed/?lang=en', icon: 'WPM', badge: 'Speed', title: 'Typing Speed Test', desc: 'A quick skill check that pairs well with productivity traffic.', accent: '#3498db' }
             ]
         },
         sg: {
@@ -143,13 +143,14 @@
         pt: {
             label: 'Portuguese markets',
             title: 'Popular in Portuguese markets',
-            desc: 'Portuguese-language traffic is small but leans toward animal identity, personality, and relationship/self-work content.',
-            preferences: ['Animal identity', 'Personality tests', 'Self-work', 'Relationship insight'],
+            desc: 'Portuguese-language traffic is small but the latest Brazil organic sessions are staying longest on mental-age and brain-quiz intent.',
+            preferences: ['Mental age', 'Brain quizzes', 'Animal identity', 'Personality tests'],
             items: [
-                { key: 'pt-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=pt', icon: '🦁', badge: 'Animal', title: 'Teste de Personalidade Animal', desc: 'A strong shareable identity path for Portuguese readers.', accent: '#22c55e' },
+                { key: 'pt-mental-age', type: 'app', appId: 'mental-age', href: '/mental-age/?lang=pt', icon: 'AGE', badge: 'BR #1', title: 'Teste de Idade Mental', desc: 'Route high-engagement Brazil search visits into a quick brain-age result.', accent: '#6366f1' },
+                { key: 'pt-mental-guide', type: 'blog', href: '/portal/blog/pt/mental-age-test-brain-quiz-guide.html', icon: 'BR', badge: 'Guide', title: 'Guia do Teste de Idade Mental', desc: 'The recent Portuguese organic page with the strongest dwell signal.', accent: '#8b5cf6' },
+                { key: 'pt-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=pt', icon: 'AN', badge: 'Animal', title: 'Teste de Personalidade Animal', desc: 'A shareable identity path after the cognitive check.', accent: '#22c55e' },
                 { key: 'pt-tests', type: 'blog', href: '/portal/blog/pt/personality-tests.html', icon: '🧪', badge: 'Tests', title: 'Melhores testes de personalidade', desc: 'A broad discovery page for test-curious visitors.', accent: '#8b5cf6' },
-                { key: 'pt-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=pt', icon: '🎭', badge: 'EQ', title: 'Teste de EQ', desc: 'A short emotional-intelligence follow-up.', accent: '#00bcd4' },
-                { key: 'pt-attachment', type: 'app', appId: 'attachment-style', href: '/attachment-style/?lang=pt', icon: '💔', badge: 'Relacao', title: 'Estilo de Apego', desc: 'Relationship insight after personality discovery.', accent: '#ec4899' }
+                { key: 'pt-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=pt', icon: 'EQ', badge: 'EQ', title: 'Teste de EQ', desc: 'A short emotional-intelligence follow-up.', accent: '#00bcd4' }
             ]
         },
         ru: {
