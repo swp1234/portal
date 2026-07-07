@@ -10,8 +10,10 @@ class I18n {
         const params = new URLSearchParams(window.location.search);
         const urlLang = params.get('lang');
         if (urlLang && this.supportedLanguages.includes(urlLang)) return urlLang;
-        const savedLang = localStorage.getItem('app_language');
-        if (savedLang && this.supportedLanguages.includes(savedLang)) return savedLang;
+        try {
+            const savedLang = localStorage.getItem('app_language');
+            if (savedLang && this.supportedLanguages.includes(savedLang)) return savedLang;
+        } catch (e) {}
         const browserLang = (navigator.language || navigator.userLanguage).split('-')[0];
         if (this.supportedLanguages.includes(browserLang)) return browserLang;
         return 'en';
@@ -83,7 +85,9 @@ class I18n {
         if (!this.supportedLanguages.includes(lang)) return false;
         if (!this.translations[lang]) await this.loadTranslations(lang);
         this.currentLang = lang;
-        localStorage.setItem('app_language', lang);
+        try {
+            localStorage.setItem('app_language', lang);
+        } catch (e) {}
         document.documentElement.lang = lang;
         this.updateUI();
         this.syncSeoState(lang, true);
@@ -128,6 +132,7 @@ class I18n {
 }
 
 const i18n = new I18n();
+window.i18n = i18n;
 
 // Ensure loader transitions properly (CSS must support opacity/visibility)
 (function() {

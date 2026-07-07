@@ -253,6 +253,14 @@
         if (market) return market;
 
         try {
+            var activeI18n = window.i18n || (typeof i18n !== 'undefined' ? i18n : null);
+            if (activeI18n && typeof activeI18n.getCurrentLanguage === 'function') {
+                market = normalizeLanguageMarket(activeI18n.getCurrentLanguage());
+                if (market) return market;
+            }
+        } catch(e) {}
+
+        try {
             market = normalizeLanguageMarket(localStorage.getItem('app_language'));
             if (market) return market;
         } catch(e) {}
