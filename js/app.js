@@ -2,6 +2,49 @@
 (function () {
     'use strict';
 
+    const LINK_LANGS = {
+        ko: true, en: true, ja: true, es: true, pt: true, zh: true,
+        id: true, tr: true, de: true, fr: true, hi: true, ru: true
+    };
+
+    function getActiveLinkLang() {
+        try {
+            if (typeof i18n !== 'undefined' && i18n && typeof i18n.getCurrentLanguage === 'function') {
+                const lang = i18n.getCurrentLanguage();
+                if (LINK_LANGS[lang]) return lang;
+            }
+        } catch (e) {}
+        return 'ko';
+    }
+
+    function localizeHref(href, lang = getActiveLinkLang()) {
+        if (!href || !LINK_LANGS[lang]) return href;
+        if (/^(#|mailto:|tel:|javascript:)/i.test(href)) return href;
+        try {
+            const isAbsolute = /^[a-z][a-z0-9+.-]*:\/\//i.test(href);
+            const url = new URL(href, window.location.origin);
+            if (url.hostname && url.hostname !== window.location.hostname && url.hostname !== 'dopabrain.com') return href;
+            if (url.pathname.indexOf('/portal/blog/') === 0) return href;
+            url.searchParams.set('lang', lang);
+            return isAbsolute ? url.href : url.pathname + url.search + url.hash;
+        } catch (e) {
+            return href;
+        }
+    }
+
+    function localizeLinkElement(link, lang = getActiveLinkLang()) {
+        if (!link || !link.getAttribute('href')) return;
+        if (!link.dataset.baseHref) link.dataset.baseHref = link.getAttribute('href');
+        link.setAttribute('href', localizeHref(link.dataset.baseHref, lang));
+    }
+
+    function updateLocalizedLinks() {
+        const lang = getActiveLinkLang();
+        document.querySelectorAll('.brand-story a[data-cta-surface], .hero-winner-card, .hub-card, #featured-grid .featured-card, #app-grid .app-card, #personalized-section .p-card').forEach(link => {
+            localizeLinkElement(link, lang);
+        });
+    }
+
     // Initialize i18n with error handling, then start app
     (async function initI18n() {
         try {
@@ -46,6 +89,7 @@
                         if (window.CountryContent && typeof window.CountryContent.renderRail === 'function') {
                             window.CountryContent.renderRail('#country-content-rail', { surface: 'portal_home' });
                         }
+                        updateLocalizedLinks();
                     } catch (e) {
                         console.warn('Re-render after language change failed:', e.message);
                     }
@@ -223,7 +267,7 @@
         const timeCtx = Personalize.getTimeContext();
         const isBoosted = isRecommend && timeCtx.boostIds.indexOf(app.id) >= 0;
 
-        return `<a href="${app.url}" class="p-card" data-id="${app.id}"
+        return `<a href="${localizeHref(app.url, lang)}" class="p-card" data-id="${app.id}"
                    style="--p-color:${app.color}"
                    ${isBoosted ? 'data-time-boost' : ''}>
             <div class="p-card-icon">${app.icon}</div>
@@ -296,6 +340,7 @@
         });
 
         updateLoadMoreButton();
+        updateLocalizedLinks();
     }
 
     // Create category sections with headers
@@ -360,7 +405,7 @@
         }
 
         return `
-            <a href="${app.url}" class="featured-card fade-in" data-id="${app.id}"
+            <a href="${localizeHref(app.url, lang)}" class="featured-card fade-in" data-id="${app.id}"
                style="--card-color: ${app.color}"
                aria-label="${name} - ${desc}">
                 <div class="featured-icon">${app.icon}</div>
@@ -410,7 +455,7 @@
         const users = userCounts[app.id] || '1K+';
 
         return `
-            <a href="${app.url}" class="app-card fade-in" data-id="${app.id}" data-category="${app.category}"
+            <a href="${localizeHref(app.url, lang)}" class="app-card fade-in" data-id="${app.id}" data-category="${app.category}"
                style="--card-color: ${app.color}"
                aria-label="${name} - ${desc}">
                 <div class="card-glow"></div>
