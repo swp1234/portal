@@ -19,6 +19,21 @@
         en: 'en', us: 'en', usa: 'en', gb: 'en', uk: 'en'
     };
 
+    var LANGUAGE_MARKETS = {
+        ko: 'ko',
+        en: 'en',
+        zh: 'zh',
+        ja: 'ja',
+        es: 'mx',
+        pt: 'pt',
+        id: 'id',
+        tr: 'tr',
+        de: 'de',
+        fr: 'fr',
+        hi: 'hi',
+        ru: 'ru'
+    };
+
     var MARKETS = {
         mx: {
             label: 'Mexico',
@@ -209,6 +224,12 @@
         return MARKET_ALIASES[value] || '';
     }
 
+    function normalizeLanguageMarket(value) {
+        if (!value) return '';
+        value = String(value).toLowerCase().replace(/_/g, '-').split('-')[0].replace(/[^a-z]/g, '');
+        return LANGUAGE_MARKETS[value] || '';
+    }
+
     function getQueryOverride() {
         try {
             var params = new URLSearchParams(window.location.search || '');
@@ -216,6 +237,27 @@
         } catch(e) {
             return '';
         }
+    }
+
+    function getQueryLanguageMarket() {
+        try {
+            var params = new URLSearchParams(window.location.search || '');
+            return normalizeLanguageMarket(params.get('lang'));
+        } catch(e) {
+            return '';
+        }
+    }
+
+    function getSelectedLanguageMarket() {
+        var market = getQueryLanguageMarket();
+        if (market) return market;
+
+        try {
+            market = normalizeLanguageMarket(localStorage.getItem('app_language'));
+            if (market) return market;
+        } catch(e) {}
+
+        return '';
     }
 
     function getLangs() {
@@ -237,6 +279,9 @@
     function detectMarket() {
         var override = getQueryOverride();
         if (override) return override;
+
+        var selectedLanguageMarket = getSelectedLanguageMarket();
+        if (selectedLanguageMarket) return selectedLanguageMarket;
 
         var langs = getLangs();
         var primary = langs[0] || '';

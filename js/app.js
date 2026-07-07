@@ -43,6 +43,9 @@
                         filterApps();
                         if (typeof renderBlog === 'function') renderBlog();
                         if (typeof window.updatePortalWinnerCards === 'function') window.updatePortalWinnerCards();
+                        if (window.CountryContent && typeof window.CountryContent.renderRail === 'function') {
+                            window.CountryContent.renderRail('#country-content-rail', { surface: 'portal_home' });
+                        }
                     } catch (e) {
                         console.warn('Re-render after language change failed:', e.message);
                     }
