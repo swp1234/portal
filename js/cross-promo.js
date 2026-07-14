@@ -47,6 +47,17 @@
         zh: ['hsp-test', 'brain-type', 'dopamine-type', 'eq-test'],
         global: ['hsp-test', 'brain-type', 'animal-personality', 'eq-test']
     };
+    var APP_LABEL_OVERRIDES = {
+        zh: {
+            'hsp-test': { name: 'HSP 高敏感测试', shortDesc: '了解你的敏感度' },
+            'brain-type': { name: '大脑类型测试', shortDesc: '发现你的思维模式' },
+            'dopamine-type': { name: '多巴胺类型测试', shortDesc: '分析你的奖励系统' },
+            'animal-personality': { name: '动物人格测试', shortDesc: '找到你的内在动物' },
+            'eq-test': { name: 'EQ 情商测试', shortDesc: '测试你的情绪理解力' },
+            'mbti-love': { name: 'MBTI 恋爱匹配', shortDesc: '看看你的恋爱风格' },
+            'attachment-style': { name: '依恋类型测试', shortDesc: '确认你的关系模式' }
+        }
+    };
     var BLOG_BRIDGE_TITLES = {
         mx: 'Continua con una prueba rapida',
         zh: '继续探索中文热门路径',
@@ -363,30 +374,40 @@
         }
     }
 
-    function getAppName(app) {
-        var lang = 'en';
+    function getAppLabelOverride(app, lang) {
+        var langKey = String(lang || '').slice(0, 2).toLowerCase();
+        var labels = APP_LABEL_OVERRIDES[langKey];
+        return labels && app && app.id ? labels[app.id] : null;
+    }
+
+    function getAppName(app, preferredLang) {
+        var lang = preferredLang || 'en';
         try {
-            if (typeof i18n !== 'undefined' && i18n.getCurrentLanguage) {
+            if (!preferredLang && typeof i18n !== 'undefined' && i18n.getCurrentLanguage) {
                 lang = i18n.getCurrentLanguage();
-            } else {
+            } else if (!preferredLang) {
                 lang = (navigator.language || 'en').slice(0, 2);
             }
         } catch(e) {}
+        var override = getAppLabelOverride(app, lang);
+        if (override && override.name) return override.name;
         if (lang !== 'ko' && app.i18n && app.i18n[lang] && app.i18n[lang].name) {
             return app.i18n[lang].name;
         }
         return app.name;
     }
 
-    function getAppDesc(app) {
-        var lang = 'en';
+    function getAppDesc(app, preferredLang) {
+        var lang = preferredLang || 'en';
         try {
-            if (typeof i18n !== 'undefined' && i18n.getCurrentLanguage) {
+            if (!preferredLang && typeof i18n !== 'undefined' && i18n.getCurrentLanguage) {
                 lang = i18n.getCurrentLanguage();
-            } else {
+            } else if (!preferredLang) {
                 lang = (navigator.language || 'en').slice(0, 2);
             }
         } catch(e) {}
+        var override = getAppLabelOverride(app, lang);
+        if (override && override.shortDesc) return override.shortDesc;
         if (lang !== 'ko' && app.i18n && app.i18n[lang] && app.i18n[lang].shortDesc) {
             return app.i18n[lang].shortDesc;
         }
@@ -581,10 +602,10 @@
         var html = '<nav class="cp-section" aria-label="' + title + '" data-detected-market="' + market + '" data-recommendation-strategy="' + recommendationStrategy + '" data-revenue-goal="' + (revenueGoal || 'none') + '"><div class="cp-title">' + title + '</div><div class="cp-grid">';
         picks.forEach(function(app, index) {
             var url = withLangParam(app.url.replace('https://dopabrain.com', ''), lang);
-            html += '<a href="' + url + '" class="cp-card" aria-label="' + getAppName(app) + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '" data-position="' + (index + 1) + '">'
+            html += '<a href="' + url + '" class="cp-card" aria-label="' + getAppName(app, lang) + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '" data-position="' + (index + 1) + '">'
                 + '<div class="cp-icon" style="background:linear-gradient(135deg,' + app.color + '22,' + app.color + '08)">' + app.icon + '</div>'
-                + '<div><div class="cp-name">' + getAppName(app) + '</div>'
-                + '<div class="cp-desc">' + getAppDesc(app) + '</div></div></a>';
+                + '<div><div class="cp-name">' + getAppName(app, lang) + '</div>'
+                + '<div class="cp-desc">' + getAppDesc(app, lang) + '</div></div></a>';
         });
         html += '</div></nav>';
 
@@ -713,10 +734,10 @@
             var html = '<nav class="cp-section cp-blog-bridge ' + extraClass + '" aria-label="' + title + '" data-detected-market="' + bridge.market + '" data-content-locale="' + bridge.locale + '" data-surface-name="' + surfaceName + '" data-topic-strategy="' + topicKey + '" data-bridge-strategy="' + strategyIds.join(',') + '" data-revenue-goal="daily_0_20"><div class="cp-title">' + title + '</div><div class="cp-grid">';
             cards.forEach(function(app) {
                 var url = withLangParam(app.url.replace('https://dopabrain.com', ''), bridge.locale);
-                html += '<a href="' + url + '" class="cp-card" aria-label="' + getAppName(app) + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '">'
+                html += '<a href="' + url + '" class="cp-card" aria-label="' + getAppName(app, bridge.locale) + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '">'
                     + '<div class="cp-icon" style="background:linear-gradient(135deg,' + app.color + '22,' + app.color + '08)">' + app.icon + '</div>'
-                    + '<div><div class="cp-name">' + getAppName(app) + '</div>'
-                    + '<div class="cp-desc">' + getAppDesc(app) + '</div></div></a>';
+                    + '<div><div class="cp-name">' + getAppName(app, bridge.locale) + '</div>'
+                    + '<div class="cp-desc">' + getAppDesc(app, bridge.locale) + '</div></div></a>';
             });
             html += '</div></nav>';
             return html;
