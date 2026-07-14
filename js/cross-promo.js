@@ -21,7 +21,7 @@
     ];
     var BLOG_BRIDGE_BY_MARKET = {
         mx: ['animal-personality', 'brain-type', 'eq-test', 'attachment-style'],
-        zh: ['hsp-test', 'mental-age', 'brain-type', 'dopamine-type', 'eq-test'],
+        zh: ['mental-age', 'hsp-test', 'brain-type', 'dopamine-type', 'eq-test'],
         ja: ['brain-type', 'mbti-city', 'mental-age', 'hsp-test'],
         fr: ['brain-type', 'hsp-test', 'eq-test', 'animal-personality'],
         id: ['eq-test', 'hsp-test', 'attachment-style', 'brain-type'],
@@ -44,7 +44,7 @@
         pt: ['mental-age', 'brain-type', 'animal-personality', 'eq-test'],
         mx: ['animal-personality', 'brain-type', 'eq-test', 'hsp-test'],
         id: ['eq-test', 'hsp-test', 'brain-type', 'dopamine-type'],
-        zh: ['hsp-test', 'mental-age', 'brain-type', 'dopamine-type', 'eq-test'],
+        zh: ['mental-age', 'hsp-test', 'brain-type', 'dopamine-type', 'eq-test'],
         global: ['hsp-test', 'brain-type', 'animal-personality', 'eq-test']
     };
     var APP_LABEL_OVERRIDES = {
@@ -778,18 +778,36 @@
             return { kicker: '60-second test', action: 'Start', close: 'Dismiss' };
         }
 
+        function getStickyPrimaryApp(itemList, revenueSprint) {
+            if (bridge.market === 'zh' && revenueSprint && /^revenue_sprint_/.test(revenueSprint.topicKey || '')) {
+                return itemList.find(function(candidate) {
+                    return candidate && candidate.id === 'mental-age';
+                }) || itemList[0];
+            }
+            return itemList[0];
+        }
+
         function getStickyAlternateApp(primaryApp, itemList, revenueSprint) {
             if (bridge.market !== 'zh' || !revenueSprint || !itemList || !itemList.length) return null;
             if (!/^revenue_sprint_/.test(revenueSprint.topicKey || '')) return null;
+            var preferredId = primaryApp.id === 'mental-age' ? 'hsp-test' : 'mental-age';
             return itemList.find(function(candidate) {
-                return candidate && candidate.id === 'mental-age' && candidate.id !== primaryApp.id;
+                return candidate && candidate.id === preferredId && candidate.id !== primaryApp.id;
             }) || null;
         }
 
-        function getStickyAlternatePrefix(locale) {
-            if (locale === 'zh') return '高互动';
+        function getStickyAlternatePrefix(locale, appId) {
+            if (locale === 'zh' && appId === 'mental-age') return '高互动';
+            if (locale === 'zh') return '相关';
             if (locale === 'ko') return '추천';
             return 'Trending';
+        }
+
+        function getStickyDelayMs(revenueSprint) {
+            if (bridge.market === 'zh' && revenueSprint && /^revenue_sprint_/.test(revenueSprint.topicKey || '')) {
+                return 500;
+            }
+            return 1400;
         }
 
         function mountStickySprint(revenueSprint, itemList) {
@@ -800,13 +818,13 @@
                 if (sessionStorage.getItem('dopabrain_sticky_sprint_dismissed') === '1') return;
             } catch(e) {}
 
-            var app = itemList[0];
+            var app = getStickyPrimaryApp(itemList, revenueSprint);
             var copy = getStickySprintCopy(bridge.locale);
             var destinationPath = withStickyAutoStart(withLangParam(app.url.replace('https://dopabrain.com', ''), bridge.locale), app.id, 'blog_sticky_sprint');
             var label = getAppName(app, bridge.locale);
             var altApp = getStickyAlternateApp(app, itemList, revenueSprint);
             var altPath = altApp ? withStickyAutoStart(withLangParam(altApp.url.replace('https://dopabrain.com', ''), bridge.locale), altApp.id, 'blog_sticky_sprint_alt') : '';
-            var altHtml = altApp ? '<a class="cp-sticky-alt" href="' + altPath + '" data-destination-id="' + altApp.id + '" data-destination-category="' + altApp.category + '" data-position="2">' + getStickyAlternatePrefix(bridge.locale) + ': ' + getAppName(altApp, bridge.locale) + '</a>' : '';
+            var altHtml = altApp ? '<a class="cp-sticky-alt" href="' + altPath + '" data-destination-id="' + altApp.id + '" data-destination-category="' + altApp.category + '" data-position="2">' + getStickyAlternatePrefix(bridge.locale, altApp.id) + ': ' + getAppName(altApp, bridge.locale) + '</a>' : '';
             var html = '<aside class="cp-sticky-sprint" data-detected-market="' + bridge.market + '" data-content-locale="' + bridge.locale + '" data-surface-name="blog_sticky_sprint" data-topic-strategy="' + revenueSprint.topicKey + '" data-bridge-strategy="' + revenueSprint.ids.join(',') + '" data-revenue-goal="daily_0_20">'
                 + '<div class="cp-sticky-copy"><div class="cp-sticky-kicker">' + copy.kicker + '</div><div class="cp-sticky-name">' + label + '</div>' + altHtml + '</div>'
                 + '<a class="cp-sticky-link" href="' + destinationPath + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '" data-position="1">' + copy.action + '</a>'
@@ -876,7 +894,7 @@
                         });
                     }
                 });
-            }, 1400);
+            }, getStickyDelayMs(revenueSprint));
         }
 
         var anchor = document.querySelector('article') || document.querySelector('main') || document.body;
