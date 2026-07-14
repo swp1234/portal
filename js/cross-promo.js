@@ -447,6 +447,15 @@
         return url + (url.indexOf('?') === -1 ? '?' : '&') + 'lang=' + encodeURIComponent(lang);
     }
 
+    function withParam(url, key, value) {
+        if (!key || /[?&]/.test(key) || new RegExp('[?&]' + key + '=').test(url)) return url;
+        return url + (url.indexOf('?') === -1 ? '?' : '&') + key + '=' + encodeURIComponent(value);
+    }
+
+    function shouldAutoStartFromSticky(appId) {
+        return appId === 'hsp-test' || appId === 'brain-type';
+    }
+
     function scheduleBackground(task) {
         if (window.scheduler && typeof window.scheduler.postTask === 'function') {
             window.scheduler.postTask(task, { priority: 'background' }).catch(function() {
@@ -772,8 +781,9 @@
             var app = itemList[0];
             var copy = getStickySprintCopy(bridge.locale);
             var destinationPath = withLangParam(app.url.replace('https://dopabrain.com', ''), bridge.locale);
-            if (app.id === 'hsp-test') {
-                destinationPath += (destinationPath.indexOf('?') === -1 ? '?' : '&') + 'start=1';
+            if (shouldAutoStartFromSticky(app.id)) {
+                destinationPath = withParam(destinationPath, 'start', '1');
+                destinationPath = withParam(destinationPath, 'surface', 'blog_sticky_sprint');
             }
             var label = getAppName(app, bridge.locale);
             var html = '<aside class="cp-sticky-sprint" data-detected-market="' + bridge.market + '" data-content-locale="' + bridge.locale + '" data-surface-name="blog_sticky_sprint" data-topic-strategy="' + revenueSprint.topicKey + '" data-bridge-strategy="' + revenueSprint.ids.join(',') + '" data-revenue-goal="daily_0_20">'
