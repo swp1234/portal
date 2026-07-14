@@ -21,7 +21,7 @@
     ];
     var BLOG_BRIDGE_BY_MARKET = {
         mx: ['animal-personality', 'brain-type', 'eq-test', 'attachment-style'],
-        zh: ['hsp-test', 'brain-type', 'dopamine-type', 'eq-test'],
+        zh: ['hsp-test', 'mental-age', 'brain-type', 'dopamine-type', 'eq-test'],
         ja: ['brain-type', 'mbti-city', 'mental-age', 'hsp-test'],
         fr: ['brain-type', 'hsp-test', 'eq-test', 'animal-personality'],
         id: ['eq-test', 'hsp-test', 'attachment-style', 'brain-type'],
@@ -44,7 +44,7 @@
         pt: ['mental-age', 'brain-type', 'animal-personality', 'eq-test'],
         mx: ['animal-personality', 'brain-type', 'eq-test', 'hsp-test'],
         id: ['eq-test', 'hsp-test', 'brain-type', 'dopamine-type'],
-        zh: ['hsp-test', 'brain-type', 'dopamine-type', 'eq-test'],
+        zh: ['hsp-test', 'mental-age', 'brain-type', 'dopamine-type', 'eq-test'],
         global: ['hsp-test', 'brain-type', 'animal-personality', 'eq-test']
     };
     var APP_LABEL_OVERRIDES = {
@@ -55,7 +55,8 @@
             'animal-personality': { name: '动物人格测试', shortDesc: '找到你的内在动物' },
             'eq-test': { name: 'EQ 情商测试', shortDesc: '测试你的情绪理解力' },
             'mbti-love': { name: 'MBTI 恋爱匹配', shortDesc: '看看你的恋爱风格' },
-            'attachment-style': { name: '依恋类型测试', shortDesc: '确认你的关系模式' }
+            'attachment-style': { name: '依恋类型测试', shortDesc: '确认你的关系模式' },
+            'mental-age': { name: '心理年龄测试', shortDesc: '看看你的内在年龄' }
         }
     };
     var BLOG_BRIDGE_TITLES = {
@@ -724,9 +725,10 @@
             '.cp-sticky-copy{min-width:0;flex:1}',
             '.cp-sticky-kicker{font-size:11px;font-weight:800;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0}',
             '.cp-sticky-name{font-size:14px;font-weight:800;color:#fff;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
+            '.cp-sticky-alt{display:block;max-width:100%;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#67e8f9;text-decoration:none;font-size:11px;font-weight:800;line-height:1.2}',
             '.cp-sticky-link{flex:0 0 auto;padding:10px 12px;border-radius:8px;background:#7c3aed;color:#fff;text-decoration:none;font-size:13px;font-weight:800;line-height:1}',
             '.cp-sticky-close{width:32px;height:32px;border:0;border-radius:8px;background:rgba(255,255,255,0.08);color:#fff;font-size:18px;line-height:1;cursor:pointer}',
-            '.cp-sticky-link:focus-visible,.cp-sticky-close:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:2px}',
+            '.cp-sticky-link:focus-visible,.cp-sticky-alt:focus-visible,.cp-sticky-close:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:2px}',
             '@media(min-width:900px){.cp-sticky-sprint{display:none}}',
             '.cp-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}',
             '.cp-name{font-size:13px;font-weight:700;color:rgba(255,255,255,0.92);line-height:1.3}',
@@ -770,6 +772,20 @@
             return { kicker: '60-second test', action: 'Start', close: 'Dismiss' };
         }
 
+        function getStickyAlternateApp(primaryApp, itemList, revenueSprint) {
+            if (bridge.market !== 'zh' || !revenueSprint || !itemList || !itemList.length) return null;
+            if (!/^revenue_sprint_/.test(revenueSprint.topicKey || '')) return null;
+            return itemList.find(function(candidate) {
+                return candidate && candidate.id === 'mental-age' && candidate.id !== primaryApp.id;
+            }) || null;
+        }
+
+        function getStickyAlternatePrefix(locale) {
+            if (locale === 'zh') return '高互动';
+            if (locale === 'ko') return '추천';
+            return 'Trending';
+        }
+
         function mountStickySprint(revenueSprint, itemList) {
             if (!revenueSprint || !itemList || !itemList.length) return;
             if (isScanRiskVisit(bridge.market) || getDeviceType() === 'desktop') return;
@@ -786,9 +802,12 @@
                 destinationPath = withParam(destinationPath, 'surface', 'blog_sticky_sprint');
             }
             var label = getAppName(app, bridge.locale);
+            var altApp = getStickyAlternateApp(app, itemList, revenueSprint);
+            var altPath = altApp ? withLangParam(altApp.url.replace('https://dopabrain.com', ''), bridge.locale) : '';
+            var altHtml = altApp ? '<a class="cp-sticky-alt" href="' + altPath + '" data-destination-id="' + altApp.id + '" data-destination-category="' + altApp.category + '" data-position="2">' + getStickyAlternatePrefix(bridge.locale) + ': ' + getAppName(altApp, bridge.locale) + '</a>' : '';
             var html = '<aside class="cp-sticky-sprint" data-detected-market="' + bridge.market + '" data-content-locale="' + bridge.locale + '" data-surface-name="blog_sticky_sprint" data-topic-strategy="' + revenueSprint.topicKey + '" data-bridge-strategy="' + revenueSprint.ids.join(',') + '" data-revenue-goal="daily_0_20">'
-                + '<div class="cp-sticky-copy"><div class="cp-sticky-kicker">' + copy.kicker + '</div><div class="cp-sticky-name">' + label + '</div></div>'
-                + '<a class="cp-sticky-link" href="' + destinationPath + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '">' + copy.action + '</a>'
+                + '<div class="cp-sticky-copy"><div class="cp-sticky-kicker">' + copy.kicker + '</div><div class="cp-sticky-name">' + label + '</div>' + altHtml + '</div>'
+                + '<a class="cp-sticky-link" href="' + destinationPath + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '" data-position="1">' + copy.action + '</a>'
                 + '<button class="cp-sticky-close" type="button" aria-label="' + copy.close + '">&times;</button>'
                 + '</aside>';
 
@@ -808,7 +827,7 @@
                         topic_strategy: revenueSprint.topicKey,
                         bridge_strategy: revenueSprint.ids.join(','),
                         revenue_goal: 'daily_0_20',
-                        item_count: 1,
+                        item_count: altApp ? 2 : 1,
                         transport_type: 'beacon'
                     });
                 }
@@ -830,19 +849,23 @@
                         }
                         return;
                     }
-                    var link = e.target.closest('.cp-sticky-link');
+                    var link = e.target.closest('.cp-sticky-link,.cp-sticky-alt');
                     if (!link) return;
+                    var destinationId = link.getAttribute('data-destination-id');
+                    var destinationCategory = link.getAttribute('data-destination-category');
+                    var clickedPath = link.getAttribute('href') || destinationPath;
                     rememberAppClick(link.getAttribute('data-destination-id'), link.getAttribute('data-destination-category'));
                     if (typeof gtag === 'function') {
                         gtag('event', 'cross_promo_click', {
                             event_category: 'engagement',
-                            event_label: destinationPath,
+                            event_label: clickedPath,
                             source_app: 'blog',
                             surface_type: 'cross_promo',
                             surface_name: 'blog_sticky_sprint',
-                            destination_path: destinationPath,
-                            destination_id: app.id,
-                            destination_category: app.category,
+                            destination_path: clickedPath,
+                            destination_id: destinationId,
+                            destination_category: destinationCategory,
+                            destination_position: link.getAttribute('data-position') || '1',
                             detected_market: bridge.market,
                             content_locale: bridge.locale,
                             topic_strategy: revenueSprint.topicKey,
