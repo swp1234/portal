@@ -454,7 +454,13 @@
     }
 
     function shouldAutoStartFromSticky(appId) {
-        return appId === 'hsp-test' || appId === 'brain-type';
+        return appId === 'hsp-test' || appId === 'brain-type' || appId === 'mental-age';
+    }
+
+    function withStickyAutoStart(url, appId, surfaceName) {
+        if (!shouldAutoStartFromSticky(appId)) return url;
+        url = withParam(url, 'start', '1');
+        return withParam(url, 'surface', surfaceName || 'blog_sticky_sprint');
     }
 
     function scheduleBackground(task) {
@@ -796,14 +802,10 @@
 
             var app = itemList[0];
             var copy = getStickySprintCopy(bridge.locale);
-            var destinationPath = withLangParam(app.url.replace('https://dopabrain.com', ''), bridge.locale);
-            if (shouldAutoStartFromSticky(app.id)) {
-                destinationPath = withParam(destinationPath, 'start', '1');
-                destinationPath = withParam(destinationPath, 'surface', 'blog_sticky_sprint');
-            }
+            var destinationPath = withStickyAutoStart(withLangParam(app.url.replace('https://dopabrain.com', ''), bridge.locale), app.id, 'blog_sticky_sprint');
             var label = getAppName(app, bridge.locale);
             var altApp = getStickyAlternateApp(app, itemList, revenueSprint);
-            var altPath = altApp ? withLangParam(altApp.url.replace('https://dopabrain.com', ''), bridge.locale) : '';
+            var altPath = altApp ? withStickyAutoStart(withLangParam(altApp.url.replace('https://dopabrain.com', ''), bridge.locale), altApp.id, 'blog_sticky_sprint_alt') : '';
             var altHtml = altApp ? '<a class="cp-sticky-alt" href="' + altPath + '" data-destination-id="' + altApp.id + '" data-destination-category="' + altApp.category + '" data-position="2">' + getStickyAlternatePrefix(bridge.locale) + ': ' + getAppName(altApp, bridge.locale) + '</a>' : '';
             var html = '<aside class="cp-sticky-sprint" data-detected-market="' + bridge.market + '" data-content-locale="' + bridge.locale + '" data-surface-name="blog_sticky_sprint" data-topic-strategy="' + revenueSprint.topicKey + '" data-bridge-strategy="' + revenueSprint.ids.join(',') + '" data-revenue-goal="daily_0_20">'
                 + '<div class="cp-sticky-copy"><div class="cp-sticky-kicker">' + copy.kicker + '</div><div class="cp-sticky-name">' + label + '</div>' + altHtml + '</div>'
