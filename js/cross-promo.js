@@ -711,6 +711,14 @@
             '.cp-mobile-sprint .cp-grid{grid-template-columns:repeat(4,minmax(0,1fr))}',
             '.cp-mobile-sprint .cp-card{min-height:64px;padding:10px}',
             '.cp-mobile-sprint .cp-desc{display:none}',
+            '.cp-sticky-sprint{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:2147483000;display:flex;align-items:center;gap:10px;max-width:680px;margin:0 auto;padding:10px 10px 10px 12px;border:1px solid rgba(124,58,237,0.28);border-radius:8px;background:rgba(17,24,39,0.94);box-shadow:0 12px 32px rgba(0,0,0,0.28);backdrop-filter:blur(12px)}',
+            '.cp-sticky-copy{min-width:0;flex:1}',
+            '.cp-sticky-kicker{font-size:11px;font-weight:800;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0}',
+            '.cp-sticky-name{font-size:14px;font-weight:800;color:#fff;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
+            '.cp-sticky-link{flex:0 0 auto;padding:10px 12px;border-radius:8px;background:#7c3aed;color:#fff;text-decoration:none;font-size:13px;font-weight:800;line-height:1}',
+            '.cp-sticky-close{width:32px;height:32px;border:0;border-radius:8px;background:rgba(255,255,255,0.08);color:#fff;font-size:18px;line-height:1;cursor:pointer}',
+            '.cp-sticky-link:focus-visible,.cp-sticky-close:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:2px}',
+            '@media(min-width:900px){.cp-sticky-sprint{display:none}}',
             '.cp-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}',
             '.cp-name{font-size:13px;font-weight:700;color:rgba(255,255,255,0.92);line-height:1.3}',
             '.cp-desc{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;line-height:1.35}',
@@ -743,6 +751,96 @@
             return html;
         }
 
+        function getStickySprintCopy(locale) {
+            if (locale === 'zh') {
+                return { kicker: '60 秒快速测试', action: '开始', close: '关闭' };
+            }
+            if (locale === 'ko') {
+                return { kicker: '60초 빠른 테스트', action: '시작', close: '닫기' };
+            }
+            return { kicker: '60-second test', action: 'Start', close: 'Dismiss' };
+        }
+
+        function mountStickySprint(revenueSprint, itemList) {
+            if (!revenueSprint || !itemList || !itemList.length) return;
+            if (isScanRiskVisit(bridge.market) || getDeviceType() === 'desktop') return;
+            if (document.querySelector('.cp-sticky-sprint')) return;
+            try {
+                if (sessionStorage.getItem('dopabrain_sticky_sprint_dismissed') === '1') return;
+            } catch(e) {}
+
+            var app = itemList[0];
+            var copy = getStickySprintCopy(bridge.locale);
+            var destinationPath = withLangParam(app.url.replace('https://dopabrain.com', ''), bridge.locale);
+            var label = getAppName(app, bridge.locale);
+            var html = '<aside class="cp-sticky-sprint" data-detected-market="' + bridge.market + '" data-content-locale="' + bridge.locale + '" data-surface-name="blog_sticky_sprint" data-topic-strategy="' + revenueSprint.topicKey + '" data-bridge-strategy="' + revenueSprint.ids.join(',') + '" data-revenue-goal="daily_0_20">'
+                + '<div class="cp-sticky-copy"><div class="cp-sticky-kicker">' + copy.kicker + '</div><div class="cp-sticky-name">' + label + '</div></div>'
+                + '<a class="cp-sticky-link" href="' + destinationPath + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '">' + copy.action + '</a>'
+                + '<button class="cp-sticky-close" type="button" aria-label="' + copy.close + '">&times;</button>'
+                + '</aside>';
+
+            window.setTimeout(function() {
+                if (document.hidden || document.querySelector('.cp-sticky-sprint')) return;
+                document.body.insertAdjacentHTML('beforeend', html);
+                var sticky = document.querySelector('.cp-sticky-sprint');
+                if (!sticky) return;
+                if (typeof gtag === 'function') {
+                    gtag('event', 'cross_promo_view', {
+                        event_category: 'engagement',
+                        source_app: 'blog',
+                        surface_type: 'cross_promo',
+                        surface_name: 'blog_sticky_sprint',
+                        detected_market: bridge.market,
+                        content_locale: bridge.locale,
+                        topic_strategy: revenueSprint.topicKey,
+                        bridge_strategy: revenueSprint.ids.join(','),
+                        revenue_goal: 'daily_0_20',
+                        item_count: 1,
+                        transport_type: 'beacon'
+                    });
+                }
+                sticky.addEventListener('click', function(e) {
+                    var close = e.target.closest('.cp-sticky-close');
+                    if (close) {
+                        try { sessionStorage.setItem('dopabrain_sticky_sprint_dismissed', '1'); } catch(err) {}
+                        sticky.remove();
+                        if (typeof gtag === 'function') {
+                            gtag('event', 'cross_promo_dismiss', {
+                                event_category: 'engagement',
+                                source_app: 'blog',
+                                surface_type: 'cross_promo',
+                                surface_name: 'blog_sticky_sprint',
+                                detected_market: bridge.market,
+                                content_locale: bridge.locale,
+                                revenue_goal: 'daily_0_20'
+                            });
+                        }
+                        return;
+                    }
+                    var link = e.target.closest('.cp-sticky-link');
+                    if (!link) return;
+                    rememberAppClick(link.getAttribute('data-destination-id'), link.getAttribute('data-destination-category'));
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'cross_promo_click', {
+                            event_category: 'engagement',
+                            event_label: destinationPath,
+                            source_app: 'blog',
+                            surface_type: 'cross_promo',
+                            surface_name: 'blog_sticky_sprint',
+                            destination_path: destinationPath,
+                            destination_id: app.id,
+                            destination_category: app.category,
+                            detected_market: bridge.market,
+                            content_locale: bridge.locale,
+                            topic_strategy: revenueSprint.topicKey,
+                            bridge_strategy: revenueSprint.ids.join(','),
+                            revenue_goal: 'daily_0_20'
+                        });
+                    }
+                });
+            }, 1400);
+        }
+
         var anchor = document.querySelector('article') || document.querySelector('main') || document.body;
         var hasQuickRail = !!document.querySelector('.quick-actions,[data-content-surface="quick_rail"]');
         var scanRecovery = isScanRiskVisit(bridge.market) && !hasQuickRail;
@@ -764,6 +862,7 @@
             var sprintHtml = buildBridgeHtml('cp-mobile-sprint', 'blog_revenue_sprint', sprintPicks, revenueSprint.title, revenueSprint.topicKey, revenueSprint.ids);
             if (sprintPara) sprintPara.insertAdjacentHTML('afterend', sprintHtml);
             else anchor.insertAdjacentHTML('afterbegin', sprintHtml);
+            mountStickySprint(revenueSprint, sprintPicks);
         } else if (earlyRecovery) {
             var earlyPara = anchor.querySelector('p');
             var earlyHtml = buildBridgeHtml('cp-revenue-recovery', 'blog_revenue_recovery');

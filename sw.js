@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dopabrain-portal-v7';
+const CACHE_NAME = 'dopabrain-portal-v8';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
