@@ -772,6 +772,9 @@
             var app = itemList[0];
             var copy = getStickySprintCopy(bridge.locale);
             var destinationPath = withLangParam(app.url.replace('https://dopabrain.com', ''), bridge.locale);
+            if (app.id === 'hsp-test') {
+                destinationPath += (destinationPath.indexOf('?') === -1 ? '?' : '&') + 'start=1';
+            }
             var label = getAppName(app, bridge.locale);
             var html = '<aside class="cp-sticky-sprint" data-detected-market="' + bridge.market + '" data-content-locale="' + bridge.locale + '" data-surface-name="blog_sticky_sprint" data-topic-strategy="' + revenueSprint.topicKey + '" data-bridge-strategy="' + revenueSprint.ids.join(',') + '" data-revenue-goal="daily_0_20">'
                 + '<div class="cp-sticky-copy"><div class="cp-sticky-kicker">' + copy.kicker + '</div><div class="cp-sticky-name">' + label + '</div></div>'
