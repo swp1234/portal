@@ -138,10 +138,12 @@
     }
 
     function detectMarket() {
+        var queryLocaleMarket = '';
         try {
             var params = new URLSearchParams(window.location.search || '');
             var override = normalizeMarket(params.get('market') || params.get('country') || params.get('cc'));
             if (override) return override;
+            queryLocaleMarket = normalizeMarket(params.get('lang') || params.get('hl'));
         } catch(e) {}
 
         try {
@@ -150,6 +152,7 @@
 
         var localeMarket = normalizeMarket(getBlogLocale());
         if (localeMarket) return localeMarket;
+        if (queryLocaleMarket) return queryLocaleMarket;
 
         var lang = '';
         var timezone = '';
@@ -226,6 +229,46 @@
             title: device === 'desktop' ? 'Fast result paths' : 'Fast result tests',
             topicKey: 'revenue_sprint_' + (bridge.topicKey || 'market')
         };
+    }
+
+    function getRevenueSprintIdsForMarket(market) {
+        return (REVENUE_SPRINT_BY_MARKET[market] || REVENUE_SPRINT_BY_MARKET.global || []).slice();
+    }
+
+    function getAppRevenueSprintPicks(current, apps, market) {
+        if (!current || !apps || String(current.category || '').toLowerCase() !== 'test') return [];
+        if (isScanRiskVisit(market)) return [];
+
+        var device = getDeviceType();
+        var desktopEligible = /^(en|ko|ja|fr|de|pt|mx|zh|id|global)$/.test(market || 'global');
+        if (device === 'desktop' && !desktopEligible) return [];
+
+        var byId = {};
+        apps.forEach(function(app) {
+            if (app && app.id) byId[app.id] = app;
+        });
+
+        var picks = [];
+        function addById(id) {
+            var app = byId[id];
+            if (!app || app.id === current.id || picks.indexOf(app) !== -1) return;
+            picks.push(app);
+        }
+
+        getRevenueSprintIdsForMarket(market).forEach(addById);
+
+        if (picks.length < 4 && market !== 'global') {
+            getRevenueSprintIdsForMarket('global').forEach(addById);
+        }
+
+        if (picks.length < 4) {
+            apps.forEach(function(app) {
+                if (!app || app.id === current.id || picks.indexOf(app) !== -1) return;
+                if (String(app.category || '').toLowerCase() === 'test' && app.isPopular) picks.push(app);
+            });
+        }
+
+        return picks.slice(0, 4);
     }
 
     function sendQualityEvent(name, params) {
@@ -466,28 +509,38 @@
         }
         rememberAppVisit(current);
 
-        // Get related apps: same category first, then popular
-        var sameCategory = apps.filter(function(a) {
-            return a.id !== path && a.category === current.category;
-        });
-        var otherPopular = apps.filter(function(a) {
-            return a.id !== path && a.category !== current.category && a.isPopular;
-        });
+        var market = detectMarket();
+        var recommendationStrategy = 'category_popular_mix';
+        var revenueGoal = '';
+        var picks = getAppRevenueSprintPicks(current, apps, market);
 
-        // Shuffle arrays
-        shuffle(sameCategory);
-        shuffle(otherPopular);
-
-        // Pick 2 same category + 2 popular (or fill from either)
-        var picks = [];
-        picks = picks.concat(sameCategory.slice(0, 2));
-        picks = picks.concat(otherPopular.slice(0, 4 - picks.length));
-        if (picks.length < 4) {
-            var remaining = apps.filter(function(a) {
-                return a.id !== path && picks.indexOf(a) === -1;
+        if (picks.length >= 3) {
+            recommendationStrategy = 'app_revenue_sprint';
+            revenueGoal = 'daily_0_20';
+        } else {
+            // Get related apps: same category first, then popular
+            var sameCategory = apps.filter(function(a) {
+                return a.id !== path && a.category === current.category;
             });
-            shuffle(remaining);
-            picks = picks.concat(remaining.slice(0, 4 - picks.length));
+            var otherPopular = apps.filter(function(a) {
+                return a.id !== path && a.category !== current.category && a.isPopular;
+            });
+
+            // Shuffle arrays
+            shuffle(sameCategory);
+            shuffle(otherPopular);
+
+            // Pick 2 same category + 2 popular (or fill from either)
+            picks = [];
+            picks = picks.concat(sameCategory.slice(0, 2));
+            picks = picks.concat(otherPopular.slice(0, 4 - picks.length));
+            if (picks.length < 4) {
+                var remaining = apps.filter(function(a) {
+                    return a.id !== path && picks.indexOf(a) === -1;
+                });
+                shuffle(remaining);
+                picks = picks.concat(remaining.slice(0, 4 - picks.length));
+            }
         }
 
         if (picks.length === 0) return;
@@ -525,10 +578,10 @@
         var title = titles[lang] || titles.en;
 
         // Build HTML
-        var html = '<nav class="cp-section" aria-label="' + title + '"><div class="cp-title">' + title + '</div><div class="cp-grid">';
-        picks.forEach(function(app) {
+        var html = '<nav class="cp-section" aria-label="' + title + '" data-detected-market="' + market + '" data-recommendation-strategy="' + recommendationStrategy + '" data-revenue-goal="' + (revenueGoal || 'none') + '"><div class="cp-title">' + title + '</div><div class="cp-grid">';
+        picks.forEach(function(app, index) {
             var url = withLangParam(app.url.replace('https://dopabrain.com', ''), lang);
-            html += '<a href="' + url + '" class="cp-card" aria-label="' + getAppName(app) + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '">'
+            html += '<a href="' + url + '" class="cp-card" aria-label="' + getAppName(app) + '" data-destination-id="' + app.id + '" data-destination-category="' + app.category + '" data-position="' + (index + 1) + '">'
                 + '<div class="cp-icon" style="background:linear-gradient(135deg,' + app.color + '22,' + app.color + '08)">' + app.icon + '</div>'
                 + '<div><div class="cp-name">' + getAppName(app) + '</div>'
                 + '<div class="cp-desc">' + getAppDesc(app) + '</div></div></a>';
@@ -544,8 +597,43 @@
             main.insertAdjacentHTML('beforeend', html);
         }
 
+        var section = document.querySelector('.cp-section');
+        if (!section) return;
+
+        var viewTracked = false;
+        function trackVisibleCrossPromoView() {
+            if (viewTracked || typeof gtag !== 'function') return;
+            var rect = section.getBoundingClientRect();
+            if (!rect.width || !rect.height) return;
+            viewTracked = true;
+            gtag('event', 'cross_promo_view', {
+                event_category: 'engagement',
+                source_app: path,
+                surface_type: 'cross_promo',
+                surface_name: path,
+                detected_market: market,
+                recommendation_strategy: recommendationStrategy,
+                revenue_goal: revenueGoal || 'none',
+                item_count: picks.length
+            });
+        }
+
+        if ('IntersectionObserver' in window) {
+            var viewObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        trackVisibleCrossPromoView();
+                        if (viewTracked) viewObserver.disconnect();
+                    }
+                });
+            }, { threshold: 0.05 });
+            viewObserver.observe(section);
+        } else {
+            setTimeout(trackVisibleCrossPromoView, 1500);
+        }
+
         // Track cross-promo clicks
-        document.querySelector('.cp-section').addEventListener('click', function(e) {
+        section.addEventListener('click', function(e) {
             var card = e.target.closest('.cp-card');
             if (card) {
                 rememberAppClick(card.getAttribute('data-destination-id'), card.getAttribute('data-destination-category'));
@@ -558,7 +646,13 @@
                     source_app: path,
                     surface_type: 'cross_promo',
                     surface_name: path,
-                    destination_path: destinationPath
+                    destination_path: destinationPath,
+                    destination_id: card.getAttribute('data-destination-id'),
+                    destination_category: card.getAttribute('data-destination-category'),
+                    destination_position: card.getAttribute('data-position'),
+                    detected_market: market,
+                    recommendation_strategy: recommendationStrategy,
+                    revenue_goal: revenueGoal || 'none'
                 });
             }
         });
