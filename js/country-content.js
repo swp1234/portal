@@ -109,14 +109,14 @@
         },
         en: {
             label: 'English markets',
-            title: 'Popular in English markets',
-            desc: 'Recent US and English-market sessions are using practical browser tools heavily, led by QR creation and quick utilities.',
-            preferences: ['QR and utility tasks', 'No-signup tools', 'Desktop workflows', 'Quick productivity checks'],
+            title: 'Fast result tests for English markets',
+            desc: 'Recent US traffic has the strongest revenue per page view, so route English visitors into short result flows first.',
+            preferences: ['Fast result screens', 'Self-discovery tests', 'Shareable identity', 'Mobile-friendly flow'],
             items: [
-                { key: 'en-qr', type: 'app', appId: 'qr-generator', href: '/qr-generator/?lang=en', icon: 'QR', badge: 'US #1', title: 'QR Code Generator', desc: 'The strongest recent English utility signal: create and download QR codes fast.', accent: '#1abc9c' },
-                { key: 'en-unit', type: 'app', appId: 'unit-converter', href: '/unit-converter/?lang=en', icon: 'UC', badge: 'Tool', title: 'Unit Converter', desc: 'A practical follow-up for desktop utility sessions.', accent: '#10b981' },
-                { key: 'en-password', type: 'app', appId: 'password-generator', href: '/password-generator/?lang=en', icon: 'PW', badge: 'Security', title: 'Password Generator', desc: 'One-click secure password creation for high-intent visitors.', accent: '#f59e0b' },
-                { key: 'en-typing', type: 'app', appId: 'typing-speed', href: '/typing-speed/?lang=en', icon: 'WPM', badge: 'Speed', title: 'Typing Speed Test', desc: 'A quick skill check that pairs well with productivity traffic.', accent: '#3498db' }
+                { key: 'en-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=en', icon: 'BT', badge: 'Fast', title: 'Brain Type Test', desc: 'A compact cognitive result flow for high-value English sessions.', accent: '#6366f1' },
+                { key: 'en-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=en', icon: 'HSP', badge: 'HSP', title: 'HSP Test', desc: 'The strongest recent result-test path for deeper mobile sessions.', accent: '#7c3aed' },
+                { key: 'en-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=en', icon: 'AP', badge: 'Share', title: 'Animal Personality', desc: 'A shareable identity result that keeps visitors moving.', accent: '#22c55e' },
+                { key: 'en-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=en', icon: 'EQ', badge: 'EQ', title: 'EQ Test', desc: 'A short emotional-intelligence quiz with result-screen follow-up.', accent: '#00bcd4' }
             ]
         },
         sg: {
