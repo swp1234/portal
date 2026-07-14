@@ -8,12 +8,20 @@
     var STORAGE_KEY = 'dopabrain_personalize';
     var MAX_HISTORY = 50;
     var SCAN_GUARD_DELAY_MS = 8000;
-    var BLOG_BRIDGE_IDS = ['animal-personality', 'mbti-city', 'attachment-style', 'eq-test'];
+    var BLOG_BRIDGE_IDS = ['hsp-test', 'animal-personality', 'eq-test', 'attachment-style'];
     var EN_TOOL_BLOG_PATTERN = /\/portal\/blog\/en\/(?:qr-generator-guide|unit-converter-guide|password-generator-guide|typing-speed-test-guide|habit-tracker-guide|pomodoro-timer-guide|todo-list-guide|json-formatter-guide|free-games)\.html$/;
     var EN_TOOL_BRIDGE_IDS = ['qr-generator', 'unit-converter', 'password-generator', 'typing-speed'];
+    var BLOG_TOPIC_STRATEGIES = [
+        { key: 'self_check', pattern: /(?:hsp|sensory|highly-sensitive|emotional-regulation|emotion-management|cognitive-distortions|rumination|people-pleasing|trauma-response|attachment|avoidant|anxious|inner-child|shadow-work)/, ids: ['hsp-test', 'shadow-work', 'attachment-style', 'eq-test'], title: 'Try a matching self-check' },
+        { key: 'fortune', pattern: /(?:tarot|past-life|dream|zodiac|fortune|numerology)/, ids: ['daily-tarot', 'past-life', 'dream-fortune', 'numerology'], title: 'Open a quick reading' },
+        { key: 'productivity', pattern: /(?:habit|routine|pomodoro|todo|detox|focus|dopamine)/, ids: ['habit-tracker', 'pomodoro-timer', 'detox-timer', 'routine-planner'], title: 'Turn this into a quick tool' },
+        { key: 'game', pattern: /(?:2048|brick|reaction|typing|free-games|browser-games|game-guide|casual-games|puzzle)/, ids: ['puzzle-2048', 'reaction-test', 'typing-speed', 'brick-breaker'], title: 'Play the related game now' },
+        { key: 'kpop', pattern: /(?:kpop|k-pop)/, ids: ['kpop-position', 'aura-score', 'color-personality', 'animal-personality'], title: 'Try the related viral test' },
+        { key: 'personality', pattern: /(?:mbti|personality-tests|personality-test|color-personality)/, ids: ['hsp-test', 'color-personality', 'animal-personality', 'eq-test'], title: 'Continue with a result test' }
+    ];
     var BLOG_BRIDGE_BY_MARKET = {
         mx: ['animal-personality', 'mbti-city', 'attachment-style', 'eq-test'],
-        zh: ['color-personality', 'shadow-work', 'attachment-style', 'hsp-test'],
+        zh: ['hsp-test', 'shadow-work', 'eq-test', 'attachment-style'],
         ja: ['mbti-city', 'mental-age', 'brain-type', 'eq-test'],
         fr: ['brain-type', 'eq-test', 'mbti-city', 'hsp-test'],
         id: ['eq-test', 'hsp-test', 'attachment-style', 'brain-type'],
@@ -44,6 +52,24 @@
         ko: '이어서 해볼 인기 테스트'
     };
 
+    var BLOG_BRIDGE_SAFE_TITLES = {
+        mx: 'Continue with a quick test',
+        zh: 'Continue with a quick test',
+        ja: 'Continue with a quick test',
+        fr: 'Continue with a quick test',
+        id: 'Continue with a quick test',
+        de: 'Continue with a quick test',
+        my: 'Continue with a quick test',
+        pt: 'Continue with a quick test',
+        ru: 'Continue with a quick test',
+        hi: 'Continue with a quick test',
+        tr: 'Continue with a quick test',
+        sg: 'Start a quick result test',
+        en: 'Continue with a quick test',
+        ko: 'Continue with a quick test',
+        global: 'Continue with a quick test'
+    };
+
     function getDeviceType() {
         if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return 'touch';
         if (window.matchMedia && window.matchMedia('(min-width: 900px)').matches) return 'desktop';
@@ -61,6 +87,23 @@
     function getBlogLocale() {
         var match = /^\/portal\/blog\/([^/]+)\//.exec(window.location.pathname || '');
         return match ? match[1].toLowerCase() : '';
+    }
+
+    function getBlogSlug() {
+        var match = /^\/portal\/blog\/[^/]+\/([^/?#]+)\.html$/.exec(window.location.pathname || '');
+        return match ? match[1].toLowerCase() : '';
+    }
+
+    function getBlogTopicStrategy() {
+        var slug = getBlogSlug();
+        if (!slug) return null;
+
+        for (var i = 0; i < BLOG_TOPIC_STRATEGIES.length; i += 1) {
+            if (BLOG_TOPIC_STRATEGIES[i].pattern.test(slug)) {
+                return BLOG_TOPIC_STRATEGIES[i];
+            }
+        }
+        return null;
     }
 
     function normalizeMarket(value) {
@@ -122,18 +165,25 @@
         var locale = getBlogLocale();
         var market = detectMarket();
         var ids = BLOG_BRIDGE_BY_MARKET[market] || BLOG_BRIDGE_IDS;
-        var title = BLOG_BRIDGE_TITLES[market] || BLOG_BRIDGE_TITLES.en;
+        var title = BLOG_BRIDGE_SAFE_TITLES[market] || BLOG_BRIDGE_SAFE_TITLES.en;
+        var topic = getBlogTopicStrategy();
+        var topicKey = topic ? topic.key : 'market';
 
         if (locale === 'en' && EN_TOOL_BLOG_PATTERN.test(window.location.pathname || '')) {
             ids = EN_TOOL_BRIDGE_IDS;
             title = 'Continue with a free tool';
+            topicKey = 'en_tool';
+        } else if (topic) {
+            ids = topic.ids;
+            title = topic.title;
         }
 
         return {
             locale: locale,
             market: market,
             ids: ids,
-            title: title
+            title: title,
+            topicKey: topicKey
         };
     }
 
@@ -495,10 +545,16 @@
             '.cp-scan-recovery .cp-grid{grid-template-columns:repeat(4,minmax(0,1fr))}',
             '.cp-scan-recovery .cp-card{min-height:64px;padding:10px}',
             '.cp-scan-recovery .cp-desc{display:none}',
+            '.cp-revenue-recovery{margin:18px auto 26px;padding:16px;border:1px solid rgba(255,184,0,0.18);border-radius:14px;background:rgba(255,184,0,0.055)}',
+            '.cp-revenue-recovery .cp-title{text-align:left;margin-bottom:10px}',
+            '.cp-revenue-recovery .cp-grid{grid-template-columns:repeat(4,minmax(0,1fr))}',
+            '.cp-revenue-recovery .cp-card{min-height:64px;padding:10px}',
+            '.cp-revenue-recovery .cp-desc{display:none}',
             '.cp-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}',
             '.cp-name{font-size:13px;font-weight:700;color:rgba(255,255,255,0.92);line-height:1.3}',
             '.cp-desc{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;line-height:1.35}',
-            '@media(max-width:560px){.cp-grid{grid-template-columns:1fr}.cp-section{padding:18px 12px}}',
+            '@media(max-width:720px){.cp-revenue-recovery .cp-grid,.cp-scan-recovery .cp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}',
+            '@media(max-width:560px){.cp-grid{grid-template-columns:1fr}.cp-section{padding:18px 12px}.cp-revenue-recovery .cp-grid,.cp-scan-recovery .cp-grid{grid-template-columns:1fr}}',
             'html.light-mode .cp-section,[data-theme="light"] .cp-section{border-top-color:rgba(0,0,0,0.08)}',
             'html.light-mode .cp-title,[data-theme="light"] .cp-title{color:rgba(0,0,0,0.52)}',
             'html.light-mode .cp-card,[data-theme="light"] .cp-card{background:rgba(0,0,0,0.03);border-color:rgba(0,0,0,0.07)}',
@@ -526,12 +582,20 @@
         var anchor = document.querySelector('article') || document.querySelector('main') || document.body;
         var hasQuickRail = !!document.querySelector('.quick-actions,[data-content-surface="quick_rail"]');
         var scanRecovery = bridge.market === 'sg' && getDeviceType() === 'desktop' && !document.referrer && !hasQuickRail;
+        var earlyRecovery = !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
 
         if (scanRecovery) {
             var firstPara = anchor.querySelector('p');
             var recoveryHtml = buildBridgeHtml('cp-scan-recovery', 'blog_scan_recovery');
             if (firstPara) firstPara.insertAdjacentHTML('afterend', recoveryHtml);
             else anchor.insertAdjacentHTML('afterbegin', recoveryHtml);
+        }
+
+        if (earlyRecovery) {
+            var earlyPara = anchor.querySelector('p');
+            var earlyHtml = buildBridgeHtml('cp-revenue-recovery', 'blog_revenue_recovery');
+            if (earlyPara) earlyPara.insertAdjacentHTML('afterend', earlyHtml);
+            else anchor.insertAdjacentHTML('afterbegin', earlyHtml);
         }
 
         anchor.insertAdjacentHTML('beforeend', buildBridgeHtml('', 'blog_bridge'));
@@ -547,6 +611,8 @@
                     surface_name: surfaceName,
                     detected_market: bridge.market,
                     content_locale: bridge.locale,
+                    topic_strategy: bridge.topicKey,
+                    bridge_strategy: bridge.ids.join(','),
                     item_count: itemCount,
                     view_delay_ms: bridge.market === 'sg' && getDeviceType() === 'desktop' && !document.referrer ? SCAN_GUARD_DELAY_MS : 0,
                     transport_type: 'beacon'
@@ -577,6 +643,7 @@
                         destination_path: destinationPath,
                         detected_market: bridge.market,
                         content_locale: bridge.locale,
+                        topic_strategy: bridge.topicKey,
                         bridge_strategy: bridge.ids.join(',')
                     });
                 }
