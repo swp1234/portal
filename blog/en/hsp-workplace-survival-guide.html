@@ -79,6 +79,51 @@
         blockquote { border-left: 3px solid var(--primary); padding-left: 16px; margin: 20px 0; font-style: italic; color: var(--text-secondary); }
         @media (max-width: 480px) { h1 { font-size: 28px; } .trait-grid { grid-template-columns: 1fr; } .container { padding: 20px 16px 40px; } }
 
+        body.has-revenue-sticky-cta { padding-bottom: 172px; }
+        .revenue-sticky-cta {
+            position: fixed;
+            left: max(16px, calc((100vw - 760px) / 2 + 16px));
+            right: max(16px, calc((100vw - 760px) / 2 + 16px));
+            bottom: calc(82px + env(safe-area-inset-bottom));
+            z-index: 2147483200;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 14px 16px;
+            color: #fff;
+            text-decoration: none;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 14px;
+            box-shadow: 0 18px 38px rgba(0, 0, 0, 0.38), 0 10px 30px rgba(124, 58, 237, 0.28);
+        }
+        .revenue-sticky-cta strong { display: block; color: #fff; font-size: 15px; line-height: 1.25; }
+        .revenue-sticky-cta span { display: block; color: rgba(255, 255, 255, 0.86); font-size: 12px; line-height: 1.45; }
+        .revenue-sticky-cta .sticky-cta-action {
+            flex: 0 0 auto;
+            padding: 9px 12px;
+            color: #7c3aed;
+            background: #fff;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        .revenue-sticky-cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+        @media (min-width: 760px) {
+            .revenue-sticky-cta { left: 50%; right: auto; width: min(720px, calc(100vw - 32px)); transform: translateX(-50%); }
+        }
+        @media (min-width: 900px) {
+            body.has-revenue-sticky-cta { padding-bottom: 104px; }
+            .revenue-sticky-cta { bottom: calc(16px + env(safe-area-inset-bottom)); }
+        }
+        @media (max-width: 480px) {
+            .revenue-sticky-cta { padding: 12px 13px; gap: 10px; }
+            .revenue-sticky-cta strong { font-size: 14px; }
+            .revenue-sticky-cta span { font-size: 11px; }
+        }
+
 
         /* Indexing batch support */
         .indexing-quick-rail {
@@ -236,13 +281,17 @@
 
     </style>
 
-    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"HSP Workplace Survival Guide: Strategies for Highly Sensitive People at Work","description":"HSP workplace survival guide for highly sensitive people. Evidence-based strategies for thriving at work including environment optimization, boundary setting, conflict management, and burnout prevention.","image":"https://dopabrain.com/portal/img/og/hsp-test.png","datePublished":"2026-03-24","dateModified":"2026-06-19","inLanguage":"en","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/en/hsp-workplace-survival-guide.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog EN","item":"https://dopabrain.com/portal/blog/en/"},{"@type":"ListItem","position":3,"name":"HSP Workplace Survival Guide: Strategies for Highly Sensitive People at Work","item":"https://dopabrain.com/portal/blog/en/hsp-workplace-survival-guide.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"HSP Workplace Survival Guide: Strategies for Highly Sensitive People at Work","description":"HSP workplace survival guide for highly sensitive people. Evidence-based strategies for thriving at work including environment optimization, boundary setting, conflict management, and burnout prevention.","image":"https://dopabrain.com/portal/img/og/hsp-test.png","datePublished":"2026-03-24","dateModified":"2026-07-20","inLanguage":"en","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/en/hsp-workplace-survival-guide.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog EN","item":"https://dopabrain.com/portal/blog/en/"},{"@type":"ListItem","position":3,"name":"HSP Workplace Survival Guide: Strategies for Highly Sensitive People at Work","item":"https://dopabrain.com/portal/blog/en/hsp-workplace-survival-guide.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
 </head>
-<body>
+<body class="has-revenue-sticky-cta">
+    <a class="revenue-sticky-cta" href="/hsp-test/?lang=en&start=1&surface=en_hsp_workplace_sticky" data-content-surface="sticky_revenue_cta" data-target-slug="hsp-test" aria-label="Start the HSP test now">
+        <span><strong>Is work draining you faster than others?</strong><span>Start the 3-minute HSP check now</span></span>
+        <span class="sticky-cta-action">Start test</span>
+    </a>
                 <section class="indexing-quick-rail" aria-labelledby="indexing-quick-rail-title">
                     <h2 id="indexing-quick-rail-title">Quick next paths</h2>
                     <div class="quick-grid">
-                        <a class="quick-card" href="/animal-personality/?lang=en" data-content-surface="quick_rail" data-target-slug="animal-personality"><strong>Animal personality</strong><span>Find your result</span></a>
+                        <a class="quick-card" href="/hsp-test/?lang=en&start=1&surface=en_hsp_workplace_quick" data-content-surface="quick_rail" data-target-slug="hsp-test"><strong>HSP test</strong><span>Measure your sensitivity</span></a>
                         <a class="quick-card" href="/brain-type/?lang=en" data-content-surface="quick_rail" data-target-slug="brain-type"><strong>Brain type</strong><span>Compare thinking style</span></a>
                         <a class="quick-card" href="/eq-test/?lang=en" data-content-surface="quick_rail" data-target-slug="eq-test"><strong>EQ test</strong><span>Read emotional patterns</span></a>
                         <a class="quick-card" href="/attachment-style/?lang=en" data-content-surface="quick_rail" data-target-slug="attachment-style"><strong>Attachment style</strong><span>Check relationship habits</span></a>
@@ -269,7 +318,7 @@
             <div class="cta-box">
                 <h3>Are You an HSP?</h3>
                 <p>Take our free HSP test to measure your sensitivity level</p>
-                <a href="/hsp-test/" class="cta-btn">Start HSP Test &rarr;</a>
+                <a href="/hsp-test/?lang=en&start=1&surface=en_hsp_workplace_intro" class="cta-btn" data-content-surface="article_cta" data-target-slug="hsp-test">Start HSP Test &rarr;</a>
             </div>
 
             <nav class="toc">
@@ -331,7 +380,7 @@
             <div class="cta-box">
                 <h3>What's Your Sensitivity Level?</h3>
                 <p>Identify your traits with our science-based HSP assessment</p>
-                <a href="/hsp-test/" class="cta-btn">Start Free Test &rarr;</a>
+                <a href="/hsp-test/?lang=en&start=1&surface=en_hsp_workplace_mid" class="cta-btn" data-content-surface="article_cta" data-target-slug="hsp-test">Start Free Test &rarr;</a>
             </div>
 
             <h2 id="section3">HSP Strengths: Sensitivity as Superpower</h2>
@@ -474,7 +523,7 @@
 
             <div style="background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); border-radius: 16px; padding: 24px; margin: 32px 0; text-align: center;">
               <p style="color: white; font-size: 1.2em; margin-bottom: 16px; font-weight: 600;">Understand and leverage your sensitivity</p>
-              <a href="/hsp-test/" style="display: inline-block; background: white; color: #7c3aed; padding: 12px 32px; border-radius: 12px; font-weight: 700; text-decoration: none; font-size: 1.1em;">Start HSP Test &rarr;</a>
+              <a href="/hsp-test/?lang=en&start=1&surface=en_hsp_workplace_final" data-content-surface="article_cta" data-target-slug="hsp-test" style="display: inline-block; background: white; color: #7c3aed; padding: 12px 32px; border-radius: 12px; font-weight: 700; text-decoration: none; font-size: 1.1em;">Start HSP Test &rarr;</a>
             </div>
 
             <h2 id="section9">HSP-Friendly Careers and Environments</h2>
@@ -576,6 +625,14 @@
                         ad_index: index + 1
                     });
                 });
+                var stickyCta = document.querySelector('.revenue-sticky-cta');
+                if (stickyCta) {
+                    track('content_sticky_cta_view', {
+                        cta_surface: stickyCta.getAttribute('data-content-surface') || 'sticky_revenue_cta',
+                        target_slug: stickyCta.getAttribute('data-target-slug') || '',
+                        link_url: stickyCta.href || ''
+                    });
+                }
             }
 
             if (document.readyState === 'loading') {
@@ -589,8 +646,12 @@
                 if (!target) return;
                 if (target.closest('.quick-card')) {
                     track('content_test_click', { link_url: target.href || '', target_slug: target.getAttribute('data-target-slug') || '' });
-                } else if (target.closest('.cta-section') || target.closest('.cta-box') || target.closest('.test-cta') || target.classList.contains('cta-btn') || target.classList.contains('cta-button') || target.classList.contains('game-link') || target.getAttribute('data-content-surface') === 'cta') {
-                    track('content_cta_click', { link_url: target.href || '' });
+                } else if (target.closest('.revenue-sticky-cta') || target.closest('.cta-section') || target.closest('.cta-box') || target.closest('.test-cta') || target.classList.contains('cta-btn') || target.classList.contains('cta-button') || target.classList.contains('game-link') || target.getAttribute('data-content-surface')) {
+                    track('content_cta_click', {
+                        link_url: target.href || '',
+                        cta_surface: target.getAttribute('data-content-surface') || (target.closest('.revenue-sticky-cta') ? 'sticky_revenue_cta' : 'article_cta'),
+                        target_slug: target.getAttribute('data-target-slug') || ''
+                    });
                 } else if (target.closest('.related-posts') || target.closest('.related-links') || target.classList.contains('related-link') || target.classList.contains('related-card') || target.closest('.related-card')) {
                     track('content_related_click', { link_url: target.href || '' });
                 } else if (target.closest('.toc')) {
