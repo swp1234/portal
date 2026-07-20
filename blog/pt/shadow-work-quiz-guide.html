@@ -89,6 +89,40 @@
         footer a { color: var(--primary-light); text-decoration: none; }
         @media (max-width: 480px) { h1 { font-size: 28px; } .trait-grid { grid-template-columns: 1fr; } .container { padding: 20px 16px 40px; } }
 
+        body.has-revenue-sticky-cta { padding-bottom: 172px; }
+        .revenue-sticky-cta {
+            position: fixed;
+            left: max(16px, calc((100vw - 760px) / 2 + 16px));
+            right: max(16px, calc((100vw - 760px) / 2 + 16px));
+            bottom: calc(82px + env(safe-area-inset-bottom));
+            z-index: 2147483200;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 14px 16px;
+            color: #fff;
+            text-decoration: none;
+            background: linear-gradient(135deg, #7c3aed, #a78bfa);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 14px;
+            box-shadow: 0 18px 38px rgba(0, 0, 0, 0.38), 0 10px 30px rgba(124, 58, 237, 0.28);
+        }
+        .revenue-sticky-cta strong { display: block; color: #fff; font-size: 15px; line-height: 1.25; }
+        .revenue-sticky-cta span { display: block; color: rgba(255, 255, 255, 0.86); font-size: 12px; line-height: 1.45; }
+        .revenue-sticky-cta .sticky-cta-action { flex: 0 0 auto; padding: 9px 12px; color: #7c3aed; background: #fff; border-radius: 10px; font-size: 13px; font-weight: 800; white-space: nowrap; }
+        .revenue-sticky-cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+        @media (min-width: 760px) { .revenue-sticky-cta { left: 50%; right: auto; width: min(720px, calc(100vw - 32px)); transform: translateX(-50%); } }
+        @media (min-width: 900px) {
+            body.has-revenue-sticky-cta { padding-bottom: 104px; }
+            .revenue-sticky-cta { bottom: calc(16px + env(safe-area-inset-bottom)); }
+        }
+        @media (max-width: 480px) {
+            .revenue-sticky-cta { padding: 12px 13px; gap: 10px; }
+            .revenue-sticky-cta strong { font-size: 14px; }
+            .revenue-sticky-cta span { font-size: 11px; }
+        }
+
 
         /* Indexing batch support */
         .indexing-quick-rail {
@@ -246,13 +280,17 @@
 
     </style>
 
-    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Teste de Trabalho de Sombra: Descubra seu Arquétipo de Sombra","description":"Descubra seu arquétipo de sombra com este teste gratuito de trabalho de sombra junguiano. Você é o Agradador, Perfeccionista, Controlador, Evitador, Rebelde ou Cuidador? Aprenda a integrar seu eu oculto.","image":"https://dopabrain.com/portal/img/og/shadow-work.png","datePublished":"2026-03-23","dateModified":"2026-06-19","inLanguage":"pt","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/pt/shadow-work-quiz-guide.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog PT","item":"https://dopabrain.com/portal/blog/pt/"},{"@type":"ListItem","position":3,"name":"Teste de Trabalho de Sombra: Descubra seu Arquétipo de Sombra","item":"https://dopabrain.com/portal/blog/pt/shadow-work-quiz-guide.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Teste de Trabalho de Sombra: Descubra seu Arquétipo de Sombra","description":"Descubra seu arquétipo de sombra com este teste gratuito de trabalho de sombra junguiano. Você é o Agradador, Perfeccionista, Controlador, Evitador, Rebelde ou Cuidador? Aprenda a integrar seu eu oculto.","image":"https://dopabrain.com/portal/img/og/shadow-work.png","datePublished":"2026-03-23","dateModified":"2026-07-20","inLanguage":"pt","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/pt/shadow-work-quiz-guide.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog PT","item":"https://dopabrain.com/portal/blog/pt/"},{"@type":"ListItem","position":3,"name":"Teste de Trabalho de Sombra: Descubra seu Arquétipo de Sombra","item":"https://dopabrain.com/portal/blog/pt/shadow-work-quiz-guide.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
 </head>
-<body>
+<body class="has-revenue-sticky-cta">
+    <a class="revenue-sticky-cta" href="/shadow-work/?lang=pt&start=1&surface=pt_shadow_work_sticky" data-content-surface="sticky_revenue_cta" data-target-slug="shadow-work" aria-label="Começar o teste de trabalho de sombra">
+        <span><strong>Qual arquétipo você esconde?</strong><span>Comece o teste de 3 minutos agora</span></span>
+        <span class="sticky-cta-action">Começar</span>
+    </a>
                 <section class="indexing-quick-rail" aria-labelledby="indexing-quick-rail-title">
                     <h2 id="indexing-quick-rail-title">Quick next paths</h2>
                     <div class="quick-grid">
-                        <a class="quick-card" href="/animal-personality/?lang=pt" data-content-surface="quick_rail" data-target-slug="animal-personality"><strong>Animal personality</strong><span>Find your result</span></a>
+                        <a class="quick-card" href="/shadow-work/?lang=pt&start=1&surface=pt_shadow_work_quick" data-content-surface="quick_rail" data-target-slug="shadow-work"><strong>Trabalho de sombra</strong><span>Descubra seu arquétipo oculto</span></a>
                         <a class="quick-card" href="/brain-type/?lang=pt" data-content-surface="quick_rail" data-target-slug="brain-type"><strong>Brain type</strong><span>Compare thinking style</span></a>
                         <a class="quick-card" href="/eq-test/?lang=pt" data-content-surface="quick_rail" data-target-slug="eq-test"><strong>EQ test</strong><span>Read emotional patterns</span></a>
                         <a class="quick-card" href="/attachment-style/?lang=pt" data-content-surface="quick_rail" data-target-slug="attachment-style"><strong>Attachment style</strong><span>Check relationship habits</span></a>
@@ -276,7 +314,7 @@
             <div class="cta-box">
                 <h3>Conheça seu eu oculto</h3>
                 <p>8 perguntas revelam seu arquétipo de sombra e sugestões de diário personalizadas</p>
-                <a href="/shadow-work/" class="cta-btn">Faça o Teste de Trabalho de Sombra &rarr;</a>
+                <a href="/shadow-work/?lang=pt&start=1&surface=pt_shadow_work_intro" class="cta-btn" data-content-surface="article_cta" data-target-slug="shadow-work">Faça o Teste de Trabalho de Sombra &rarr;</a>
             </div>
 
             <nav class="toc">
@@ -323,7 +361,7 @@
             <div class="cta-box">
                 <h3>Qual arquétipo de sombra você é?</h3>
                 <p>Descubra seu padrão oculto em 2 minutos</p>
-                <a href="/shadow-work/" class="cta-btn">Faça o teste &rarr;</a>
+                <a href="/shadow-work/?lang=pt&start=1&surface=pt_shadow_work_mid" class="cta-btn" data-content-surface="article_cta" data-target-slug="shadow-work">Faça o teste &rarr;</a>
             </div>
 
             <h2 id="section3">As 5 dimensões de sombra</h2>
@@ -338,7 +376,7 @@
 
             <h2 id="section4">Como começar o trabalho de sombra: um guia passo a passo</h2>
             <h3>Passo 1: Identifique seu tipo de sombra</h3>
-            <p>Faça o <a href="/shadow-work/" class="inline-link">Teste de Trabalho de Sombra</a> para descobrir seu arquétipo primário. Isso lhe dá um ponto de partida focado em vez de tentar explorar todo o seu inconsciente de uma vez.</p>
+            <p>Faça o <a href="/shadow-work/?lang=pt&start=1&surface=pt_shadow_work_inline" class="inline-link" data-content-surface="article_cta" data-target-slug="shadow-work">Teste de Trabalho de Sombra</a> para descobrir seu arquétipo primário. Isso lhe dá um ponto de partida focado em vez de tentar explorar todo o seu inconsciente de uma vez.</p>
 
             <h3>Passo 2: Note seus gatilhos</h3>
             <p>Sua sombra se revela através de <strong>reações emocionais desproporcionais</strong>. Se o comportamento de alguém desencadeia raiva, desprezo ou profundo desconforto em você, pergunte: "O que essa pessoa representa que eu reneguei em mim mesmo?"</p>
@@ -390,7 +428,7 @@
             <div class="cta-box">
                 <h3>Pronto para começar?</h3>
                 <p>Sua sombra está esperando para ser reconhecida. Dê o primeiro passo.</p>
-                <a href="/shadow-work/" class="cta-btn">Comece o Teste de Trabalho de Sombra &rarr;</a>
+                <a href="/shadow-work/?lang=pt&start=1&surface=pt_shadow_work_final" class="cta-btn" data-content-surface="article_cta" data-target-slug="shadow-work">Comece o Teste de Trabalho de Sombra &rarr;</a>
             </div>
 
             <h2 id="section7">Perguntas frequentes</h2>
@@ -418,7 +456,7 @@
 
             <h2>Recursos relacionados</h2>
             <div class="related-links">
-                <a href="/shadow-work/">Teste de Trabalho de Sombra</a>
+                <a href="/shadow-work/?lang=pt&start=1&surface=pt_shadow_work_related" data-target-slug="shadow-work">Teste de Trabalho de Sombra</a>
                 <a href="/eq-test/">Teste de QE</a>
                 <a href="/attachment-style/">Teste de Estilo de Apego</a>
                 <a href="/anxiety-type/">Teste de Tipo de Ansiedade</a>
@@ -460,6 +498,14 @@
                         ad_index: index + 1
                     });
                 });
+                var stickyCta = document.querySelector('.revenue-sticky-cta');
+                if (stickyCta) {
+                    track('content_sticky_cta_view', {
+                        cta_surface: stickyCta.getAttribute('data-content-surface') || 'sticky_revenue_cta',
+                        target_slug: stickyCta.getAttribute('data-target-slug') || '',
+                        link_url: stickyCta.href || ''
+                    });
+                }
             }
 
             if (document.readyState === 'loading') {
@@ -473,8 +519,12 @@
                 if (!target) return;
                 if (target.closest('.quick-card')) {
                     track('content_test_click', { link_url: target.href || '', target_slug: target.getAttribute('data-target-slug') || '' });
-                } else if (target.closest('.cta-section') || target.closest('.cta-box') || target.closest('.test-cta') || target.classList.contains('cta-btn') || target.classList.contains('cta-button') || target.classList.contains('game-link') || target.getAttribute('data-content-surface') === 'cta') {
-                    track('content_cta_click', { link_url: target.href || '' });
+                } else if (target.closest('.revenue-sticky-cta') || target.closest('.cta-section') || target.closest('.cta-box') || target.closest('.test-cta') || target.classList.contains('cta-btn') || target.classList.contains('cta-button') || target.classList.contains('game-link') || target.getAttribute('data-content-surface')) {
+                    track('content_cta_click', {
+                        link_url: target.href || '',
+                        cta_surface: target.getAttribute('data-content-surface') || (target.closest('.revenue-sticky-cta') ? 'sticky_revenue_cta' : 'article_cta'),
+                        target_slug: target.getAttribute('data-target-slug') || ''
+                    });
                 } else if (target.closest('.related-posts') || target.closest('.related-links') || target.classList.contains('related-link') || target.classList.contains('related-card') || target.closest('.related-card')) {
                     track('content_related_click', { link_url: target.href || '' });
                 } else if (target.closest('.toc')) {
