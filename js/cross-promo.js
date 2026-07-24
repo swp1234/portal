@@ -158,6 +158,40 @@
         };
     }
 
+    function getBoundaryScriptBridgeConfig() {
+        var slug = getBlogSlug();
+        var safeRelationshipPattern = /(?:people-pleasing|healthy-boundaries|boundaries-setting|conflict-resolution-relationship|relationship-tips)/;
+        var safeWorkPattern = /(?:hsp-workplace-survival|emotional-intelligence-workplace)/;
+        if (!safeRelationshipPattern.test(slug) && !safeWorkPattern.test(slug)) return null;
+
+        var locale = getBlogLocale();
+        var supportedLocale = /^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(locale) ? locale : 'en';
+        var copyByLocale = {
+            ko: { kicker: '읽은 내용을 실제 문장으로', title: '경계와 부탁을 명확히 전하는 문장 만들기', desc: '상황, 부탁, 내가 취할 다음 행동을 입력하면 차분하고 구체적인 초안을 만듭니다.', action: '무료 대화문 만들기' },
+            en: { kicker: 'TURN INSIGHT INTO WORDS', title: 'Draft a clear boundary or request', desc: 'Add the facts, your request, and your next action to build a calm, specific script.', action: 'Build my free script' },
+            zh: { kicker: '把想法变成话语', title: '起草清晰的界限或请求', desc: '填写事实、你的请求和下一步行动，生成冷静而具体的表达草稿。', action: '免费生成对话稿' },
+            hi: { kicker: 'समझ को शब्दों में बदलें', title: 'स्पष्ट सीमा या अनुरोध का मसौदा बनाएँ', desc: 'तथ्य, अपना अनुरोध और अगला कदम जोड़कर शांत और स्पष्ट संवाद तैयार करें।', action: 'मुफ़्त संवाद बनाएँ' },
+            ru: { kicker: 'ПРЕВРАТИТЕ МЫСЛЬ В СЛОВА', title: 'Сформулируйте границу или просьбу', desc: 'Добавьте факты, просьбу и свой следующий шаг, чтобы получить спокойный и конкретный текст.', action: 'Создать текст бесплатно' },
+            ja: { kicker: '気づきを言葉に', title: '境界線やお願いを明確な文章にする', desc: '事実、お願い、自分の次の行動を入力して、落ち着いた具体的な下書きを作ります。', action: '無料で会話文を作る' },
+            es: { kicker: 'CONVIERTE LA IDEA EN PALABRAS', title: 'Redacta un límite o una petición clara', desc: 'Añade los hechos, tu petición y tu siguiente paso para crear un guion sereno y concreto.', action: 'Crear mi guion gratis' },
+            pt: { kicker: 'TRANSFORME A IDEIA EM PALAVRAS', title: 'Escreva um limite ou pedido com clareza', desc: 'Adicione os fatos, seu pedido e o próximo passo para criar um roteiro calmo e específico.', action: 'Criar roteiro grátis' },
+            id: { kicker: 'UBAH PEMAHAMAN MENJADI KATA', title: 'Susun batasan atau permintaan yang jelas', desc: 'Tambahkan fakta, permintaan, dan langkah berikutnya untuk membuat skrip yang tenang dan spesifik.', action: 'Buat skrip gratis' },
+            tr: { kicker: 'DÜŞÜNCEYİ SÖZE DÖK', title: 'Net bir sınır veya rica taslağı hazırla', desc: 'Sakin ve somut bir metin için gerçekleri, ricayı ve sonraki adımını ekle.', action: 'Ücretsiz metin oluştur' },
+            de: { kicker: 'AUS ERKENNTNIS WERDEN WORTE', title: 'Eine klare Grenze oder Bitte formulieren', desc: 'Ergänze Fakten, Bitte und nächsten Schritt für einen ruhigen, konkreten Gesprächsentwurf.', action: 'Kostenlosen Text erstellen' },
+            fr: { kicker: 'METTEZ VOS IDÉES EN MOTS', title: 'Formulez une limite ou une demande claire', desc: 'Ajoutez les faits, votre demande et votre prochaine action pour obtenir un texte calme et précis.', action: 'Créer mon texte gratuitement' }
+        };
+        var context = safeWorkPattern.test(slug) ? 'work' : 'relationship';
+
+        return {
+            locale: supportedLocale,
+            copy: copyByLocale[supportedLocale],
+            context: context,
+            url: '/stress-check/script.html?lang=' + encodeURIComponent(supportedLocale)
+                + '&context=' + encodeURIComponent(context)
+                + '&tone=clear&source=blog_communication_bridge'
+        };
+    }
+
     function getBlogTopicStrategy() {
         var slug = getBlogSlug();
         if (!slug) return null;
@@ -775,6 +809,12 @@
             '.cp-stress-script-link{display:inline-flex;align-items:center;min-height:44px;margin-left:10px;color:#bfdbfe;text-decoration:underline;text-underline-offset:3px;font-size:13px;font-weight:800}',
             '.cp-stress-plan-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
             '.cp-stress-script-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
+            '.cp-boundary-script{max-width:720px;margin:18px auto 26px;padding:18px;border:1px solid rgba(96,165,250,0.28);border-radius:16px;background:linear-gradient(135deg,rgba(59,130,246,0.1),rgba(124,58,237,0.06));box-shadow:0 14px 34px rgba(0,0,0,0.12)}',
+            '.cp-boundary-script-kicker{font-size:11px;font-weight:900;letter-spacing:.08em;color:#93c5fd;margin-bottom:5px}',
+            '.cp-boundary-script-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
+            '.cp-boundary-script-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.7);margin-bottom:13px}',
+            '.cp-boundary-script-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 16px;border-radius:11px;background:#2563eb;color:#fff;text-decoration:none;font-size:14px;font-weight:850}',
+            '.cp-boundary-script-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
             '.cp-sticky-sprint{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:2147483000;display:flex;align-items:center;gap:10px;max-width:680px;margin:0 auto;padding:10px 10px 10px 12px;border:1px solid rgba(124,58,237,0.28);border-radius:8px;background:rgba(17,24,39,0.94);box-shadow:0 12px 32px rgba(0,0,0,0.28);backdrop-filter:blur(12px)}',
             '.cp-sticky-copy{min-width:0;flex:1}',
             '.cp-sticky-kicker{font-size:11px;font-weight:800;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0}',
@@ -800,6 +840,10 @@
             'html.light-mode .cp-stress-plan-title,[data-theme="light"] .cp-stress-plan-title{color:rgba(0,0,0,0.88)}',
             'html.light-mode .cp-stress-plan-desc,[data-theme="light"] .cp-stress-plan-desc{color:rgba(0,0,0,0.62)}',
             'html.light-mode .cp-stress-script-link,[data-theme="light"] .cp-stress-script-link{color:#1d4ed8}',
+            'html.light-mode .cp-boundary-script,[data-theme="light"] .cp-boundary-script{background:linear-gradient(135deg,rgba(37,99,235,0.08),rgba(124,58,237,0.05));border-color:rgba(37,99,235,0.24)}',
+            'html.light-mode .cp-boundary-script-kicker,[data-theme="light"] .cp-boundary-script-kicker{color:#1d4ed8}',
+            'html.light-mode .cp-boundary-script-title,[data-theme="light"] .cp-boundary-script-title{color:rgba(0,0,0,0.88)}',
+            'html.light-mode .cp-boundary-script-desc,[data-theme="light"] .cp-boundary-script-desc{color:rgba(0,0,0,0.62)}',
             '.cp-card:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:2px}'
         ].join('');
         document.head.appendChild(style);
@@ -954,11 +998,12 @@
         var hasQuickRail = !!document.querySelector('.quick-actions,[data-content-surface="quick_rail"]');
         var scanRecovery = isScanRiskVisit(bridge.market) && !hasQuickRail;
         var stressPlan = getStressPlanBridgeConfig();
-        var revenueSprint = stressPlan ? null : getRevenueSprintStrategy(bridge);
+        var boundaryScript = stressPlan ? null : getBoundaryScriptBridgeConfig();
+        var revenueSprint = stressPlan || boundaryScript ? null : getRevenueSprintStrategy(bridge);
         var sprintPicks = revenueSprint ? revenueSprint.ids
             .map(function(id) { return apps.find(function(app) { return app.id === id; }); })
             .filter(Boolean) : [];
-        var earlyRecovery = !stressPlan && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
+        var earlyRecovery = !stressPlan && !boundaryScript && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
 
         if (stressPlan) {
             var planHtml = '<aside class="cp-stress-plan" data-surface-name="blog_stress_plan" data-content-locale="' + stressPlan.locale + '" data-plan-focus="' + stressPlan.focus + '">'
@@ -1009,6 +1054,59 @@
                         content_locale: stressPlan.locale,
                         plan_focus: stressPlan.focus,
                         destination_path: scriptLink ? stressPlan.scriptUrl : stressPlan.url,
+                        revenue_goal: 'daily_0_10'
+                    });
+                });
+            }
+        }
+
+        if (boundaryScript) {
+            var scriptHtml = '<aside class="cp-boundary-script" data-surface-name="blog_communication_script" data-content-locale="' + boundaryScript.locale + '" data-script-context="' + boundaryScript.context + '">'
+                + '<div class="cp-boundary-script-kicker">' + boundaryScript.copy.kicker + '</div>'
+                + '<div class="cp-boundary-script-title">' + boundaryScript.copy.title + '</div>'
+                + '<div class="cp-boundary-script-desc">' + boundaryScript.copy.desc + '</div>'
+                + '<a class="cp-boundary-script-link" href="' + boundaryScript.url + '">' + boundaryScript.copy.action + '</a>'
+                + '</aside>';
+            var scriptPara = anchor.querySelector('p');
+            if (scriptPara) scriptPara.insertAdjacentHTML('afterend', scriptHtml);
+            else anchor.insertAdjacentHTML('afterbegin', scriptHtml);
+
+            var scriptElement = document.querySelector('.cp-boundary-script');
+            var scriptViewTracked = false;
+            var trackScriptView = function() {
+                if (scriptViewTracked || typeof gtag !== 'function') return;
+                scriptViewTracked = true;
+                gtag('event', 'boundary_script_bridge_view', {
+                    event_category: 'engagement',
+                    source_app: 'blog',
+                    surface_name: 'blog_communication_script',
+                    content_locale: boundaryScript.locale,
+                    script_context: boundaryScript.context,
+                    revenue_goal: 'daily_0_10'
+                });
+            };
+            if (scriptElement && 'IntersectionObserver' in window) {
+                var scriptObserver = new IntersectionObserver(function(entries) {
+                    if (entries.some(function(entry) { return entry.isIntersecting; })) {
+                        trackScriptView();
+                        scriptObserver.disconnect();
+                    }
+                }, { threshold: 0.35 });
+                scriptObserver.observe(scriptElement);
+            } else {
+                trackScriptView();
+            }
+            if (scriptElement) {
+                scriptElement.addEventListener('click', function(event) {
+                    var scriptLink = event.target.closest('.cp-boundary-script-link');
+                    if (!scriptLink || typeof gtag !== 'function') return;
+                    gtag('event', 'boundary_script_bridge_click', {
+                        event_category: 'engagement',
+                        source_app: 'blog',
+                        surface_name: 'blog_communication_script',
+                        content_locale: boundaryScript.locale,
+                        script_context: boundaryScript.context,
+                        destination_path: boundaryScript.url,
                         revenue_goal: 'daily_0_10'
                     });
                 });
