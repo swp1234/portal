@@ -1109,6 +1109,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'boundary-phrase-library',
+        name: '경계 표현 문장 라이브러리',
+        shortDesc: '상황과 말투별로 찾아 복사하는 실용 문장 모음',
+        description: '직장, 관계, 가족, 학교에서 경계나 부탁을 전할 때 쓸 수 있는 12가지 문장 변형을 검색하고 필터링하세요. 바로 복사하거나 빌더에서 나에게 맞게 수정할 수 있습니다.',
+        icon: '📚',
+        color: '#7c3aed',
+        category: 'wellness',
+        tags: ['경계', '대화', '예문', '직장', '관계', 'communication', 'boundary', 'phrase', 'template', 'workplace', 'relationship', 'reference'],
+        url: 'https://dopabrain.com/stress-check/library.html',
+        isNew: true,
+        isPopular: false,
+        popularity: 16,
+        i18n: {
+            en: { name: 'Boundary Phrase Library', shortDesc: 'Copy and edit clear phrases for difficult conversations' },
+            zh: { name: '界限表达语句库', shortDesc: '复制并修改适合困难对话的清晰表达' },
+            hi: { name: 'सीमा-वाक्य लाइब्रेरी', shortDesc: 'कठिन बातचीत के लिए स्पष्ट वाक्य कॉपी और संपादित करें' },
+            ru: { name: 'Библиотека фраз о границах', shortDesc: 'Копируйте и меняйте ясные фразы для сложных разговоров' },
+            ja: { name: '境界線フレーズ集', shortDesc: '難しい会話の明確な例文をコピー・編集' },
+            es: { name: 'Biblioteca de Frases para Límites', shortDesc: 'Copia y adapta frases claras para conversaciones difíciles' },
+            pt: { name: 'Biblioteca de Frases para Limites', shortDesc: 'Copie e adapte frases claras para conversas difíceis' },
+            id: { name: 'Pustaka Frasa Batasan', shortDesc: 'Salin dan edit frasa jelas untuk percakapan sulit' },
+            tr: { name: 'Sınır İfadeleri Kitaplığı', shortDesc: 'Zor konuşmalar için net ifadeleri kopyalayıp düzenleyin' },
+            de: { name: 'Bibliothek für klare Grenzen', shortDesc: 'Klare Formulierungen für schwierige Gespräche kopieren und anpassen' },
+            fr: { name: 'Bibliothèque de Phrases pour Poser ses Limites', shortDesc: 'Copiez et adaptez des phrases claires pour les conversations difficiles' }
+        }
+    },
+    {
         id: 'habit-tracker',
         name: '습관 추적기',
         shortDesc: '좋은 습관 만들기 추적 도구',

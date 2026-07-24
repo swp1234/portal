@@ -82,7 +82,8 @@
       {"@type":"ListItem","position":16,"url":"https://dopabrain.com/todo-list/","name":"Todo List"},
       {"@type":"ListItem","position":17,"url":"https://dopabrain.com/routine-planner/","name":"Routine Planner"},
       {"@type":"ListItem","position":18,"url":"https://dopabrain.com/stress-check/plan.html","name":"7-Day Stress Reset Plan"},
-      {"@type":"ListItem","position":19,"url":"https://dopabrain.com/stress-check/script.html","name":"Boundary and Request Script Builder"}
+      {"@type":"ListItem","position":19,"url":"https://dopabrain.com/stress-check/script.html","name":"Boundary and Request Script Builder"},
+      {"@type":"ListItem","position":20,"url":"https://dopabrain.com/stress-check/library.html","name":"Boundary Phrase Library"}
     ]
   }
 }
@@ -375,6 +376,7 @@ footer a{color:var(--text2)}
 <div class="tools-grid" id="tools-grid">
   <a href="/stress-check/plan.html?source=portal_tools_catalog" class="tool-card" data-cat="wellness" data-app="stress-reset-plan" data-plan-surface="catalog"><span class="tc-cat">Wellness</span><div class="tc-icon" style="background:rgba(22,163,74,0.12)">&#128467;&#65039;</div><div class="tc-name">7-Day Stress Reset Plan</div><div class="tc-desc">A private, personalized action plan</div></a>
   <a href="/stress-check/script.html?source=portal_tools_catalog" class="tool-card" data-cat="wellness" data-app="boundary-script-builder"><span class="tc-cat">Wellness</span><div class="tc-icon" style="background:rgba(59,130,246,0.12)">&#128172;</div><div class="tc-name">Boundary &amp; Request Script Builder</div><div class="tc-desc">Find clear words for a difficult conversation</div></a>
+  <a href="/stress-check/library.html?source=portal_tools_catalog" class="tool-card" data-cat="wellness" data-app="boundary-phrase-library" data-library-surface="catalog"><span class="tc-cat">Wellness</span><div class="tc-icon" style="background:rgba(124,58,237,0.12)">&#128218;</div><div class="tc-name">Boundary Phrase Library</div><div class="tc-desc">Copy and edit practical conversation phrases</div></a>
   <a href="/shopping-calc/" class="tool-card" data-cat="calculator" data-app="shopping-calc"><span class="tc-cat">Calculator</span><div class="tc-icon" style="background:rgba(243,156,18,0.12)">&#128722;</div><div class="tc-name">Shopping Calc</div><div class="tc-desc" data-i18n="hub_tools.desc_shopping-calc">Smart discount calculator</div></a>
   <a href="/bmi-calculator/" class="tool-card" data-cat="calculator" data-app="bmi-calculator"><span class="tc-cat">Calculator</span><div class="tc-icon" style="background:rgba(16,185,129,0.12)">&#9878;&#65039;</div><div class="tc-name">BMI Calculator</div><div class="tc-desc" data-i18n="hub_tools.desc_bmi-calculator">Body Mass Index calculator</div></a>
   <a href="/tax-refund-preview/" class="tool-card" data-cat="calculator" data-app="tax-refund-preview"><span class="tc-cat">Calculator</span><div class="tc-icon" style="background:rgba(34,197,94,0.12)">&#128176;</div><div class="tc-name">Tax Refund</div><div class="tc-desc" data-i18n="hub_tools.desc_tax-refund-preview">Estimate your tax refund</div></a>
@@ -492,6 +494,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const routineCards=document.querySelectorAll('.routine-card');
   const ctaLinks=document.querySelectorAll('[data-cta-surface]');
   const stressPlanCards=document.querySelectorAll('[data-plan-surface]');
+  const boundaryLibraryCards=document.querySelectorAll('[data-library-surface]');
   const faqItems=document.querySelectorAll('.faq-item');
   filters.forEach(f=>{
     f.addEventListener('click',()=>{
@@ -555,6 +558,25 @@ document.addEventListener('DOMContentLoaded',()=>{
           event:'stress_plan_catalog_click',
           hub_name:'tools',
           plan_surface:card.dataset.planSurface,
+          destination:card.href,
+          revenue_goal:'daily_0_10'
+        });
+      });
+    });
+  }
+  if(boundaryLibraryCards.length){
+    pushEvent({
+      event:'boundary_library_catalog_view',
+      hub_name:'tools',
+      placement_count:boundaryLibraryCards.length,
+      revenue_goal:'daily_0_10'
+    });
+    boundaryLibraryCards.forEach(card=>{
+      card.addEventListener('click',()=>{
+        pushEvent({
+          event:'boundary_library_catalog_click',
+          hub_name:'tools',
+          library_surface:card.dataset.librarySurface,
           destination:card.href,
           revenue_goal:'daily_0_10'
         });

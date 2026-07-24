@@ -167,18 +167,18 @@
         var locale = getBlogLocale();
         var supportedLocale = /^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(locale) ? locale : 'en';
         var copyByLocale = {
-            ko: { kicker: '읽은 내용을 실제 문장으로', title: '경계와 부탁을 명확히 전하는 문장 만들기', desc: '상황, 부탁, 내가 취할 다음 행동을 입력하면 차분하고 구체적인 초안을 만듭니다.', action: '무료 대화문 만들기' },
-            en: { kicker: 'TURN INSIGHT INTO WORDS', title: 'Draft a clear boundary or request', desc: 'Add the facts, your request, and your next action to build a calm, specific script.', action: 'Build my free script' },
-            zh: { kicker: '把想法变成话语', title: '起草清晰的界限或请求', desc: '填写事实、你的请求和下一步行动，生成冷静而具体的表达草稿。', action: '免费生成对话稿' },
-            hi: { kicker: 'समझ को शब्दों में बदलें', title: 'स्पष्ट सीमा या अनुरोध का मसौदा बनाएँ', desc: 'तथ्य, अपना अनुरोध और अगला कदम जोड़कर शांत और स्पष्ट संवाद तैयार करें।', action: 'मुफ़्त संवाद बनाएँ' },
-            ru: { kicker: 'ПРЕВРАТИТЕ МЫСЛЬ В СЛОВА', title: 'Сформулируйте границу или просьбу', desc: 'Добавьте факты, просьбу и свой следующий шаг, чтобы получить спокойный и конкретный текст.', action: 'Создать текст бесплатно' },
-            ja: { kicker: '気づきを言葉に', title: '境界線やお願いを明確な文章にする', desc: '事実、お願い、自分の次の行動を入力して、落ち着いた具体的な下書きを作ります。', action: '無料で会話文を作る' },
-            es: { kicker: 'CONVIERTE LA IDEA EN PALABRAS', title: 'Redacta un límite o una petición clara', desc: 'Añade los hechos, tu petición y tu siguiente paso para crear un guion sereno y concreto.', action: 'Crear mi guion gratis' },
-            pt: { kicker: 'TRANSFORME A IDEIA EM PALAVRAS', title: 'Escreva um limite ou pedido com clareza', desc: 'Adicione os fatos, seu pedido e o próximo passo para criar um roteiro calmo e específico.', action: 'Criar roteiro grátis' },
-            id: { kicker: 'UBAH PEMAHAMAN MENJADI KATA', title: 'Susun batasan atau permintaan yang jelas', desc: 'Tambahkan fakta, permintaan, dan langkah berikutnya untuk membuat skrip yang tenang dan spesifik.', action: 'Buat skrip gratis' },
-            tr: { kicker: 'DÜŞÜNCEYİ SÖZE DÖK', title: 'Net bir sınır veya rica taslağı hazırla', desc: 'Sakin ve somut bir metin için gerçekleri, ricayı ve sonraki adımını ekle.', action: 'Ücretsiz metin oluştur' },
-            de: { kicker: 'AUS ERKENNTNIS WERDEN WORTE', title: 'Eine klare Grenze oder Bitte formulieren', desc: 'Ergänze Fakten, Bitte und nächsten Schritt für einen ruhigen, konkreten Gesprächsentwurf.', action: 'Kostenlosen Text erstellen' },
-            fr: { kicker: 'METTEZ VOS IDÉES EN MOTS', title: 'Formulez une limite ou une demande claire', desc: 'Ajoutez les faits, votre demande et votre prochaine action pour obtenir un texte calme et précis.', action: 'Créer mon texte gratuitement' }
+            ko: { kicker: '읽은 내용을 실제 문장으로', title: '경계와 부탁을 명확히 전하는 문장 만들기', desc: '상황, 부탁, 내가 취할 다음 행동을 입력하면 차분하고 구체적인 초안을 만듭니다.', action: '무료 대화문 만들기', libraryAction: '먼저 예문 둘러보기' },
+            en: { kicker: 'TURN INSIGHT INTO WORDS', title: 'Draft a clear boundary or request', desc: 'Add the facts, your request, and your next action to build a calm, specific script.', action: 'Build my free script', libraryAction: 'Browse phrase examples first' },
+            zh: { kicker: '把想法变成话语', title: '起草清晰的界限或请求', desc: '填写事实、你的请求和下一步行动，生成冷静而具体的表达草稿。', action: '免费生成对话稿', libraryAction: '先浏览表达示例' },
+            hi: { kicker: 'समझ को शब्दों में बदलें', title: 'स्पष्ट सीमा या अनुरोध का मसौदा बनाएँ', desc: 'तथ्य, अपना अनुरोध और अगला कदम जोड़कर शांत और स्पष्ट संवाद तैयार करें।', action: 'मुफ़्त संवाद बनाएँ', libraryAction: 'पहले वाक्य उदाहरण देखें' },
+            ru: { kicker: 'ПРЕВРАТИТЕ МЫСЛЬ В СЛОВА', title: 'Сформулируйте границу или просьбу', desc: 'Добавьте факты, просьбу и свой следующий шаг, чтобы получить спокойный и конкретный текст.', action: 'Создать текст бесплатно', libraryAction: 'Сначала посмотреть примеры' },
+            ja: { kicker: '気づきを言葉に', title: '境界線やお願いを明確な文章にする', desc: '事実、お願い、自分の次の行動を入力して、落ち着いた具体的な下書きを作ります。', action: '無料で会話文を作る', libraryAction: 'まず例文を見る' },
+            es: { kicker: 'CONVIERTE LA IDEA EN PALABRAS', title: 'Redacta un límite o una petición clara', desc: 'Añade los hechos, tu petición y tu siguiente paso para crear un guion sereno y concreto.', action: 'Crear mi guion gratis', libraryAction: 'Ver ejemplos primero' },
+            pt: { kicker: 'TRANSFORME A IDEIA EM PALAVRAS', title: 'Escreva um limite ou pedido com clareza', desc: 'Adicione os fatos, seu pedido e o próximo passo para criar um roteiro calmo e específico.', action: 'Criar roteiro grátis', libraryAction: 'Ver exemplos primeiro' },
+            id: { kicker: 'UBAH PEMAHAMAN MENJADI KATA', title: 'Susun batasan atau permintaan yang jelas', desc: 'Tambahkan fakta, permintaan, dan langkah berikutnya untuk membuat skrip yang tenang dan spesifik.', action: 'Buat skrip gratis', libraryAction: 'Lihat contoh frasa dahulu' },
+            tr: { kicker: 'DÜŞÜNCEYİ SÖZE DÖK', title: 'Net bir sınır veya rica taslağı hazırla', desc: 'Sakin ve somut bir metin için gerçekleri, ricayı ve sonraki adımını ekle.', action: 'Ücretsiz metin oluştur', libraryAction: 'Önce örnekleri gör' },
+            de: { kicker: 'AUS ERKENNTNIS WERDEN WORTE', title: 'Eine klare Grenze oder Bitte formulieren', desc: 'Ergänze Fakten, Bitte und nächsten Schritt für einen ruhigen, konkreten Gesprächsentwurf.', action: 'Kostenlosen Text erstellen', libraryAction: 'Zuerst Beispiele ansehen' },
+            fr: { kicker: 'METTEZ VOS IDÉES EN MOTS', title: 'Formulez une limite ou une demande claire', desc: 'Ajoutez les faits, votre demande et votre prochaine action pour obtenir un texte calme et précis.', action: 'Créer mon texte gratuitement', libraryAction: 'Voir d’abord des exemples' }
         };
         var context = safeWorkPattern.test(slug) ? 'work' : 'relationship';
 
@@ -187,6 +187,9 @@
             copy: copyByLocale[supportedLocale],
             context: context,
             url: '/stress-check/script.html?lang=' + encodeURIComponent(supportedLocale)
+                + '&context=' + encodeURIComponent(context)
+                + '&tone=clear&source=blog_communication_bridge',
+            libraryUrl: '/stress-check/library.html?lang=' + encodeURIComponent(supportedLocale)
                 + '&context=' + encodeURIComponent(context)
                 + '&tone=clear&source=blog_communication_bridge'
         };
@@ -814,7 +817,9 @@
             '.cp-boundary-script-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
             '.cp-boundary-script-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.7);margin-bottom:13px}',
             '.cp-boundary-script-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 16px;border-radius:11px;background:#2563eb;color:#fff;text-decoration:none;font-size:14px;font-weight:850}',
+            '.cp-boundary-library-link{display:inline-flex;align-items:center;min-height:44px;margin-left:10px;color:#ddd6fe;text-decoration:underline;text-underline-offset:3px;font-size:13px;font-weight:800}',
             '.cp-boundary-script-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
+            '.cp-boundary-library-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
             '.cp-sticky-sprint{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:2147483000;display:flex;align-items:center;gap:10px;max-width:680px;margin:0 auto;padding:10px 10px 10px 12px;border:1px solid rgba(124,58,237,0.28);border-radius:8px;background:rgba(17,24,39,0.94);box-shadow:0 12px 32px rgba(0,0,0,0.28);backdrop-filter:blur(12px)}',
             '.cp-sticky-copy{min-width:0;flex:1}',
             '.cp-sticky-kicker{font-size:11px;font-weight:800;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0}',
@@ -828,7 +833,7 @@
             '.cp-name{font-size:13px;font-weight:700;color:rgba(255,255,255,0.92);line-height:1.3}',
             '.cp-desc{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;line-height:1.35}',
             '@media(max-width:720px){.cp-mobile-sprint .cp-grid,.cp-revenue-recovery .cp-grid,.cp-scan-recovery .cp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}',
-            '@media(max-width:560px){.cp-grid{grid-template-columns:1fr}.cp-section{padding:18px 12px}.cp-mobile-sprint .cp-grid,.cp-revenue-recovery .cp-grid,.cp-scan-recovery .cp-grid{grid-template-columns:1fr}.cp-stress-script-link{display:flex;margin:8px 0 0}}',
+            '@media(max-width:560px){.cp-grid{grid-template-columns:1fr}.cp-section{padding:18px 12px}.cp-mobile-sprint .cp-grid,.cp-revenue-recovery .cp-grid,.cp-scan-recovery .cp-grid{grid-template-columns:1fr}.cp-stress-script-link,.cp-boundary-library-link{display:flex;margin:8px 0 0}}',
             'html.light-mode .cp-section,[data-theme="light"] .cp-section{border-top-color:rgba(0,0,0,0.08)}',
             'html.light-mode .cp-title,[data-theme="light"] .cp-title{color:rgba(0,0,0,0.52)}',
             'html.light-mode .cp-card,[data-theme="light"] .cp-card{background:rgba(0,0,0,0.03);border-color:rgba(0,0,0,0.07)}',
@@ -844,6 +849,7 @@
             'html.light-mode .cp-boundary-script-kicker,[data-theme="light"] .cp-boundary-script-kicker{color:#1d4ed8}',
             'html.light-mode .cp-boundary-script-title,[data-theme="light"] .cp-boundary-script-title{color:rgba(0,0,0,0.88)}',
             'html.light-mode .cp-boundary-script-desc,[data-theme="light"] .cp-boundary-script-desc{color:rgba(0,0,0,0.62)}',
+            'html.light-mode .cp-boundary-library-link,[data-theme="light"] .cp-boundary-library-link{color:#6d28d9}',
             '.cp-card:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:2px}'
         ].join('');
         document.head.appendChild(style);
@@ -1066,6 +1072,7 @@
                 + '<div class="cp-boundary-script-title">' + boundaryScript.copy.title + '</div>'
                 + '<div class="cp-boundary-script-desc">' + boundaryScript.copy.desc + '</div>'
                 + '<a class="cp-boundary-script-link" href="' + boundaryScript.url + '">' + boundaryScript.copy.action + '</a>'
+                + '<a class="cp-boundary-library-link" href="' + boundaryScript.libraryUrl + '">' + boundaryScript.copy.libraryAction + '</a>'
                 + '</aside>';
             var scriptPara = anchor.querySelector('p');
             if (scriptPara) scriptPara.insertAdjacentHTML('afterend', scriptHtml);
@@ -1099,14 +1106,15 @@
             if (scriptElement) {
                 scriptElement.addEventListener('click', function(event) {
                     var scriptLink = event.target.closest('.cp-boundary-script-link');
-                    if (!scriptLink || typeof gtag !== 'function') return;
-                    gtag('event', 'boundary_script_bridge_click', {
+                    var libraryLink = event.target.closest('.cp-boundary-library-link');
+                    if ((!scriptLink && !libraryLink) || typeof gtag !== 'function') return;
+                    gtag('event', libraryLink ? 'boundary_library_bridge_click' : 'boundary_script_bridge_click', {
                         event_category: 'engagement',
                         source_app: 'blog',
                         surface_name: 'blog_communication_script',
                         content_locale: boundaryScript.locale,
                         script_context: boundaryScript.context,
-                        destination_path: boundaryScript.url,
+                        destination_path: libraryLink ? boundaryScript.libraryUrl : boundaryScript.url,
                         revenue_goal: 'daily_0_10'
                     });
                 });
