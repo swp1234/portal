@@ -195,6 +195,35 @@
         };
     }
 
+    function getSensoryResetBridgeConfig() {
+        var slug = getBlogSlug();
+        if (!/(?:sensory-overload-hsp-coping|hsp-coping-strategies-highly-sensitive)/.test(slug)) return null;
+
+        var locale = getBlogLocale();
+        var supportedLocale = /^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(locale) ? locale : 'en';
+        var copyByLocale = {
+            ko: { kicker: '읽은 내용을 지금 활용하세요', title: '5분 감각 과부하 리셋 카드', desc: '지금 가장 강한 자극과 장소를 고르고, 한 단계씩 따라갈 작은 시간별 계획을 만드세요.', action: '무료 리셋 카드 만들기' },
+            en: { kicker: 'USE THIS GUIDE NOW', title: 'Build a 5-minute sensory reset card', desc: 'Choose the strongest input and your current setting, then follow one small timed step at a time.', action: 'Build my free reset card' },
+            zh: { kicker: '立即使用这篇指南', title: '制作5分钟感官过载重置卡', desc: '选择最强刺激和当前场所，然后一次执行一个简短的计时步骤。', action: '免费制作重置卡' },
+            hi: { kicker: 'इस गाइड का अभी उपयोग करें', title: '5-मिनट सेंसरी रीसेट कार्ड बनाएँ', desc: 'सबसे तेज़ इनपुट और अपनी जगह चुनें, फिर एक-एक छोटा समयबद्ध कदम लें।', action: 'मुफ़्त रीसेट कार्ड बनाएँ' },
+            ru: { kicker: 'ИСПОЛЬЗУЙТЕ СОВЕТЫ СЕЙЧАС', title: 'Создайте 5-минутную сенсорную карточку', desc: 'Выберите самый сильный стимул и место, затем выполняйте по одному короткому шагу.', action: 'Создать карточку бесплатно' },
+            ja: { kicker: 'ガイドを今すぐ活用', title: '5分間の感覚リセットカードを作る', desc: '最も強い刺激と今いる場所を選び、小さな時間別ステップを一つずつ進めます。', action: '無料でカードを作る' },
+            es: { kicker: 'USA ESTA GUÍA AHORA', title: 'Crea una tarjeta de reinicio sensorial de 5 minutos', desc: 'Elige el estímulo más intenso y tu entorno, y sigue pequeños pasos cronometrados.', action: 'Crear tarjeta gratis' },
+            pt: { kicker: 'USE ESTE GUIA AGORA', title: 'Crie um cartão de reset sensorial de 5 minutos', desc: 'Escolha o estímulo mais intenso e o local, depois siga pequenos passos cronometrados.', action: 'Criar cartão grátis' },
+            id: { kicker: 'GUNAKAN PANDUAN INI SEKARANG', title: 'Buat kartu reset sensorik 5 menit', desc: 'Pilih input terkuat dan lokasi Anda, lalu ikuti satu langkah singkat pada satu waktu.', action: 'Buat kartu gratis' },
+            tr: { kicker: 'BU REHBERİ ŞİMDİ KULLAN', title: '5 dakikalık duyusal sıfırlama kartı oluştur', desc: 'En güçlü uyaranı ve bulunduğunuz yeri seçip küçük zamanlı adımları izleyin.', action: 'Ücretsiz kart oluştur' },
+            de: { kicker: 'RATGEBER JETZT ANWENDEN', title: '5-Minuten-Karte bei Reizüberflutung erstellen', desc: 'Wähle den stärksten Reiz und deine Umgebung, dann folge kleinen Schritten mit Zeitangaben.', action: 'Kostenlose Reset-Karte' },
+            fr: { kicker: 'UTILISEZ CE GUIDE MAINTENANT', title: 'Créez une carte sensorielle de 5 minutes', desc: 'Choisissez le stimulus le plus fort et le lieu, puis suivez de petites étapes chronométrées.', action: 'Créer ma carte gratuitement' }
+        };
+
+        return {
+            locale: supportedLocale,
+            copy: copyByLocale[supportedLocale],
+            url: '/hsp-test/reset.html?lang=' + encodeURIComponent(supportedLocale)
+                + '&source=blog_sensory_bridge'
+        };
+    }
+
     function getBlogTopicStrategy() {
         var slug = getBlogSlug();
         if (!slug) return null;
@@ -820,6 +849,12 @@
             '.cp-boundary-library-link{display:inline-flex;align-items:center;min-height:44px;margin-left:10px;color:#ddd6fe;text-decoration:underline;text-underline-offset:3px;font-size:13px;font-weight:800}',
             '.cp-boundary-script-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
             '.cp-boundary-library-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
+            '.cp-sensory-reset{max-width:720px;margin:18px auto 26px;padding:18px;border:1px solid rgba(74,222,128,0.28);border-radius:16px;background:linear-gradient(135deg,rgba(22,163,74,0.1),rgba(13,148,136,0.06));box-shadow:0 14px 34px rgba(0,0,0,0.12)}',
+            '.cp-sensory-reset-kicker{font-size:11px;font-weight:900;letter-spacing:.08em;color:#86efac;margin-bottom:5px}',
+            '.cp-sensory-reset-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
+            '.cp-sensory-reset-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.7);margin-bottom:13px}',
+            '.cp-sensory-reset-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 16px;border-radius:11px;background:#16a34a;color:#fff;text-decoration:none;font-size:14px;font-weight:850}',
+            '.cp-sensory-reset-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
             '.cp-sticky-sprint{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:2147483000;display:flex;align-items:center;gap:10px;max-width:680px;margin:0 auto;padding:10px 10px 10px 12px;border:1px solid rgba(124,58,237,0.28);border-radius:8px;background:rgba(17,24,39,0.94);box-shadow:0 12px 32px rgba(0,0,0,0.28);backdrop-filter:blur(12px)}',
             '.cp-sticky-copy{min-width:0;flex:1}',
             '.cp-sticky-kicker{font-size:11px;font-weight:800;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0}',
@@ -850,6 +885,10 @@
             'html.light-mode .cp-boundary-script-title,[data-theme="light"] .cp-boundary-script-title{color:rgba(0,0,0,0.88)}',
             'html.light-mode .cp-boundary-script-desc,[data-theme="light"] .cp-boundary-script-desc{color:rgba(0,0,0,0.62)}',
             'html.light-mode .cp-boundary-library-link,[data-theme="light"] .cp-boundary-library-link{color:#6d28d9}',
+            'html.light-mode .cp-sensory-reset,[data-theme="light"] .cp-sensory-reset{background:linear-gradient(135deg,rgba(22,163,74,0.08),rgba(13,148,136,0.05));border-color:rgba(22,163,74,0.24)}',
+            'html.light-mode .cp-sensory-reset-kicker,[data-theme="light"] .cp-sensory-reset-kicker{color:#15803d}',
+            'html.light-mode .cp-sensory-reset-title,[data-theme="light"] .cp-sensory-reset-title{color:rgba(0,0,0,0.88)}',
+            'html.light-mode .cp-sensory-reset-desc,[data-theme="light"] .cp-sensory-reset-desc{color:rgba(0,0,0,0.62)}',
             '.cp-card:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:2px}'
         ].join('');
         document.head.appendChild(style);
@@ -1005,11 +1044,12 @@
         var scanRecovery = isScanRiskVisit(bridge.market) && !hasQuickRail;
         var stressPlan = getStressPlanBridgeConfig();
         var boundaryScript = stressPlan ? null : getBoundaryScriptBridgeConfig();
-        var revenueSprint = stressPlan || boundaryScript ? null : getRevenueSprintStrategy(bridge);
+        var sensoryReset = stressPlan || boundaryScript ? null : getSensoryResetBridgeConfig();
+        var revenueSprint = stressPlan || boundaryScript || sensoryReset ? null : getRevenueSprintStrategy(bridge);
         var sprintPicks = revenueSprint ? revenueSprint.ids
             .map(function(id) { return apps.find(function(app) { return app.id === id; }); })
             .filter(Boolean) : [];
-        var earlyRecovery = !stressPlan && !boundaryScript && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
+        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
 
         if (stressPlan) {
             var planHtml = '<aside class="cp-stress-plan" data-surface-name="blog_stress_plan" data-content-locale="' + stressPlan.locale + '" data-plan-focus="' + stressPlan.focus + '">'
@@ -1115,6 +1155,57 @@
                         content_locale: boundaryScript.locale,
                         script_context: boundaryScript.context,
                         destination_path: libraryLink ? boundaryScript.libraryUrl : boundaryScript.url,
+                        revenue_goal: 'daily_0_10'
+                    });
+                });
+            }
+        }
+
+        if (sensoryReset) {
+            var resetHtml = '<aside class="cp-sensory-reset" data-surface-name="blog_sensory_reset" data-content-locale="' + sensoryReset.locale + '">'
+                + '<div class="cp-sensory-reset-kicker">' + sensoryReset.copy.kicker + '</div>'
+                + '<div class="cp-sensory-reset-title">' + sensoryReset.copy.title + '</div>'
+                + '<div class="cp-sensory-reset-desc">' + sensoryReset.copy.desc + '</div>'
+                + '<a class="cp-sensory-reset-link" href="' + sensoryReset.url + '">' + sensoryReset.copy.action + '</a>'
+                + '</aside>';
+            var resetPara = anchor.querySelector('p');
+            if (resetPara) resetPara.insertAdjacentHTML('afterend', resetHtml);
+            else anchor.insertAdjacentHTML('afterbegin', resetHtml);
+
+            var resetElement = document.querySelector('.cp-sensory-reset');
+            var resetViewTracked = false;
+            var trackResetView = function() {
+                if (resetViewTracked || typeof gtag !== 'function') return;
+                resetViewTracked = true;
+                gtag('event', 'sensory_reset_bridge_view', {
+                    event_category: 'engagement',
+                    source_app: 'blog',
+                    surface_name: 'blog_sensory_reset',
+                    content_locale: sensoryReset.locale,
+                    revenue_goal: 'daily_0_10'
+                });
+            };
+            if (resetElement && 'IntersectionObserver' in window) {
+                var resetObserver = new IntersectionObserver(function(entries) {
+                    if (entries.some(function(entry) { return entry.isIntersecting; })) {
+                        trackResetView();
+                        resetObserver.disconnect();
+                    }
+                }, { threshold: 0.35 });
+                resetObserver.observe(resetElement);
+            } else {
+                trackResetView();
+            }
+            if (resetElement) {
+                resetElement.addEventListener('click', function(event) {
+                    var resetLink = event.target.closest('.cp-sensory-reset-link');
+                    if (!resetLink || typeof gtag !== 'function') return;
+                    gtag('event', 'sensory_reset_bridge_click', {
+                        event_category: 'engagement',
+                        source_app: 'blog',
+                        surface_name: 'blog_sensory_reset',
+                        content_locale: sensoryReset.locale,
+                        destination_path: sensoryReset.url,
                         revenue_goal: 'daily_0_10'
                     });
                 });

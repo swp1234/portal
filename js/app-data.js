@@ -1136,6 +1136,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'sensory-reset-card',
+        name: '5분 감각 과부하 리셋 카드',
+        shortDesc: '강한 자극을 줄이는 시간별 포켓 플랜',
+        description: '소리, 빛, 사람, 촉감, 과도한 요구 중 지금 가장 강한 자극을 고르고 5분 동안 실행할 작은 순서를 만드세요. 타이머, 복사, 인쇄를 지원하며 점수나 진단이 없습니다.',
+        icon: '🌿',
+        color: '#16a34a',
+        category: 'wellness',
+        tags: ['감각', '과부하', 'HSP', '리셋', '타이머', 'sensory', 'overload', 'reset', 'highly sensitive', 'coping', 'timer'],
+        url: 'https://dopabrain.com/hsp-test/reset.html',
+        isNew: true,
+        isPopular: true,
+        popularity: 22,
+        i18n: {
+            en: { name: '5-Minute Sensory Reset Card', shortDesc: 'A timed pocket plan for lowering intense input' },
+            zh: { name: '5分钟感官过载重置卡', shortDesc: '减少强烈刺激的计时口袋计划' },
+            hi: { name: '5-मिनट सेंसरी रीसेट कार्ड', shortDesc: 'तेज़ इनपुट घटाने की समयबद्ध छोटी योजना' },
+            ru: { name: '5-минутная сенсорная карточка', shortDesc: 'Короткий план снижения сильной нагрузки' },
+            ja: { name: '5分間 感覚過負荷リセットカード', shortDesc: '強い刺激を下げる時間別ポケットプラン' },
+            es: { name: 'Tarjeta de Reinicio Sensorial de 5 Minutos', shortDesc: 'Plan breve y cronometrado para bajar estímulos intensos' },
+            pt: { name: 'Cartão de Reset Sensorial de 5 Minutos', shortDesc: 'Plano curto e cronometrado para reduzir estímulos' },
+            id: { name: 'Kartu Reset Sensorik 5 Menit', shortDesc: 'Rencana singkat untuk mengurangi input intens' },
+            tr: { name: '5 Dakikalık Duyusal Sıfırlama Kartı', shortDesc: 'Yoğun uyaranı azaltmak için zamanlı kısa plan' },
+            de: { name: '5-Minuten-Karte bei Reizüberflutung', shortDesc: 'Kurzer Zeitplan zum Senken starker Reize' },
+            fr: { name: 'Carte Sensorielle de 5 Minutes', shortDesc: 'Petit plan chronométré pour réduire les stimuli intenses' }
+        }
+    },
+    {
         id: 'habit-tracker',
         name: '습관 추적기',
         shortDesc: '좋은 습관 만들기 추적 도구',
