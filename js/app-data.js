@@ -1082,6 +1082,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'boundary-script-builder',
+        name: '경계·요청 문장 빌더',
+        shortDesc: '어려운 대화를 위한 개인용 문장 도구',
+        description: '직장, 관계, 가족, 학교의 어려운 대화를 앞두고 관찰 가능한 사실, 구체적인 요청, 내가 취할 다음 행동을 정리해 복사하거나 인쇄하세요.',
+        icon: '💬',
+        color: '#3b82f6',
+        category: 'wellness',
+        tags: ['대화', '경계', '요청', '직장', '관계', 'communication', 'boundary', 'request', 'script', 'workplace', 'relationship'],
+        url: 'https://dopabrain.com/stress-check/script.html',
+        isNew: true,
+        isPopular: false,
+        popularity: 18,
+        i18n: {
+            en: { name: 'Boundary & Request Script Builder', shortDesc: 'Find clear words for a difficult conversation' },
+            zh: { name: '界限与请求话术生成器', shortDesc: '为困难对话准备清晰的话' },
+            hi: { name: 'सीमा और अनुरोध स्क्रिप्ट बिल्डर', shortDesc: 'कठिन बातचीत के लिए स्पष्ट शब्द पाएँ' },
+            ru: { name: 'Конструктор просьбы и границ', shortDesc: 'Подберите слова для трудного разговора' },
+            ja: { name: '境界線・お願い文ビルダー', shortDesc: '難しい会話の言葉を準備する' },
+            es: { name: 'Generador de Límites y Peticiones', shortDesc: 'Encuentra palabras claras para una conversación difícil' },
+            pt: { name: 'Gerador de Limites e Pedidos', shortDesc: 'Encontre palavras claras para uma conversa difícil' },
+            id: { name: 'Pembuat Skrip Batas & Permintaan', shortDesc: 'Temukan kata yang jelas untuk percakapan sulit' },
+            tr: { name: 'Sınır ve İstek Metni Oluşturucu', shortDesc: 'Zor bir konuşma için net sözler bulun' },
+            de: { name: 'Generator für Grenzen & Bitten', shortDesc: 'Klare Worte für ein schwieriges Gespräch' },
+            fr: { name: 'Générateur de Limites et Demandes', shortDesc: 'Trouvez des mots clairs pour une conversation difficile' }
+        }
+    },
+    {
         id: 'habit-tracker',
         name: '습관 추적기',
         shortDesc: '좋은 습관 만들기 추적 도구',
