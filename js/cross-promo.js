@@ -124,18 +124,18 @@
 
         var locale = getBlogLocale();
         var copyByLocale = {
-            ko: { kicker: '읽기에서 실천으로', title: '나의 7일 스트레스 리셋 플랜', desc: '가장 부담되는 영역을 고르고 오늘 할 작은 행동 하나부터 시작하세요.', action: '무료 플랜 만들기' },
-            en: { kicker: 'TURN READING INTO ACTION', title: 'Build your 7-day stress reset plan', desc: 'Choose your main pressure area and leave with one small action for today.', action: 'Build my free plan' },
-            zh: { kicker: '从阅读到行动', title: '创建你的7天压力重置计划', desc: '选择主要压力领域，从今天一个小行动开始。', action: '免费创建计划' },
-            hi: { kicker: 'पढ़ने से अभ्यास तक', title: 'अपनी 7-दिन की तनाव रीसेट योजना बनाएँ', desc: 'मुख्य दबाव क्षेत्र चुनें और आज के एक छोटे कदम से शुरू करें।', action: 'मुफ़्त योजना बनाएँ' },
-            ru: { kicker: 'ОТ ЧТЕНИЯ К ДЕЙСТВИЮ', title: 'Создайте 7-дневный план снижения стресса', desc: 'Выберите главную область давления и начните с одного небольшого шага.', action: 'Создать бесплатный план' },
-            ja: { kicker: '読むだけで終わらせない', title: '7日間ストレス・リセットプランを作る', desc: '主な負担領域を選び、今日の小さな一歩から始めます。', action: '無料プランを作る' },
-            es: { kicker: 'DE LA LECTURA A LA ACCIÓN', title: 'Crea tu plan de 7 días para reducir el estrés', desc: 'Elige tu principal área de presión y empieza con una acción pequeña hoy.', action: 'Crear plan gratis' },
-            pt: { kicker: 'DA LEITURA PARA A AÇÃO', title: 'Crie seu plano de 7 dias para reduzir o estresse', desc: 'Escolha a principal área de pressão e comece com uma pequena ação hoje.', action: 'Criar plano grátis' },
-            id: { kicker: 'DARI MEMBACA KE BERTINDAK', title: 'Buat rencana reset stres 7 hari', desc: 'Pilih area tekanan utama dan mulai dengan satu tindakan kecil hari ini.', action: 'Buat rencana gratis' },
-            tr: { kicker: 'OKUMADAN EYLEME', title: '7 günlük stres sıfırlama planını oluştur', desc: 'Ana baskı alanını seç ve bugün küçük bir adımla başla.', action: 'Ücretsiz plan oluştur' },
-            de: { kicker: 'VOM LESEN ZUM HANDELN', title: 'Erstelle deinen 7-Tage-Stress-Reset-Plan', desc: 'Wähle deine Hauptbelastung und beginne heute mit einem kleinen Schritt.', action: 'Kostenlosen Plan erstellen' },
-            fr: { kicker: 'DE LA LECTURE À L’ACTION', title: 'Créez votre plan anti-stress sur 7 jours', desc: 'Choisissez votre principale source de pression et commencez par une petite action.', action: 'Créer mon plan gratuit' }
+            ko: { kicker: '읽기에서 실천으로', title: '나의 7일 스트레스 리셋 플랜', desc: '가장 부담되는 영역을 고르고 오늘 할 작은 행동 하나부터 시작하세요.', action: '무료 플랜 만들기', scriptAction: '어려운 대화 문장 만들기' },
+            en: { kicker: 'TURN READING INTO ACTION', title: 'Build your 7-day stress reset plan', desc: 'Choose your main pressure area and leave with one small action for today.', action: 'Build my free plan', scriptAction: 'Build a difficult-conversation script' },
+            zh: { kicker: '从阅读到行动', title: '创建你的7天压力重置计划', desc: '选择主要压力领域，从今天一个小行动开始。', action: '免费创建计划', scriptAction: '生成困难对话话术' },
+            hi: { kicker: 'पढ़ने से अभ्यास तक', title: 'अपनी 7-दिन की तनाव रीसेट योजना बनाएँ', desc: 'मुख्य दबाव क्षेत्र चुनें और आज के एक छोटे कदम से शुरू करें।', action: 'मुफ़्त योजना बनाएँ', scriptAction: 'कठिन बातचीत की स्क्रिप्ट बनाएँ' },
+            ru: { kicker: 'ОТ ЧТЕНИЯ К ДЕЙСТВИЮ', title: 'Создайте 7-дневный план снижения стресса', desc: 'Выберите главную область давления и начните с одного небольшого шага.', action: 'Создать бесплатный план', scriptAction: 'Подготовить трудный разговор' },
+            ja: { kicker: '読むだけで終わらせない', title: '7日間ストレス・リセットプランを作る', desc: '主な負担領域を選び、今日の小さな一歩から始めます。', action: '無料プランを作る', scriptAction: '難しい会話の文章を作る' },
+            es: { kicker: 'DE LA LECTURA A LA ACCIÓN', title: 'Crea tu plan de 7 días para reducir el estrés', desc: 'Elige tu principal área de presión y empieza con una acción pequeña hoy.', action: 'Crear plan gratis', scriptAction: 'Crear un guión para una conversación difícil' },
+            pt: { kicker: 'DA LEITURA PARA A AÇÃO', title: 'Crie seu plano de 7 dias para reduzir o estresse', desc: 'Escolha a principal área de pressão e comece com uma pequena ação hoje.', action: 'Criar plano grátis', scriptAction: 'Criar roteiro para uma conversa difícil' },
+            id: { kicker: 'DARI MEMBACA KE BERTINDAK', title: 'Buat rencana reset stres 7 hari', desc: 'Pilih area tekanan utama dan mulai dengan satu tindakan kecil hari ini.', action: 'Buat rencana gratis', scriptAction: 'Buat skrip percakapan sulit' },
+            tr: { kicker: 'OKUMADAN EYLEME', title: '7 günlük stres sıfırlama planını oluştur', desc: 'Ana baskı alanını seç ve bugün küçük bir adımla başla.', action: 'Ücretsiz plan oluştur', scriptAction: 'Zor konuşma metni oluştur' },
+            de: { kicker: 'VOM LESEN ZUM HANDELN', title: 'Erstelle deinen 7-Tage-Stress-Reset-Plan', desc: 'Wähle deine Hauptbelastung und beginne heute mit einem kleinen Schritt.', action: 'Kostenlosen Plan erstellen', scriptAction: 'Text für ein schwieriges Gespräch erstellen' },
+            fr: { kicker: 'DE LA LECTURE À L’ACTION', title: 'Créez votre plan anti-stress sur 7 jours', desc: 'Choisissez votre principale source de pression et commencez par une petite action.', action: 'Créer mon plan gratuit', scriptAction: 'Préparer une conversation difficile' }
         };
         var focus = /(?:workplace|work-stress|job-stress|career-stress)/.test(slug) ? 'work'
             : /(?:financial|money-stress|finance)/.test(slug) ? 'finance'
@@ -149,7 +149,12 @@
             focus: focus,
             url: '/stress-check/plan.html?lang=' + encodeURIComponent(locale || 'en')
                 + '&focus=' + encodeURIComponent(focus)
-                + '&level=moderate&source=blog_stress_bridge'
+                + '&level=moderate&source=blog_stress_bridge',
+            scriptUrl: focus === 'work' || focus === 'relationship'
+                ? '/stress-check/script.html?lang=' + encodeURIComponent(locale || 'en')
+                    + '&context=' + encodeURIComponent(focus)
+                    + '&tone=clear&source=blog_stress_bridge'
+                : ''
         };
     }
 
@@ -767,7 +772,9 @@
             '.cp-stress-plan-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
             '.cp-stress-plan-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.7);margin-bottom:13px}',
             '.cp-stress-plan-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 16px;border-radius:11px;background:#16a34a;color:#fff;text-decoration:none;font-size:14px;font-weight:850}',
+            '.cp-stress-script-link{display:inline-flex;align-items:center;min-height:44px;margin-left:10px;color:#bfdbfe;text-decoration:underline;text-underline-offset:3px;font-size:13px;font-weight:800}',
             '.cp-stress-plan-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
+            '.cp-stress-script-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
             '.cp-sticky-sprint{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:2147483000;display:flex;align-items:center;gap:10px;max-width:680px;margin:0 auto;padding:10px 10px 10px 12px;border:1px solid rgba(124,58,237,0.28);border-radius:8px;background:rgba(17,24,39,0.94);box-shadow:0 12px 32px rgba(0,0,0,0.28);backdrop-filter:blur(12px)}',
             '.cp-sticky-copy{min-width:0;flex:1}',
             '.cp-sticky-kicker{font-size:11px;font-weight:800;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0}',
@@ -781,7 +788,7 @@
             '.cp-name{font-size:13px;font-weight:700;color:rgba(255,255,255,0.92);line-height:1.3}',
             '.cp-desc{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;line-height:1.35}',
             '@media(max-width:720px){.cp-mobile-sprint .cp-grid,.cp-revenue-recovery .cp-grid,.cp-scan-recovery .cp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}',
-            '@media(max-width:560px){.cp-grid{grid-template-columns:1fr}.cp-section{padding:18px 12px}.cp-mobile-sprint .cp-grid,.cp-revenue-recovery .cp-grid,.cp-scan-recovery .cp-grid{grid-template-columns:1fr}}',
+            '@media(max-width:560px){.cp-grid{grid-template-columns:1fr}.cp-section{padding:18px 12px}.cp-mobile-sprint .cp-grid,.cp-revenue-recovery .cp-grid,.cp-scan-recovery .cp-grid{grid-template-columns:1fr}.cp-stress-script-link{display:flex;margin:8px 0 0}}',
             'html.light-mode .cp-section,[data-theme="light"] .cp-section{border-top-color:rgba(0,0,0,0.08)}',
             'html.light-mode .cp-title,[data-theme="light"] .cp-title{color:rgba(0,0,0,0.52)}',
             'html.light-mode .cp-card,[data-theme="light"] .cp-card{background:rgba(0,0,0,0.03);border-color:rgba(0,0,0,0.07)}',
@@ -792,6 +799,7 @@
             'html.light-mode .cp-stress-plan-kicker,[data-theme="light"] .cp-stress-plan-kicker{color:#15803d}',
             'html.light-mode .cp-stress-plan-title,[data-theme="light"] .cp-stress-plan-title{color:rgba(0,0,0,0.88)}',
             'html.light-mode .cp-stress-plan-desc,[data-theme="light"] .cp-stress-plan-desc{color:rgba(0,0,0,0.62)}',
+            'html.light-mode .cp-stress-script-link,[data-theme="light"] .cp-stress-script-link{color:#1d4ed8}',
             '.cp-card:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:2px}'
         ].join('');
         document.head.appendChild(style);
@@ -958,6 +966,7 @@
                 + '<div class="cp-stress-plan-title">' + stressPlan.copy.title + '</div>'
                 + '<div class="cp-stress-plan-desc">' + stressPlan.copy.desc + '</div>'
                 + '<a class="cp-stress-plan-link" href="' + stressPlan.url + '">' + stressPlan.copy.action + '</a>'
+                + (stressPlan.scriptUrl ? '<a class="cp-stress-script-link" href="' + stressPlan.scriptUrl + '">' + stressPlan.copy.scriptAction + '</a>' : '')
                 + '</aside>';
             var planPara = anchor.querySelector('p');
             if (planPara) planPara.insertAdjacentHTML('afterend', planHtml);
@@ -990,14 +999,16 @@
             }
             if (planElement) {
                 planElement.addEventListener('click', function(event) {
-                    if (!event.target.closest('.cp-stress-plan-link') || typeof gtag !== 'function') return;
-                    gtag('event', 'stress_plan_bridge_click', {
+                    var scriptLink = event.target.closest('.cp-stress-script-link');
+                    var planLink = event.target.closest('.cp-stress-plan-link');
+                    if ((!planLink && !scriptLink) || typeof gtag !== 'function') return;
+                    gtag('event', scriptLink ? 'boundary_script_bridge_click' : 'stress_plan_bridge_click', {
                         event_category: 'engagement',
                         source_app: 'blog',
                         surface_name: 'blog_stress_plan',
                         content_locale: stressPlan.locale,
                         plan_focus: stressPlan.focus,
-                        destination_path: stressPlan.url,
+                        destination_path: scriptLink ? stressPlan.scriptUrl : stressPlan.url,
                         revenue_goal: 'daily_0_10'
                     });
                 });
