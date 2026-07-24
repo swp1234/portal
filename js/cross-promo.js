@@ -118,6 +118,41 @@
         return match ? match[1].toLowerCase() : '';
     }
 
+    function getStressPlanBridgeConfig() {
+        var slug = getBlogSlug();
+        if (!/(?:stress|burnout|overwhelm)/.test(slug)) return null;
+
+        var locale = getBlogLocale();
+        var copyByLocale = {
+            ko: { kicker: '읽기에서 실천으로', title: '나의 7일 스트레스 리셋 플랜', desc: '가장 부담되는 영역을 고르고 오늘 할 작은 행동 하나부터 시작하세요.', action: '무료 플랜 만들기' },
+            en: { kicker: 'TURN READING INTO ACTION', title: 'Build your 7-day stress reset plan', desc: 'Choose your main pressure area and leave with one small action for today.', action: 'Build my free plan' },
+            zh: { kicker: '从阅读到行动', title: '创建你的7天压力重置计划', desc: '选择主要压力领域，从今天一个小行动开始。', action: '免费创建计划' },
+            hi: { kicker: 'पढ़ने से अभ्यास तक', title: 'अपनी 7-दिन की तनाव रीसेट योजना बनाएँ', desc: 'मुख्य दबाव क्षेत्र चुनें और आज के एक छोटे कदम से शुरू करें।', action: 'मुफ़्त योजना बनाएँ' },
+            ru: { kicker: 'ОТ ЧТЕНИЯ К ДЕЙСТВИЮ', title: 'Создайте 7-дневный план снижения стресса', desc: 'Выберите главную область давления и начните с одного небольшого шага.', action: 'Создать бесплатный план' },
+            ja: { kicker: '読むだけで終わらせない', title: '7日間ストレス・リセットプランを作る', desc: '主な負担領域を選び、今日の小さな一歩から始めます。', action: '無料プランを作る' },
+            es: { kicker: 'DE LA LECTURA A LA ACCIÓN', title: 'Crea tu plan de 7 días para reducir el estrés', desc: 'Elige tu principal área de presión y empieza con una acción pequeña hoy.', action: 'Crear plan gratis' },
+            pt: { kicker: 'DA LEITURA PARA A AÇÃO', title: 'Crie seu plano de 7 dias para reduzir o estresse', desc: 'Escolha a principal área de pressão e comece com uma pequena ação hoje.', action: 'Criar plano grátis' },
+            id: { kicker: 'DARI MEMBACA KE BERTINDAK', title: 'Buat rencana reset stres 7 hari', desc: 'Pilih area tekanan utama dan mulai dengan satu tindakan kecil hari ini.', action: 'Buat rencana gratis' },
+            tr: { kicker: 'OKUMADAN EYLEME', title: '7 günlük stres sıfırlama planını oluştur', desc: 'Ana baskı alanını seç ve bugün küçük bir adımla başla.', action: 'Ücretsiz plan oluştur' },
+            de: { kicker: 'VOM LESEN ZUM HANDELN', title: 'Erstelle deinen 7-Tage-Stress-Reset-Plan', desc: 'Wähle deine Hauptbelastung und beginne heute mit einem kleinen Schritt.', action: 'Kostenlosen Plan erstellen' },
+            fr: { kicker: 'DE LA LECTURE À L’ACTION', title: 'Créez votre plan anti-stress sur 7 jours', desc: 'Choisissez votre principale source de pression et commencez par une petite action.', action: 'Créer mon plan gratuit' }
+        };
+        var focus = /(?:workplace|work-stress|job-stress|career-stress)/.test(slug) ? 'work'
+            : /(?:financial|money-stress|finance)/.test(slug) ? 'finance'
+            : /(?:relationship|couple|family-stress)/.test(slug) ? 'relationship'
+            : /(?:physical|chronic|sleep|health)/.test(slug) ? 'health'
+            : 'daily';
+
+        return {
+            locale: /^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(locale) ? locale : 'en',
+            copy: copyByLocale[locale] || copyByLocale.en,
+            focus: focus,
+            url: '/stress-check/plan.html?lang=' + encodeURIComponent(locale || 'en')
+                + '&focus=' + encodeURIComponent(focus)
+                + '&level=moderate&source=blog_stress_bridge'
+        };
+    }
+
     function getBlogTopicStrategy() {
         var slug = getBlogSlug();
         if (!slug) return null;
@@ -727,6 +762,12 @@
             '.cp-mobile-sprint .cp-grid{grid-template-columns:repeat(4,minmax(0,1fr))}',
             '.cp-mobile-sprint .cp-card{min-height:64px;padding:10px}',
             '.cp-mobile-sprint .cp-desc{display:none}',
+            '.cp-stress-plan{max-width:720px;margin:18px auto 26px;padding:18px;border:1px solid rgba(74,222,128,0.24);border-radius:16px;background:linear-gradient(135deg,rgba(74,222,128,0.09),rgba(0,188,212,0.055));box-shadow:0 14px 34px rgba(0,0,0,0.12)}',
+            '.cp-stress-plan-kicker{font-size:11px;font-weight:900;letter-spacing:.08em;color:#86efac;margin-bottom:5px}',
+            '.cp-stress-plan-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
+            '.cp-stress-plan-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.7);margin-bottom:13px}',
+            '.cp-stress-plan-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 16px;border-radius:11px;background:#16a34a;color:#fff;text-decoration:none;font-size:14px;font-weight:850}',
+            '.cp-stress-plan-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
             '.cp-sticky-sprint{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:2147483000;display:flex;align-items:center;gap:10px;max-width:680px;margin:0 auto;padding:10px 10px 10px 12px;border:1px solid rgba(124,58,237,0.28);border-radius:8px;background:rgba(17,24,39,0.94);box-shadow:0 12px 32px rgba(0,0,0,0.28);backdrop-filter:blur(12px)}',
             '.cp-sticky-copy{min-width:0;flex:1}',
             '.cp-sticky-kicker{font-size:11px;font-weight:800;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0}',
@@ -747,6 +788,10 @@
             'html.light-mode .cp-card:hover,[data-theme="light"] .cp-card:hover{background:rgba(0,0,0,0.06);border-color:rgba(0,0,0,0.12)}',
             'html.light-mode .cp-name,[data-theme="light"] .cp-name{color:rgba(0,0,0,0.85)}',
             'html.light-mode .cp-desc,[data-theme="light"] .cp-desc{color:rgba(0,0,0,0.48)}',
+            'html.light-mode .cp-stress-plan,[data-theme="light"] .cp-stress-plan{background:linear-gradient(135deg,rgba(22,163,74,0.08),rgba(8,145,178,0.05));border-color:rgba(22,163,74,0.24)}',
+            'html.light-mode .cp-stress-plan-kicker,[data-theme="light"] .cp-stress-plan-kicker{color:#15803d}',
+            'html.light-mode .cp-stress-plan-title,[data-theme="light"] .cp-stress-plan-title{color:rgba(0,0,0,0.88)}',
+            'html.light-mode .cp-stress-plan-desc,[data-theme="light"] .cp-stress-plan-desc{color:rgba(0,0,0,0.62)}',
             '.cp-card:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:2px}'
         ].join('');
         document.head.appendChild(style);
@@ -900,11 +945,64 @@
         var anchor = document.querySelector('article') || document.querySelector('main') || document.body;
         var hasQuickRail = !!document.querySelector('.quick-actions,[data-content-surface="quick_rail"]');
         var scanRecovery = isScanRiskVisit(bridge.market) && !hasQuickRail;
-        var revenueSprint = getRevenueSprintStrategy(bridge);
+        var stressPlan = getStressPlanBridgeConfig();
+        var revenueSprint = stressPlan ? null : getRevenueSprintStrategy(bridge);
         var sprintPicks = revenueSprint ? revenueSprint.ids
             .map(function(id) { return apps.find(function(app) { return app.id === id; }); })
             .filter(Boolean) : [];
-        var earlyRecovery = !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
+        var earlyRecovery = !stressPlan && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
+
+        if (stressPlan) {
+            var planHtml = '<aside class="cp-stress-plan" data-surface-name="blog_stress_plan" data-content-locale="' + stressPlan.locale + '" data-plan-focus="' + stressPlan.focus + '">'
+                + '<div class="cp-stress-plan-kicker">' + stressPlan.copy.kicker + '</div>'
+                + '<div class="cp-stress-plan-title">' + stressPlan.copy.title + '</div>'
+                + '<div class="cp-stress-plan-desc">' + stressPlan.copy.desc + '</div>'
+                + '<a class="cp-stress-plan-link" href="' + stressPlan.url + '">' + stressPlan.copy.action + '</a>'
+                + '</aside>';
+            var planPara = anchor.querySelector('p');
+            if (planPara) planPara.insertAdjacentHTML('afterend', planHtml);
+            else anchor.insertAdjacentHTML('afterbegin', planHtml);
+
+            var planElement = document.querySelector('.cp-stress-plan');
+            var planViewTracked = false;
+            var trackPlanView = function() {
+                if (planViewTracked || typeof gtag !== 'function') return;
+                planViewTracked = true;
+                gtag('event', 'stress_plan_bridge_view', {
+                    event_category: 'engagement',
+                    source_app: 'blog',
+                    surface_name: 'blog_stress_plan',
+                    content_locale: stressPlan.locale,
+                    plan_focus: stressPlan.focus,
+                    revenue_goal: 'daily_0_10'
+                });
+            };
+            if (planElement && 'IntersectionObserver' in window) {
+                var planObserver = new IntersectionObserver(function(entries) {
+                    if (entries.some(function(entry) { return entry.isIntersecting; })) {
+                        trackPlanView();
+                        planObserver.disconnect();
+                    }
+                }, { threshold: 0.35 });
+                planObserver.observe(planElement);
+            } else {
+                trackPlanView();
+            }
+            if (planElement) {
+                planElement.addEventListener('click', function(event) {
+                    if (!event.target.closest('.cp-stress-plan-link') || typeof gtag !== 'function') return;
+                    gtag('event', 'stress_plan_bridge_click', {
+                        event_category: 'engagement',
+                        source_app: 'blog',
+                        surface_name: 'blog_stress_plan',
+                        content_locale: stressPlan.locale,
+                        plan_focus: stressPlan.focus,
+                        destination_path: stressPlan.url,
+                        revenue_goal: 'daily_0_10'
+                    });
+                });
+            }
+        }
 
         if (scanRecovery) {
             var firstPara = anchor.querySelector('p');
