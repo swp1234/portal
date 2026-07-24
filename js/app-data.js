@@ -1055,6 +1055,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'stress-reset-plan',
+        name: '7일 스트레스 리셋 플랜',
+        shortDesc: '개인 맞춤형 7일 실천 체크리스트',
+        description: '스트레스 원인과 강도에 맞춘 7일 실천 계획을 만들고, 브라우저에서 진행률을 기록하거나 인쇄하세요. 계정 없이 무료로 사용할 수 있습니다.',
+        icon: '🗓️',
+        color: '#16a34a',
+        category: 'wellness',
+        tags: ['스트레스', '회복', '체크리스트', '7일 계획', '웰니스', 'stress', 'reset', 'plan', 'checklist', 'wellness', 'self-care'],
+        url: 'https://dopabrain.com/stress-check/plan.html',
+        isNew: true,
+        isPopular: true,
+        popularity: 24,
+        i18n: {
+            en: { name: '7-Day Stress Reset Plan', shortDesc: 'A private, personalized action plan' },
+            zh: { name: '7天压力重置计划', shortDesc: '私密的个性化行动计划' },
+            hi: { name: '7-दिन का तनाव रीसेट प्लान', shortDesc: 'निजी और व्यक्तिगत कार्य योजना' },
+            ru: { name: '7-дневный план снижения стресса', shortDesc: 'Личный план практических действий' },
+            ja: { name: '7日間ストレスリセットプラン', shortDesc: '非公開のパーソナル実践プラン' },
+            es: { name: 'Plan de 7 Días para Reducir el Estrés', shortDesc: 'Un plan de acción privado y personalizado' },
+            pt: { name: 'Plano de 7 Dias para Reduzir o Estresse', shortDesc: 'Um plano de ação privado e personalizado' },
+            id: { name: 'Rencana Reset Stres 7 Hari', shortDesc: 'Rencana tindakan pribadi dan personal' },
+            tr: { name: '7 Günlük Stres Sıfırlama Planı', shortDesc: 'Özel ve kişiselleştirilmiş eylem planı' },
+            de: { name: '7-Tage-Plan gegen Stress', shortDesc: 'Ein privater, persönlicher Aktionsplan' },
+            fr: { name: 'Programme Anti-Stress de 7 Jours', shortDesc: 'Un plan d’action privé et personnalisé' }
+        }
+    },
+    {
         id: 'habit-tracker',
         name: '습관 추적기',
         shortDesc: '좋은 습관 만들기 추적 도구',

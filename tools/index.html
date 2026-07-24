@@ -62,7 +62,7 @@
   "publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},
   "mainEntity":{
     "@type":"ItemList",
-    "numberOfItems":17,
+    "numberOfItems":18,
     "itemListElement":[
       {"@type":"ListItem","position":1,"url":"https://dopabrain.com/shopping-calc/","name":"Shopping Calculator"},
       {"@type":"ListItem","position":2,"url":"https://dopabrain.com/bmi-calculator/","name":"BMI Calculator"},
@@ -80,7 +80,8 @@
       {"@type":"ListItem","position":14,"url":"https://dopabrain.com/affirmation/","name":"Daily Affirmation"},
       {"@type":"ListItem","position":15,"url":"https://dopabrain.com/habit-tracker/","name":"Habit Tracker"},
       {"@type":"ListItem","position":16,"url":"https://dopabrain.com/todo-list/","name":"Todo List"},
-      {"@type":"ListItem","position":17,"url":"https://dopabrain.com/routine-planner/","name":"Routine Planner"}
+      {"@type":"ListItem","position":17,"url":"https://dopabrain.com/routine-planner/","name":"Routine Planner"},
+      {"@type":"ListItem","position":18,"url":"https://dopabrain.com/stress-check/plan.html","name":"7-Day Stress Reset Plan"}
     ]
   }
 }
@@ -316,11 +317,11 @@ footer a{color:var(--text2)}
 
 <h2 class="section-title" data-i18n="hub_tools.featured_title"><span>Featured</span> Tools</h2>
 <div class="featured">
-  <a href="/habit-tracker/" class="featured-card js-prefetch-link" style="--card-color:rgba(39,174,96,0.1);--card-border:#27ae60;--icon-bg:rgba(39,174,96,0.15)" data-cat="wellness" data-app="habit-tracker" data-feature-slot="1">
-    <div class="fc-icon">&#128202;</div>
+  <a href="/stress-check/plan.html?source=portal_tools_featured" class="featured-card js-prefetch-link" style="--card-color:rgba(22,163,74,0.12);--card-border:#16a34a;--icon-bg:rgba(22,163,74,0.16)" data-cat="wellness" data-app="stress-reset-plan" data-feature-slot="1" data-plan-surface="featured">
+    <div class="fc-icon">&#128467;&#65039;</div>
     <span class="fc-tag" data-i18n="hub_tools.filter_wellness">Wellness</span>
-    <div class="fc-name">Habit Tracker</div>
-    <p class="fc-desc" data-i18n="hub_tools.desc_habit-tracker">Track your daily habits</p>
+    <div class="fc-name">7-Day Stress Reset Plan</div>
+    <p class="fc-desc">A private, personalized action plan</p>
     <span class="fc-play" data-i18n="hub_tools.open_tool">Open Tool &rarr;</span>
   </a>
   <a href="/pomodoro-timer/" class="featured-card js-prefetch-link" style="--card-color:rgba(239,68,68,0.1);--card-border:#ef4444;--icon-bg:rgba(239,68,68,0.15)" data-cat="timer" data-app="pomodoro-timer" data-feature-slot="2">
@@ -371,6 +372,7 @@ footer a{color:var(--text2)}
 
 <h2 class="section-title" data-i18n="hub_tools.all_title"><span>All</span> Tools</h2>
 <div class="tools-grid" id="tools-grid">
+  <a href="/stress-check/plan.html?source=portal_tools_catalog" class="tool-card" data-cat="wellness" data-app="stress-reset-plan" data-plan-surface="catalog"><span class="tc-cat">Wellness</span><div class="tc-icon" style="background:rgba(22,163,74,0.12)">&#128467;&#65039;</div><div class="tc-name">7-Day Stress Reset Plan</div><div class="tc-desc">A private, personalized action plan</div></a>
   <a href="/shopping-calc/" class="tool-card" data-cat="calculator" data-app="shopping-calc"><span class="tc-cat">Calculator</span><div class="tc-icon" style="background:rgba(243,156,18,0.12)">&#128722;</div><div class="tc-name">Shopping Calc</div><div class="tc-desc" data-i18n="hub_tools.desc_shopping-calc">Smart discount calculator</div></a>
   <a href="/bmi-calculator/" class="tool-card" data-cat="calculator" data-app="bmi-calculator"><span class="tc-cat">Calculator</span><div class="tc-icon" style="background:rgba(16,185,129,0.12)">&#9878;&#65039;</div><div class="tc-name">BMI Calculator</div><div class="tc-desc" data-i18n="hub_tools.desc_bmi-calculator">Body Mass Index calculator</div></a>
   <a href="/tax-refund-preview/" class="tool-card" data-cat="calculator" data-app="tax-refund-preview"><span class="tc-cat">Calculator</span><div class="tc-icon" style="background:rgba(34,197,94,0.12)">&#128176;</div><div class="tc-name">Tax Refund</div><div class="tc-desc" data-i18n="hub_tools.desc_tax-refund-preview">Estimate your tax refund</div></a>
@@ -487,6 +489,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const quickStartCards=document.querySelectorAll('.quick-start-card');
   const routineCards=document.querySelectorAll('.routine-card');
   const ctaLinks=document.querySelectorAll('[data-cta-surface]');
+  const stressPlanCards=document.querySelectorAll('[data-plan-surface]');
   const faqItems=document.querySelectorAll('.faq-item');
   filters.forEach(f=>{
     f.addEventListener('click',()=>{
@@ -537,6 +540,25 @@ document.addEventListener('DOMContentLoaded',()=>{
     featured_count:featured.length,
     tool_count:cards.length
   });
+  if(stressPlanCards.length){
+    pushEvent({
+      event:'stress_plan_catalog_view',
+      hub_name:'tools',
+      placement_count:stressPlanCards.length,
+      revenue_goal:'daily_0_10'
+    });
+    stressPlanCards.forEach(card=>{
+      card.addEventListener('click',()=>{
+        pushEvent({
+          event:'stress_plan_catalog_click',
+          hub_name:'tools',
+          plan_surface:card.dataset.planSurface,
+          destination:card.href,
+          revenue_goal:'daily_0_10'
+        });
+      });
+    });
+  }
 
   featured.forEach((card,index)=>{
     card.addEventListener('click',()=>{
