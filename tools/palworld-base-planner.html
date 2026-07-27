@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <title>Palworld Base Planner: Worker Roles & Production Layout</title>
+  <meta name="description" content="Plan a Palworld base workforce by goal, worker slots and bottleneck. Get role allocations, production zones, workflow checks and a copyable base checklist without relying on a fragile Pal tier list.">
+  <meta name="dateModified" content="2026-07-27">
+  <link rel="canonical" href="https://dopabrain.com/portal/tools/palworld-base-planner.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Palworld Base Workforce Planner">
+  <meta property="og:description" content="Turn worker slots and a production goal into a practical base role allocation and layout checklist.">
+  <meta property="og:url" content="https://dopabrain.com/portal/tools/palworld-base-planner.html">
+  <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/tools/palworld-base-planner.html?lang=en">
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/tools/palworld-base-planner.html?lang=ko">
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/tools/palworld-base-planner.html?lang=zh">
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/tools/palworld-base-planner.html?lang=hi">
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/tools/palworld-base-planner.html?lang=ru">
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/tools/palworld-base-planner.html?lang=ja">
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/tools/palworld-base-planner.html?lang=es">
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/tools/palworld-base-planner.html?lang=pt">
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/tools/palworld-base-planner.html?lang=id">
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/tools/palworld-base-planner.html?lang=tr">
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/tools/palworld-base-planner.html?lang=de">
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/tools/palworld-base-planner.html?lang=fr">
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/tools/palworld-base-planner.html">
+  <link rel="stylesheet" href="../css/palworld-server-settings.css">
+  <link rel="stylesheet" href="../css/palworld-base-planner.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Palworld Base Workforce Planner","applicationCategory":"GameApplication","operatingSystem":"Any","url":"https://dopabrain.com/portal/tools/palworld-base-planner.html","dateModified":"2026-07-27","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A goal-based workforce allocation and production layout planner for Palworld bases."}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"How many workers should a Palworld base use?","acceptedAnswer":{"@type":"Answer","text":"The right number depends on the server limit and production goal. The official server documentation allows BaseCampWorkerMaxNum up to 50, but increasing workers can increase processing load."}},
+    {"@type":"Question","name":"Why does adding more Pals not fix base production?","acceptedAnswer":{"@type":"Answer","text":"The bottleneck may be missing inputs, transport, storage, food, recovery or blocked paths rather than work capacity. Observe a full production cycle before adding workers."}},
+    {"@type":"Question","name":"Does this planner recommend specific Pals?","acceptedAnswer":{"@type":"Answer","text":"No. It recommends work roles and workflow capacity so the plan remains useful across balance patches and can be filled with the Pals available in your world."}}
+  ]}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#planner" data-i18n="skip">Skip to base planner</a>
+  <header class="hero base-hero">
+    <nav>
+      <a href="palworld-field-guide.html" data-preserve-lang data-i18n="fieldGuide">← Field guide</a>
+      <label><span data-i18n="language">Language</span>
+        <select id="language" aria-label="Language">
+          <option value="en">English</option><option value="ko">한국어</option><option value="zh">中文</option><option value="hi">हिन्दी</option>
+          <option value="ru">Русский</option><option value="ja">日本語</option><option value="es">Español</option><option value="pt">Português</option>
+          <option value="id">Indonesia</option><option value="tr">Türkçe</option><option value="de">Deutsch</option><option value="fr">Français</option>
+        </select>
+      </label>
+    </nav>
+    <p class="eyebrow" data-i18n="eyebrow">PALWORLD BASE OPERATIONS BOARD</p>
+    <h1 data-i18n="title">Palworld Base Workforce Planner</h1>
+    <p class="lead" data-i18n="lead">Choose a production goal, worker capacity and bottleneck. Get a role allocation and layout plan built around flow—not a patch-sensitive Pal tier list.</p>
+    <div class="chips"><span data-i18n="chipRoles">Role allocation</span><span data-i18n="chipZones">Layout zones</span><span data-i18n="chipFlow">Bottleneck fixes</span><span data-i18n="chipChecklist">Copyable checklist</span></div>
+  </header>
+  <main>
+    <section class="notice">
+      <strong data-i18n="principleTitle">Plan capacity, then choose Pals</strong>
+      <p data-i18n="principleBody">One Pal can cover several work suitabilities, but too many competing jobs can make behavior unpredictable. Use the role counts as capacity targets, not rigid one-Pal assignments.</p>
+    </section>
+    <section id="planner" class="panel">
+      <p class="kicker" data-i18n="inputsKicker">BASE INPUTS</p>
+      <h2 data-i18n="inputsTitle">Describe the base you want</h2>
+      <div class="planner-inputs">
+        <fieldset><legend data-i18n="goalLabel">Primary goal</legend><div id="goalOptions" class="choice-grid"></div></fieldset>
+        <label class="range-field"><span><strong data-i18n="workersLabel">Worker capacity</strong><output id="workerOutput">15</output></span><input id="workers" type="range" min="4" max="50" value="15" step="1"><small data-i18n="workersHelp">Official server configuration supports up to 50, but higher counts can increase server load.</small></label>
+        <fieldset><legend data-i18n="paceLabel">Operating style</legend><div id="paceOptions" class="choice-grid compact"></div></fieldset>
+        <fieldset><legend data-i18n="bottleneckLabel">Current bottleneck</legend><div id="bottleneckOptions" class="choice-grid compact"></div></fieldset>
+      </div>
+      <button id="buildPlan" class="primary build-button" type="button" data-i18n="buildPlan">Build base plan</button>
+    </section>
+
+    <section id="result" class="panel" hidden>
+      <div class="section-head">
+        <div><p class="kicker" data-i18n="resultKicker">WORKFORCE BLUEPRINT</p><h2 id="resultTitle"></h2></div>
+        <button id="copyPlan" class="primary" type="button" data-i18n="copyPlan">Copy plan</button>
+      </div>
+      <p id="resultSummary" class="muted"></p>
+      <div id="allocation" class="allocation"></div>
+      <div class="result-grid">
+        <article><h3 data-i18n="zoneTitle">Four-zone layout</h3><ol id="zoneList"></ol></article>
+        <article><h3 data-i18n="checkTitle">Workflow checks</h3><ul id="checkList"></ul></article>
+      </div>
+      <p id="loadWarning" class="load-warning"></p>
+    </section>
+
+    <div class="ad-wrap" data-ad-surface="palworld_base_planner_inline">
+      <span data-i18n="ad">Advertisement</span>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    </div>
+
+    <section class="panel explainer">
+      <p class="kicker" data-i18n="whyKicker">WHY BASES STALL</p>
+      <h2 data-i18n="whyTitle">Work speed is only one part of throughput</h2>
+      <div class="throughput">
+        <article><span>1</span><h3 data-i18n="through1Title">Input</h3><p data-i18n="through1Body">Raw materials and farm outputs must arrive before stations become idle.</p></article>
+        <article><span>2</span><h3 data-i18n="through2Title">Process</h3><p data-i18n="through2Body">The correct work suitability and station capacity turn inputs into useful outputs.</p></article>
+        <article><span>3</span><h3 data-i18n="through3Title">Move</h3><p data-i18n="through3Body">Transport and short paths keep finished goods from blocking stations.</p></article>
+        <article><span>4</span><h3 data-i18n="through4Title">Recover</h3><p data-i18n="through4Body">Food, beds and unobstructed access protect worker uptime.</p></article>
+      </div>
+    </section>
+
+    <section class="palworld-suite">
+      <a href="palworld-field-guide.html?source=base_planner" data-preserve-lang><span>🧭</span><div><strong data-i18n="fieldGuideCard">Field Guide</strong><small data-i18n="fieldGuideCardDesc">24 tactics and six session plans</small></div></a>
+      <a href="palworld-server-settings.html?source=base_planner" data-preserve-lang><span>⚙️</span><div><strong data-i18n="serverCard">Server Settings</strong><small data-i18n="serverCardDesc">Set worker and base limits safely</small></div></a>
+      <a href="palworld-server-troubleshooter.html?source=base_planner" data-preserve-lang><span>🛠️</span><div><strong data-i18n="troubleCard">Troubleshooter</strong><small data-i18n="troubleCardDesc">Fix lag, settings, saves and mods</small></div></a>
+    </section>
+
+    <section class="panel sources">
+      <h2 data-i18n="sourcesTitle">Source basis and limits</h2>
+      <p data-i18n="sourcesBody">The game officially includes Pal-powered production, farming and automation. Server documentation lists BaseCampWorkerMaxNum with a maximum of 50 and warns that larger values increase processing load. This planner models workflow roles; it does not calculate hidden game AI or guarantee output rates.</p>
+      <div><a href="https://docs.palworldgame.com/settings-and-operation/configuration/" target="_blank" rel="noopener" data-i18n="officialConfig">Official server parameters ↗</a><a href="https://store.steampowered.com/app/1623730/Palworld/" target="_blank" rel="noopener" data-i18n="officialGame">Official game page ↗</a></div>
+    </section>
+  </main>
+  <footer><a href="/portal/tools/" data-i18n="allTools">← All tools</a><span>Independent planner. Palworld is a trademark of its respective owner.</span></footer>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="../js/palworld-base-planner.js" defer></script>
+  <script src="../js/cross-promo.js" defer></script>
+</body>
+</html>

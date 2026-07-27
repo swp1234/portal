@@ -138,6 +138,13 @@ a:hover{color:var(--purple)}
 .gc-desc{font-size:11px;color:var(--text2);line-height:1.4}
 .gc-cat{position:absolute;top:8px;right:8px;font-size:9px;padding:2px 8px;border-radius:99px;background:var(--surface);border:1px solid var(--border);color:var(--text3);text-transform:uppercase;font-weight:600;letter-spacing:0.5px}
 
+/* Palworld discovery rail */
+.palworld-rail{position:relative;margin:0 0 34px;padding:22px;border:1px solid rgba(0,229,255,.24);border-radius:22px;background:linear-gradient(135deg,rgba(0,229,255,.09),rgba(168,85,247,.07));overflow:hidden}
+.palworld-rail::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 90% 0,rgba(183,239,93,.12),transparent 45%);pointer-events:none}
+.palworld-rail-head,.palworld-rail-grid{position:relative;z-index:1}.palworld-rail-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:16px}
+.palworld-rail-kicker{font-size:11px;font-weight:800;letter-spacing:.15em;color:#b7ef5d}.palworld-rail h2{font-family:var(--heading);font-size:clamp(23px,4vw,32px);margin-top:4px}.palworld-rail-head p{max-width:430px;color:var(--text2);font-size:13px}
+.palworld-rail-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.palworld-rail-card{display:flex;flex-direction:column;gap:8px;min-height:146px;padding:15px;border:1px solid var(--border);border-radius:15px;background:rgba(6,6,18,.62);color:var(--text);text-decoration:none}.palworld-rail-card:hover{border-color:var(--cyan);transform:translateY(-3px);color:var(--text)}.palworld-rail-card>span{font-size:25px}.palworld-rail-card strong{font-family:var(--heading);font-size:15px}.palworld-rail-card small{color:var(--text2);line-height:1.4}
+
 /* Content Section */
 .content-section{margin:48px 0;padding:32px 24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
 .content-section h2{font-family:var(--heading);font-size:22px;font-weight:800;margin-bottom:16px;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -175,7 +182,8 @@ footer a{color:var(--text2)}
 .animate{animation:fadeUp 0.5s ease both}
 
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
-@media(max-width:480px){.featured{grid-template-columns:1fr}.games-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){.palworld-rail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.palworld-rail-head{align-items:flex-start;flex-direction:column}}
+@media(max-width:480px){.featured{grid-template-columns:1fr}.games-grid{grid-template-columns:repeat(2,1fr)}.palworld-rail{padding:16px}.palworld-rail-grid{grid-template-columns:1fr}.palworld-rail-card{min-height:110px}}
 </style>
 </head>
 <body>
@@ -200,6 +208,19 @@ footer a{color:var(--text2)}
 </nav>
 
 <main id="main" class="container">
+
+<section class="palworld-rail" data-palworld-rail>
+  <div class="palworld-rail-head">
+    <div><div class="palworld-rail-kicker">PALWORLD COMMAND CENTER</div><h2>Plan, build and recover</h2></div>
+    <p>Four practical tools for Palworld progression, base production and dedicated servers—no fragile tier-list dependency.</p>
+  </div>
+  <div class="palworld-rail-grid">
+    <a class="palworld-rail-card" href="/portal/tools/palworld-field-guide.html?source=games_hub" data-palworld-destination="field_guide"><span>🧭</span><strong>Field Guide</strong><small>24 tactics and six focused session plans</small></a>
+    <a class="palworld-rail-card" href="/portal/tools/palworld-base-planner.html?source=games_hub" data-palworld-destination="base_planner"><span>🏗️</span><strong>Base Planner</strong><small>Worker roles, zones and bottleneck fixes</small></a>
+    <a class="palworld-rail-card" href="/portal/tools/palworld-server-settings.html?source=games_hub" data-palworld-destination="server_settings"><span>⚙️</span><strong>Server Console</strong><small>INI generator and 53-parameter reference</small></a>
+    <a class="palworld-rail-card" href="/portal/tools/palworld-server-troubleshooter.html?source=games_hub" data-palworld-destination="troubleshooter"><span>🛠️</span><strong>Troubleshooter</strong><small>Connection, save, mod, settings and lag recovery</small></a>
+  </div>
+</section>
 
 <h2 class="section-title" data-i18n="hub_games.featured_title"><span>Featured</span> Games</h2>
 <div class="featured">
@@ -306,6 +327,11 @@ footer a{color:var(--text2)}
 document.addEventListener('DOMContentLoaded',()=>{
   const loader=document.getElementById('app-loader');
   if(loader)loader.style.display='none';
+  window.dataLayer=window.dataLayer||[];
+  window.dataLayer.push({event:'palworld_games_rail_view',content_format:'palworld_discovery_rail',surface:'games_hub'});
+  document.querySelectorAll('[data-palworld-destination]').forEach(link=>link.addEventListener('click',()=>{
+    window.dataLayer.push({event:'palworld_games_rail_click',content_format:'palworld_discovery_rail',surface:'games_hub',destination:link.dataset.palworldDestination});
+  }));
 
   // Theme toggle
   const btn=document.getElementById('theme-toggle');

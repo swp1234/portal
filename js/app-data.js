@@ -3202,6 +3202,23 @@ const APP_DATA = [
             tr:{name:'Palworld Saha Rehberi',shortDesc:'24 taktik ve oturum planı'},de:{name:'Palworld-Feldhandbuch',shortDesc:'24 Taktiken und Sitzungsplan'},
             fr:{name:'Guide de terrain Palworld',shortDesc:'24 tactiques et plan de session'}
         }
+    },
+    {
+        id:'palworld-base-planner',
+        name:'팰월드 거점 배치 플래너',
+        shortDesc:'목표·작업 팰 수·병목에 맞춘 역할과 생산 구역 배치',
+        description:'Goal-based Palworld base workforce allocation and production layout planner.',
+        icon:'PW',color:'#ffc857',category:'game',
+        tags:['palworld','팰월드','base planner','base workers','work suitability','automation','production layout'],
+        url:'https://dopabrain.com/portal/tools/palworld-base-planner.html',isNew:true,isPopular:false,popularity:30,
+        i18n:{
+            en:{name:'Palworld Base Planner',shortDesc:'Worker roles & production layout'},zh:{name:'幻兽帕鲁据点规划器',shortDesc:'工作角色与生产布局'},
+            hi:{name:'Palworld बेस प्लानर',shortDesc:'वर्कर भूमिकाएँ और उत्पादन'},ru:{name:'Планировщик базы Palworld',shortDesc:'Роли работников и производство'},
+            ja:{name:'Palworld 拠点プランナー',shortDesc:'作業役割と生産レイアウト'},es:{name:'Planificador de base Palworld',shortDesc:'Roles y diseño de producción'},
+            pt:{name:'Planejador de base Palworld',shortDesc:'Funções e layout de produção'},id:{name:'Perencana Basis Palworld',shortDesc:'Peran pekerja dan tata produksi'},
+            tr:{name:'Palworld Üs Planlayıcı',shortDesc:'İşçi rolleri ve üretim düzeni'},de:{name:'Palworld-Basisplaner',shortDesc:'Arbeitsrollen und Produktionslayout'},
+            fr:{name:'Planificateur de base Palworld',shortDesc:'Rôles et organisation de production'}
+        }
     }
 ];
 
