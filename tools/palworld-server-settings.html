@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <title>Palworld Server Settings Generator & Admin Guide (1.0)</title>
+  <meta name="description" content="Generate PalWorldSettings.ini, compare presets, search official server parameters, copy admin commands, and follow backup and mod checklists. Updated for Palworld server docs 1.0.">
+  <meta name="dateModified" content="2026-07-27">
+  <link rel="canonical" href="https://dopabrain.com/portal/tools/palworld-server-settings.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Palworld Server Settings Generator & Admin Guide">
+  <meta property="og:description" content="A practical Palworld server console: presets, INI generator, parameter reference, commands, backups, mods and troubleshooting.">
+  <meta property="og:url" content="https://dopabrain.com/portal/tools/palworld-server-settings.html">
+  <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/tools/palworld-server-settings.html?lang=en">
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/tools/palworld-server-settings.html?lang=ko">
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/tools/palworld-server-settings.html?lang=zh">
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/tools/palworld-server-settings.html?lang=hi">
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/tools/palworld-server-settings.html?lang=ru">
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/tools/palworld-server-settings.html?lang=ja">
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/tools/palworld-server-settings.html?lang=es">
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/tools/palworld-server-settings.html?lang=pt">
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/tools/palworld-server-settings.html?lang=id">
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/tools/palworld-server-settings.html?lang=tr">
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/tools/palworld-server-settings.html?lang=de">
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/tools/palworld-server-settings.html?lang=fr">
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/tools/palworld-server-settings.html">
+  <link rel="stylesheet" href="../css/palworld-server-settings.css">
+  <style>.path-note code{overflow-wrap:anywhere;word-break:break-word}</style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Palworld Server Settings Generator","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","url":"https://dopabrain.com/portal/tools/palworld-server-settings.html","dateModified":"2026-07-27","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Generate a PalWorldSettings.ini configuration and browse Palworld dedicated server settings, commands, backups, mods and troubleshooting information."}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"Where does PalWorldSettings.ini go?","acceptedAnswer":{"@type":"Answer","text":"Place it in Pal/Saved/Config/WindowsServer/PalWorldSettings.ini after starting the dedicated server once. Linux servers use the LinuxServer directory."}},
+    {"@type":"Question","name":"Should I edit DefaultPalWorldSettings.ini?","acceptedAnswer":{"@type":"Answer","text":"No. The official documentation says editing the default file does not apply the changes. Copy it to the active configuration directory first."}},
+    {"@type":"Question","name":"How do I use Palworld admin commands?","acceptedAnswer":{"@type":"Answer","text":"Set AdminPassword, enter /AdminPassword followed by that password in game, then use commands such as /Save, /ShowPlayers or /Shutdown."}},
+    {"@type":"Question","name":"Can mods damage a Palworld save?","acceptedAnswer":{"@type":"Answer","text":"Yes. Official guidance warns that incompatible server mods may cause crashes or save-data corruption. Back up the world and verify server compatibility before enabling a mod."}}
+  ]}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#generator" data-i18n="skip">Skip to generator</a>
+  <header class="hero">
+    <nav>
+      <a href="/portal/tools/" data-i18n="back">← All tools</a>
+      <label><span data-i18n="language">Language</span>
+        <select id="language" aria-label="Language">
+          <option value="en">English</option><option value="ko">한국어</option><option value="zh">中文</option>
+          <option value="hi">हिन्दी</option><option value="ru">Русский</option><option value="ja">日本語</option>
+          <option value="es">Español</option><option value="pt">Português</option><option value="id">Indonesia</option>
+          <option value="tr">Türkçe</option><option value="de">Deutsch</option><option value="fr">Français</option>
+        </select>
+      </label>
+    </nav>
+    <p class="eyebrow" data-i18n="eyebrow">PALWORLD SERVER CONTROL DESK · DOCS 1.0</p>
+    <h1 data-i18n="title">Palworld Server Settings Generator</h1>
+    <p class="lead" data-i18n="lead">Build an INI safely, compare play styles, and keep the commands and recovery steps you actually need in one place.</p>
+    <div class="chips">
+      <a href="#generator" data-i18n="chipGenerator">INI generator</a>
+      <a href="#parameters" data-i18n="chipParameters">Parameter finder</a>
+      <a href="#commands" data-i18n="chipCommands">Admin commands</a>
+      <a href="#operations" data-i18n="chipOps">Backup & mods</a>
+    </div>
+    <p class="stamp"><span data-i18n="verified">Verified against official server documentation</span> · <time datetime="2026-07-27">2026-07-27</time></p>
+  </header>
+
+  <main>
+    <section class="notice">
+      <strong data-i18n="earlyTitle">Before changing a live world</strong>
+      <p data-i18n="earlyBody">Palworld is actively updated. Stop the server, back up the world, change one group of settings at a time, and keep your previous INI.</p>
+    </section>
+
+    <section id="generator" class="panel">
+      <div class="section-head">
+        <div><p class="kicker" data-i18n="step1">STEP 1</p><h2 data-i18n="generatorTitle">Choose a server profile</h2></div>
+        <button id="reset" class="ghost" type="button" data-i18n="reset">Reset</button>
+      </div>
+      <div id="presets" class="presets" role="group" aria-label="Server presets"></div>
+      <div id="settings" class="settings"></div>
+      <div class="output-head">
+        <div><p class="kicker" data-i18n="step2">STEP 2</p><h2 data-i18n="outputTitle">Copy your generated settings</h2></div>
+        <button id="copyIni" class="primary" type="button" data-i18n="copyIni">Copy INI</button>
+      </div>
+      <p class="path-note"><strong data-i18n="activeFile">Active file:</strong> <code>Pal/Saved/Config/WindowsServer/PalWorldSettings.ini</code></p>
+      <pre id="iniOutput" tabindex="0"></pre>
+      <p class="fine" data-i18n="generatorNote">This generator covers common settings, not every reserved or deprecated key. Merge the generated values into the OptionSettings line of your active file.</p>
+    </section>
+
+    <div class="ad-wrap" data-ad-surface="palworld_server_inline">
+      <span data-i18n="ad">Advertisement</span>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    </div>
+
+    <section id="parameters" class="panel">
+      <p class="kicker" data-i18n="reference">REFERENCE</p>
+      <h2 data-i18n="parametersTitle">Official parameter finder</h2>
+      <p data-i18n="parametersLead">Search the key name or meaning. Performance warnings are highlighted.</p>
+      <div class="finder">
+        <input id="parameterSearch" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search: backup, PvP, capture, voice…">
+        <select id="categoryFilter" aria-label="Category"></select>
+      </div>
+      <p id="resultCount" class="count" aria-live="polite"></p>
+      <div id="parameterList" class="parameter-list"></div>
+    </section>
+
+    <section id="commands" class="panel">
+      <p class="kicker" data-i18n="reference">REFERENCE</p>
+      <h2 data-i18n="commandsTitle">Admin command desk</h2>
+      <p data-i18n="commandsLead">Set AdminPassword first, then authenticate in chat. Click any command to copy it.</p>
+      <div id="commandList" class="command-grid"></div>
+    </section>
+
+    <section id="operations" class="panel">
+      <p class="kicker" data-i18n="runbook">RUNBOOK</p>
+      <h2 data-i18n="operationsTitle">Setup, backup, mods and recovery</h2>
+      <div class="runbook">
+        <article>
+          <h3 data-i18n="setupTitle">First-time setup</h3>
+          <ol>
+            <li data-i18n="setup1">Install Palworld Dedicated Server through Steam or SteamCMD.</li>
+            <li data-i18n="setup2">Start it once so the configuration directories are created.</li>
+            <li data-i18n="setup3">Copy DefaultPalWorldSettings.ini to the active WindowsServer or LinuxServer folder.</li>
+            <li data-i18n="setup4">Stop the server, edit the active file, then restart and verify.</li>
+          </ol>
+          <code class="block">steamcmd +login anonymous +app_update 2394010 validate +quit</code>
+        </article>
+        <article>
+          <h3 data-i18n="backupTitle">Backup before every change</h3>
+          <ul>
+            <li data-i18n="backup1">Use /Save and wait for completion before stopping.</li>
+            <li data-i18n="backup2">Copy the Saved directory to a dated folder outside the server directory.</li>
+            <li data-i18n="backup3">Enable bIsUseBackupSaveData=True for automatic rotating backups.</li>
+            <li data-i18n="backup4">Keep at least one known-good INI together with the save.</li>
+          </ul>
+        </article>
+        <article>
+          <h3 data-i18n="modsTitle">Server mod checklist</h3>
+          <ul>
+            <li data-i18n="mods1">Official docs currently limit server-side mods to Windows dedicated servers.</li>
+            <li data-i18n="mods2">Confirm Info.json contains a server-compatible install rule and all dependencies.</li>
+            <li data-i18n="mods3">Back up first: incompatible mods can cause crashes or save corruption.</li>
+            <li data-i18n="mods4">Restart to deploy changes; use -NoMods to isolate a mod-related failure.</li>
+          </ul>
+        </article>
+        <article>
+          <h3 data-i18n="troubleTitle">Fast troubleshooting order</h3>
+          <ol>
+            <li data-i18n="trouble1">Validate server files and confirm the active INI path.</li>
+            <li data-i18n="trouble2">Restore the last known-good INI and remove outdated mods.</li>
+            <li data-i18n="trouble3">Check ports, firewall, PublicIP/PublicPort and allowed platforms.</li>
+            <li data-i18n="trouble4">Change one setting group at a time and inspect logs after each restart.</li>
+          </ol>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel sources">
+      <h2 data-i18n="sourcesTitle">Official sources and scope</h2>
+      <p data-i18n="sourcesBody">Setting names and operational notes are based on Pocketpair's official Palworld Server Guide version 1.0. This independent tool is not affiliated with Pocketpair. Game updates may change defaults or behavior.</p>
+      <div>
+        <a href="https://docs.palworldgame.com/settings-and-operation/configuration/" target="_blank" rel="noopener" data-i18n="sourceConfig">Official configuration parameters ↗</a>
+        <a href="https://docs.palworldgame.com/settings-and-operation/commands/" target="_blank" rel="noopener" data-i18n="sourceCommands">Official commands ↗</a>
+        <a href="https://docs.palworldgame.com/settings-and-operation/mod/" target="_blank" rel="noopener" data-i18n="sourceMods">Official server mod guide ↗</a>
+      </div>
+    </section>
+  </main>
+  <footer><a href="/portal/tools/" data-i18n="back">← All tools</a><span>Palworld is a trademark of its respective owner.</span></footer>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="../js/palworld-server-settings.js" defer></script>
+  <script src="../js/cross-promo.js" defer></script>
+</body>
+</html>

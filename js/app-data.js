@@ -3141,6 +3141,33 @@ const APP_DATA = [
         i18n: {
             en: { name: 'JSON Formatter', shortDesc: 'JSON Formatter' }
         }
+    },
+    {
+        id: 'palworld-server-settings',
+        name: '팰월드 서버 설정',
+        shortDesc: 'INI 생성기, 공식 파라미터·명령어·백업·모드 가이드',
+        description: 'Palworld server configuration generator and operations reference based on the official server guide 1.0.',
+        icon: 'PW',
+        color: '#46d9e8',
+        category: 'dev',
+        tags: ['palworld','팰월드','server settings','palworldsettings ini','dedicated server','admin commands','backup','mods'],
+        url: 'https://dopabrain.com/portal/tools/palworld-server-settings.html',
+        isNew: true,
+        isPopular: false,
+        popularity: 28,
+        i18n: {
+            en:{name:'Palworld Server Settings',shortDesc:'INI generator & admin guide'},
+            zh:{name:'幻兽帕鲁服务器设置',shortDesc:'INI 生成器与管理指南'},
+            hi:{name:'Palworld सर्वर सेटिंग',shortDesc:'INI जेनरेटर और एडमिन गाइड'},
+            ru:{name:'Настройки сервера Palworld',shortDesc:'Генератор INI и руководство'},
+            ja:{name:'Palworld サーバー設定',shortDesc:'INI生成・管理ガイド'},
+            es:{name:'Ajustes del servidor Palworld',shortDesc:'Generador INI y guía'},
+            pt:{name:'Configurações do servidor Palworld',shortDesc:'Gerador INI e guia'},
+            id:{name:'Pengaturan Server Palworld',shortDesc:'Generator INI dan panduan'},
+            tr:{name:'Palworld Sunucu Ayarları',shortDesc:'INI oluşturucu ve rehber'},
+            de:{name:'Palworld-Servereinstellungen',shortDesc:'INI-Generator und Leitfaden'},
+            fr:{name:'Paramètres serveur Palworld',shortDesc:'Générateur INI et guide'}
+        }
     }
 ];
 
