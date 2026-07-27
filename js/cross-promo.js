@@ -254,6 +254,31 @@
         };
     }
 
+    function getPalworldGameBridgeConfig() {
+        var slug = getBlogSlug();
+        var gamePattern = /(?:2048|browser-games|free-games|casual-games|dopabrain-games|brain-training-games|flappy-bird|snake-game|minesweeper|block-puzzle|stack-tower|reaction-test-game|brick-breaker|number-puzzle|word-(?:guess|scramble)|maze-runner|zigzag-runner)/;
+        if (!gamePattern.test(slug)) return null;
+        var locale = getBlogLocale();
+        var supportedLocale = /^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(locale) ? locale : 'en';
+        var copyByLocale = {
+            ko: { kicker: '다음 전략 게임을 계획하세요', title: '팰월드 진행·거점·교배 도구', desc: '진행 루트부터 거점 인력 배치와 교배 실험 기록까지, 티어표 대신 실행 가능한 계획을 만드세요.', field: '필드 가이드', base: '거점 플래너', breeding: '교배 실험 노트' },
+            en: { kicker: 'PLAN YOUR NEXT STRATEGY GAME', title: 'Palworld progression, base and breeding tools', desc: 'Turn your next session into a route, workforce plan, or breeding experiment—without a fragile tier list.', field: 'Field guide', base: 'Base planner', breeding: 'Breeding notebook' },
+            zh: { kicker: '规划下一场策略游戏', title: '幻兽帕鲁进度、据点与配种工具', desc: '把下一次游戏变成清晰路线、据点人员方案或配种实验，无需依赖易过时的排名。', field: '野外指南', base: '据点规划器', breeding: '配种实验笔记' },
+            ja: { kicker: '次の攻略を計画', title: 'Palworld 攻略・拠点・配合ツール', desc: '次のセッションを進行ルート、拠点人員計画、配合実験の記録に変えます。', field: 'フィールドガイド', base: '拠点プランナー', breeding: '配合実験ノート' },
+            es: { kicker: 'PLANEA TU PRÓXIMA ESTRATEGIA', title: 'Herramientas de progreso, base y cría de Palworld', desc: 'Convierte la próxima sesión en una ruta, plan de personal o experimento de cría.', field: 'Guía de campo', base: 'Planificador de base', breeding: 'Cuaderno de cría' },
+            pt: { kicker: 'PLANEJE SUA PRÓXIMA ESTRATÉGIA', title: 'Ferramentas de progresso, base e reprodução de Palworld', desc: 'Transforme a próxima sessão em uma rota, plano de equipe ou experimento de reprodução.', field: 'Guia de campo', base: 'Planejador de base', breeding: 'Caderno de reprodução' },
+            de: { kicker: 'PLANE DEINE NÄCHSTE STRATEGIE', title: 'Palworld-Fortschritts-, Basis- und Zuchtwerkzeuge', desc: 'Erstelle eine Route, einen Personalplan oder ein Zuchtexperiment für deine nächste Sitzung.', field: 'Feldhandbuch', base: 'Basisplaner', breeding: 'Zuchtnotizbuch' },
+            fr: { kicker: 'PLANIFIEZ VOTRE PROCHAINE STRATÉGIE', title: 'Outils de progression, de base et d’élevage Palworld', desc: 'Transformez la prochaine session en itinéraire, plan de personnel ou expérience d’élevage.', field: 'Guide de terrain', base: 'Planificateur de base', breeding: 'Carnet d’élevage' }
+        };
+        return {
+            locale: supportedLocale,
+            copy: copyByLocale[supportedLocale] || copyByLocale.en,
+            fieldUrl: '/portal/tools/palworld-field-guide.html?lang=' + encodeURIComponent(supportedLocale) + '&source=blog_game_bridge',
+            baseUrl: '/portal/tools/palworld-base-planner.html?lang=' + encodeURIComponent(supportedLocale) + '&source=blog_game_bridge',
+            breedingUrl: '/portal/tools/palworld-breeding-notebook.html?lang=' + encodeURIComponent(supportedLocale) + '&source=blog_game_bridge'
+        };
+    }
+
     function getBlogTopicStrategy() {
         var slug = getBlogSlug();
         if (!slug) return null;
@@ -891,6 +916,14 @@
             '.cp-couple-deck-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.7);margin-bottom:13px}',
             '.cp-couple-deck-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 16px;border-radius:11px;background:#db2777;color:#fff;text-decoration:none;font-size:14px;font-weight:850}',
             '.cp-couple-deck-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
+            '.cp-palworld-game{max-width:720px;margin:18px auto 26px;padding:18px;border:1px solid rgba(70,217,232,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(6,35,45,0.96),rgba(35,24,67,0.92));box-shadow:0 14px 34px rgba(0,0,0,0.16)}',
+            '.cp-palworld-game-kicker{font-size:11px;font-weight:900;letter-spacing:.1em;color:#b7ef5d;margin-bottom:5px}',
+            '.cp-palworld-game-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
+            '.cp-palworld-game-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.72);margin-bottom:13px}',
+            '.cp-palworld-game-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}',
+            '.cp-palworld-game-link{display:flex;align-items:center;justify-content:center;min-height:46px;padding:11px 14px;border-radius:11px;background:#46d9e8;color:#061017;text-decoration:none;font-size:14px;font-weight:850}',
+            '.cp-palworld-game-link:last-child{background:#b7ef5d}',
+            '.cp-palworld-game-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
             '.cp-sticky-sprint{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:2147483000;display:flex;align-items:center;gap:10px;max-width:680px;margin:0 auto;padding:10px 10px 10px 12px;border:1px solid rgba(124,58,237,0.28);border-radius:8px;background:rgba(17,24,39,0.94);box-shadow:0 12px 32px rgba(0,0,0,0.28);backdrop-filter:blur(12px)}',
             '.cp-sticky-copy{min-width:0;flex:1}',
             '.cp-sticky-kicker{font-size:11px;font-weight:800;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0}',
@@ -929,6 +962,10 @@
             'html.light-mode .cp-couple-deck-kicker,[data-theme="light"] .cp-couple-deck-kicker{color:#be185d}',
             'html.light-mode .cp-couple-deck-title,[data-theme="light"] .cp-couple-deck-title{color:rgba(0,0,0,0.88)}',
             'html.light-mode .cp-couple-deck-desc,[data-theme="light"] .cp-couple-deck-desc{color:rgba(0,0,0,0.62)}',
+            'html.light-mode .cp-palworld-game,[data-theme="light"] .cp-palworld-game{background:linear-gradient(135deg,rgba(70,217,232,0.1),rgba(183,239,93,0.08));border-color:rgba(6,100,120,0.24)}',
+            'html.light-mode .cp-palworld-game-title,[data-theme="light"] .cp-palworld-game-title{color:rgba(0,0,0,0.88)}',
+            'html.light-mode .cp-palworld-game-desc,[data-theme="light"] .cp-palworld-game-desc{color:rgba(0,0,0,0.62)}',
+            '@media(max-width:480px){.cp-palworld-game-actions{grid-template-columns:1fr}}',
             '.cp-card:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:2px}'
         ].join('');
         document.head.appendChild(style);
@@ -1086,11 +1123,13 @@
         var boundaryScript = stressPlan ? null : getBoundaryScriptBridgeConfig();
         var sensoryReset = stressPlan || boundaryScript ? null : getSensoryResetBridgeConfig();
         var coupleDeck = stressPlan || boundaryScript || sensoryReset ? null : getCoupleDeckBridgeConfig();
-        var revenueSprint = stressPlan || boundaryScript || sensoryReset || coupleDeck ? null : getRevenueSprintStrategy(bridge);
+        var palworldGame = stressPlan || boundaryScript || sensoryReset || coupleDeck ? null : getPalworldGameBridgeConfig();
+        if (palworldGame) scanRecovery = false;
+        var revenueSprint = stressPlan || boundaryScript || sensoryReset || coupleDeck || palworldGame ? null : getRevenueSprintStrategy(bridge);
         var sprintPicks = revenueSprint ? revenueSprint.ids
             .map(function(id) { return apps.find(function(app) { return app.id === id; }); })
             .filter(Boolean) : [];
-        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !coupleDeck && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
+        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !coupleDeck && !palworldGame && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
 
         if (stressPlan) {
             var planHtml = '<aside class="cp-stress-plan" data-surface-name="blog_stress_plan" data-content-locale="' + stressPlan.locale + '" data-plan-focus="' + stressPlan.focus + '">'
@@ -1298,6 +1337,61 @@
                         surface_name: 'blog_couple_deck',
                         content_locale: coupleDeck.locale,
                         destination_path: coupleDeck.url,
+                        revenue_goal: 'daily_0_10'
+                    });
+                });
+            }
+        }
+
+        if (palworldGame) {
+            var palworldHtml = '<aside class="cp-palworld-game" data-surface-name="blog_palworld_game" data-content-locale="' + palworldGame.locale + '">'
+                + '<div class="cp-palworld-game-kicker">' + palworldGame.copy.kicker + '</div>'
+                + '<div class="cp-palworld-game-title">' + palworldGame.copy.title + '</div>'
+                + '<div class="cp-palworld-game-desc">' + palworldGame.copy.desc + '</div>'
+                + '<div class="cp-palworld-game-actions">'
+                + '<a class="cp-palworld-game-link" data-destination="field_guide" href="' + palworldGame.fieldUrl + '">' + palworldGame.copy.field + '</a>'
+                + '<a class="cp-palworld-game-link" data-destination="base_planner" href="' + palworldGame.baseUrl + '">' + palworldGame.copy.base + '</a>'
+                + '<a class="cp-palworld-game-link" data-destination="breeding_notebook" href="' + palworldGame.breedingUrl + '">' + palworldGame.copy.breeding + '</a>'
+                + '</div></aside>';
+            var palworldPara = anchor.querySelector('p');
+            if (palworldPara) palworldPara.insertAdjacentHTML('afterend', palworldHtml);
+            else anchor.insertAdjacentHTML('afterbegin', palworldHtml);
+
+            var palworldElement = document.querySelector('.cp-palworld-game');
+            var palworldViewTracked = false;
+            var trackPalworldView = function() {
+                if (palworldViewTracked || typeof gtag !== 'function') return;
+                palworldViewTracked = true;
+                gtag('event', 'palworld_game_bridge_view', {
+                    event_category: 'engagement',
+                    source_app: 'blog',
+                    surface_name: 'blog_palworld_game',
+                    content_locale: palworldGame.locale,
+                    revenue_goal: 'daily_0_10'
+                });
+            };
+            if (palworldElement && 'IntersectionObserver' in window) {
+                var palworldObserver = new IntersectionObserver(function(entries) {
+                    if (entries.some(function(entry) { return entry.isIntersecting; })) {
+                        trackPalworldView();
+                        palworldObserver.disconnect();
+                    }
+                }, { threshold: 0.35 });
+                palworldObserver.observe(palworldElement);
+            } else {
+                trackPalworldView();
+            }
+            if (palworldElement) {
+                palworldElement.addEventListener('click', function(event) {
+                    var link = event.target.closest('.cp-palworld-game-link');
+                    if (!link || typeof gtag !== 'function') return;
+                    gtag('event', 'palworld_game_bridge_click', {
+                        event_category: 'engagement',
+                        source_app: 'blog',
+                        surface_name: 'blog_palworld_game',
+                        content_locale: palworldGame.locale,
+                        destination_id: link.getAttribute('data-destination') || '',
+                        destination_path: link.getAttribute('href') || '',
                         revenue_goal: 'daily_0_10'
                     });
                 });

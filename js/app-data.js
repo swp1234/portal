@@ -3219,6 +3219,23 @@ const APP_DATA = [
             tr:{name:'Palworld Üs Planlayıcı',shortDesc:'İşçi rolleri ve üretim düzeni'},de:{name:'Palworld-Basisplaner',shortDesc:'Arbeitsrollen und Produktionslayout'},
             fr:{name:'Planificateur de base Palworld',shortDesc:'Rôles et organisation de production'}
         }
+    },
+    {
+        id:'palworld-breeding-notebook',
+        name:'팰월드 교배 실험 노트',
+        shortDesc:'부모 조합·목표 특성·알 진행률을 기기 안에 기록',
+        description:'Browser-local Palworld breeding project, parent pair, trait and egg progress notebook.',
+        icon:'🥚',color:'#b7ef5d',category:'game',
+        tags:['palworld','팰월드','breeding notebook','parent pairs','traits','egg tracker','local storage'],
+        url:'https://dopabrain.com/portal/tools/palworld-breeding-notebook.html',isNew:true,isPopular:false,popularity:31,
+        i18n:{
+            en:{name:'Palworld Breeding Notebook',shortDesc:'Parent pairs, traits & egg progress'},zh:{name:'幻兽帕鲁配种实验笔记',shortDesc:'亲本组合、目标特性与蛋进度'},
+            hi:{name:'Palworld प्रजनन नोटबुक',shortDesc:'माता-पिता, गुण और अंडे की प्रगति'},ru:{name:'Журнал разведения Palworld',shortDesc:'Родители, черты и прогресс яиц'},
+            ja:{name:'Palworld 配合実験ノート',shortDesc:'親の組み合わせ・特性・タマゴ進捗'},es:{name:'Cuaderno de cría Palworld',shortDesc:'Padres, rasgos y progreso de huevos'},
+            pt:{name:'Caderno de reprodução Palworld',shortDesc:'Pais, traços e progresso dos ovos'},id:{name:'Catatan breeding Palworld',shortDesc:'Induk, sifat, dan progres telur'},
+            tr:{name:'Palworld yetiştirme defteri',shortDesc:'Ebeveynler, özellikler ve yumurta ilerlemesi'},de:{name:'Palworld-Zuchtnotizbuch',shortDesc:'Elternpaare, Merkmale und Eierfortschritt'},
+            fr:{name:'Carnet d’élevage Palworld',shortDesc:'Parents, traits et progression des œufs'}
+        }
     }
 ];
 

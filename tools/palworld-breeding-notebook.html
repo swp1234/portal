@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <title>Palworld Breeding Notebook: Parent, Trait & Egg Tracker</title>
+  <meta name="description" content="Track Palworld breeding projects, parent pairs, target traits and egg progress privately in your browser. Filter projects, copy summaries, and export or import a backup.">
+  <meta name="dateModified" content="2026-07-27">
+  <link rel="canonical" href="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Palworld Breeding Experiment Notebook">
+  <meta property="og:description" content="A private local tracker for parent pairs, target traits, egg progress and breeding notes.">
+  <meta property="og:url" content="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html">
+  <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html?lang=en">
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html?lang=ko">
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html?lang=zh">
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html?lang=hi">
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html?lang=ru">
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html?lang=ja">
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html?lang=es">
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html?lang=pt">
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html?lang=id">
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html?lang=tr">
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html?lang=de">
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html?lang=fr">
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/tools/palworld-breeding-notebook.html">
+  <link rel="stylesheet" href="../css/palworld-server-settings.css">
+  <link rel="stylesheet" href="../css/palworld-breeding-notebook.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebApplication","name":"Palworld Breeding Experiment Notebook","applicationCategory":"GameApplication","operatingSystem":"Any","url":"https://dopabrain.com/portal/tools/palworld-breeding-notebook.html","dateModified":"2026-07-27","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A browser-local notebook for Palworld breeding projects, parent pairs, desired traits, egg counts and notes."}
+  </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"Does the Palworld breeding notebook upload my projects?","acceptedAnswer":{"@type":"Answer","text":"No. Project data is stored in local browser storage on the current device. Export a JSON backup before clearing browser data or moving devices."}},
+    {"@type":"Question","name":"Is this a Palworld breeding calculator?","acceptedAnswer":{"@type":"Answer","text":"No. It does not predict offspring or breeding combinations. It records experiments, parent pairs, desired traits and egg progress."}},
+    {"@type":"Question","name":"Can I move my breeding notes to another device?","acceptedAnswer":{"@type":"Answer","text":"Yes. Export the notebook as JSON, transfer that file yourself, and import it on the other device."}}
+  ]}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#newProject" data-i18n="skip">Skip to new project</a>
+  <header class="hero notebook-hero">
+    <nav>
+      <a href="palworld-field-guide.html" data-preserve-lang data-i18n="fieldGuide">← Field guide</a>
+      <label><span data-i18n="language">Language</span>
+        <select id="language" aria-label="Language">
+          <option value="en">English</option><option value="ko">한국어</option><option value="zh">中文</option><option value="hi">हिन्दी</option>
+          <option value="ru">Русский</option><option value="ja">日本語</option><option value="es">Español</option><option value="pt">Português</option>
+          <option value="id">Indonesia</option><option value="tr">Türkçe</option><option value="de">Deutsch</option><option value="fr">Français</option>
+        </select>
+      </label>
+    </nav>
+    <p class="eyebrow" data-i18n="eyebrow">PALWORLD BREEDING LAB · LOCAL NOTEBOOK</p>
+    <h1 data-i18n="title">Palworld Breeding Experiment Notebook</h1>
+    <p class="lead" data-i18n="lead">Track parent pairs, target traits, planned eggs and results. Your project text stays in this browser and can be exported as a backup.</p>
+    <div class="chips"><span data-i18n="chipParents">Parent pairs</span><span data-i18n="chipTraits">Target traits</span><span data-i18n="chipProgress">Egg progress</span><span data-i18n="chipBackup">JSON backup</span></div>
+  </header>
+  <main>
+    <section class="notice privacy-note">
+      <strong data-i18n="privacyTitle">Private by design</strong>
+      <p data-i18n="privacyBody">Notes are saved only in local browser storage. They are not placed in the URL or sent with analytics. Export a backup before clearing browser data.</p>
+    </section>
+
+    <section class="notebook-stats" aria-label="Notebook summary">
+      <article><strong id="statProjects">0</strong><span data-i18n="projects">Projects</span></article>
+      <article><strong id="statActive">0</strong><span data-i18n="active">Active</span></article>
+      <article><strong id="statEggs">0</strong><span data-i18n="hatched">Eggs logged</span></article>
+      <article><strong id="statRate">0%</strong><span data-i18n="progress">Progress</span></article>
+    </section>
+
+    <section id="newProject" class="panel">
+      <p class="kicker" data-i18n="newKicker">NEW EXPERIMENT</p>
+      <h2 data-i18n="newTitle">Record a breeding goal</h2>
+      <form id="projectForm" class="project-form">
+        <label><span data-i18n="projectName">Project name</span><input id="projectName" maxlength="60" required data-i18n-placeholder="projectPlaceholder" placeholder="Fast travel mount line"></label>
+        <div class="parents">
+          <label><span data-i18n="parentA">Parent A</span><input id="parentA" maxlength="50" required data-i18n-placeholder="parentPlaceholder" placeholder="Pal name / identifier"></label>
+          <span class="pair-mark">×</span>
+          <label><span data-i18n="parentB">Parent B</span><input id="parentB" maxlength="50" required data-i18n-placeholder="parentPlaceholder" placeholder="Pal name / identifier"></label>
+        </div>
+        <label><span data-i18n="traits">Target traits</span><input id="traits" maxlength="160" data-i18n-placeholder="traitsPlaceholder" placeholder="Comma-separated goals"></label>
+        <div class="form-row">
+          <label><span data-i18n="plannedEggs">Planned eggs</span><input id="plannedEggs" type="number" min="1" max="999" value="20" required></label>
+          <label><span data-i18n="status">Status</span><select id="status"><option value="active" data-i18n="active">Active</option><option value="paused" data-i18n="paused">Paused</option></select></label>
+        </div>
+        <label><span data-i18n="notes">Experiment note</span><textarea id="notes" maxlength="500" rows="3" data-i18n-placeholder="notesPlaceholder" placeholder="Why this pair, what to keep, what to change next…"></textarea></label>
+        <button class="primary" type="submit" data-i18n="addProject">Add project</button>
+      </form>
+    </section>
+
+    <div class="ad-wrap" data-ad-surface="palworld_breeding_notebook_inline">
+      <span data-i18n="ad">Advertisement</span>
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    </div>
+
+    <section class="panel notebook-list">
+      <div class="list-head">
+        <div><p class="kicker" data-i18n="notebookKicker">EXPERIMENT NOTEBOOK</p><h2 data-i18n="notebookTitle">Breeding projects</h2></div>
+        <div class="backup-actions"><button id="exportData" class="ghost" type="button" data-i18n="export">Export JSON</button><button id="importButton" class="ghost" type="button" data-i18n="import">Import JSON</button><input id="importFile" type="file" accept="application/json" hidden></div>
+      </div>
+      <div class="list-tools">
+        <div id="filters" class="filters-local"><button class="active" data-filter="all" type="button" data-i18n="all">All</button><button data-filter="active" type="button" data-i18n="active">Active</button><button data-filter="paused" type="button" data-i18n="paused">Paused</button><button data-filter="complete" type="button" data-i18n="complete">Complete</button></div>
+        <input id="search" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search projects…">
+      </div>
+      <div id="emptyState" class="empty-state"><span>🥚</span><h3 data-i18n="emptyTitle">No experiments yet</h3><p data-i18n="emptyBody">Add a parent pair above. Your notebook will appear here.</p></div>
+      <div id="projectList" class="project-list"></div>
+    </section>
+
+    <section class="panel workflow">
+      <p class="kicker" data-i18n="workflowKicker">REPEATABLE WORKFLOW</p>
+      <h2 data-i18n="workflowTitle">Turn breeding into an experiment</h2>
+      <div class="workflow-grid">
+        <article><span>1</span><h3 data-i18n="flow1Title">Define one target</h3><p data-i18n="flow1Body">A role and a small trait set make each batch interpretable.</p></article>
+        <article><span>2</span><h3 data-i18n="flow2Title">Record the parents</h3><p data-i18n="flow2Body">Names or identifiers let you repeat a promising line.</p></article>
+        <article><span>3</span><h3 data-i18n="flow3Title">Log every batch</h3><p data-i18n="flow3Body">Count eggs and note which result changes the next attempt.</p></article>
+        <article><span>4</span><h3 data-i18n="flow4Title">Export the evidence</h3><p data-i18n="flow4Body">Keep a JSON backup outside the browser before major changes.</p></article>
+      </div>
+    </section>
+
+    <section class="palworld-suite">
+      <a href="palworld-field-guide.html?source=breeding_notebook" data-preserve-lang><span>🧭</span><div><strong data-i18n="fieldCard">Field Guide</strong><small data-i18n="fieldCardDesc">Breeding principles and 24 tactics</small></div></a>
+      <a href="palworld-base-planner.html?source=breeding_notebook" data-preserve-lang><span>🏗️</span><div><strong data-i18n="baseCard">Base Planner</strong><small data-i18n="baseCardDesc">Plan the ranch, food and transport loop</small></div></a>
+      <a href="palworld-server-settings.html?source=breeding_notebook" data-preserve-lang><span>⚙️</span><div><strong data-i18n="serverCard">Server Settings</strong><small data-i18n="serverCardDesc">Adjust egg time and worker limits</small></div></a>
+    </section>
+  </main>
+  <footer><a href="/portal/tools/" data-i18n="allTools">← All tools</a><span>Independent notebook. Palworld is a trademark of its respective owner.</span></footer>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="../js/palworld-breeding-notebook.js" defer></script>
+  <script src="../js/cross-promo.js" defer></script>
+</body>
+</html>
