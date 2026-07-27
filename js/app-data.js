@@ -3168,6 +3168,40 @@ const APP_DATA = [
             de:{name:'Palworld-Servereinstellungen',shortDesc:'INI-Generator und Leitfaden'},
             fr:{name:'Paramètres serveur Palworld',shortDesc:'Générateur INI et guide'}
         }
+    },
+    {
+        id:'palworld-server-troubleshooter',
+        name:'팰월드 서버 문제 해결기',
+        shortDesc:'접속·세이브·설정·모드·렉 우선순위 복구 절차',
+        description:'Interactive Palworld dedicated server recovery checklist based on symptom, environment and last change.',
+        icon:'PW',color:'#ff7878',category:'dev',
+        tags:['palworld','팰월드','server connection failed','save missing','mod crash','server lag','troubleshooter'],
+        url:'https://dopabrain.com/portal/tools/palworld-server-troubleshooter.html',isNew:true,isPopular:false,popularity:27,
+        i18n:{
+            en:{name:'Palworld Server Troubleshooter',shortDesc:'Connection, save, mod & lag recovery'},
+            zh:{name:'幻兽帕鲁服务器故障排除',shortDesc:'连接、存档、模组与延迟恢复'},hi:{name:'Palworld सर्वर समस्या निवारक',shortDesc:'कनेक्शन, सेव, मॉड और लैग'},
+            ru:{name:'Диагностика сервера Palworld',shortDesc:'Подключение, сохранения, моды и лаги'},ja:{name:'Palworld サーバートラブル診断',shortDesc:'接続・セーブ・MOD・ラグ復旧'},
+            es:{name:'Diagnóstico del servidor Palworld',shortDesc:'Conexión, guardado, mods y lag'},pt:{name:'Diagnóstico do servidor Palworld',shortDesc:'Conexão, saves, mods e lag'},
+            id:{name:'Pemecah Masalah Server Palworld',shortDesc:'Koneksi, save, mod, dan lag'},tr:{name:'Palworld Sunucu Sorun Giderici',shortDesc:'Bağlantı, kayıt, mod ve gecikme'},
+            de:{name:'Palworld-Server-Fehlerdiagnose',shortDesc:'Verbindung, Spielstand, Mods und Lag'},fr:{name:'Dépannage serveur Palworld',shortDesc:'Connexion, sauvegarde, mods et latence'}
+        }
+    },
+    {
+        id:'palworld-field-guide',
+        name:'팰월드 필드 가이드',
+        shortDesc:'진행·포획·거점·교배·탐험·전투 실전 전술 24개',
+        description:'Filterable Palworld field guide and personalized play-session planner.',
+        icon:'PW',color:'#b7ef5d',category:'game',
+        tags:['palworld','팰월드','beginner guide','base guide','breeding guide','capture guide','combat guide','session planner'],
+        url:'https://dopabrain.com/portal/tools/palworld-field-guide.html',isNew:true,isPopular:false,popularity:29,
+        i18n:{
+            en:{name:'Palworld Field Guide',shortDesc:'24 tactics & session planner'},zh:{name:'幻兽帕鲁野外指南',shortDesc:'24 项战术与游戏计划'},
+            hi:{name:'Palworld फील्ड गाइड',shortDesc:'24 रणनीतियाँ और सत्र योजना'},ru:{name:'Полевое руководство Palworld',shortDesc:'24 тактики и план сессии'},
+            ja:{name:'Palworld フィールドガイド',shortDesc:'24の戦術とセッション計画'},es:{name:'Guía de campo de Palworld',shortDesc:'24 tácticas y planificador'},
+            pt:{name:'Guia de campo de Palworld',shortDesc:'24 táticas e planejador'},id:{name:'Panduan Lapangan Palworld',shortDesc:'24 taktik dan rencana sesi'},
+            tr:{name:'Palworld Saha Rehberi',shortDesc:'24 taktik ve oturum planı'},de:{name:'Palworld-Feldhandbuch',shortDesc:'24 Taktiken und Sitzungsplan'},
+            fr:{name:'Guide de terrain Palworld',shortDesc:'24 tactiques et plan de session'}
+        }
     }
 ];
 
