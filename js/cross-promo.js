@@ -224,6 +224,36 @@
         };
     }
 
+    function getCoupleDeckBridgeConfig() {
+        var slug = getBlogSlug();
+        if (!/(?:^|-)(?:mbti-(?:love|compatibility)|love-compatibility)(?:-|$)/.test(slug)) return null;
+        if (/(?:zodiac|valentine|biorhythm|name)/.test(slug)) return null;
+
+        var locale = getBlogLocale();
+        var supportedLocale = /^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(locale) ? locale : 'en';
+        var copyByLocale = {
+            ko: { kicker: '궁합 점수 다음에는 실제 대화', title: '둘이 함께 뽑는 MBTI 커플 대화 카드', desc: '가볍게, 더 가까이, 관계 회복 중 오늘의 분위기를 고르고 한 장씩 이야기해 보세요.', action: '무료 카드 덱 열기' },
+            en: { kicker: 'AFTER COMPATIBILITY, TALK', title: 'Draw an MBTI couple conversation card', desc: 'Choose playful, closer, or repair mode and take one question at a time together.', action: 'Open the free card deck' },
+            zh: { kicker: '看完配对，开始对话', title: '一起抽一张MBTI情侣对话卡', desc: '选择轻松、更靠近或修复模式，一次聊一个问题。', action: '打开免费卡牌' },
+            hi: { kicker: 'अनुकूलता के बाद, बातचीत', title: 'MBTI कपल बातचीत कार्ड साथ में चुनें', desc: 'हल्का, करीब या सुधार मोड चुनें और एक बार में एक सवाल लें।', action: 'मुफ़्त कार्ड खोलें' },
+            ru: { kicker: 'ПОСЛЕ СОВМЕСТИМОСТИ — РАЗГОВОР', title: 'Вытяните карту для разговора вдвоём', desc: 'Выберите лёгкий, близкий или восстановительный режим и обсуждайте по одному вопросу.', action: 'Открыть бесплатные карты' },
+            ja: { kicker: '相性の次は、実際の会話', title: '二人でMBTI会話カードを引く', desc: '気軽、もっと近く、関係修復から選び、一つずつ話してみましょう。', action: '無料カードを開く' },
+            es: { kicker: 'DESPUÉS DE LA COMPATIBILIDAD, HABLEN', title: 'Saquen una carta de conversación MBTI', desc: 'Elijan modo ligero, cercano o de reparación y conversen una pregunta a la vez.', action: 'Abrir cartas gratis' },
+            pt: { kicker: 'DEPOIS DA COMPATIBILIDADE, CONVERSEM', title: 'Tirem uma carta de conversa MBTI', desc: 'Escolham o modo leve, próximo ou reparo e conversem uma pergunta por vez.', action: 'Abrir cartas grátis' },
+            id: { kicker: 'SETELAH KECOCOKAN, MARI BICARA', title: 'Ambil kartu percakapan pasangan MBTI', desc: 'Pilih mode santai, lebih dekat, atau memperbaiki lalu bahas satu pertanyaan.', action: 'Buka kartu gratis' },
+            tr: { kicker: 'UYUMLULUKTAN SONRA, SOHBET', title: 'Bir MBTI çift sohbet kartı çekin', desc: 'Eğlenceli, yakınlaşma veya onarım modunu seçip her seferinde bir soruyu konuşun.', action: 'Ücretsiz kartları aç' },
+            de: { kicker: 'NACH DER KOMPATIBILITÄT: REDEN', title: 'Zieht eine MBTI-Gesprächskarte für Paare', desc: 'Wählt locker, näher oder reparieren und besprecht jeweils eine Frage.', action: 'Kostenlose Karten öffnen' },
+            fr: { kicker: 'APRÈS LA COMPATIBILITÉ, PARLEZ', title: 'Tirez une carte de conversation MBTI', desc: 'Choisissez léger, rapprochement ou réparation, puis discutez une question à la fois.', action: 'Ouvrir les cartes gratuites' }
+        };
+
+        return {
+            locale: supportedLocale,
+            copy: copyByLocale[supportedLocale],
+            url: '/mbti-love/deck.html?lang=' + encodeURIComponent(supportedLocale)
+                + '&source=blog_mbti_love_bridge'
+        };
+    }
+
     function getBlogTopicStrategy() {
         var slug = getBlogSlug();
         if (!slug) return null;
@@ -855,6 +885,12 @@
             '.cp-sensory-reset-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.7);margin-bottom:13px}',
             '.cp-sensory-reset-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 16px;border-radius:11px;background:#16a34a;color:#fff;text-decoration:none;font-size:14px;font-weight:850}',
             '.cp-sensory-reset-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
+            '.cp-couple-deck{max-width:720px;margin:18px auto 26px;padding:18px;border:1px solid rgba(244,114,182,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(233,30,99,0.12),rgba(124,58,237,0.07));box-shadow:0 14px 34px rgba(0,0,0,0.12)}',
+            '.cp-couple-deck-kicker{font-size:11px;font-weight:900;letter-spacing:.08em;color:#f9a8d4;margin-bottom:5px}',
+            '.cp-couple-deck-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
+            '.cp-couple-deck-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.7);margin-bottom:13px}',
+            '.cp-couple-deck-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 16px;border-radius:11px;background:#db2777;color:#fff;text-decoration:none;font-size:14px;font-weight:850}',
+            '.cp-couple-deck-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
             '.cp-sticky-sprint{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:2147483000;display:flex;align-items:center;gap:10px;max-width:680px;margin:0 auto;padding:10px 10px 10px 12px;border:1px solid rgba(124,58,237,0.28);border-radius:8px;background:rgba(17,24,39,0.94);box-shadow:0 12px 32px rgba(0,0,0,0.28);backdrop-filter:blur(12px)}',
             '.cp-sticky-copy{min-width:0;flex:1}',
             '.cp-sticky-kicker{font-size:11px;font-weight:800;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0}',
@@ -889,6 +925,10 @@
             'html.light-mode .cp-sensory-reset-kicker,[data-theme="light"] .cp-sensory-reset-kicker{color:#15803d}',
             'html.light-mode .cp-sensory-reset-title,[data-theme="light"] .cp-sensory-reset-title{color:rgba(0,0,0,0.88)}',
             'html.light-mode .cp-sensory-reset-desc,[data-theme="light"] .cp-sensory-reset-desc{color:rgba(0,0,0,0.62)}',
+            'html.light-mode .cp-couple-deck,[data-theme="light"] .cp-couple-deck{background:linear-gradient(135deg,rgba(219,39,119,0.08),rgba(124,58,237,0.05));border-color:rgba(219,39,119,0.24)}',
+            'html.light-mode .cp-couple-deck-kicker,[data-theme="light"] .cp-couple-deck-kicker{color:#be185d}',
+            'html.light-mode .cp-couple-deck-title,[data-theme="light"] .cp-couple-deck-title{color:rgba(0,0,0,0.88)}',
+            'html.light-mode .cp-couple-deck-desc,[data-theme="light"] .cp-couple-deck-desc{color:rgba(0,0,0,0.62)}',
             '.cp-card:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:2px}'
         ].join('');
         document.head.appendChild(style);
@@ -1045,11 +1085,12 @@
         var stressPlan = getStressPlanBridgeConfig();
         var boundaryScript = stressPlan ? null : getBoundaryScriptBridgeConfig();
         var sensoryReset = stressPlan || boundaryScript ? null : getSensoryResetBridgeConfig();
-        var revenueSprint = stressPlan || boundaryScript || sensoryReset ? null : getRevenueSprintStrategy(bridge);
+        var coupleDeck = stressPlan || boundaryScript || sensoryReset ? null : getCoupleDeckBridgeConfig();
+        var revenueSprint = stressPlan || boundaryScript || sensoryReset || coupleDeck ? null : getRevenueSprintStrategy(bridge);
         var sprintPicks = revenueSprint ? revenueSprint.ids
             .map(function(id) { return apps.find(function(app) { return app.id === id; }); })
             .filter(Boolean) : [];
-        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
+        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !coupleDeck && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
 
         if (stressPlan) {
             var planHtml = '<aside class="cp-stress-plan" data-surface-name="blog_stress_plan" data-content-locale="' + stressPlan.locale + '" data-plan-focus="' + stressPlan.focus + '">'
@@ -1206,6 +1247,57 @@
                         surface_name: 'blog_sensory_reset',
                         content_locale: sensoryReset.locale,
                         destination_path: sensoryReset.url,
+                        revenue_goal: 'daily_0_10'
+                    });
+                });
+            }
+        }
+
+        if (coupleDeck) {
+            var deckHtml = '<aside class="cp-couple-deck" data-surface-name="blog_couple_deck" data-content-locale="' + coupleDeck.locale + '">'
+                + '<div class="cp-couple-deck-kicker">' + coupleDeck.copy.kicker + '</div>'
+                + '<div class="cp-couple-deck-title">' + coupleDeck.copy.title + '</div>'
+                + '<div class="cp-couple-deck-desc">' + coupleDeck.copy.desc + '</div>'
+                + '<a class="cp-couple-deck-link" href="' + coupleDeck.url + '">' + coupleDeck.copy.action + '</a>'
+                + '</aside>';
+            var deckPara = anchor.querySelector('p');
+            if (deckPara) deckPara.insertAdjacentHTML('afterend', deckHtml);
+            else anchor.insertAdjacentHTML('afterbegin', deckHtml);
+
+            var deckElement = document.querySelector('.cp-couple-deck');
+            var deckViewTracked = false;
+            var trackDeckView = function() {
+                if (deckViewTracked || typeof gtag !== 'function') return;
+                deckViewTracked = true;
+                gtag('event', 'couple_deck_bridge_view', {
+                    event_category: 'engagement',
+                    source_app: 'blog',
+                    surface_name: 'blog_couple_deck',
+                    content_locale: coupleDeck.locale,
+                    revenue_goal: 'daily_0_10'
+                });
+            };
+            if (deckElement && 'IntersectionObserver' in window) {
+                var deckObserver = new IntersectionObserver(function(entries) {
+                    if (entries.some(function(entry) { return entry.isIntersecting; })) {
+                        trackDeckView();
+                        deckObserver.disconnect();
+                    }
+                }, { threshold: 0.35 });
+                deckObserver.observe(deckElement);
+            } else {
+                trackDeckView();
+            }
+            if (deckElement) {
+                deckElement.addEventListener('click', function(event) {
+                    var deckLink = event.target.closest('.cp-couple-deck-link');
+                    if (!deckLink || typeof gtag !== 'function') return;
+                    gtag('event', 'couple_deck_bridge_click', {
+                        event_category: 'engagement',
+                        source_app: 'blog',
+                        surface_name: 'blog_couple_deck',
+                        content_locale: coupleDeck.locale,
+                        destination_path: coupleDeck.url,
                         revenue_goal: 'daily_0_10'
                     });
                 });

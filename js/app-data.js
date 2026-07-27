@@ -1163,6 +1163,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'couple-conversation-deck',
+        name: 'MBTI 커플 대화 카드',
+        shortDesc: '둘이 함께 뽑는 12장 대화 카드',
+        description: '가볍게, 더 가까이, 관계 회복의 세 가지 모드에서 대화 질문을 중복 없이 뽑으세요. 마음에 남는 카드를 저장하고 복사, 공유, 인쇄할 수 있으며 답변은 수집하거나 저장하지 않습니다.',
+        icon: '💞',
+        color: '#e91e63',
+        category: 'wellness',
+        tags: ['커플', '대화', '질문', '연애', 'MBTI', '카드', 'couple', 'conversation', 'questions', 'relationship', 'deck'],
+        url: 'https://dopabrain.com/mbti-love/deck.html',
+        isNew: true,
+        isPopular: true,
+        popularity: 23,
+        i18n: {
+            en: { name: 'MBTI Couple Conversation Deck', shortDesc: '12 conversation cards to draw together' },
+            zh: { name: 'MBTI情侣对话卡', shortDesc: '两个人一起抽的12张对话卡' },
+            hi: { name: 'MBTI कपल कन्वर्सेशन डेक', shortDesc: 'साथ में चुनने के लिए 12 बातचीत कार्ड' },
+            ru: { name: 'Колода вопросов для пары MBTI', shortDesc: '12 карт для разговора вдвоём' },
+            ja: { name: 'MBTIカップル会話カード', shortDesc: '二人で引く12枚の会話カード' },
+            es: { name: 'Cartas de Conversación MBTI para Parejas', shortDesc: '12 cartas para sacar y conversar en pareja' },
+            pt: { name: 'Cartas de Conversa MBTI para Casais', shortDesc: '12 cartas para tirar e conversar juntos' },
+            id: { name: 'Kartu Percakapan Pasangan MBTI', shortDesc: '12 kartu percakapan untuk diambil bersama' },
+            tr: { name: 'MBTI Çift Sohbet Kartları', shortDesc: 'Birlikte çekilecek 12 sohbet kartı' },
+            de: { name: 'MBTI-Gesprächskarten für Paare', shortDesc: '12 Karten für ein gemeinsames Gespräch' },
+            fr: { name: 'Cartes de Conversation MBTI en Couple', shortDesc: '12 cartes à tirer et discuter à deux' }
+        }
+    },
+    {
         id: 'habit-tracker',
         name: '습관 추적기',
         shortDesc: '좋은 습관 만들기 추적 도구',

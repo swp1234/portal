@@ -62,7 +62,7 @@
   "publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},
   "mainEntity":{
     "@type":"ItemList",
-    "numberOfItems":19,
+    "numberOfItems":22,
     "itemListElement":[
       {"@type":"ListItem","position":1,"url":"https://dopabrain.com/shopping-calc/","name":"Shopping Calculator"},
       {"@type":"ListItem","position":2,"url":"https://dopabrain.com/bmi-calculator/","name":"BMI Calculator"},
@@ -84,7 +84,8 @@
       {"@type":"ListItem","position":18,"url":"https://dopabrain.com/stress-check/plan.html","name":"7-Day Stress Reset Plan"},
       {"@type":"ListItem","position":19,"url":"https://dopabrain.com/stress-check/script.html","name":"Boundary and Request Script Builder"},
       {"@type":"ListItem","position":20,"url":"https://dopabrain.com/stress-check/library.html","name":"Boundary Phrase Library"},
-      {"@type":"ListItem","position":21,"url":"https://dopabrain.com/hsp-test/reset.html","name":"5-Minute Sensory Reset Card"}
+      {"@type":"ListItem","position":21,"url":"https://dopabrain.com/hsp-test/reset.html","name":"5-Minute Sensory Reset Card"},
+      {"@type":"ListItem","position":22,"url":"https://dopabrain.com/mbti-love/deck.html","name":"MBTI Couple Conversation Deck"}
     ]
   }
 }
@@ -379,6 +380,7 @@ footer a{color:var(--text2)}
   <a href="/stress-check/script.html?source=portal_tools_catalog" class="tool-card" data-cat="wellness" data-app="boundary-script-builder"><span class="tc-cat">Wellness</span><div class="tc-icon" style="background:rgba(59,130,246,0.12)">&#128172;</div><div class="tc-name">Boundary &amp; Request Script Builder</div><div class="tc-desc">Find clear words for a difficult conversation</div></a>
   <a href="/stress-check/library.html?source=portal_tools_catalog" class="tool-card" data-cat="wellness" data-app="boundary-phrase-library" data-library-surface="catalog"><span class="tc-cat">Wellness</span><div class="tc-icon" style="background:rgba(124,58,237,0.12)">&#128218;</div><div class="tc-name">Boundary Phrase Library</div><div class="tc-desc">Copy and edit practical conversation phrases</div></a>
   <a href="/hsp-test/reset.html?source=portal_tools_catalog" class="tool-card" data-cat="wellness" data-app="sensory-reset-card" data-sensory-reset-surface="catalog"><span class="tc-cat">Wellness</span><div class="tc-icon" style="background:rgba(22,163,74,0.12)">&#127807;</div><div class="tc-name">5-Minute Sensory Reset Card</div><div class="tc-desc">A timed pocket plan for lowering intense input</div></a>
+  <a href="/mbti-love/deck.html?source=portal_tools_catalog" class="tool-card" data-cat="wellness" data-app="couple-conversation-deck" data-couple-deck-surface="catalog"><span class="tc-cat">Wellness</span><div class="tc-icon" style="background:rgba(233,30,99,0.12)">&#128158;</div><div class="tc-name">MBTI Couple Conversation Deck</div><div class="tc-desc">12 conversation cards to draw together</div></a>
   <a href="/shopping-calc/" class="tool-card" data-cat="calculator" data-app="shopping-calc"><span class="tc-cat">Calculator</span><div class="tc-icon" style="background:rgba(243,156,18,0.12)">&#128722;</div><div class="tc-name">Shopping Calc</div><div class="tc-desc" data-i18n="hub_tools.desc_shopping-calc">Smart discount calculator</div></a>
   <a href="/bmi-calculator/" class="tool-card" data-cat="calculator" data-app="bmi-calculator"><span class="tc-cat">Calculator</span><div class="tc-icon" style="background:rgba(16,185,129,0.12)">&#9878;&#65039;</div><div class="tc-name">BMI Calculator</div><div class="tc-desc" data-i18n="hub_tools.desc_bmi-calculator">Body Mass Index calculator</div></a>
   <a href="/tax-refund-preview/" class="tool-card" data-cat="calculator" data-app="tax-refund-preview"><span class="tc-cat">Calculator</span><div class="tc-icon" style="background:rgba(34,197,94,0.12)">&#128176;</div><div class="tc-name">Tax Refund</div><div class="tc-desc" data-i18n="hub_tools.desc_tax-refund-preview">Estimate your tax refund</div></a>
@@ -498,6 +500,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   const stressPlanCards=document.querySelectorAll('[data-plan-surface]');
   const boundaryLibraryCards=document.querySelectorAll('[data-library-surface]');
   const sensoryResetCards=document.querySelectorAll('[data-sensory-reset-surface]');
+  const coupleDeckCards=document.querySelectorAll('[data-couple-deck-surface]');
   const faqItems=document.querySelectorAll('.faq-item');
   filters.forEach(f=>{
     f.addEventListener('click',()=>{
@@ -599,6 +602,25 @@ document.addEventListener('DOMContentLoaded',()=>{
           event:'sensory_reset_catalog_click',
           hub_name:'tools',
           reset_surface:card.dataset.sensoryResetSurface,
+          destination:card.href,
+          revenue_goal:'daily_0_10'
+        });
+      });
+    });
+  }
+  if(coupleDeckCards.length){
+    pushEvent({
+      event:'couple_deck_catalog_view',
+      hub_name:'tools',
+      placement_count:coupleDeckCards.length,
+      revenue_goal:'daily_0_10'
+    });
+    coupleDeckCards.forEach(card=>{
+      card.addEventListener('click',()=>{
+        pushEvent({
+          event:'couple_deck_catalog_click',
+          hub_name:'tools',
+          deck_surface:card.dataset.coupleDeckSurface,
           destination:card.href,
           revenue_goal:'daily_0_10'
         });
