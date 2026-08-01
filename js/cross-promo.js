@@ -279,6 +279,33 @@
         };
     }
 
+    function get2048CoachBridgeConfig() {
+        var slug = getBlogSlug();
+        if (!/(?:^|-)2048(?:-|$)/.test(slug)) return null;
+        var locale = getBlogLocale();
+        var supportedLocale = /^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(locale) ? locale : 'en';
+        var copyByLocale = {
+            ko: { kicker: '지금 막힌 보드를 가져오세요', title: '2048 다음 수를 네 방향 모두 비교', desc: '현재 4×4 타일을 입력하면 실제 합치기 규칙과 한 단계 예측으로 추천 이동과 미리보기를 보여줍니다.', coach: '보드 분석하기', play: '2048 플레이' },
+            en: { kicker: 'BRING THE BOARD THAT STOPPED YOU', title: 'Compare every possible 2048 move', desc: 'Enter your current 4×4 tiles to preview each legal move with exact merge rules and one-step lookahead.', coach: 'Analyze my board', play: 'Play 2048' },
+            zh: { kicker: '把卡住你的棋盘带过来', title: '比较 2048 的每一个合法方向', desc: '输入当前 4×4 方块，按准确合并规则和一步前瞻查看推荐移动及预览。', coach: '分析我的棋盘', play: '玩 2048' },
+            hi: { kicker: 'अपना अटका हुआ बोर्ड लाएँ', title: '2048 की चारों चालों की तुलना करें', desc: 'वर्तमान 4×4 टाइलें भरें और हर वैध चाल का पूर्वावलोकन देखें।', coach: 'बोर्ड का विश्लेषण', play: '2048 खेलें' },
+            ru: { kicker: 'ПРОВЕРЬТЕ СЛОЖНУЮ ПОЗИЦИЮ', title: 'Сравните все ходы в 2048', desc: 'Введите поле 4×4 и посмотрите каждый допустимый ход по точным правилам слияния.', coach: 'Анализировать поле', play: 'Играть в 2048' },
+            ja: { kicker: '迷った盤面を入力', title: '2048の4方向をすべて比較', desc: '現在の4×4タイルを入力し、正確な合体ルールと1手先評価でプレビューします。', coach: '盤面を分析', play: '2048をプレイ' },
+            es: { kicker: 'TRAE EL TABLERO QUE TE BLOQUEÓ', title: 'Compara todos los movimientos de 2048', desc: 'Introduce tus fichas 4×4 y previsualiza cada movimiento legal.', coach: 'Analizar mi tablero', play: 'Jugar 2048' },
+            pt: { kicker: 'TRAGA O TABULEIRO QUE TRAVOU', title: 'Compare todas as jogadas de 2048', desc: 'Digite suas peças 4×4 e visualize cada movimento válido.', coach: 'Analisar meu tabuleiro', play: 'Jogar 2048' },
+            id: { kicker: 'BAWA PAPAN YANG MEMBUATMU MACET', title: 'Bandingkan semua langkah 2048', desc: 'Masukkan ubin 4×4 dan lihat pratinjau setiap langkah yang valid.', coach: 'Analisis papan', play: 'Main 2048' },
+            tr: { kicker: 'TAKILDIĞIN TAHTAYI GETİR', title: 'Tüm 2048 hamlelerini karşılaştır', desc: '4×4 taşlarını gir ve her geçerli hamleyi önizle.', coach: 'Tahtayı analiz et', play: '2048 oyna' },
+            de: { kicker: 'BRING DEINE SCHWIERIGE POSITION MIT', title: 'Vergleiche alle 2048-Züge', desc: 'Gib dein 4×4-Brett ein und prüfe jeden gültigen Zug.', coach: 'Brett analysieren', play: '2048 spielen' },
+            fr: { kicker: 'APPORTEZ LA GRILLE QUI VOUS BLOQUE', title: 'Comparez tous les coups de 2048', desc: 'Saisissez vos tuiles 4×4 et prévisualisez chaque coup valide.', coach: 'Analyser ma grille', play: 'Jouer à 2048' }
+        };
+        return {
+            locale: supportedLocale,
+            copy: copyByLocale[supportedLocale] || copyByLocale.en,
+            coachUrl: '/puzzle-2048/coach.html?lang=' + encodeURIComponent(supportedLocale) + '&source=blog_2048_bridge',
+            playUrl: '/puzzle-2048/?lang=' + encodeURIComponent(supportedLocale) + '&surface=coach_2048_bridge'
+        };
+    }
+
     function getBlogTopicStrategy() {
         var slug = getBlogSlug();
         if (!slug) return null;
@@ -924,6 +951,14 @@
             '.cp-palworld-game-link{display:flex;align-items:center;justify-content:center;min-height:46px;padding:11px 14px;border-radius:11px;background:#46d9e8;color:#061017;text-decoration:none;font-size:14px;font-weight:850}',
             '.cp-palworld-game-link:last-child{background:#b7ef5d}',
             '.cp-palworld-game-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
+            '.cp-2048-coach{max-width:720px;margin:18px auto 26px;padding:18px;border:1px solid rgba(246,196,83,.38);border-radius:16px;background:linear-gradient(135deg,rgba(58,45,23,.96),rgba(38,29,72,.94));box-shadow:0 14px 34px rgba(0,0,0,.16)}',
+            '.cp-2048-coach-kicker{font-size:11px;font-weight:900;letter-spacing:.1em;color:#f6c453;margin-bottom:5px}',
+            '.cp-2048-coach-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
+            '.cp-2048-coach-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,.72);margin-bottom:13px}',
+            '.cp-2048-coach-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}',
+            '.cp-2048-coach-link{display:flex;align-items:center;justify-content:center;min-height:46px;padding:11px 14px;border-radius:11px;background:#f6c453;color:#21180b;text-decoration:none;font-size:14px;font-weight:850}',
+            '.cp-2048-coach-link:last-child{background:#8b7cf6;color:#fff}',
+            '.cp-2048-coach-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
             '.cp-sticky-sprint{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:2147483000;display:flex;align-items:center;gap:10px;max-width:680px;margin:0 auto;padding:10px 10px 10px 12px;border:1px solid rgba(124,58,237,0.28);border-radius:8px;background:rgba(17,24,39,0.94);box-shadow:0 12px 32px rgba(0,0,0,0.28);backdrop-filter:blur(12px)}',
             '.cp-sticky-copy{min-width:0;flex:1}',
             '.cp-sticky-kicker{font-size:11px;font-weight:800;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0}',
@@ -965,7 +1000,10 @@
             'html.light-mode .cp-palworld-game,[data-theme="light"] .cp-palworld-game{background:linear-gradient(135deg,rgba(70,217,232,0.1),rgba(183,239,93,0.08));border-color:rgba(6,100,120,0.24)}',
             'html.light-mode .cp-palworld-game-title,[data-theme="light"] .cp-palworld-game-title{color:rgba(0,0,0,0.88)}',
             'html.light-mode .cp-palworld-game-desc,[data-theme="light"] .cp-palworld-game-desc{color:rgba(0,0,0,0.62)}',
-            '@media(max-width:480px){.cp-palworld-game-actions{grid-template-columns:1fr}}',
+            'html.light-mode .cp-2048-coach,[data-theme="light"] .cp-2048-coach{background:linear-gradient(135deg,rgba(246,196,83,.12),rgba(139,124,246,.08));border-color:rgba(160,110,20,.28)}',
+            'html.light-mode .cp-2048-coach-title,[data-theme="light"] .cp-2048-coach-title{color:rgba(0,0,0,.88)}',
+            'html.light-mode .cp-2048-coach-desc,[data-theme="light"] .cp-2048-coach-desc{color:rgba(0,0,0,.62)}',
+            '@media(max-width:480px){.cp-palworld-game-actions,.cp-2048-coach-actions{grid-template-columns:1fr}}',
             '.cp-card:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:2px}'
         ].join('');
         document.head.appendChild(style);
@@ -1123,13 +1161,14 @@
         var boundaryScript = stressPlan ? null : getBoundaryScriptBridgeConfig();
         var sensoryReset = stressPlan || boundaryScript ? null : getSensoryResetBridgeConfig();
         var coupleDeck = stressPlan || boundaryScript || sensoryReset ? null : getCoupleDeckBridgeConfig();
-        var palworldGame = stressPlan || boundaryScript || sensoryReset || coupleDeck ? null : getPalworldGameBridgeConfig();
-        if (palworldGame) scanRecovery = false;
-        var revenueSprint = stressPlan || boundaryScript || sensoryReset || coupleDeck || palworldGame ? null : getRevenueSprintStrategy(bridge);
+        var coach2048 = stressPlan || boundaryScript || sensoryReset || coupleDeck ? null : get2048CoachBridgeConfig();
+        var palworldGame = stressPlan || boundaryScript || sensoryReset || coupleDeck || coach2048 ? null : getPalworldGameBridgeConfig();
+        if (palworldGame || coach2048) scanRecovery = false;
+        var revenueSprint = stressPlan || boundaryScript || sensoryReset || coupleDeck || coach2048 || palworldGame ? null : getRevenueSprintStrategy(bridge);
         var sprintPicks = revenueSprint ? revenueSprint.ids
             .map(function(id) { return apps.find(function(app) { return app.id === id; }); })
             .filter(Boolean) : [];
-        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !coupleDeck && !palworldGame && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
+        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !coupleDeck && !coach2048 && !palworldGame && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
 
         if (stressPlan) {
             var planHtml = '<aside class="cp-stress-plan" data-surface-name="blog_stress_plan" data-content-locale="' + stressPlan.locale + '" data-plan-focus="' + stressPlan.focus + '">'
@@ -1337,6 +1376,60 @@
                         surface_name: 'blog_couple_deck',
                         content_locale: coupleDeck.locale,
                         destination_path: coupleDeck.url,
+                        revenue_goal: 'daily_0_10'
+                    });
+                });
+            }
+        }
+
+        if (coach2048) {
+            var coach2048Html = '<aside class="cp-2048-coach" data-surface-name="blog_2048_coach" data-content-locale="' + coach2048.locale + '">'
+                + '<div class="cp-2048-coach-kicker">' + coach2048.copy.kicker + '</div>'
+                + '<div class="cp-2048-coach-title">' + coach2048.copy.title + '</div>'
+                + '<div class="cp-2048-coach-desc">' + coach2048.copy.desc + '</div>'
+                + '<div class="cp-2048-coach-actions">'
+                + '<a class="cp-2048-coach-link" data-destination="board_coach" href="' + coach2048.coachUrl + '">' + coach2048.copy.coach + '</a>'
+                + '<a class="cp-2048-coach-link" data-destination="play_2048" href="' + coach2048.playUrl + '">' + coach2048.copy.play + '</a>'
+                + '</div></aside>';
+            var coach2048Para = anchor.querySelector('p');
+            if (coach2048Para) coach2048Para.insertAdjacentHTML('afterend', coach2048Html);
+            else anchor.insertAdjacentHTML('afterbegin', coach2048Html);
+
+            var coach2048Element = document.querySelector('.cp-2048-coach');
+            var coach2048ViewTracked = false;
+            var trackCoach2048View = function() {
+                if (coach2048ViewTracked || typeof gtag !== 'function') return;
+                coach2048ViewTracked = true;
+                gtag('event', 'coach_2048_bridge_view', {
+                    event_category: 'engagement',
+                    source_app: 'blog',
+                    surface_name: 'blog_2048_coach',
+                    content_locale: coach2048.locale,
+                    revenue_goal: 'daily_0_10'
+                });
+            };
+            if (coach2048Element && 'IntersectionObserver' in window) {
+                var coach2048Observer = new IntersectionObserver(function(entries) {
+                    if (entries.some(function(entry) { return entry.isIntersecting; })) {
+                        trackCoach2048View();
+                        coach2048Observer.disconnect();
+                    }
+                }, { threshold: 0.35 });
+                coach2048Observer.observe(coach2048Element);
+            } else {
+                trackCoach2048View();
+            }
+            if (coach2048Element) {
+                coach2048Element.addEventListener('click', function(event) {
+                    var link = event.target.closest('.cp-2048-coach-link');
+                    if (!link || typeof gtag !== 'function') return;
+                    gtag('event', 'coach_2048_bridge_click', {
+                        event_category: 'engagement',
+                        source_app: 'blog',
+                        surface_name: 'blog_2048_coach',
+                        content_locale: coach2048.locale,
+                        destination_id: link.getAttribute('data-destination') || '',
+                        destination_path: link.getAttribute('href') || '',
                         revenue_goal: 'daily_0_10'
                     });
                 });

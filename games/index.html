@@ -144,6 +144,7 @@ a:hover{color:var(--purple)}
 .palworld-rail-head,.palworld-rail-grid{position:relative;z-index:1}.palworld-rail-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:16px}
 .palworld-rail-kicker{font-size:11px;font-weight:800;letter-spacing:.15em;color:#b7ef5d}.palworld-rail h2{font-family:var(--heading);font-size:clamp(23px,4vw,32px);margin-top:4px}.palworld-rail-head p{max-width:430px;color:var(--text2);font-size:13px}
 .palworld-rail-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.palworld-rail-card{display:flex;flex-direction:column;gap:8px;min-height:146px;padding:15px;border:1px solid var(--border);border-radius:15px;background:rgba(6,6,18,.62);color:var(--text);text-decoration:none}.palworld-rail-card:hover{border-color:var(--cyan);transform:translateY(-3px);color:var(--text)}.palworld-rail-card>span{font-size:25px}.palworld-rail-card strong{font-family:var(--heading);font-size:15px}.palworld-rail-card small{color:var(--text2);line-height:1.4}
+.coach-2048-rail{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;margin:-14px 0 32px;padding:18px 20px;border:1px solid rgba(246,196,83,.32);border-radius:17px;background:linear-gradient(120deg,rgba(246,196,83,.09),rgba(168,85,247,.08));color:var(--text);text-decoration:none}.coach-2048-rail:hover{border-color:#f6c453;transform:translateY(-2px);color:var(--text)}.coach-2048-rail>span{font-size:34px}.coach-2048-rail strong,.coach-2048-rail small{display:block}.coach-2048-rail strong{font-family:var(--heading);font-size:18px}.coach-2048-rail small{margin-top:2px;color:var(--text2)}.coach-2048-rail b{color:#f6c453;font-size:24px}
 
 /* Content Section */
 .content-section{margin:48px 0;padding:32px 24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
@@ -222,6 +223,10 @@ footer a{color:var(--text2)}
     <a class="palworld-rail-card" href="/portal/tools/palworld-breeding-notebook.html?source=games_hub" data-palworld-destination="breeding_notebook"><span>🥚</span><strong>Breeding Notebook</strong><small>Parent pairs, target traits and egg progress</small></a>
   </div>
 </section>
+
+<a class="coach-2048-rail" href="/puzzle-2048/coach.html?source=games_hub" data-coach-2048-rail>
+  <span aria-hidden="true">🧭</span><div><strong data-coach-title>Stuck in 2048? Analyze the board.</strong><small data-coach-desc>Enter 16 tiles, compare all four moves and preview the recommendation.</small></div><b aria-hidden="true">→</b>
+</a>
 
 <h2 class="section-title" data-i18n="hub_games.featured_title"><span>Featured</span> Games</h2>
 <div class="featured">
@@ -333,6 +338,15 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('[data-palworld-destination]').forEach(link=>link.addEventListener('click',()=>{
     window.dataLayer.push({event:'palworld_games_rail_click',content_format:'palworld_discovery_rail',surface:'games_hub',destination:link.dataset.palworldDestination});
   }));
+  const coachRail=document.querySelector('[data-coach-2048-rail]');
+  if(coachRail){
+    const lang=new URLSearchParams(location.search).get('lang')||localStorage.getItem('app_language')||'en';
+    const copy={ko:['2048에서 막혔나요? 보드를 분석하세요.','타일 16개를 입력하고 네 방향과 추천 미리보기를 비교하세요.'],zh:['2048 卡住了？分析当前棋盘。','输入 16 个方块，比较四个方向并预览推荐结果。'],ja:['2048で迷ったら盤面を分析','16タイルを入力し、4方向とおすすめを比較します。'],pt:['Travou no 2048? Analise o tabuleiro.','Digite 16 peças, compare quatro jogadas e veja a recomendação.'],fr:['Bloqué à 2048 ? Analysez la grille.','Saisissez 16 tuiles et comparez les quatre coups.'],es:['¿Atascado en 2048? Analiza el tablero.','Introduce 16 fichas y compara los cuatro movimientos.']}[lang];
+    if(copy){coachRail.querySelector('[data-coach-title]').textContent=copy[0];coachRail.querySelector('[data-coach-desc]').textContent=copy[1]}
+    const coachUrl=new URL(coachRail.href,location.href);coachUrl.searchParams.set('lang',lang);coachRail.href=coachUrl.pathname+coachUrl.search;
+    window.dataLayer.push({event:'coach_2048_games_view',content_format:'board_analyzer',surface:'games_hub',content_locale:lang});
+    coachRail.addEventListener('click',()=>window.dataLayer.push({event:'coach_2048_games_click',content_format:'board_analyzer',surface:'games_hub',content_locale:lang}));
+  }
 
   // Theme toggle
   const btn=document.getElementById('theme-toggle');

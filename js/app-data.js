@@ -3236,6 +3236,23 @@ const APP_DATA = [
             tr:{name:'Palworld yetiştirme defteri',shortDesc:'Ebeveynler, özellikler ve yumurta ilerlemesi'},de:{name:'Palworld-Zuchtnotizbuch',shortDesc:'Elternpaare, Merkmale und Eierfortschritt'},
             fr:{name:'Carnet d’élevage Palworld',shortDesc:'Parents, traits et progression des œufs'}
         }
+    },
+    {
+        id:'coach-2048',
+        name:'2048 보드 분석 코치',
+        shortDesc:'현재 보드의 네 방향을 시뮬레이션하고 다음 수 비교',
+        description:'Browser-local 2048 board analyzer with exact move simulation, previews and one-step lookahead.',
+        icon:'🧭',color:'#f6c453',category:'game',
+        tags:['2048','board analyzer','next move','strategy','puzzle','game coach','보드 분석','다음 수'],
+        url:'https://dopabrain.com/puzzle-2048/coach.html',isNew:true,isPopular:false,popularity:32,
+        i18n:{
+            en:{name:'2048 Board Analyzer',shortDesc:'Compare every legal next move'},zh:{name:'2048 棋盘分析器',shortDesc:'比较所有合法的下一步'},
+            hi:{name:'2048 बोर्ड विश्लेषक',shortDesc:'हर वैध अगली चाल की तुलना'},ru:{name:'Анализатор доски 2048',shortDesc:'Сравнение всех допустимых ходов'},
+            ja:{name:'2048 盤面分析コーチ',shortDesc:'合法な次の一手をすべて比較'},es:{name:'Analizador de tablero 2048',shortDesc:'Compara todos los movimientos válidos'},
+            pt:{name:'Analisador de tabuleiro 2048',shortDesc:'Compare todas as jogadas válidas'},id:{name:'Penganalisis papan 2048',shortDesc:'Bandingkan semua langkah valid'},
+            tr:{name:'2048 Tahta Analizörü',shortDesc:'Tüm geçerli hamleleri karşılaştır'},de:{name:'2048-Brettanalyse',shortDesc:'Vergleiche alle gültigen Züge'},
+            fr:{name:'Analyseur de grille 2048',shortDesc:'Comparez tous les coups valides'}
+        }
     }
 ];
 
