@@ -328,6 +328,18 @@
         return {locale:supportedLocale,copy:copyByLocale[supportedLocale],url:'/portal/tools/brain-game-workout.html?lang='+encodeURIComponent(supportedLocale)+'&source=blog_brain_game_bridge'};
     }
 
+    function getEmotionActionBridgeConfig() {
+        var slug=getBlogSlug();
+        if (!/(?:emotional-regulation|emotion-management|emotional-dysregulation|emotional-triggers)/.test(slug)) return null;
+        var locale=getBlogLocale(),supportedLocale=/^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(locale)?locale:'en';
+        var copy={
+            ko:{kicker:'읽기에서 작은 행동으로',title:'지금–다음–나중 행동 카드 만들기',desc:'감정, 상황, 가능한 시간을 고르고 현실적인 다음 행동 하나를 정리하세요.',action:'비공개 카드 만들기'},en:{kicker:'TURN READING INTO ONE ACTION',title:'Build a now–next–later action card',desc:'Choose the emotion, situation and time to organize one realistic next action.',action:'Build a private card'},
+            zh:{kicker:'把阅读变成一个小行动',title:'创建“现在–下一步–稍后”行动卡',desc:'选择情绪、情境和时间，整理一个现实可行的下一行动。',action:'创建私密卡片'},id:{kicker:'DARI MEMBACA KE SATU TINDAKAN',title:'Buat kartu sekarang–berikutnya–nanti',desc:'Pilih emosi, situasi, dan waktu untuk satu langkah yang realistis.',action:'Buat kartu pribadi'},pt:{kicker:'DA LEITURA PARA UMA AÇÃO',title:'Crie um cartão agora–depois–mais tarde',desc:'Escolha emoção, situação e tempo para organizar uma próxima ação realista.',action:'Criar cartão privado'},
+            ja:{kicker:'読むだけから小さな行動へ',title:'「今・次・後で」行動カード',desc:'感情、状況、時間を選び、現実的な次の一歩を整理します。',action:'非公開カードを作る'},es:{kicker:'DE LA LECTURA A UNA ACCIÓN',title:'Crea una tarjeta ahora–después–más tarde',desc:'Elige emoción, situación y tiempo para ordenar un siguiente paso realista.',action:'Crear tarjeta privada'},fr:{kicker:'DE LA LECTURE À UNE ACTION',title:'Créez une carte maintenant–ensuite–plus tard',desc:'Choisissez émotion, situation et durée pour une prochaine action réaliste.',action:'Créer une carte privée'},de:{kicker:'VOM LESEN ZU EINER HANDLUNG',title:'Erstelle eine Jetzt–Danach–Später-Karte',desc:'Wähle Gefühl, Situation und Zeit für einen realistischen nächsten Schritt.',action:'Private Karte erstellen'},tr:{kicker:'OKUMADAN TEK BİR EYLEME',title:'Şimdi–sonra–daha sonra kartı oluştur',desc:'Gerçekçi bir sonraki adım için duygu, durum ve süre seçin.',action:'Özel kart oluştur'},ru:{kicker:'ОТ ЧТЕНИЯ К ОДНОМУ ДЕЙСТВИЮ',title:'Создайте карточку «сейчас–затем–позже»',desc:'Выберите эмоцию, ситуацию и время для реалистичного следующего шага.',action:'Создать личную карточку'},hi:{kicker:'पढ़ने से एक छोटे कार्य तक',title:'अभी–अगला–बाद में कार्य कार्ड बनाएँ',desc:'एक व्यावहारिक अगला कदम तय करने के लिए भावना, स्थिति और समय चुनें।',action:'निजी कार्ड बनाएँ'}
+        };
+        return {locale:supportedLocale,copy:copy[supportedLocale],url:'/portal/tools/emotion-regulation-planner.html?lang='+encodeURIComponent(supportedLocale)+'&source=blog_emotion_action_bridge'};
+    }
+
     function getBlogTopicStrategy() {
         var slug = getBlogSlug();
         if (!slug) return null;
@@ -987,6 +999,11 @@
             '.cp-brain-workout-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,.72);margin-bottom:13px}',
             '.cp-brain-workout-link{display:flex;align-items:center;justify-content:center;min-height:46px;padding:11px 14px;border-radius:11px;background:#5eead4;color:#06211e;text-decoration:none;font-size:14px;font-weight:850}',
             '.cp-brain-workout-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
+            '.cp-emotion-action{max-width:720px;margin:18px auto 26px;padding:18px;border:1px solid rgba(251,113,133,.38);border-radius:16px;background:linear-gradient(135deg,rgba(65,22,38,.96),rgba(20,42,59,.94));box-shadow:0 14px 34px rgba(0,0,0,.16)}',
+            '.cp-emotion-action-kicker{font-size:11px;font-weight:900;letter-spacing:.1em;color:#fda4af;margin-bottom:5px}',
+            '.cp-emotion-action-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
+            '.cp-emotion-action-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,.72);margin-bottom:13px}',
+            '.cp-emotion-action-link{display:flex;align-items:center;justify-content:center;min-height:46px;padding:11px 14px;border-radius:11px;background:#fb7185;color:#2b0710;text-decoration:none;font-size:14px;font-weight:850}',
             '.cp-sticky-sprint{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:2147483000;display:flex;align-items:center;gap:10px;max-width:680px;margin:0 auto;padding:10px 10px 10px 12px;border:1px solid rgba(124,58,237,0.28);border-radius:8px;background:rgba(17,24,39,0.94);box-shadow:0 12px 32px rgba(0,0,0,0.28);backdrop-filter:blur(12px)}',
             '.cp-sticky-copy{min-width:0;flex:1}',
             '.cp-sticky-kicker{font-size:11px;font-weight:800;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0}',
@@ -1034,6 +1051,9 @@
             'html.light-mode .cp-brain-workout,[data-theme="light"] .cp-brain-workout{background:linear-gradient(135deg,rgba(94,234,212,.1),rgba(139,124,246,.08));border-color:rgba(15,118,110,.28)}',
             'html.light-mode .cp-brain-workout-title,[data-theme="light"] .cp-brain-workout-title{color:rgba(0,0,0,.88)}',
             'html.light-mode .cp-brain-workout-desc,[data-theme="light"] .cp-brain-workout-desc{color:rgba(0,0,0,.62)}',
+            'html.light-mode .cp-emotion-action,[data-theme="light"] .cp-emotion-action{background:linear-gradient(135deg,rgba(251,113,133,.1),rgba(103,232,249,.08));border-color:rgba(190,24,93,.25)}',
+            'html.light-mode .cp-emotion-action-title,[data-theme="light"] .cp-emotion-action-title{color:rgba(0,0,0,.88)}',
+            'html.light-mode .cp-emotion-action-desc,[data-theme="light"] .cp-emotion-action-desc{color:rgba(0,0,0,.62)}',
             '@media(max-width:480px){.cp-palworld-game-actions,.cp-2048-coach-actions{grid-template-columns:1fr}}',
             '.cp-card:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:2px}'
         ].join('');
@@ -1191,16 +1211,17 @@
         var stressPlan = getStressPlanBridgeConfig();
         var boundaryScript = stressPlan ? null : getBoundaryScriptBridgeConfig();
         var sensoryReset = stressPlan || boundaryScript ? null : getSensoryResetBridgeConfig();
-        var coupleDeck = stressPlan || boundaryScript || sensoryReset ? null : getCoupleDeckBridgeConfig();
-        var coach2048 = stressPlan || boundaryScript || sensoryReset || coupleDeck ? null : get2048CoachBridgeConfig();
-        var brainWorkout = stressPlan || boundaryScript || sensoryReset || coupleDeck || coach2048 ? null : getBrainWorkoutBridgeConfig();
-        var palworldGame = stressPlan || boundaryScript || sensoryReset || coupleDeck || coach2048 || brainWorkout ? null : getPalworldGameBridgeConfig();
-        if (palworldGame || coach2048 || brainWorkout) scanRecovery = false;
-        var revenueSprint = stressPlan || boundaryScript || sensoryReset || coupleDeck || coach2048 || brainWorkout || palworldGame ? null : getRevenueSprintStrategy(bridge);
+        var emotionAction = stressPlan || boundaryScript || sensoryReset ? null : getEmotionActionBridgeConfig();
+        var coupleDeck = stressPlan || boundaryScript || sensoryReset || emotionAction ? null : getCoupleDeckBridgeConfig();
+        var coach2048 = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck ? null : get2048CoachBridgeConfig();
+        var brainWorkout = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || coach2048 ? null : getBrainWorkoutBridgeConfig();
+        var palworldGame = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || coach2048 || brainWorkout ? null : getPalworldGameBridgeConfig();
+        if (palworldGame || coach2048 || brainWorkout || emotionAction) scanRecovery = false;
+        var revenueSprint = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || coach2048 || brainWorkout || palworldGame ? null : getRevenueSprintStrategy(bridge);
         var sprintPicks = revenueSprint ? revenueSprint.ids
             .map(function(id) { return apps.find(function(app) { return app.id === id; }); })
             .filter(Boolean) : [];
-        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !coupleDeck && !coach2048 && !brainWorkout && !palworldGame && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
+        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !emotionAction && !coupleDeck && !coach2048 && !brainWorkout && !palworldGame && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
 
         if (stressPlan) {
             var planHtml = '<aside class="cp-stress-plan" data-surface-name="blog_stress_plan" data-content-locale="' + stressPlan.locale + '" data-plan-focus="' + stressPlan.focus + '">'
@@ -1361,6 +1382,15 @@
                     });
                 });
             }
+        }
+
+        if (emotionAction) {
+            var emotionHtml='<aside class="cp-emotion-action" data-surface-name="blog_emotion_action" data-content-locale="'+emotionAction.locale+'"><div class="cp-emotion-action-kicker">'+emotionAction.copy.kicker+'</div><div class="cp-emotion-action-title">'+emotionAction.copy.title+'</div><div class="cp-emotion-action-desc">'+emotionAction.copy.desc+'</div><a class="cp-emotion-action-link" href="'+emotionAction.url+'">'+emotionAction.copy.action+'</a></aside>';
+            var emotionPara=anchor.querySelector('p');if(emotionPara)emotionPara.insertAdjacentHTML('afterend',emotionHtml);else anchor.insertAdjacentHTML('afterbegin',emotionHtml);
+            var emotionElement=document.querySelector('.cp-emotion-action'),emotionViewed=false;
+            var trackEmotionView=function(){if(emotionViewed||typeof gtag!=='function')return;emotionViewed=true;gtag('event','emotion_action_bridge_view',{event_category:'engagement',source_app:'blog',surface_name:'blog_emotion_action',content_locale:emotionAction.locale,revenue_goal:'daily_0_10'});};
+            if(emotionElement&&'IntersectionObserver'in window){var emotionObserver=new IntersectionObserver(function(entries){if(entries.some(function(entry){return entry.isIntersecting;})){trackEmotionView();emotionObserver.disconnect();}},{threshold:.35});emotionObserver.observe(emotionElement);}else trackEmotionView();
+            if(emotionElement)emotionElement.addEventListener('click',function(event){var link=event.target.closest('.cp-emotion-action-link');if(!link||typeof gtag!=='function')return;gtag('event','emotion_action_bridge_click',{event_category:'engagement',source_app:'blog',surface_name:'blog_emotion_action',content_locale:emotionAction.locale,destination_path:link.getAttribute('href')||'',revenue_goal:'daily_0_10'});});
         }
 
         if (coupleDeck) {

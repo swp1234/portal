@@ -3238,6 +3238,16 @@ const APP_DATA = [
         }
     },
     {
+        id:'emotion-regulation-planner',
+        name:'감정 조절 행동 플래너',
+        shortDesc:'감정과 상황을 지금·다음·나중 행동 카드로 정리',
+        description:'A private selectable now-next-later action worksheet for organizing a small response to an emotion and situation.',
+        icon:'🧭',color:'#fb7185',category:'wellness',
+        tags:['emotion regulation','action card','worksheet','coping plan','private planner','감정 조절','행동 카드'],
+        url:'https://dopabrain.com/portal/tools/emotion-regulation-planner.html',isNew:true,isPopular:false,popularity:34,
+        i18n:{en:{name:'Emotion Regulation Action Planner',shortDesc:'Build a private now–next–later action card'},zh:{name:'情绪调节行动规划器',shortDesc:'创建私密的现在–下一步–稍后行动卡'},hi:{name:'भावना नियंत्रण कार्य योजनाकार',shortDesc:'निजी अभी–अगला–बाद में कार्य कार्ड'},ru:{name:'Планировщик регуляции эмоций',shortDesc:'Личная карточка «сейчас–затем–позже»'},ja:{name:'感情調整アクションプランナー',shortDesc:'非公開の「今・次・後で」行動カード'},es:{name:'Planificador de regulación emocional',shortDesc:'Tarjeta privada ahora–después–más tarde'},pt:{name:'Planejador de regulação emocional',shortDesc:'Cartão privado agora–depois–mais tarde'},id:{name:'Perencana Regulasi Emosi',shortDesc:'Kartu pribadi sekarang–berikutnya–nanti'},tr:{name:'Duygu Düzenleme Planlayıcısı',shortDesc:'Özel şimdi–sonra–daha sonra kartı'},de:{name:'Planer zur Emotionsregulation',shortDesc:'Private Jetzt–Danach–Später-Karte'},fr:{name:'Planificateur de régulation émotionnelle',shortDesc:'Carte privée maintenant–ensuite–plus tard'}}
+    },
+    {
         id:'brain-game-workout',
         name:'오늘의 두뇌 게임 서킷',
         shortDesc:'집중 영역과 시간에 맞춘 일일 게임 플레이리스트',
