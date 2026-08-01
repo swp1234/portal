@@ -1163,6 +1163,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'sensory-load-map',
+        name: '감각 부하 지도와 환경 요청 카드',
+        shortDesc: '반복되는 자극을 비교하고 환경 요청 문장 만들기',
+        description: '소음, 빛, 촉감, 사회적 입력, 요구와 전환의 부하를 비교해 우선순위를 정하고 복사 가능한 환경 요청 카드를 만드세요. 점수나 진단 없이 선택값은 기기에만 저장됩니다.',
+        icon: '🗺️',
+        color: '#2563eb',
+        category: 'wellness',
+        tags: ['감각', '부하', 'HSP', '환경', '요청', 'sensory', 'load', 'map', 'accommodation', 'preference', 'planning'],
+        url: 'https://dopabrain.com/hsp-test/map.html',
+        isNew: true,
+        isPopular: true,
+        popularity: 35,
+        i18n: {
+            en: { name: 'Sensory Load Map', shortDesc: 'Compare recurring input and build an environment request card' },
+            zh: { name: '感官负荷地图', shortDesc: '比较反复刺激并生成环境请求卡' },
+            hi: { name: 'संवेदी भार मानचित्र', shortDesc: 'बार-बार आने वाले इनपुट की तुलना कर वातावरण अनुरोध कार्ड बनाएँ' },
+            ru: { name: 'Карта сенсорной нагрузки', shortDesc: 'Сравните повторяющиеся стимулы и создайте карточку запроса' },
+            ja: { name: '感覚負荷マップ', shortDesc: '繰り返す刺激を比べて環境リクエストカードを作成' },
+            es: { name: 'Mapa de Carga Sensorial', shortDesc: 'Compara estímulos recurrentes y crea una tarjeta de entorno' },
+            pt: { name: 'Mapa de Carga Sensorial', shortDesc: 'Compare estímulos recorrentes e crie um cartão de ambiente' },
+            id: { name: 'Peta Beban Sensorik', shortDesc: 'Bandingkan input berulang dan buat kartu permintaan lingkungan' },
+            tr: { name: 'Duyusal Yük Haritası', shortDesc: 'Tekrarlanan uyaranları karşılaştırıp ortam talep kartı oluşturun' },
+            de: { name: 'Sensorische Belastungskarte', shortDesc: 'Wiederkehrende Reize vergleichen und eine Umgebungskarte erstellen' },
+            fr: { name: 'Carte de Charge Sensorielle', shortDesc: 'Comparez les stimuli récurrents et créez une carte de demande' }
+        }
+    },
+    {
         id: 'couple-conversation-deck',
         name: 'MBTI 커플 대화 카드',
         shortDesc: '둘이 함께 뽑는 12장 대화 카드',

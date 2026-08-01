@@ -202,24 +202,26 @@
         var locale = getBlogLocale();
         var supportedLocale = /^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(locale) ? locale : 'en';
         var copyByLocale = {
-            ko: { kicker: '읽은 내용을 지금 활용하세요', title: '5분 감각 과부하 리셋 카드', desc: '지금 가장 강한 자극과 장소를 고르고, 한 단계씩 따라갈 작은 시간별 계획을 만드세요.', action: '무료 리셋 카드 만들기' },
-            en: { kicker: 'USE THIS GUIDE NOW', title: 'Build a 5-minute sensory reset card', desc: 'Choose the strongest input and your current setting, then follow one small timed step at a time.', action: 'Build my free reset card' },
-            zh: { kicker: '立即使用这篇指南', title: '制作5分钟感官过载重置卡', desc: '选择最强刺激和当前场所，然后一次执行一个简短的计时步骤。', action: '免费制作重置卡' },
-            hi: { kicker: 'इस गाइड का अभी उपयोग करें', title: '5-मिनट सेंसरी रीसेट कार्ड बनाएँ', desc: 'सबसे तेज़ इनपुट और अपनी जगह चुनें, फिर एक-एक छोटा समयबद्ध कदम लें।', action: 'मुफ़्त रीसेट कार्ड बनाएँ' },
-            ru: { kicker: 'ИСПОЛЬЗУЙТЕ СОВЕТЫ СЕЙЧАС', title: 'Создайте 5-минутную сенсорную карточку', desc: 'Выберите самый сильный стимул и место, затем выполняйте по одному короткому шагу.', action: 'Создать карточку бесплатно' },
-            ja: { kicker: 'ガイドを今すぐ活用', title: '5分間の感覚リセットカードを作る', desc: '最も強い刺激と今いる場所を選び、小さな時間別ステップを一つずつ進めます。', action: '無料でカードを作る' },
-            es: { kicker: 'USA ESTA GUÍA AHORA', title: 'Crea una tarjeta de reinicio sensorial de 5 minutos', desc: 'Elige el estímulo más intenso y tu entorno, y sigue pequeños pasos cronometrados.', action: 'Crear tarjeta gratis' },
-            pt: { kicker: 'USE ESTE GUIA AGORA', title: 'Crie um cartão de reset sensorial de 5 minutos', desc: 'Escolha o estímulo mais intenso e o local, depois siga pequenos passos cronometrados.', action: 'Criar cartão grátis' },
-            id: { kicker: 'GUNAKAN PANDUAN INI SEKARANG', title: 'Buat kartu reset sensorik 5 menit', desc: 'Pilih input terkuat dan lokasi Anda, lalu ikuti satu langkah singkat pada satu waktu.', action: 'Buat kartu gratis' },
-            tr: { kicker: 'BU REHBERİ ŞİMDİ KULLAN', title: '5 dakikalık duyusal sıfırlama kartı oluştur', desc: 'En güçlü uyaranı ve bulunduğunuz yeri seçip küçük zamanlı adımları izleyin.', action: 'Ücretsiz kart oluştur' },
-            de: { kicker: 'RATGEBER JETZT ANWENDEN', title: '5-Minuten-Karte bei Reizüberflutung erstellen', desc: 'Wähle den stärksten Reiz und deine Umgebung, dann folge kleinen Schritten mit Zeitangaben.', action: 'Kostenlose Reset-Karte' },
-            fr: { kicker: 'UTILISEZ CE GUIDE MAINTENANT', title: 'Créez une carte sensorielle de 5 minutes', desc: 'Choisissez le stimulus le plus fort et le lieu, puis suivez de petites étapes chronométrées.', action: 'Créer ma carte gratuitement' }
+            ko: { kicker: '읽은 내용을 지금 활용하세요', title: '감각 과부하: 지금 리셋하거나 미리 계획하기', desc: '이미 자극이 강하면 5분 리셋을, 반복되는 환경을 준비하려면 감각 부하 지도를 선택하세요.', action: '5분 리셋 만들기', mapAction: '감각 부하 지도 만들기' },
+            en: { kicker: 'USE THIS GUIDE NOW', title: 'Sensory overload: reset now or plan ahead', desc: 'Use the 5-minute reset when input is already intense, or map recurring environments before they become too much.', action: 'Build a 5-minute reset', mapAction: 'Build a sensory load map' },
+            zh: { kicker: '立即使用这篇指南', title: '感官过载：立即重置或提前规划', desc: '刺激已经很强时使用5分钟重置；要准备反复出现的环境时，使用感官负荷地图。', action: '制作5分钟重置卡', mapAction: '制作感官负荷地图' },
+            hi: { kicker: 'इस गाइड का अभी उपयोग करें', title: 'संवेदी भार: अभी रीसेट या आगे की योजना', desc: 'तेज़ इनपुट के लिए 5-मिनट रीसेट चुनें या दोहराते वातावरण की पहले से योजना बनाएँ।', action: '5-मिनट रीसेट बनाएँ', mapAction: 'संवेदी भार मानचित्र बनाएँ' },
+            ru: { kicker: 'ИСПОЛЬЗУЙТЕ СОВЕТЫ СЕЙЧАС', title: 'Сенсорная нагрузка: сбросить или спланировать', desc: 'Выберите 5-минутный сброс при сильной нагрузке или заранее составьте карту среды.', action: 'Создать 5-минутную карточку', mapAction: 'Создать карту нагрузки' },
+            ja: { kicker: 'ガイドを今すぐ活用', title: '感覚過負荷：今リセットするか事前に備える', desc: '刺激がすでに強い時は5分リセット、繰り返す環境には感覚負荷マップを使います。', action: '5分リセットを作る', mapAction: '感覚負荷マップを作る' },
+            es: { kicker: 'USA ESTA GUÍA AHORA', title: 'Carga sensorial: reinicia o planifica', desc: 'Usa el reinicio de 5 minutos si el estímulo ya es intenso, o prepara un mapa para entornos recurrentes.', action: 'Crear reinicio de 5 minutos', mapAction: 'Crear mapa sensorial' },
+            pt: { kicker: 'USE ESTE GUIA AGORA', title: 'Carga sensorial: resetar ou planejar', desc: 'Use o reset de 5 minutos quando o estímulo já estiver intenso ou planeje ambientes recorrentes.', action: 'Criar reset de 5 minutos', mapAction: 'Criar mapa sensorial' },
+            id: { kicker: 'GUNAKAN PANDUAN INI SEKARANG', title: 'Beban sensorik: reset atau rencanakan', desc: 'Gunakan reset 5 menit saat input sudah intens, atau petakan lingkungan berulang sebelumnya.', action: 'Buat reset 5 menit', mapAction: 'Buat peta beban sensorik' },
+            tr: { kicker: 'BU REHBERİ ŞİMDİ KULLAN', title: 'Duyusal yük: sıfırla veya planla', desc: 'Uyaran zaten yoğunsa 5 dakikalık sıfırlamayı, tekrarlanan ortamlar için haritayı seçin.', action: '5 dakikalık sıfırlama', mapAction: 'Duyusal yük haritası' },
+            de: { kicker: 'RATGEBER JETZT ANWENDEN', title: 'Reizbelastung: jetzt senken oder vorausplanen', desc: 'Nutze den 5-Minuten-Reset bei akuter Belastung oder plane wiederkehrende Umgebungen.', action: '5-Minuten-Reset erstellen', mapAction: 'Belastungskarte erstellen' },
+            fr: { kicker: 'UTILISEZ CE GUIDE MAINTENANT', title: 'Charge sensorielle : réduire ou anticiper', desc: 'Utilisez la carte de 5 minutes si la stimulation est forte, ou préparez les environnements récurrents.', action: 'Créer un reset de 5 minutes', mapAction: 'Créer une carte sensorielle' }
         };
 
         return {
             locale: supportedLocale,
             copy: copyByLocale[supportedLocale],
             url: '/hsp-test/reset.html?lang=' + encodeURIComponent(supportedLocale)
+                + '&source=blog_sensory_bridge',
+            mapUrl: '/hsp-test/map.html?lang=' + encodeURIComponent(supportedLocale)
                 + '&source=blog_sensory_bridge'
         };
     }
@@ -969,8 +971,11 @@
             '.cp-sensory-reset-kicker{font-size:11px;font-weight:900;letter-spacing:.08em;color:#86efac;margin-bottom:5px}',
             '.cp-sensory-reset-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
             '.cp-sensory-reset-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.7);margin-bottom:13px}',
-            '.cp-sensory-reset-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 16px;border-radius:11px;background:#16a34a;color:#fff;text-decoration:none;font-size:14px;font-weight:850}',
+            '.cp-sensory-reset-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}',
+            '.cp-sensory-reset-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 16px;border-radius:11px;background:#16a34a;color:#fff;text-decoration:none;text-align:center;font-size:14px;font-weight:850}',
+            '.cp-sensory-reset-link[data-destination="map"]{background:#2563eb}',
             '.cp-sensory-reset-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
+            '@media(max-width:560px){.cp-sensory-reset-actions{grid-template-columns:1fr}}',
             '.cp-couple-deck{max-width:720px;margin:18px auto 26px;padding:18px;border:1px solid rgba(244,114,182,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(233,30,99,0.12),rgba(124,58,237,0.07));box-shadow:0 14px 34px rgba(0,0,0,0.12)}',
             '.cp-couple-deck-kicker{font-size:11px;font-weight:900;letter-spacing:.08em;color:#f9a8d4;margin-bottom:5px}',
             '.cp-couple-deck-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
@@ -1338,7 +1343,10 @@
                 + '<div class="cp-sensory-reset-kicker">' + sensoryReset.copy.kicker + '</div>'
                 + '<div class="cp-sensory-reset-title">' + sensoryReset.copy.title + '</div>'
                 + '<div class="cp-sensory-reset-desc">' + sensoryReset.copy.desc + '</div>'
-                + '<a class="cp-sensory-reset-link" href="' + sensoryReset.url + '">' + sensoryReset.copy.action + '</a>'
+                + '<div class="cp-sensory-reset-actions">'
+                + '<a class="cp-sensory-reset-link" data-destination="reset" href="' + sensoryReset.url + '">' + sensoryReset.copy.action + '</a>'
+                + '<a class="cp-sensory-reset-link" data-destination="map" href="' + sensoryReset.mapUrl + '">' + sensoryReset.copy.mapAction + '</a>'
+                + '</div>'
                 + '</aside>';
             var resetPara = anchor.querySelector('p');
             if (resetPara) resetPara.insertAdjacentHTML('afterend', resetHtml);
@@ -1372,12 +1380,13 @@
                 resetElement.addEventListener('click', function(event) {
                     var resetLink = event.target.closest('.cp-sensory-reset-link');
                     if (!resetLink || typeof gtag !== 'function') return;
-                    gtag('event', 'sensory_reset_bridge_click', {
+                    var destination = resetLink.dataset.destination === 'map' ? 'map' : 'reset';
+                    gtag('event', destination === 'map' ? 'sensory_map_bridge_click' : 'sensory_reset_bridge_click', {
                         event_category: 'engagement',
                         source_app: 'blog',
                         surface_name: 'blog_sensory_reset',
                         content_locale: sensoryReset.locale,
-                        destination_path: sensoryReset.url,
+                        destination_path: resetLink.getAttribute('href'),
                         revenue_goal: 'daily_0_10'
                     });
                 });
