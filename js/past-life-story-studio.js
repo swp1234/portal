@@ -37,7 +37,7 @@
         en: {
             titles: ['The {motif} of the {setting}', '{role} and the {motif}', 'A Promise from the {era}'],
             arrival: ['In the {era}, the {setting} stirred before sunrise. You were known there as a {role}.', 'One rain-bright morning in the {era}, your work as a {role} brought you to the {setting}.', 'Long before the city bells, a {role} crossed the quiet threshold of the {setting}.'],
-            calling: ['The {motif} appeared where no visitor should have been, carrying a question only you noticed.', 'Someone left the {motif} beside your tools, along with a request that could not wait until morning.', 'The familiar shape of a {motif} returned in three unlikely places, pointing toward an unfinished promise.'],
+            calling: ['The {motif} appeared where no visitor should have been, carrying a question only you noticed.', 'Someone left the {motif} beside your tools, along with a request that could not wait until morning.', 'The familiar shape of the {motif} returned in three unlikely places, pointing toward an unfinished promise.'],
             obstacle: { hopeful: 'The road closed, but strangers each offered one small piece of a new route.', mysterious: 'Every witness remembered the same hour differently, and the silence became the strongest clue.', adventurous: 'A sudden departure gave you one tide, one lantern and no time for a perfect plan.', bittersweet: 'Keeping the promise meant leaving behind a place you had finally learned to call home.' },
             choice: ['You chose to share the {motif} instead of guarding it, changing what the whole community could imagine.', 'You followed the clue to its source, then returned the {motif} to the person who needed courage most.', 'Rather than claim the answer, you turned the {motif} into a map others could continue.'],
             echo: ['Years later, people forgot your name but repeated the generous choice at the heart of the story.', 'The tale survived as a small ritual: leave a light for the next traveler and a blank page for their version.', 'Nothing supernatural had to be proven; the story endured because it made ordinary bravery easier to picture.'],
@@ -86,7 +86,8 @@
         var copy = STORY[lang] || STORY.en;
         var headings = ['arrival', 'calling', 'obstacle', 'choice', 'echo'];
         var bodies = [pick(copy.arrival, card.seed, 1), pick(copy.calling, card.seed, 2), copy.obstacle[card.tone], pick(copy.choice, card.seed, 3), pick(copy.echo, card.seed, 4)].map(function (line) { return fill(line, card); });
-        return { title: fill(pick(copy.titles, card.seed, 0), card), meta: [t('era_' + card.era), t('setting_' + card.setting), t('tone_' + card.tone)].join(' · '), code: 'STORY-' + String(card.seed % 10000).padStart(4, '0'), scenes: headings.map(function (heading, index) { return { heading: t('scene_' + heading), body: bodies[index] }; }), keepsake: fill(pick(copy.keepsakes, card.seed, 5), card) };
+        var title = fill(pick(copy.titles, card.seed, 0), card); title = title.charAt(0).toUpperCase() + title.slice(1);
+        return { title: title, meta: [t('era_' + card.era), t('setting_' + card.setting), t('tone_' + card.tone)].join(' · '), code: 'STORY-' + String(card.seed % 10000).padStart(4, '0'), scenes: headings.map(function (heading, index) { return { heading: t('scene_' + heading), body: bodies[index] }; }), keepsake: fill(pick(copy.keepsakes, card.seed, 5), card) };
     }
     function readControls() { Object.keys(OPTIONS).forEach(function (key) { state[key] = document.getElementById(key).value; }); }
     function writeControls() { Object.keys(OPTIONS).forEach(function (key) { document.getElementById(key).value = state[key]; }); }
