@@ -515,6 +515,33 @@ const APP_DATA = [
         }
     },
     {
+        id: 'kpop-role-roster',
+        name: 'K-pop 그룹 포지션 로스터',
+        shortDesc: '3~12인 그룹의 강점과 포지션 커버리지 설계',
+        description: '멤버별 주요·보조 강점을 비교하고 콘셉트와 리더십 방식에 맞춰 메인, 리드, 센터, 리더 태그를 배치하는 비공개 그룹 설계 보드입니다.',
+        icon: '🎛️',
+        color: '#f472b6',
+        category: 'tool',
+        tags: ['KPOP', '그룹', '포지션', '로스터', '아이돌', '기획', 'kpop', 'group', 'position', 'roster', 'idol', 'planner'],
+        url: 'https://dopabrain.com/portal/tools/kpop-role-roster.html',
+        isNew: true,
+        isPopular: true,
+        popularity: 38,
+        i18n: {
+            en: { name: 'K-pop Group Role Roster', shortDesc: 'Plan strengths and position coverage for a 3–12 member group' },
+            zh: { name: 'K-pop组合定位阵容', shortDesc: '规划3至12人组合的优势和定位覆盖' },
+            hi: { name: 'K-pop समूह भूमिका रोस्टर', shortDesc: '3–12 सदस्यों की ताकत और भूमिका कवरेज बनाएँ' },
+            ru: { name: 'Ролевой ростер K-pop группы', shortDesc: 'Распределите сильные стороны и роли для 3–12 участников' },
+            ja: { name: 'K-popグループ役割ロスター', shortDesc: '3〜12人の強みとポジションを設計' },
+            es: { name: 'Plantilla de Roles K-pop', shortDesc: 'Planifica fortalezas y posiciones para un grupo de 3–12 integrantes' },
+            pt: { name: 'Escalação de Posições K-pop', shortDesc: 'Planeje forças e posições para um grupo de 3–12 integrantes' },
+            id: { name: 'Roster Peran Grup K-pop', shortDesc: 'Rancang kekuatan dan posisi untuk grup 3–12 anggota' },
+            tr: { name: 'K-pop Grup Rol Kadrosu', shortDesc: '3–12 üyeli bir grup için güçleri ve rolleri planlayın' },
+            de: { name: 'K-pop-Gruppenrollenplaner', shortDesc: 'Stärken und Positionen für 3–12 Mitglieder planen' },
+            fr: { name: 'Répartition des Rôles K-pop', shortDesc: 'Planifiez forces et positions pour un groupe de 3 à 12 membres' }
+        }
+    },
+    {
         id: 'emoji-merge',
         name: '이모지 머지',
         shortDesc: '이모지 진화 퍼즐 게임',

@@ -281,6 +281,33 @@
         };
     }
 
+    function getKpopRosterBridgeConfig() {
+        var slug = getBlogSlug();
+        if (!/(?:kpop|k-pop)-(?:position|positions)|(?:posicion-kpop)/.test(slug)) return null;
+        var locale = getBlogLocale();
+        var supportedLocale = /^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(locale) ? locale : 'en';
+        var copyByLocale = {
+            ko: { kicker: '포지션을 읽었다면 직접 배치하세요', title: 'K-pop 그룹 포지션 로스터 만들기', desc: '3~12인 멤버의 강점을 비교해 메인·리드·센터·리더 태그와 전체 커버리지를 한 장에 정리하세요.', roster: '그룹 로스터 설계', test: '내 포지션 테스트' },
+            en: { kicker: 'TURN POSITION THEORY INTO A LINEUP', title: 'Build a K-pop group role roster', desc: 'Compare two strengths across 3–12 members, then map main, lead, center, leadership and group coverage.', roster: 'Plan a group roster', test: 'Find my own position' },
+            zh: { kicker: '把定位知识变成阵容', title: '制作K-pop组合定位阵容', desc: '比较3至12名成员的两项优势，整理主力、领衔、中心、队长和整体覆盖。', roster: '规划组合阵容', test: '测试我的定位' },
+            hi: { kicker: 'पोज़िशन जानकारी से लाइनअप बनाएँ', title: 'K-pop समूह भूमिका रोस्टर बनाएँ', desc: '3–12 सदस्यों की दो ताकतों की तुलना कर मुख्य, लीड, सेंटर और नेतृत्व टैग बनाएँ।', roster: 'समूह रोस्टर बनाएँ', test: 'मेरी पोज़िशन खोजें' },
+            ru: { kicker: 'ОТ ТЕОРИИ ПОЗИЦИЙ К СОСТАВУ', title: 'Составьте ролевой ростер K-pop группы', desc: 'Сравните две сильные стороны 3–12 участников и распределите основные, ведущие, центральные и лидерские роли.', roster: 'Создать состав', test: 'Узнать свою позицию' },
+            ja: { kicker: 'ポジション解説を編成に変える', title: 'K-popグループ役割ロスターを作る', desc: '3〜12人の2つの強みを比べ、メイン・リード・センター・リーダーと全体のカバーを整理します。', roster: 'グループ編成を作る', test: '自分のポジション診断' },
+            es: { kicker: 'DE LA TEORÍA A LA FORMACIÓN', title: 'Crea una plantilla de roles K-pop', desc: 'Compara dos fortalezas de 3–12 integrantes y organiza roles principales, líderes, centro y cobertura.', roster: 'Planear el grupo', test: 'Descubrir mi posición' },
+            pt: { kicker: 'DA TEORIA À FORMAÇÃO', title: 'Crie uma escalação de posições K-pop', desc: 'Compare duas forças de 3–12 integrantes e organize posições principais, líderes, centro e cobertura.', roster: 'Planejar o grupo', test: 'Descobrir minha posição' },
+            id: { kicker: 'DARI TEORI POSISI KE FORMASI', title: 'Buat roster peran grup K-pop', desc: 'Bandingkan dua kekuatan untuk 3–12 anggota lalu petakan peran utama, lead, center, dan pemimpin.', roster: 'Rancang roster grup', test: 'Cari posisi saya' },
+            tr: { kicker: 'POZİSYON BİLGİSİNDEN KADROYA', title: 'K-pop grup rol kadrosu oluştur', desc: '3–12 üyenin iki gücünü karşılaştırıp ana, lider, merkez ve yönetim rollerini düzenleyin.', roster: 'Grup kadrosu planla', test: 'Pozisyonumu bul' },
+            de: { kicker: 'VON DER POSITIONSTHEORIE ZUR BESETZUNG', title: 'Plane einen K-pop-Gruppenrollenplan', desc: 'Vergleiche zwei Stärken von 3–12 Mitgliedern und verteile Haupt-, Lead-, Center- und Führungsrollen.', roster: 'Gruppenrollen planen', test: 'Meine Position finden' },
+            fr: { kicker: 'DE LA THÉORIE À LA FORMATION', title: 'Créez une répartition des rôles K-pop', desc: 'Comparez deux forces pour 3 à 12 membres et répartissez rôles principaux, leaders, centre et coordination.', roster: 'Planifier le groupe', test: 'Trouver ma position' }
+        };
+        return {
+            locale: supportedLocale,
+            copy: copyByLocale[supportedLocale],
+            rosterUrl: '/portal/tools/kpop-role-roster.html?lang=' + encodeURIComponent(supportedLocale) + '&source=blog_kpop_position_bridge',
+            testUrl: '/kpop-position/?lang=' + encodeURIComponent(supportedLocale) + '&source=blog_kpop_position_bridge'
+        };
+    }
+
     function get2048CoachBridgeConfig() {
         var slug = getBlogSlug();
         if (!/(?:^|-)2048(?:-|$)/.test(slug)) return null;
@@ -982,6 +1009,14 @@
             '.cp-couple-deck-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,0.7);margin-bottom:13px}',
             '.cp-couple-deck-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 16px;border-radius:11px;background:#db2777;color:#fff;text-decoration:none;font-size:14px;font-weight:850}',
             '.cp-couple-deck-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
+            '.cp-kpop-roster{max-width:720px;margin:18px auto 26px;padding:18px;border:1px solid rgba(244,114,182,.34);border-radius:16px;background:linear-gradient(135deg,rgba(72,20,55,.96),rgba(38,29,72,.94));box-shadow:0 14px 34px rgba(0,0,0,.16)}',
+            '.cp-kpop-roster-kicker{font-size:11px;font-weight:900;letter-spacing:.1em;color:#f9a8d4;margin-bottom:5px}',
+            '.cp-kpop-roster-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
+            '.cp-kpop-roster-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,.72);margin-bottom:13px}',
+            '.cp-kpop-roster-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}',
+            '.cp-kpop-roster-link{display:flex;align-items:center;justify-content:center;min-height:46px;padding:11px 14px;border-radius:11px;background:#f472b6;color:#2b071e;text-align:center;text-decoration:none;font-size:14px;font-weight:850}',
+            '.cp-kpop-roster-link:last-child{background:#8b5cf6;color:#fff}',
+            '.cp-kpop-roster-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
             '.cp-palworld-game{max-width:720px;margin:18px auto 26px;padding:18px;border:1px solid rgba(70,217,232,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(6,35,45,0.96),rgba(35,24,67,0.92));box-shadow:0 14px 34px rgba(0,0,0,0.16)}',
             '.cp-palworld-game-kicker{font-size:11px;font-weight:900;letter-spacing:.1em;color:#b7ef5d;margin-bottom:5px}',
             '.cp-palworld-game-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
@@ -1022,7 +1057,7 @@
             '.cp-name{font-size:13px;font-weight:700;color:rgba(255,255,255,0.92);line-height:1.3}',
             '.cp-desc{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;line-height:1.35}',
             '@media(max-width:720px){.cp-mobile-sprint .cp-grid,.cp-revenue-recovery .cp-grid,.cp-scan-recovery .cp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}',
-            '@media(max-width:560px){.cp-grid{grid-template-columns:1fr}.cp-section{padding:18px 12px}.cp-mobile-sprint .cp-grid,.cp-revenue-recovery .cp-grid,.cp-scan-recovery .cp-grid{grid-template-columns:1fr}.cp-stress-script-link,.cp-boundary-library-link{display:flex;margin:8px 0 0}}',
+            '@media(max-width:560px){.cp-grid{grid-template-columns:1fr}.cp-section{padding:18px 12px}.cp-mobile-sprint .cp-grid,.cp-revenue-recovery .cp-grid,.cp-scan-recovery .cp-grid,.cp-kpop-roster-actions{grid-template-columns:1fr}.cp-stress-script-link,.cp-boundary-library-link{display:flex;margin:8px 0 0}}',
             'html.light-mode .cp-section,[data-theme="light"] .cp-section{border-top-color:rgba(0,0,0,0.08)}',
             'html.light-mode .cp-title,[data-theme="light"] .cp-title{color:rgba(0,0,0,0.52)}',
             'html.light-mode .cp-card,[data-theme="light"] .cp-card{background:rgba(0,0,0,0.03);border-color:rgba(0,0,0,0.07)}',
@@ -1218,15 +1253,16 @@
         var sensoryReset = stressPlan || boundaryScript ? null : getSensoryResetBridgeConfig();
         var emotionAction = stressPlan || boundaryScript || sensoryReset ? null : getEmotionActionBridgeConfig();
         var coupleDeck = stressPlan || boundaryScript || sensoryReset || emotionAction ? null : getCoupleDeckBridgeConfig();
-        var coach2048 = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck ? null : get2048CoachBridgeConfig();
-        var brainWorkout = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || coach2048 ? null : getBrainWorkoutBridgeConfig();
-        var palworldGame = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || coach2048 || brainWorkout ? null : getPalworldGameBridgeConfig();
-        if (palworldGame || coach2048 || brainWorkout || emotionAction) scanRecovery = false;
-        var revenueSprint = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || coach2048 || brainWorkout || palworldGame ? null : getRevenueSprintStrategy(bridge);
+        var kpopRoster = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck ? null : getKpopRosterBridgeConfig();
+        var coach2048 = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || kpopRoster ? null : get2048CoachBridgeConfig();
+        var brainWorkout = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || kpopRoster || coach2048 ? null : getBrainWorkoutBridgeConfig();
+        var palworldGame = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || kpopRoster || coach2048 || brainWorkout ? null : getPalworldGameBridgeConfig();
+        if (palworldGame || coach2048 || brainWorkout || emotionAction || kpopRoster) scanRecovery = false;
+        var revenueSprint = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || kpopRoster || coach2048 || brainWorkout || palworldGame ? null : getRevenueSprintStrategy(bridge);
         var sprintPicks = revenueSprint ? revenueSprint.ids
             .map(function(id) { return apps.find(function(app) { return app.id === id; }); })
             .filter(Boolean) : [];
-        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !emotionAction && !coupleDeck && !coach2048 && !brainWorkout && !palworldGame && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
+        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !emotionAction && !coupleDeck && !kpopRoster && !coach2048 && !brainWorkout && !palworldGame && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
 
         if (stressPlan) {
             var planHtml = '<aside class="cp-stress-plan" data-surface-name="blog_stress_plan" data-content-locale="' + stressPlan.locale + '" data-plan-focus="' + stressPlan.focus + '">'
@@ -1451,6 +1487,36 @@
                     });
                 });
             }
+        }
+
+        if (kpopRoster) {
+            var kpopHtml = '<aside class="cp-kpop-roster" data-surface-name="blog_kpop_roster" data-content-locale="' + kpopRoster.locale + '">'
+                + '<div class="cp-kpop-roster-kicker">' + kpopRoster.copy.kicker + '</div>'
+                + '<div class="cp-kpop-roster-title">' + kpopRoster.copy.title + '</div>'
+                + '<div class="cp-kpop-roster-desc">' + kpopRoster.copy.desc + '</div>'
+                + '<div class="cp-kpop-roster-actions">'
+                + '<a class="cp-kpop-roster-link" data-destination="group_roster" href="' + kpopRoster.rosterUrl + '">' + kpopRoster.copy.roster + '</a>'
+                + '<a class="cp-kpop-roster-link" data-destination="position_test" href="' + kpopRoster.testUrl + '">' + kpopRoster.copy.test + '</a>'
+                + '</div></aside>';
+            var kpopPara = anchor.querySelector('p');
+            if (kpopPara) kpopPara.insertAdjacentHTML('afterend', kpopHtml);
+            else anchor.insertAdjacentHTML('afterbegin', kpopHtml);
+            var kpopElement = document.querySelector('.cp-kpop-roster');
+            var kpopViewed = false;
+            var trackKpopView = function() {
+                if (kpopViewed || typeof gtag !== 'function') return;
+                kpopViewed = true;
+                gtag('event', 'kpop_roster_bridge_view', { event_category: 'engagement', source_app: 'blog', surface_name: 'blog_kpop_roster', content_locale: kpopRoster.locale, revenue_goal: 'daily_0_10' });
+            };
+            if (kpopElement && 'IntersectionObserver' in window) {
+                var kpopObserver = new IntersectionObserver(function(entries) { if (entries.some(function(entry) { return entry.isIntersecting; })) { trackKpopView(); kpopObserver.disconnect(); } }, { threshold: 0.35 });
+                kpopObserver.observe(kpopElement);
+            } else trackKpopView();
+            if (kpopElement) kpopElement.addEventListener('click', function(event) {
+                var link = event.target.closest('.cp-kpop-roster-link');
+                if (!link || typeof gtag !== 'function') return;
+                gtag('event', 'kpop_roster_bridge_click', { event_category: 'engagement', source_app: 'blog', surface_name: 'blog_kpop_roster', content_locale: kpopRoster.locale, destination_id: link.getAttribute('data-destination') || '', destination_path: link.getAttribute('href') || '', revenue_goal: 'daily_0_10' });
+            });
         }
 
         if (coach2048) {
