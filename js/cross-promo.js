@@ -308,6 +308,28 @@
         };
     }
 
+    function getPastLifeStoryBridgeConfig() {
+        var slug = getBlogSlug();
+        if (!/past-life/.test(slug)) return null;
+        var locale = getBlogLocale();
+        var supportedLocale = /^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(locale) ? locale : 'en';
+        var copyByLocale = {
+            ko: { kicker: '계산 결과를 한 편의 이야기로', title: '전생 이야기 스튜디오', desc: '시대·장소·역할·분위기·상징을 조합해 다섯 장면의 허구 카드를 만들고 브라우저 서가에 보관하세요.', studio: '이야기 만들기', test: '전생 직업 모험' },
+            en: { kicker: 'TURN THE IDEA INTO A FICTIONAL TALE', title: 'Build a past-life-inspired story card', desc: 'Mix an era, place, role, tone and motif into five fictional scenes, then remix or keep the cards you like.', studio: 'Open the story studio', test: 'Try the era adventure' },
+            zh: { kicker: '把灵感变成虚构故事', title: '创作前世灵感故事卡', desc: '组合时代、地点、角色、基调和意象，生成五幕虚构故事并收藏喜欢的版本。', studio: '打开故事工作室', test: '体验时代冒险' },
+            hi: { kicker: 'विचार को काल्पनिक कहानी बनाएँ', title: 'पिछले जीवन से प्रेरित कहानी कार्ड बनाएँ', desc: 'युग, स्थान, भूमिका, भाव और प्रतीक को पाँच काल्पनिक दृश्यों में मिलाएँ।', studio: 'कहानी स्टूडियो खोलें', test: 'युग यात्रा आज़माएँ' },
+            ru: { kicker: 'ПРЕВРАТИТЕ ИДЕЮ В ВЫМЫШЛЕННЫЙ РАССКАЗ', title: 'Создайте карточку истории о прошлой жизни', desc: 'Соедините эпоху, место, роль, настроение и символ в пяти вымышленных сценах.', studio: 'Открыть студию', test: 'Начать путешествие' },
+            ja: { kicker: 'アイデアを架空の物語に', title: '前世風ストーリーカードを作る', desc: '時代、場所、役割、雰囲気、象徴を組み合わせて五場面の架空物語を作ります。', studio: '物語スタジオを開く', test: '時代の旅を試す' },
+            es: { kicker: 'CONVIERTE LA IDEA EN FICCIÓN', title: 'Crea una historia inspirada en vidas pasadas', desc: 'Combina época, lugar, papel, tono y símbolo en cinco escenas ficticias.', studio: 'Abrir el estudio', test: 'Probar la aventura' },
+            pt: { kicker: 'TRANSFORME A IDEIA EM FICÇÃO', title: 'Crie uma história inspirada em vidas passadas', desc: 'Combine época, lugar, papel, tom e símbolo em cinco cenas fictícias.', studio: 'Abrir o estúdio', test: 'Experimentar a aventura' },
+            id: { kicker: 'UBAH IDE MENJADI KISAH FIKSI', title: 'Buat kartu cerita kehidupan lampau', desc: 'Gabungkan era, tempat, peran, suasana, dan simbol menjadi lima adegan fiksi.', studio: 'Buka studio cerita', test: 'Coba petualangan era' },
+            tr: { kicker: 'FİKRİ KURGUYA DÖNÜŞTÜR', title: 'Geçmiş yaşam esintili hikâye kartı oluştur', desc: 'Çağ, mekân, rol, ton ve simgeyi beş kurgu sahnede birleştirin.', studio: 'Hikâye stüdyosunu aç', test: 'Çağ macerasını dene' },
+            de: { kicker: 'MACH AUS DER IDEE EINE FIKTION', title: 'Erstelle eine inspirierte Geschichtenkarte', desc: 'Kombiniere Epoche, Ort, Rolle, Stimmung und Symbol zu fünf fiktiven Szenen.', studio: 'Geschichtenstudio öffnen', test: 'Epochenabenteuer starten' },
+            fr: { kicker: 'TRANSFORMEZ L’IDÉE EN FICTION', title: 'Créez une histoire inspirée d’une vie antérieure', desc: 'Mélangez époque, lieu, rôle, ton et symbole en cinq scènes fictives.', studio: 'Ouvrir le studio', test: 'Essayer l’aventure' }
+        };
+        return { locale: supportedLocale, copy: copyByLocale[supportedLocale], studioUrl: '/portal/tools/past-life-story-studio.html?lang=' + encodeURIComponent(supportedLocale) + '&source=blog_past_life_story_bridge', testUrl: '/past-life/?lang=' + encodeURIComponent(supportedLocale) + '&source=blog_past_life_story_bridge' };
+    }
+
     function get2048CoachBridgeConfig() {
         var slug = getBlogSlug();
         if (!/(?:^|-)2048(?:-|$)/.test(slug)) return null;
@@ -1017,6 +1039,14 @@
             '.cp-kpop-roster-link{display:flex;align-items:center;justify-content:center;min-height:46px;padding:11px 14px;border-radius:11px;background:#f472b6;color:#2b071e;text-align:center;text-decoration:none;font-size:14px;font-weight:850}',
             '.cp-kpop-roster-link:last-child{background:#8b5cf6;color:#fff}',
             '.cp-kpop-roster-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
+            '.cp-past-life-story{max-width:720px;margin:18px auto 26px;padding:18px;border:1px solid rgba(233,189,105,.36);border-radius:16px;background:linear-gradient(135deg,rgba(38,29,61,.97),rgba(37,27,49,.95));box-shadow:0 14px 34px rgba(0,0,0,.16)}',
+            '.cp-past-life-story-kicker{font-size:11px;font-weight:900;letter-spacing:.1em;color:#e9bd69;margin-bottom:5px}',
+            '.cp-past-life-story-title{font:800 20px/1.25 Georgia,serif;color:#fff9eb;margin-bottom:6px}',
+            '.cp-past-life-story-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,.72);margin-bottom:13px}',
+            '.cp-past-life-story-actions{display:grid;grid-template-columns:1.2fr 1fr;gap:9px}',
+            '.cp-past-life-story-link{display:flex;align-items:center;justify-content:center;min-height:46px;padding:11px 14px;border-radius:11px;background:#e9bd69;color:#2c2135;text-align:center;text-decoration:none;font-size:14px;font-weight:850}',
+            '.cp-past-life-story-link:last-child{background:#8b6aa8;color:#fff}',
+            '.cp-past-life-story-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
             '.cp-palworld-game{max-width:720px;margin:18px auto 26px;padding:18px;border:1px solid rgba(70,217,232,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(6,35,45,0.96),rgba(35,24,67,0.92));box-shadow:0 14px 34px rgba(0,0,0,0.16)}',
             '.cp-palworld-game-kicker{font-size:11px;font-weight:900;letter-spacing:.1em;color:#b7ef5d;margin-bottom:5px}',
             '.cp-palworld-game-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
@@ -1057,7 +1087,7 @@
             '.cp-name{font-size:13px;font-weight:700;color:rgba(255,255,255,0.92);line-height:1.3}',
             '.cp-desc{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;line-height:1.35}',
             '@media(max-width:720px){.cp-mobile-sprint .cp-grid,.cp-revenue-recovery .cp-grid,.cp-scan-recovery .cp-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}',
-            '@media(max-width:560px){.cp-grid{grid-template-columns:1fr}.cp-section{padding:18px 12px}.cp-mobile-sprint .cp-grid,.cp-revenue-recovery .cp-grid,.cp-scan-recovery .cp-grid,.cp-kpop-roster-actions{grid-template-columns:1fr}.cp-stress-script-link,.cp-boundary-library-link{display:flex;margin:8px 0 0}}',
+            '@media(max-width:560px){.cp-grid{grid-template-columns:1fr}.cp-section{padding:18px 12px}.cp-mobile-sprint .cp-grid,.cp-revenue-recovery .cp-grid,.cp-scan-recovery .cp-grid,.cp-kpop-roster-actions,.cp-past-life-story-actions{grid-template-columns:1fr}.cp-stress-script-link,.cp-boundary-library-link{display:flex;margin:8px 0 0}}',
             'html.light-mode .cp-section,[data-theme="light"] .cp-section{border-top-color:rgba(0,0,0,0.08)}',
             'html.light-mode .cp-title,[data-theme="light"] .cp-title{color:rgba(0,0,0,0.52)}',
             'html.light-mode .cp-card,[data-theme="light"] .cp-card{background:rgba(0,0,0,0.03);border-color:rgba(0,0,0,0.07)}',
@@ -1253,16 +1283,17 @@
         var sensoryReset = stressPlan || boundaryScript ? null : getSensoryResetBridgeConfig();
         var emotionAction = stressPlan || boundaryScript || sensoryReset ? null : getEmotionActionBridgeConfig();
         var coupleDeck = stressPlan || boundaryScript || sensoryReset || emotionAction ? null : getCoupleDeckBridgeConfig();
-        var kpopRoster = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck ? null : getKpopRosterBridgeConfig();
-        var coach2048 = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || kpopRoster ? null : get2048CoachBridgeConfig();
-        var brainWorkout = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || kpopRoster || coach2048 ? null : getBrainWorkoutBridgeConfig();
-        var palworldGame = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || kpopRoster || coach2048 || brainWorkout ? null : getPalworldGameBridgeConfig();
-        if (palworldGame || coach2048 || brainWorkout || emotionAction || kpopRoster) scanRecovery = false;
-        var revenueSprint = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || kpopRoster || coach2048 || brainWorkout || palworldGame ? null : getRevenueSprintStrategy(bridge);
+        var pastLifeStory = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck ? null : getPastLifeStoryBridgeConfig();
+        var kpopRoster = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || pastLifeStory ? null : getKpopRosterBridgeConfig();
+        var coach2048 = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || pastLifeStory || kpopRoster ? null : get2048CoachBridgeConfig();
+        var brainWorkout = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || pastLifeStory || kpopRoster || coach2048 ? null : getBrainWorkoutBridgeConfig();
+        var palworldGame = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || pastLifeStory || kpopRoster || coach2048 || brainWorkout ? null : getPalworldGameBridgeConfig();
+        if (palworldGame || coach2048 || brainWorkout || emotionAction || kpopRoster || pastLifeStory) scanRecovery = false;
+        var revenueSprint = stressPlan || boundaryScript || sensoryReset || emotionAction || coupleDeck || pastLifeStory || kpopRoster || coach2048 || brainWorkout || palworldGame ? null : getRevenueSprintStrategy(bridge);
         var sprintPicks = revenueSprint ? revenueSprint.ids
             .map(function(id) { return apps.find(function(app) { return app.id === id; }); })
             .filter(Boolean) : [];
-        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !emotionAction && !coupleDeck && !kpopRoster && !coach2048 && !brainWorkout && !palworldGame && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
+        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !emotionAction && !coupleDeck && !pastLifeStory && !kpopRoster && !coach2048 && !brainWorkout && !palworldGame && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
 
         if (stressPlan) {
             var planHtml = '<aside class="cp-stress-plan" data-surface-name="blog_stress_plan" data-content-locale="' + stressPlan.locale + '" data-plan-focus="' + stressPlan.focus + '">'
@@ -1517,6 +1548,25 @@
                 if (!link || typeof gtag !== 'function') return;
                 gtag('event', 'kpop_roster_bridge_click', { event_category: 'engagement', source_app: 'blog', surface_name: 'blog_kpop_roster', content_locale: kpopRoster.locale, destination_id: link.getAttribute('data-destination') || '', destination_path: link.getAttribute('href') || '', revenue_goal: 'daily_0_10' });
             });
+        }
+
+        if (pastLifeStory) {
+            var storyHtml = '<aside class="cp-past-life-story" data-surface-name="blog_past_life_story" data-content-locale="' + pastLifeStory.locale + '">'
+                + '<div class="cp-past-life-story-kicker">' + pastLifeStory.copy.kicker + '</div>'
+                + '<div class="cp-past-life-story-title">' + pastLifeStory.copy.title + '</div>'
+                + '<div class="cp-past-life-story-desc">' + pastLifeStory.copy.desc + '</div>'
+                + '<div class="cp-past-life-story-actions">'
+                + '<a class="cp-past-life-story-link" data-destination="story_studio" href="' + pastLifeStory.studioUrl + '">' + pastLifeStory.copy.studio + '</a>'
+                + '<a class="cp-past-life-story-link" data-destination="era_adventure" href="' + pastLifeStory.testUrl + '">' + pastLifeStory.copy.test + '</a>'
+                + '</div></aside>';
+            var storyPara = anchor.querySelector('p');
+            if (storyPara) storyPara.insertAdjacentHTML('afterend', storyHtml);
+            else anchor.insertAdjacentHTML('afterbegin', storyHtml);
+            var storyElement = document.querySelector('.cp-past-life-story');
+            var storyViewed = false;
+            var trackStoryView = function() { if (storyViewed || typeof gtag !== 'function') return; storyViewed = true; gtag('event', 'past_life_story_bridge_view', { event_category: 'engagement', source_app: 'blog', surface_name: 'blog_past_life_story', content_locale: pastLifeStory.locale, revenue_goal: 'daily_0_10' }); };
+            if (storyElement && 'IntersectionObserver' in window) { var storyObserver = new IntersectionObserver(function(entries) { if (entries.some(function(entry) { return entry.isIntersecting; })) { trackStoryView(); storyObserver.disconnect(); } }, { threshold: 0.35 }); storyObserver.observe(storyElement); } else trackStoryView();
+            if (storyElement) storyElement.addEventListener('click', function(event) { var link = event.target.closest('.cp-past-life-story-link'); if (!link || typeof gtag !== 'function') return; gtag('event', 'past_life_story_bridge_click', { event_category: 'engagement', source_app: 'blog', surface_name: 'blog_past_life_story', content_locale: pastLifeStory.locale, destination_id: link.getAttribute('data-destination') || '', destination_path: link.getAttribute('href') || '', revenue_goal: 'daily_0_10' }); });
         }
 
         if (coach2048) {

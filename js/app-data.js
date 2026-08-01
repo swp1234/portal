@@ -542,6 +542,34 @@ const APP_DATA = [
         }
     },
     {
+        id: 'past-life-story-studio',
+        name: 'Past Life Story Studio',
+        shortDesc: 'Compose and collect fictional five-scene era stories',
+        description: 'Mix an era, setting, role, tone and recurring motif into a fictional five-scene story card, then remix or save up to 12 combinations in this browser.',
+        icon: '📜',
+        color: '#e9bd69',
+        category: 'tool',
+        tags: ['past life', 'story', 'studio', 'creative writing', 'fiction', 'era', 'prompt', '전생', '이야기', '창작'],
+        url: 'https://dopabrain.com/portal/tools/past-life-story-studio.html',
+        isNew: true,
+        isPopular: true,
+        popularity: 36,
+        i18n: {
+            en: { name: 'Past Life Story Studio', shortDesc: 'Compose and collect fictional five-scene era stories' },
+            ko: { name: '전생 이야기 스튜디오', shortDesc: '다섯 장면의 허구 시대 이야기를 만들고 보관하세요' },
+            zh: { name: '前世故事工作室', shortDesc: '创作并收藏五幕虚构时代故事' },
+            hi: { name: 'पिछले जीवन की कहानी स्टूडियो', shortDesc: 'पाँच दृश्यों की काल्पनिक युग कहानियाँ बनाएँ' },
+            ru: { name: 'Студия историй о прошлой жизни', shortDesc: 'Создавайте вымышленные истории из пяти сцен' },
+            ja: { name: '前世ストーリー・スタジオ', shortDesc: '架空の五場面物語を作って保存' },
+            es: { name: 'Estudio de historias de vidas pasadas', shortDesc: 'Crea relatos ficticios de cinco escenas' },
+            pt: { name: 'Estúdio de histórias de vidas passadas', shortDesc: 'Crie histórias fictícias em cinco cenas' },
+            id: { name: 'Studio Cerita Kehidupan Lampau', shortDesc: 'Buat kisah fiksi lima adegan' },
+            tr: { name: 'Geçmiş Yaşam Hikâye Stüdyosu', shortDesc: 'Beş sahnelik kurgu hikâyeler oluşturun' },
+            de: { name: 'Früheres-Leben-Geschichtenstudio', shortDesc: 'Erstelle fiktive Geschichten in fünf Szenen' },
+            fr: { name: 'Studio d’histoires de vies antérieures', shortDesc: 'Créez des récits fictifs en cinq scènes' }
+        }
+    },
+    {
         id: 'emoji-merge',
         name: '이모지 머지',
         shortDesc: '이모지 진화 퍼즐 게임',
