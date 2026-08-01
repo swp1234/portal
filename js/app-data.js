@@ -3238,6 +3238,23 @@ const APP_DATA = [
         }
     },
     {
+        id:'brain-game-workout',
+        name:'오늘의 두뇌 게임 서킷',
+        shortDesc:'집중 영역과 시간에 맞춘 일일 게임 플레이리스트',
+        description:'A deterministic daily browser-game playlist with local stage completion and streak tracking.',
+        icon:'🧠',color:'#5eead4',category:'game',
+        tags:['daily games','brain games','playlist','memory','logic','speed','streak','두뇌 게임','게임 루틴'],
+        url:'https://dopabrain.com/portal/tools/brain-game-workout.html',isNew:true,isPopular:false,popularity:33,
+        i18n:{
+            en:{name:'Daily Brain Game Circuit',shortDesc:'A 5–15 minute game playlist with a local streak'},zh:{name:'每日益智游戏循环',shortDesc:'5–15分钟游戏清单与本地连续记录'},
+            hi:{name:'दैनिक ब्रेन गेम सर्किट',shortDesc:'स्थानीय स्ट्रीक वाली 5–15 मिनट की गेम सूची'},ru:{name:'Ежедневный игровой комплекс',shortDesc:'Игровой список на 5–15 минут с локальной серией'},
+            ja:{name:'毎日の脳トレゲーム・サーキット',shortDesc:'ローカル記録付き5〜15分プレイリスト'},es:{name:'Circuito diario de juegos mentales',shortDesc:'Lista de 5–15 minutos con racha local'},
+            pt:{name:'Circuito diário de jogos mentais',shortDesc:'Lista de 5–15 minutos com sequência local'},id:{name:'Sirkuit Game Otak Harian',shortDesc:'Daftar game 5–15 menit dengan streak lokal'},
+            tr:{name:'Günlük Zihin Oyunu Turu',shortDesc:'Yerel seriyle 5–15 dakikalık oyun listesi'},de:{name:'Täglicher Denkspiel-Parcours',shortDesc:'5–15-Minuten-Spielliste mit lokaler Serie'},
+            fr:{name:'Circuit quotidien de jeux cérébraux',shortDesc:'Sélection de 5–15 minutes avec série locale'}
+        }
+    },
+    {
         id:'coach-2048',
         name:'2048 보드 분석 코치',
         shortDesc:'현재 보드의 네 방향을 시뮬레이션하고 다음 수 비교',

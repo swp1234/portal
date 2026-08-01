@@ -306,6 +306,28 @@
         };
     }
 
+    function getBrainWorkoutBridgeConfig() {
+        var slug = getBlogSlug();
+        if (!/(?:brain-training|brain-games|memory-card-game|dopabrain-games|best-brain-games)/.test(slug)) return null;
+        var locale = getBlogLocale();
+        var supportedLocale = /^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(locale) ? locale : 'en';
+        var copyByLocale = {
+            ko:{kicker:'읽었다면 짧게 플레이하세요',title:'오늘의 두뇌 게임 서킷 만들기',desc:'집중 영역과 5·10·15분 시간을 고르면 무료 게임을 한 세션으로 묶어드립니다.',action:'오늘의 서킷 만들기'},
+            en:{kicker:'TURN READING INTO PLAY',title:'Build today’s brain game circuit',desc:'Choose a focus and 5, 10 or 15 minutes to turn free games into one clear session.',action:'Build today’s circuit'},
+            zh:{kicker:'把阅读变成游戏',title:'创建今天的益智游戏循环',desc:'选择方向和5、10或15分钟，把免费游戏组合成一次明确的娱乐会话。',action:'创建今日循环'},
+            hi:{kicker:'पढ़ने के बाद खेलें',title:'आज का ब्रेन गेम सर्किट बनाएँ',desc:'फोकस और 5, 10 या 15 मिनट चुनकर मुफ्त गेम का छोटा सत्र बनाएँ।',action:'आज का सर्किट बनाएँ'},
+            ru:{kicker:'ОТ ЧТЕНИЯ К ИГРЕ',title:'Соберите игровой комплекс на сегодня',desc:'Выберите цель и 5, 10 или 15 минут для короткой сессии из бесплатных игр.',action:'Составить комплекс'},
+            ja:{kicker:'読んだら短くプレイ',title:'今日の脳トレゲーム・サーキット',desc:'目的と5・10・15分を選び、無料ゲームを一つの短いセッションにまとめます。',action:'今日のサーキットを作る'},
+            es:{kicker:'DE LA LECTURA AL JUEGO',title:'Crea el circuito de juegos de hoy',desc:'Elige un enfoque y 5, 10 o 15 minutos para combinar juegos gratuitos en una sesión.',action:'Crear circuito'},
+            pt:{kicker:'DA LEITURA AO JOGO',title:'Crie o circuito de jogos de hoje',desc:'Escolha um foco e 5, 10 ou 15 minutos para reunir jogos grátis em uma sessão.',action:'Criar circuito'},
+            id:{kicker:'DARI MEMBACA KE BERMAIN',title:'Buat sirkuit game hari ini',desc:'Pilih fokus dan 5, 10, atau 15 menit untuk satu sesi game gratis.',action:'Buat sirkuit'},
+            tr:{kicker:'OKUMADAN OYUNA',title:'Bugünün zihin oyunu turunu oluştur',desc:'Bir odak ve 5, 10 ya da 15 dakika seçerek ücretsiz oyunları tek oturumda birleştir.',action:'Turu oluştur'},
+            de:{kicker:'VOM LESEN ZUM SPIELEN',title:'Stelle den heutigen Denkspiel-Parcours zusammen',desc:'Wähle einen Fokus und 5, 10 oder 15 Minuten für eine klare Runde kostenloser Spiele.',action:'Parcours erstellen'},
+            fr:{kicker:'DE LA LECTURE AU JEU',title:'Créez le circuit de jeux du jour',desc:'Choisissez un objectif et 5, 10 ou 15 minutes pour une session de jeux gratuits.',action:'Créer le circuit'}
+        };
+        return {locale:supportedLocale,copy:copyByLocale[supportedLocale],url:'/portal/tools/brain-game-workout.html?lang='+encodeURIComponent(supportedLocale)+'&source=blog_brain_game_bridge'};
+    }
+
     function getBlogTopicStrategy() {
         var slug = getBlogSlug();
         if (!slug) return null;
@@ -959,6 +981,12 @@
             '.cp-2048-coach-link{display:flex;align-items:center;justify-content:center;min-height:46px;padding:11px 14px;border-radius:11px;background:#f6c453;color:#21180b;text-decoration:none;font-size:14px;font-weight:850}',
             '.cp-2048-coach-link:last-child{background:#8b7cf6;color:#fff}',
             '.cp-2048-coach-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
+            '.cp-brain-workout{max-width:720px;margin:18px auto 26px;padding:18px;border:1px solid rgba(94,234,212,.38);border-radius:16px;background:linear-gradient(135deg,rgba(8,42,49,.96),rgba(38,29,72,.94));box-shadow:0 14px 34px rgba(0,0,0,.16)}',
+            '.cp-brain-workout-kicker{font-size:11px;font-weight:900;letter-spacing:.1em;color:#5eead4;margin-bottom:5px}',
+            '.cp-brain-workout-title{font-size:20px;font-weight:850;line-height:1.25;color:#fff;margin-bottom:6px}',
+            '.cp-brain-workout-desc{font-size:14px;line-height:1.55;color:rgba(255,255,255,.72);margin-bottom:13px}',
+            '.cp-brain-workout-link{display:flex;align-items:center;justify-content:center;min-height:46px;padding:11px 14px;border-radius:11px;background:#5eead4;color:#06211e;text-decoration:none;font-size:14px;font-weight:850}',
+            '.cp-brain-workout-link:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:3px}',
             '.cp-sticky-sprint{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:2147483000;display:flex;align-items:center;gap:10px;max-width:680px;margin:0 auto;padding:10px 10px 10px 12px;border:1px solid rgba(124,58,237,0.28);border-radius:8px;background:rgba(17,24,39,0.94);box-shadow:0 12px 32px rgba(0,0,0,0.28);backdrop-filter:blur(12px)}',
             '.cp-sticky-copy{min-width:0;flex:1}',
             '.cp-sticky-kicker{font-size:11px;font-weight:800;color:rgba(255,255,255,0.58);text-transform:uppercase;letter-spacing:0}',
@@ -1003,6 +1031,9 @@
             'html.light-mode .cp-2048-coach,[data-theme="light"] .cp-2048-coach{background:linear-gradient(135deg,rgba(246,196,83,.12),rgba(139,124,246,.08));border-color:rgba(160,110,20,.28)}',
             'html.light-mode .cp-2048-coach-title,[data-theme="light"] .cp-2048-coach-title{color:rgba(0,0,0,.88)}',
             'html.light-mode .cp-2048-coach-desc,[data-theme="light"] .cp-2048-coach-desc{color:rgba(0,0,0,.62)}',
+            'html.light-mode .cp-brain-workout,[data-theme="light"] .cp-brain-workout{background:linear-gradient(135deg,rgba(94,234,212,.1),rgba(139,124,246,.08));border-color:rgba(15,118,110,.28)}',
+            'html.light-mode .cp-brain-workout-title,[data-theme="light"] .cp-brain-workout-title{color:rgba(0,0,0,.88)}',
+            'html.light-mode .cp-brain-workout-desc,[data-theme="light"] .cp-brain-workout-desc{color:rgba(0,0,0,.62)}',
             '@media(max-width:480px){.cp-palworld-game-actions,.cp-2048-coach-actions{grid-template-columns:1fr}}',
             '.cp-card:focus-visible{outline:3px solid var(--primary,#667eea);outline-offset:2px}'
         ].join('');
@@ -1162,13 +1193,14 @@
         var sensoryReset = stressPlan || boundaryScript ? null : getSensoryResetBridgeConfig();
         var coupleDeck = stressPlan || boundaryScript || sensoryReset ? null : getCoupleDeckBridgeConfig();
         var coach2048 = stressPlan || boundaryScript || sensoryReset || coupleDeck ? null : get2048CoachBridgeConfig();
-        var palworldGame = stressPlan || boundaryScript || sensoryReset || coupleDeck || coach2048 ? null : getPalworldGameBridgeConfig();
-        if (palworldGame || coach2048) scanRecovery = false;
-        var revenueSprint = stressPlan || boundaryScript || sensoryReset || coupleDeck || coach2048 || palworldGame ? null : getRevenueSprintStrategy(bridge);
+        var brainWorkout = stressPlan || boundaryScript || sensoryReset || coupleDeck || coach2048 ? null : getBrainWorkoutBridgeConfig();
+        var palworldGame = stressPlan || boundaryScript || sensoryReset || coupleDeck || coach2048 || brainWorkout ? null : getPalworldGameBridgeConfig();
+        if (palworldGame || coach2048 || brainWorkout) scanRecovery = false;
+        var revenueSprint = stressPlan || boundaryScript || sensoryReset || coupleDeck || coach2048 || brainWorkout || palworldGame ? null : getRevenueSprintStrategy(bridge);
         var sprintPicks = revenueSprint ? revenueSprint.ids
             .map(function(id) { return apps.find(function(app) { return app.id === id; }); })
             .filter(Boolean) : [];
-        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !coupleDeck && !coach2048 && !palworldGame && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
+        var earlyRecovery = !stressPlan && !boundaryScript && !sensoryReset && !coupleDeck && !coach2048 && !brainWorkout && !palworldGame && !scanRecovery && (bridge.market === 'zh' || bridge.topicKey !== 'market');
 
         if (stressPlan) {
             var planHtml = '<aside class="cp-stress-plan" data-surface-name="blog_stress_plan" data-content-locale="' + stressPlan.locale + '" data-plan-focus="' + stressPlan.focus + '">'
@@ -1434,6 +1466,32 @@
                     });
                 });
             }
+        }
+
+        if (brainWorkout) {
+            var workoutHtml = '<aside class="cp-brain-workout" data-surface-name="blog_brain_game_workout" data-content-locale="' + brainWorkout.locale + '">'
+                + '<div class="cp-brain-workout-kicker">' + brainWorkout.copy.kicker + '</div>'
+                + '<div class="cp-brain-workout-title">' + brainWorkout.copy.title + '</div>'
+                + '<div class="cp-brain-workout-desc">' + brainWorkout.copy.desc + '</div>'
+                + '<a class="cp-brain-workout-link" href="' + brainWorkout.url + '">' + brainWorkout.copy.action + '</a></aside>';
+            var workoutPara = anchor.querySelector('p');
+            if (workoutPara) workoutPara.insertAdjacentHTML('afterend', workoutHtml);
+            else anchor.insertAdjacentHTML('afterbegin', workoutHtml);
+            var workoutElement = document.querySelector('.cp-brain-workout');
+            var workoutViewTracked = false;
+            var trackWorkoutView = function() {
+                if (workoutViewTracked || typeof gtag !== 'function') return;
+                workoutViewTracked = true;
+                gtag('event','brain_game_workout_bridge_view',{event_category:'engagement',source_app:'blog',surface_name:'blog_brain_game_workout',content_locale:brainWorkout.locale,revenue_goal:'daily_0_10'});
+            };
+            if (workoutElement && 'IntersectionObserver' in window) {
+                var workoutObserver = new IntersectionObserver(function(entries){if(entries.some(function(entry){return entry.isIntersecting;})){trackWorkoutView();workoutObserver.disconnect();}},{threshold:.35});
+                workoutObserver.observe(workoutElement);
+            } else trackWorkoutView();
+            if (workoutElement) workoutElement.addEventListener('click',function(event){
+                var link=event.target.closest('.cp-brain-workout-link');if(!link||typeof gtag!=='function')return;
+                gtag('event','brain_game_workout_bridge_click',{event_category:'engagement',source_app:'blog',surface_name:'blog_brain_game_workout',content_locale:brainWorkout.locale,destination_path:link.getAttribute('href')||'',revenue_goal:'daily_0_10'});
+            });
         }
 
         if (palworldGame) {

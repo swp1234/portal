@@ -144,7 +144,7 @@ a:hover{color:var(--purple)}
 .palworld-rail-head,.palworld-rail-grid{position:relative;z-index:1}.palworld-rail-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:16px}
 .palworld-rail-kicker{font-size:11px;font-weight:800;letter-spacing:.15em;color:#b7ef5d}.palworld-rail h2{font-family:var(--heading);font-size:clamp(23px,4vw,32px);margin-top:4px}.palworld-rail-head p{max-width:430px;color:var(--text2);font-size:13px}
 .palworld-rail-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.palworld-rail-card{display:flex;flex-direction:column;gap:8px;min-height:146px;padding:15px;border:1px solid var(--border);border-radius:15px;background:rgba(6,6,18,.62);color:var(--text);text-decoration:none}.palworld-rail-card:hover{border-color:var(--cyan);transform:translateY(-3px);color:var(--text)}.palworld-rail-card>span{font-size:25px}.palworld-rail-card strong{font-family:var(--heading);font-size:15px}.palworld-rail-card small{color:var(--text2);line-height:1.4}
-.coach-2048-rail{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;margin:-14px 0 32px;padding:18px 20px;border:1px solid rgba(246,196,83,.32);border-radius:17px;background:linear-gradient(120deg,rgba(246,196,83,.09),rgba(168,85,247,.08));color:var(--text);text-decoration:none}.coach-2048-rail:hover{border-color:#f6c453;transform:translateY(-2px);color:var(--text)}.coach-2048-rail>span{font-size:34px}.coach-2048-rail strong,.coach-2048-rail small{display:block}.coach-2048-rail strong{font-family:var(--heading);font-size:18px}.coach-2048-rail small{margin-top:2px;color:var(--text2)}.coach-2048-rail b{color:#f6c453;font-size:24px}
+.practice-rails{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:-14px 0 32px}.coach-2048-rail{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;padding:18px 20px;border:1px solid rgba(246,196,83,.32);border-radius:17px;background:linear-gradient(120deg,rgba(246,196,83,.09),rgba(168,85,247,.08));color:var(--text);text-decoration:none}.coach-2048-rail:hover{border-color:#f6c453;transform:translateY(-2px);color:var(--text)}.coach-2048-rail>span{font-size:32px}.coach-2048-rail strong,.coach-2048-rail small{display:block}.coach-2048-rail strong{font-family:var(--heading);font-size:17px}.coach-2048-rail small{margin-top:2px;color:var(--text2)}.coach-2048-rail b{color:#f6c453;font-size:24px}.brain-workout-rail{border-color:rgba(94,234,212,.32);background:linear-gradient(120deg,rgba(94,234,212,.09),rgba(168,85,247,.08))}.brain-workout-rail:hover{border-color:#5eead4}.brain-workout-rail b{color:#5eead4}
 
 /* Content Section */
 .content-section{margin:48px 0;padding:32px 24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
@@ -183,7 +183,7 @@ footer a{color:var(--text2)}
 .animate{animation:fadeUp 0.5s ease both}
 
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
-@media(max-width:800px){.palworld-rail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.palworld-rail-head{align-items:flex-start;flex-direction:column}}
+@media(max-width:800px){.palworld-rail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.palworld-rail-head{align-items:flex-start;flex-direction:column}.practice-rails{grid-template-columns:1fr}}
 @media(max-width:480px){.featured{grid-template-columns:1fr}.games-grid{grid-template-columns:repeat(2,1fr)}.palworld-rail{padding:16px}.palworld-rail-grid{grid-template-columns:1fr}.palworld-rail-card{min-height:110px}}
 </style>
 </head>
@@ -224,9 +224,14 @@ footer a{color:var(--text2)}
   </div>
 </section>
 
-<a class="coach-2048-rail" href="/puzzle-2048/coach.html?source=games_hub" data-coach-2048-rail>
-  <span aria-hidden="true">🧭</span><div><strong data-coach-title>Stuck in 2048? Analyze the board.</strong><small data-coach-desc>Enter 16 tiles, compare all four moves and preview the recommendation.</small></div><b aria-hidden="true">→</b>
-</a>
+<div class="practice-rails">
+  <a class="coach-2048-rail" href="/puzzle-2048/coach.html?source=games_hub" data-coach-2048-rail>
+    <span aria-hidden="true">🧭</span><div><strong data-coach-title>Stuck in 2048? Analyze the board.</strong><small data-coach-desc>Enter 16 tiles, compare all four moves and preview the recommendation.</small></div><b aria-hidden="true">→</b>
+  </a>
+  <a class="coach-2048-rail brain-workout-rail" href="/portal/tools/brain-game-workout.html?source=games_hub" data-brain-workout-rail>
+    <span aria-hidden="true">🧠</span><div><strong data-workout-title>Build today's game circuit.</strong><small data-workout-desc>Choose a focus and turn 5, 10 or 15 minutes into one clear playlist.</small></div><b aria-hidden="true">→</b>
+  </a>
+</div>
 
 <h2 class="section-title" data-i18n="hub_games.featured_title"><span>Featured</span> Games</h2>
 <div class="featured">
@@ -346,6 +351,15 @@ document.addEventListener('DOMContentLoaded',()=>{
     const coachUrl=new URL(coachRail.href,location.href);coachUrl.searchParams.set('lang',lang);coachRail.href=coachUrl.pathname+coachUrl.search;
     window.dataLayer.push({event:'coach_2048_games_view',content_format:'board_analyzer',surface:'games_hub',content_locale:lang});
     coachRail.addEventListener('click',()=>window.dataLayer.push({event:'coach_2048_games_click',content_format:'board_analyzer',surface:'games_hub',content_locale:lang}));
+  }
+  const workoutRail=document.querySelector('[data-brain-workout-rail]');
+  if(workoutRail){
+    const lang=new URLSearchParams(location.search).get('lang')||localStorage.getItem('app_language')||'en';
+    const copy={ko:['오늘의 게임 서킷을 만드세요.','집중 영역을 고르고 5·10·15분을 하나의 플레이리스트로 묶으세요.'],zh:['创建今天的游戏循环。','选择方向，把5、10或15分钟组合成一份清晰清单。'],ja:['今日のゲーム・サーキットを作る','目的を選び、5・10・15分を一つのプレイリストに。'],pt:['Crie o circuito de jogos de hoje.','Escolha um foco e transforme 5, 10 ou 15 minutos em uma lista.'],fr:['Créez le circuit de jeux du jour.','Choisissez un objectif et composez une session de 5, 10 ou 15 minutes.'],es:['Crea el circuito de juegos de hoy.','Elige un enfoque y convierte 5, 10 o 15 minutos en una lista.']}[lang];
+    if(copy){workoutRail.querySelector('[data-workout-title]').textContent=copy[0];workoutRail.querySelector('[data-workout-desc]').textContent=copy[1]}
+    const workoutUrl=new URL(workoutRail.href,location.href);workoutUrl.searchParams.set('lang',lang);workoutRail.href=workoutUrl.pathname+workoutUrl.search;
+    window.dataLayer.push({event:'brain_game_workout_games_view',content_format:'daily_game_circuit',surface:'games_hub',content_locale:lang});
+    workoutRail.addEventListener('click',()=>window.dataLayer.push({event:'brain_game_workout_games_click',content_format:'daily_game_circuit',surface:'games_hub',content_locale:lang}));
   }
 
   // Theme toggle
