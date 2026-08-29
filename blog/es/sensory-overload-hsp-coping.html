@@ -699,10 +699,6 @@
             </div>
         </article>
 
-
-                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
-                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                </div>
 <footer>
             <p><a href="https://dopabrain.com/">DopaBrain</a> &bull; <a href="https://dopabrain.com/portal/">Todo el Contenido</a> &bull; <a href="https://dopabrain.com/portal/blog/es/">Blog</a></p>
             <p style="margin-top:8px;font-size:13px;color:var(--text-secondary)">&copy; 2026 DopaBrain. Todos los derechos reservados.</p>
@@ -723,12 +719,6 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
             }
 
             if (document.readyState === 'loading') {
