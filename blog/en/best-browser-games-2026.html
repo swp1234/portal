@@ -1530,12 +1530,7 @@
                     <a href="/eq-test/" class="cta-button" data-content-surface="personality_cta" data-target-slug="eq-test" style="background:linear-gradient(135deg,#a855f7,#7c3aed);">🧠 Take the EQ Test</a>
                     <a href="/toxic-trait-test/" class="cta-button" data-content-surface="personality_cta" data-target-slug="toxic-trait-test" style="background:linear-gradient(135deg,#e11d48,#be123c);margin-left:8px;">💀 Toxic Trait Test</a>
                 </div>
-            <div class="ad-container" data-ad-surface="en_browser_games_bottom_ad">
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
+
 
 
                 <section>
@@ -1650,11 +1645,6 @@
         bindClick('.toc a', 'content_toc_click', { section_name: 'table_of_contents' });
         bindClick('.related-links a, .related-card, .related-link, .link-item', 'content_related_click', { section_name: 'related_links' });
 
-        document.querySelectorAll('[data-ad-surface]').forEach(function(element) {
-            trackContentEvent('content_ad_impression', {
-                ad_surface: element.getAttribute('data-ad-surface')
-            });
-        });
     })();
     </script>
 
@@ -1672,12 +1662,6 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
             }
 
             if (document.readyState === 'loading') {

@@ -1058,15 +1058,7 @@
                     <a href="https://dopabrain.com/portal/games/" class="cta-button" data-content-surface="bottom_games_hub" data-target-slug="portal-games">🎮 探索所有游戏</a>
                 </div>
 
-                <div class="ad-container" data-ad-surface="before_related_ad" aria-label="Sponsored">
-                    <ins class="adsbygoogle"
-                        style="display:block"
-                        data-ad-client="ca-pub-3600813755953882"
-                        data-ad-slot="auto"
-                        data-ad-format="auto"
-                        data-full-width-responsive="true"></ins>
-                    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                </div>
+
 
                 <section>
                     <h2>推荐文章</h2>
@@ -1161,10 +1153,7 @@
 
         document.querySelectorAll('.ad-container[data-ad-surface] .adsbygoogle').forEach(function(slot) {
             var container = slot.closest('.ad-container');
-            pushContentEvent('content_ad_impression', {
-                ad_surface: container ? container.dataset.adSurface : 'article_ad',
-                ad_slot: slot.getAttribute('data-ad-slot') || 'auto'
-            });
+
         });
     </script>
 
@@ -1182,12 +1171,6 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
             }
 
             if (document.readyState === 'loading') {

@@ -1105,9 +1105,7 @@
 
                 <!-- CTA 1 -->
 
-                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
-                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                </div>
+
 <div class="cta-section">
                     <h2>나의 오라 색상이 궁금하다면?</h2>
                     <p>지금 바로 오라 리딩 테스트를 시작하세요. 당신의 에너지가 어떤 색으로 빛나는지 확인해 보세요.</p>
@@ -1353,12 +1351,6 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
             }
 
             if (document.readyState === 'loading') {

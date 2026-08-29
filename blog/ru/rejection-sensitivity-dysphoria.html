@@ -947,12 +947,7 @@
                 <div class="faq-answer">Во время эпизода RSD немедленные стратегии включают: техники заземления, такие как осведомленность о чувствах 5-4-3-2-1, физическое движение для разрядки эмоциональной энергии, напоминание себе "Это RSD, это чувство пройдет", обращение к доверенному лицу, которое понимает RSD, избегание импульсивных реакций (не отправляйте это сообщение), самосострадание вместо самокритики и отвлечение до снижения интенсивности. Острая эмоциональная боль обычно достигает пика в течение 30-60 минут, хотя последствия могут длиться дольше. Построение плана кризиса в спокойные моменты помогает вам реагировать более эффективно во время эпизодов.</div>
             </div>
         </div>
-            <div class="ad-container" data-ad-surface="ru_rsd_bottom_ad">
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
+
 
 
         <div class="related-section">
@@ -1044,11 +1039,6 @@
         bindClick('.toc a', 'content_toc_click', { section_name: 'table_of_contents' });
         bindClick('.related-links a, .related-card, .related-link, .link-item', 'content_related_click', { section_name: 'related_links' });
 
-        document.querySelectorAll('[data-ad-surface]').forEach(function(element) {
-            trackContentEvent('content_ad_impression', {
-                ad_surface: element.getAttribute('data-ad-surface')
-            });
-        });
     })();
     </script>
 
@@ -1066,12 +1056,6 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
             }
 
             if (document.readyState === 'loading') {

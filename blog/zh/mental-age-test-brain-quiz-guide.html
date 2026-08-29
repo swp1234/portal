@@ -609,9 +609,8 @@
                 <p>通过终身学习、体育锻炼、社交联系、优质睡眠、压力管理、认知挑战（谜题、语言、乐器）、创造性爱好、健康饮食、正念练习和保持好奇心来保持大脑年轻。神经可塑性使你的大脑能够在任何年龄通过适当的刺激进行适应和成长。</p>
             </div>
 
-            <div class="article-ad" data-ad-surface="before_related_ad" aria-label="Sponsored">
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <div class="article-ad" aria-label="Sponsored">
+                <script></script>
             </div>
 
             <h2 id="related">相关资源</h2>
@@ -705,10 +704,7 @@
 
         document.querySelectorAll('.article-ad[data-ad-surface] .adsbygoogle').forEach(function(slot) {
             const container = slot.closest('.article-ad');
-            pushContentEvent('content_ad_impression', {
-                ad_surface: container ? container.dataset.adSurface : 'article_ad',
-                ad_slot: slot.getAttribute('data-ad-slot') || 'auto'
-            });
+
         });
     </script>
 
@@ -726,12 +722,6 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
             }
 
             if (document.readyState === 'loading') {

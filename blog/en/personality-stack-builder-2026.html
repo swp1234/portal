@@ -421,10 +421,9 @@
                 <p>If the stack feels social, take MBTI Love or the MBTI hub. If it feels like a thinking-style question, take Brain Type. If it feels symbolic or shareable, take Animal Personality or Color Personality.</p>
             </div>
 
-            <div class="ad-shell" data-ad-surface="before_related_ad" aria-label="Sponsored">
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+            <div class="ad-shell" aria-label="Sponsored">
                 <script>
-                    try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+                    try {  } catch (e) {}
                 </script>
             </div>
 
@@ -448,10 +447,9 @@
         </footer>
     </div>
 
-    <div style="max-width:800px;margin:20px auto;padding:0 20px" data-ad-surface="bottom_ad">
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <div style="max-width:800px;margin:20px auto;padding:0 20px">
         <script>
-            try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+            try {  } catch (e) {}
         </script>
     </div>
 
@@ -613,10 +611,7 @@
                 var adNode = element ? element.querySelector('.adsbygoogle') : null;
                 if (!element || hasSeen(element)) return;
                 seenAds.push(element);
-                trackContentEvent('content_ad_impression', {
-                    ad_surface: element.dataset.adSurface || 'unknown',
-                    ad_slot: adNode && adNode.dataset ? adNode.dataset.adSlot || '' : ''
-                });
+
             }
             var adShells = document.querySelectorAll('[data-ad-surface]');
             if (!('IntersectionObserver' in window)) {
@@ -649,12 +644,7 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
+
             }
 
             if (document.readyState === 'loading') {

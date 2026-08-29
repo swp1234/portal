@@ -343,10 +343,7 @@
             </div>
 
             <!-- AdSense Top -->
-            <div class="ad-container" data-ad-surface="top_ad">
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            </div>
+
 
             <h2 id="history">贪吃蛇的历史：从街机到手机再到浏览器</h2>
 
@@ -498,10 +495,7 @@
             </div>
 
             <!-- AdSense Middle -->
-            <div class="ad-container" data-ad-surface="mid_ad">
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            </div>
+
 
             <h2 id="advanced">进阶技巧</h2>
 
@@ -751,10 +745,7 @@
                 if (!element || seenAds.indexOf(element) !== -1) return;
                 seenAds.push(element);
                 var ad = element.querySelector('.adsbygoogle');
-                trackContentEvent('content_ad_impression', {
-                    ad_surface: element.dataset.adSurface || 'unknown',
-                    ad_slot: ad ? ad.dataset.adSlot || '' : ''
-                });
+
             }
 
             var adShells = document.querySelectorAll('[data-ad-surface]');
@@ -790,12 +781,6 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
             }
 
             if (document.readyState === 'loading') {
