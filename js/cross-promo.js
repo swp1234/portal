@@ -300,11 +300,12 @@
             de: { kicker: 'VON DER POSITIONSTHEORIE ZUR BESETZUNG', title: 'Plane einen K-pop-Gruppenrollenplan', desc: 'Vergleiche zwei Stärken von 3–12 Mitgliedern und verteile Haupt-, Lead-, Center- und Führungsrollen.', roster: 'Gruppenrollen planen', test: 'Meine Position finden' },
             fr: { kicker: 'DE LA THÉORIE À LA FORMATION', title: 'Créez une répartition des rôles K-pop', desc: 'Comparez deux forces pour 3 à 12 membres et répartissez rôles principaux, leaders, centre et coordination.', roster: 'Planifier le groupe', test: 'Trouver ma position' }
         };
+        var quizLocale = supportedLocale === 'ko' ? 'ko' : 'en';
         return {
             locale: supportedLocale,
             copy: copyByLocale[supportedLocale],
             rosterUrl: '/portal/tools/kpop-role-roster.html?lang=' + encodeURIComponent(supportedLocale) + '&source=blog_kpop_position_bridge',
-            testUrl: '/kpop-position/?lang=' + encodeURIComponent(supportedLocale) + '&source=blog_kpop_position_bridge'
+            testUrl: '/kpop-position/?lang=' + quizLocale + '&start=1&surface=blog_kpop_position_bridge'
         };
     }
 
