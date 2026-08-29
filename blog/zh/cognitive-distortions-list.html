@@ -46,8 +46,6 @@
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
-
-    <!-- AdSense -->
     <script src="/portal/js/ad-loader.js"></script>
 
     <!-- JSON-LD Schema -->
@@ -335,7 +333,6 @@
                 padding: 1.5rem;
             }
         }
-
 
         /* Indexing batch support */
         .indexing-quick-rail {
@@ -878,7 +875,6 @@
         </div>
     </div>
 
-
     <script>
         (function indexingContentTelemetry() {
             function track(name, params) {
@@ -893,12 +889,6 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
             }
 
             if (document.readyState === 'loading') {
@@ -925,9 +915,6 @@
 
     <script src="/portal/js/cross-promo.js" defer></script>
 
-                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
-                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                </div>
 
                 <section class="indexing-followup-section" aria-labelledby="indexing-followup-title">
                     <h2 id="indexing-followup-title">Continue with DopaBrain</h2>

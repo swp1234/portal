@@ -756,7 +756,6 @@
             margin-bottom: 1.5rem;
         }
 
-
         /* Indexing batch support */
         .indexing-quick-rail {
             margin: 0 0 3rem;
@@ -2018,10 +2017,7 @@
 
         <!-- CTA Section -->
 
-                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
-                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                </div>
-<div class="cta-section">
+        <div class="cta-section">
             <h3>🔍 당신의 MBTI와 궁합을 테스트해보세요!</h3>
             <p>지금까지 이론적인 궁합을 알아봤다면, 실제로 당신의 MBTI가 무엇인지, 그리고 상대방과의 궁합이 어떤지 확인해보세요.</p>
             <div class="cta-buttons">
@@ -2154,12 +2150,6 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
             }
 
             if (document.readyState === 'loading') {

@@ -747,7 +747,6 @@
             }
         }
 
-
         /* Indexing batch support */
         .indexing-quick-rail {
             margin: 0 0 3rem;
@@ -1192,10 +1191,7 @@
 
                 <!-- CTA Section -->
 
-                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
-                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                </div>
-<div class="cta-section">
+                <div class="cta-section">
                     <h2>あなたの脳タイプを今日発見しよう</h2>
                     <p>無料の脳タイプ診断テストで、あなたの思考スタイル、強み、可能性を発見してください。</p>
                     <a href="https://dopabrain.com/brain-type/" class="cta-button">🧠 脳タイプテストを開始</a>
@@ -1283,12 +1279,6 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
             }
 
             if (document.readyState === 'loading') {

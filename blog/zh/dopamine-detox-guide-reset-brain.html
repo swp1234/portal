@@ -37,7 +37,6 @@
     <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/dopamine-detox-guide-reset-brain.html">
     <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/dopamine-detox-guide-reset-brain.html">
 
-
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
     <script src="/portal/js/ad-loader.js"></script>
@@ -100,7 +99,6 @@
         .step-box { background: var(--card-bg); border-left: 4px solid var(--primary); padding: 18px 20px; margin: 16px 0; border-radius: 8px; }
         .step-box h4 { color: var(--primary-light); margin-bottom: 8px; font-size: 16px; font-weight: 600; }
         @media (max-width: 480px) { h1 { font-size: 28px; } .trait-grid { grid-template-columns: 1fr; } .container { padding: 20px 16px 40px; } .quick-reset { padding: 18px; } }
-
 
         /* Indexing batch support */
         .indexing-quick-rail {
@@ -591,15 +589,6 @@
                 <p>不会。进展不是全有或全无的。如果你不小心查看了社交媒体或吃了垃圾食品，不带评判地承认它，然后回到戒断中。目标不是完美 &mdash; 而是重新校准你的基线。即使部分重置也会有所帮助。</p>
             </div>
 
-            <div class="ad-container" data-ad-surface="before_related_ad" aria-label="Sponsored">
-                <ins class="adsbygoogle"
-                    style="display:block"
-                    data-ad-client="ca-pub-3600813755953882"
-                    data-ad-slot="auto"
-                    data-ad-format="auto"
-                    data-full-width-responsive="true"></ins>
-                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-            </div>
 
             <h2>相关资源</h2>
             <p>探索更多神经科学和自我提升工具：</p>
@@ -692,13 +681,6 @@
             });
         });
 
-        document.querySelectorAll('.ad-container[data-ad-surface] .adsbygoogle').forEach(function(slot) {
-            var container = slot.closest('.ad-container');
-            pushContentEvent('content_ad_impression', {
-                ad_surface: container ? container.dataset.adSurface : 'article_ad',
-                ad_slot: slot.getAttribute('data-ad-slot') || 'auto'
-            });
-        });
     </script>
 
     <script>
@@ -715,12 +697,6 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
             }
 
             if (document.readyState === 'loading') {

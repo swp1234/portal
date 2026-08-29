@@ -79,7 +79,6 @@
         footer a { color: var(--primary-light); text-decoration: none; }
         @media (max-width: 480px) { h1 { font-size: 28px; } .trait-grid, .culture-grid { grid-template-columns: 1fr; } .container { padding: 20px 16px 40px; } }
 
-
         /* Indexing batch support */
         .indexing-quick-rail {
             margin: 0 0 3rem;
@@ -415,20 +414,11 @@
         </article>
 
 
-                <div class="ad-container indexing-auto-ad" data-ad-surface="indexing_mid_article_ad" aria-label="Sponsored">
-                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                </div>
 <footer>
             <p><a href="https://dopabrain.com/">DopaBrain</a> &bull; <a href="https://dopabrain.com/portal/">All Content</a> &bull; <a href="https://dopabrain.com/portal/blog/en/">Blog</a></p>
             <p style="margin-top:8px;font-size:13px;color:var(--text-secondary)">&copy; 2026 DopaBrain. All rights reserved.</p>
         </footer>
     </div>
-
-    <!-- AdSense -->
-    <div style="max-width:760px;margin:20px auto;padding:0 20px">
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    </div>
-
     <script>
         (function indexingContentTelemetry() {
             function track(name, params) {
@@ -443,12 +433,6 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
             }
 
             if (document.readyState === 'loading') {
