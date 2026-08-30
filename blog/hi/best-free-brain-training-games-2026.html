@@ -895,11 +895,7 @@
         bindClick('.toc a', 'content_toc_click', { section_name: 'table_of_contents' });
         bindClick('.related-links a, .related-card, .related-link, .link-item', 'content_related_click', { section_name: 'related_links' });
 
-        document.querySelectorAll('[data-ad-surface]').forEach(function(element) {
-            trackContentEvent('content_ad_impression', {
-                ad_surface: element.getAttribute('data-ad-surface')
-            });
-        });
+
     })();
     </script>
 
@@ -917,12 +913,7 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
+
             }
 
             if (document.readyState === 'loading') {

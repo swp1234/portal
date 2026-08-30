@@ -1303,10 +1303,7 @@
 
       document.querySelectorAll('.ad-block[data-ad-surface] .adsbygoogle').forEach(function(slot) {
         var container = slot.closest('.ad-block');
-        pushContentEvent('content_ad_impression', {
-          ad_surface: container ? container.dataset.adSurface : 'article_ad',
-          ad_slot: slot.getAttribute('data-ad-slot') || 'auto'
-        });
+
       });
     })();
   </script>
@@ -1326,12 +1323,6 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
             }
 
             if (document.readyState === 'loading') {

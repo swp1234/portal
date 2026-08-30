@@ -1459,10 +1459,7 @@
         if (document.querySelector('.inline-ad .adsbygoogle')) {
             try {
                 (adsbygoogle = window.adsbygoogle || []).push({});
-                pushContentEvent('content_ad_impression', {
-                    ad_surface: 'before_related_ad',
-                    ad_slot: 'auto'
-                });
+
             } catch (error) {}
         }
     </script>
@@ -1481,12 +1478,6 @@
 
             function emitInitialContentEvents() {
                 track('content_view');
-                document.querySelectorAll('[data-ad-surface]').forEach(function(node, index) {
-                    track('content_ad_impression', {
-                        ad_surface: node.getAttribute('data-ad-surface') || 'article_ad',
-                        ad_index: index + 1
-                    });
-                });
             }
 
             if (document.readyState === 'loading') {

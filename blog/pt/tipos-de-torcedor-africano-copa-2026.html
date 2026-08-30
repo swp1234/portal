@@ -365,10 +365,7 @@
                 var adNode = element ? element.querySelector('.adsbygoogle') : null;
                 if (!element || hasSeen(element)) return;
                 seenAds.push(element);
-                trackContentEvent('content_ad_impression', {
-                    ad_surface: element.dataset.adSurface || 'unknown',
-                    ad_slot: adNode && adNode.dataset ? adNode.dataset.adSlot || '' : ''
-                });
+
             }
             var adShells = document.querySelectorAll('[data-ad-surface]');
             if (!('IntersectionObserver' in window)) {

@@ -125,9 +125,7 @@
         }, params || {}));
       }
       track('content_view');
-      document.querySelectorAll('[data-ad-surface]').forEach(function(node) {
-        track('content_ad_impression', { ad_surface: node.getAttribute('data-ad-surface') || 'article' });
-      });
+
       document.querySelectorAll('.quick-card').forEach(function(node) {
         node.addEventListener('click', function() { track('content_test_click', { link_url: node.href }); });
       });
