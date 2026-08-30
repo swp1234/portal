@@ -3,13 +3,15 @@
 
   const LANGS = ['ko','en','zh','hi','ru','ja','es','pt','id','tr','de','fr'];
   const en = {
-    skip:'Skip to generator',back:'← All tools',language:'Language',eyebrow:'PALWORLD SERVER CONTROL DESK · DOCS 1.0',
+    skip:'Skip to generator',back:'← All tools',language:'Language',eyebrow:'PALWORLD SERVER CONTROL DESK · DOCS 1.0.3',
     title:'Palworld Server Settings Generator',lead:'Build an INI safely, compare play styles, and keep the commands and recovery steps you actually need in one place.',
     chipGenerator:'INI generator',chipParameters:'Parameter finder',chipCommands:'Admin commands',chipOps:'Backup & mods',
     verified:'Verified against official server documentation',earlyTitle:'Before changing a live world',
     earlyBody:'Palworld is actively updated. Stop the server, back up the world, change one group of settings at a time, and keep your previous INI.',
-    step1:'STEP 1',generatorTitle:'Choose a server profile',reset:'Reset',step2:'STEP 2',outputTitle:'Copy your generated settings',copyIni:'Copy INI',
+    step1:'STEP 1',generatorTitle:'Choose a server profile',presetLead:'Start with the closest profile. You can copy it immediately, then tune individual values only if needed.',reset:'Reset',step2:'STEP 2',outputTitle:'Copy your starter settings',copyIni:'Copy starter INI',
     activeFile:'Active file:',generatorNote:'This generator covers common settings, not every reserved or deprecated key. Merge the generated values into the OptionSettings line of your active file.',
+    optional:'OPTIONAL',settingsTitle:'Tune individual values',settingsLead:'Every change updates the starter block above. Back up the active file before replacing values.',
+    pvpRequirement:'PvP requires all three official flags. This preset enables them together; PvP remains an unsupported trial feature.',
     ad:'Advertisement',reference:'REFERENCE',parametersTitle:'Official parameter finder',parametersLead:'Search the key name or meaning. Performance warnings are highlighted.',
     searchPlaceholder:'Search: backup, PvP, capture, voice…',allCategories:'All categories',results:'{count} parameters',
     commandsTitle:'Admin command desk',commandsLead:'Set AdminPassword first, then authenticate in chat. Click any command to copy it.',
@@ -22,21 +24,23 @@
     mods3:'Back up first: incompatible mods can cause crashes or save corruption.',mods4:'Restart to deploy changes; use -NoMods to isolate a mod-related failure.',
     troubleTitle:'Fast troubleshooting order',trouble1:'Validate server files and confirm the active INI path.',trouble2:'Restore the last known-good INI and remove outdated mods.',
     trouble3:'Check ports, firewall, PublicIP/PublicPort and allowed platforms.',trouble4:'Change one setting group at a time and inspect logs after each restart.',
-    sourcesTitle:'Official sources and scope',sourcesBody:"Setting names and operational notes are based on Pocketpair's official Palworld Server Guide version 1.0. This independent tool is not affiliated with Pocketpair. Game updates may change defaults or behavior.",
-    sourceConfig:'Official configuration parameters ↗',sourceCommands:'Official commands ↗',sourceMods:'Official server mod guide ↗',
+    sourcesTitle:'Official sources and scope',sourcesBody:"Setting names and operational notes are based on Pocketpair's official Palworld Server Guide version 1.0.3. This independent tool is not affiliated with Pocketpair. Game updates may change defaults or behavior.",
+    sourceConfig:'Official configuration parameters ↗',sourceCommands:'Official commands ↗',sourcePvp:'Official PvP requirements ↗',sourceMods:'Official server mod guide ↗',
     copied:'Copied',copy:'Copy',performance:'May affect performance',none:'No matching parameters',
     casual:'Casual',casualDesc:'Faster progress',balanced:'Balanced',balancedDesc:'Close to default',hard:'Hard survival',hardDesc:'Slower and riskier',
-    performancePreset:'Performance',performanceDesc:'Lighter server load',pvp:'PvP trial',pvpDesc:'PvP starting point',
+    performancePreset:'Performance',performanceDesc:'Lighter server load',pvp:'PvP trial',pvpDesc:'All 3 required flags',
     management:'Management',feature:'Features',balance:'Game balance',performanceCat:'Performance'
   };
   const ko = {
-    skip:'설정 생성기로 이동',back:'← 모든 도구',language:'언어',eyebrow:'팰월드 서버 컨트롤 데스크 · 공식 문서 1.0',
+    skip:'설정 생성기로 이동',back:'← 모든 도구',language:'언어',eyebrow:'팰월드 서버 컨트롤 데스크 · 공식 문서 1.0.3',
     title:'팰월드 서버 설정 생성기',lead:'플레이 방식별 설정을 비교하고, 안전하게 INI를 만들며, 꼭 필요한 명령어와 복구 절차를 한곳에서 확인하세요.',
     chipGenerator:'INI 생성기',chipParameters:'파라미터 검색',chipCommands:'관리자 명령어',chipOps:'백업·모드',
     verified:'공식 서버 문서 기준 검증',earlyTitle:'운영 중인 월드를 변경하기 전에',
     earlyBody:'팰월드는 계속 업데이트됩니다. 서버를 멈추고 월드를 백업한 뒤 설정 묶음을 하나씩 바꾸고, 이전 INI를 보관하세요.',
-    step1:'1단계',generatorTitle:'서버 프로필 선택',reset:'초기화',step2:'2단계',outputTitle:'생성된 설정 복사',copyIni:'INI 복사',
+    step1:'1단계',generatorTitle:'서버 프로필 선택',presetLead:'가장 가까운 프로필부터 고르세요. 바로 복사한 뒤 필요한 값만 조정할 수 있습니다.',reset:'초기화',step2:'2단계',outputTitle:'시작 설정 복사',copyIni:'시작 INI 복사',
     activeFile:'실제 적용 파일:',generatorNote:'이 생성기는 자주 쓰는 설정을 다룹니다. 예약·폐기된 키까지 모두 포함하지는 않습니다. 생성값을 실제 파일의 OptionSettings 줄에 병합하세요.',
+    optional:'선택 사항',settingsTitle:'개별 값 조정',settingsLead:'값을 바꿀 때마다 위 시작 설정이 갱신됩니다. 실제 파일의 값을 교체하기 전에 반드시 백업하세요.',
+    pvpRequirement:'PvP에는 공식 플래그 3개가 모두 필요합니다. 이 프리셋은 세 플래그를 함께 켜며, PvP는 아직 지원 대상이 아닌 시험 기능입니다.',
     ad:'광고',reference:'빠른 참조',parametersTitle:'공식 파라미터 검색기',parametersLead:'키 이름이나 의미로 검색하세요. 서버 성능에 영향을 줄 수 있는 값은 따로 표시됩니다.',
     searchPlaceholder:'검색: 백업, PvP, 포획, 음성…',allCategories:'모든 분류',results:'파라미터 {count}개',
     commandsTitle:'관리자 명령어 데스크',commandsLead:'먼저 AdminPassword를 설정하고 채팅에서 인증하세요. 명령어를 누르면 복사됩니다.',
@@ -49,11 +53,11 @@
     mods3:'호환되지 않는 모드는 충돌이나 세이브 손상을 일으킬 수 있으므로 먼저 백업합니다.',mods4:'재시작해야 변경이 배포됩니다. -NoMods로 모드 관련 장애를 분리할 수 있습니다.',
     troubleTitle:'빠른 문제 해결 순서',trouble1:'서버 파일을 검증하고 실제 INI 경로를 확인합니다.',trouble2:'마지막 정상 INI를 복원하고 오래된 모드를 제거합니다.',
     trouble3:'포트, 방화벽, PublicIP/PublicPort, 허용 플랫폼을 확인합니다.',trouble4:'설정 묶음을 하나씩 바꾸고 재시작마다 로그를 확인합니다.',
-    sourcesTitle:'공식 출처와 범위',sourcesBody:'설정 이름과 운영 정보는 Pocketpair 공식 Palworld Server Guide 1.0을 기준으로 했습니다. 이 독립 도구는 Pocketpair와 제휴하지 않았으며 업데이트에 따라 기본값이나 동작이 달라질 수 있습니다.',
-    sourceConfig:'공식 설정 파라미터 ↗',sourceCommands:'공식 명령어 ↗',sourceMods:'공식 서버 모드 가이드 ↗',
+    sourcesTitle:'공식 출처와 범위',sourcesBody:'설정 이름과 운영 정보는 Pocketpair 공식 Palworld Server Guide 1.0.3을 기준으로 했습니다. 이 독립 도구는 Pocketpair와 제휴하지 않았으며 업데이트에 따라 기본값이나 동작이 달라질 수 있습니다.',
+    sourceConfig:'공식 설정 파라미터 ↗',sourceCommands:'공식 명령어 ↗',sourcePvp:'공식 PvP 요구사항 ↗',sourceMods:'공식 서버 모드 가이드 ↗',
     copied:'복사됨',copy:'복사',performance:'성능에 영향을 줄 수 있음',none:'일치하는 파라미터가 없습니다',
     casual:'캐주얼',casualDesc:'빠른 성장',balanced:'균형',balancedDesc:'기본값 중심',hard:'하드 생존',hardDesc:'느리고 위험하게',
-    performancePreset:'성능 우선',performanceDesc:'서버 부하 감소',pvp:'PvP 시험',pvpDesc:'PvP 시작 설정',
+    performancePreset:'성능 우선',performanceDesc:'서버 부하 감소',pvp:'PvP 시험',pvpDesc:'필수 플래그 3개',
     management:'서버 관리',feature:'기능',balance:'게임 밸런스',performanceCat:'성능'
   };
   const small = {
@@ -89,14 +93,16 @@
     ['bEnableVoiceChat','boolean',false,'In-game voice chat','게임 내 음성 채팅'],
     ['bEnableFastTravel','boolean',true,'Enable fast travel','빠른 이동 허용'],
     ['bEnableInvaderEnemy','boolean',true,'Enable base invasions','거점 습격 허용'],
-    ['bIsPvP','boolean',false,'Enable trial PvP rules','시험적 PvP 활성화']
+    ['bIsPvP','boolean',false,'Enable trial PvP rules','시험적 PvP 활성화'],
+    ['bEnablePlayerToPlayerDamage','boolean',false,'Allow players to damage each other in PvP','PvP에서 플레이어 간 피해 허용'],
+    ['bEnableDefenseOtherGuildPlayer','boolean',false,'Let base Pals defend against hostile guild players','거점 팰이 적대 길드 플레이어를 방어']
   ];
   const presets = {
     casual:{ExpRate:2.5,PalCaptureRate:2,CollectionDropRate:2,PalEggDefaultHatchingTime:12,PlayerDamageRateDefense:.7},
     balanced:{},
     hard:{ExpRate:.6,PalCaptureRate:.7,CollectionDropRate:.7,PlayerDamageRateDefense:1.5,PalEggDefaultHatchingTime:96},
     performance:{PalSpawnNumRate:.7,BaseCampWorkerMaxNum:10,BaseCampMaxNumInGuild:2,MaxBuildingLimitNum:1000,bEnableVoiceChat:false},
-    pvp:{bIsPvP:true,BaseCampMaxNumInGuild:2,MaxBuildingLimitNum:1000,bEnableFastTravel:true,PlayerDamageRateAttack:1,PlayerDamageRateDefense:1}
+    pvp:{bIsPvP:true,bEnablePlayerToPlayerDamage:true,bEnableDefenseOtherGuildPlayer:true,BaseCampMaxNumInGuild:2,MaxBuildingLimitNum:1000,bEnableFastTravel:true,PlayerDamageRateAttack:1,PlayerDamageRateDefense:1}
   };
   const parameters = [
     ['BaseCampMaxNum','performanceCat','Total bases across the server','서버 전체 거점 수',1],
@@ -172,6 +178,9 @@
   let lang = detectLanguage();
   let values = {};
   let activePreset = 'balanced';
+  let generatorViewSent = false;
+  let generatorViewTimer = 0;
+  const changedSettings = new Set();
   const $ = id => document.getElementById(id);
   const t = key => (locales[lang] || en)[key] || en[key] || key;
   const event = (name, params={}) => window.gtag?.('event', name, {content_format:'palworld_server_console',language:lang,...params});
@@ -187,10 +196,11 @@
     document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = t(el.dataset.i18nPlaceholder); });
     $('language').value = lang;
-    const url = new URL(location.href); url.searchParams.set('lang',lang);
+    const url = new URL(location.pathname, location.origin);
+    if (lang !== 'en' || new URLSearchParams(location.search).has('lang')) url.searchParams.set('lang',lang);
     document.querySelector('link[rel=canonical]').href = url.href;
     document.querySelector('meta[property="og:url"]').content = url.href;
-    document.title = `${t('title')} (1.0)`;
+    document.title = `${t('title')} (1.0.3)`;
   }
   function defaultValues() {
     values = Object.fromEntries(settingDefs.map(d => [d[0],d[2]]));
@@ -206,6 +216,7 @@
     $('presets').innerHTML = Object.keys(presets).map(name =>
       `<button class="preset ${name===activePreset?'active':''}" type="button" data-preset="${name}"><strong>${escapeHtml(t(name==='performance'?'performancePreset':name))}</strong><span>${escapeHtml(t(name+'Desc'))}</span></button>`
     ).join('');
+    $('pvpRequirement').hidden = activePreset !== 'pvp';
   }
   function renderSettings() {
     $('settings').innerHTML = settingDefs.map(d => {
@@ -257,6 +268,20 @@
     localize(); renderPresets(); renderSettings(); renderOutput(); renderFilters(); renderParameters(); renderCommands();
   }
 
+  function observeGenerator() {
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= 0.5);
+      clearTimeout(generatorViewTimer);
+      if (!visible || generatorViewSent) return;
+      generatorViewTimer = setTimeout(() => {
+        generatorViewSent = true;
+        event('palworld_generator_view',{official_docs_version:'1.0.3'});
+        observer.disconnect();
+      }, 500);
+    }, {threshold:[0.5]});
+    observer.observe($('presets'));
+  }
+
   $('language').addEventListener('change', e => {
     lang = e.target.value; localStorage.setItem('app_language',lang);
     const url=new URL(location.href);url.searchParams.set('lang',lang);history.replaceState({},'',url);
@@ -265,15 +290,33 @@
   $('presets').addEventListener('click', e => { const b=e.target.closest('[data-preset]');if(b)applyPreset(b.dataset.preset); });
   $('settings').addEventListener('input', e => {
     const input=e.target.closest('[data-key]');if(!input)return;
-    values[input.dataset.key]=input.type==='checkbox'?input.checked:(input.type==='number'?Number(input.value):input.value);
+    if (input.type === 'number') {
+      if (input.value === '') return;
+      const definition = settingDefs.find(item => item[0] === input.dataset.key);
+      const numeric = Number(input.value);
+      if (!Number.isFinite(numeric)) return;
+      values[input.dataset.key] = Math.min(definition[6], Math.max(definition[5], numeric));
+      if (Number(input.value) !== values[input.dataset.key]) input.value = String(values[input.dataset.key]);
+    } else {
+      values[input.dataset.key]=input.type==='checkbox'?input.checked:input.value;
+    }
     activePreset='custom';renderPresets();renderOutput();
+    if (!changedSettings.has(input.dataset.key)) {
+      changedSettings.add(input.dataset.key);
+      event('palworld_setting_change',{setting:input.dataset.key});
+    }
   });
   $('reset').addEventListener('click',()=>applyPreset('balanced'));
   $('copyIni').addEventListener('click',()=>copy($('iniOutput').textContent,'ini'));
   $('parameterSearch').addEventListener('input',()=>{renderParameters();event('palworld_parameter_search');});
   $('categoryFilter').addEventListener('change',renderParameters);
   $('commandList').addEventListener('click',e=>{const b=e.target.closest('[data-command]');if(b)copy(commands[Number(b.dataset.command)][0],'command');});
+  document.querySelector('.suite-links').addEventListener('click',e=>{
+    const link=e.target.closest('a');
+    if(link)event('palworld_guide_click',{destination:new URL(link.href,location.href).pathname.split('/').pop()});
+  });
 
   defaultValues(); rerender();
-  event('palworld_server_tool_view',{official_docs_version:'1.0'});
+  observeGenerator();
+  event('palworld_server_tool_view',{official_docs_version:'1.0.3'});
 })();
