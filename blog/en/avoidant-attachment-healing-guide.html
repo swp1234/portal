@@ -53,6 +53,7 @@
   <style>
     :root{color-scheme:dark;--bg:#0b1020;--card:#151d31;--soft:#202b43;--line:#34415d;--text:#f4f6fb;--muted:#b7c1d4;--accent:#ff8fc8;--good:#8ee3b1}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at top,#2c1f3d 0,#0b1020 48%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.72}a{color:#a8d7ff}.wrap{width:min(780px,calc(100% - 28px));margin:auto}.top{padding:18px 0}.top a{text-decoration:none}.hero,.card,.action,.boundary{margin-bottom:18px;padding:clamp(20px,5vw,38px);border:1px solid var(--line);border-radius:20px;background:rgba(21,29,49,.97)}.hero{margin-top:8px}.eyebrow{margin:0;color:var(--accent);font-size:.8rem;font-weight:850;letter-spacing:.06em;text-transform:uppercase}h1{margin:.35em 0;font-size:clamp(2rem,7vw,3.45rem);line-height:1.12;letter-spacing:-.035em}h2{margin:0 0 .65em;font-size:clamp(1.35rem,4vw,1.8rem);line-height:1.25}h3{margin:.15em 0;font-size:1.05rem}.lead,.note{color:var(--muted)}.answer{padding:4px 0 4px 16px;border-left:4px solid var(--accent)}.answer strong{color:var(--accent)}.cta{display:inline-flex;align-items:center;justify-content:center;min-height:50px;margin-top:12px;padding:12px 19px;border-radius:999px;background:var(--accent);color:#2b1020;font-weight:850;text-decoration:none}.grid,.dimensions,.steps{display:grid;gap:12px}.grid{grid-template-columns:repeat(2,1fr)}.dimensions{grid-template-columns:repeat(2,1fr);margin-top:16px}.grid article,.dimensions article,.step{padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--soft)}.grid strong,.dimensions strong,.step strong{display:block;color:var(--good)}.boundary{border-color:#72566d}.boundary h2{color:#ffc4df}.script{margin:16px 0;padding:18px;border-radius:14px;background:#0f172a;border:1px solid var(--line);font-size:1.05rem}.script span{display:block;margin-bottom:5px;color:var(--accent);font-size:.8rem;font-weight:800;text-transform:uppercase}.sources li{margin:.75em 0}.footer{padding:22px 0 44px;color:var(--muted);font-size:.9rem}@media(max-width:620px){.grid,.dimensions{grid-template-columns:1fr}.hero,.card,.action,.boundary{padding:20px;border-radius:16px}.cta{width:100%;text-align:center}}
+    .rail{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.quick-card{display:block;min-height:72px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--soft);color:var(--text);font-weight:750;text-decoration:none}.quick-card span{display:block;margin-top:4px;color:var(--muted);font-size:.88rem;font-weight:500}@media(max-width:620px){.rail{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -116,6 +117,14 @@
           <a class="cta" data-cta-position="action" href="/attachment-style/?lang=en&amp;start=1&amp;surface=en_avoidant_guide_primary">Try the 10-scenario private reflection →</a>
         </section>
 
+        <section class="card indexing-quick-rail" data-quick-rail-mode="focused">
+          <h2>Two related next steps</h2>
+          <div class="rail">
+            <a class="quick-card" href="/portal/blog/en/attachment-styles-4-types-explained.html" data-content-surface="quick_rail" data-target-slug="attachment_dimensions_guide">Understand the two dimensions<span>How anxiety and avoidance relate to four familiar labels</span></a>
+            <a class="quick-card" href="/emotion-iceberg/?lang=en" data-content-surface="quick_rail" data-target-slug="emotion_iceberg">Name the feeling underneath<span>A private prompt for moving from reaction to words</span></a>
+          </div>
+        </section>
+
         <section class="card sources" id="sources">
           <h2>Research used for this guide</h2>
           <ul>
@@ -131,6 +140,9 @@
   </div>
   <script>
   (()=>{const track=(name,params={})=>{if(typeof window.gtag==='function')window.gtag('event',name,{event_category:'content',content_id:'en_avoidant_attachment_evidence',content_language:'en',...params})};track('content_view');let sent=false;const section=document.querySelector('[data-qualified-action]');const qualify=()=>{if(sent)return;sent=true;track('content_en_avoidant_pattern_view',{interaction_surface:'evidence_pattern_action'})};if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting&&entry.intersectionRatio>=.35)){setTimeout(()=>{const box=section.getBoundingClientRect();if(box.top<innerHeight&&box.bottom>0)qualify()},500);observer.disconnect()}},{threshold:[.35]});observer.observe(section)}document.querySelectorAll('[data-cta-position]').forEach(link=>link.addEventListener('click',()=>track('content_cta_click',{target_slug:'attachment_response_reflection',cta_position:link.dataset.ctaPosition})))})();
+  </script>
+  <script>
+  (()=>{const track=(target)=>{if(typeof window.gtag==='function')window.gtag('event','content_related_click',{event_category:'content',content_id:'en_avoidant_attachment_evidence',content_language:'en',target_slug:target.dataset.targetSlug,interaction_surface:'focused_rail'})};document.querySelectorAll('[data-content-surface="quick_rail"]').forEach(link=>link.addEventListener('click',()=>track(link)))})();
   </script>
 </body>
 </html>
