@@ -1,836 +1,110 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="index, follow, max-image-preview:large">
-    <meta name="description" content="2026年最好玩的免费在线游戏推荐。无需下载，直接浏览器玩。Sky Runner、Stack Tower、Zigzag Runner、Emoji Merge等10款热门游戏。">
-    <meta name="keywords" content="免费在线游戏, 浏览器游戏, 网页游戏, 在线游戏推荐, 休闲游戏, 轻游戏, 2026游戏">
-    <meta name="author" content="DopaBrain">
-    <meta name="theme-color" content="#ec4899">
-    <title>2026年最好玩的免费在线游戏推荐</title>
-
-    <!-- Open Graph Tags -->
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="2026年最好玩的免费在线游戏推荐">
-    <meta property="og:description" content="无需下载安装，打开浏览器即玩。2026年最受欢迎的10款休闲网络游戏。">
-    <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg">
-    <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/browser-games.html">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/browser-games.html">
-    <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/browser-games.html">
-
-    <!-- Schema.org Article JSON-LD -->
-<!-- Google Analytics & AdSense -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-J8GSWM40TV');
-    </script>
-    <script src="/portal/js/ad-loader.js"></script>
-
-    <style>
-        :root {
-            --primary: #ec4899;
-            --secondary: #f43f5e;
-            --bg-dark: #0a0a1a;
-            --text-primary: #f0f0f8;
-            --text-secondary: #a0a0b8;
-            --border-color: rgba(236, 72, 153, 0.15);
-            --card-bg: rgba(236, 72, 153, 0.08);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
-            background: #0a0a1a;
-            color: var(--text-primary);
-            line-height: 1.8;
-            min-height: 100vh;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image:
-                radial-gradient(circle at 20% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(244, 63, 94, 0.08) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 50%, #fb7185 100%);
-            width: 0%;
-            z-index: 1000;
-        }
-
-        .header-nav {
-            display: flex;
-            justify-content: space-between;
-            padding: 1.25rem 1rem;
-            background: rgba(10, 10, 26, 0.85);
-            border-bottom: 1px solid var(--border-color);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-nav a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .hero-section {
-            padding: 6rem 1rem 4rem;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.15) 0%, rgba(244, 63, 94, 0.1) 100%);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .hero-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-        }
-
-        .article-header h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-        }
-
-        .article-header h1 span {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .article-meta {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .article-desc {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            max-width: 750px;
-            margin: 0 auto;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .article-content {
-            margin: 3rem auto;
-        }
-
-        .article-content section {
-            margin-bottom: 4rem;
-        }
-
-        .article-content h2 {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            margin: 0 0 1.5rem 0;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-
-        .article-content h2::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-        }
-
-        .article-content h3 {
-            font-size: 1.3rem;
-            color: var(--text-primary);
-            margin: 1.5rem 0 1rem;
-            font-weight: 700;
-        }
-
-        .article-content p {
-            margin-bottom: 1.2rem;
-            color: var(--text-secondary);
-            line-height: 1.85;
-        }
-
-        .article-content ul {
-            margin-left: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .article-content li {
-            margin-bottom: 0.8rem;
-            color: var(--text-secondary);
-        }
-
-        .article-content strong {
-            color: #fb7185;
-            font-weight: 700;
-        }
-
-        .highlight-box {
-            background: var(--card-bg);
-            border-left: 4px solid var(--primary);
-            padding: 1.8rem;
-            margin: 2rem 0;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-        }
-
-        .highlight-box p {
-            color: var(--text-primary);
-            margin-bottom: 0;
-        }
-
-        .game-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            transition: all 0.3s ease;
-        }
-
-        .game-card:hover {
-            border-color: rgba(236, 72, 153, 0.3);
-            background: rgba(236, 72, 153, 0.1);
-            transform: translateY(-4px);
-        }
-
-        .game-number {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-weight: 700;
-            margin-bottom: 0.8rem;
-            font-size: 0.9rem;
-        }
-
-        .game-card h3 {
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin: 0.5rem 0 0.8rem;
-        }
-
-        .game-card p {
-            color: var(--text-secondary);
-            margin-bottom: 0.8rem;
-            font-size: 0.95rem;
-        }
-
-        .game-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .game-link:hover {
-            transform: translateY(-2px);
-        }
-
-        .faq-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            margin-bottom: 1rem;
-        }
-
-        .faq-item.active {
-            border-color: rgba(236, 72, 153, 0.3);
-            background: rgba(236, 72, 153, 0.1);
-        }
-
-        .faq-question {
-            padding: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            user-select: none;
-        }
-
-        .faq-question h4 {
-            margin: 0;
-            color: var(--text-primary);
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .faq-toggle {
-            color: var(--primary);
-            font-size: 1.1rem;
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .faq-item.active .faq-toggle {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            padding: 0 1.5rem 1.5rem;
-            color: var(--text-secondary);
-            display: none;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.95rem;
-        }
-
-        .faq-item.active .faq-answer {
-            display: block;
-        }
-
-        .cta-section {
-            background: linear-gradient(135deg, rgba(236, 72, 153, 0.15) 0%, rgba(244, 63, 94, 0.1) 100%);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 3rem;
-            text-align: center;
-            margin: 4rem 0;
-        }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 700;
-            margin-top: 1rem;
-        }
-
-        .article-footer {
-            text-align: center;
-            padding: 2rem 0;
-            border-top: 1px solid var(--border-color);
-            margin-top: 4rem;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        @media (max-width: 768px) {
-            .article-header h1 {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .article-header h1 {
-                font-size: 1.5rem;
-            }
-            .cta-button {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-
-
-        /* Indexing batch support */
-        .indexing-quick-rail {
-            margin: 0 0 3rem;
-        }
-
-        .indexing-quick-rail .quick-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .indexing-quick-rail .quick-card {
-            display: block;
-            min-height: 96px;
-            padding: 1rem;
-            background: var(--card-bg, rgba(255, 255, 255, 0.06));
-            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
-            border-radius: 8px;
-            text-decoration: none;
-            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-        }
-
-        .indexing-quick-rail .quick-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--primary, #8ab4ff);
-            background: rgba(255, 255, 255, 0.08);
-            text-decoration: none;
-        }
-
-        .indexing-quick-rail .quick-card strong {
-            display: block;
-            color: var(--text-primary, #fff);
-            margin-bottom: 0.35rem;
-        }
-
-        .indexing-quick-rail .quick-card span {
-            display: block;
-            color: var(--text-secondary, #cbd5e1);
-            font-size: 0.92rem;
-            line-height: 1.45;
-        }
-
-        .indexing-auto-ad {
-            min-height: 120px;
-            margin: 2.5rem 0;
-            padding: 1rem;
-            border: 1px dashed var(--border-color, rgba(255, 255, 255, 0.18));
-            border-radius: 8px;
-        }
-
-        /* Indexing table overflow support */
-        .indexing-quick-rail,
-        .indexing-auto-ad,
-        .indexing-followup-section {
-            max-width: 100%;
-            overflow-wrap: anywhere;
-        }
-
-        table {
-            max-width: 100%;
-        }
-
-        .compare-table {
-            display: block;
-            max-width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Indexing body overflow guard */
-        html,
-        body {
-            max-width: 100%;
-            overflow-x: hidden;
-        }
-
-        main,
-        article,
-        section,
-        .container,
-        .content,
-        .article-content,
-        .blog-content {
-            max-width: 100%;
-        }
-
-        p,
-        li,
-        a,
-        h1,
-        h2,
-        h3,
-        h4,
-        td,
-        th {
-            overflow-wrap: anywhere;
-        }
-
-        .compare-table,
-        .comparison-table {
-            display: block;
-            max-width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Indexing spectrum overflow guard */
-        .spectrum-labels {
-            max-width: 100%;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .spectrum-label {
-            min-width: 0;
-            overflow-wrap: anywhere;
-        }
-
-        .indexing-followup-section {
-            margin: 2.5rem 0;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
-            border-radius: 8px;
-            background: var(--card-bg, rgba(255, 255, 255, 0.06));
-        }
-
-        .indexing-followup-section .related-links {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 0.75rem;
-            margin: 1rem 0 0;
-            padding: 0;
-            list-style: none;
-        }
-
-        .indexing-followup-section .related-links a {
-            display: block;
-            min-height: 44px;
-            padding: 0.8rem 0.9rem;
-            border: 1px solid var(--border-color, rgba(255, 255, 255, 0.14));
-            border-radius: 8px;
-            text-decoration: none;
-        }
-
-        @media (max-width: 760px) {
-            .indexing-quick-rail .quick-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .indexing-followup-section .related-links {
-                grid-template-columns: 1fr;
-            }
-        }
-
-    </style>
-
-    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"2026年最好玩的 免费在线游戏","description":"2026年最好玩的免费在线游戏推荐。无需下载，直接浏览器玩。Sky Runner、Stack Tower、Zigzag Runner、Emoji Merge等10款热门游戏。","image":"https://dopabrain.com/portal/icon-512.svg","datePublished":"2026-02-09","dateModified":"2026-06-19","inLanguage":"zh","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/zh/browser-games.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog ZH","item":"https://dopabrain.com/portal/blog/zh/"},{"@type":"ListItem","position":3,"name":"2026年最好玩的 免费在线游戏","item":"https://dopabrain.com/portal/blog/zh/browser-games.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How should I use this guide?","acceptedAnswer":{"@type":"Answer","text":"Use it as a practical starting point, then try the linked DopaBrain test or tool for a more personal result."}},{"@type":"Question","name":"Is this result final advice?","acceptedAnswer":{"@type":"Answer","text":"No. DopaBrain guides and tests are for reflection and entertainment, not professional, medical, legal, or financial advice."}},{"@type":"Question","name":"What should I do next?","acceptedAnswer":{"@type":"Answer","text":"Open one of the quick cards, compare your result, and use the related links to continue with a focused follow-up path."}}]}]}</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="dateModified" content="2026-08-30">
+  <title>免费浏览器小游戏：按 3、10、20 分钟选择 | DopaBrain</title>
+  <meta name="description" content="想玩几分钟？按 3、10、20 分钟选择 2048、扫雷、堆叠塔、Emoji 合成等免费浏览器小游戏，打开即可开始。">
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/browser-games.html">
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/browser-games.html">
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/zh/browser-games.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="免费浏览器小游戏：按空闲时间来选">
+  <meta property="og:description" content="没有虚构排名。告诉页面你有几分钟，它会给出三个可直接打开的小游戏。">
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/browser-games.html">
+  <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-J8GSWM40TV');</script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"免费浏览器小游戏：按 3、10、20 分钟选择","description":"按空闲时间和玩法选择九款可直接打开的 DopaBrain 浏览器小游戏。","image":"https://dopabrain.com/portal/icon-512.svg","datePublished":"2026-02-13","dateModified":"2026-08-30","inLanguage":"zh-CN","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com/"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com/","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/zh/browser-games.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"中文内容","item":"https://dopabrain.com/portal/blog/zh/"},{"@type":"ListItem","position":3,"name":"浏览器小游戏","item":"https://dopabrain.com/portal/blog/zh/browser-games.html"}]}]}
+  </script>
+  <style>
+    :root{--bg:#080b16;--panel:#11172a;--soft:#171f37;--line:#2b3655;--text:#f7f8ff;--muted:#b9c1d9;--pink:#fb7185;--cyan:#67e8f9;--gold:#fde68a;--radius:20px}*{box-sizing:border-box}html{overflow-x:hidden;scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 10% 0,#29204b 0,transparent 34%),radial-gradient(circle at 90% 18%,#123a4a 0,transparent 28%),var(--bg);color:var(--text);font:16px/1.7 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",sans-serif}a{color:var(--cyan)}button{font:inherit}.skip{position:fixed;top:-90px;left:12px;z-index:20;padding:10px 14px;border-radius:10px;background:var(--gold);color:#261f00}.skip:focus{top:12px}.site-head{border-bottom:1px solid var(--line);background:rgba(8,11,22,.94)}.site-head div{max-width:1040px;margin:auto;padding:15px 20px;display:flex;justify-content:space-between;gap:18px}.brand{color:#fff;text-decoration:none;font-weight:900}.wrap{max-width:1040px;margin:auto;padding:32px 20px 76px}.crumb{font-size:14px;color:var(--muted)}.hero{padding:38px 0 10px}.eyebrow,.kicker{margin:0 0 8px;color:var(--cyan);font-size:12px;font-weight:900;letter-spacing:.14em}.hero h1{max-width:900px;margin:0;font-size:clamp(38px,7vw,68px);line-height:1.04;letter-spacing:-.045em}.lede{max-width:780px;margin:20px 0;color:var(--muted);font-size:clamp(18px,2.5vw,22px)}.release-note{display:inline-block;margin:0;padding:8px 12px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:13px}.primary,.quick-rail,.picker,.catalog,.how{margin-top:28px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,rgba(23,31,55,.98),rgba(12,17,33,.98));box-shadow:0 18px 48px rgba(0,0,0,.2)}.primary{padding:clamp(22px,4vw,34px);display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center}.primary h2,.primary p{margin:0}.primary p{max-width:680px;margin-top:6px;color:var(--muted)}.cta{display:inline-flex;min-height:48px;align-items:center;justify-content:center;padding:11px 19px;border-radius:12px;background:linear-gradient(135deg,var(--pink),#f43f5e);color:#fff;text-decoration:none;font-weight:900;white-space:nowrap}.quick-rail,.picker,.catalog,.how{padding:clamp(22px,4vw,38px)}.quick-rail h2,.picker h2,.catalog h2,.how h2{margin:4px 0 10px;font-size:clamp(27px,4vw,39px);line-height:1.2}.quick-rail>p,.picker>p,.catalog>p,.how>p{color:var(--muted)}.quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-top:17px}.game-link{min-height:98px;padding:15px;border:1px solid var(--line);border-radius:14px;background:#0c1326;color:var(--text);text-decoration:none}.game-link strong,.game-link span{display:block}.game-link span{margin-top:4px;color:var(--muted);font-size:13px}.game-link:hover,.game-link:focus-visible{border-color:var(--cyan);transform:translateY(-1px)}.picker-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:18px}.time-choice{min-height:54px;padding:12px;border:1px solid var(--cyan);border-radius:13px;background:#0b2232;color:var(--text);cursor:pointer;font-weight:900}.time-choice[aria-pressed="true"]{background:var(--cyan);color:#06242c}.picker-output{min-height:184px;margin-top:14px;padding:18px;border-radius:14px;background:#09101f}.picker-output>p{margin:0;color:var(--muted)}.result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}.result-link{display:flex;min-height:72px;flex-direction:column;justify-content:center;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--soft);color:#fff;text-decoration:none}.result-link span{color:var(--muted);font-size:13px}.catalog-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}.game-card{display:flex;min-height:186px;flex-direction:column;padding:19px;border:1px solid var(--line);border-radius:15px;background:#0b1223}.game-card h3,.game-card p{margin:0}.game-card p{margin:7px 0 16px;color:var(--muted);font-size:14px}.game-card a{display:inline-flex;min-height:44px;align-items:center;margin-top:auto;font-weight:900}.tag{align-self:flex-start;margin-bottom:12px;padding:4px 9px;border-radius:999px;background:rgba(103,232,249,.1);color:var(--cyan);font-size:12px;font-weight:900}.how-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}.tip{padding:17px;border:1px solid var(--line);border-radius:14px;background:#0b1223}.tip h3,.tip p{margin:0}.tip p{margin-top:5px;color:var(--muted)}footer{border-top:1px solid var(--line);color:var(--muted)}footer div{max-width:1040px;margin:auto;padding:24px 20px;display:flex;justify-content:space-between;gap:18px}.related{display:flex;flex-wrap:wrap;gap:14px}.related a{display:inline-flex;min-height:44px;align-items:center}@media(max-width:780px){.wrap{padding:25px 15px 58px}.primary{grid-template-columns:1fr}.quick-grid{grid-template-columns:1fr 1fr}.catalog-grid,.how-grid{grid-template-columns:1fr 1fr}.result-grid{grid-template-columns:1fr}.picker-output{min-height:310px}footer div{flex-direction:column}}@media(max-width:480px){.quick-grid,.catalog-grid,.how-grid,.picker-actions{grid-template-columns:1fr}.picker-output{min-height:330px}.hero h1{font-size:39px}.primary,.quick-rail,.picker,.catalog,.how{border-radius:16px}}
+  </style>
 </head>
 <body>
-                <section class="indexing-quick-rail" aria-labelledby="indexing-quick-rail-title">
-                    <h2 id="indexing-quick-rail-title">Quick next paths</h2>
-                    <div class="quick-grid">
-                        <a class="quick-card" href="/puzzle-2048/?lang=zh" data-content-surface="quick_rail" data-target-slug="puzzle-2048"><strong>2048</strong><span>Play a number puzzle</span></a>
-                        <a class="quick-card" href="/reaction-test/?lang=zh" data-content-surface="quick_rail" data-target-slug="reaction-test"><strong>Reaction test</strong><span>Measure speed</span></a>
-                        <a class="quick-card" href="/minesweeper/?lang=zh" data-content-surface="quick_rail" data-target-slug="minesweeper"><strong>Minesweeper</strong><span>Practice logic</span></a>
-                        <a class="quick-card" href="/brick-breaker/?lang=zh" data-content-surface="quick_rail" data-target-slug="brick-breaker"><strong>Brick breaker</strong><span>Take a quick break</span></a>
-                    </div>
-                </section>
-
-    <div class="progress-bar"></div>
-
-    <div class="header-nav">
-        <a href="https://dopabrain.com/portal/">← 返回 DopaBrain</a>
-    </div>
-
-    <div class="hero-section">
-        <div class="hero-badge">即时游玩</div>
-        <div class="container">
-            <header class="article-header">
-                <h1>2026年最好玩的<span>免费在线游戏</span></h1>
-                <div class="article-meta">
-                    <span>📅 2026年2月9日</span>
-                    <span>👤 DopaBrain</span>
-                    <span>⏱️ 阅读约13分钟</span>
-                </div>
-                <p class="article-desc">
-                    无需下载，打开浏览器即玩。2026年最受欢迎的10款免费在线游戏推荐。从动作冒险到益智休闲，找到你最喜欢的游戏。
-                </p>
-            </header>
+  <a class="skip" href="#picker">跳到游戏选择器</a>
+  <header class="site-head"><div><a class="brand" href="/portal/">DopaBrain</a><a href="/portal/blog/zh/">中文内容</a></div></header>
+  <main class="wrap">
+    <article data-browser-games-contract="2026-08-30">
+      <nav class="crumb" aria-label="面包屑"><a href="/portal/">首页</a> · <a href="/portal/blog/zh/">中文内容</a> · 浏览器小游戏</nav>
+      <header class="hero">
+        <p class="eyebrow">先看时间 · 再选玩法</p>
+        <h1>免费浏览器小游戏：你现在有几分钟？</h1>
+        <p class="lede">这里没有“全网第一”或虚构星级。按你手头的时间，挑一个数字、反应、合成或跑酷小游戏，直接开始。</p>
+        <p class="release-note">页面内 9 条游戏路线已于 2026-08-30 逐项打开检查；这不是人气排行榜。</p>
+      </header>
+      <section class="primary" aria-labelledby="primary-title">
+        <div><p class="kicker">最快开始</p><h2 id="primary-title">先玩一局 2048</h2><p>用方向键或滑动合并相同数字。短局可以随时停，也可以继续挑战更大的数字。</p></div>
+        <a class="cta" href="/puzzle-2048/?lang=zh&amp;source=zh_browser_games_primary" data-game-surface="primary" data-target-slug="puzzle-2048">打开 2048</a>
+      </section>
+      <nav class="quick-rail" aria-labelledby="quick-title">
+        <p class="kicker">一键直达</p><h2 id="quick-title">四种不同手感</h2><p>不知道选什么时，从数字、逻辑、节奏、反应里挑一个。</p>
+        <div class="quick-grid">
+          <a class="game-link quick-card" href="/puzzle-2048/?lang=zh&amp;source=zh_browser_games_quick" data-content-surface="quick_rail" data-game-surface="quick" data-target-slug="puzzle-2048"><strong>2048</strong><span>滑动合并数字</span></a>
+          <a class="game-link quick-card" href="/minesweeper/?lang=zh&amp;source=zh_browser_games_quick" data-content-surface="quick_rail" data-game-surface="quick" data-target-slug="minesweeper"><strong>扫雷</strong><span>根据数字排除地雷</span></a>
+          <a class="game-link quick-card" href="/stack-tower/?lang=zh&amp;source=zh_browser_games_quick" data-content-surface="quick_rail" data-game-surface="quick" data-target-slug="stack-tower"><strong>堆叠塔</strong><span>把移动方块叠稳</span></a>
+          <a class="game-link quick-card" href="/flappy-bird/?lang=zh&amp;source=zh_browser_games_quick" data-content-surface="quick_rail" data-game-surface="quick" data-target-slug="flappy-bird"><strong>飞行小鸟</strong><span>点击穿过管道</span></a>
         </div>
-    </div>
-
-    <div class="container">
-        <div class="article-content">
-            <section>
-                <h2>为什么浏览器游戏在2026年大热</h2>
-                <p>
-                    随着5G网络普及和浏览器技术进步，越来越多人选择浏览器游戏。不需要安装，不占用手机或电脑存储，即点即玩。无论在办公室、咖啡厅还是家里，只要有网络，就能开始游戏。
-                </p>
-
-                <h3>浏览器游戏的3大优势</h3>
-                <ul>
-                    <li><strong>无需安装:</strong> PC、手机、平板都支持，无需下载app</li>
-                    <li><strong>零门槛:</strong> 打开网页，1秒开始游戏</li>
-                    <li><strong>轻量级:</strong> 不占用本地存储，随时玩多个游戏</li>
-                </ul>
-
-                <div class="highlight-box">
-                    <p>✨ <strong>2026游戏趋势:</strong> 轻游戏、社交游戏、竞速排名系统成为主流。复杂的故事和图形不再是必需，简洁、上瘾的游戏机制是王道。</p>
-                </div>
-            </section>
-
-            <section>
-                <h2>2026年TOP 10免费浏览器游戏</h2>
-
-                <div class="game-card">
-                    <div class="game-number">🏃 #1 Sky Runner</div>
-                    <h3>天空跑者</h3>
-                    <p>经典的跑酷游戏。左右躲避障碍，争夺高分。简单但上瘾的游戏机制，全球玩家都在竞争排名。</p>
-                    <p><strong>推荐指数:</strong> ⭐⭐⭐⭐⭐</p>
-                    <a href="https://dopabrain.com/sky-runner/" class="game-link">▶ 立即游玩</a>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-number">🏗️ #2 Stack Tower</div>
-                    <h3>堆塔</h3>
-                    <p>精准度考验。滑动方块垂直堆叠，超高难度。每一步都考验你的反应速度和时机感。</p>
-                    <p><strong>推荐指数:</strong> ⭐⭐⭐⭐⭐</p>
-                    <a href="https://dopabrain.com/stack-tower/" class="game-link">▶ 立即游玩</a>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-number">⚡ #3 Zigzag Runner</div>
-                    <h3>之字跑者</h3>
-                    <p>反应速度挑战。弯曲的路径，需要快速转向。难度递增，越往后越刺激。</p>
-                    <p><strong>推荐指数:</strong> ⭐⭐⭐⭐⭐</p>
-                    <a href="https://dopabrain.com/zigzag-runner/" class="game-link">▶ 立即游玩</a>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-number">😊 #4 Emoji Merge</div>
-                    <h3>表情合并</h3>
-                    <p>策略性益智游戏。合并相同表情创建新的，放松心情的同时锻炼脑力。</p>
-                    <p><strong>推荐指数:</strong> ⭐⭐⭐⭐⭐</p>
-                    <a href="https://dopabrain.com/emoji-merge/" class="game-link">▶ 立即游玩</a>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-number">🖱️ #5 Idle Clicker</div>
-                    <h3>点击者</h3>
-                    <p>放置游戏经典。不断点击赚取积分，升级和解锁新功能。即使离线也在赚钱。</p>
-                    <p><strong>推荐指数:</strong> ⭐⭐⭐⭐</p>
-                    <a href="https://dopabrain.com/idle-clicker/" class="game-link">▶ 立即游玩</a>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-number">🔢 #6 2048</div>
-                    <h3>2048</h3>
-                    <p>数字融合益智。滑动方块合并数字，目标是达到2048。看似简单，实则充满挑战。</p>
-                    <p><strong>推荐指数:</strong> ⭐⭐⭐⭐</p>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-number">🐦 #7 Flappy Bird</div>
-                    <h3>飞翔小鸟</h3>
-                    <p>怀旧经典。点击屏幕控制小鸟，躲避管道。难度陡峭，易上瘾。</p>
-                    <p><strong>推荐指数:</strong> ⭐⭐⭐⭐</p>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-number">〇× #8 Tic Tac Toe</div>
-                    <h3>井字棋</h3>
-                    <p>永恒的经典。与AI对战或两人对玩。简单但深度的策略游戏。</p>
-                    <p><strong>推荐指数:</strong> ⭐⭐⭐</p>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-number">🧠 #9 Memory Tiles</div>
-                    <h3>记忆瓷砖</h3>
-                    <p>记忆力测试。翻开瓷砖配对，难度逐级上升。培养专注力和记忆力。</p>
-                    <p><strong>推荐指数:</strong> ⭐⭐⭐⭐</p>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-number">🎨 #10 Color Dots</div>
-                    <h3>色彩点点</h3>
-                    <p>放松益智游戏。连接同色点，解开谜题。舒缓的音乐和精美的UI，是压力释放的完美工具。</p>
-                    <p><strong>推荐指数:</strong> ⭐⭐⭐⭐</p>
-                </div>
-
-                <div class="highlight-box">
-                    <p>💡 <strong>所有游戏都是完全免费的。</strong>无需付费购买或订阅，随时随地尽情享受。</p>
-                </div>
-            </section>
-
-            <section>
-                <h2>如何选择适合你的游戏</h2>
-
-                <h3>按场景选择</h3>
-                <ul>
-                    <li><strong>工作休息（5-10分钟）:</strong> Sky Runner、Zigzag Runner 等快速上手的游戏</li>
-                    <li><strong>晚上放松（30分钟+）:</strong> Emoji Merge、Color Dots 等低压力游戏</li>
-                    <li><strong>脑力挑战:</strong> 2048、Memory Tiles 等需要思考的游戏</li>
-                </ul>
-
-                <h3>按性格选择</h3>
-                <ul>
-                    <li><strong>竞争心强:</strong> Sky Runner、Zigzag Runner（排名竞争）</li>
-                    <li><strong>逻辑思维:</strong> 2048、Tic Tac Toe</li>
-                    <li><strong>放松派:</strong> Color Dots、Emoji Merge</li>
-                </ul>
-            </section>
-
-            <section>
-                <h2>常见问题</h2>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h4>Q. 这些游戏真的完全免费吗？</h4>
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        A. 是的，所有游戏在DopaBrain上完全免费。零付费、零广告骚扰、零强制购买。
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h4>Q. 手机和电脑都能玩吗？</h4>
-                    <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        A. 完全支持。所有游戏都是响应式设计，自动适配手机、平板和PC屏幕。
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h4>Q. 需要安装插件或客户端吗？</h4>
-                    <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        A. 完全不需要。只需打开浏览器，输入URL就能直接游玩。
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h4>Q. 有新游戏定期添加吗？</h4>
-                    <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        A. 是的，DopaBrain每月更新新游戏。定期访问网站，发现最新热门游戏。
-                    </div>
-                </div>
-            </section>
-
-
-
-<div class="cta-section">
-                <h2>现在就开始游戏吧</h2>
-                <p>无需犹豫，选一款游戏，立即开始冒险。让每个空闲时刻都充满乐趣。</p>
-                <a href="https://dopabrain.com/" class="cta-button">🎮 所有游戏列表</a>
-            </div>
+      </nav>
+      <section id="picker" class="picker" aria-labelledby="picker-title">
+        <p class="kicker">私人选择器</p><h2 id="picker-title">你想玩多久？</h2><p>选择只在当前页面中使用，不会写入网址、浏览器存储或分析事件。</p>
+        <div class="picker-actions" role="group" aria-label="选择可用时间">
+          <button class="time-choice" type="button" data-time="short" aria-pressed="false">约 3 分钟</button>
+          <button class="time-choice" type="button" data-time="medium" aria-pressed="false">约 10 分钟</button>
+          <button class="time-choice" type="button" data-time="long" aria-pressed="false">约 20 分钟</button>
         </div>
-    </div>
-
-
-                <section class="indexing-followup-section" aria-labelledby="indexing-followup-title">
-                    <h2 id="indexing-followup-title">Continue with DopaBrain</h2>
-                    <a class="cta-button" href="/puzzle-2048/?lang=zh" data-content-surface="cta" data-target-slug="puzzle-2048">2048</a>
-                    <ul class="related-links">
-                        <li><a class="related-link" href="/reaction-test/?lang=zh" data-content-surface="related" data-target-slug="reaction-test">Reaction test</a></li>
-                        <li><a class="related-link" href="/minesweeper/?lang=zh" data-content-surface="related" data-target-slug="minesweeper">Minesweeper</a></li>
-                        <li><a class="related-link" href="/brick-breaker/?lang=zh" data-content-surface="related" data-target-slug="brick-breaker">Brick breaker</a></li>
-                    </ul>
-                </section>
-<footer class="article-footer">
-        <p>所有游戏均由DopaBrain开发和托管，遵守版权法。</p>
-        <p>版权 © 2026 DopaBrain.</p>
-    </footer>
-
-    <script>
-        window.addEventListener('scroll', function() {
-            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            document.querySelector('.progress-bar').style.width = scrolled + '%';
-        });
-
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', function() {
-                const item = this.parentElement;
-                item.classList.toggle('active');
-            });
-        });
-
-        document.querySelectorAll('.game-link, .cta-button').forEach(element => {
-            element.addEventListener('click', function() {
-                if (window.gtag) {
-                    gtag('event', 'click', {
-                        'event_category': 'engagement',
-                        'event_label': this.textContent,
-                        'value': 1
-                    });
-                }
-            });
-        });
-    </script>
-
-    <script>
-        (function indexingContentTelemetry() {
-            function track(name, params) {
-                if (typeof gtag !== 'function') return;
-                gtag('event', name, Object.assign({
-                    event_category: 'content',
-                    page_path: location.pathname,
-                    content_locale: "zh",
-                    content_id: "browser-games.html"
-                }, params || {}));
-            }
-
-            function emitInitialContentEvents() {
-                track('content_view');
-            }
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', emitInitialContentEvents, { once: true });
-            } else {
-                emitInitialContentEvents();
-            }
-
-            document.addEventListener('click', function(event) {
-                var target = event.target && event.target.closest ? event.target.closest('a') : null;
-                if (!target) return;
-                if (target.closest('.quick-card')) {
-                    track('content_test_click', { link_url: target.href, target_slug: target.getAttribute('data-target-slug') || '' });
-                } else if (target.closest('.cta-section') || target.closest('.cta-box') || target.closest('.test-cta') || target.classList.contains('cta-btn') || target.classList.contains('cta-button') || target.classList.contains('game-link') || target.getAttribute('data-content-surface') === 'cta') {
-                    track('content_cta_click', { link_url: target.href });
-                } else if (target.closest('.related-posts') || target.closest('.related-links') || target.classList.contains('related-link') || target.classList.contains('related-card') || target.closest('.related-card')) {
-                    track('content_related_click', { link_url: target.href });
-                } else if (target.closest('.toc')) {
-                    track('content_toc_click', { target: target.getAttribute('href') || '' });
-                }
-            }, true);
-        })();
-    </script>
-
-    <script src="/portal/js/cross-promo.js" defer></script>
+        <div class="picker-output" data-picker-output role="status" aria-live="polite"><p>点一个时间，就会出现三个选择。时长只是选游戏的参考，不是关卡或完成时间的保证。</p></div>
+      </section>
+      <section class="catalog" aria-labelledby="catalog-title">
+        <p class="kicker">全部 9 款</p><h2 id="catalog-title">按玩法浏览</h2><p>所有链接都会带上中文界面参数。游戏进度与难度因作品而异。</p>
+        <div class="catalog-grid">
+          <article class="game-card"><span class="tag">数字 · 策略</span><h3>2048</h3><p>把相同数字合并，在棋盘填满前规划下一步。</p><a href="/puzzle-2048/?lang=zh&amp;source=zh_browser_games_catalog" data-game-surface="catalog" data-target-slug="puzzle-2048">开始合并 →</a></article>
+          <article class="game-card"><span class="tag">逻辑 · 排除</span><h3>扫雷</h3><p>读取邻格数字，标出可能的地雷并打开安全格。</p><a href="/minesweeper/?lang=zh&amp;source=zh_browser_games_catalog" data-game-surface="catalog" data-target-slug="minesweeper">打开棋盘 →</a></article>
+          <article class="game-card"><span class="tag">街机 · 反弹</span><h3>打砖块</h3><p>移动挡板接住球，逐步清掉上方砖块。</p><a href="/brick-breaker/?lang=zh&amp;source=zh_browser_games_catalog" data-game-surface="catalog" data-target-slug="brick-breaker">开始打砖块 →</a></article>
+          <article class="game-card"><span class="tag">跑酷 · 躲避</span><h3>天空跑者</h3><p>在太空赛道上移动，避开障碍并继续前进。</p><a href="/sky-runner/?lang=zh&amp;source=zh_browser_games_catalog" data-game-surface="catalog" data-target-slug="sky-runner">开始跑酷 →</a></article>
+          <article class="game-card"><span class="tag">节奏 · 堆叠</span><h3>堆叠塔</h3><p>在合适时机放下移动方块，让塔保持宽度。</p><a href="/stack-tower/?lang=zh&amp;source=zh_browser_games_catalog" data-game-surface="catalog" data-target-slug="stack-tower">开始堆叠 →</a></article>
+          <article class="game-card"><span class="tag">反应 · 转向</span><h3>之字跑者</h3><p>点击改变方向，沿折线路径继续前进。</p><a href="/zigzag-runner/?lang=zh&amp;source=zh_browser_games_catalog" data-game-surface="catalog" data-target-slug="zigzag-runner">开始转向 →</a></article>
+          <article class="game-card"><span class="tag">合成 · 规划</span><h3>Emoji 合成</h3><p>让相同表情碰到一起，合成新的表情。</p><a href="/emoji-merge/?lang=zh&amp;source=zh_browser_games_catalog" data-game-surface="catalog" data-target-slug="emoji-merge">开始合成 →</a></article>
+          <article class="game-card"><span class="tag">放置 · 升级</span><h3>放置点击 RPG</h3><p>点击积累资源，再用升级让进度持续增长。</p><a href="/idle-clicker/?lang=zh&amp;source=zh_browser_games_catalog" data-game-surface="catalog" data-target-slug="idle-clicker">进入地牢 →</a></article>
+          <article class="game-card"><span class="tag">反应 · 飞行</span><h3>飞行小鸟</h3><p>控制起落穿过管道，失误后可立即重开。</p><a href="/flappy-bird/?lang=zh&amp;source=zh_browser_games_catalog" data-game-surface="catalog" data-target-slug="flappy-bird">开始飞行 →</a></article>
+        </div>
+      </section>
+      <section class="how" aria-labelledby="how-title">
+        <p class="kicker">选择提示</p><h2 id="how-title">不用找“最好”，找现在合适的</h2>
+        <div class="how-grid">
+          <article class="tip"><h3>只想玩一小局</h3><p>2048、扫雷和飞行小鸟都能在失败或完成当前目标后停下。</p></article>
+          <article class="tip"><h3>想练节奏感</h3><p>堆叠塔、之字跑者和打砖块更依赖点击或移动时机。</p></article>
+          <article class="tip"><h3>想看进度累积</h3><p>Emoji 合成和放置点击 RPG 更适合连续升级与解锁。</p></article>
+        </div>
+      </section>
+    </article>
+  </main>
+  <footer><div><span>© 2026 DopaBrain · 免费浏览器游戏入口</span><nav class="related" aria-label="相关链接"><a href="/portal/games/?lang=zh" data-game-surface="related" data-target-slug="games">游戏中心</a><a href="/portal/blog/zh/2048-strategy-guide.html" data-game-surface="related" data-target-slug="2048-guide">2048 攻略</a><a href="/portal/blog/zh/" data-game-surface="related" data-target-slug="zh-blog">中文内容</a></nav></div></footer>
+  <script>
+  (()=>{
+    const track=(name,params={})=>window.gtag?.('event',name,{event_category:'content',content_id:'browser-games',content_locale:'zh',page_path:'/portal/blog/zh/browser-games.html',transport_type:'beacon',...params});
+    const games={
+      short:[['2048','滑动合并数字','/puzzle-2048/?lang=zh&source=zh_browser_games_picker','puzzle-2048'],['扫雷','用数字排除地雷','/minesweeper/?lang=zh&source=zh_browser_games_picker','minesweeper'],['飞行小鸟','点击控制飞行','/flappy-bird/?lang=zh&source=zh_browser_games_picker','flappy-bird']],
+      medium:[['打砖块','接球并清除砖块','/brick-breaker/?lang=zh&source=zh_browser_games_picker','brick-breaker'],['堆叠塔','看准时机叠方块','/stack-tower/?lang=zh&source=zh_browser_games_picker','stack-tower'],['之字跑者','点击改变前进方向','/zigzag-runner/?lang=zh&source=zh_browser_games_picker','zigzag-runner']],
+      long:[['Emoji 合成','合成新的表情','/emoji-merge/?lang=zh&source=zh_browser_games_picker','emoji-merge'],['放置点击 RPG','积累资源并升级','/idle-clicker/?lang=zh&source=zh_browser_games_picker','idle-clicker'],['天空跑者','在赛道上躲避障碍','/sky-runner/?lang=zh&source=zh_browser_games_picker','sky-runner']]
+    };
+    let pickerViewSent=false,pickerUseSent=false,viewTimer=0;
+    const observer=new IntersectionObserver(entries=>{const visible=entries.some(entry=>entry.isIntersecting&&entry.intersectionRatio>=0.5);clearTimeout(viewTimer);if(!visible||pickerViewSent)return;viewTimer=setTimeout(()=>{pickerViewSent=true;track('content_game_picker_view');observer.disconnect()},500)},{threshold:[0.5]});
+    observer.observe(document.querySelector('.picker-actions'));
+    document.querySelectorAll('.time-choice').forEach(button=>button.addEventListener('click',()=>{
+      document.querySelectorAll('.time-choice').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+      document.querySelector('[data-picker-output]').innerHTML=`<p>适合这段时间的三个入口：</p><div class="result-grid">${games[button.dataset.time].map(game=>`<a class="result-link" href="${game[2]}" data-game-surface="picker" data-target-slug="${game[3]}"><strong>${game[0]}</strong><span>${game[1]}</span></a>`).join('')}</div>`;
+      if(!pickerUseSent){pickerUseSent=true;track('content_game_picker_use',{interaction_name:'time_game_picker'})}
+    }));
+    document.addEventListener('click',event=>{const link=event.target.closest('a[data-game-surface]');if(!link)return;track('content_game_click',{surface_name:link.dataset.gameSurface,target_slug:link.dataset.targetSlug||'',link_url:link.href})},true);
+    track('content_view');
+  })();
+  </script>
+  <script src="/portal/js/cross-promo.js" defer></script>
 </body>
 </html>
