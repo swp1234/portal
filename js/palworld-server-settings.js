@@ -276,10 +276,4 @@
 
   defaultValues(); rerender();
   event('palworld_server_tool_view',{official_docs_version:'1.0'});
-  try {(window.adsbygoogle=window.adsbygoogle||[]).push({});}catch{}
-  const ad=document.querySelector('[data-ad-surface]');
-  if(ad && 'IntersectionObserver' in window){
-    const io=new IntersectionObserver(entries=>{if(entries.some(x=>x.isIntersecting)){event('palworld_ad_impression',{ad_surface:'palworld_server_inline'});io.disconnect();}},{threshold:.4});
-    io.observe(ad);
-  }
 })();
