@@ -2,7 +2,7 @@ class I18n {
     constructor() {
         this.translations = {};
         this.supportedLanguages = ['ko', 'en', 'ja', 'es', 'pt', 'zh', 'id', 'tr', 'de', 'fr', 'hi', 'ru'];
-        this.localeVersion = '20260422b';
+        this.localeVersion = '20260830a';
         this.currentLang = this.detectLanguage();
     }
 
