@@ -1623,33 +1623,6 @@ const APP_DATA = [
         }
     },
     {
-        id: 'mbti-career',
-        name: 'MBTI 직업 궁합 테스트',
-        shortDesc: 'MBTI 유형별 최적 직업 추천',
-        description: '12개 질문 또는 직접 선택으로 당신의 MBTI를 분석하고 TOP 10 추천 직업을 받으세요. 강점/약점 분석, 팀 구성 호환성, AI 심층 진로 상담 제공.',
-        icon: '💼',
-        color: '#2c3e50',
-        category: 'test',
-        tags: ['MBTI', '직업', '진로', '심리테스트', '궁합', 'career', 'test', 'personality', 'matching', 'job'],
-        url: 'https://dopabrain.com/mbti-career/',
-        isNew: true,
-        isPopular: false,
-        popularity: 3,
-        i18n: {
-            en: { name: 'MBTI Career Match', shortDesc: 'Find the perfect job for your personality' },
-            zh: { name: 'MBTI 职业配对', shortDesc: '发现最适合你的职业' },
-            hi: { name: 'MBTI कैरियर मैच', shortDesc: 'अपनी व्यक्तित्व के लिए सही नौकरी खोजें' },
-            ru: { name: 'MBTI Карьерный матч', shortDesc: 'Найдите идеальную работу для вашей личности' },
-            ja: { name: 'MBTI キャリアマッチ', shortDesc: 'あなたの性格に完璧な仕事を見つけてください' },
-            es: { name: 'MBTI Compatibilidad Laboral', shortDesc: 'Encuentra el trabajo perfecto para ti' },
-            pt: { name: 'MBTI Compatibilidade Profissional', shortDesc: 'Encontre o trabalho perfeito para você' },
-            id: { name: 'MBTI Keselarasan Karir', shortDesc: 'Temukan pekerjaan sempurna untuk kepribadian Anda' },
-            tr: { name: 'MBTI Kariyer Eşleşmesi', shortDesc: 'Kişiliğinize uygun mükemmel işi bulun' },
-            de: { name: 'MBTI Karrierepassung', shortDesc: 'Finden Sie den perfekten Job für Ihre Persönlichkeit' },
-            fr: { name: 'MBTI Correspondance Professionnelle', shortDesc: 'Trouvez l\'emploi parfait pour votre personnalité' }
-        }
-    },
-    {
         id: 'brick-breaker',
         name: '벽돌깨기',
         shortDesc: '클래식 벽돌깨기 게임',
