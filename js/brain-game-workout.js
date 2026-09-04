@@ -10,7 +10,6 @@
     'number-puzzle':{name:'Number Puzzle',icon:'🧩',url:'/number-puzzle/',tags:['logic'],energy:['gentle','steady']},
     'reaction-test':{name:'Reaction Test',icon:'⚡',url:'/reaction-test/',tags:['speed'],energy:['steady','challenge']},
     'typing-speed':{name:'Typing Speed',icon:'⌨️',url:'/typing-speed/',tags:['speed'],energy:['steady','challenge']},
-    'word-scramble':{name:'Word Scramble',icon:'🔤',url:'/word-scramble/',tags:['memory','logic'],energy:['steady','challenge']},
     'block-puzzle':{name:'Block Puzzle',icon:'🟪',url:'/block-puzzle/',tags:['logic'],energy:['gentle','steady','challenge']}
   };
   var I18N={
@@ -50,7 +49,7 @@
   function createPlan(){
     var date=today(),minutesByTime={'5':[2,3],'10':[2,5,3],'15':[2,5,5,3]},durations=minutesByTime[selected.time],used=[];
     var warmPool=['color-memory','memory-card','number-puzzle','reaction-test'];
-    var finishPool=['reaction-test','word-scramble','block-puzzle','color-memory'];
+    var finishPool=['reaction-test','block-puzzle','color-memory'];
     var focusPool=poolFor(selected.focus,selected.energy);
     if(focusPool.length<durations.length)focusPool=focusPool.concat(poolFor(selected.focus==='variety'?'logic':'variety',selected.energy));
     var stages=[],seed=date+'|'+selected.focus+'|'+selected.time+'|'+selected.energy+'|';
