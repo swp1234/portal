@@ -2380,33 +2380,6 @@ const APP_DATA = [
         }
     },
     {
-        id: 'delulu-score',
-        name: '델루루 점수 테스트',
-        shortDesc: '나의 현실왜곡도는?',
-        description: '10가지 일상 상황으로 현실 vs 델루루 해석 중 어느 쪽에 가까운지 측정하세요.',
-        icon: '🔮',
-        color: '#7C3AED',
-        category: 'test',
-        tags: ['델루루', 'delulu', '현실왜곡', 'reality distortion', 'TikTok', '밈'],
-        url: 'https://dopabrain.com/delulu-score/',
-        isNew: true,
-        isPopular: false,
-        popularity: 3,
-        i18n: {
-            en: { name: 'Reality Distortion Filter', shortDesc: 'How distorted is your lens on reality?' },
-            zh: { name: '现实扭曲滤镜', shortDesc: '你的现实扭曲度有多高？' },
-            hi: { name: 'रियलिटी डिस्टॉर्शन फ़िल्टर', shortDesc: 'आपकी वास्तविकता कितनी विकृत है?' },
-            ru: { name: 'Фильтр Искажения Реальности', shortDesc: 'Насколько искажён ваш взгляд на реальность?' },
-            ja: { name: '現実歪曲フィルター', shortDesc: 'あなたの現実歪曲度は？' },
-            es: { name: 'Filtro de Distorsión de Realidad', shortDesc: '¿Qué tan distorsionada es tu realidad?' },
-            pt: { name: 'Filtro de Distorção da Realidade', shortDesc: 'Quão distorcida é sua visão da realidade?' },
-            id: { name: 'Filter Distorsi Realita', shortDesc: 'Seberapa terdistorsi pandanganmu?' },
-            tr: { name: 'Gerçeklik Bozulma Filtresi', shortDesc: 'Gerçeklik algın ne kadar bozuk?' },
-            de: { name: 'Realitätsverzerrungsfilter', shortDesc: 'Wie verzerrt ist deine Realität?' },
-            fr: { name: 'Filtre de Distorsion de Réalité', shortDesc: 'Quel est votre niveau de distorsion?' }
-        }
-    },
-    {
         id: 'emotion-iceberg',
         name: '감정 빙산 테스트',
         shortDesc: '숨겨진 감정을 발견하세요',
