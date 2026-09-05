@@ -26,7 +26,7 @@
         fr: ['brain-type', 'hsp-test', 'eq-test', 'animal-personality'],
         id: ['eq-test', 'hsp-test', 'attachment-style', 'brain-type'],
         de: ['brain-type', 'hsp-test', 'eq-test', 'mbti-city'],
-        my: ['brain-type', 'iq-test', 'mental-age', 'rizz-score'],
+        my: ['brain-type', 'iq-test', 'mental-age', 'animal-personality'],
         pt: ['mental-age', 'brain-type', 'animal-personality', 'eq-test'],
         ru: ['stress-check', 'animal-personality', 'brain-type', 'puzzle-2048'],
         hi: ['brain-type', 'iq-test', 'eq-test', 'anxiety-type'],

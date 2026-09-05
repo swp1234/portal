@@ -2110,33 +2110,6 @@ const APP_DATA = [
         }
     },
     {
-        id: 'rizz-score',
-        name: '리즈 점수',
-        shortDesc: '리즈 점수 측정',
-        description: '당신의 리즈(매력) 점수는? 카리스마와 소셜 매력을 측정해보세요!',
-        icon: '✨',
-        color: '#FF6B35',
-        category: 'test',
-        tags: ['매력', '카리스마', '소셜', 'rizz', 'charisma', 'social', 'fun'],
-        url: 'https://dopabrain.com/rizz-score/',
-        isNew: true,
-        isPopular: false,
-        popularity: 3,
-        i18n: {
-            en: { name: 'Rizz Score', shortDesc: 'Measure your rizz level' },
-            zh: { name: '魅力值', shortDesc: '测量你的魅力值' },
-            hi: { name: 'रिज़ स्कोर', shortDesc: 'अपना रिज़ लेवल मापें' },
-            ru: { name: 'Риз Счёт', shortDesc: 'Измерь свой уровень риза' },
-            ja: { name: 'リズスコア', shortDesc: 'リズレベルを測定' },
-            es: { name: 'Puntuación Rizz', shortDesc: 'Mide tu nivel de rizz' },
-            pt: { name: 'Pontuação Rizz', shortDesc: 'Meça seu nível de rizz' },
-            id: { name: 'Skor Rizz', shortDesc: 'Ukur level rizz-mu' },
-            tr: { name: 'Rizz Puanı', shortDesc: 'Rizz seviyeni ölç' },
-            de: { name: 'Rizz-Score', shortDesc: 'Miss deinen Rizz-Level' },
-            fr: { name: 'Score Rizz', shortDesc: 'Mesurez votre niveau de rizz' }
-        }
-    },
-    {
         id: 'dark-core',
         name: '다크코어 테스트',
         shortDesc: '나의 어둠 성향은?',

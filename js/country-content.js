@@ -152,7 +152,7 @@
                 { key: 'my-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=en', icon: '🧠', badge: 'Brain', title: 'Brain Type Test', desc: 'A strong next stop for exploratory test sessions.', accent: '#6366f1' },
                 { key: 'my-iq', type: 'app', appId: 'iq-test', href: '/iq-test/?lang=en', icon: '🧩', badge: 'IQ', title: 'Quick IQ Test', desc: 'For visitors who move between cognitive tests.', accent: '#3498db' },
                 { key: 'my-mental-age', type: 'app', appId: 'mental-age', href: '/mental-age/?lang=en', icon: '🧠', badge: 'Age', title: 'Mental Age Test', desc: 'A lighter self-discovery follow-up.', accent: '#6366f1' },
-                { key: 'my-rizz', type: 'app', appId: 'rizz-score', href: '/rizz-score/?lang=en', icon: '✨', badge: 'Fun', title: 'Rizz Score', desc: 'A playful identity quiz after serious tests.', accent: '#ff8c42' }
+                { key: 'my-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=en', icon: '🐾', badge: 'Fun', title: 'Animal Personality', desc: 'A maintained identity quiz after serious tests.', accent: '#ff8c42' }
             ]
         },
         pt: {
