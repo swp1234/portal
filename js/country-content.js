@@ -198,7 +198,7 @@
             desc: 'Türkiye için kısa, sosyal ve kendini tanıma odaklı testler öne çıkarılıyor.',
             preferences: ['İlişki farkındalığı', 'Stres / kaygı', 'Sosyal enerji', 'Kısa viral testler'],
             items: [
-                { key: 'tr-red-flag', type: 'app', appId: 'red-flag-test', href: '/red-flag-test/?lang=tr', icon: '🚩', badge: 'İlişki', title: 'Kırmızı Bayrak Testi', desc: 'Sosyal paylaşımı kolay ilişki farkındalığı testi.', accent: '#dc2626' },
+                { key: 'tr-attachment', type: 'app', appId: 'attachment-style', href: '/attachment-style/?lang=tr&source=red_flag_retirement', icon: '💬', badge: 'İlişki', title: 'Bağlanma Stili', desc: 'On ilişki senaryosu üzerinden açık yöntemli bir düşünme aracı.', accent: '#ec4899' },
                 { key: 'tr-anxiety', type: 'app', appId: 'anxiety-type', href: '/anxiety-type/?lang=tr', icon: '🌀', badge: 'Kaygı', title: 'Kaygı Tipi Testi', desc: 'Kısa ve güvenli bir duygusal self-check.', accent: '#10b981' },
                 { key: 'tr-social', type: 'app', appId: 'social-battery', href: '/social-battery/?lang=tr', icon: '🔋', badge: 'Sosyal', title: 'Sosyal Batarya', desc: 'Enerji ve içe dönüklük merakını hızlı sonuca çevirir.', accent: '#f59e0b' },
             ]
