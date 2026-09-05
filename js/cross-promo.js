@@ -30,7 +30,7 @@
         pt: ['mental-age', 'brain-type', 'animal-personality', 'eq-test'],
         ru: ['stress-check', 'animal-personality', 'brain-type', 'puzzle-2048'],
         hi: ['brain-type', 'iq-test', 'eq-test', 'anxiety-type'],
-        tr: ['red-flag-test', 'anxiety-type', 'social-battery', 'brainrot-score'],
+        tr: ['red-flag-test', 'anxiety-type', 'social-battery', 'detox-timer'],
         sg: ['past-life', 'animal-personality', 'eq-test', 'attachment-style'],
         en: ['brain-type', 'hsp-test', 'animal-personality', 'eq-test'],
         ko: ['hsp-test', 'brain-type', 'dopamine-type', 'mbti-love']

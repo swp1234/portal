@@ -201,7 +201,6 @@
                 { key: 'tr-red-flag', type: 'app', appId: 'red-flag-test', href: '/red-flag-test/?lang=tr', icon: '🚩', badge: 'İlişki', title: 'Kırmızı Bayrak Testi', desc: 'Sosyal paylaşımı kolay ilişki farkındalığı testi.', accent: '#dc2626' },
                 { key: 'tr-anxiety', type: 'app', appId: 'anxiety-type', href: '/anxiety-type/?lang=tr', icon: '🌀', badge: 'Kaygı', title: 'Kaygı Tipi Testi', desc: 'Kısa ve güvenli bir duygusal self-check.', accent: '#10b981' },
                 { key: 'tr-social', type: 'app', appId: 'social-battery', href: '/social-battery/?lang=tr', icon: '🔋', badge: 'Sosyal', title: 'Sosyal Batarya', desc: 'Enerji ve içe dönüklük merakını hızlı sonuca çevirir.', accent: '#f59e0b' },
-                { key: 'tr-brainrot', type: 'app', appId: 'brainrot-score', href: '/brainrot-score/?lang=tr', icon: '🧠', badge: 'Meme', title: 'Brain Rot Skoru', desc: 'Mizah ve kısa video kültürüne uygun viral test.', accent: '#06b6d4' }
             ]
         },
         global: {

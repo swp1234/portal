@@ -2083,33 +2083,6 @@ const APP_DATA = [
         }
     },
     {
-        id: 'brainrot-score',
-        name: '브레인롯 점수',
-        shortDesc: '브레인롯 레벨 측정',
-        description: '당신의 브레인롯 레벨은? 인터넷 밈 중독 정도를 측정해보세요!',
-        icon: '🧠',
-        color: '#06b6d4',
-        category: 'test',
-        tags: ['밈', '바이럴', '재미', 'meme', 'viral', 'fun'],
-        url: 'https://dopabrain.com/brainrot-score/',
-        isNew: true,
-        isPopular: false,
-        popularity: 15,
-        i18n: {
-            en: { name: 'Brain Rot Score', shortDesc: 'Measure your brain rot level' },
-            zh: { name: '脑腐指数', shortDesc: '测量你的脑腐程度' },
-            hi: { name: 'ब्रेन रॉट स्कोर', shortDesc: 'अपना ब्रेन रॉट लेवल मापें' },
-            ru: { name: 'Brain Rot Счёт', shortDesc: 'Измерь свой уровень Brain Rot' },
-            ja: { name: 'ブレインロットスコア', shortDesc: 'ブレインロットレベルを測定' },
-            es: { name: 'Nivel de Brain Rot', shortDesc: 'Mide tu nivel de brain rot' },
-            pt: { name: 'Nível de Brain Rot', shortDesc: 'Meça seu nível de brain rot' },
-            id: { name: 'Skor Brain Rot', shortDesc: 'Ukur level brain rot-mu' },
-            tr: { name: 'Brain Rot Skoru', shortDesc: 'Brain rot seviyeni ölç' },
-            de: { name: 'Brain Rot Score', shortDesc: 'Miss deinen Brain Rot Level' },
-            fr: { name: 'Score Brain Rot', shortDesc: 'Mesurez votre niveau de brain rot' }
-        }
-    },
-    {
         id: 'social-battery',
         name: '소셜 배터리',
         shortDesc: '소셜 에너지 측정',
