@@ -2137,33 +2137,6 @@ const APP_DATA = [
         }
     },
     {
-        id: 'sleep-animal',
-        name: '수면 동물',
-        shortDesc: '수면 동물 테스트',
-        description: '당신의 수면 유형은 어떤 동물? 크로노타입으로 알아보는 수면 습관!',
-        icon: '🌙',
-        color: '#4A3F8A',
-        category: 'test',
-        tags: ['수면', '크로노타입', '건강', 'sleep', 'chronotype', 'health', 'personality'],
-        url: 'https://dopabrain.com/sleep-animal/',
-        isNew: true,
-        isPopular: false,
-        popularity: 3,
-        i18n: {
-            en: { name: 'Sleep Animal', shortDesc: 'Sleep animal test' },
-            zh: { name: '睡眠动物', shortDesc: '睡眠动物测试' },
-            hi: { name: 'स्लीप एनिमल', shortDesc: 'स्लीप एनिमल टेस्ट' },
-            ru: { name: 'Животное Сна', shortDesc: 'Тест животного сна' },
-            ja: { name: '睡眠動物', shortDesc: '睡眠動物診断' },
-            es: { name: 'Animal de Sueño', shortDesc: 'Test de animal de sueño' },
-            pt: { name: 'Animal do Sono', shortDesc: 'Teste de animal do sono' },
-            id: { name: 'Hewan Tidur', shortDesc: 'Tes hewan tidur' },
-            tr: { name: 'Uyku Hayvanı', shortDesc: 'Uyku hayvanı testi' },
-            de: { name: 'Schlaftier', shortDesc: 'Schlaftier-Test' },
-            fr: { name: 'Animal de Sommeil', shortDesc: 'Test d\'animal de sommeil' }
-        }
-    },
-    {
         id: 'dark-core',
         name: '다크코어 테스트',
         shortDesc: '나의 어둠 성향은?',
