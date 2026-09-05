@@ -1975,33 +1975,6 @@ const APP_DATA = [
         }
     },
     {
-        id: 'luck-meter',
-        name: '운 측정기',
-        shortDesc: '오늘의 운 테스트',
-        description: '오늘 당신의 운은 몇 점일까요? 재미있는 운 측정기로 확인해보세요!',
-        icon: '🍀',
-        color: '#10b981',
-        category: 'fortune',
-        tags: ['운', '행운', '포춘', 'luck', 'fortune', 'fun'],
-        url: 'https://dopabrain.com/luck-meter/',
-        isNew: true,
-        isPopular: false,
-        popularity: 3,
-        i18n: {
-            en: { name: 'Luck Meter', shortDesc: 'Test your luck today' },
-            zh: { name: '运气测量', shortDesc: '测测今天的运气' },
-            hi: { name: 'भाग्य मीटर', shortDesc: 'आज अपना भाग्य जांचें' },
-            ru: { name: 'Измеритель Удачи', shortDesc: 'Проверь свою удачу сегодня' },
-            ja: { name: '運メーター', shortDesc: '今日の運を測定' },
-            es: { name: 'Medidor de Suerte', shortDesc: 'Mide tu suerte hoy' },
-            pt: { name: 'Medidor de Sorte', shortDesc: 'Teste sua sorte hoje' },
-            id: { name: 'Pengukur Keberuntungan', shortDesc: 'Ukur keberuntunganmu hari ini' },
-            tr: { name: 'Şans Ölçer', shortDesc: 'Bugün şansını ölç' },
-            de: { name: 'Glücksmesser', shortDesc: 'Teste dein Glück heute' },
-            fr: { name: 'Compteur de Chance', shortDesc: 'Mesurez votre chance aujourd\'hui' }
-        }
-    },
-    {
         id: 'red-green-flag',
         name: '레드/그린 플래그',
         shortDesc: '연애 플래그 테스트',
