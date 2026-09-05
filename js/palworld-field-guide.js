@@ -95,6 +95,4 @@
   $('copyPlan').addEventListener('click',copyPlan);$('clearPlan').addEventListener('click',()=>{activePlan=null;$('sessionPlan').hidden=true;renderGoals()});
   document.querySelectorAll('.palworld-suite a').forEach(a=>a.addEventListener('click',()=>event('palworld_suite_click',{destination:a.href.includes('troubleshooter')?'troubleshooter':'settings'})));
   localize();renderGoals();renderFilters();renderGuides();event('palworld_field_guide_view',{guide_count:guides.length,topic_count:8});
-  try{(window.adsbygoogle=window.adsbygoogle||[]).push({})}catch{}
-  const ad=document.querySelector('[data-ad-surface]');if(ad&&'IntersectionObserver'in window){const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){event('palworld_field_ad_impression',{ad_surface:'palworld_field_guide_inline'});io.disconnect()}},{threshold:.4});io.observe(ad)}
 })();

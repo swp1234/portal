@@ -984,17 +984,6 @@
                 detected_market: countryRailResult ? countryRailResult.market : ''
             });
 
-            document.querySelectorAll('.ad-banner').forEach(function(banner) {
-                var adNode = banner.querySelector('.adsbygoogle');
-                if (!adNode) return;
-                try {
-
-                    trackPortalEvent('hub_ad_impression', {
-                        ad_surface: banner.dataset.adSurface || 'portal_ad'
-                    });
-                } catch (e) {}
-            });
-
             window.updatePortalWinnerCards = function() {
                 if (typeof APP_DATA === 'undefined' || typeof getAppName !== 'function') return;
                 var lang = (typeof i18n !== 'undefined' && typeof i18n.getCurrentLanguage === 'function')

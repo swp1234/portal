@@ -321,19 +321,6 @@
   document.querySelectorAll('.palworld-suite a').forEach(function (link, position) {
     link.addEventListener('click', function () { track('palworld_suite_click', { destination_position: position + 1, destination_path: link.pathname }); });
   });
-  var ad = document.querySelector('[data-ad-surface="palworld_breeding_notebook_inline"]');
-  if (ad) {
-    var adTracked = false, adView = function () {
-      if (adTracked) return; adTracked = true;
-      track('palworld_breeding_ad_impression', { ad_surface: 'palworld_breeding_notebook_inline' });
-    };
-    if ('IntersectionObserver' in window) {
-      var observer = new IntersectionObserver(function (entries) {
-        if (entries.some(function (entry) { return entry.isIntersecting; })) { adView(); observer.disconnect(); }
-      }, { threshold: 0.3 }); observer.observe(ad);
-    } else adView();
-  }
-  try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (ignore) {}
   applyLocale();
   track('palworld_breeding_notebook_view', { project_count: projects.length });
 }());

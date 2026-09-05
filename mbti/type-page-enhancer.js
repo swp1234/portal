@@ -62,38 +62,6 @@
     });
   });
 
-  function injectInlineAd() {
-    if (document.querySelector('.type-inline-ad')) return;
-
-    var overview = document.querySelector('.overview-text');
-    if (!overview || !overview.parentNode) return;
-
-    var afterNode = overview;
-    while (afterNode.nextElementSibling && afterNode.nextElementSibling.classList.contains('overview-text')) {
-      afterNode = afterNode.nextElementSibling;
-    }
-
-    var ad = document.createElement('aside');
-    ad.className = 'type-inline-ad';
-    ad.dataset.adSurface = 'after_overview_ad';
-    ad.setAttribute('aria-label', 'Sponsored');
-    ad.innerHTML = '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3600813755953882" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>';
-    afterNode.insertAdjacentElement('afterend', ad);
-
-    track('mbti_type_ad_impression', {
-      surface: 'after_overview_ad',
-      ad_slot: 'auto'
-    });
-
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (error) {
-      ad.dataset.adError = '1';
-    }
-  }
-
-  injectInlineAd();
-
   function sendRailView() {
     if (rail.dataset.viewed === '1') return;
     rail.dataset.viewed = '1';

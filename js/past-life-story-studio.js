@@ -130,7 +130,5 @@
     document.querySelector('.related').addEventListener('click', function (event) { var link = event.target.closest('[data-related]'); if (link) track('past_life_studio_related_click', { destination_id: link.dataset.related }); });
 
     writeControls(); applyLanguage();
-    var ad = document.querySelector('[data-ad-surface="past_life_story_inline"]'); var adSent = false; function sendAd() { if (adSent) return; adSent = true; try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (error) {} track('past_life_studio_ad_impression'); }
-    if ('IntersectionObserver' in window) { var observer = new IntersectionObserver(function (entries) { if (entries.some(function (entry) { return entry.isIntersecting && entry.intersectionRatio >= 0.25; })) { sendAd(); observer.disconnect(); } }, { threshold: [0.25] }); observer.observe(ad); } else sendAd();
     track('past_life_studio_view', { source: params.get('source') || 'direct', saved_count: state.saved.length, has_story: state.generated });
 })();

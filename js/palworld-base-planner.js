@@ -132,6 +132,4 @@
   $('language').addEventListener('change',e=>{const had=!$('result').hidden;lang=e.target.value;localStorage.setItem('app_language',lang);const u=new URL(location.href);u.searchParams.set('lang',lang);history.replaceState({},'',u);localize();renderChoices();if(had)buildPlan();event('palworld_base_language_change')});
   document.querySelectorAll('.palworld-suite a').forEach(a=>a.addEventListener('click',()=>event('palworld_suite_click',{source:'base_planner',destination:a.href.split('/').pop().split('?')[0]})));
   localize();renderChoices();event('palworld_base_planner_view',{official_worker_max:50});
-  try{(window.adsbygoogle=window.adsbygoogle||[]).push({})}catch{}
-  const ad=document.querySelector('[data-ad-surface]');if(ad&&'IntersectionObserver'in window){const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){event('palworld_base_ad_impression',{ad_surface:'palworld_base_planner_inline'});io.disconnect()}},{threshold:.4});io.observe(ad)}
 })();

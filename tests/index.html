@@ -428,18 +428,6 @@ document.addEventListener('DOMContentLoaded',function(){
 
   trackHubEvent('hub_view',{page_type:'tests_hub'});
 
-  document.querySelectorAll('.inline-ad').forEach(function(adWrap){
-    var adNode=adWrap.querySelector('.adsbygoogle');
-    if(!adNode)return;
-    try{
-
-      trackHubEvent('hub_ad_impression',{
-        ad_surface:adWrap.dataset.adSurface||'tests_inline_ad',
-        ad_slot:adNode.dataset.adSlot||''
-      });
-    }catch(e){}
-  });
-
   // Theme toggle
   var btn=document.getElementById('theme-toggle');
   var saved=localStorage.getItem('theme');
