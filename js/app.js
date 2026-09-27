@@ -320,7 +320,8 @@
         }
 
         // Organize apps by category for section rendering
-        if (currentCategory === 'all' && !searchQuery.trim()) {
+        const showCategorySections = currentCategory === 'all' && !searchQuery.trim() && currentSort !== 'popularity' && currentSort !== 'latest';
+        if (showCategorySections) {
             // Paginated category sections
             const paginatedApps = regular.slice(0, itemsPerPage * currentPage);
             appGrid.innerHTML = renderCategorySections(paginatedApps);
@@ -435,8 +436,25 @@
         // Add NEW badge for new apps
         if (app.isNew) badges.push('<span class="badge badge-new">✨ NEW</span>');
 
-        // Add popularity badge (8+ is hot)
-        if (app.popularity >= 8) {
+        if (currentSort === 'popularity' && typeof index === 'number') {
+
+
+            const rank = index + 1;
+
+
+            const rankIcon = rank === 1 ? '🥇 #1' : rank === 2 ? '🥈 #2' : rank === 3 ? '🥉 #3' : `#${rank}`;
+
+
+            badges.unshift(`<span class="badge badge-rank" style="background:rgba(255,215,0,0.18);color:#ffd700;font-weight:700">${rankIcon}</span>`);
+
+
+        } else if (currentSort === 'latest' && app.isNew) {
+
+
+            badges.unshift('<span class="badge badge-new" style="background:rgba(0,229,255,0.18);color:#00e5ff;font-weight:700">✨ NEW</span>');
+
+
+        } else if (app.popularity >= 8) {
             badges.push(`<span class="badge badge-hot">🔥 ${i18n.t('badge.trending') || 'Hot'}</span>`);
         } else if (app.isPopular) {
             badges.push(`<span class="badge badge-popular">${i18n.t('badge.popular') || 'Popular'}</span>`);
@@ -597,12 +615,12 @@
                 loadMoreBtn.addEventListener('click', () => {
                     currentPage = Math.ceil(totalFilteredApps / itemsPerPage);
                     // Re-render with new page
-                    const showFeatured = currentCategory === 'all' && !searchQuery.trim();
-                    const loadMoreApps = showFeatured
+                    const showCategorySections = currentCategory === 'all' && !searchQuery.trim() && currentSort !== 'popularity' && currentSort !== 'latest';
+                    const loadMoreApps = (currentCategory === 'all' && !searchQuery.trim())
                         ? filteredAppsCache.filter(app => !FEATURED_IDS.includes(app.id))
                         : filteredAppsCache;
 
-                    if (showFeatured) {
+                    if (showCategorySections) {
                         const paginatedApps = loadMoreApps.slice(0, itemsPerPage * currentPage);
                         appGrid.innerHTML = renderCategorySections(paginatedApps);
                     } else {

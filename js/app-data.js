@@ -391,7 +391,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/mbti-love/',
         isNew: true,
         isPopular: true,
-        popularity: 84,
+        popularity: 88,
         i18n: {
             en: { name: 'MBTI Love Match', shortDesc: "What's your love style? 💕" },
             zh: { name: 'MBTI 恋爱配对', shortDesc: '你的恋爱风格是？💕' },
@@ -418,7 +418,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/hsp-test/',
         isNew: true,
         isPopular: true,
-        popularity: 90,
+        popularity: 98,
         i18n: {
             en: { name: 'HSP Sensitivity Test', shortDesc: 'Are you highly sensitive?' },
             zh: { name: 'HSP 敏感度测试', shortDesc: '你是高敏感人群吗？' },
@@ -716,7 +716,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/brain-type/',
         isNew: true,
         isPopular: true,
-        popularity: 100,
+        popularity: 99,
         i18n: {
             en: { name: 'Brain Type Test', shortDesc: 'What is your brain type?' },
             zh: { name: '脑型测试', shortDesc: '你的大脑类型是什么？' },
@@ -743,7 +743,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/iq-test/',
         isNew: true,
         isPopular: false,
-        popularity: 3,
+        popularity: 90,
         i18n: {
             en: { name: 'Quick IQ Test', shortDesc: 'Measure intelligence in 20 questions' },
             zh: { name: '快速智商测试', shortDesc: '20题测量你的智力' },
@@ -878,7 +878,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/stress-check/',
         isNew: false,
         isPopular: true,
-        popularity: 73,
+        popularity: 100,
         i18n: {
             en: { name: 'Stress Level Check', shortDesc: 'Measure your stress level' },
             zh: { name: '压力水平检查', shortDesc: '测量您的压力水平' },
@@ -1067,7 +1067,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/future-self/',
         isNew: true,
         isPopular: false,
-        popularity: 3,
+        popularity: 97,
         i18n: {
             en: { name: '10 Years From Now', shortDesc: 'Discover your future archetype' },
             zh: { name: '10年后的你', shortDesc: '发现你的未来自我' },
@@ -1310,7 +1310,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/puzzle-2048/',
         isNew: true,
         isPopular: false,
-        popularity: 3,
+        popularity: 95,
         i18n: {
             en: { name: '2048 Puzzle', shortDesc: 'Number tile merging game' },
             zh: { name: '2048 拼图', shortDesc: '合并数字瓷砖游戏' },
@@ -1715,7 +1715,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/reaction-test/',
         isNew: false,
         isPopular: false,
-        popularity: 3,
+        popularity: 89,
         i18n: {
             en: { name: 'Reaction Speed Test', shortDesc: 'Measure your nerve response time' },
             zh: { name: '反应速度测试', shortDesc: '测量你的神经反应速度' },
@@ -1769,7 +1769,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/color-personality/',
         isNew: true,
         isPopular: true,
-        popularity: 88,
+        popularity: 91,
         i18n: {
             en: { name: 'Color Personality Test', shortDesc: 'Discover your personality color' },
             zh: { name: '性格色彩测试', shortDesc: '发现你的性格颜色' },
@@ -2337,7 +2337,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/eq-test/',
         isNew: true,
         isPopular: true,
-        popularity: 94,
+        popularity: 92,
         i18n: {
             en: { name: 'EQ Emotion Reading Challenge', shortDesc: 'Test your emotional intelligence' },
             zh: { name: 'EQ情商测试', shortDesc: '测试你的情商' },
@@ -2607,7 +2607,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/dopamine-type/',
         isNew: true,
         isPopular: true,
-        popularity: 65,
+        popularity: 87,
         i18n: {
             en: { name: 'Dopamine Type Test', shortDesc: 'Brain reward system analysis' },
             zh: { name: '\u591A\u5DF4\u80FA\u7C7B\u578B\u6D4B\u8BD5', shortDesc: '\u5927\u8111\u5956\u52B1\u7CFB\u7EDF\u5206\u6790' },
@@ -2634,7 +2634,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/burnout-test/',
         isNew: true,
         isPopular: true,
-        popularity: 72,
+        popularity: 93,
         i18n: {
             en: { name: 'Burnout Test', shortDesc: "What's your burnout type?" },
             zh: { name: '\u5012\u5C3D\u6D4B\u8BD5', shortDesc: '\u4F60\u7684\u5012\u5C3D\u7C7B\u578B\u662F\u4EC0\u4E48\uFF1F' },
@@ -3110,7 +3110,7 @@ const APP_DATA = [
         description:'Browser-local 2048 board analyzer with exact move simulation, previews and one-step lookahead.',
         icon:'🧭',color:'#f6c453',category:'game',
         tags:['2048','board analyzer','next move','strategy','puzzle','game coach','보드 분석','다음 수'],
-        url:'https://dopabrain.com/puzzle-2048/coach.html',isNew:true,isPopular:false,popularity:32,
+        url:'https://dopabrain.com/puzzle-2048/coach.html',isNew:true,isPopular:false,popularity:94,
         i18n:{
             en:{name:'2048 Board Analyzer',shortDesc:'Compare every legal next move'},zh:{name:'2048 棋盘分析器',shortDesc:'比较所有合法的下一步'},
             hi:{name:'2048 बोर्ड विश्लेषक',shortDesc:'हर वैध अगली चाल की तुलना'},ru:{name:'Анализатор доски 2048',shortDesc:'Сравнение всех допустимых ходов'},
