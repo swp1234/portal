@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Développer un Plugin Roblox Studio en 2026: UI & Creator Store | DopaBrain</title>
+  <meta name="description" content="Créez et vendez des plugins Roblox Studio en 2026: DockWidgetPluginGui, ChangeHistoryService annuler/rétablir, Selection API et vente en dollars réels.">
+  <meta name="keywords" content="developper plugin roblox studio 2026, dockwidgetplugingui lua, changehistoryservice roblox, vendre creator store roblox">
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/fr/roblox-studio-plugin-development-guide.html">
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-studio-plugin-development-guide.html">
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-studio-plugin-development-guide.html">
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-studio-plugin-development-guide.html">
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-studio-plugin-development-guide.html">
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-studio-plugin-development-guide.html">
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-studio-plugin-development-guide.html">
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-studio-plugin-development-guide.html">
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-studio-plugin-development-guide.html">
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-studio-plugin-development-guide.html">
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-studio-plugin-development-guide.html">
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-studio-plugin-development-guide.html">
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-studio-plugin-development-guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-studio-plugin-development-guide.html">
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/fr/roblox-studio-plugin-development-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/fr/roblox-studio-plugin-development-guide.html"
+      },
+      "headline": "Développement de Plugins Roblox Studio: DockWidget UI & Vente sur le Creator Store",
+      "description": "Créez et vendez des plugins Roblox Studio en 2026: DockWidgetPluginGui, ChangeHistoryService annuler/rétablir, Selection API et vente en dollars réels.",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Game Dev Lab",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "datePublished": "2026-09-28T09:00:00+09:00",
+      "dateModified": "2026-09-28T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/fr/roblox-studio-plugin-development-guide.html"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/fr/roblox-studio-plugin-development-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portail",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Guide des Plugins Roblox Studio",
+          "item": "https://dopabrain.com/portal/blog/fr/roblox-studio-plugin-development-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/fr/roblox-studio-plugin-development-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Comment tester un plugin en local sans le publier?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Placez le fichier dans le dossier local des plugins de Studio. Il se chargera instantanément."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Peut-on vendre des plugins en euros ou dollars réels?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui, les créateurs vérifiés peuvent vendre leurs plugins en dollars sur le Creator Store."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Pourquoi ChangeHistoryService est-il incontournable?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Il permet d'enregistrer les actions dans l'historique d'annulation Ctrl+Z sans écraser le travail de l'utilisateur."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment adapter l'interface aux thèmes clair et sombre?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Utilisez settings().Studio.Theme:GetColor() pour récupérer les couleurs natives du système."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <style>
+    :root {
+      --bg: #090b10;
+      --card-bg: #121620;
+      --card-border: #1f2738;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #06b6d4;
+      --accent-glow: rgba(6, 182, 212, 0.15);
+      --highlight: #3b82f6;
+      --code-bg: #0d1117;
+      --border-radius: 12px;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 24px 16px;
+      overflow-x: hidden;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .meta-box {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.15rem;
+      color: var(--accent);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      min-height: 44px;
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      font-size: 0.95rem;
+      color: #fff;
+    }
+    .quick-card span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .banner-quote {
+      background: var(--accent-glow);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 24px 0;
+      font-size: 1.05rem;
+    }
+    .content-body p {
+      margin-bottom: 18px;
+      font-size: 1.05rem;
+      color: #d1d7e0;
+    }
+    .content-body h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 36px 0 16px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 8px;
+    }
+    .content-body ul {
+      margin: 0 0 20px 24px;
+    }
+    .content-body li {
+      margin-bottom: 10px;
+      color: #cbd5e1;
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 16px 0 20px;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #58a6ff;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: #22d3ee;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+    .cta-box {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(59, 130, 246, 0.1));
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: var(--border-radius);
+      padding: 28px 24px;
+      text-align: center;
+      margin: 40px 0;
+    }
+    .cta-box h3 {
+      font-size: 1.35rem;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .cta-box p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-btn {
+      display: inline-block;
+      min-height: 44px;
+      line-height: 44px;
+      padding: 0 28px;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      border-radius: 22px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .cta-btn:hover {
+      background: #22d3ee;
+      transform: scale(1.03);
+    }
+    .faq-section {
+      margin: 40px 0;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+    }
+    .faq-item h3 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--card-border);
+      padding-top: 24px;
+    }
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 1.7rem;
+      }
+      .content-body h2 {
+        font-size: 1.3rem;
+      }
+      .quick-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Développement de Plugins Roblox Studio: DockWidget UI & Vente sur le Creator Store</h1>
+      <div class="meta-box">
+        <span>Par DopaBrain Game Dev Lab</span>
+        <span>&bull;</span>
+        <span>Mis à jour: Septembre 2026</span>
+        <span>&bull;</span>
+        <span>Temps de lecture: 9 min</span>
+      </div>
+    </header>
+
+    <div class="quick-rail" data-content-surface="quick_rail">
+      <h2>Outils d'Analyse & Développeur</h2>
+      <div class="quick-grid">
+        <a href="/brain-type/?lang=fr" class="quick-card">
+          <strong>Type Cérébral</strong>
+          <span>Architecture de systèmes</span>
+        </a>
+        <a href="/reaction-test/?lang=fr" class="quick-card">
+          <strong>Test de Réflexes</strong>
+          <span>Précision et réactivité</span>
+        </a>
+        <a href="/stress-check/?lang=fr" class="quick-card">
+          <strong>Bilan de Stress</strong>
+          <span>Fatigue du codeur</span>
+        </a>
+        <a href="/puzzle-2048/?lang=fr" class="quick-card">
+          <strong>Puzzle 2048</strong>
+          <span>Efficacité logique</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="content-body">
+      <p>Tandis que la majorité des développeurs se concentrent sur la création de jeux, une minorité d'ingénieurs exploite un marché très rentable: la vente d'outils de productivité pour Studio sur le Creator Store en dollars et Robux.</p>
+      <p>Concevoir un plugin professionnel nécessite la maîtrise d'APIs dédiées: DockWidgetPluginGui pour les fenêtres ancrables, ChangeHistoryService pour un historique d'annulation (Ctrl+Z) propre, et la Selection API. Ce guide 2026 détaille la marche à suivre.</p>
+
+      <div class="banner-quote">
+        <strong>Rentabilité des Outils:</strong> Un plugin avec 5 000 utilisateurs actifs génère des revenus récurrents sans aucun frais d'hébergement de serveur ni maintenance lourde.
+      </div>
+
+      <h2>1. Cycle de Vie et Sécurité des Plugins</h2>
+      <p>Les plugins s'exécutent avec des privilèges élevés dans Studio:</p>
+      <ul>
+        <li><strong>Contexte d'Exécution:</strong> Exécution locale côté client dans Studio avec accès direct aux modèles.</li>
+        <li><strong>Plugins Locaux:</strong> Enregistrez vos scripts dans <code>%localappdata%\Roblox\Plugins</code> pour un rechargement à chaud instantané.</li>
+        <li><strong>Autorisations de Sécurité:</strong> Les requêtes HTTP externes demandent l'accord préalable de l'utilisateur.</li>
+      </ul>
+
+      <h2>2. Créer des Panneaux Ancrables avec DockWidgetPluginGui</h2>
+      <p>Concevoir des interfaces parfaitement intégrées à l'ergonomie de Studio:</p>
+      <ul>
+        <li><strong>Configuration DockWidget:</strong> Fixe la position par défaut (flottante, ancrée à gauche/droite) et la taille minimale.</li>
+        <li><strong>Adaptation StudioTheme:</strong> Adaptez automatiquement les couleurs via <code>settings().Studio.Theme</code> pour les modes sombre et clair.</li>
+        <li><strong>Design Fluide:</strong> Utilisez UIListLayout pour que l'interface s'ajuste lors des redimensionnements de panneaux.</li>
+      </ul>
+
+      <h2>3. Gestion Propre du Ctrl+Z avec ChangeHistoryService</h2>
+      <p>Le piège classique des débutants est de corrompre l'historique d'annulation:</p>
+      <ul>
+        <li><strong>Enregistrer un Waypoint:</strong> Appelez <code>ChangeHistoryService:SetWaypoint()</code> immédiatement après modification.</li>
+        <li><strong>Actions Atomiques:</strong> Regroupez les manipulations pour qu'un seul Ctrl+Z annule l'intégralité de l'opération.</li>
+        <li><strong>Selection API:</strong> Modifiez uniquement les pièces sélectionnées avec <code>Selection:Get()</code>.</li>
+      </ul>
+
+      <h2>4. Script Complet: Optimiseur de Pièces par Lot</h2>
+      <p>Script prêt à l'emploi créant un bouton, une fenêtre et optimisant les pièces sélectionnées:</p>
+      <div class="code-header"><strong>Code Complet du Plugin Studio (Toolbar & DockWidget)</strong></div>
+      <pre><code>local ChangeHistoryService = game:GetService("ChangeHistoryService")
+local Selection = game:GetService("Selection")
+
+local toolbar = plugin:CreateToolbar("Optimization Tools")
+local button = toolbar:CreateButton("Optimizer", "Open Batch Part Optimizer", "rbxassetid://4458901886")
+
+local widgetInfo = DockWidgetPluginGuiInfo.new(
+    Enum.InitialDockState.Float,
+    false, false, 260, 180, 200, 140
+)
+
+local widget = plugin:CreateDockWidgetPluginGui("BatchOptimizerGui", widgetInfo)
+widget.Title = "Mesh Optimizer"
+
+local btnOptimize = Instance.new("TextButton")
+btnOptimize.Size = UDim2.new(1, -20, 0, 44)
+btnOptimize.Position = UDim2.new(0, 10, 0, 10)
+btnOptimize.Text = "Optimiser la Selection"
+btnOptimize.BackgroundColor3 = Color3.fromRGB(16, 185, 129)
+btnOptimize.TextColor3 = Color3.fromRGB(255, 255, 255)
+btnOptimize.Parent = widget
+
+button.Click:Connect(function()
+    widget.Enabled = not widget.Enabled
+end)
+
+btnOptimize.MouseButton1Click:Connect(function()
+    local selected = Selection:Get()
+    local count = 0
+    for _, obj in ipairs(selected) do
+        if obj:IsA("BasePart") then
+            obj.CastShadow = false
+            if obj:IsA("MeshPart") then
+                obj.CollisionFidelity = Enum.CollisionFidelity.Box
+            end
+            count = count + 1
+        end
+    end
+    ChangeHistoryService:SetWaypoint("Optimized " .. count .. " Parts")
+end)</code></pre>
+      <p>Fonctionnement: Ajoute un bouton dans la barre supérieure, ouvre une fenêtre flottante et applique les optimisations avec un point de restauration.</p>
+
+      <h2>5. Vendre son Plugin sur le Creator Store en Dollars</h2>
+      <p>Commercialiser son outil auprès de la communauté mondiale:</p>
+      <ul>
+        <li><strong>Prix en Devises Réelles ($USD):</strong> Vendez directement entre 4,99 $ et 19,99 $ en recevant des paiements directs.</li>
+        <li><strong>Modèle Freemium:</strong> Version gratuite pour la visibilité et version pro payante pour les fonctions avancées.</li>
+        <li><strong>Promotion DevForum:</strong> Les démonstrations vidéo et documentations claires déclenchent les ventes.</li>
+      </ul>
+
+      <div class="cta-box">
+        <h3>Évaluez Vos Capacités d'Architecture et Votre Clarté</h3>
+        <p>Créer des outils solides exige précision et calme intellectuel. Testez votre profil cognitif avec nos outils gratuits.</p>
+        <a href="/brain-type/?lang=fr" class="cta-btn">Faire le Test de Profil Cérébral Gratuit</a>
+      </div>
+
+      <section class="faq-section">
+        <h2>Foire Aux Questions (Plugins Roblox Studio 2026)</h2>
+        <div class="faq-item">
+          <h3>Comment tester un plugin en local sans le publier?</h3>
+          <p>Placez le fichier dans le dossier local des plugins de Studio. Il se chargera instantanément.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Peut-on vendre des plugins en euros ou dollars réels?</h3>
+          <p>Oui, les créateurs vérifiés peuvent vendre leurs plugins en dollars sur le Creator Store.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Pourquoi ChangeHistoryService est-il incontournable?</h3>
+          <p>Il permet d'enregistrer les actions dans l'historique d'annulation Ctrl+Z sans écraser le travail de l'utilisateur.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Comment adapter l'interface aux thèmes clair et sombre?</h3>
+          <p>Utilisez settings().Studio.Theme:GetColor() pour récupérer les couleurs natives du système.</p>
+        </div>
+
+      </section>
+    </article>
+
+    <footer>
+      <p>© 2026 DopaBrain Game Dev Lab. Normes techniques pour les développeurs professionnels.</p>
+    </footer>
+  </div>
+</body>
+</html>
