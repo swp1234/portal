@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로블록스 타이쿤 만들기 2026: 드로퍼 & 경제 시스템 루아 스크립트 | DopaBrain</title>
+    <meta name="description" content="2026년 최신 로블록스 타이쿤 게임 제작 가이드. 광물 드로퍼 스크립트, 컨베이어 수집 패드, 구매 버튼 로직, 환생(Rebirth) 복리 경제 밸런스 완벽 정리." />
+    <meta name="keywords" content="로블록스 타이쿤 만들기 2026, 로블록스 드로퍼 스크립트, 로블록스 타이쿤 버튼 루아, 로블록스 타이쿤 렉 줄이기, 로블록스 환생 시스템" />
+    <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-tycoon-game-mechanics-guide.html" />
+    <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-tycoon-game-mechanics-guide.html" />
+    <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-tycoon-game-mechanics-guide.html" />
+    <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-tycoon-game-mechanics-guide.html" />
+    <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-tycoon-game-mechanics-guide.html" />
+    <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-tycoon-game-mechanics-guide.html" />
+    <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-tycoon-game-mechanics-guide.html" />
+    <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-tycoon-game-mechanics-guide.html" />
+    <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-tycoon-game-mechanics-guide.html" />
+    <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-tycoon-game-mechanics-guide.html" />
+    <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-tycoon-game-mechanics-guide.html" />
+    <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-tycoon-game-mechanics-guide.html" />
+    <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-tycoon-game-mechanics-guide.html" />
+    <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-tycoon-game-mechanics-guide.html" />
+    <meta property="og:title" content="로블록스 타이쿤 만들기 2026: 드로퍼 & 경제 시스템 루아 스크립트 | DopaBrain" />
+    <meta property="og:description" content="2026년 최신 로블록스 타이쿤 게임 제작 가이드. 광물 드로퍼 스크립트, 컨베이어 수집 패드, 구매 버튼 로직, 환생(Rebirth) 복리 경제 밸런스 완벽 정리." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-tycoon-game-mechanics-guide.html" />
+    <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="로블록스 타이쿤 만들기 2026: 드로퍼 & 경제 시스템 루아 스크립트 | DopaBrain" />
+    <meta name="twitter:description" content="2026년 최신 로블록스 타이쿤 게임 제작 가이드. 광물 드로퍼 스크립트, 컨베이어 수집 패드, 구매 버튼 로직, 환생(Rebirth) 복리 경제 밸런스 완벽 정리." />
+    <meta name="twitter:image" content="https://dopabrain.com/portal/icon-512.svg" />
+    <script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "로블록스 타이쿤 제작 가이드: 드로퍼, 구매 버튼 & 경제 시스템 코딩", "description": "2026년 최신 로블록스 타이쿤 게임 제작 가이드. 광물 드로퍼 스크립트, 컨베이어 수집 패드, 구매 버튼 로직, 환생(Rebirth) 복리 경제 밸런스 완벽 정리.", "image": "https://dopabrain.com/portal/icon-512.svg", "datePublished": "2026-09-28", "dateModified": "2026-09-28", "inLanguage": "ko", "author": {"@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com"}, "publisher": {"@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com", "logo": {"@type": "ImageObject", "url": "https://dopabrain.com/portal/icon-512.svg"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://dopabrain.com/portal/blog/ko/roblox-tycoon-game-mechanics-guide.html"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "DopaBrain", "item": "https://dopabrain.com/"}, {"@type": "ListItem", "position": 2, "name": "블로그 KO", "item": "https://dopabrain.com/portal/blog/ko/"}, {"@type": "ListItem", "position": 3, "name": "로블록스 타이쿤 제작 가이드", "item": "https://dopabrain.com/portal/blog/ko/roblox-tycoon-game-mechanics-guide.html"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "타이쿤 게임에서 렉이 심하게 발생하는 이유는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "수백 개의 광물 파트가 물리 엔진(물리 충돌)을 일으키기 때문입니다. 광물 파트의 CanTouch를 끄고, 파트끼리의 충돌을 비활성화하며, DebrisService로 미수거 광물을 즉시 삭제해야 합니다."}}, {"@type": "Question", "name": "유저가 나갔다 들어와도 지어둔 건물이 유지되게 하려면 어떻게 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "<code>DataStoreService</code>를 사용하여 플레이어가 구매한 아이템 ID 목록을 저장해두고, 재접속 시 해당 아이템들을 자동으로 한 번에 로드해 주면 됩니다."}}, {"@type": "Question", "name": "타이쿤 게임에서 가장 효과적인 수익화(로벅스 판매) 방법은 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "자리를 비워도 돈이 자동으로 들어오는 \"자동 수집기(Auto-Collect)\", 수익이 2배로 늘어나는 \"2x 캐시 부스트\", 전용 VIP 구역 등이 가장 인기가 높습니다."}}, {"@type": "Question", "name": "1인 개발자도 혼자서 완성도 높은 타이쿤을 제작할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네! 타이쿤은 드로퍼와 수집기라는 모듈형 시스템이 반복되는 구조이므로, 기본 스크립트만 완성하면 1인 개발자도 얼마든지 대형 맵을 제작할 수 있습니다."}}]}]}
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-J8GSWM40TV');
+    </script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --bg-light: #1f2937;
+            --border-color: #374151;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --primary: #10b981;
+            --secondary: #3b82f6;
+            --accent: #fbbf24;
+            --code-bg: #1e293b;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --spacing: 1.25rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            line-height: 1.75;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem var(--spacing);
+            background: rgba(11, 15, 25, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+        .header-nav a:hover { color: var(--accent); }
+        .header-nav span { font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-secondary); }
+
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 2.5rem 1.25rem 5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .breadcrumb { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        .indexing-quick-rail {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.5rem 0 2.5rem;
+        }
+        .indexing-quick-rail h2 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0 0 1rem 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .indexing-quick-rail h2::after { display: none; }
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+        }
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 48px;
+            padding: 0.75rem 0.9rem;
+            border-radius: 8px;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        h2 {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 3rem 0 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid var(--border-color);
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 1.8rem 0 0.8rem;
+        }
+
+        p { margin-bottom: 1.2rem; color: var(--text-secondary); font-size: 1.02rem; }
+
+        ul, ol {
+            margin: 0 0 1.5rem 1.6rem;
+            color: var(--text-secondary);
+        }
+        li { margin-bottom: 0.6rem; }
+        strong { color: #ffffff; font-weight: 700; }
+        code {
+            background: rgba(110, 118, 129, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.9em;
+            color: #34d399;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.2rem;
+            overflow-x: auto;
+            margin: 1.2rem 0 1.8rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+
+        .highlight-box {
+            background: var(--card-bg);
+            border-left: 4px solid var(--primary);
+            padding: 1.4rem;
+            margin: 1.8rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .highlight-box p { color: var(--text-primary); margin-bottom: 0; }
+
+        .faq-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.4rem;
+            margin-bottom: 1.2rem;
+        }
+        .faq-card h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.6rem;
+        }
+        .faq-card p { margin-bottom: 0; font-size: 0.95rem; }
+
+        .cta-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.14) 0%, rgba(59, 130, 246, 0.08) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 2rem;
+            text-align: center;
+            margin: 3.5rem 0;
+        }
+        .cta-box h3 {
+            color: #ffffff;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+        }
+        .cta-box p {
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto 1.5rem;
+            font-size: 0.98rem;
+        }
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, #059669 100%);
+            color: #ffffff;
+            font-weight: 700;
+            padding: 0.9rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            min-height: 48px;
+            line-height: 1.2;
+            transition: all 0.3s ease;
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.75rem; }
+            .container { padding: 1.5rem 1rem 3rem; }
+            .indexing-quick-rail .quick-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-nav">
+        <a href="/portal/">DopaBrain 포털</a>
+        <span>게임 개발 랩</span>
+    </header>
+
+    <main class="container">
+        <nav class="breadcrumb">
+            <a href="/">홈</a> &gt;
+            <a href="/portal/">포털</a> &gt;
+            <a href="/portal/blog/ko/">블로그 KO</a> &gt;
+            <span>로블록스 타이쿤 제작 가이드</span>
+        </nav>
+
+        <section class="indexing-quick-rail" aria-label="Quick Navigation">
+            <h2>방치형 게임 & 두뇌 테스트</h2>
+            <div class="quick-grid">
+                <a class="quick-card" href="/idle-clicker/?lang=ko" data-content-surface="quick_rail" data-target-slug="idle-clicker">
+                    <strong>방치형 클리커</strong>
+                    <span>복리 성장 게임 휴식</span>
+                </a>
+                <a class="quick-card" href="/puzzle-2048/?lang=ko" data-content-surface="quick_rail" data-target-slug="puzzle-2048">
+                    <strong>2048 퍼즐</strong>
+                    <span>수학적 전략 두뇌 풀기</span>
+                </a>
+                <a class="quick-card" href="/reaction-test/?lang=ko" data-content-surface="quick_rail" data-target-slug="reaction-test">
+                    <strong>반응속도 테스트</strong>
+                    <span>키보드 반응 측정</span>
+                </a>
+                <a class="quick-card" href="/stress-check/?lang=ko" data-content-surface="quick_rail" data-target-slug="stress-check">
+                    <strong>스트레스 진단</strong>
+                    <span>게임 집중력 리셋</span>
+                </a>
+            </div>
+        </section>
+
+        <header class="article-header">
+            <h1>로블록스 타이쿤 제작 가이드: 드로퍼, 구매 버튼 & 경제 시스템 코딩</h1>
+            <div class="meta">
+                <span>DopaBrain 게임개발 랩</span>
+                <span>업데이트: 2026년 9월</span>
+                <span>읽는 시간: 8분</span>
+            </div>
+        </header>
+
+        <p>타이쿤(Tycoon)은 로블록스 역사상 가장 오랫동안 사랑받아 온 중독성 높은 장르입니다. 드로퍼에서 쏟아지는 광물이 컨베이어를 타고 돈으로 환전되고, 그 돈으로 새로운 버튼을 밟아 건물을 확장해 나가는 복리 성장의 쾌감은 게이머의 뇌를 강력하게 매료시킵니다.</p>
+        <p>하지만 기본 무료 템플릿을 넘어 수많은 유저가 즐기는 인기 타이쿤을 만들려면 최적화된 서버 스크립트, 치밀한 경제 인플레이션 밸런싱, 그리고 악성 치트를 방지하는 보안 설계가 필수적입니다. 본 가이드에서는 핵심 메커니즘인 자동 드로퍼, 수집기, 구매 버튼, 환생 시스템을 완벽 정리해 드립니다.</p>
+
+        <div class="highlight-box">
+            <p><strong>경제 밸런스 법칙:</strong> 타이쿤 유저의 이탈을 막는 핵심은 초반 템포입니다. 첫 10~30초 안에 첫 업그레이드를 경험하게 하고, 중반부에는 2~5분간 목표 금액을 모으는 전략적 기다림을 유도해야 몰입도가 유지됩니다.</p>
+        </div>
+
+        <h2>1. 로블록스 타이쿤의 4단계 핵심 메커니즘 루프</h2>
+        <p>성공적인 모든 타이쿤 게임은 아래의 닫힌 루프(Closed Loop) 구조로 작동합니다:</p>
+        <ul>
+            <li><strong>1. 드로퍼(Dropper):</strong> 일정 주기로 광물이나 상품 파트를 생성하여 컨베이어 벨트로 떨어뜨립니다.</li>
+            <li><strong>2. 컨베이어 및 수집기(Collector):</strong> 파트를 수거함으로 운반하고, 파트가 닿는 순간 파괴하면서 플레이어의 계좌에 돈을 적립합니다.</li>
+            <li><strong>3. 골드 금고(Cash Bank):</strong> 서버 상에서 플레이어의 누적 자산을 안전하게 보관합니다.</li>
+            <li><strong>4. 구매 버튼(Buy Buttons):</strong> 플레이어가 발판을 밟으면 잔액을 확인하고 차감한 뒤 다음 단계 설비나 건물을 생성합니다.</li>
+        </ul>
+
+        <h2>2. 자동 광물 드로퍼 코딩 (서버 스크립트)</h2>
+        <p>드로퍼 발사구 모델 안에 아래의 루아 스크립트를 삽입합니다:</p>
+        <h3>드로퍼 생성 스크립트 (Script)</h3>
+        <pre><code>local dropper = script.Parent
+local oreTemplate = game.ServerStorage:WaitForChild("OrePart")
+
+while true do
+    task.wait(2)
+    local ore = oreTemplate:Clone()
+    ore.Position = dropper.Position - Vector3.new(0, 1.5, 0)
+    ore.Parent = workspace
+    game:GetService("Debris"):AddItem(ore, 15) -- Auto-delete after 15s to prevent lag
+end</code></pre>
+        <p>작동 원리: 2초마다 <code>ServerStorage</code>에서 원본 파트를 복제(Clone)하여 바닥으로 떨어뜨리고, <code>DebrisService</code>를 이용해 15초 뒤 자동으로 소멸시켜 서버 렉을 원천 차단합니다.</p>
+
+        <h2>3. 컨베이어 수집 패드 코딩</h2>
+        <p>광물이 컨베이어 끝에 도달했을 때 돈을 지급하는 수집기 스크립트입니다:</p>
+        <h3>수집기 환전 스크립트 (Script)</h3>
+        <pre><code>local collector = script.Parent
+
+local function onTouch(hit)
+    if hit.Name == "OrePart" then
+        hit:Destroy()
+        local tycoonOwner = collector.Parent.Parent.Owner.Value
+        if tycoonOwner and tycoonOwner:FindFirstChild("leaderstats") then
+            tycoonOwner.leaderstats.Cash.Value += 10
+        end
+    end
+end
+
+collector.Touched:Connect(onTouch)</code></pre>
+        <p>작동 원리: 닿은 물체가 <code>OrePart</code>인지 확인하고 즉시 파괴한 뒤, 해당 타이쿤 소유자의 <code>leaderstats.Cash</code>에 10골드를 안전하게 적립합니다.</p>
+
+        <h2>4. 단계별 구매 버튼(Purchase Buttons) 연쇄 해금 로직</h2>
+        <p>초반에 최고급 장비를 바로 사지 못하도록 단계별 순차 해금 시스템을 구축해야 합니다:</p>
+        <ol>
+            <li>구매 버튼 파트 위에 <code>BillboardGui</code>를 띄워 아이템 이름과 가격을 표시합니다(예: "중급 드로퍼 - $250").</li>
+            <li>버튼 접촉 이벤트에서 <code>if player.leaderstats.Cash.Value >= price then</code> 조건을 검사합니다.</li>
+            <li>금액을 차감하고 숨겨두었던 3D 모델을 활성화(Parent = workspace)한 뒤, 사용된 구매 버튼을 제거합니다.</li>
+            <li>다음 단계 구매 버튼을 화면에 등장시켜 플레이어에게 명확한 다음 목표를 제시합니다.</li>
+        </ol>
+
+        <h2>5. 서버 최적화(렉 줄이기) 및 환생(Rebirth) 시스템</h2>
+        <p>수많은 물리 파트가 돌아다니는 타이쿤 게임의 특성상 최적화는 생명입니다:</p>
+        <ul>
+            <li><strong>충돌 그룹(CollisionGroups) 활용:</strong> 광물 파트끼리 부딪히지 않고 오직 컨베이어 바닥에만 닿도록 설정하여 물리 연산 부하를 80% 이상 줄입니다.</li>
+            <li><strong>환생(Rebirth) 보상:</strong> 모든 건물을 완성한 유저에게 타이쿤을 초기화하는 대신 영구 수익 +20% 부스트를 제공하여 다회차 플레이를 유도합니다.</li>
+            <li><strong>오프라인 수익 제한:</strong> 게임을 껐을 때 최대 2시간까지만 수익이 적립되도록 제한하여 초인플레이션을 막고 매일 재방문하게 만듭니다.</li>
+        </ul>
+
+        <div class="cta-box">
+            <h3>나의 복리 전략과 논리적 사고력을 테스트해 볼까요?</h3>
+            <p>타이쿤 경제 밸런싱은 치밀한 수치 계산과 논리적 구조화를 요구합니다. 2048 퍼즐과 인지 테스트로 나의 수학적 사고력을 단련해 보세요.</p>
+            <a href="/puzzle-2048/?lang=ko" class="cta-btn">2048 퍼즐 게임 시작하기</a>
+        </div>
+
+        <h2>자주 묻는 질문 (FAQ)</h2>
+        <div class="faq-card"><h4>타이쿤 게임에서 렉이 심하게 발생하는 이유는 무엇인가요?</h4><p>수백 개의 광물 파트가 물리 엔진(물리 충돌)을 일으키기 때문입니다. 광물 파트의 CanTouch를 끄고, 파트끼리의 충돌을 비활성화하며, DebrisService로 미수거 광물을 즉시 삭제해야 합니다.</p></div>
+        <div class="faq-card"><h4>유저가 나갔다 들어와도 지어둔 건물이 유지되게 하려면 어떻게 하나요?</h4><p><code>DataStoreService</code>를 사용하여 플레이어가 구매한 아이템 ID 목록을 저장해두고, 재접속 시 해당 아이템들을 자동으로 한 번에 로드해 주면 됩니다.</p></div>
+        <div class="faq-card"><h4>타이쿤 게임에서 가장 효과적인 수익화(로벅스 판매) 방법은 무엇인가요?</h4><p>자리를 비워도 돈이 자동으로 들어오는 "자동 수집기(Auto-Collect)", 수익이 2배로 늘어나는 "2x 캐시 부스트", 전용 VIP 구역 등이 가장 인기가 높습니다.</p></div>
+        <div class="faq-card"><h4>1인 개발자도 혼자서 완성도 높은 타이쿤을 제작할 수 있나요?</h4><p>네! 타이쿤은 드로퍼와 수집기라는 모듈형 시스템이 반복되는 구조이므로, 기본 스크립트만 완성하면 1인 개발자도 얼마든지 대형 맵을 제작할 수 있습니다.</p></div>
+    </main>
+
+    <footer style="text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border-color); margin-top: 4rem;">
+        <p>&copy; 2026 DopaBrain. All rights reserved. 본 가이드는 독립적인 게임 개발 및 디지털 경제 아키텍처 칼럼입니다.</p>
+    </footer>
+</body>
+</html>
