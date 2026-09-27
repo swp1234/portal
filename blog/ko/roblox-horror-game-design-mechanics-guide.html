@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 공포 게임 제작 공략 2026: 몬스터 AI, 점프스케어 & 라이팅 | DopaBrain</title>
+  <meta name="description" content="2026년 대박 로블록스 공포 게임 만들기 완벽 가이드. PathfindingService 추적 몬스터 AI, 레이캐스트 시야 감지, Future 라이팅 안개, 도어즈식 옷장 숨기기 구현법." />
+  <meta name="keywords" content="로블록스 공포게임 만들기 2026, 로블록스 몬스터 ai 스크립트, pathfindingservice 몬스터, 도어즈 점프스케어 스크립트, 로블록스 공포 연출" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-horror-game-design-mechanics-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="로블록스 공포 게임 제작 공략 2026: 몬스터 AI, 점프스케어 & 라이팅 | DopaBrain" />
+  <meta property="og:description" content="2026년 대박 로블록스 공포 게임 만들기 완벽 가이드. PathfindingService 추적 몬스터 AI, 레이캐스트 시야 감지, Future 라이팅 안개, 도어즈식 옷장 숨기기 구현법." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-horror-game-design-mechanics-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="로블록스 공포 게임 제작 공략 2026: 몬스터 AI, 점프스케어 & 라이팅 | DopaBrain" />
+  <meta name="twitter:description" content="2026년 대박 로블록스 공포 게임 만들기 완벽 가이드. PathfindingService 추적 몬스터 AI, 레이캐스트 시야 감지, Future 라이팅 안개, 도어즈식 옷장 숨기기 구현법." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-horror-game-design-mechanics-guide.html#article",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://dopabrain.com/#website",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "headline": "로블록스 공포 게임 제작: 몬스터 추적 AI, 점프스케어 스크립트 & 공포 연출",
+      "description": "2026년 대박 로블록스 공포 게임 만들기 완벽 가이드. PathfindingService 추적 몬스터 AI, 레이캐스트 시야 감지, Future 라이팅 안개, 도어즈식 옷장 숨기기 구현법.",
+      "inLanguage": "ko",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-horror-game-design-mechanics-guide.html",
+      "datePublished": "2026-09-28T00:00:00+09:00",
+      "dateModified": "2026-09-28T00:00:00+09:00",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-horror-game-design-mechanics-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "포털",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "블로그 KO",
+          "item": "https://dopabrain.com/portal/blog/ko/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "로블록스 공포 게임 제작",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-horror-game-design-mechanics-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-horror-game-design-mechanics-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "몬스터가 벽을 뚫고 지나가는 버그는 어떻게 고치나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "모든 벽 오브젝트의 CanCollide가 true인지 확인하고, PathfindingService의 AgentRadius를 몬스터의 실제 히트박스보다 약간 크게 설정하여 경로가 벽에 너무 붙지 않게 합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "1인 개발자도 도어즈 같은 퀄리티의 공포 게임을 만들 수 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "충분히 가능합니다! 도어즈 역시 소규모 팀에서 시작되었습니다. 방 생성의 모듈화와 조명 연출이 핵심입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "플레이어 손전등을 렉 없이 최적화하려면 어떻게 해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "서버가 아닌 클라이언트(LocalScript)에서 손전등 SpotLight를 장착하고, 각도를 60도, 밝기를 2.5 안팎으로 맞춰 프레임 저하를 방지합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "도어즈처럼 무한히 방이 랜덤 생성되는 원리는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ServerStorage에 템플릿 방들을 저장해 두고, 플레이어가 N번 문을 열 때 다음 방을 복제하여 입구 CFrame을 이전 문의 출구 CFrame에 맞춘 뒤, 지나온 방을 순차 삭제(Destroy)하는 방식입니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <style>
+    :root {
+      --bg: #09090e;
+      --card-bg: #12121b;
+      --border: #222232;
+      --accent: #dc2626;
+      --accent-glow: rgba(220, 38, 38, 0.2);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --max-w: 800px;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 24px 16px 64px 16px;
+    }
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .nav-bar a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .nav-bar .badge {
+      background: var(--accent-glow);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      border: 1px solid var(--accent);
+    }
+    .breadcrumb {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .breadcrumb a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover {
+      color: var(--accent);
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .meta-box {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+      color: var(--accent);
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s ease;
+      min-height: 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+    }
+    .quick-card strong {
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .quick-card span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .content-body p {
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+    }
+    .content-body h2 {
+      font-size: 1.4rem;
+      margin: 36px 0 16px 0;
+      color: #fff;
+      font-weight: 700;
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+    }
+    .banner-quote {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      margin: 28px 0;
+      border-radius: 0 8px 8px 0;
+      font-size: 1rem;
+      color: #cbd5e1;
+    }
+    ul, ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+    li {
+      margin-bottom: 12px;
+      color: #cbd5e1;
+      font-size: 1rem;
+    }
+    .code-box {
+      background: #08080c;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .code-header {
+      background: #141420;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #f1f5f9;
+    }
+    code {
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      color: #fca5a5;
+    }
+    .cta-box {
+      background: linear-gradient(135deg, rgba(220, 38, 38, 0.15) 0%, rgba(18, 18, 27, 0.9) 100%);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      padding: 28px 24px;
+      text-align: center;
+      margin: 44px 0;
+    }
+    .cta-box h3 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .cta-box p {
+      color: #94a3b8;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #ffffff;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+      min-height: 44px;
+      line-height: 20px;
+    }
+    .cta-btn:hover {
+      opacity: 0.9;
+    }
+    .faq-section {
+      margin-top: 48px;
+    }
+    .faq-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 24px;
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .faq-item p {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      margin-bottom: 0;
+    }
+    footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav-bar">
+      <a href="/portal/">DopaBrain 포털</a>
+      <span class="badge">공포 게임 연구실</span>
+    </nav>
+
+    <div class="breadcrumb">
+      <a href="/">홈</a> &gt;
+      <a href="/portal/">포털</a> &gt;
+      <a href="/portal/blog/ko/">블로그 KO</a> &gt;
+      <span>로블록스 공포 게임 제작</span>
+    </div>
+
+    <header>
+      <h1>로블록스 공포 게임 제작: 몬스터 추적 AI, 점프스케어 스크립트 & 공포 연출</h1>
+      <div class="meta-box">
+        <span>DopaBrain 게임 개발 연구팀</span>
+        <span>&bull;</span>
+        <span>업데이트: 2026년 9월</span>
+        <span>&bull;</span>
+        <span>읽는 시간: 8분</span>
+      </div>
+    </header>
+
+    <div class="quick-rail" data-content-surface="quick_rail">
+      <h2>빠른 인지 및 스트레스 테스트</h2>
+      <div class="quick-grid">
+        <a href="/stress-check/?lang=ko" class="quick-card">
+          <strong>스트레스 진단</strong>
+          <span>공포 상황 심박 안정화</span>
+        </a>
+        <a href="/reaction-test/?lang=ko" class="quick-card">
+          <strong>반응속도 테스트</strong>
+          <span>점프스케어 회피 반사신경</span>
+        </a>
+        <a href="/brain-type/?lang=ko" class="quick-card">
+          <strong>두뇌 유형 테스트</strong>
+          <span>냉철한 분석형 vs 본능형</span>
+        </a>
+        <a href="/puzzle-2048/?lang=ko" class="quick-card">
+          <strong>2048 퍼즐</strong>
+          <span>위기 상황 논리력 유지</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="content-body">
+      <p>도어즈(Doors), 프레셔(Pressure), 더 미믹(The Mimic)에 이르기까지, 공포 장르는 현재 로블록스에서 가장 높은 유저 몰입도와 바이럴 파급력을 자랑하는 핵심 분야입니다. 로블록스 엔진은 인디 스탠드얼론 호러 게임을 능가하는 고품질의 심리적 서스펜스를 완벽히 구현해 냅니다.</p>
+      <p>하지만 플레이어의 뇌리에 각인되는 공포를 만들려면 단순한 괴성이나 어두운 복장만으로는 부족합니다. 정교한 길찾기(PathfindingService) 인공지능, 레이캐스팅 기반 시야 탐지, 심리적 긴장감을 고조시키는 Future 라이팅과 안개 설정, 박진감 넘치는 점프스케어 카메라 연출이 필수적입니다. 2026년 최신 개발 비결을 코드로 확인하세요.</p>
+
+      <div class="banner-quote">
+        <strong>공포 연출의 제1원칙:</strong> 진짜 공포는 점프스케어 그 자체가 아니라, ‘점프스케어가 언제 터질지 모른다는 예견적 긴장감’에서 발생합니다. 깜빡이는 조명과 침묵이 공포를 축적합니다.
+      </div>
+
+      <h2>1. 공포 분위기 연출: Future 라이팅과 입체 안개(Fog)</h2>
+      <p>시각적 분위기는 공포 게임 몰입도의 70%를 결정합니다:</p>
+      <ul>
+            <li><strong>Future 라이팅 기술 적용:</strong> <code>Lighting.Technology</code>를 <strong>Future</strong>로 설정하여 젖은 바닥의 반사광, 손전등의 사실적인 그림자 원뿔을 구현합니다.</li>
+            <li><strong>Atmosphere 볼륨 안개:</strong> <code>Lighting.Atmosphere</code>의 <code>Density</code>를 0.5 안팎으로 높이고 <code>Haze</code>를 주어 시야를 제한함으로써 폐소공포증을 유도합니다.</li>
+            <li><strong>입체 공간 음향(Spatial Audio):</strong> 몬스터의 발소리와 신음소리는 맵 전체에 틀지 않고, 몬스터 본체에 <code>Sound</code>를 달아 거리와 방향을 귀로 감지할 수 있게 만듭니다.</li>
+      </ul>
+
+      <h2>2. 끈질긴 추적 몬스터 AI 코딩 (PathfindingService)</h2>
+      <p>문과 장애물을 똑똑하게 우회하여 플레이어를 쫓는 서버 스크립트:</p>
+      <div class="code-box">
+        <div class="code-header">몬스터 길찾기 추적 스크립트 (Server Script)</div>
+        <pre><code>local PathfindingService = game:GetService("PathfindingService")
+local monster = script.Parent
+local humanoid = monster:WaitForChild("Humanoid")
+local root = monster:WaitForChild("HumanoidRootPart")
+
+local function findNearestPlayer()
+    local nearestTorso, maxDist = nil, 80
+    for _, player in ipairs(game.Players:GetPlayers()) do
+        local char = player.Character
+        if char and char:FindFirstChild("HumanoidRootPart") and char.Humanoid.Health > 0 then
+            local dist = (char.HumanoidRootPart.Position - root.Position).Magnitude
+            if dist < maxDist then
+                nearestTorso = char.HumanoidRootPart
+                maxDist = dist
+            end
+        end
+    end
+    return nearestTorso
+end
+
+while task.wait(0.5) do
+    local target = findNearestPlayer()
+    if target then
+        local path = PathfindingService:CreatePath({
+            AgentRadius = 3,
+            AgentHeight = 6,
+            AgentCanJump = false
+        })
+        path:ComputeAsync(root.Position, target.Position)
+        if path.Status == Enum.PathStatus.Success then
+            local waypoints = path:GetWaypoints()
+            if waypoints[2] then
+                humanoid:MoveTo(waypoints[2].Position)
+            end
+        end
+    end
+end</code></pre>
+      </div>
+      <p>동작 원리: 0.5초마다 반경 80스터드 내에서 가장 가까운 생존 플레이어를 탐색하고, PathfindingService를 통해 벽과 문을 우회하는 최적의 경로 웨이포인트를 계산하여 순차 이동시킵니다.</p>
+
+      <h2>3. 시야 레이캐스팅(Raycast)과 옷장 숨기 시스템</h2>
+      <p>도어즈처럼 벽 뒤나 옷장(Locker)에 숨어 몬스터를 따돌리는 핵심 로직:</p>
+      <ul>
+            <li><strong>장애물 레이캐스트 검사:</strong> 몬스터 눈 위치에서 플레이어 머리 방향으로 <code>workspace:Raycast()</code>를 발사합니다. 사이에 벽이나 문이 먼저 걸리면 시야를 상실합니다.</li>
+            <li><strong>옷장 숨기 속성(Attribute):</strong> 플레이어가 옷장에 들어가면 <code>player:SetAttribute("IsHidden", true)</code>로 설정하여 몬스터의 타깃 탐색 대상에서 즉시 제외합니다.</li>
+            <li><strong>숨죽이기 미니게임:</strong> 옷장 안에서 심장 박동 타이밍에 맞춰 버튼을 누르는 미니게임을 부여하여 긴박감을 극대화합니다.</li>
+      </ul>
+
+      <h2>4. 뇌리에 박히는 강렬한 점프스케어 연출법</h2>
+      <p>불쾌한 소음 폭탄이 아닌, 전율을 주는 점프스케어 테크닉:</p>
+      <ul>
+            <li><strong>TweenService 카메라 강제 시점:</strong> LocalScript에서 플레이어 카메라를 Scriptable로 전환하고, 몬스터의 섬뜩한 얼굴 정면으로 CFrame을 0.8초간 강제 트윈시킵니다.</li>
+            <li><strong>저주파 진동 + 고주파 금속성 사운드:</strong> 40Hz 이하의 서브 베이스 진동과 찢어지는 고주파 사운드를 교차시켜 신체적 깜짝 놀람 반응을 유도합니다.</li>
+            <li><strong>카타르시스 완충 구역:</strong> 강렬한 교전 후에는 20초간 안전하고 밝은 방을 배치하여 자율신경계를 이완시켜 줍니다.</li>
+      </ul>
+
+      <h2>5. 멀티플레이 협동 공포: 인원수 비례 공포 스케일링</h2>
+      <p>프레셔처럼 다수가 함께 플레이할 때 공포를 극대화하는 멀티플레이 장치:</p>
+      <ul>
+            <li><strong>강제 고립 기믹:</strong> 문이 닫히며 2인 1조로 강제 분리되거나, 한 명은 통제실에서 카메라를 보고 다른 한 명은 어둠 속을 전진하는 협동 퍼즐을 설계합니다.</li>
+            <li><strong>자원 희소성 공유:</strong> 손전등 배터리와 열쇠 수량을 제한하여 음성 채팅을 통한 소통을 강제합니다.</li>
+            <li><strong>개인 맞춤형 환각 연출:</strong> 특정 플레이어의 클라이언트에만 보이는 유령 객체를 띄워 플레이어 간 불신과 공황을 조성합니다.</li>
+      </ul>
+
+      <div class="cta-box">
+        <h3>나의 심리적 침착도와 반사신경 측정하기</h3>
+        <p>공포와 긴장감 속에서 나는 침착함을 유지할 수 있을까요? 밀리초 반응속도 테스트와 스트레스 진단으로 내면의 통제력을 시험해 보세요.</p>
+        <a href="/stress-check/?lang=ko" class="cta-btn">무료 스트레스 및 반응속도 테스트</a>
+      </div>
+
+      <section class="faq-section">
+        <h2>자주 묻는 질문 (FAQ)</h2>
+        <div class="faq-item">
+          <h3>몬스터가 벽을 뚫고 지나가는 버그는 어떻게 고치나요?</h3>
+          <p>모든 벽 오브젝트의 CanCollide가 true인지 확인하고, PathfindingService의 AgentRadius를 몬스터의 실제 히트박스보다 약간 크게 설정하여 경로가 벽에 너무 붙지 않게 합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>1인 개발자도 도어즈 같은 퀄리티의 공포 게임을 만들 수 있나요?</h3>
+          <p>충분히 가능합니다! 도어즈 역시 소규모 팀에서 시작되었습니다. 방 생성의 모듈화와 조명 연출이 핵심입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>플레이어 손전등을 렉 없이 최적화하려면 어떻게 해야 하나요?</h3>
+          <p>서버가 아닌 클라이언트(LocalScript)에서 손전등 SpotLight를 장착하고, 각도를 60도, 밝기를 2.5 안팎으로 맞춰 프레임 저하를 방지합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>도어즈처럼 무한히 방이 랜덤 생성되는 원리는 무엇인가요?</h3>
+          <p>ServerStorage에 템플릿 방들을 저장해 두고, 플레이어가 N번 문을 열 때 다음 방을 복제하여 입구 CFrame을 이전 문의 출구 CFrame에 맞춘 뒤, 지나온 방을 순차 삭제(Destroy)하는 방식입니다.</p>
+        </div>
+      </section>
+    </article>
+
+    <footer>
+      <p>&copy; 2026 DopaBrain. All rights reserved. 독립 게임 개발 및 공포 심리학 연구 프로젝트.</p>
+    </footer>
+  </div>
+</body>
+</html>

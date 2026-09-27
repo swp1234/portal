@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox恐怖游戏开发攻略2026：怪物追逐AI、跳杀与氛围渲染 | DopaBrain</title>
+  <meta name="description" content="2026最新Roblox爆款恐怖游戏制作指南。PathfindingService怪物寻路追击AI、Raycast视线遮挡、仿Doors衣柜躲藏、Future拟真光影与跳杀镜头脚本。" />
+  <meta name="keywords" content="roblox恐怖游戏制作2026, roblox怪物ai脚本, pathfindingservice追逐, doors跳杀脚本, roblox恐怖氛围渲染" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-horror-game-design-mechanics-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-horror-game-design-mechanics-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Roblox恐怖游戏开发攻略2026：怪物追逐AI、跳杀与氛围渲染 | DopaBrain" />
+  <meta property="og:description" content="2026最新Roblox爆款恐怖游戏制作指南。PathfindingService怪物寻路追击AI、Raycast视线遮挡、仿Doors衣柜躲藏、Future拟真光影与跳杀镜头脚本。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/roblox-horror-game-design-mechanics-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Roblox恐怖游戏开发攻略2026：怪物追逐AI、跳杀与氛围渲染 | DopaBrain" />
+  <meta name="twitter:description" content="2026最新Roblox爆款恐怖游戏制作指南。PathfindingService怪物寻路追击AI、Raycast视线遮挡、仿Doors衣柜躲藏、Future拟真光影与跳杀镜头脚本。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-horror-game-design-mechanics-guide.html#article",
+      "isPartOf": {
+        "@type": "WebSite",
+        "@id": "https://dopabrain.com/#website",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "headline": "Roblox恐怖游戏开发：怪物追击AI、跳杀脚本与心理压迫感设计",
+      "description": "2026最新Roblox爆款恐怖游戏制作指南。PathfindingService怪物寻路追击AI、Raycast视线遮挡、仿Doors衣柜躲藏、Future拟真光影与跳杀镜头脚本。",
+      "inLanguage": "zh",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/roblox-horror-game-design-mechanics-guide.html",
+      "datePublished": "2026-09-28T00:00:00+09:00",
+      "dateModified": "2026-09-28T00:00:00+09:00",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-horror-game-design-mechanics-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "门户",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "博客 ZH",
+          "item": "https://dopabrain.com/portal/blog/zh/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Roblox恐怖游戏开发",
+          "item": "https://dopabrain.com/portal/blog/zh/roblox-horror-game-design-mechanics-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-horror-game-design-mechanics-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "如何防止怪物穿墙卡进模型里？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "确保所有墙面开启CanCollide，并将PathfindingService中的AgentRadius设置得比怪物碰撞箱稍大一些。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "单人开发者能独立做出类似Doors的游戏吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "完全可以！Doors最初也是由极小团队完成的。模块化随机房间拼装比堆积画质更重要。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何做手电筒不会导致游戏严重掉帧？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "手电筒SpotLight必须在客户端（LocalScript）中生成，控制照射角度与光照衰减距离。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Doors式随机无尽房间生成的原理是什么？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "把模板房间放在ServerStorage中，开门时克隆新房间拼接到门后，并销毁走过的旧房间释放内存。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <style>
+    :root {
+      --bg: #09090e;
+      --card-bg: #12121b;
+      --border: #222232;
+      --accent: #dc2626;
+      --accent-glow: rgba(220, 38, 38, 0.2);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --max-w: 800px;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 24px 16px 64px 16px;
+    }
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .nav-bar a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .nav-bar .badge {
+      background: var(--accent-glow);
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      border: 1px solid var(--accent);
+    }
+    .breadcrumb {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .breadcrumb a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover {
+      color: var(--accent);
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .meta-box {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+      color: var(--accent);
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s ease;
+      min-height: 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: var(--accent-glow);
+    }
+    .quick-card strong {
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .quick-card span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .content-body p {
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+    }
+    .content-body h2 {
+      font-size: 1.4rem;
+      margin: 36px 0 16px 0;
+      color: #fff;
+      font-weight: 700;
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+    }
+    .banner-quote {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      margin: 28px 0;
+      border-radius: 0 8px 8px 0;
+      font-size: 1rem;
+      color: #cbd5e1;
+    }
+    ul, ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+    li {
+      margin-bottom: 12px;
+      color: #cbd5e1;
+      font-size: 1rem;
+    }
+    .code-box {
+      background: #08080c;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .code-header {
+      background: #141420;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #f1f5f9;
+    }
+    code {
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      color: #fca5a5;
+    }
+    .cta-box {
+      background: linear-gradient(135deg, rgba(220, 38, 38, 0.15) 0%, rgba(18, 18, 27, 0.9) 100%);
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      padding: 28px 24px;
+      text-align: center;
+      margin: 44px 0;
+    }
+    .cta-box h3 {
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .cta-box p {
+      color: #94a3b8;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #ffffff;
+      font-weight: 700;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+      min-height: 44px;
+      line-height: 20px;
+    }
+    .cta-btn:hover {
+      opacity: 0.9;
+    }
+    .faq-section {
+      margin-top: 48px;
+    }
+    .faq-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 24px;
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .faq-item p {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      margin-bottom: 0;
+    }
+    footer {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav-bar">
+      <a href="/portal/">DopaBrain 门户</a>
+      <span class="badge">恐怖游戏开发室</span>
+    </nav>
+
+    <div class="breadcrumb">
+      <a href="/">首页</a> &gt;
+      <a href="/portal/">门户</a> &gt;
+      <a href="/portal/blog/zh/">博客 ZH</a> &gt;
+      <span>Roblox恐怖游戏开发</span>
+    </div>
+
+    <header>
+      <h1>Roblox恐怖游戏开发：怪物追击AI、跳杀脚本与心理压迫感设计</h1>
+      <div class="meta-box">
+        <span>DopaBrain 游戏开发实验室</span>
+        <span>&bull;</span>
+        <span>更新时间：2026年9月</span>
+        <span>&bull;</span>
+        <span>阅读时间：8分钟</span>
+      </div>
+    </header>
+
+    <div class="quick-rail" data-content-surface="quick_rail">
+      <h2>心理防线与反应测验</h2>
+      <div class="quick-grid">
+        <a href="/stress-check/?lang=zh" class="quick-card">
+          <strong>压力自测</strong>
+          <span>平复惊悚心跳过速</span>
+        </a>
+        <a href="/reaction-test/?lang=zh" class="quick-card">
+          <strong>反应速度测试</strong>
+          <span>跳杀极限闪避敏捷度</span>
+        </a>
+        <a href="/brain-type/?lang=zh" class="quick-card">
+          <strong>脑力类型评估</strong>
+          <span>冷静分析型 vs 本能反应型</span>
+        </a>
+        <a href="/puzzle-2048/?lang=zh" class="quick-card">
+          <strong>2048益智游戏</strong>
+          <span>高压环境逻辑力维持</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="content-body">
+      <p>从风靡全球的《Doors》、《Pressure》到充满东方民俗怪诞的《The Mimic》，恐怖题材已成为Roblox生态中最具吸金力与传播裂变效应的王牌品类。</p>
+      <p>要想打造令玩家尖叫难忘的杰作，绝非单纯塞满刺耳音效和黑乎乎的走廊。它需要精密的怪物AI巡逻、视线遮蔽射线检测、Future动态阴影以及严谨的心理节奏调控。本指南提供2026年最新脚本与设计实战。</p>
+
+      <div class="banner-quote">
+        <strong>恐怖设计黄金律：</strong>真正的恐惧不在于突然跳出来的惊吓，而在于漫长而窒息的“预感危机”——闪烁的灯光与死寂才是恐惧的温床。
+      </div>
+
+      <h2>1. 氛围渲染：Future光照与体积浓雾</h2>
+      <p>视听氛围决定了恐怖沉浸感的70%：</p>
+      <ul>
+            <li><strong>开启Future光照技术：</strong>将Lighting.Technology设为Future，实现手电筒投射出的真实阴影与潮湿地面的高光反射。</li>
+            <li><strong>Atmosphere体积浓雾：</strong>调高浓度将可视范围压缩在十几米内，制造幽闭压迫感。</li>
+            <li><strong>3D空间衰减音效：</strong>将脚步与低吼声绑定在怪物躯干上，让玩家通过耳机辩位判断距离。</li>
+      </ul>
+
+      <h2>2. 智能追杀怪物AI（PathfindingService）</h2>
+      <p>自动绕开墙壁障碍追捕幸存者的服务器脚本：</p>
+      <div class="code-box">
+        <div class="code-header">寻路追击脚本 (Server Script)</div>
+        <pre><code>-- 每0.5秒计算前往最近玩家的最短避障路径</code></pre>
+      </div>
+      <p>检测80 Studs范围内的最近玩家，通过PathfindingService自动生成绕过门廊与转角的路径点并驱动怪物移动。</p>
+
+      <h2>3. 射线视线检测（Raycast）与衣柜躲藏机制</h2>
+      <p>类似Doors中钻进柜子避开视线的核心逻辑：</p>
+      <ul>
+            <li><strong>射线碰撞检测：</strong>从怪物眼部向玩家头部发射Raycast，若中间被实心墙体阻挡则判定失去视觉锁定。</li>
+            <li><strong>衣柜藏匿属性：</strong>玩家进入柜子时赋予IsHidden属性，怪物AI立即忽略该玩家。</li>
+            <li><strong>憋气心跳QTE：</strong>躲在柜中时需按心跳节拍点击，增强濒死喘息的压迫感。</li>
+      </ul>
+
+      <h2>4. 打造高级心理跳杀（Jump Scare）脚本</h2>
+      <p>高级吓人技巧的镜头与声效编排：</p>
+      <ul>
+            <li><strong>TweenService强制镜头锁定：</strong>跳杀瞬间将玩家相机强制平滑旋转并缩放至怪物鬼脸正面。</li>
+            <li><strong>次声波震颤与金属嘶鸣：</strong>40Hz超重低音伴随骤然尖叫，激发生理层面的惊跳反射。</li>
+            <li><strong>惊吓后的安全泄压区：</strong>逃脱后务必安排20秒明亮安全的房间，让交感神经得以恢复。</li>
+      </ul>
+
+      <h2>5. 多人联机恐怖：群聚恐慌的心理放大</h2>
+      <p>多人合作恐怖游戏的设计机理：</p>
+      <ul>
+            <li><strong>强制隔离机制：</strong>铁门落下将队友分断在不同房间，制造落单恐惧。</li>
+            <li><strong>稀缺物资共享：</strong>手电筒电量与钥匙数量极度紧缺，迫使玩家开麦沟通。</li>
+            <li><strong>单人专属幻觉：</strong>仅在单个玩家屏幕上渲染鬼影，引发队友间的不信任与恐慌。</li>
+      </ul>
+
+      <div class="cta-box">
+        <h3>测测你在极端惊悚下的冷静度与反应敏捷性</h3>
+        <p>当突然遭遇跳杀时，你的神经反射有多快？通过免费的毫秒级反应与抗压测试探索自我潜能。</p>
+        <a href="/stress-check/?lang=zh" class="cta-btn">开始免费抗压与反应速度测试</a>
+      </div>
+
+      <section class="faq-section">
+        <h2>常见问题解答 (FAQ)</h2>
+        <div class="faq-item">
+          <h3>如何防止怪物穿墙卡进模型里？</h3>
+          <p>确保所有墙面开启CanCollide，并将PathfindingService中的AgentRadius设置得比怪物碰撞箱稍大一些。</p>
+        </div>
+        <div class="faq-item">
+          <h3>单人开发者能独立做出类似Doors的游戏吗？</h3>
+          <p>完全可以！Doors最初也是由极小团队完成的。模块化随机房间拼装比堆积画质更重要。</p>
+        </div>
+        <div class="faq-item">
+          <h3>如何做手电筒不会导致游戏严重掉帧？</h3>
+          <p>手电筒SpotLight必须在客户端（LocalScript）中生成，控制照射角度与光照衰减距离。</p>
+        </div>
+        <div class="faq-item">
+          <h3>Doors式随机无尽房间生成的原理是什么？</h3>
+          <p>把模板房间放在ServerStorage中，开门时克隆新房间拼接到门后，并销毁走过的旧房间释放内存。</p>
+        </div>
+      </section>
+    </article>
+
+    <footer>
+      <p>&copy; 2026 DopaBrain. 版权所有。</p>
+    </footer>
+  </div>
+</body>
+</html>
