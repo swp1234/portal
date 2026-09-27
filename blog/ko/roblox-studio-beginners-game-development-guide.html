@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로블록스 스튜디오 입문 공략 2026: 나만의 게임 만들기 & 루아 기초 | DopaBrain</title>
+    <meta name="description" content="2026년 최신 로블록스 스튜디오 첫 게임 제작 가이드. 워크스페이스 조작법, 파트 앵커(고정) 규칙, 킬블록 및 점프패드 루아(Lua) 코딩 기초, 게임 배포 방법 완벽 정리." />
+    <meta name="keywords" content="로블록스 스튜디오 사용법, 로블록스 게임 만들기 2026, 로블록스 루아 코딩 기초, 로블록스 오비 제작, 로블록스 개발 입문" />
+    <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-studio-beginners-game-development-guide.html" />
+    <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-studio-beginners-game-development-guide.html" />
+    <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-studio-beginners-game-development-guide.html" />
+    <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-studio-beginners-game-development-guide.html" />
+    <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-studio-beginners-game-development-guide.html" />
+    <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-studio-beginners-game-development-guide.html" />
+    <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-studio-beginners-game-development-guide.html" />
+    <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-studio-beginners-game-development-guide.html" />
+    <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-studio-beginners-game-development-guide.html" />
+    <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-studio-beginners-game-development-guide.html" />
+    <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-studio-beginners-game-development-guide.html" />
+    <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-studio-beginners-game-development-guide.html" />
+    <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-studio-beginners-game-development-guide.html" />
+    <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-studio-beginners-game-development-guide.html" />
+    <meta property="og:title" content="로블록스 스튜디오 입문 공략 2026: 나만의 게임 만들기 & 루아 기초 | DopaBrain" />
+    <meta property="og:description" content="2026년 최신 로블록스 스튜디오 첫 게임 제작 가이드. 워크스페이스 조작법, 파트 앵커(고정) 규칙, 킬블록 및 점프패드 루아(Lua) 코딩 기초, 게임 배포 방법 완벽 정리." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-studio-beginners-game-development-guide.html" />
+    <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="로블록스 스튜디오 입문 공략 2026: 나만의 게임 만들기 & 루아 기초 | DopaBrain" />
+    <meta name="twitter:description" content="2026년 최신 로블록스 스튜디오 첫 게임 제작 가이드. 워크스페이스 조작법, 파트 앵커(고정) 규칙, 킬블록 및 점프패드 루아(Lua) 코딩 기초, 게임 배포 방법 완벽 정리." />
+    <meta name="twitter:image" content="https://dopabrain.com/portal/icon-512.svg" />
+    <script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "로블록스 스튜디오 입문 가이드 2026: 첫 게임 제작과 루아(Lua) 코딩 기초", "description": "2026년 최신 로블록스 스튜디오 첫 게임 제작 가이드. 워크스페이스 조작법, 파트 앵커(고정) 규칙, 킬블록 및 점프패드 루아(Lua) 코딩 기초, 게임 배포 방법 완벽 정리.", "image": "https://dopabrain.com/portal/icon-512.svg", "datePublished": "2026-09-27", "dateModified": "2026-09-27", "inLanguage": "ko", "author": {"@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com"}, "publisher": {"@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com", "logo": {"@type": "ImageObject", "url": "https://dopabrain.com/portal/icon-512.svg"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://dopabrain.com/portal/blog/ko/roblox-studio-beginners-game-development-guide.html"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "DopaBrain", "item": "https://dopabrain.com/"}, {"@type": "ListItem", "position": 2, "name": "블로그 KO", "item": "https://dopabrain.com/portal/blog/ko/"}, {"@type": "ListItem", "position": 3, "name": "로블록스 스튜디오 입문 가이드", "item": "https://dopabrain.com/portal/blog/ko/roblox-studio-beginners-game-development-guide.html"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "로블록스 스튜디오는 완전히 무료인가요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 로블록스 스튜디오는 윈도우와 맥에서 100% 무료로 다운로드하고 사용할 수 있습니다. 월 구독료가 전혀 없으며, 게임 호스팅 서버 비용도 로블록스 본사에서 무료로 전액 지원합니다."}}, {"@type": "Question", "name": "로블록스 게임 개발로 실제 수익을 창출할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 유저들이 게임 내 게임패스나 아이템을 구매하면 로벅스를 획득할 수 있으며, 개발자 환전 프로그램(DevEx) 조건을 충족하면 실제 현금(달러)으로 환전할 수 있습니다."}}, {"@type": "Question", "name": "코딩을 전혀 모르는 초보자도 게임을 만들 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 로블록스 스튜디오는 초보자 친화적으로 설계되어 있습니다. 처음에는 무료 에셋과 마우스 드래그 기반 맵 제작으로 시작하여, 점차 루아(Lua) 코딩을 배워나갈 수 있습니다."}}, {"@type": "Question", "name": "일반 스크립트(Script)와 로컬 스크립트(LocalScript)의 차이는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "일반 <code>Script</code>는 로블록스 서버에서 실행되어 모든 플레이어에게 공통으로 적용되는 규칙(점수, 체력, 문 열림 등)을 담당하며, <code>LocalScript</code>는 각 플레이어의 기기에서만 실행되어 개인 화면 UI 표시나 카메라 움직임을 처리합니다."}}]}]}
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-J8GSWM40TV');
+    </script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --bg-light: #1f2937;
+            --border-color: #374151;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --primary: #3b82f6;
+            --accent: #10b981;
+            --code-bg: #1e293b;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --spacing: 1.25rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            line-height: 1.75;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem var(--spacing);
+            background: rgba(11, 15, 25, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+        .header-nav a:hover { color: var(--accent); }
+        .header-nav span { font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-secondary); }
+
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 2.5rem 1.25rem 5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .breadcrumb { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        .indexing-quick-rail {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.5rem 0 2.5rem;
+        }
+        .indexing-quick-rail h2 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0 0 1rem 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .indexing-quick-rail h2::after { display: none; }
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+        }
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 48px;
+            padding: 0.75rem 0.9rem;
+            border-radius: 8px;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #60a5fa 0%, #34d399 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        h2 {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 3rem 0 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid var(--border-color);
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 1.8rem 0 0.8rem;
+        }
+
+        p { margin-bottom: 1.2rem; color: var(--text-secondary); font-size: 1.02rem; }
+
+        ul, ol {
+            margin: 0 0 1.5rem 1.6rem;
+            color: var(--text-secondary);
+        }
+        li { margin-bottom: 0.6rem; }
+        strong { color: #ffffff; font-weight: 700; }
+        code {
+            background: rgba(110, 118, 129, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.9em;
+            color: #60a5fa;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.2rem;
+            overflow-x: auto;
+            margin: 1.2rem 0 1.8rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+
+        .highlight-box {
+            background: var(--card-bg);
+            border-left: 4px solid var(--accent);
+            padding: 1.4rem;
+            margin: 1.8rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .highlight-box p { color: var(--text-primary); margin-bottom: 0; }
+
+        .faq-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.4rem;
+            margin-bottom: 1.2rem;
+        }
+        .faq-card h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.6rem;
+        }
+        .faq-card p { margin-bottom: 0; font-size: 0.95rem; }
+
+        .cta-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.14) 0%, rgba(16, 185, 129, 0.1) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 2rem;
+            text-align: center;
+            margin: 3.5rem 0;
+        }
+        .cta-box h3 {
+            color: #ffffff;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+        }
+        .cta-box p {
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto 1.5rem;
+            font-size: 0.98rem;
+        }
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: #ffffff;
+            font-weight: 700;
+            padding: 0.9rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            min-height: 48px;
+            line-height: 1.2;
+            transition: all 0.3s ease;
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.75rem; }
+            .container { padding: 1.5rem 1rem 3rem; }
+            .indexing-quick-rail .quick-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-nav">
+        <a href="/portal/">DopaBrain 포털</a>
+        <span>게임 개발 랩</span>
+    </header>
+
+    <main class="container">
+        <nav class="breadcrumb">
+            <a href="/">홈</a> &gt;
+            <a href="/portal/">포털</a> &gt;
+            <a href="/portal/blog/ko/">블로그 KO</a> &gt;
+            <span>로블록스 스튜디오 입문 가이드</span>
+        </nav>
+
+        <section class="indexing-quick-rail" aria-label="Quick Navigation">
+            <h2>논리적 두뇌 휴식 & 인지 테스트</h2>
+            <div class="quick-grid">
+                <a class="quick-card" href="/iq-test/?lang=ko" data-content-surface="quick_rail" data-target-slug="iq-test">
+                    <strong>IQ 테스트</strong>
+                    <span>논리 추론 능력 측정</span>
+                </a>
+                <a class="quick-card" href="/puzzle-2048/?lang=ko" data-content-surface="quick_rail" data-target-slug="puzzle-2048">
+                    <strong>2048 퍼즐</strong>
+                    <span>전략적 퍼즐 두뇌 풀기</span>
+                </a>
+                <a class="quick-card" href="/reaction-test/?lang=ko" data-content-surface="quick_rail" data-target-slug="reaction-test">
+                    <strong>반응속도 테스트</strong>
+                    <span>키보드 입력 반응 측정</span>
+                </a>
+                <a class="quick-card" href="/stress-check/?lang=ko" data-content-surface="quick_rail" data-target-slug="stress-check">
+                    <strong>스트레스 진단</strong>
+                    <span>집중력과 멘탈 리셋</span>
+                </a>
+            </div>
+        </section>
+
+        <header class="article-header">
+            <h1>로블록스 스튜디오 입문 가이드 2026: 첫 게임 제작과 루아(Lua) 코딩 기초</h1>
+            <div class="meta">
+                <span>DopaBrain 게임개발 랩</span>
+                <span>업데이트: 2026년 9월</span>
+                <span>읽는 시간: 9분</span>
+            </div>
+        </header>
+
+        <p>로블록스 게임을 플레이하는 유저에서 나만의 독창적인 가상 세계를 창조하는 게임 개발자로 도약하는 것은 매우 흥미진진한 도전입니다. 로블록스 스튜디오(Roblox Studio)는 무료이면서도 물리 엔진, 글로벌 멀티플레이어 호스팅, 그리고 직관적인 루아(Lua) 스크립트 언어를 지원하는 강력한 전문 개발 도구입니다.</p>
+        <p>인기 파쿠르 장애물 달리기(Obby)부터 시뮬레이터, 소셜 맵까지 누구나 자신만의 아이디어를 게임으로 구현할 수 있습니다. 본 입문 가이드에서는 3D 워크스페이스 조작법부터 파트(Part) 고정 규칙, 생명력을 깎는 킬블록(Kill Brick) 코딩, 그리고 전 세계 유저에게 정식 배포하는 과정까지 단계별로 완벽 정리해 드립니다.</p>
+
+        <div class="highlight-box">
+            <p><strong>개발 팁:</strong> <em>Brookhaven</em>이나 <em>Doors</em> 같은 세계적인 로블록스 흥행작들도 모두 여러분이 다운로드한 것과 똑같은 무료 로블록스 스튜디오와 루아 기초 코드로 제작되었습니다.</p>
+        </div>
+
+        <h2>1. 작업 환경 세팅 & 필수 4대 인터페이스</h2>
+        <p>로블록스 스튜디오를 실행한 후 <strong>Baseplate</strong>나 <strong>Classic Obby</strong> 템플릿을 선택합니다. 작업할 때 반드시 켜두어야 할 핵심 창 4가지는 다음과 같습니다:</p>
+        <ul>
+            <li><strong>탐색기(Explorer):</strong> 게임에 존재하는 모든 오브젝트(블록, 조명, 음향, 스크립트)가 계층 구조로 표시되는 핵심 디렉터리입니다.</li>
+            <li><strong>속성(Properties):</strong> 선택한 파트의 색상, 재질, 투명도, 충돌 판정(CanCollide) 등을 세밀하게 조절하는 설정 창입니다.</li>
+            <li><strong>툴박스(Toolbox):</strong> 다른 개발자들이 공유한 무료 3D 모델과 효과음을 가져올 수 있는 에셋 보관소입니다. (※ 악성 렉 유발 스크립트가 숨어있을 수 있으니 주의 필요)</li>
+            <li><strong>출력(Output):</strong> 코딩 에러와 print 로그가 실시간으로 출력되는 프로그래머 디버깅 콘솔입니다.</li>
+        </ul>
+
+        <h2>2. 3D 파트 배치와 절대 규칙: "앵커(Anchor)" 고정</h2>
+        <p>게임 맵 제작의 시작은 기본 블록(파트)을 배치하는 것입니다. 하지만 초보 개발자가 가장 자주 저지르는 실수는 파트를 "앵커"하지 않는 것입니다.</p>
+        <ol>
+            <li>홈(Home) 탭에서 <strong>파트(Part)</strong> 버튼을 눌러 블록을 생성합니다.</li>
+            <li><strong>선택, 이동, 크기 조절, 회전</strong> 도구를 사용하여 원하는 발판 모양을 만듭니다.</li>
+            <li><strong>반드시 "앵커(Anchor)" 버튼 클릭 (Alt+A):</strong> 앵커를 켜지 않으면 게임이 시작되자마자 중력 때문에 공중에 띄워둔 블록이 와르르 바닥으로 추락합니다.</li>
+            <li>벽이나 바닥은 속성 창에서 <strong>CanCollide = true</strong>로 유지하고, 통과할 수 있는 비밀문이나 물은 false로 변경합니다.</li>
+        </ol>
+
+        <h2>3. 첫 루아 스크립트 작성: 닿으면 죽는 킬블록(Kill Brick)</h2>
+        <p>장애물 달리기 맵의 핵심은 용암이나 레이저에 닿았을 때 캐릭터가 즉시 리스폰되는 킬블록입니다. 파트에 스크립트를 추가하여 동작을 구현합니다.</p>
+        <h3>킬블록 서버 스크립트 (Script)</h3>
+        <pre><code>local part = script.Parent
+
+local function onTouch(otherPart)
+    local character = otherPart.Parent
+    local humanoid = character:FindFirstChildWhichIsA("Humanoid")
+    if humanoid then
+        humanoid.Health = 0
+    end
+end
+
+part.Touched:Connect(onTouch)</code></pre>
+        <p>작동 원리: <code>script.Parent</code>는 스크립트가 담긴 블록을 가리킵니다. <code>Touched</code> 이벤트는 플레이어가 블록을 밟을 때 실행되며, 캐릭터의 <code>Humanoid</code>를 감지하여 체력(Health)을 즉시 0으로 만듭니다.</p>
+
+        <h2>4. 이동속도 부스터 패드 만들기</h2>
+        <p>발판을 밟으면 3초 동안 달리기 속도가 2배로 빨라지는 스피드 패드를 만들어 다이내믹한 게임성을 더해보세요:</p>
+        <pre><code>local pad = script.Parent
+
+local function onTouch(otherPart)
+    local humanoid = otherPart.Parent:FindFirstChildWhichIsA("Humanoid")
+    if humanoid and humanoid.WalkSpeed == 16 then
+        humanoid.WalkSpeed = 32
+        task.wait(3)
+        humanoid.WalkSpeed = 16
+    end
+end
+
+pad.Touched:Connect(onTouch)</code></pre>
+        <p>로블록스 캐릭터의 기본 걷기 속도(WalkSpeed)는 16입니다. 발판을 밟으면 32로 빨라지고, <code>task.wait(3)</code>를 거쳐 3초 뒤 다시 정상 속도로 복귀합니다.</p>
+
+        <h2>5. 로컬 테스트 및 전 세계 공식 배포</h2>
+        <p>제작한 게임은 배포 전 철저한 로컬 플레이 테스트를 거쳐야 합니다:</p>
+        <ul>
+            <li><strong>플레이 테스트 (단축키 F5):</strong> 스튜디오 안에서 직접 캐릭터를 움직이며 점프 거리와 킬블록 반응을 즉각 테스트합니다.</li>
+            <li><strong>File > Save to Roblox:</strong> 게임의 제목과 설명을 입력하고 클라우드에 프로젝트를 저장합니다.</li>
+            <li><strong>File > Publish to Roblox to Make Public:</strong> 게임 설정을 "공개(Public)"로 전환하면 링크 하나로 친구들과 전 세계 로블록스 유저들이 즉시 접속할 수 있습니다.</li>
+        </ul>
+
+        <div class="cta-box">
+            <h3>게임 개발에 필요한 논리적 사고력을 테스트해 볼까요?</h3>
+            <p>프로그래밍과 맵 설계는 논리적 알고리즘과 공간 지각 능력을 요구합니다. 무료 인지 논리 IQ 테스트로 나의 사고력 강점을 확인해 보세요.</p>
+            <a href="/iq-test/?lang=ko" class="cta-btn">무료 인지 논리 IQ 테스트 시작</a>
+        </div>
+
+        <h2>자주 묻는 질문 (FAQ)</h2>
+        <div class="faq-card"><h4>로블록스 스튜디오는 완전히 무료인가요?</h4><p>네, 로블록스 스튜디오는 윈도우와 맥에서 100% 무료로 다운로드하고 사용할 수 있습니다. 월 구독료가 전혀 없으며, 게임 호스팅 서버 비용도 로블록스 본사에서 무료로 전액 지원합니다.</p></div>
+        <div class="faq-card"><h4>로블록스 게임 개발로 실제 수익을 창출할 수 있나요?</h4><p>네, 유저들이 게임 내 게임패스나 아이템을 구매하면 로벅스를 획득할 수 있으며, 개발자 환전 프로그램(DevEx) 조건을 충족하면 실제 현금(달러)으로 환전할 수 있습니다.</p></div>
+        <div class="faq-card"><h4>코딩을 전혀 모르는 초보자도 게임을 만들 수 있나요?</h4><p>네, 로블록스 스튜디오는 초보자 친화적으로 설계되어 있습니다. 처음에는 무료 에셋과 마우스 드래그 기반 맵 제작으로 시작하여, 점차 루아(Lua) 코딩을 배워나갈 수 있습니다.</p></div>
+        <div class="faq-card"><h4>일반 스크립트(Script)와 로컬 스크립트(LocalScript)의 차이는 무엇인가요?</h4><p>일반 <code>Script</code>는 로블록스 서버에서 실행되어 모든 플레이어에게 공통으로 적용되는 규칙(점수, 체력, 문 열림 등)을 담당하며, <code>LocalScript</code>는 각 플레이어의 기기에서만 실행되어 개인 화면 UI 표시나 카메라 움직임을 처리합니다.</p></div>
+    </main>
+
+    <footer style="text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border-color); margin-top: 4rem;">
+        <p>&copy; 2026 DopaBrain. All rights reserved. 본 가이드는 독립적인 디지털 코딩 교육 및 게임 개발 공략입니다.</p>
+    </footer>
+</body>
+</html>
