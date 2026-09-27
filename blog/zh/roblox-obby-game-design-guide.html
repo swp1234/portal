@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>如何制作 Roblox 跑酷(Obby)游戏 2026：关卡设计与检查点脚本 | DopaBrain</title>
+    <meta name="description" content="2026年最新 Roblox Obby(障碍跑酷)制作全攻略。关卡难度曲线规划、定时消失方块 Lua 脚本、复活检查点(Checkpoint)机制与跳跃物理学。" />
+    <meta name="keywords" content="roblox 制作跑酷 2026, roblox obby 教程, roblox 检查点脚本, roblox 消失方块代码, roblox 关卡设计" />
+    <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-obby-game-design-guide.html" />
+    <meta property="og:title" content="如何制作 Roblox 跑酷(Obby)游戏 2026：关卡设计与检查点脚本 | DopaBrain" />
+    <meta property="og:description" content="2026年最新 Roblox Obby(障碍跑酷)制作全攻略。关卡难度曲线规划、定时消失方块 Lua 脚本、复活检查点(Checkpoint)机制与跳跃物理学。" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/roblox-obby-game-design-guide.html" />
+    <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="如何制作 Roblox 跑酷(Obby)游戏 2026：关卡设计与检查点脚本 | DopaBrain" />
+    <meta name="twitter:description" content="2026年最新 Roblox Obby(障碍跑酷)制作全攻略。关卡难度曲线规划、定时消失方块 Lua 脚本、复活检查点(Checkpoint)机制与跳跃物理学。" />
+    <meta name="twitter:image" content="https://dopabrain.com/portal/icon-512.svg" />
+    <script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "制作爆款 Roblox 跑酷(Obby)游戏：关卡设计、跳跃物理与检查点脚本", "description": "2026年最新 Roblox Obby(障碍跑酷)制作全攻略。关卡难度曲线规划、定时消失方块 Lua 脚本、复活检查点(Checkpoint)机制与跳跃物理学。", "image": "https://dopabrain.com/portal/icon-512.svg", "datePublished": "2026-09-28", "dateModified": "2026-09-28", "inLanguage": "zh", "author": {"@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com"}, "publisher": {"@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com", "logo": {"@type": "ImageObject", "url": "https://dopabrain.com/portal/icon-512.svg"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://dopabrain.com/portal/blog/zh/roblox-obby-game-design-guide.html"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "DopaBrain", "item": "https://dopabrain.com/"}, {"@type": "ListItem", "position": 2, "name": "博客 ZH", "item": "https://dopabrain.com/portal/blog/zh/"}, {"@type": "ListItem", "position": 3, "name": "Roblox 跑酷制作指南", "item": "https://dopabrain.com/portal/blog/zh/roblox-obby-game-design-guide.html"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the maximum jump distance an avatar can clear in Roblox?", "acceptedAnswer": {"@type": "Answer", "text": "With default gravity (196.2) and default JumpPower (50) or JumpHeight (7.2), an avatar running at normal speed (16 WalkSpeed) can clear a gap of approximately 11 to 11.5 studs."}}, {"@type": "Question", "name": "How do I stop players from skipping stages using climbing glitches?", "acceptedAnswer": {"@type": "Answer", "text": "Ensure that walls separating stages are at least 15 studs high, and place invisible boundary walls with <code>CanCollide = true</code> and <code>Transparency = 1</code> around shortcuts."}}, {"@type": "Question", "name": "Should I add a skip-stage Developer Product for Robux?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Adding a 50-Robux \"Skip Stage\" button is the standard monetization method for obbies. However, ensure every stage is 100% beatable without paying, or players will leave negative ratings."}}, {"@type": "Question", "name": "Why do mobile players struggle with wraparounds and trusses?", "acceptedAnswer": {"@type": "Answer", "text": "Mobile touch controls lack the instant DPI precision of a physical mouse. If targeting a broad mobile audience, ensure your early stages feature wide walkways and avoid pixel-perfect corner jumps."}}]}]}
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-J8GSWM40TV');
+    </script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --bg-light: #1f2937;
+            --border-color: #374151;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --primary: #f59e0b;
+            --accent: #10b981;
+            --code-bg: #1e293b;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --spacing: 1.25rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            line-height: 1.75;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem var(--spacing);
+            background: rgba(11, 15, 25, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+        .header-nav a:hover { color: var(--accent); }
+        .header-nav span { font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-secondary); }
+
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 2.5rem 1.25rem 5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .breadcrumb { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        .indexing-quick-rail {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.5rem 0 2.5rem;
+        }
+        .indexing-quick-rail h2 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0 0 1rem 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .indexing-quick-rail h2::after { display: none; }
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+        }
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 48px;
+            padding: 0.75rem 0.9rem;
+            border-radius: 8px;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        h2 {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 3rem 0 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid var(--border-color);
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 1.8rem 0 0.8rem;
+        }
+
+        p { margin-bottom: 1.2rem; color: var(--text-secondary); font-size: 1.02rem; }
+
+        ul, ol {
+            margin: 0 0 1.5rem 1.6rem;
+            color: var(--text-secondary);
+        }
+        li { margin-bottom: 0.6rem; }
+        strong { color: #ffffff; font-weight: 700; }
+        code {
+            background: rgba(110, 118, 129, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.9em;
+            color: #fbbf24;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.2rem;
+            overflow-x: auto;
+            margin: 1.2rem 0 1.8rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+
+        .highlight-box {
+            background: var(--card-bg);
+            border-left: 4px solid var(--primary);
+            padding: 1.4rem;
+            margin: 1.8rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .highlight-box p { color: var(--text-primary); margin-bottom: 0; }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        th, td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background: var(--bg-light);
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        td { color: var(--text-secondary); }
+
+        .faq-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.4rem;
+            margin-bottom: 1.2rem;
+        }
+        .faq-card h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.6rem;
+        }
+        .faq-card p { margin-bottom: 0; font-size: 0.95rem; }
+
+        .cta-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.14) 0%, rgba(249, 115, 22, 0.08) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 2rem;
+            text-align: center;
+            margin: 3.5rem 0;
+        }
+        .cta-box h3 {
+            color: #ffffff;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+        }
+        .cta-box p {
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto 1.5rem;
+            font-size: 0.98rem;
+        }
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, #ea580c 100%);
+            color: #ffffff;
+            font-weight: 700;
+            padding: 0.9rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            min-height: 48px;
+            line-height: 1.2;
+            transition: all 0.3s ease;
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.75rem; }
+            .container { padding: 1.5rem 1rem 3rem; }
+            .indexing-quick-rail .quick-grid { grid-template-columns: 1fr 1fr; }
+            th, td { padding: 0.6rem 0.5rem; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-nav">
+        <a href="/portal/">DopaBrain 门户</a>
+        <span>游戏设计专栏</span>
+    </header>
+
+    <main class="container">
+        <nav class="breadcrumb">
+            <a href="/">首页</a> &gt;
+            <a href="/portal/">门户</a> &gt;
+            <a href="/portal/blog/zh/">博客 ZH</a> &gt;
+            <span>Roblox 跑酷制作指南</span>
+        </nav>
+
+        <section class="indexing-quick-rail" aria-label="Quick Navigation">
+            <h2>反应速度与空间逻辑测试</h2>
+            <div class="quick-grid">
+                <a class="quick-card" href="/reaction-test/?lang=zh" data-content-surface="quick_rail" data-target-slug="reaction-test">
+                    <strong>反应速度测试</strong>
+                    <span>测量电竞输入神经反射</span>
+                </a>
+                <a class="quick-card" href="/puzzle-2048/?lang=zh" data-content-surface="quick_rail" data-target-slug="puzzle-2048">
+                    <strong>2048 益智游戏</strong>
+                    <span>逻辑思维放松</span>
+                </a>
+                <a class="quick-card" href="/stress-check/?lang=zh" data-content-surface="quick_rail" data-target-slug="stress-check">
+                    <strong>压力自测</strong>
+                    <span>游戏心态重置</span>
+                </a>
+                <a class="quick-card" href="/iq-test/?lang=zh" data-content-surface="quick_rail" data-target-slug="iq-test">
+                    <strong>IQ 智商测试</strong>
+                    <span>空间推理能力评估</span>
+                </a>
+            </div>
+        </section>
+
+        <header class="article-header">
+            <h1>制作爆款 Roblox 跑酷(Obby)游戏：关卡设计、跳跃物理与检查点脚本</h1>
+            <div class="meta">
+                <span>DopaBrain 游戏设计实验室</span>
+                <span>更新时间：2026年9月</span>
+                <span>阅读时间：8分钟</span>
+            </div>
+        </header>
+
+        <p>Obstacle courses—universally known as "Obbies"—are the foundational genre of Roblox gaming culture. From classic 500-stage tower parkours to viral difficulty-chart obbies (DCOs), millions of players log in daily to test their jumping precision, spatial timing, and patience against increasingly perilous hazards.</p>
+        <p>However, building an obby that keeps players engaged rather than rage-quitting requires a delicate balance of level architecture, forgiving checkpoints, and responsive scripting. In this 2026 guide, you will master the anatomy of a captivating obby, implement functional stage checkpoints, write disappearing platform Lua scripts, and engineer smooth difficulty curves.</p>
+
+        <div class="highlight-box">
+            <p><strong>Level Design Rule:</strong> The #1 reason players abandon an obby is not difficulty—it is perceived unfairness. Jumps must have predictable physics, clear visual contrast, and reliable respawn points.</p>
+        </div>
+
+        <h2>1. The Psychology of Level Progression: The "Flow" Curve</h2>
+        <p>Successful game designers leverage psychologist Mihaly Csikszentmihalyi's concept of <em>Flow</em>—the sweet spot between boredom and overwhelming frustration:</p>
+        <ul>
+            <li><strong>Stages 1 to 5 (Onboarding & Confidence):</strong> Keep jumps forgiving (4 to 8 studs wide) with wide landing pads. Introduce basic mechanics: simple gaps, static kill bricks, and obvious paths.</li>
+            <li><strong>Stages 6 to 15 (Skill Expansion):</strong> Introduce verticality, ladder flicking, wraparounds (jumping around wall corners), and moving hazards.</li>
+            <li><strong>The "Breather" Principle:</strong> After an intensely difficult stage, always provide a visually soothing, low-stress checkpoint area. This resets player cortisol and prevents cognitive burnout.</li>
+        </ul>
+
+        <h2>2. Implementing a Rock-Solid Stage Checkpoint System</h2>
+        <p>Nothing destroys player retention faster than dying at stage 10 and being forced to restart at stage 1. Roblox uses <code>SpawnLocation</code> parts to establish respawn points:</p>
+        <ol>
+            <li>Insert a <strong>SpawnLocation</strong> at each stage landing platform.</li>
+            <li>In the <strong>Properties</strong> window, set <code>Enabled = true</code> and <code>Neutral = false</code>.</li>
+            <li>Assign a distinct <strong>TeamColor</strong> to each checkpoint (e.g., Bright Red for Stage 1, Bright Blue for Stage 2).</li>
+            <li>Alternatively, use a lightweight Leaderstats checkpoint script in <code>ServerScriptService</code> that saves player stage integers to <code>DataStoreService</code>.</li>
+        </ol>
+
+        <h2>3. Coding Disappearing & Reappearing Platforms (Lua)</h2>
+        <p>Disappearing blocks test player timing and memory. Add this script inside a platform part to create a cyclical vanishing hazard:</p>
+        <h3>Fading Platform Script</h3>
+        <pre><code>local platform = script.Parent
+
+local function fade()
+    task.wait(1.5)
+    for i = 0, 1, 0.1 do
+        platform.Transparency = i
+        task.wait(0.05)
+    end
+    platform.CanCollide = false
+    task.wait(2)
+    platform.CanCollide = true
+    platform.Transparency = 0
+end
+
+while true do
+    fade()
+end</code></pre>
+        <p>How it works: The platform pauses for 1.5 seconds, gradually fades transparency from 0 to 1, disables <code>CanCollide</code> so players fall through, waits 2 seconds, and then snaps back to solid visibility.</p>
+
+        <h2>4. 4 Popular Obby Mechanics & Jump Dimensions</h2>
+        <p>Standard Roblox avatar jump physics dictate specific maximum distances:</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mechanic</th>
+                        <th>Standard Spec</th>
+                        <th>Player Technique</th>
+                        <th>Danger Factor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Standard Long Jump</strong></td><td>Up to 11.5 studs (Default JumpPower)</td><td>Straight sprint + forward jump</td><td>Low to Medium</td></tr>
+                    <tr><td><strong>Wraparound Jump</strong></td><td>Around a 1-stud to 3-stud wide wall</td><td>Shift-Lock + sweeping camera flick</td><td>Medium to High</td></tr>
+                    <tr><td><strong>Truss / Ladder Flick</strong></td><td>Single truss climbing segment</td><td>Quick side-disengage and re-latch</td><td>High</td></tr>
+                    <tr><td><strong>Conveyor Speed Jump</strong></td><td>High Velocity surface force</td><td>Compensating for acceleration lag</td><td>High</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>5. Aesthetics & Optimization: Keeping 60+ FPS</h2>
+        <p>Even the most brilliant parkour map will fail if players suffer framerate stutter during precision jumps:</p>
+        <ul>
+            <li><strong>Color Coding Hazards:</strong> Use universal color conventions (Neon Red or Lime Green) for kill bricks so players immediately recognize death zones.</li>
+            <li><strong>Optimize Part Count:</strong> Use <em>Unions</em> or <em>MeshParts</em> instead of thousands of tiny individual blocks to prevent memory bloat on mobile devices.</li>
+            <li><strong>Consistent Lighting:</strong> Avoid pitch-black shadows that obscure platform edges; configure subtle Ambient Lighting in the <code>Lighting</code> tab.</li>
+        </ul>
+
+        <div class="cta-box">
+            <h3>想测测你的操作反应速度与空间敏捷度吗？</h3>
+            <p>精准跑酷需要毫秒级的敏锐反应。通过我们免费的反应时间测试工具，评估你的神经反射实力。</p>
+            <a href="/reaction-test/?lang=zh" class="cta-btn">立即测试反应速度</a>
+        </div>
+
+        <h2>Frequently Asked Questions (FAQ)</h2>
+        <div class="faq-card"><h4>What is the maximum jump distance an avatar can clear in Roblox?</h4><p>With default gravity (196.2) and default JumpPower (50) or JumpHeight (7.2), an avatar running at normal speed (16 WalkSpeed) can clear a gap of approximately 11 to 11.5 studs.</p></div>
+        <div class="faq-card"><h4>How do I stop players from skipping stages using climbing glitches?</h4><p>Ensure that walls separating stages are at least 15 studs high, and place invisible boundary walls with <code>CanCollide = true</code> and <code>Transparency = 1</code> around shortcuts.</p></div>
+        <div class="faq-card"><h4>Should I add a skip-stage Developer Product for Robux?</h4><p>Yes. Adding a 50-Robux "Skip Stage" button is the standard monetization method for obbies. However, ensure every stage is 100% beatable without paying, or players will leave negative ratings.</p></div>
+        <div class="faq-card"><h4>Why do mobile players struggle with wraparounds and trusses?</h4><p>Mobile touch controls lack the instant DPI precision of a physical mouse. If targeting a broad mobile audience, ensure your early stages feature wide walkways and avoid pixel-perfect corner jumps.</p></div>
+    </main>
+
+    <footer style="text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border-color); margin-top: 4rem;">
+        <p>&copy; 2026 DopaBrain. All rights reserved. Independent game architecture and digital design guides.</p>
+    </footer>
+</body>
+</html>

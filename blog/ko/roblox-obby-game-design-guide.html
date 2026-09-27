@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로블록스 오비(Obby) 만들기 공략 2026: 레벨 디자인 & 체크포인트 스크립트 | DopaBrain</title>
+    <meta name="description" content="2026년 최신 로블록스 오비(장애물 달리기) 제작 가이드. 난이도 곡선 설계, 발판 점멸 스크립트, 체크포인트(세이브포인트) 구현, 점프 거리 물리학 완벽 정리." />
+    <meta name="keywords" content="로블록스 오비 만들기 2026, 로블록스 체크포인트 스크립트, 로블록스 파쿠르 제작, 로블록스 발판 사라지는 스크립트, 로블록스 점프 거리" />
+    <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-obby-game-design-guide.html" />
+    <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-obby-game-design-guide.html" />
+    <meta property="og:title" content="로블록스 오비(Obby) 만들기 공략 2026: 레벨 디자인 & 체크포인트 스크립트 | DopaBrain" />
+    <meta property="og:description" content="2026년 최신 로블록스 오비(장애물 달리기) 제작 가이드. 난이도 곡선 설계, 발판 점멸 스크립트, 체크포인트(세이브포인트) 구현, 점프 거리 물리학 완벽 정리." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-obby-game-design-guide.html" />
+    <meta property="og:image" content="https://dopabrain.com/portal/icon-512.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="로블록스 오비(Obby) 만들기 공략 2026: 레벨 디자인 & 체크포인트 스크립트 | DopaBrain" />
+    <meta name="twitter:description" content="2026년 최신 로블록스 오비(장애물 달리기) 제작 가이드. 난이도 곡선 설계, 발판 점멸 스크립트, 체크포인트(세이브포인트) 구현, 점프 거리 물리학 완벽 정리." />
+    <meta name="twitter:image" content="https://dopabrain.com/portal/icon-512.svg" />
+    <script type="application/ld+json">
+{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "인기 로블록스 오비(Obby) 제작 가이드: 레벨 설계, 점프 물리학 & 체크포인트", "description": "2026년 최신 로블록스 오비(장애물 달리기) 제작 가이드. 난이도 곡선 설계, 발판 점멸 스크립트, 체크포인트(세이브포인트) 구현, 점프 거리 물리학 완벽 정리.", "image": "https://dopabrain.com/portal/icon-512.svg", "datePublished": "2026-09-28", "dateModified": "2026-09-28", "inLanguage": "ko", "author": {"@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com"}, "publisher": {"@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com", "logo": {"@type": "ImageObject", "url": "https://dopabrain.com/portal/icon-512.svg"}}, "mainEntityOfPage": {"@type": "WebPage", "@id": "https://dopabrain.com/portal/blog/ko/roblox-obby-game-design-guide.html"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "DopaBrain", "item": "https://dopabrain.com/"}, {"@type": "ListItem", "position": 2, "name": "블로그 KO", "item": "https://dopabrain.com/portal/blog/ko/"}, {"@type": "ListItem", "position": 3, "name": "로블록스 오비 제작 가이드", "item": "https://dopabrain.com/portal/blog/ko/roblox-obby-game-design-guide.html"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "로블록스 아바타가 기본 점프로 넘을 수 있는 최대 거리는 얼마인가요?", "acceptedAnswer": {"@type": "Answer", "text": "기본 중력(196.2)과 기본 점프파워(50), 걷기속도(16) 기준으로 전력 질주 점프 시 약 11~11.5스터드 거리를 뛰어넘을 수 있습니다."}}, {"@type": "Question", "name": "벽타기 버그로 단계를 건너뛰는 꼼수를 막으려면 어떻게 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "스테이지 사이의 벽 높이를 최소 15스터드 이상으로 높이고, 지름길 주변에 투명 벽(Transparency=1, CanCollide=true)을 둘러치면 됩니다."}}, {"@type": "Question", "name": "단계 건너뛰기(Skip Stage) 유료 아이템을 판매해도 되나요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 많은 오비 게임들이 50로벅스 정도의 \"단계 스킵\" 개발자 상품을 판매하여 수익을 창출합니다. 단, 돈을 쓰지 않아도 100% 클리어 가능해야 평점이 떨어지지 않습니다."}}, {"@type": "Question", "name": "모바일 유저들이 모서리 회전 점프를 어려워하는 이유는 무엇인가요?", "acceptedAnswer": {"@type": "Answer", "text": "터치스크린은 마우스보다 화면 전환의 미세 조작이 어렵기 때문입니다. 모바일 유저 비중이 높다면 초반 스테이지에는 발판 폭을 넉넉하게 설계하는 것이 좋습니다."}}]}]}
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-J8GSWM40TV');
+    </script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --bg-light: #1f2937;
+            --border-color: #374151;
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --primary: #f59e0b;
+            --accent: #10b981;
+            --code-bg: #1e293b;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --spacing: 1.25rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            line-height: 1.75;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem var(--spacing);
+            background: rgba(11, 15, 25, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+        .header-nav a:hover { color: var(--accent); }
+        .header-nav span { font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-secondary); }
+
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 2.5rem 1.25rem 5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .breadcrumb { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        .indexing-quick-rail {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin: 1.5rem 0 2.5rem;
+        }
+        .indexing-quick-rail h2 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0 0 1rem 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .indexing-quick-rail h2::after { display: none; }
+        .indexing-quick-rail .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.75rem;
+        }
+        .indexing-quick-rail .quick-card {
+            display: block;
+            min-height: 48px;
+            padding: 0.75rem 0.9rem;
+            border-radius: 8px;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .indexing-quick-rail .quick-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+        .indexing-quick-rail .quick-card strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+        .indexing-quick-rail .quick-card span {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fbbf24 0%, #f97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        h2 {
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 3rem 0 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid var(--border-color);
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 1.8rem 0 0.8rem;
+        }
+
+        p { margin-bottom: 1.2rem; color: var(--text-secondary); font-size: 1.02rem; }
+
+        ul, ol {
+            margin: 0 0 1.5rem 1.6rem;
+            color: var(--text-secondary);
+        }
+        li { margin-bottom: 0.6rem; }
+        strong { color: #ffffff; font-weight: 700; }
+        code {
+            background: rgba(110, 118, 129, 0.2);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.9em;
+            color: #fbbf24;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.2rem;
+            overflow-x: auto;
+            margin: 1.2rem 0 1.8rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            color: #e2e8f0;
+        }
+
+        .highlight-box {
+            background: var(--card-bg);
+            border-left: 4px solid var(--primary);
+            padding: 1.4rem;
+            margin: 1.8rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .highlight-box p { color: var(--text-primary); margin-bottom: 0; }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        th, td {
+            padding: 0.8rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background: var(--bg-light);
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+        td { color: var(--text-secondary); }
+
+        .faq-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.4rem;
+            margin-bottom: 1.2rem;
+        }
+        .faq-card h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.6rem;
+        }
+        .faq-card p { margin-bottom: 0; font-size: 0.95rem; }
+
+        .cta-box {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.14) 0%, rgba(249, 115, 22, 0.08) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 2rem;
+            text-align: center;
+            margin: 3.5rem 0;
+        }
+        .cta-box h3 {
+            color: #ffffff;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+        }
+        .cta-box p {
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto 1.5rem;
+            font-size: 0.98rem;
+        }
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, #ea580c 100%);
+            color: #ffffff;
+            font-weight: 700;
+            padding: 0.9rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            min-height: 48px;
+            line-height: 1.2;
+            transition: all 0.3s ease;
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.75rem; }
+            .container { padding: 1.5rem 1rem 3rem; }
+            .indexing-quick-rail .quick-grid { grid-template-columns: 1fr 1fr; }
+            th, td { padding: 0.6rem 0.5rem; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-nav">
+        <a href="/portal/">DopaBrain 포털</a>
+        <span>게임 디자인 랩</span>
+    </header>
+
+    <main class="container">
+        <nav class="breadcrumb">
+            <a href="/">홈</a> &gt;
+            <a href="/portal/">포털</a> &gt;
+            <a href="/portal/blog/ko/">블로그 KO</a> &gt;
+            <span>로블록스 오비 제작 가이드</span>
+        </nav>
+
+        <section class="indexing-quick-rail" aria-label="Quick Navigation">
+            <h2>게이밍 반사신경 & 두뇌 휴식</h2>
+            <div class="quick-grid">
+                <a class="quick-card" href="/reaction-test/?lang=ko" data-content-surface="quick_rail" data-target-slug="reaction-test">
+                    <strong>반응속도 테스트</strong>
+                    <span>파쿠르 반사신경 측정</span>
+                </a>
+                <a class="quick-card" href="/puzzle-2048/?lang=ko" data-content-surface="quick_rail" data-target-slug="puzzle-2048">
+                    <strong>2048 퍼즐</strong>
+                    <span>논리적 전략 휴식</span>
+                </a>
+                <a class="quick-card" href="/stress-check/?lang=ko" data-content-surface="quick_rail" data-target-slug="stress-check">
+                    <strong>스트레스 진단</strong>
+                    <span>게임 멘탈 리셋</span>
+                </a>
+                <a class="quick-card" href="/iq-test/?lang=ko" data-content-surface="quick_rail" data-target-slug="iq-test">
+                    <strong>IQ 테스트</strong>
+                    <span>공간 지각 논리 퀴즈</span>
+                </a>
+            </div>
+        </section>
+
+        <header class="article-header">
+            <h1>인기 로블록스 오비(Obby) 제작 가이드: 레벨 설계, 점프 물리학 & 체크포인트</h1>
+            <div class="meta">
+                <span>DopaBrain 게임디자인 랩</span>
+                <span>업데이트: 2026년 9월</span>
+                <span>읽는 시간: 8분</span>
+            </div>
+        </header>
+
+        <p>장애물 달리기 게임인 "오비(Obby)"는 로블록스 플랫폼의 가장 대표적이고 대중적인 장르입니다. 500단계에 달하는 거대한 타워 파쿠르부터 극한의 난이도를 자랑하는 난이도 차트 오비(DCO)까지, 수많은 유저들이 타이밍과 정밀한 점프 실력을 겨루고 있습니다.</p>
+        <p>하지만 플레이어가 중간에 포기하지 않고 끝까지 플레이하게 만들려면 치밀한 난이도 곡선, 공정한 체크포인트 배치, 매끄러운 스크립팅이 필수적입니다. 본 가이드에서는 몰입감 넘치는 오비 맵 구조 설계, 발판 점멸 루아 스크립트, 체크포인트 저장 원리를 완벽 정리해 드립니다.</p>
+
+        <div class="highlight-box">
+            <p><strong>레벨 디자인 핵심 수칙:</strong> 플레이어가 게임을 이탈하는 1위 원인은 난이도가 아니라 "불합리함"입니다. 점프 거리의 예측 가능성, 명확한 색상 대비, 안정적인 리스폰 지점이 보장되어야 합니다.</p>
+        </div>
+
+        <h2>1. 레벨 난이도 곡선과 몰입(Flow) 심리학</h2>
+        <p>성공적인 오비 제작자는 심리학자 칙센트미하이의 "몰입(Flow)" 이론을 적용하여 지루함과 좌절 사이의 완벽한 밸런스를 맞춥니다:</p>
+        <ul>
+            <li><strong>1~5단계 (튜토리얼 및 자신감 부여):</strong> 발판 간격을 4~8스터드로 넓게 유지하고 단순한 킬블록을 배치하여 기본 조작감을 익히게 합니다.</li>
+            <li><strong>6~15단계 (기술 확장):</strong> 수직 사다리 타기, 벽 모서리를 도는 랩어라운드(Wraparound), 움직이는 장애물을 도입합니다.</li>
+            <li><strong>숨고르기 구간(Breather):</strong> 매우 어려운 구간을 통과한 직후에는 반드시 시각적으로 아름답고 긴장을 풀 수 있는 평화로운 체크포인트를 제공하여 스트레스를 식혀줍니다.</li>
+        </ul>
+
+        <h2>2. 완벽한 스테이지 체크포인트(세이브포인트) 구현</h2>
+        <p>10단계에서 추락했을 때 1단계로 되돌아간다면 플레이어는 즉시 게임을 종료합니다. 로블록스의 <code>SpawnLocation</code>을 활용하여 안정적인 체크포인트를 만듭니다:</p>
+        <ol>
+            <li>각 스테이지의 착지 플랫폼에 <strong>SpawnLocation</strong> 파트를 배치합니다.</li>
+            <li>속성(Properties) 창에서 <code>Enabled = true</code>, <code>Neutral = false</code>로 지정합니다.</li>
+            <li>체크포인트마다 고유한 <strong>TeamColor</strong>를 지정하여 순차적으로 스폰 지점이 갱신되도록 설정합니다.</li>
+            <li>고급 맵의 경우 <code>ServerScriptService</code>에 Leaderstats 스크립트를 작성하여 플레이어의 최고 도달 단계를 DataStore에 영구 저장합니다.</li>
+        </ol>
+
+        <h2>3. 주기적으로 사라졌다 나타나는 발판 코딩 (루아)</h2>
+        <p>타이밍과 기억력을 시험하는 점멸 발판을 제작하려면 파트 안에 아래의 루아 스크립트를 삽입합니다:</p>
+        <h3>발판 점멸 루아 스크립트 (Script)</h3>
+        <pre><code>local platform = script.Parent
+
+local function fade()
+    task.wait(1.5)
+    for i = 0, 1, 0.1 do
+        platform.Transparency = i
+        task.wait(0.05)
+    end
+    platform.CanCollide = false
+    task.wait(2)
+    platform.CanCollide = true
+    platform.Transparency = 0
+end
+
+while true do
+    fade()
+end</code></pre>
+        <p>작동 원리: 1.5초 대기 후 서서히 투명도를 0에서 1로 높이고, <code>CanCollide = false</code>로 전환하여 밟을 수 없게 만듭니다. 2초 후 다시 원래 상태로 복원합니다.</p>
+
+        <h2>4. 대표적인 오비 기믹 4가지와 점프 규격</h2>
+        <p>로블록스 아바타의 기본 물리 스펙에 따른 점프 한계 거리는 다음과 같습니다:</p>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>기믹 종류</th>
+                        <th>표준 규격 및 물리학</th>
+                        <th>플레이어 조작 기술</th>
+                        <th>난이도</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>기본 장거리 점프</strong></td><td>최대 11.5스터드 (기본 점프력 50)</td><td>직선 가속 전력질주 후 점프</td><td>하~중</td></tr>
+                    <tr><td><strong>모서리 회전 (랩어라운드)</strong></td><td>두께 1~3스터드 벽면</td><td>Shift-Lock 및 화면 마우스 회전</td><td>중~상</td></tr>
+                    <tr><td><strong>사다리 튕기기 (트러스 플릭)</strong></td><td>단일 트러스 기둥</td><td>측면 이탈 후 즉시 재접착</td><td>상</td></tr>
+                    <tr><td><strong>컨베이어 가속 점프</strong></td><td>고속 Velocity 표면 마찰</td><td>가속 관성 예측 및 착지</td><td>상</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>5. 모바일 최적화 & 렉 없는 60 FPS 유지법</h2>
+        <p>정밀 점프 게임에서 프레임 드롭(렉)은 치명적인 이탈 요인입니다:</p>
+        <ul>
+            <li><strong>위험 구역 색상 통일:</strong> 밟으면 죽는 킬블록은 네온 레드나 라임 그린 같은 눈에 띄는 형광색으로 통일하여 직관성을 높입니다.</li>
+            <li><strong>파트 개수 최적화:</strong> 수천 개의 파트를 잘게 쪼개는 대신 <em>Union</em> 결합이나 메시를 활용하여 모바일 기기 메모리 부하를 줄입니다.</li>
+            <li><strong>균일한 조명 배치:</strong> 발판 경계선이 안 보이는 칠흑 같은 그림자를 피하고, Lighting 탭에서 은은한 앰비언트 라이트를 적용합니다.</li>
+        </ul>
+
+        <div class="cta-box">
+            <h3>나의 반사신경과 점프 감각을 측정해 볼까요?</h3>
+            <p>정밀 파쿠르는 찰나의 반응 속도와 입력 정확도를 요구합니다. 무료 반응속도 테스트로 나의 반사신경을 측정해 보세요.</p>
+            <a href="/reaction-test/?lang=ko" class="cta-btn">반응속도 측정해보기</a>
+        </div>
+
+        <h2>자주 묻는 질문 (FAQ)</h2>
+        <div class="faq-card"><h4>로블록스 아바타가 기본 점프로 넘을 수 있는 최대 거리는 얼마인가요?</h4><p>기본 중력(196.2)과 기본 점프파워(50), 걷기속도(16) 기준으로 전력 질주 점프 시 약 11~11.5스터드 거리를 뛰어넘을 수 있습니다.</p></div>
+        <div class="faq-card"><h4>벽타기 버그로 단계를 건너뛰는 꼼수를 막으려면 어떻게 하나요?</h4><p>스테이지 사이의 벽 높이를 최소 15스터드 이상으로 높이고, 지름길 주변에 투명 벽(Transparency=1, CanCollide=true)을 둘러치면 됩니다.</p></div>
+        <div class="faq-card"><h4>단계 건너뛰기(Skip Stage) 유료 아이템을 판매해도 되나요?</h4><p>네, 많은 오비 게임들이 50로벅스 정도의 "단계 스킵" 개발자 상품을 판매하여 수익을 창출합니다. 단, 돈을 쓰지 않아도 100% 클리어 가능해야 평점이 떨어지지 않습니다.</p></div>
+        <div class="faq-card"><h4>모바일 유저들이 모서리 회전 점프를 어려워하는 이유는 무엇인가요?</h4><p>터치스크린은 마우스보다 화면 전환의 미세 조작이 어렵기 때문입니다. 모바일 유저 비중이 높다면 초반 스테이지에는 발판 폭을 넉넉하게 설계하는 것이 좋습니다.</p></div>
+    </main>
+
+    <footer style="text-align: center; padding: 2rem; color: var(--text-secondary); font-size: 0.85rem; border-top: 1px solid var(--border-color); margin-top: 4rem;">
+        <p>&copy; 2026 DopaBrain. All rights reserved. 본 가이드는 독립적인 게임 아키텍처 및 레벨 디자인 칼럼입니다.</p>
+    </footer>
+</body>
+</html>
