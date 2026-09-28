@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roblox Spatial Query & Hitbox Guide 2026: Fast Hit Detection | DopaBrain</title>
+  <meta name="description" content="Build lag-compensated Roblox combat: Master Workspace spatial queries, OverlapParams, GetPartsInPart, raycast hitboxes, and server validation.">
+  <meta name="keywords" content="roblox spatial query tutorial 2026, roblox overlapParams getpartsinaabb, roblox hitbox hit detection, raycast melee hitbox script, roblox anti exploit hit">
+  <meta name="author" content="DopaBrain">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/en/roblox-spatial-query-collision-hitbox-detection-guide.html">
+
+  <!-- Alternate Language Links -->
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-spatial-query-collision-hitbox-detection-guide.html">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Roblox Spatial Query & Hitbox Guide 2026: Fast Hit Detection | DopaBrain">
+  <meta property="og:description" content="Build lag-compensated Roblox combat: Master Workspace spatial queries, OverlapParams, GetPartsInPart, raycast hitboxes, and server validation.">
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/en/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <meta property="og:site_name" content="DopaBrain">
+  <meta property="og:image" content="https://dopabrain.com/portal/blog/images/roblox-spatial-query.webp">
+  <meta property="article:published_time" content="2026-09-28T12:00:00+09:00">
+  <meta property="article:modified_time" content="2026-09-28T12:00:00+09:00">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Roblox Spatial Query & Hitbox Guide 2026: Fast Hit Detection | DopaBrain">
+  <meta name="twitter:description" content="Build lag-compensated Roblox combat: Master Workspace spatial queries, OverlapParams, GetPartsInPart, raycast hitboxes, and server validation.">
+  <meta name="twitter:image" content="https://dopabrain.com/portal/blog/images/roblox-spatial-query.webp">
+
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882"
+     crossorigin="anonymous"></script>
+
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/en/roblox-spatial-query-collision-hitbox-detection-guide.html#article",
+      "isPartOf": {
+        "@id": "https://dopabrain.com/portal/blog/en/roblox-spatial-query-collision-hitbox-detection-guide.html"
+      },
+      "headline": "Roblox Spatial Query & Combat Hitboxes: OverlapParams, Raycasts & Anti-Exploit Architecture",
+      "description": "Build lag-compensated Roblox combat: Master Workspace spatial queries, OverlapParams, GetPartsInPart, raycast hitboxes, and server validation.",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Game Dev Lab",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "datePublished": "2026-09-28T12:00:00+09:00",
+      "dateModified": "2026-09-28T12:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/en/roblox-spatial-query-collision-hitbox-detection-guide.html"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/en/roblox-spatial-query-collision-hitbox-detection-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/en/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Roblox Spatial Query Guide",
+          "item": "https://dopabrain.com/portal/blog/en/roblox-spatial-query-collision-hitbox-detection-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/en/roblox-spatial-query-collision-hitbox-detection-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why is GetPartsInPart better than GetTouchingParts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "GetTouchingParts requires CanCollide to be true or a TouchTransmitter listener. GetPartsInPart works instantly regardless of collision state and uses modern OverlapParams filtering."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I prevent melee attacks from hitting through walls?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Perform a secondary Raycast from the attacker's HumanoidRootPart to the victim's torso. If a solid map obstacle is hit, discard the attack."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can exploiters manipulate Spatial Queries?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Spatial Queries executed on the server cannot be tampered with by clients. As long as you validate positions and ranges server-side, exploiters cannot forge hits."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <style>
+    :root {
+      --bg: #090b10;
+      --card-bg: #121620;
+      --card-border: #1f2738;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #10b981;
+      --accent-glow: rgba(16, 185, 129, 0.15);
+      --highlight: #3b82f6;
+      --code-bg: #0d1117;
+      --border-radius: 12px;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 24px 16px;
+      overflow-x: hidden;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .meta-box {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.15rem;
+      color: var(--accent);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      min-height: 44px;
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      font-size: 0.95rem;
+      color: #fff;
+    }
+    .quick-card span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .banner-quote {
+      background: var(--accent-glow);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 24px 0;
+      font-size: 1.05rem;
+    }
+    .content-body p {
+      margin-bottom: 18px;
+      font-size: 1.05rem;
+      color: #d1d7e0;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .content-body h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 36px 0 16px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 8px;
+    }
+    .content-body ul {
+      margin: 0 0 20px 24px;
+    }
+    .content-body li {
+      margin-bottom: 10px;
+      color: #cbd5e1;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 16px 0 20px;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #58a6ff;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: #34d399;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+    .code-header {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: #8b949e;
+      margin-top: 16px;
+    }
+    .code-header + pre {
+      margin-top: 0;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+    .cta-box {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(59, 130, 246, 0.1));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--border-radius);
+      padding: 28px 24px;
+      text-align: center;
+      margin: 40px 0;
+    }
+    .cta-box h3 {
+      font-size: 1.35rem;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .cta-box p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-btn {
+      display: inline-block;
+      min-height: 44px;
+      line-height: 44px;
+      padding: 0 28px;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      border-radius: 22px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .cta-btn:hover {
+      background: #34d399;
+      transform: scale(1.03);
+    }
+    .faq-section {
+      margin: 40px 0;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+    }
+    .faq-item h3 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--card-border);
+      padding-top: 24px;
+    }
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 1.7rem;
+      }
+      .content-body h2 {
+        font-size: 1.3rem;
+      }
+      .quick-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox Spatial Query & Combat Hitboxes: OverlapParams, Raycasts & Anti-Exploit Architecture</h1>
+      <div class="meta-box">
+        <span>By DopaBrain Game Dev Lab</span>
+        <span>&bull;</span>
+        <span>Updated: September 2026</span>
+        <span>&bull;</span>
+        <span>Reading Time: 9 min</span>
+      </div>
+    </header>
+
+    <div class="quick-rail" data-content-surface="quick_rail">
+      <h2>Developer Cognitive Tools</h2>
+      <div class="quick-grid">
+        <a href="/brain-type/?lang=en" class="quick-card">
+          <strong>Brain Type Test</strong>
+          <span>Computational geometry mindset</span>
+        </a>
+        <a href="/reaction-test/?lang=en" class="quick-card">
+          <strong>Reaction Test</strong>
+          <span>Combat timing baseline</span>
+        </a>
+        <a href="/stress-check/?lang=en" class="quick-card">
+          <strong>Stress Check</strong>
+          <span>Latency & netcode fatigue</span>
+        </a>
+        <a href="/puzzle-2048/?lang=en" class="quick-card">
+          <strong>2048 Puzzle</strong>
+          <span>Spatial matrix logic</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="content-body">
+      <p>In fast-paced melee, shooter, or action RPG games on Roblox, nothing frustrates players more than "phantom hits" where strikes register from miles away, or clean sword strikes that pass harmlessly through enemies due to server latency or inaccurate `Touched` events.</p>
+      <p>The legacy `BasePart.Touched` event is notoriously unreliable for precision combat because it depends on physics stepping and client simulation latency. Modern commercial Roblox games rely on Roblox's `WorldRoot` Spatial Query APIs—specifically `GetPartsInPart`, `GetPartBoundsInBox`, and raycast hitboxes governed by `OverlapParams`.</p>
+
+      <div class="banner-quote">
+        <strong>The Hitbox Golden Rule:</strong> Never use <code>Touched</code> events for weapon hit registration. Use client-predicted Raycast or Spatial Queries paired with strict server-side distance and angle validation.
+      </div>
+
+      <h2>1. Why Touched Fails: Physics Inaccuracies and Exploits</h2>
+      <p>The technical breakdown of why physics collisions fail competitive combat:</p>
+      <ul>
+        <li><strong>Physics Step Latency:</strong> `Touched` events only fire when the internal physics solver detects overlapping bounding boxes during a physics step (60 Hz), frequently skipping fast-moving sword blades.</li>
+        <li><strong>Client Exploitation Vector:</strong> Because clients simulate their own character physics, an exploiter can fire `Touched` events remotely or inflate character bounding boxes to strike enemies across the map.</li>
+        <li><strong>Uncontrolled Multiple Triggers:</strong> A single swing can fire dozen of erratic `Touched` events within milliseconds, causing performance spikes and erratic damage calculation.</li>
+      </ul>
+
+      <h2>2. The Spatial Query Suite: OverlapParams & Geometry Modes</h2>
+      <p>Roblox's modern spatial query methods provide instantaneous geometric intersection:</p>
+      <ul>
+        <li><strong>GetPartsInPart:</strong> Checks intersections with complex mesh or primitive geometries, ideal for volumetric weapon sweeps and spinning area-of-effect (AoE) abilities.</li>
+        <li><strong>GetPartBoundsInBox / InRadius:</strong> Extremely lightweight mathematical bounding box and spherical checks, optimal for rapid projectile blast radiuses.</li>
+        <li><strong>OverlapParams Configuration:</strong> Filter instances cleanly using <code>RaycastFilterType.Include</code> or <code>Exclude</code>, specify collision groups, and limit maximum part checks for predictable performance.</li>
+      </ul>
+
+      <h2>3. Raycast Hitboxes vs. Volumetric Spatial Queries</h2>
+      <p>Choosing the optimal detection architecture for each weapon archetype:</p>
+      <ul>
+        <li><strong>DDA Raycast Hitboxes (Swords, Blades):</strong> Casting rays between attachment points on weapon blades every render frame accurately captures fast curved swings without tunneling.</li>
+        <li><strong>Volumetric Spatial Queries (Hammers, Explosions):</strong> Perfect for blunt slams, shockwaves, and cone-shaped breath attacks where volume matters more than edge precision.</li>
+        <li><strong>Hybrid Client-Cast Server-Verify:</strong> The client renders instant visual cues, while the server verifies distance, line of sight, and player state before applying damage.</li>
+      </ul>
+
+      <h2>4. Production Lua Script: Spatial Query Melee Combat Handler</h2>
+      <p>Commercial-grade server-side combat validator using spatial queries and OverlapParams:</p>
+      <div class="code-header"><strong>ServerScriptService.CombatManager (Spatial Query Validator)</strong></div>
+      <pre><code>local Workspace = game:GetService("Workspace")
+
+local function PerformMeleeCheck(attacker, weaponHitboxPart, maxTargets)
+    local overlapParams = OverlapParams.new()
+    overlapParams.FilterType = RaycastFilterType.Exclude
+    overlapParams.FilterDescendantsInstances = {attacker.Character}
+    overlapParams.MaxParts = 20
+    overlapParams.CollisionGroup = "Default"
+
+    local collidingParts = Workspace:GetPartsInPart(weaponHitboxPart, overlapParams)
+    local hitHumanoids = {}
+    local targetsDamaged = 0
+
+    for _, part in ipairs(collidingParts) do
+        local model = part:FindFirstAncestorOfClass("Model")
+        if model and model ~= attacker.Character then
+            local targetHumanoid = model:FindFirstChildOfClass("Humanoid")
+            local targetRoot = model:FindFirstChild("HumanoidRootPart")
+            
+            if targetHumanoid and targetHumanoid.Health > 0 and not hitHumanoids[targetHumanoid] then
+                hitHumanoids[targetHumanoid] = true
+                
+                -- Server validation: Validate distance from attacker
+                local attackerRoot = attacker.Character:FindFirstChild("HumanoidRootPart")
+                if attackerRoot and targetRoot then
+                    local distance = (attackerRoot.Position - targetRoot.Position).Magnitude
+                    if distance <= 18 then -- Maximum allowable reach threshold
+                        targetHumanoid:TakeDamage(25)
+                        targetsDamaged = targetsDamaged + 1
+                        if targetsDamaged >= maxTargets then break end
+                    end
+                end
+            end
+        end
+    end
+end</code></pre>
+      <p>Highlights: Excludes friendly attacker geometry, filters unique humanoids to avoid multi-hitting per swing, and enforces strict server-side distance sanity checks.</p>
+
+      <h2>5. Server Latency Compensation & Anti-Cheat Guards</h2>
+      <p>Preventing exploits in high-ping environments:</p>
+      <ul>
+        <li><strong>Historical State Buffers:</strong> Track target positions over a rolling 200ms window to account for ping without granting exploiters artificial reach.</li>
+        <li><strong>Server-Side Cooldown Enforcers:</strong> Never trust client animation timing. Track weapon cooldowns strictly on the server.</li>
+        <li><strong>Line-of-Sight Raycast Validation:</strong> Confirm no walls or static geometry exist between attacker and victim at the exact strike timestamp.</li>
+      </ul>
+
+      <div class="cta-box">
+        <h3>Sharpen Your Algorithmic Architecture & Netcode Logic</h3>
+        <p>Precision combat mechanics require clean spatial geometry and rapid mental calculations. Assess your cognitive baseline with our diagnostic tools.</p>
+        <a href="/brain-type/?lang=en" class="cta-btn">Take Free Cognitive & Brain Type Test</a>
+      </div>
+
+      <section class="faq-section">
+        <h2>Frequently Asked Questions (Roblox Spatial Query & Hitboxes)</h2>
+        <div class="faq-item">
+          <h3>Why is GetPartsInPart better than GetTouchingParts?</h3>
+          <p>GetTouchingParts requires CanCollide to be true or a TouchTransmitter listener. GetPartsInPart works instantly regardless of collision state and uses modern OverlapParams filtering.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I prevent melee attacks from hitting through walls?</h3>
+          <p>Perform a secondary Raycast from the attacker's HumanoidRootPart to the victim's torso. If a solid map obstacle is hit, discard the attack.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can exploiters manipulate Spatial Queries?</h3>
+          <p>Spatial Queries executed on the server cannot be tampered with by clients. As long as you validate positions and ranges server-side, exploiters cannot forge hits.</p>
+        </div>
+
+      </section>
+    </article>
+
+    <footer>
+      <p>© 2026 DopaBrain Game Dev Lab. High-performance netcode & game architecture.</p>
+    </footer>
+  </div>
+</body>
+</html>

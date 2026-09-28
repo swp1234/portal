@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roblox空間クエリ＆ヒットボックス判定2026：精密判定 | DopaBrain</title>
+  <meta name="description" content="ラグ補正されたRoblox近接戦闘：空間クエリ、OverlapParams、GetPartsInPart、レイキャストヒットボックス、サーバー判定の解説。">
+  <meta name="keywords" content="Roblox 空間クエリ 使い方, overlapParams getpartsInPart, Roblox ヒットボックス スクリプト, レイキャスト 攻撃判定">
+  <meta name="author" content="DopaBrain">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ja/roblox-spatial-query-collision-hitbox-detection-guide.html">
+
+  <!-- Alternate Language Links -->
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-spatial-query-collision-hitbox-detection-guide.html">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Roblox空間クエリ＆ヒットボックス判定2026：精密判定 | DopaBrain">
+  <meta property="og:description" content="ラグ補正されたRoblox近接戦闘：空間クエリ、OverlapParams、GetPartsInPart、レイキャストヒットボックス、サーバー判定の解説。">
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ja/roblox-spatial-query-collision-hitbox-detection-guide.html">
+  <meta property="og:site_name" content="DopaBrain">
+  <meta property="og:image" content="https://dopabrain.com/portal/blog/images/roblox-spatial-query.webp">
+  <meta property="article:published_time" content="2026-09-28T12:00:00+09:00">
+  <meta property="article:modified_time" content="2026-09-28T12:00:00+09:00">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Roblox空間クエリ＆ヒットボックス判定2026：精密判定 | DopaBrain">
+  <meta name="twitter:description" content="ラグ補正されたRoblox近接戦闘：空間クエリ、OverlapParams、GetPartsInPart、レイキャストヒットボックス、サーバー判定の解説。">
+  <meta name="twitter:image" content="https://dopabrain.com/portal/blog/images/roblox-spatial-query.webp">
+
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882"
+     crossorigin="anonymous"></script>
+
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/ja/roblox-spatial-query-collision-hitbox-detection-guide.html#article",
+      "isPartOf": {
+        "@id": "https://dopabrain.com/portal/blog/ja/roblox-spatial-query-collision-hitbox-detection-guide.html"
+      },
+      "headline": "Roblox Spatial Query & ヒットボックス判定：OverlapParams、レイキャスト、サーバー防衛設計",
+      "description": "ラグ補正されたRoblox近接戦闘：空間クエリ、OverlapParams、GetPartsInPart、レイキャストヒットボックス、サーバー判定の解説。",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Game Dev Lab",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "datePublished": "2026-09-28T12:00:00+09:00",
+      "dateModified": "2026-09-28T12:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ja/roblox-spatial-query-collision-hitbox-detection-guide.html"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/ja/roblox-spatial-query-collision-hitbox-detection-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "ポータル",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "ブログ",
+          "item": "https://dopabrain.com/portal/blog/ja/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Roblox 空間クエリ",
+          "item": "https://dopabrain.com/portal/blog/ja/roblox-spatial-query-collision-hitbox-detection-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/ja/roblox-spatial-query-collision-hitbox-detection-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "GetPartsInPartがGetTouchingPartsより優れている理由は？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "CanCollideの設定に依存せず、OverlapParamsで柔軟なフィルタリングが可能なためです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "壁越しに攻撃が当たるのを防ぐには？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "攻撃者と対象の間にレイキャストを飛ばし、障害物が検出されたら攻撃を無効化します。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "空間クエリはクライアントから改ざんできますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "サーバーで実行されている限り、クライアントから改ざんすることは不可能です。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <style>
+    :root {
+      --bg: #090b10;
+      --card-bg: #121620;
+      --card-border: #1f2738;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #10b981;
+      --accent-glow: rgba(16, 185, 129, 0.15);
+      --highlight: #3b82f6;
+      --code-bg: #0d1117;
+      --border-radius: 12px;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 24px 16px;
+      overflow-x: hidden;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .meta-box {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.15rem;
+      color: var(--accent);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      min-height: 44px;
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      font-size: 0.95rem;
+      color: #fff;
+    }
+    .quick-card span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .banner-quote {
+      background: var(--accent-glow);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 24px 0;
+      font-size: 1.05rem;
+    }
+    .content-body p {
+      margin-bottom: 18px;
+      font-size: 1.05rem;
+      color: #d1d7e0;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .content-body h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 36px 0 16px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 8px;
+    }
+    .content-body ul {
+      margin: 0 0 20px 24px;
+    }
+    .content-body li {
+      margin-bottom: 10px;
+      color: #cbd5e1;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 16px 0 20px;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #58a6ff;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: #34d399;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+    .code-header {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: #8b949e;
+      margin-top: 16px;
+    }
+    .code-header + pre {
+      margin-top: 0;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+    .cta-box {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(59, 130, 246, 0.1));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--border-radius);
+      padding: 28px 24px;
+      text-align: center;
+      margin: 40px 0;
+    }
+    .cta-box h3 {
+      font-size: 1.35rem;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .cta-box p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-btn {
+      display: inline-block;
+      min-height: 44px;
+      line-height: 44px;
+      padding: 0 28px;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      border-radius: 22px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .cta-btn:hover {
+      background: #34d399;
+      transform: scale(1.03);
+    }
+    .faq-section {
+      margin: 40px 0;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+    }
+    .faq-item h3 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--card-border);
+      padding-top: 24px;
+    }
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 1.7rem;
+      }
+      .content-body h2 {
+        font-size: 1.3rem;
+      }
+      .quick-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox Spatial Query & ヒットボックス判定：OverlapParams、レイキャスト、サーバー防衛設計</h1>
+      <div class="meta-box">
+        <span>DopaBrain ゲーム開発ラボ</span>
+        <span>&bull;</span>
+        <span>更新: 2026年9月</span>
+        <span>&bull;</span>
+        <span>読了時間: 9分</span>
+      </div>
+    </header>
+
+    <div class="quick-rail" data-content-surface="quick_rail">
+      <h2>開発者向け思考診断ツール</h2>
+      <div class="quick-grid">
+        <a href="/brain-type/?lang=ja" class="quick-card">
+          <strong>脳タイプテスト</strong>
+          <span>幾何学アルゴリズム思考</span>
+        </a>
+        <a href="/reaction-test/?lang=ja" class="quick-card">
+          <strong>反応速度テスト</strong>
+          <span>戦闘タイミング測定</span>
+        </a>
+        <a href="/stress-check/?lang=ja" class="quick-card">
+          <strong>ストレスチェック</strong>
+          <span>ネットコード疲労度</span>
+        </a>
+        <a href="/puzzle-2048/?lang=ja" class="quick-card">
+          <strong>2048パズル</strong>
+          <span>空間マトリクス論理</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="content-body">
+      <p>アクションゲームで、剣が確実に当たっているのにすり抜けたり、離れた場所から理不尽にダメージを受ける「ゴーストヒット」はプレイヤーの熱中を一瞬で奪います。</p>
+      <p>旧来の`BasePart.Touched`は物理演算ステップ（60Hz）に依存し、すり抜けやチートの温床となります。現在の商業タイトルでは`GetPartsInPart`やレイキャスト判定が標準です。</p>
+
+      <div class="banner-quote">
+        <strong>ヒットボックスの絶対法則：</strong> 近接武器に <code>Touched</code> を使用しないでください。空間クエリとサーバー側の厳格な距離検証を組み合わせてください。
+      </div>
+
+      <h2>1. Touchedイベントが戦闘判定で破綻する理由</h2>
+      <p>物理判定の遅延とセキュリティ上のリスク：</p>
+      <ul>
+        <li><strong>トンネリング現象：</strong> 高速で振られた武器がフレーム間をすり抜け、当たり判定が消失。</li>
+        <li><strong>チートへの脆弱性：</strong> クライアント側でTouchedイベントを遠隔偽造されるリスク。</li>
+        <li><strong>連続誤検出：</strong> 1振りの間に過剰なイベントが乱発されサーバー負荷が増大。</li>
+      </ul>
+
+      <h2>2. 空間クエリ（Spatial Query）とOverlapParams</h2>
+      <p>幾何学的な交差判定を瞬時に実行するAPI群：</p>
+      <ul>
+        <li><strong>GetPartsInPart：</strong> 複雑なメッシュや剣の軌跡ボリュームと重なるパーツを即座に取得。</li>
+        <li><strong>GetPartBoundsInBox：</strong> 爆発や衝撃波など高速な立方体・球体判定に最適。</li>
+        <li><strong>OverlapParams設定：</strong> 攻撃者自身を判定から除外し、無関係なパーツを無視。</li>
+      </ul>
+
+      <h2>3. レイキャスト判定 vs 空間クエリの使い分け</h2>
+      <p>武器の種類に応じた最適な判定手法：</p>
+      <ul>
+        <li><strong>レイキャストヒットボックス：</strong> 刀や槍など、刃の軌跡を点で繋ぐ精密な判定。</li>
+        <li><strong>空間クエリ：</strong> ハンマーや範囲攻撃など、体積そのものが重要な打撃。</li>
+        <li><strong>ハイブリッド設計：</strong> クライアントで即時エフェクト、サーバーで距離と視界を検証。</li>
+      </ul>
+
+      <h2>4. 実践Luaスクリプト：空間クエリ近接ハンドラ</h2>
+      <p>サーバー距離検証を内蔵した安全な戦闘スクリプト：</p>
+      <div class="code-header"><strong>ServerScriptService.CombatManager</strong></div>
+      <pre><code>-- 空間クエリによる近接攻撃判定
+local Workspace = game:GetService("Workspace")</code></pre>
+      <p>特徴：攻撃者モデルの除外、多重ヒット防止、18スタッド以内の厳格な距離検証。</p>
+
+      <h2>5. レイテンシ補正とアンチチート対策</h2>
+      <p>高Ping環境でも公平な勝負を実現するポイント：</p>
+      <ul>
+        <li><strong>過去座標バッファ：</strong> 過去200msの敵座標を記録し、Ping差によるズレをサーバーで逆算。</li>
+        <li><strong>サーバー主導クールダウン：</strong> 攻撃インターバルをサーバー側のタイマーで厳密管理。</li>
+        <li><strong>壁抜き防止レイキャスト：</strong> 障害物越しにダメージが通らないよう直視判定を併用。</li>
+      </ul>
+
+      <div class="cta-box">
+        <h3>あなたのアルゴリズム設計と思考スタイルをチェック</h3>
+        <p>精密な戦闘判定システムには高度な空間認識力が必要です。診断ツールで確認しましょう。</p>
+        <a href="/brain-type/?lang=ja" class="cta-btn">無料脳タイプ診断を始める</a>
+      </div>
+
+      <section class="faq-section">
+        <h2>よくある質問（Roblox Spatial Query）</h2>
+        <div class="faq-item">
+          <h3>GetPartsInPartがGetTouchingPartsより優れている理由は？</h3>
+          <p>CanCollideの設定に依存せず、OverlapParamsで柔軟なフィルタリングが可能なためです。</p>
+        </div>
+        <div class="faq-item">
+          <h3>壁越しに攻撃が当たるのを防ぐには？</h3>
+          <p>攻撃者と対象の間にレイキャストを飛ばし、障害物が検出されたら攻撃を無効化します。</p>
+        </div>
+        <div class="faq-item">
+          <h3>空間クエリはクライアントから改ざんできますか？</h3>
+          <p>サーバーで実行されている限り、クライアントから改ざんすることは不可能です。</p>
+        </div>
+
+      </section>
+    </article>
+
+    <footer>
+      <p>© 2026 DopaBrain ゲーム開発ラボ。仮想空間の精密ネットコード標準。</p>
+    </footer>
+  </div>
+</body>
+</html>
