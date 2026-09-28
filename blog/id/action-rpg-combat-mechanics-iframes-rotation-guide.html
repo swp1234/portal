@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panduan Mekanik Tempur Action RPG 2026: i-Frames, Hitlag & Rotasi DPS | DopaBrain</title>
+  <meta name="description" content="Kuasai pertarungan Action RPG: Frame kebal (i-frame), pembatalan animasi, fisika hitlag, penghancuran poise, dan rotasi DPS optimal.">
+  <meta name="keywords" content="mekanik tempur action rpg, iframes menghindar elden ring, animation cancel dps rotasi, hitlag poise">
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/id/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Panduan Mekanik Tempur Action RPG 2026: i-Frames, Hitlag & Rotasi DPS | DopaBrain">
+  <meta property="og:description" content="Kuasai pertarungan Action RPG: Frame kebal (i-frame), pembatalan animasi, fisika hitlag, penghancuran poise, dan rotasi DPS optimal.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/id/action-rpg-combat-mechanics-iframes-rotation-guide.html">
+  <meta property="og:site_name" content="DopaBrain">
+  <meta property="og:image" content="https://dopabrain.com/portal/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Panduan Mekanik Tempur Action RPG 2026: i-Frames, Hitlag & Rotasi DPS | DopaBrain">
+  <meta name="twitter:description" content="Kuasai pertarungan Action RPG: Frame kebal (i-frame), pembatalan animasi, fisika hitlag, penghancuran poise, dan rotasi DPS optimal.">
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Action RPG Combat Mechanics: i-Frames, Animation Canceling, Poise & Rotation DPS Math",
+    "description": "Kuasai pertarungan Action RPG: Frame kebal (i-frame), pembatalan animasi, fisika hitlag, penghancuran poise, dan rotasi DPS optimal.",
+    "datePublished": "2026-09-28",
+    "dateModified": "2026-09-28",
+    "author": {
+      "@type": "Organization",
+      "name": "DopaBrain Action Gaming Lab"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "DopaBrain",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://dopabrain.com/portal/img/logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://dopabrain.com/portal/blog/id/action-rpg-combat-mechanics-iframes-rotation-guide.html"
+    }
+  }
+  </script>
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "DopaBrain",
+        "item": "https://dopabrain.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Portal",
+        "item": "https://dopabrain.com/portal/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Gaming Guide",
+        "item": "https://dopabrain.com/portal/blog/id/action-rpg-combat-mechanics-iframes-rotation-guide.html"
+      }
+    ]
+  }
+  </script>
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does ICD (Internal Cooldown) mean in action RPGs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ICD governs how frequently an attack can apply an elemental status or special effect. Standard rules (such as 3 hits or 2.5 seconds) prevent multi-hit rapid attacks from infinitely triggering overpowered reactions."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is 60 FPS or 120 FPS crucial for action RPG timing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Frame-dependent mechanics like parries and i-frame dodges require consistent visual cues. Higher frame rates halve display input lag, making tight 100ms reaction windows vastly easier to execute."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I stop panicking and rolling repeatedly during difficult boss fights?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Panic-rolling queues consecutive dodges with zero recovery buffer, leaving you vulnerable on the final roll. Train yourself to stand still and roll once only when the boss's forward weapon swing begins, rather than during the windup."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is buff snapshotting?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Snapshotting means an ability retains the character's stat buffs at the exact millisecond of casting for its entire duration, even if the temporary buff expires while the attack is still ticking."
+        }
+      }
+    ]
+  }
+  </script>
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --primary: #f59e0b;
+      --primary-hover: #d97706;
+      --bg: #0f1117;
+      --card-bg: #1a1e29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #2a3142;
+      --accent: #10b981;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(16, 185, 129, 0.15));
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1a1e29, #0f1117);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0 0 12px;
+      font-size: 1.4rem;
+    }
+    .portal-btn {
+      display: inline-block;
+      min-height: 44px;
+      line-height: 44px;
+      padding: 0 24px;
+      background: var(--primary);
+      color: #000000;
+      font-weight: 700;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 14px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Action RPG Combat Mechanics: i-Frames, Animation Canceling, Poise & Rotation DPS Math</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Action Gaming Lab</span>
+        <span>•</span>
+        <span>Updated: September 2026</span>
+        <span>•</span>
+        <span>Reading Time: 9 min</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>The Action RPG Principle:</strong> High DPS is not about clicking faster; it is about eliminating idle recovery frames and synchronizing burst cooldowns within vulnerability windows.
+    </div>
+
+    <!-- Quick Cognitive Rail (4 Tools) -->
+    <div class="quick-rail" data-content-surface="quick_rail">
+      <h2>Action Gaming Cognitive Tools</h2>
+      <div class="quick-grid">
+        <a href="https://dopabrain.com/reaction-test/" class="quick-card">
+          <strong>Reaction Test</strong>
+          <span>i-Frame dodge timing benchmark</span>
+        </a>
+        <a href="https://dopabrain.com/brain-type/" class="quick-card">
+          <strong>Brain Type Test</strong>
+          <span>Frame-data calculation profile</span>
+        </a>
+        <a href="https://dopabrain.com/stress-check/" class="quick-card">
+          <strong>Stress Check</strong>
+          <span>Boss fight adrenaline & tilt</span>
+        </a>
+        <a href="https://dopabrain.com/puzzle-2048/" class="quick-card">
+          <strong>2048 Puzzle</strong>
+          <span>Skill rotation matrix logic</span>
+        </a>
+      </div>
+    </div>
+
+    <p>From Elden Ring, Black Myth: Wukong, and Monster Hunter to high-octane anime action RPGs like Genshin Impact and Wuthering Waves, modern third-person combat systems have evolved into sophisticated games of frame data, stamina economy, and cognitive timing.</p>
+    <p>While button-mashing might carry players through early tutorials, defeating endgame bosses and timed DPS challenges requires mastering the invisible mechanics beneath the surface: Invulnerability Frames (i-frames), animation canceling, hitlag physics, poise damage thresholds, and optimal ability sequencing.</p>
+
+    <h2>1. The Anatomy of i-Frames: Dodge Windows and Telegraph Reading</h2>
+    <p>How temporary invincibility transforms defensive movement into aggression:</p>
+    <ul>
+      <li><strong>Startup, Active, and Recovery Frames:</strong> A standard 60 FPS dodge roll typically grants 12 to 16 i-frames (~200-266ms) starting immediately upon button press. Rolling too early causes vulnerability during the lingering recovery frames.</li>
+      <li><strong>Dodging Through Attacks vs. Away:</strong> Novice players roll backward away from boss swings, often catching the tail end of large hitboxes. Veteran players roll forward through the attack arc, utilizing i-frames to position immediately behind the enemy for free punishment windows.</li>
+      <li><strong>Parry Windows vs. Evade Windows:</strong> Parries typically possess narrower active frames (4-8 frames) with severe whiff penalties, but reward instantaneous posture damage or bullet-time counter windows.</li>
+    </ul>
+
+    <h2>2. Hitlag (Hitstop) Mechanics: Game Feel and Frame Padding</h2>
+    <p>The secret physics behind crunchy, impactful melee strikes:</p>
+    <ul>
+      <li><strong>What Hitlag Does:</strong> When a heavy blade connects with an enemy, the game engine freezes both the attacker's model and the target for 3 to 10 frames, simulating physical resistance and mass.</li>
+      <li><strong>Hitlag Extension Paradox:</strong> In games with dynamic buff timers or active i-frame states, hitlag temporarily freezes internal animation timers. Connecting heavy hits during certain defensive states can actually extend your invincibility duration.</li>
+      <li><strong>Camera Shake & Directional Impulses:</strong> Subtle screen micro-shakes paired with micro-pushes communicate whether an attack struck armor, flesh, or an invulnerable shield.</li>
+    </ul>
+
+    <h2>3. Animation Canceling: Shaving Idle Recovery Latency</h2>
+    <p>Maximizing damage throughput by bypassing dead animation frames:</p>
+    <ul>
+      <li><strong>Dash & Jump Canceling:</strong> Many heavy combo finishers leave the character locked in a celebratory weapon recovery pose for 30+ frames. Tapping dash or jump the exact frame damage registers cancels the cooldown, allowing immediate repositioning.</li>
+      <li><strong>Quick-Swap Canceling:</strong> In multi-character party RPGs (Genshin, Wuthering Waves), swapping characters immediately upon casting an ultimate or burst triggers the ability while transferring control to the next character instantly.</li>
+      <li><strong>Skill Input Buffering:</strong> Pressing your next attack input slightly before the current animation concludes queues the command in the engine buffer, executing it at frame 0 without human reaction delay.</li>
+    </ul>
+
+    <h2>4. Poise, Hyper Armor & Stagger Breakdown</h2>
+    <p>The invisible tug-of-war governing enemy flinching and boss knockdowns:</p>
+    <ul>
+      <li><strong>Invisible Poise Bar:</strong> Every boss possesses a hidden poise health bar. Heavy bludgeoning weapons and charged strikes deal high poise damage; once depleted, the boss enters an extended vulnerable staggered state.</li>
+      <li><strong>Poise Regeneration Timers:</strong> If you stop attacking for 4 to 6 seconds, boss poise resets to 100%. Maintaining persistent off-field chip damage prevents poise regeneration.</li>
+      <li><strong>Player Hyper Armor:</strong> Heavy skill animations grant high poise, preventing minor enemy hits from interrupting your attacks at the cost of absorbing raw damage.</li>
+    </ul>
+
+    <h2>5. Mathematical DPS Rotation Design</h2>
+    <p>Structuring high-efficiency ability loops for competitive clearing:</p>
+    <ul>
+      <li><strong>Phase 1: Setup & Debuffs (0-3s):</strong> Apply defense shred, elemental vulnerability, or attack power buffs that persist across swaps.</li>
+      <li><strong>Phase 2: Off-Field Sub-DPS Deployment (3-6s):</strong> Deploy turrets, ground fields, or autonomous summons that continue dealing damage while inactive.</li>
+      <li><strong>Phase 3: Hypercarry Burst Window (6-14s):</strong> Unleash your primary damage dealer's amplified kit while all buffs are simultaneously active before timers expire.</li>
+      <li><strong>Phase 4: Energy Battery & Coolant (14-20s):</strong> Funnel energy particles and reset cooldowns, restarting the cycle seamlessly.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>What does ICD (Internal Cooldown) mean in action RPGs?</h3>
+      <p>ICD governs how frequently an attack can apply an elemental status or special effect. Standard rules (such as 3 hits or 2.5 seconds) prevent multi-hit rapid attacks from infinitely triggering overpowered reactions.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Why is 60 FPS or 120 FPS crucial for action RPG timing?</h3>
+      <p>Frame-dependent mechanics like parries and i-frame dodges require consistent visual cues. Higher frame rates halve display input lag, making tight 100ms reaction windows vastly easier to execute.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How do I stop panicking and rolling repeatedly during difficult boss fights?</h3>
+      <p>Panic-rolling queues consecutive dodges with zero recovery buffer, leaving you vulnerable on the final roll. Train yourself to stand still and roll once only when the boss's forward weapon swing begins, rather than during the windup.</p>
+    </div>
+    <div class="faq-item">
+      <h3>What is buff snapshotting?</h3>
+      <p>Snapshotting means an ability retains the character's stat buffs at the exact millisecond of casting for its entire duration, even if the temporary buff expires while the attack is still ticking.</p>
+    </div>
+
+    <h2>Conclusion: From Reaction to Choreography</h2>
+    <p>Mastering Action RPG combat is an evolution from panicked instinct into deliberate choreography. By understanding i-frames, cutting recovery frames, and structuring disciplined DPS rotations, you transform chaotic boss encounters into masterful demonstrations of skill.</p>
+
+    <div class="portal-cta">
+      <h2>Calibrate Your Action Gaming Reflexes</h2>
+      <p>Measure your i-frame dodge reaction speed, evaluate your analytical cognitive profile, and de-stress after intense boss runs at DopaBrain.</p>
+      <a href="https://dopabrain.com/reaction-test/" class="portal-btn">Test Your Dodge Reactions on DopaBrain</a>
+    </div>
+  </div>
+</body>
+</html>
