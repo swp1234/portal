@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roblox कस्टम कैरेक्टर कंट्रोलर गाइड 2026: फिजिक्स और मूवमेंट | DopaBrain</title>
+  <meta name="description" content="Roblox में उत्कृष्ट मूवमेंट तैयार करें: किनेमैटिक बनाम फिजिक्स कंट्रोलर, स्लोप स्लाइडिंग, वॉल जंप और सर्वर सत्यापन।">
+  <meta name="keywords" content="roblox custom character controller hindi, roblox physics movement script, roblox wall jump, roblox movement netcode">
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/hi/roblox-custom-character-controller-movement-guide.html">
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-movement-guide.html">
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-movement-guide.html">
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-character-controller-movement-guide.html">
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-character-controller-movement-guide.html">
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-movement-guide.html">
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-character-controller-movement-guide.html">
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-character-controller-movement-guide.html">
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-movement-guide.html">
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-character-controller-movement-guide.html">
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-movement-guide.html">
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-character-controller-movement-guide.html">
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-movement-guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-movement-guide.html">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox कस्टम कैरेक्टर कंट्रोलर गाइड 2026: फिजिक्स और मूवमेंट | DopaBrain">
+  <meta property="og:description" content="Roblox में उत्कृष्ट मूवमेंट तैयार करें: किनेमैटिक बनाम फिजिक्स कंट्रोलर, स्लोप स्लाइडिंग, वॉल जंप और सर्वर सत्यापन।">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/hi/roblox-custom-character-controller-movement-guide.html">
+  <meta property="og:site_name" content="DopaBrain">
+  <meta property="og:image" content="https://dopabrain.com/portal/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Roblox कस्टम कैरेक्टर कंट्रोलर गाइड 2026: फिजिक्स और मूवमेंट | DopaBrain">
+  <meta name="twitter:description" content="Roblox में उत्कृष्ट मूवमेंट तैयार करें: किनेमैटिक बनाम फिजिक्स कंट्रोलर, स्लोप स्लाइडिंग, वॉल जंप और सर्वर सत्यापन।">
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Roblox Custom Character Controllers: Kinematic Physics, Fluid Movement & Netcode",
+    "description": "Roblox में उत्कृष्ट मूवमेंट तैयार करें: किनेमैटिक बनाम फिजिक्स कंट्रोलर, स्लोप स्लाइडिंग, वॉल जंप और सर्वर सत्यापन।",
+    "datePublished": "2026-09-28",
+    "dateModified": "2026-09-28",
+    "author": {
+      "@type": "Organization",
+      "name": "DopaBrain Game Dev Lab"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "DopaBrain",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://dopabrain.com/portal/img/logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://dopabrain.com/portal/blog/hi/roblox-custom-character-controller-movement-guide.html"
+    }
+  }
+  </script>
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "DopaBrain",
+        "item": "https://dopabrain.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Portal",
+        "item": "https://dopabrain.com/portal/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Roblox Dev Guide",
+        "item": "https://dopabrain.com/portal/blog/hi/roblox-custom-character-controller-movement-guide.html"
+      }
+    ]
+  }
+  </script>
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Should I delete the Humanoid completely for a custom controller?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not always. You can keep the Humanoid for animation replication and clothing display, but set its state to Physics or disable its internal movement via `PlatformStand = true` while moving the root part yourself."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I make moving platforms carry custom characters smoothly?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cast a raycast downward to detect if the platform is moving. Add the platform's relative delta velocity to the character's movement vector each frame."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does my custom character vibrate when sliding down steep ramps?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "This happens when the ground sensor rapidly toggles between grounded and airborne states. Implement a hysteresis threshold where disconnecting from ground requires greater distance than connecting."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can mobile and controller inputs be bound seamlessly to a custom controller?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Read input directions directly from `ContextActionService` or `UserGameSettings` vector inputs rather than relying on default humanoid walk vectors."
+        }
+      }
+    ]
+  }
+  </script>
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --code-bg: #090d16;
+      --accent: #10b981;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(16, 185, 129, 0.15));
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+    }
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+    .code-block pre {
+      margin: 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #38bdf8;
+      line-height: 1.5;
+    }
+    .code-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0 0 12px;
+      font-size: 1.4rem;
+    }
+    .portal-btn {
+      display: inline-block;
+      min-height: 44px;
+      line-height: 44px;
+      padding: 0 24px;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 14px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox Custom Character Controllers: Kinematic Physics, Fluid Movement & Netcode</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Game Dev Lab</span>
+        <span>•</span>
+        <span>Updated: September 2026</span>
+        <span>•</span>
+        <span>Reading Time: 9 min</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Movement Golden Rule:</strong> The default Humanoid is an all-in-one state machine that incurs heavy internal physics overhead. For responsive parkour or competitive games, use a minimal collision capsule with custom raycast-driven ground detection and client-authoritative movement.
+    </div>
+
+    <!-- Quick Cognitive Rail (4 Tools) -->
+    <div class="quick-rail" data-content-surface="quick_rail">
+      <h2>Developer Cognitive Tools</h2>
+      <div class="quick-grid">
+        <a href="https://dopabrain.com/brain-type/" class="quick-card">
+          <strong>Brain Type Test</strong>
+          <span>Vector kinematic thinking</span>
+        </a>
+        <a href="https://dopabrain.com/reaction-test/" class="quick-card">
+          <strong>Reaction Test</strong>
+          <span>Input-to-motion latency</span>
+        </a>
+        <a href="https://dopabrain.com/stress-check/" class="quick-card">
+          <strong>Stress Check</strong>
+          <span>Engine debugging tension</span>
+        </a>
+        <a href="https://dopabrain.com/puzzle-2048/" class="quick-card">
+          <strong>2048 Puzzle</strong>
+          <span>Coordinate matrix logic</span>
+        </a>
+      </div>
+    </div>
+
+    <p>Roblox's default `Humanoid` is famously versatile for casual social games, but competitive platformers, parkour experiences, and fast-paced shooters quickly run into its limitations: floaty jumps, unpredictable edge clipping, awkward stair tripping, and rigid acceleration physics.</p>
+    <p>To create console-grade movement reminiscent of Titanfall, Super Mario 64, or modern FPS titles, top Roblox developers bypass default Humanoid physics and build custom character controllers using kinematic raycasting, `VectorForce`, `LinearVelocity`, or procedural collision volumes.</p>
+
+    <h2>1. Humanoid Limitations vs. Custom Kinematic Controllers</h2>
+    <p>Why commercial action games replace or customize default Humanoid physics:</p>
+    <ul>
+      <li><strong>Unpredictable Ground Physics:</strong> The default Humanoid uses an internal raycast that can misinterpret mesh seams, steep wedges, and moving platforms as obstacles, leading to stuttering.</li>
+      <li><strong>Floaty Jump Curves:</strong> Humanoid jumping applies a constant vertical velocity rather than realistic variable-height impulses based on input hold duration.</li>
+      <li><strong>Clunky State Transitions:</strong> States like `Freefall`, `Climbing`, and `GettingUp` are internally managed by C++ code, making custom sliding, dashing, or wall-running jittery and difficult to override.</li>
+    </ul>
+
+    <h2>2. Architectural Choices: Physics-Driven vs. Kinematic Raycasting</h2>
+    <p>Evaluating the two core approaches to character controllers:</p>
+    <ul>
+      <li><strong>Physics-Driven Controllers (Forces):</strong> Use `LinearVelocity` or `VectorForce` constraints on an unanchored capsule. Naturally interacts with moving platforms and pushable objects, but requires dampening to avoid sliding on ramps.</li>
+      <li><strong>Kinematic Raycast Controllers (CFrame):</strong> Manually calculates character position each frame using raycasts and `CFrame` offsets. Yields pixel-perfect arcade precision, but requires manual calculation of moving platform momentum and external impulses.</li>
+      <li><strong>Hybrid Controller (The Modern Standard):</strong> A capsule part moved via `LinearVelocity` for smooth collision resolution, paired with manual raycast downward sensing for crisp ground snapping and slope alignment.</li>
+    </ul>
+
+    <h2>3. Implementing Advanced Mechanics: Slopes, Dashing & Wall-Jumping</h2>
+    <p>Core mathematical formulas for fluid locomotion feel:</p>
+    <ul>
+      <li><strong>Slope Normal Projection:</strong> Calculate the dot product between the surface normal and the vertical vector `(normal:Dot(Vector3.yAxis))`. If the slope angle exceeds the threshold (e.g., 45 degrees), convert ground friction into slide acceleration.</li>
+      <li><strong>Wall-Jump Normal Reflection:</strong> Cast horizontal raycasts in the direction of player movement. When a wall collision is detected, apply an impulse reflecting away from the wall normal combined with upward jump velocity.</li>
+      <li><strong>Coyote Time & Jump Buffering:</strong> Allow jumps for 100-150ms after leaving a ledge (coyote time) and register jump inputs 100ms before touching the ground (buffering) to eliminate missed jump inputs.</li>
+    </ul>
+
+    <h2>4. Production Lua Script: Raycast Ground Detection & Slope Snapping</h2>
+    <p>Client-side ground alignment and variable slope velocity handler:</p>
+    <div class="code-title">ReplicatedStorage.Controllers.GroundSensor (Production Module)</div>
+    <div class="code-block">
+      <pre><code>local Workspace = game:GetService("Workspace")
+
+local GroundSensor = {}
+GroundSensor.__index = GroundSensor
+
+function GroundSensor.new(rootPart, characterHeight)
+    local self = setmetatable({}, GroundSensor)
+    self.RootPart = rootPart
+    self.CheckDistance = (characterHeight / 2) + 0.8
+    self.RaycastParams = RaycastParams.new()
+    self.RaycastParams.FilterType = RaycastFilterType.Exclude
+    self.RaycastParams.FilterDescendantsInstances = {rootPart.Parent}
+    return self
+end
+
+function GroundSensor:CheckGround()
+    local origin = self.RootPart.Position
+    local direction = -Vector3.yAxis * self.CheckDistance
+    local result = Workspace:Raycast(origin, direction, self.RaycastParams)
+
+    if result then
+        local surfaceNormal = result.Normal
+        local slopeAngle = math.deg(math.acos(surfaceNormal:Dot(Vector3.yAxis)))
+        local isWalkable = slopeAngle &lt;= 50
+
+        return {
+            IsGrounded = true,
+            Distance = result.Distance,
+            Normal = surfaceNormal,
+            SlopeAngle = slopeAngle,
+            IsWalkable = isWalkable,
+            Material = result.Material
+        }
+    end
+
+    return {
+        IsGrounded = false,
+        Distance = math.huge,
+        Normal = Vector3.yAxis,
+        SlopeAngle = 0,
+        IsWalkable = false,
+        Material = Enum.Material.Air
+    }
+end
+
+return GroundSensor</code></pre>
+    </div>
+
+    <h2>5. Server Authority & Anti-Noclip Verification</h2>
+    <p>Preventing teleportation and wall-clipping exploits with custom controllers:</p>
+    <ul>
+      <li><strong>Server Distance Envelope:</strong> Maintain a running position history on the server and ensure the client does not exceed maximum allowable displacement per tick.</li>
+      <li><strong>Thick Raycast Sweeps:</strong> Cast spherecasts between the player's previous verified position and new reported position to catch players attempting to phase through thin walls.</li>
+      <li><strong>State Desync Correction:</strong> If the server detects illegal positions, gently pull the player back to the last valid verified coordinates using soft interpolation.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>Should I delete the Humanoid completely for a custom controller?</h3>
+      <p>Not always. You can keep the Humanoid for animation replication and clothing display, but set its state to Physics or disable its internal movement via `PlatformStand = true` while moving the root part yourself.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How do I make moving platforms carry custom characters smoothly?</h3>
+      <p>Cast a raycast downward to detect if the platform is moving. Add the platform's relative delta velocity to the character's movement vector each frame.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Why does my custom character vibrate when sliding down steep ramps?</h3>
+      <p>This happens when the ground sensor rapidly toggles between grounded and airborne states. Implement a hysteresis threshold where disconnecting from ground requires greater distance than connecting.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Can mobile and controller inputs be bound seamlessly to a custom controller?</h3>
+      <p>Yes. Read input directions directly from `ContextActionService` or `UserGameSettings` vector inputs rather than relying on default humanoid walk vectors.</p>
+    </div>
+
+    <h2>Conclusion: Elevating Roblox Gameplay with Custom Movement</h2>
+    <p>Movement is the foundational verb of 3D gaming. By graduating from standard Humanoid physics to a custom kinematic or hybrid character controller, you unlock fluid wall-runs, snappy jumps, and competitive responsiveness that instantly sets your game apart.</p>
+
+    <div class="portal-cta">
+      <h2>Explore Developer & Cognitive Tools</h2>
+      <p>Sharpen your vector logic, test your reaction speeds, and balance your developer cognitive load with DopaBrain.</p>
+      <a href="https://dopabrain.com/portal/" class="portal-btn">Discover More Tools on DopaBrain</a>
+    </div>
+  </div>
+</body>
+</html>
