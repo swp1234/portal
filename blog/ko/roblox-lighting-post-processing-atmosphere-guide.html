@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로블록스 조명 & 후처리 완벽 가이드 2026: 시네마틱 그래픽 | DopaBrain</title>
+  <meta name="description" content="로블록스 비주얼 극대화: Future 라이팅, Atmosphere 대기 설정, 볼륨 안개, Bloom, ColorCorrection 및 모바일 60FPS 최적화 기법.">
+  <meta name="keywords" content="로블록스 조명 가이드, roblox future 라이팅 설정, 로블록스 그래픽 후처리, 로블록스 bloom 색보정, 로블록스 모바일 그래픽 최적화">
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-lighting-post-processing-atmosphere-guide.html">
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-lighting-post-processing-atmosphere-guide.html">
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-lighting-post-processing-atmosphere-guide.html">
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-lighting-post-processing-atmosphere-guide.html">
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-lighting-post-processing-atmosphere-guide.html">
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-lighting-post-processing-atmosphere-guide.html">
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-lighting-post-processing-atmosphere-guide.html">
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-lighting-post-processing-atmosphere-guide.html">
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-lighting-post-processing-atmosphere-guide.html">
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-lighting-post-processing-atmosphere-guide.html">
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-lighting-post-processing-atmosphere-guide.html">
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-lighting-post-processing-atmosphere-guide.html">
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-lighting-post-processing-atmosphere-guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-lighting-post-processing-atmosphere-guide.html">
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 조명 & 후처리 완벽 가이드 2026: 시네마틱 그래픽 | DopaBrain">
+  <meta property="og:description" content="로블록스 비주얼 극대화: Future 라이팅, Atmosphere 대기 설정, 볼륨 안개, Bloom, ColorCorrection 및 모바일 60FPS 최적화 기법.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-lighting-post-processing-atmosphere-guide.html">
+  <meta property="og:site_name" content="DopaBrain">
+  <meta property="og:image" content="https://dopabrain.com/portal/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="로블록스 조명 & 후처리 완벽 가이드 2026: 시네마틱 그래픽 | DopaBrain">
+  <meta name="twitter:description" content="로블록스 비주얼 극대화: Future 라이팅, Atmosphere 대기 설정, 볼륨 안개, Bloom, ColorCorrection 및 모바일 60FPS 최적화 기법.">
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "로블록스 조명, 대기 & 후처리: 시네마틱 비주얼 연출과 멀티플랫폼 최적화",
+    "description": "로블록스 비주얼 극대화: Future 라이팅, Atmosphere 대기 설정, 볼륨 안개, Bloom, ColorCorrection 및 모바일 60FPS 최적화 기법.",
+    "datePublished": "2026-09-28",
+    "dateModified": "2026-09-28",
+    "author": {
+      "@type": "Organization",
+      "name": "DopaBrain Game Dev Lab"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "DopaBrain",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://dopabrain.com/portal/img/logo.png"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-lighting-post-processing-atmosphere-guide.html"
+    }
+  }
+  </script>
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "DopaBrain",
+        "item": "https://dopabrain.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Portal",
+        "item": "https://dopabrain.com/portal/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Roblox Dev Guide",
+        "item": "https://dopabrain.com/portal/blog/ko/roblox-lighting-post-processing-atmosphere-guide.html"
+      }
+    ]
+  }
+  </script>
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Future 라이팅은 모바일 기기에서도 정상 작동하나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "최신 플래그십 스마트폰에서는 지원되지만, 기기 발열과 배터리 소모를 고려하여 저사양 기기에서는 ShadowMap으로 자동 다운그레이드하는 것이 안전합니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "실내 공간을 칠흑같이 어둡게 만들면서 야외는 밝게 유지하려면 어떻게 하나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "플레이어가 실내 영역에 진입할 때 로컬 스크립트로 `Lighting.OutdoorAmbient`를 어둡게 조절하거나, 노멀이 반전된 차폐 큐브로 외부 햇빛을 가리는 방식을 사용합니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Atmosphere 객체를 추가했는데 화면 전체가 하얗게 바래 보입니다.",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "기본 `Density`(밀도)가 너무 높기 때문입니다. 밀도를 0.25~0.35 수준으로 낮추고 `Haze` 수치를 미세 조절하여 전경 대비를 살려주세요."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "로블록스 후처리 이펙트 중 성능을 가장 많이 먹는 것은 무엇인가요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "전체 화면 블러 연산이 들어가는 DepthOfField와 과도한 Bloom이 모바일 GPU에 가장 큰 부담을 줍니다."
+        }
+      }
+    ]
+  }
+  </script>
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --code-bg: #090d16;
+      --accent: #10b981;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(16, 185, 129, 0.15));
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+    }
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 20px 0;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    .code-block pre {
+      margin: 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #38bdf8;
+      line-height: 1.5;
+    }
+    .code-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0 0 12px;
+      font-size: 1.4rem;
+    }
+    .portal-btn {
+      display: inline-block;
+      min-height: 44px;
+      line-height: 44px;
+      padding: 0 24px;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 14px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>로블록스 조명, 대기 & 후처리: 시네마틱 비주얼 연출과 멀티플랫폼 최적화</h1>
+      <div class="meta-bar">
+        <span>DopaBrain 게임 개발 연구소</span>
+        <span>•</span>
+        <span>업데이트: 2026년 9월</span>
+        <span>•</span>
+        <span>읽는 시간: 9분</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>조명 연출 황금률:</strong> 눈부시게 밝은 맵보다 명암의 대비가 살아있는 맵이 훨씬 고급스럽습니다. 앰비언트(Ambient) 그림자를 차분히 낮추고 핵심 위치에 포인트 라이트와 은은한 ColorCorrection을 배치하며, 모바일에서는 셰이더 부하를 동적으로 줄여주세요.
+    </div>
+
+    <!-- Quick Cognitive Rail (4 Tools) -->
+    <div class="quick-rail" data-content-surface="quick_rail">
+      <h2>개발자 인지 도구 모음</h2>
+      <div class="quick-grid">
+        <a href="https://dopabrain.com/brain-type/" class="quick-card">
+          <strong>두뇌 유형 테스트</strong>
+          <span>시각 예술 vs 테크 논리 성향</span>
+        </a>
+        <a href="https://dopabrain.com/reaction-test/" class="quick-card">
+          <strong>반응속도 테스트</strong>
+          <span>시각적 자극 인지 기준점</span>
+        </a>
+        <a href="https://dopabrain.com/stress-check/" class="quick-card">
+          <strong>스트레스 측정</strong>
+          <span>셰이더 디버깅 인지 피로도</span>
+        </a>
+        <a href="https://dopabrain.com/puzzle-2048/" class="quick-card">
+          <strong>2048 퍼즐</strong>
+          <span>컬러 매트릭스 배열 논리</span>
+        </a>
+      </div>
+    </div>
+
+    <p>조명과 대기 연출은 투박한 블록 놀이터 같던 로블록스 맵을 상용 콘솔 게임 수준의 몰입감 넘치는 AAA급 세계로 탈바꿈시키는 가장 강력한 시각적 무기입니다. 도어즈(Doors), 프레셔(Pressure), 프론트라인(Frontlines) 같은 대형 히트작들의 인기 비결 역시 압도적인 조명과 음영 연출에 있습니다.</p>
+    <p>하지만 렌더링 파이프라인의 원리를 모르고 무작정 고사양 광원을 배치하면 저사양 모바일 기기와 노트북에서 프레임이 바닥으로 곤두박질칩니다. `Lighting.Technology = Future`, 후처리 이펙트, `Atmosphere` 대기 설정, 그리고 기기별 동적 최적화 스크립트를 조화롭게 다루어야 진정한 상업적 성공을 거둘 수 있습니다.</p>
+
+    <h2>1. 로블록스 조명 기술 비교: Future vs ShadowMap vs Voxel</h2>
+    <p>3대 조명 엔진의 장단점과 권장 사용 환경:</p>
+    <ul>
+      <li><strong>Future (Phase 3 PBR 조명):</strong> 실시간 스펙큘러 하이라이트, 점광원/스포트라이트의 정확한 그림자, 부드러운 앰비언트 오클루전을 계산합니다. 극상의 실사 그래픽을 제공하지만 모바일 GPU 성능을 많이 요구합니다.</li>
+      <li><strong>ShadowMap (지형 하이브리드):</strong> 태양/달의 방향성 그림자를 지형과 구조물에 선명하게 투사하지만, 로컬 조명의 동적 그림자는 생략합니다. 대규모 오픈월드 멀티플레이어에 최적화된 선택지입니다.</li>
+      <li><strong>Voxel & Compatibility:</strong> 격자 기반의 단순 근사치 연산으로 CPU/GPU 부하가 거의 없습니다. 2GB 이하 램을 장착한 구형 스마트폰을 위한 필수 폴백(Fallback) 모드입니다.</li>
+    </ul>
+
+    <h2>2. 하늘과 공기 조각하기: Atmosphere 객체와 깊이 안개</h2>
+    <p>구형 단색 Fog를 완벽히 대체하는 차세대 대기 시스템 활용법:</p>
+    <ul>
+      <li><strong>레일리 & 미 산란(Rayleigh & Mie):</strong> `Density`, `Offset`, `Haze`를 조절하여 대기 중 입자를 시뮬레이션합니다. 아침 안개나 일몰 때 태양 주위로 퍼지는 사실적인 광륜(Halo)을 연출할 수 있습니다.</li>
+      <li><strong>수평선 색상 감쇄(Decay):</strong> 먼 거리의 지평선 색상을 제어하여 최대 렌더링 거리에서 오브젝트가 갑자기 잘려 보이는 절단면(Clipping plane)을 자연스럽게 감춥니다.</li>
+      <li><strong>선레이(SunRaysEffect) 연동:</strong> 울창한 숲이나 창문 틈새로 쏟아지는 빛줄기(God Rays)를 만들어 몽환적이고 영화 같은 분위기를 완성합니다.</li>
+    </ul>
+
+    <h2>3. 카메라 후처리 파이프라인: ColorCorrection, Bloom, Blur</h2>
+    <p>유저의 시야를 방해하지 않으면서 렌즈 감성을 극대화하는 세팅법:</p>
+    <ul>
+      <li><strong>컬러 컬렉션(ColorCorrection):</strong> 대비(Contrast)를 +0.1~+0.2 살짝 올리고 채도를 미세하게 조절하여 장르에 맞는 톤앤매너(디스토피아 SF, 포근한 판타지, 서늘한 공포)를 잡습니다.</li>
+      <li><strong>절제된 블룸(Bloom):</strong> 임계값(Threshold)을 0.8 이상으로 높이고 강도(Intensity)를 낮춰, 오직 네온(Neon) 파트나 전등만 부드럽게 빛나게 해야 눈부심 피로가 없습니다.</li>
+      <li><strong>피사계 심도(DepthOfField):</strong> 일반 게임플레이 중에는 시야를 가려 피로를 유발하므로 끄고, 컷신이나 저격총 조준, 메뉴 창 오픈 시에만 스크립트로 활성화합니다.</li>
+    </ul>
+
+    <h2>4. 실전 Lua 코드: 클라이언트 기기별 자동 그래픽 최적화 모듈</h2>
+    <p>모바일 및 저사양 환경에서 프레임 드랍을 방지하는 상용 최적화 스크립트:</p>
+    <div class="code-title">StarterPlayer.StarterPlayerScripts.GraphicsOptimizer (상용 표준 모듈)</div>
+    <div class="code-block">
+      <pre><code>local Lighting = game:GetService("Lighting")
+local UserSettings = UserSettings():GetService("UserGameSettings")
+local RunService = game:GetService("RunService")
+
+local function OptimizeVisualSettings()
+    local savedLevel = UserSettings.SavedQualityLevel.Value
+    local isMobile = game:GetService("UserInputService").TouchEnabled
+
+    -- 모바일 기기이거나 그래픽 품질이 3단계 이하인 경우: 60FPS 방어
+    if isMobile or (savedLevel &gt; 0 and savedLevel &lt;= 3) then
+        Lighting.GlobalShadows = false
+        Lighting.Technology = Enum.Technology.ShadowMap
+        
+        local bloom = Lighting:FindFirstChildOfClass("BloomEffect")
+        if bloom then bloom.Enabled = false end
+        
+        local sunRays = Lighting:FindFirstChildOfClass("SunRaysEffect")
+        if sunRays then sunRays.Enabled = false end
+    else
+        -- 고사양 PC / 콘솔: 최고 화질 Future 라이팅 가동
+        Lighting.GlobalShadows = true
+        Lighting.Technology = Enum.Technology.Future
+    end
+end
+
+-- 초기 실행 및 유저 설정 변경 감지 바인딩
+OptimizeVisualSettings()
+UserSettings:GetPropertyChangedSignal("SavedQualityLevel"):Connect(OptimizeVisualSettings)</code></pre>
+    </div>
+
+    <h2>5. 성능 체크리스트: 프레임 드랍 및 오버드로우(Overdraw) 방지</h2>
+    <p>출시 전 반드시 점검해야 할 조명 최적화 핵심 3원칙:</p>
+    <ul>
+      <li><strong>그림자 투사 포인트 라이트 제한:</strong> `Shadows = true`인 포인트 라이트는 매 프레임 6면의 섀도우 맵을 렌더링하므로 맵 전체에서 핵심 광원에만 선별 적용합니다.</li>
+      <li><strong>거대 네온 파트 중첩 금지:</strong> 넓은 면적의 반투명 네온 파트가 겹치면 화면을 채우는 필레이트(Fill Rate) 부하가 폭증하여 모바일이 멈춥니다.</li>
+      <li><strong>거리 기반 동적 조명 컬링:</strong> 150스터드 이상 멀어진 가로등이나 횃불 광원은 클라이언트 스크립트로 비활성화하여 렌더링 패스를 절약합니다.</li>
+    </ul>
+
+    <h2>자주 묻는 질문 (FAQ)</h2>
+    <div class="faq-item">
+      <h3>Future 라이팅은 모바일 기기에서도 정상 작동하나요?</h3>
+      <p>최신 플래그십 스마트폰에서는 지원되지만, 기기 발열과 배터리 소모를 고려하여 저사양 기기에서는 ShadowMap으로 자동 다운그레이드하는 것이 안전합니다.</p>
+    </div>
+    <div class="faq-item">
+      <h3>실내 공간을 칠흑같이 어둡게 만들면서 야외는 밝게 유지하려면 어떻게 하나요?</h3>
+      <p>플레이어가 실내 영역에 진입할 때 로컬 스크립트로 `Lighting.OutdoorAmbient`를 어둡게 조절하거나, 노멀이 반전된 차폐 큐브로 외부 햇빛을 가리는 방식을 사용합니다.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Atmosphere 객체를 추가했는데 화면 전체가 하얗게 바래 보입니다.</h3>
+      <p>기본 `Density`(밀도)가 너무 높기 때문입니다. 밀도를 0.25~0.35 수준으로 낮추고 `Haze` 수치를 미세 조절하여 전경 대비를 살려주세요.</p>
+    </div>
+    <div class="faq-item">
+      <h3>로블록스 후처리 이펙트 중 성능을 가장 많이 먹는 것은 무엇인가요?</h3>
+      <p>전체 화면 블러 연산이 들어가는 DepthOfField와 과도한 Bloom이 모바일 GPU에 가장 큰 부담을 줍니다.</p>
+    </div>
+
+    <h2>결론: 잊을 수 없는 시각적 경험을 창조하는 법</h2>
+    <p>로블록스 조명은 기술과 예술이 만나는 정점입니다. Future 조명의 깊이감, Atmosphere의 몽환적인 대기감, 그리고 철저한 모바일 최적화를 결합하여 유저들의 뇌리에 영원히 남을 명작 게임을 완성하세요.</p>
+
+    <div class="portal-cta">
+      <h2>개발자 및 인지 향상 도구 탐색</h2>
+      <p>시각적 감각을 조율하고 반응속도를 측정하며 DopaBrain에서 균형 잡힌 개발 루틴을 만들어보세요.</p>
+      <a href="https://dopabrain.com/portal/" class="portal-btn">DopaBrain 도구 둘러보기</a>
+    </div>
+  </div>
+</body>
+</html>
