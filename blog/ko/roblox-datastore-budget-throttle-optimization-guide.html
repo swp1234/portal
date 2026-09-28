@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로블록스 데이터스토어 예산 제한 및 스로틀 최적화 가이드 2026 | DopaBrain</title>
+  <meta name="description" content="로블록스 데이터스토어 요청 제한 완전 정복: 스로틀 오류 방지, 6초 쓰기 쿨다운 대응, 서버 메모리 캐싱 계층 구축 및 UpdateAsync 재시도 큐 구현.">
+  <meta name="keywords" content="로블록스 데이터스토어 예산, 로블록스 데이터스토어 스로틀 에러, 로블록스 updateasync 재시도, 로블록스 세션 락킹 캐시, 로블록스 프로필서비스 아키텍처">
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-datastore-budget-throttle-optimization-guide.html">
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-datastore-budget-throttle-optimization-guide.html">
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-datastore-budget-throttle-optimization-guide.html">
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-datastore-budget-throttle-optimization-guide.html">
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-datastore-budget-throttle-optimization-guide.html">
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-datastore-budget-throttle-optimization-guide.html">
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-datastore-budget-throttle-optimization-guide.html">
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-datastore-budget-throttle-optimization-guide.html">
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-datastore-budget-throttle-optimization-guide.html">
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-datastore-budget-throttle-optimization-guide.html">
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-datastore-budget-throttle-optimization-guide.html">
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-datastore-budget-throttle-optimization-guide.html">
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-datastore-budget-throttle-optimization-guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-datastore-budget-throttle-optimization-guide.html">
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 데이터스토어 예산 제한 및 스로틀 최적화 가이드 2026 | DopaBrain">
+  <meta property="og:description" content="로블록스 데이터스토어 요청 제한 완전 정복: 스로틀 오류 방지, 6초 쓰기 쿨다운 대응, 서버 메모리 캐싱 계층 구축 및 UpdateAsync 재시도 큐 구현.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-datastore-budget-throttle-optimization-guide.html">
+  <meta property="og:site_name" content="DopaBrain">
+  <meta property="og:image" content="https://dopabrain.com/portal/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="로블록스 데이터스토어 예산 제한 및 스로틀 최적화 가이드 2026 | DopaBrain">
+  <meta name="twitter:description" content="로블록스 데이터스토어 요청 제한 완전 정복: 스로틀 오류 방지, 6초 쓰기 쿨다운 대응, 서버 메모리 캐싱 계층 구축 및 UpdateAsync 재시도 큐 구현.">
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "로블록스 데이터스토어 예산 및 스로틀링 최적화: 캐싱, 큐잉 및 세션 안전성",
+  "description": "로블록스 데이터스토어 요청 제한 완전 정복: 스로틀 오류 방지, 6초 쓰기 쿨다운 대응, 서버 메모리 캐싱 계층 구축 및 UpdateAsync 재시도 큐 구현.",
+  "datePublished": "2026-09-28",
+  "dateModified": "2026-09-28",
+  "author": {
+    "@type": "Organization",
+    "name": "DopaBrain 로블록스 기술 아키텍처 팀"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DopaBrain",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://dopabrain.com/portal/img/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://dopabrain.com/portal/blog/ko/roblox-datastore-budget-throttle-optimization-guide.html"
+  }
+}
+  </script>
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DopaBrain",
+      "item": "https://dopabrain.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Portal",
+      "item": "https://dopabrain.com/portal/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "로블록스 데이터스토어 예산 및 스로틀링 최적화: 캐싱, 큐잉 및 세션 안전성",
+      "item": "https://dopabrain.com/portal/blog/ko/roblox-datastore-budget-throttle-optimization-guide.html"
+    }
+  ]
+}
+  </script>
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "동일 키 6초 쿨다운 에러가 발생하는 근본적인 이유는 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "로블록스 백엔드 인프라 보호를 위해 동일 키에 대한 빈번한 쓰기를 엔진 수준에서 차단하기 때문입니다. 상태 저장은 메모리에 누적하고 120초 단위로 묶어서 처리해야 합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "ProfileService 라이브러리를 쓰는 것이 자체 구현보다 나은가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "그렇습니다. ProfileService는 수천만 MAU를 처리하는 로블록스 상위 게임들에서 세션 락킹, 서버 간 이동 경쟁, 자동 저장 등이 장기간 검증된 표준 아키텍처입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "로블록스 스튜디오에서 데이터스토어 스로틀링을 어떻게 테스트하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "게임 설정에서 데이터스토어 API 접근을 허용한 뒤, 루프문으로 짧은 주기의 호출을 발생시키거나 GetRequestBudgetForRequestType() API를 통해 실시간 잔여 예산을 모니터링할 수 있습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "BindToClose 실행 시 30초 시간 초과가 발생하면 어떻게 해야 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "플레이어 데이터를 순차적으로 저장(for 순회)하지 말고, task.spawn이나 코루틴을 통해 5~10명 단위의 병렬 배치로 비동기 저장하여 30초 내에 완벽히 처리해야 합니다."
+      }
+    }
+  ]
+}
+  </script>
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0 0 12px;
+      font-size: 1.4rem;
+    }
+    .portal-btn {
+      display: inline-block;
+      min-height: 44px;
+      line-height: 44px;
+      padding: 0 24px;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 700;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 14px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>로블록스 데이터스토어 예산 및 스로틀링 최적화: 캐싱, 큐잉 및 세션 안전성</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 로블록스 기술 아키텍처 팀</span>
+        <span>•</span>
+        <span>Updated: September 2026</span>
+        <span>•</span>
+        <span>Reading Time: 9 min</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>아키텍처 원칙:</strong> 로블록스 데이터스토어를 실시간 트랜잭션 DB처럼 직접 호출하지 마십시오. 모든 상태 변경은 서버 메모리에서 즉시 처리하고, 비동기 세션 락과 예산 기반 큐를 통해 저장해야 합니다.
+    </div>
+
+    <!-- Quick Cognitive Rail (4 Tools) -->
+    <div class="quick-rail" data-content-surface="quick_rail">
+      <h2>엔지니어링 & 인지 분석 도구</h2>
+      <div class="quick-grid">
+        <a href="https://dopabrain.com/brain-type/" class="quick-card">
+          <strong>뇌 유형 테스트</strong>
+          <span>시스템 설계 및 논리적 문제해결 성향 분석</span>
+        </a>
+        <a href="https://dopabrain.com/puzzle-2048/" class="quick-card">
+          <strong>2048 퍼즐</strong>
+          <span>데이터 구조화 및 메모리 배치 훈련</span>
+        </a>
+        <a href="https://dopabrain.com/reaction-test/" class="quick-card">
+          <strong>반응속도 테스트</strong>
+          <span>실시간 엔진 루프 처리 감각 측정</span>
+        </a>
+        <a href="https://dopabrain.com/stress-check/" class="quick-card">
+          <strong>스트레스 지수 측정</strong>
+          <span>라이브 장애 및 디버깅 스트레스 회복력</span>
+        </a>
+      </div>
+    </div>
+
+    <p>동시 접속자가 급증하는 대형 로블록스 게임에서 가장 흔히 마주치는 치명적 문제는 "DataStore request was added to queue and dropped" 경고입니다. 코인을 얻거나 인벤토리를 바꿀 때마다 GetAsync나 SetAsync를 호출하면 API 요청 예산이 고갈되어 대규모 롤백과 데이터 유실이 발생합니다.</p>
+    <p>본 가이드에서는 실시간 요청 예산 추적, 변경 플래그(Dirty Flag) 기반 메모리 캐싱, 지수 백오프 기반 UpdateAsync 재시도 로직, 서버 간 아이템 복사를 차단하는 세션 락킹 아키텍처를 상세히 다룹니다.</p>
+
+    <h2>1. 로블록스 데이터스토어 예산 한도와 수집 윈도우 이해</h2>
+    <p>로블록스는 플레이스 인스턴스당 접속자 수에 따라 엄격한 API 할당량을 적용합니다:</p>
+    <ul>
+      <li><strong>GetAsync 예산:</strong> 전체 키를 통틀어 분당 <code>60 + (플레이어 수 * 10)</code>회.</li>
+      <li><strong>SetAsync / UpdateAsync 예산:</strong> 분당 <code>60 + (플레이어 수 * 10)</code>회의 쓰기 요청.</li>
+      <li><strong>동일 키 6초 쓰기 쿨다운:</strong> 동일한 개별 키에 대해 6초 이내에 연속 쓰기를 시도하면 로블록스 엔진이 자동으로 요청을 스로틀링하거나 버립니다.</li>
+      <li><strong>페이로드 크기 한도:</strong> 키값당 최대 4,194,304자(약 4MB)로, 정규화된 JSON 스키마를 저장하기에 충분합니다.</li>
+    </ul>
+
+    <h2>2. 인메모리 세션 캐싱과 Dirty Flag 자동 저장 패턴</h2>
+    <p>대규모 로블록스 프로젝트의 표준 데이터 아키텍처:</p>
+    <ul>
+      <li><strong>접속 시 로드, 퇴장 시 플러시:</strong> 플레이어가 접속할 때 단 한 번 <code>GetAsync</code> 또는 <code>UpdateAsync</code>로 데이터를 로드하여 서버 메모리(Lua 테이블)에 보관합니다.</li>
+      <li><strong>인메모리 즉시 반영:</strong> 코인 획득, 아이템 장착 등 모든 작업은 서버 메모리의 테이블만 즉시 수정합니다. API 호출 예산 소모가 0입니다.</li>
+      <li><strong>주기적 Dirty Flag 오토세이브:</strong> 120~180초마다 실행되는 루프에서 실제로 데이터가 변경된(Dirty) 플레이어만 랜덤 분산 간격으로 저장하여 순간 부하를 방지합니다.</li>
+      <li><strong>서버 종료(BindToClose) 완결성:</strong> <code>game:BindToClose()</code>에 병렬 태스크 핸들러를 바인딩하여 서버 셧다운 시 모든 접속자의 캐시를 완벽히 저장해야 합니다.</li>
+    </ul>
+
+        <h2>3. Production Implementation Architecture</h2>
+    <div class="code-block">
+      <div class="code-title">ServerScriptService.DataStoreManager (프로덕션 재시도 및 캐시 아키텍처)</div>
+      <pre><code>-- Safe DataStore Write with Exponential Backoff and Budget Check
+local DataStoreService = game:GetService("DataStoreService")
+local Players = game:GetService("Players")
+local PlayerDataStore = DataStoreService:GetDataStore("PlayerCore_v1")
+
+local MAX_RETRIES = 3
+local BASE_DELAY = 1.5
+
+local function safeUpdateAsync(key, transformFunc)
+    local budget = DataStoreService:GetRequestBudgetForRequestType(Enum.DataStoreRequestType.UpdateAsync)
+    if budget &lt; 5 then
+        warn("[DataStore] Throttling warning: Low budget for UpdateAsync (" .. tostring(budget) .. ")")
+    end
+    
+    local success, result
+    local attempts = 0
+    
+    repeat
+        attempts = attempts + 1
+        success, result = pcall(function()
+            return PlayerDataStore:UpdateAsync(key, transformFunc)
+        end)
+        
+        if not success then
+            local delayTime = BASE_DELAY * (2 ^ (attempts - 1)) + math.random() * 0.5
+            warn("[DataStore] Attempt " .. attempts .. " failed: " .. tostring(result) .. ". Retrying in " .. string.format("%.2f", delayTime) .. "s")
+            task.wait(delayTime)
+        end
+    until success or attempts &gt;= MAX_RETRIES
+    
+    return success, result
+end</code></pre>
+    </div>
+
+    <h2>4. 세션 락킹과 멀티 서버 아이템 복사 버그 차단</h2>
+    <p>서버 이동(Server Hop) 시 발생하는 데이터 복사 버그 방지책:</p>
+    <ul>
+      <li><strong>서버 간 경쟁 조건:</strong> A 서버에서 아이템을 교환한 뒤 극도로 빠르게 B 서버로 이동하면, A 서버가 저장하기 전에 B 서버가 구버전 데이터를 불러오는 취약점이 발생합니다.</li>
+      <li><strong>세션 락킹(Session Lock):</strong> 데이터를 로드할 때 <code>SessionLock = { JobId = game.JobId, Time = os.time() }</code> 플래그를 저장소에 기록합니다.</li>
+      <li><strong>락 해제 대기:</strong> 타 서버의 유효한 락이 감지되면 데이터 로드를 대기하고, 이전 서버의 하트비트가 만료된 경우에만 소유권을 이전받습니다.</li>
+      <li><strong>ProfileService 채택:</strong> 이러한 세션 락, 자동 저장, 스키마 마이그레이션이 검증된 오픈소스 라이브러리(ProfileService)를 표준으로 도입하는 것이 권장됩니다.</li>
+    </ul>
+
+    <h2>5. 스키마 마이그레이션과 라이브 게임 버전 관리</h2>
+    <p>게임 밸런스 패치 및 기능 추가 시 안전한 데이터 이전 전략:</p>
+    <ul>
+      <li><strong>스키마 버전 헤더:</strong> 데이터 루트에 <code>_SchemaVersion = 2</code>를 부여하여 구조 변경을 추적합니다.</li>
+      <li><strong>기본값 자동 병합(Reconciliation):</strong> 기존 유저 데이터에 새로운 스탯 필드가 없을 경우 기본 템플릿 필드를 자동으로 채워 넣습니다.</li>
+      <li><strong>하위 호환성 유지:</strong> 구버전 필드를 즉시 삭제하지 않고 마이그레이션 완료 후 안전하게 정리합니다.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>동일 키 6초 쿨다운 에러가 발생하는 근본적인 이유는 무엇인가요?</h3>
+      <p>로블록스 백엔드 인프라 보호를 위해 동일 키에 대한 빈번한 쓰기를 엔진 수준에서 차단하기 때문입니다. 상태 저장은 메모리에 누적하고 120초 단위로 묶어서 처리해야 합니다.</p>
+    </div>
+    <div class="faq-item">
+      <h3>ProfileService 라이브러리를 쓰는 것이 자체 구현보다 나은가요?</h3>
+      <p>그렇습니다. ProfileService는 수천만 MAU를 처리하는 로블록스 상위 게임들에서 세션 락킹, 서버 간 이동 경쟁, 자동 저장 등이 장기간 검증된 표준 아키텍처입니다.</p>
+    </div>
+    <div class="faq-item">
+      <h3>로블록스 스튜디오에서 데이터스토어 스로틀링을 어떻게 테스트하나요?</h3>
+      <p>게임 설정에서 데이터스토어 API 접근을 허용한 뒤, 루프문으로 짧은 주기의 호출을 발생시키거나 GetRequestBudgetForRequestType() API를 통해 실시간 잔여 예산을 모니터링할 수 있습니다.</p>
+    </div>
+    <div class="faq-item">
+      <h3>BindToClose 실행 시 30초 시간 초과가 발생하면 어떻게 해야 하나요?</h3>
+      <p>플레이어 데이터를 순차적으로 저장(for 순회)하지 말고, task.spawn이나 코루틴을 통해 5~10명 단위의 병렬 배치로 비동기 저장하여 30초 내에 완벽히 처리해야 합니다.</p>
+    </div>
+
+    <div class="portal-cta">
+      <h2>시스템 엔지니어링 역량과 인지 능력 극대화</h2>
+      <p>시스템 설계 역량을 진단하고 정밀한 인지 분석 도구를 DopaBrain에서 체험해 보세요.</p>
+      <a href="https://dopabrain.com/brain-type/" class="portal-btn">DopaBrain 인지 테스트 시작하기</a>
+    </div>
+  </div>
+</body>
+</html>
