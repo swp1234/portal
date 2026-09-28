@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roblox PathfindingService & Navigation IA 2026: PNJ Intelligents | DopaBrain</title>
+  <meta name="description" content="Créez une IA de PNJ avancée sur Roblox: PathfindingService, PathfindingModifiers, évitement d'obstacles, waypoints et raycasting direct.">
+  <meta name="keywords" content="tutoriel pathfindingservice roblox, script navigation pnj roblox, pathfindingmodifier, ia ennemie roblox">
+  <meta name="author" content="DopaBrain">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/fr/roblox-pathfinding-service-ai-navigation-guide.html">
+
+  <!-- Alternate Language Links -->
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-pathfinding-service-ai-navigation-guide.html">
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-pathfinding-service-ai-navigation-guide.html">
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-pathfinding-service-ai-navigation-guide.html">
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-pathfinding-service-ai-navigation-guide.html">
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-pathfinding-service-ai-navigation-guide.html">
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-pathfinding-service-ai-navigation-guide.html">
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-pathfinding-service-ai-navigation-guide.html">
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-pathfinding-service-ai-navigation-guide.html">
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-pathfinding-service-ai-navigation-guide.html">
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-pathfinding-service-ai-navigation-guide.html">
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-pathfinding-service-ai-navigation-guide.html">
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-pathfinding-service-ai-navigation-guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-pathfinding-service-ai-navigation-guide.html">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Roblox PathfindingService & Navigation IA 2026: PNJ Intelligents | DopaBrain">
+  <meta property="og:description" content="Créez une IA de PNJ avancée sur Roblox: PathfindingService, PathfindingModifiers, évitement d'obstacles, waypoints et raycasting direct.">
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/fr/roblox-pathfinding-service-ai-navigation-guide.html">
+  <meta property="og:site_name" content="DopaBrain">
+  <meta property="og:image" content="https://dopabrain.com/portal/blog/images/roblox-pathfinding-guide.webp">
+  <meta property="article:published_time" content="2026-09-28T11:00:00+09:00">
+  <meta property="article:modified_time" content="2026-09-28T11:00:00+09:00">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Roblox PathfindingService & Navigation IA 2026: PNJ Intelligents | DopaBrain">
+  <meta name="twitter:description" content="Créez une IA de PNJ avancée sur Roblox: PathfindingService, PathfindingModifiers, évitement d'obstacles, waypoints et raycasting direct.">
+  <meta name="twitter:image" content="https://dopabrain.com/portal/blog/images/roblox-pathfinding-guide.webp">
+
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882"
+     crossorigin="anonymous"></script>
+
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/fr/roblox-pathfinding-service-ai-navigation-guide.html#article",
+      "isPartOf": {
+        "@id": "https://dopabrain.com/portal/blog/fr/roblox-pathfinding-service-ai-navigation-guide.html"
+      },
+      "headline": "Roblox PathfindingService & Navigation IA: Obstacles Dynamiques, Modificateurs & Scripts PNJ",
+      "description": "Créez une IA de PNJ avancée sur Roblox: PathfindingService, PathfindingModifiers, évitement d'obstacles, waypoints et raycasting direct.",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Game Dev Lab",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "datePublished": "2026-09-28T11:00:00+09:00",
+      "dateModified": "2026-09-28T11:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/fr/roblox-pathfinding-service-ai-navigation-guide.html"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/fr/roblox-pathfinding-service-ai-navigation-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portail",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Roblox Pathfinding IA",
+          "item": "https://dopabrain.com/portal/blog/fr/roblox-pathfinding-service-ai-navigation-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/fr/roblox-pathfinding-service-ai-navigation-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Pourquoi Path.Status indique NoPath?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La cible est inaccessible ou l'ouverture est inférieure à AgentRadius."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment éviter les blocages aux angles de murs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Réglez un AgentRadius légèrement supérieur au maillage visuel du personnage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Différence entre MoveTo et Pathfinding?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MoveTo avance en ligne droite sans esquive; Pathfinding contourne les obstacles."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <style>
+    :root {
+      --bg: #090b10;
+      --card-bg: #121620;
+      --card-border: #1f2738;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #10b981;
+      --accent-glow: rgba(16, 185, 129, 0.15);
+      --highlight: #3b82f6;
+      --code-bg: #0d1117;
+      --border-radius: 12px;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 24px 16px;
+      overflow-x: hidden;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .meta-box {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.15rem;
+      color: var(--accent);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      min-height: 44px;
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      font-size: 0.95rem;
+      color: #fff;
+    }
+    .quick-card span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .banner-quote {
+      background: var(--accent-glow);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 24px 0;
+      font-size: 1.05rem;
+    }
+    .content-body p {
+      margin-bottom: 18px;
+      font-size: 1.05rem;
+      color: #d1d7e0;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .content-body h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 36px 0 16px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 8px;
+    }
+    .content-body ul {
+      margin: 0 0 20px 24px;
+    }
+    .content-body li {
+      margin-bottom: 10px;
+      color: #cbd5e1;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 16px 0 20px;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #58a6ff;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: #34d399;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+    .code-header {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: #8b949e;
+      margin-top: 16px;
+    }
+    .code-header + pre {
+      margin-top: 0;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+    .cta-box {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(59, 130, 246, 0.1));
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--border-radius);
+      padding: 28px 24px;
+      text-align: center;
+      margin: 40px 0;
+    }
+    .cta-box h3 {
+      font-size: 1.35rem;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .cta-box p {
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-btn {
+      display: inline-block;
+      min-height: 44px;
+      line-height: 44px;
+      padding: 0 28px;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      border-radius: 22px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .cta-btn:hover {
+      background: #34d399;
+      transform: scale(1.03);
+    }
+    .faq-section {
+      margin: 40px 0;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+    }
+    .faq-item h3 {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--card-border);
+      padding-top: 24px;
+    }
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 1.7rem;
+      }
+      .content-body h2 {
+        font-size: 1.3rem;
+      }
+      .quick-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox PathfindingService & Navigation IA: Obstacles Dynamiques, Modificateurs & Scripts PNJ</h1>
+      <div class="meta-box">
+        <span>Par DopaBrain Game Dev Lab</span>
+        <span>&bull;</span>
+        <span>Mis à jour: Septembre 2026</span>
+        <span>&bull;</span>
+        <span>Lecture: 9 min</span>
+      </div>
+    </header>
+
+    <div class="quick-rail" data-content-surface="quick_rail">
+      <h2>Outils Cognitifs Développeur</h2>
+      <div class="quick-grid">
+        <a href="/brain-type/?lang=fr" class="quick-card">
+          <strong>Test Type Cérébral</strong>
+          <span>Architecture logique</span>
+        </a>
+        <a href="/reaction-test/?lang=fr" class="quick-card">
+          <strong>Test Réaction</strong>
+          <span>Réflexes & précision</span>
+        </a>
+        <a href="/stress-check/?lang=fr" class="quick-card">
+          <strong>Bilan Stress</strong>
+          <span>Fatigue de débogage</span>
+        </a>
+        <a href="/puzzle-2048/?lang=fr" class="quick-card">
+          <strong>Puzzle 2048</strong>
+          <span>Planification spatiale</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="content-body">
+      <p>Rien ne brise l'immersion autant que des ennemis bloqués dans les portes ou courant contre des murs. Des PNJ réactifs exigent la maîtrise du moteur navmesh 3D de Roblox.</p>
+      <p>Le `PathfindingService` fournit des calculs de chemin A* adaptés aux physiques dynamiques. Ce guide détaille les paramètres d'agent, les coûts `PathfindingModifier` et les optimisations raycast.</p>
+
+      <div class="banner-quote">
+        <strong>Règle Fondamentale:</strong> Ne vous fiez jamais uniquement à <code>Humanoid:MoveTo()</code>. Calculez toujours des waypoints <code>PathfindingService</code>.
+      </div>
+
+      <h2>1. Calcul des Trajectoires: La Grille Voxel 3D</h2>
+      <p>Comprendre la géométrie navmesh pour éviter les échecs de trajet:</p>
+      <ul>
+        <li><strong>Grille Voxel:</strong> Si AgentRadius dépasse la largeur du passage, le statut devient NoPath.</li>
+        <li><strong>Paramètres d'Agent:</strong> Ajustez AgentRadius, AgentHeight et AgentCanJump aux proportions exactes.</li>
+        <li><strong>Tableau de Waypoints:</strong> Coordonnées 3D associées à des actions de marche ou de saut.</li>
+      </ul>
+
+      <h2>2. PathfindingModifiers & Coûts Personnalisés</h2>
+      <p>Dirigez intelligemment les zones que les PNJ doivent emprunter ou fuir:</p>
+      <ul>
+        <li><strong>PathfindingModifier:</strong> Applique des labels comme Lave ou Route sur les pièces.</li>
+        <li><strong>Multiplicateurs de Coût:</strong> Forcent le contournement des dangers.</li>
+        <li><strong>Propriété PassThrough:</strong> Autorise le calcul à travers les portes closes destructibles.</li>
+      </ul>
+
+      <h2>3. Éliminer les Saccades: Raycasting & Lissage</h2>
+      <p>Techniques pour assurer une locomotion naturelle:</p>
+      <ul>
+        <li><strong>Ligne de Vue Directe:</strong> Ligne droite sans waypoint si le champ est libre.</li>
+        <li><strong>Validation Anticipée:</strong> Passer au waypoint suivant dès 3-4 studs de proximité.</li>
+        <li><strong>Régulation Temporelle:</strong> Recalculer toutes les 0,3 à 0,5 seconde maximum.</li>
+      </ul>
+
+      <h2>4. Script Lua Professionnel: Traqueur Intelligent</h2>
+      <p>Script de poursuite robuste avec détection d'obstacles et saut automatique:</p>
+      <div class="code-header"><strong>ServerScriptService.SmartNPCChaser</strong></div>
+      <pre><code>-- Implémentation complète de PathfindingService
+local PathfindingService = game:GetService("PathfindingService")</code></pre>
+      <p>Architecture: calcul d'agent précis, déclenchement du saut et gestion des blocages.</p>
+
+      <h2>5. Optimisation Multi-PNJ sans Ralentissement</h2>
+      <p>Faire tourner plus de 50 PNJ simultanés sans lag serveur:</p>
+      <ul>
+        <li><strong>Interpolation Côté Client:</strong> Trajectoires sur serveur, animation sur client.</li>
+        <li><strong>LOD par Distance:</strong> Fréquence réduite pour les entités éloignées.</li>
+        <li><strong>Gestion de File:</strong> Restez sous le quota de 500 calculs par minute.</li>
+      </ul>
+
+      <div class="cta-box">
+        <h3>Analysez Votre Mode de Pensée Algorithmique</h3>
+        <p>L'architecture de systèmes IA exige rigueur logique et intuition spatiale.</p>
+        <a href="/brain-type/?lang=fr" class="cta-btn">Faire le Test de Type Cérébral Gratuit</a>
+      </div>
+
+      <section class="faq-section">
+        <h2>Questions Fréquentes (Roblox Pathfinding)</h2>
+        <div class="faq-item">
+          <h3>Pourquoi Path.Status indique NoPath?</h3>
+          <p>La cible est inaccessible ou l'ouverture est inférieure à AgentRadius.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Comment éviter les blocages aux angles de murs?</h3>
+          <p>Réglez un AgentRadius légèrement supérieur au maillage visuel du personnage.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Différence entre MoveTo et Pathfinding?</h3>
+          <p>MoveTo avance en ligne droite sans esquive; Pathfinding contourne les obstacles.</p>
+        </div>
+
+      </section>
+    </article>
+
+    <footer>
+      <p>© 2026 DopaBrain Game Dev Lab. Ingénierie des mondes virtuels.</p>
+    </footer>
+  </div>
+</body>
+</html>
