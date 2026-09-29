@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox自動ダンジョン生成: BSP・ドロネー三角形分割・ストリーミング 2026 | DopaBrain</title>
+  <meta name="description" content="Robloxにおけるプロシージャルダンジョン開発：空間二分木（BSP）による部屋配置、ドロネー三角形分割と最小全域木（MST）通路生成、StreamingEnabled最適化。" />
+  <meta name="keywords" content="roblox ダンジョン 自動生成, roblox bsp アルゴリズム, roblox ドロネー三角形分割, roblox ストリーミング ダンジョン, roblox ローグライク 生成" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ja/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox自動ダンジョン生成: BSP・ドロネー三角形分割・ストリーミング 2026 | DopaBrain" />
+  <meta property="og:description" content="Robloxにおけるプロシージャルダンジョン開発：空間二分木（BSP）による部屋配置、ドロネー三角形分割と最小全域木（MST）通路生成、StreamingEnabled最適化。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ja/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox自動ダンジョン生成: BSP・ドロネー三角形分割・ストリーミング 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Robloxにおけるプロシージャルダンジョン開発：空間二分木（BSP）による部屋配置、ドロネー三角形分割と最小全域木（MST）通路生成、StreamingEnabled最適化。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ja/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ja/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html"
+      },
+      "headline": "Robloxプロシージャルダンジョン設計: BSP空間分割・ドロネー通路網・チャンク最適化",
+      "description": "Robloxにおけるプロシージャルダンジョン開発：空間二分木（BSP）による部屋配置、ドロネー三角形分割と最小全域木（MST）通路生成、StreamingEnabled最適化。",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ja/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox Procedural Architecture Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Robloxプロシージャルダンジョン設計: BSP空間分割・ドロネー通路網・チャンク最適化",
+          "item": "https://dopabrain.com/portal/blog/ja/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "単純なランダム配置ではなくBSPを使うメリットは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "部屋同士の重なりを判定する重い処理が不要になり、マップ全体にバランス良く部屋を分散配置できるためです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ドロネー三角形分割とMSTを組み合わせる理由は何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "近隣の部屋を自然に結んだ上で、孤立した部屋を作らず、適度なループを持った快適な周回動線を作れるからです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "StreamingEnabledはダンジョンでどのように役立ちますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "プレイヤー周辺の部屋だけを動的にロードするため、広大なダンジョンでもモバイル端末のメモリを圧迫しません。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "マルチプレイでマップがズレないようにするには？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "同じ乱数シード（Seed）をクライアントとサーバーで共有することで、通信を行わずに完全に同一のマップを組み立てられます。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Robloxプロシージャルダンジョン設計: BSP空間分割・ドロネー通路網・チャンク最適化</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain Roblox Procedural Architecture Team</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>生成システムの鉄則:</strong> 無限のリプレイ性は数学的調和から生まれます。完全なランダム配置は移動不能な迷路を生み、単なる定型配置はすぐに飽きられます。BSPとドロネー三角形分割を組み合わせることで、破綻のない有機的通路とモバイル60FPSを両立できます。
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier166_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Spatial grid packing & binary partitioning logic</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier166_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spatial topology & labyrinth navigation cognitive style</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier166_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Dungeon trap reflex & sudden ambush response speed</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier166_stress_check">
+          <strong>Stress Check</strong>
+          <span>Claustrophobia & dungeon exploration tension management</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>プロシージャル生成は、RobloxにおけるローグライクやハクスラRPGの根幹です。適切なアルゴリズムなしに生成すると、パーツ過多によるクラッシュや部屋の重なりが発生します。</p>
+      <p>BSPによる部屋の無衝突分割、ドロネー三角形分割とプリム法による自然なループ通路の形成、そしてRoblox標準の`StreamingEnabled`を連動させた次世代パイプラインを解説します。</p>
+
+      <h2>1. 空間二分木（BSP）による均等な部屋配置</h2>
+      <p>重なりを数学的に防ぐ再帰的空間分割の手法:</p>
+      <ul>
+          <li><strong>再帰的サブツリー分割:</strong> 領域を縦横ランダムな比率（0.4〜0.6）で分割し、目標サイズになるまで階層的に分割を繰り返します。</li>
+          <li><strong>アスペクト比制限:</strong> 細長すぎる不自然な部屋を排除するため、縦横比を1:1〜1:2.5の範囲に抑制します。</li>
+          <li><strong>領域内への内接配置:</strong> 分割された末端ノード内に部屋を配置するため、重い当たり判定計算を行わずに部屋の重複を100%回避できます。</li>
+      </ul>
+
+      <h2>2. ドロネー三角形分割 & 最小全域木（MST）による通路形成</h2>
+      <p>孤立や行き止まりのない有機的な回遊ルートの構築:</p>
+      <ul>
+          <li><strong>重心点群の抽出:</strong> 各部屋の中心座標を結ぶ平面2Dドロネー三角形網を作成し、近接する候補経路を網羅します。</li>
+          <li><strong>最小全域木（MST）による簡略化:</strong> すべての部屋が最短距離で接続されるよう、冗長なエッジを刈り取ります。</li>
+          <li><strong>ループの再導入（15%）:</strong> 刈り取られたエッジの約15%をあえて復元することで、単調な一本道を防ぎ周回性を高めます。</li>
+      </ul>
+
+      <h2>3. グリッド通路の掘削とタイル配置</h2>
+      <p>抽象的なグラフデータをRobloxの実パーツへ変換:</p>
+      <ul>
+          <li><strong>直角（L字・S字）配管:</strong> 部屋同士を直角に曲がる通路で結び、壁の接点にドアを自動配置します。</li>
+          <li><strong>4ビットオートタイル:</strong> 上下左右の隣接状況から、直線壁・角壁・交差路のメッシュを自動選定します。</li>
+          <li><strong>パーツ統合:</strong> 床や壁をWelded ModelまたはEditableMeshで単一メッシュ化し、パーツ数を90%削減します。</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ServerScriptService.Dungeon.BSPGenerator</div>
+        <pre><code>-- BSP空間二分木ノード分割モジュール
+local BSPNode = {}
+BSPNode.__index = BSPNode
+
+function BSPNode.new(x, z, width, depth)
+    local self = setmetatable({}, BSPNode)
+    self.X, self.Z = x, z
+    self.Width, self.Depth = width, depth
+    self.LeftChild = nil
+    self.RightChild = nil
+    self.Room = nil
+    return self
+end
+
+function BSPNode:Split(minSize)
+    if self.LeftChild or self.RightChild then return false end
+    local splitHorizontal = math.random() > 0.5
+    if self.Width > self.Depth and (self.Width / self.Depth) >= 1.25 then
+        splitHorizontal = false
+    elseif self.Depth > self.Width and (self.Depth / self.Width) >= 1.25 then
+        splitHorizontal = true
+    end
+    local maxDimension = (splitHorizontal and self.Depth or self.Width) - minSize
+    if maxDimension <= minSize then return false end
+    local splitPos = math.random(minSize, maxDimension)
+    if splitHorizontal then
+        self.LeftChild = BSPNode.new(self.X, self.Z, self.Width, splitPos)
+        self.RightChild = BSPNode.new(self.X, self.Z + splitPos, self.Width, self.Depth - splitPos)
+    else
+        self.LeftChild = BSPNode.new(self.X, self.Z, splitPos, self.Depth)
+        self.RightChild = BSPNode.new(self.X + splitPos, self.Z, self.Width - splitPos, self.Depth)
+    end
+    return true
+end
+
+return BSPNode</code></pre>
+      </div>
+
+      <h2>4. メモリ削減とStreamingEnabledチャンク構造</h2>
+      <p>モバイル端末の2GB RAMでも安定して100部屋以上の迷宮を動かす技術:</p>
+      <ul>
+          <li><strong>ModelStreamingMode.Atomic:</strong> 部屋単位でまとめてストリーミングし、床抜け落下バグを防止します。</li>
+          <li><strong>64x64 studsセクター分割:</strong> 遠方のダンジョン領域の物理演算を自動停止させ、CPU負荷を最小化します。</li>
+          <li><strong>オクルージョンカリング:</strong> 部屋間の扉やフォグを介して、視界外の部屋のレンダリングを完全にスキップさせます。</li>
+      </ul>
+
+      <h2>5. シード値（Seed）同期とサーバー権限のエンティティ生成</h2>
+      <p>チート防止と通信帯域ゼロの完全同期:</p>
+      <ul>
+          <li><strong>決定論的シード同期:</strong> サーバーから32ビットの整数シードを1つ送るだけで、クライアント側で同一の地形が生成されます。</li>
+          <li><strong>サーバー主導の敵・宝箱配置:</strong> 見た目の床はローカルで描画しつつ、モンスターや罠の当たり判定はサーバー側でのみ確定します。</li>
+          <li><strong>自動NavMesh構成:</strong> 生成された床にPathfindingModifierを自動設定し、敵AIが段差を認識して正確に追尾できるようにします。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>単純なランダム配置ではなくBSPを使うメリットは何ですか？</h3>
+          <p>部屋同士の重なりを判定する重い処理が不要になり、マップ全体にバランス良く部屋を分散配置できるためです。</p>
+        </div>
+        <div class="faq-item">
+          <h3>ドロネー三角形分割とMSTを組み合わせる理由は何ですか？</h3>
+          <p>近隣の部屋を自然に結んだ上で、孤立した部屋を作らず、適度なループを持った快適な周回動線を作れるからです。</p>
+        </div>
+        <div class="faq-item">
+          <h3>StreamingEnabledはダンジョンでどのように役立ちますか？</h3>
+          <p>プレイヤー周辺の部屋だけを動的にロードするため、広大なダンジョンでもモバイル端末のメモリを圧迫しません。</p>
+        </div>
+        <div class="faq-item">
+          <h3>マルチプレイでマップがズレないようにするには？</h3>
+          <p>同じ乱数シード（Seed）をクライアントとサーバーで共有することで、通信を行わずに完全に同一のマップを組み立てられます。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

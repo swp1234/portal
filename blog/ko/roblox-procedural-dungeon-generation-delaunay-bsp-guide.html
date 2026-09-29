@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 절차적 던전 생성: BSP, 델로네 삼각분할 & 스트리밍 2026 | DopaBrain</title>
+  <meta name="description" content="로블록스 절차적 던전 구현 가이드: 이진 공간 분할(BSP) 방 배치, 델로네 삼각분할 및 최소 신장 트리(MST) 복도 생성, StreamingEnabled 최적화." />
+  <meta name="keywords" content="로블록스 절차적 던전 생성, 로블록스 bsp 알고리즘, 로블록스 델로네 삼각분할 luau, 로블록스 청크 스트리밍 던전, 로블록스 로그라이크 맵 제작" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 절차적 던전 생성: BSP, 델로네 삼각분할 & 스트리밍 2026 | DopaBrain" />
+  <meta property="og:description" content="로블록스 절차적 던전 구현 가이드: 이진 공간 분할(BSP) 방 배치, 델로네 삼각분할 및 최소 신장 트리(MST) 복도 생성, StreamingEnabled 최적화." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 절차적 던전 생성: BSP, 델로네 삼각분할 & 스트리밍 2026 | DopaBrain" />
+  <meta name="twitter:description" content="로블록스 절차적 던전 구현 가이드: 이진 공간 분할(BSP) 방 배치, 델로네 삼각분할 및 최소 신장 트리(MST) 복도 생성, StreamingEnabled 최적화." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html"
+      },
+      "headline": "로블록스 절차적 던전 아키텍처: BSP 방 분할, 델로네 복도망 & 청크 스트리밍",
+      "description": "로블록스 절차적 던전 구현 가이드: 이진 공간 분할(BSP) 방 배치, 델로네 삼각분할 및 최소 신장 트리(MST) 복도 생성, StreamingEnabled 최적화.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 로블록스 절차적 시스템 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 절차적 던전 아키텍처: BSP 방 분할, 델로네 복도망 & 청크 스트리밍",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "단순 무작위 배치 대신 BSP 알고리즘을 써야 하는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "무작위 배치는 방끼리 겹치는 물리 충돌 검사 비용이 매우 비싸고 맵 빈 공간이 심합니다. BSP는 공간을 재귀 분할하여 겹침 없이 방을 균일하게 분포시킵니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "델로네 삼각분할과 MST를 결합하는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "델로네 삼각분할로 인접 방들을 자연스럽게 잇고, MST로 고립 없는 최단 복도망을 뽑은 뒤 15% 정도의 순환선을 넣어 완벽한 동선을 만들기 위함입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "StreamingEnabled는 절차적 던전에서 어떤 역할을 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "플레이어 주변의 방만 메모리에 로딩하고 먼 방은 언로드하여 100개가 넘는 방이 있는 던전도 모바일 저사양 기기에서 부드럽게 구동할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "클라이언트와 서버의 던전 지형이 어긋나지 않으려면 어떻게 해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "서버가 생성한 동일한 정수 시드(Seed)를 난수 생성기(Random.new(seed))에 공유하면 네트워크 전송량 0바이트로 완전히 동일한 맵이 생성됩니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>로블록스 절차적 던전 아키텍처: BSP 방 분할, 델로네 복도망 & 청크 스트리밍</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain 로블록스 절차적 시스템 엔지니어링 팀</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>절차적 생성 원칙:</strong> 무한한 리플레이성은 수학적 균형에서 탄생합니다. 무작위 배치는 길을 잃게 만드는 스파게티 복도를 만들고, 단순 프리팹 배치는 금세 식상해집니다. BSP 알고리즘과 델로네 삼각분할(Delaunay Triangulation) 및 MST를 결합하면 막다른 길 없는 유기적 던전과 모바일 60 FPS 최적화를 동시에 달성할 수 있습니다.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier166_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>공간 격자 패킹 및 이진 분할 논리 훈련</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier166_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>공간 위상 기하 및 미로 탐색 인지 스타일</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier166_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>던전 함정 회피 및 기습 몬스터 반사 신경</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier166_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>폐쇄 공포감과 던전 심층 탐험 긴장도 조절</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>절차적 맵 생성(Procedural Generation)은 로그라이크, 던전 RPG, 탈출 생존 장르의 핵심 엔진입니다. 알고리즘 설계가 미흡하면 부품 수 폭증으로 메모리 렉이 발생하고 방끼리 겹치는 물리 충돌 버그가 생깁니다.</p>
+      <p>이진 공간 분할(BSP)을 통한 재귀적 공간 균등 분할, 델로네 삼각분할과 프림 알고리즘 기반 순환 복도망 구축, 그리고 로블록스 내장 `StreamingEnabled` 청크 단위 최적화를 연결해 수백 개의 방을 지연 없이 렌더링하는 파이프라인을 구축합니다.</p>
+
+      <h2>1. 이진 공간 분할(BSP)을 이용한 비중복 방 생성</h2>
+      <p>균형 잡힌 방 배치를 위한 재귀적 공간 분할 수학:</p>
+      <ul>
+          <li><strong>재귀적 서브트리 분할:</strong> 전체 맵 영역을 가로 또는 세로로 랜덤 비율(0.4~0.6)로 쪼개어 리프 노드가 목표 크기에 도달할 때까지 반복 분할합니다.</li>
+          <li><strong>패딩 및 가로세로 비율 제한:</strong> 지나치게 길쭉한 복도형 방이 생기지 않도록 가로세로 비율(1:1~1:2.5)을 제한하고 가장자리 여백을 확보합니다.</li>
+          <li><strong>영역 내 방 내접:</strong> 분할된 리프 노드 영역 내부에만 방을 무작위 크기로 내접시키므로, 무거운 물리 충돌 검사 없이도 방 간 겹침이 100% 방지됩니다.</li>
+      </ul>
+
+      <h2>2. 자연스러운 복도망: 델로네 삼각분할 & 최소 신장 트리 (MST)</h2>
+      <p>막다른 길을 없애고 유기적인 순환 동선을 구축하는 알고리즘:</p>
+      <ul>
+          <li><strong>중심점 점군(Point Cloud) 추출:</strong> 모든 방의 중심 좌표를 추출해 평면 2D 델로네 삼각분할 그래프를 생성하여 인접 후보 경로를 확보합니다.</li>
+          <li><strong>프림/크루스칼 최소 신장 트리(MST):</strong> 모든 방이 최소 경로로 고립 없이 연결되도록 삼각망에서 중복 간선을 제거합니다.</li>
+          <li><strong>순환 루프 재주입(15% 여유 간선):</strong> 트리에서 제거된 간선 중 12~18%를 무작위로 복원해 외길 진행을 방지하고 유기적인 순환 동선을 제공합니다.</li>
+      </ul>
+
+      <h2>3. 그리드 기반 복도 카빙 & 타일 인스턴싱</h2>
+      <p>수학적 그래프 간선을 실제 로블록스 물리 지형으로 변환:</p>
+      <ul>
+          <li><strong>직각 L자형/S자형 복도 라우팅:</strong> 연결된 두 방 사이를 직각 절곡 경로로 잇고 방 외벽 접점에 문(Doorway) 임계점을 배치합니다.</li>
+          <li><strong>타일맵 4비트 마스킹:</strong> 상하좌우 인접 타일 여부에 따라 평면 바닥, 직선 벽, 코너 벽, 교차로 메시를 자동 선택해 조립합니다.</li>
+          <li><strong>무충돌 지오메트리 결합:</strong> 복도 타일들을 Welded Model로 묶거나 EditableMesh API를 활용해 단일 메시로 병합하여 파트 수를 90% 절감합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ServerScriptService.Dungeon.BSPGenerator</div>
+        <pre><code>-- 이진 공간 분할 (BSP) 던전 트리 생성 모듈
+local BSPNode = {}
+BSPNode.__index = BSPNode
+
+function BSPNode.new(x, z, width, depth)
+    local self = setmetatable({}, BSPNode)
+    self.X, self.Z = x, z
+    self.Width, self.Depth = width, depth
+    self.LeftChild = nil
+    self.RightChild = nil
+    self.Room = nil
+    return self
+end
+
+function BSPNode:Split(minSize)
+    if self.LeftChild or self.RightChild then return false end
+    
+    local splitHorizontal = math.random() > 0.5
+    if self.Width > self.Depth and (self.Width / self.Depth) >= 1.25 then
+        splitHorizontal = false
+    elseif self.Depth > self.Width and (self.Depth / self.Width) >= 1.25 then
+        splitHorizontal = true
+    end
+    
+    local maxDimension = (splitHorizontal and self.Depth or self.Width) - minSize
+    if maxDimension <= minSize then return false end
+    
+    local splitPos = math.random(minSize, maxDimension)
+    if splitHorizontal then
+        self.LeftChild = BSPNode.new(self.X, self.Z, self.Width, splitPos)
+        self.RightChild = BSPNode.new(self.X, self.Z + splitPos, self.Width, self.Depth - splitPos)
+    else
+        self.LeftChild = BSPNode.new(self.X, self.Z, splitPos, self.Depth)
+        self.RightChild = BSPNode.new(self.X + splitPos, self.Z, self.Width - splitPos, self.Depth)
+    end
+    return true
+end
+
+return BSPNode</code></pre>
+      </div>
+
+      <h2>4. 메모리 컬링 & StreamingEnabled 청크 아키텍처</h2>
+      <p>모바일 2GB RAM 기기에서도 끊김 없는 대형 던전 구현:</p>
+      <ul>
+          <li><strong>ModelStreamingMode.Atomic 적용:</strong> 개별 방과 복도를 원자적 모델로 묶어 벽 일부만 로딩되어 캐릭터가 추락하는 현상을 방지합니다.</li>
+          <li><strong>공간 섹터 분할(64x64 studs):</strong> 거대한 던전을 그리드 청크로 묶고 플레이어 시야 밖의 청크는 물리 연산을 비활성화합니다.</li>
+          <li><strong>동적 오클루전 컬링(Occlusion Culling):</strong> 방 사이 통로에 안개 포털 및 닫힌 문을 배치해 로블록스 엔진이 시야 밖 방들의 렌더링을 완전히 생략하도록 유도합니다.</li>
+      </ul>
+
+      <h2>5. 시드(Seed) 동기화 & 서버 권한 엔티티 스폰</h2>
+      <p>동기화 렉 없이 완벽한 보안과 공정한 게임성을 유지하는 방법:</p>
+      <ul>
+          <li><strong>결정론적 의사난수 시드 복제:</strong> 서버는 단 하나의 32비트 정수 시드만을 전송하고, 클라이언트는 동일한 시드로 로컬 그래픽 지형을 연산합니다.</li>
+          <li><strong>서버 권한 엔티티 스폰:</strong> 바닥 타일은 로컬에서 생성되지만 몬스터, 보물상자, 함정 트리거는 철저히 서버에서만 생성하고 동기화합니다.</li>
+          <li><strong>네비메시(NavMesh) 자동 생성:</strong> 생성된 바닥에 PathfindingModifier를 지정해 몬스터 AI가 낭떠러지와 벽을 피해 유저를 추적하도록 유도합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>단순 무작위 배치 대신 BSP 알고리즘을 써야 하는 이유는 무엇인가요?</h3>
+          <p>무작위 배치는 방끼리 겹치는 물리 충돌 검사 비용이 매우 비싸고 맵 빈 공간이 심합니다. BSP는 공간을 재귀 분할하여 겹침 없이 방을 균일하게 분포시킵니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>델로네 삼각분할과 MST를 결합하는 이유는 무엇인가요?</h3>
+          <p>델로네 삼각분할로 인접 방들을 자연스럽게 잇고, MST로 고립 없는 최단 복도망을 뽑은 뒤 15% 정도의 순환선을 넣어 완벽한 동선을 만들기 위함입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>StreamingEnabled는 절차적 던전에서 어떤 역할을 하나요?</h3>
+          <p>플레이어 주변의 방만 메모리에 로딩하고 먼 방은 언로드하여 100개가 넘는 방이 있는 던전도 모바일 저사양 기기에서 부드럽게 구동할 수 있습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>클라이언트와 서버의 던전 지형이 어긋나지 않으려면 어떻게 해야 하나요?</h3>
+          <p>서버가 생성한 동일한 정수 시드(Seed)를 난수 생성기(Random.new(seed))에 공유하면 네트워크 전송량 0바이트로 완전히 동일한 맵이 생성됩니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

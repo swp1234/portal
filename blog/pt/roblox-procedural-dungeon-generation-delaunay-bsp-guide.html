@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dungeons Procedurais no Roblox: BSP, Delaunay & Streaming 2026 | DopaBrain</title>
+  <meta name="description" content="Aprenda geração procedural de masmorras no Roblox: particionamento de espaço binário (BSP), corredores com triangulação Delaunay e otimização StreamingEnabled." />
+  <meta name="keywords" content="roblox dungeon procedural, roblox algoritmo bsp, roblox triangulacao delaunay, roblox streaming chunks masmorras, roblox gerador roguelike" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/pt/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Dungeons Procedurais no Roblox: BSP, Delaunay & Streaming 2026 | DopaBrain" />
+  <meta property="og:description" content="Aprenda geração procedural de masmorras no Roblox: particionamento de espaço binário (BSP), corredores com triangulação Delaunay e otimização StreamingEnabled." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/pt/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dungeons Procedurais no Roblox: BSP, Delaunay & Streaming 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Aprenda geração procedural de masmorras no Roblox: particionamento de espaço binário (BSP), corredores com triangulação Delaunay e otimização StreamingEnabled." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/pt/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/pt/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html"
+      },
+      "headline": "Geração Procedural de Masmorras no Roblox: Salas BSP, Delaunay & Streaming",
+      "description": "Aprenda geração procedural de masmorras no Roblox: particionamento de espaço binário (BSP), corredores com triangulação Delaunay e otimização StreamingEnabled.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/pt/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox Procedural Architecture Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "pt"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Geração Procedural de Masmorras no Roblox: Salas BSP, Delaunay & Streaming",
+          "item": "https://dopabrain.com/portal/blog/pt/roblox-procedural-dungeon-generation-delaunay-bsp-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Por que usar BSP em vez de posicionar salas aleatoriamente?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O posicionamento aleatório exige checagens de colisão complexas e deixa espaços vazios. O BSP divide o espaço de maneira equilibrada e sem sobreposições."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qual o papel da triangulação Delaunay com MST?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Conectar salas próximas com naturalidade e assegurar que nenhum cômodo fique isolado ou com caminhos excessivamente repetitivos."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como o StreamingEnabled ajuda em mapas extensos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ele carrega na memória apenas os trechos próximos ao usuário, economizando memória em aparelhos móveis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como evitar discrepâncias de mapa entre cliente e servidor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Basta compartilhar a mesma semente matemática, permitindo que ambos os lados construam o mesmo terreno sem transmissão de dados pesados."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Geração Procedural de Masmorras no Roblox: Salas BSP, Delaunay & Streaming</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain Roblox Procedural Architecture Team</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Axioma de Sistemas:</strong> Rejogabilidade infinita exige equilíbrio matemático. Aleatoriedade pura cria labirintos confusos; estruturas fixas enjoam rapidamente. Unir BSP com Delaunay e árvores geradoras mínimas garante mapas naturais a 60 FPS em celulares.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier166_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Spatial grid packing & binary partitioning logic</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier166_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spatial topology & labyrinth navigation cognitive style</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier166_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Dungeon trap reflex & sudden ambush response speed</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier166_stress_check">
+          <strong>Stress Check</strong>
+          <span>Claustrophobia & dungeon exploration tension management</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>A geração procedural sustenta os principais roguelikes e RPGs no Roblox. Sem arquitetura algorítmica correta, o servidor sofre sobrecarga de memória e travamentos.</p>
+      <p>Ao integrar o particionamento BSP para salas, Delaunay para caminhos orgânicos e o recurso nativo `StreamingEnabled`, é possível criar masmorras gigantescas e leves.</p>
+
+      <h2>1. Divisão de Salas com Particionamento Espacial Binário (BSP)</h2>
+      <p>Subdivisão recursiva para distribuição proporcional de salas:</p>
+      <ul>
+          <li><strong>Corte Recursivo:</strong> O espaço total é dividido repetidamente na vertical ou horizontal até que os nós alcancem as dimensões pretendidas.</li>
+          <li><strong>Controle de Proporção:</strong> Mantém proporções entre 1:1 e 1:2.5, impedindo a criação de quartos excessivamente estreitos.</li>
+          <li><strong>Inscrição sem Colisão:</strong> As salas são geradas dentro de cada nó folha, eliminando sobreposições sem exigir checagens pesadas de física.</li>
+      </ul>
+
+      <h2>2. Corredores Orgânicos: Triangulação Delaunay & Árvore Geradora Mínima (MST)</h2>
+      <p>Conectando salas de forma contínua sem becos sem saída:</p>
+      <ul>
+          <li><strong>Nuvem de Centroides:</strong> Conecta o centro de todas as salas por meio de uma malha 2D de Delaunay.</li>
+          <li><strong>Algoritmo MST:</strong> Elimina arestas redundantes garantindo que cada sala esteja acessível pelo menor trajeto total.</li>
+          <li><strong>Reinjeção de Ciclos (15%):</strong> Adiciona algumas ligações de volta para permitir trajetos alternativos e exploração rica.</li>
+      </ul>
+
+      <h2>3. Roteamento em Grade e Instanciação Modular de Peças</h2>
+      <p>Transformando grafos teóricos em blocos tridimensionais no Roblox:</p>
+      <ul>
+          <li><strong>Conexões em Ângulo Reto:</strong> Corredores ortogonais conectam os pontos de acesso das portas de cada ambiente.</li>
+          <li><strong>Autotiling 4-Bits:</strong> Seleção automática de paredes retas, cantos e cruzamentos conforme as peças vizinhas.</li>
+          <li><strong>Otimização de Geometria:</strong> Soldagem e fusão de malhas para reduzir a contagem de peças em até 90%.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ServerScriptService.Dungeon.BSPGenerator</div>
+        <pre><code>-- Módulo de Particionamento Espacial Binário (BSP)
+local BSPNode = {}
+BSPNode.__index = BSPNode
+
+function BSPNode.new(x, z, width, depth)
+    local self = setmetatable({}, BSPNode)
+    self.X, self.Z = x, z
+    self.Width, self.Depth = width, depth
+    self.LeftChild = nil
+    self.RightChild = nil
+    self.Room = nil
+    return self
+end
+
+function BSPNode:Split(minSize)
+    if self.LeftChild or self.RightChild then return false end
+    local splitHorizontal = math.random() > 0.5
+    if self.Width > self.Depth and (self.Width / self.Depth) >= 1.25 then
+        splitHorizontal = false
+    elseif self.Depth > self.Width and (self.Depth / self.Width) >= 1.25 then
+        splitHorizontal = true
+    end
+    local maxDimension = (splitHorizontal and self.Depth or self.Width) - minSize
+    if maxDimension <= minSize then return false end
+    local splitPos = math.random(minSize, maxDimension)
+    if splitHorizontal then
+        self.LeftChild = BSPNode.new(self.X, self.Z, self.Width, splitPos)
+        self.RightChild = BSPNode.new(self.X, self.Z + splitPos, self.Width, self.Depth - splitPos)
+    else
+        self.LeftChild = BSPNode.new(self.X, self.Z, splitPos, self.Depth)
+        self.RightChild = BSPNode.new(self.X + splitPos, self.Z, self.Width - splitPos, self.Depth)
+    end
+    return true
+end
+
+return BSPNode</code></pre>
+      </div>
+
+      <h2>4. Gestão de Memória e Arquitetura com StreamingEnabled</h2>
+      <p>Masmorras com mais de 100 salas operando perfeitamente em celulares com 2GB de RAM:</p>
+      <ul>
+          <li><strong>ModelStreamingMode.Atomic:</strong> Carrega cômodos inteiros de uma só vez para evitar buracos no chão.</li>
+          <li><strong>Particionamento em Chunks de 64x64 studs:</strong> Desativa cálculos de física em setores distantes do jogador.</li>
+          <li><strong>Culling de Oclusão:</strong> Portas fechadas evitam a renderização desnecessária de câmaras fora do campo visual.</li>
+      </ul>
+
+      <h2>5. Sincronização por Semente (Seed) e Controle no Servidor</h2>
+      <p>Garantindo segurança total e zero lag de replicação de mapa:</p>
+      <ul>
+          <li><strong>Replicação de Semente:</strong> O envio de um único número inteiro permite ao cliente reconstruir o mapa exato localmente.</li>
+          <li><strong>Entidades no Servidor:</strong> Monstros, armadilhas e baús são calculados e controlados exclusivamente pelo servidor.</li>
+          <li><strong>NavMesh Automatizado:</strong> Configuração de PathfindingModifier no piso para navegação inteligente dos inimigos.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Por que usar BSP em vez de posicionar salas aleatoriamente?</h3>
+          <p>O posicionamento aleatório exige checagens de colisão complexas e deixa espaços vazios. O BSP divide o espaço de maneira equilibrada e sem sobreposições.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Qual o papel da triangulação Delaunay com MST?</h3>
+          <p>Conectar salas próximas com naturalidade e assegurar que nenhum cômodo fique isolado ou com caminhos excessivamente repetitivos.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Como o StreamingEnabled ajuda em mapas extensos?</h3>
+          <p>Ele carrega na memória apenas os trechos próximos ao usuário, economizando memória em aparelhos móveis.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Como evitar discrepâncias de mapa entre cliente e servidor?</h3>
+          <p>Basta compartilhar a mesma semente matemática, permitindo que ambos os lados construam o mesmo terreno sem transmissão de dados pesados.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
