@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox हथियार विकास: FastCast बैलिस्टिक्स और रिकॉइल 2026 | DopaBrain</title>
+  <meta name="description" content="Roblox में हथियार प्रोग्रामिंग सीखें: FastCast प्रोजेक्टाइल सिमुलेशन, हुक के नियम पर आधारित रिकॉइल स्प्रिंग, दीवार भेदना और सर्वर सुरक्षा।" />
+  <meta name="keywords" content="roblox हथियार विकास, roblox fastcast ट्यूटोरियल, roblox रिकॉइल स्प्रिंग, roblox बुलेट ड्रॉप फिजिक्स, roblox हथियार सिस्टम स्क्रिप्ट" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/hi/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox हथियार विकास: FastCast बैलिस्टिक्स और रिकॉइल 2026 | DopaBrain" />
+  <meta property="og:description" content="Roblox में हथियार प्रोग्रामिंग सीखें: FastCast प्रोजेक्टाइल सिमुलेशन, हुक के नियम पर आधारित रिकॉइल स्प्रिंग, दीवार भेदना और सर्वर सुरक्षा।" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/hi/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox हथियार विकास: FastCast बैलिस्टिक्स और रिकॉइल 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Roblox में हथियार प्रोग्रामिंग सीखें: FastCast प्रोजेक्टाइल सिमुलेशन, हुक के नियम पर आधारित रिकॉइल स्प्रिंग, दीवार भेदना और सर्वर सुरक्षा।" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/hi/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/hi/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html"
+      },
+      "headline": "Roblox कॉम्बैट इंजीनियरिंग: FastCast बैलिस्टिक्स, रिकॉइल स्प्रिंग्स और हथियार सिस्टम",
+      "description": "Roblox में हथियार प्रोग्रामिंग सीखें: FastCast प्रोजेक्टाइल सिमुलेशन, हुक के नियम पर आधारित रिकॉइल स्प्रिंग, दीवार भेदना और सर्वर सुरक्षा।",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/hi/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox कॉम्बैट इंजीनियरिंग टीम",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "hi"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox कॉम्बैट इंजीनियरिंग: FastCast बैलिस्टिक्स, रिकॉइल स्प्रिंग्स और हथियार सिस्टम",
+          "item": "https://dopabrain.com/portal/blog/hi/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Roblox में FastCast का उपयोग क्यों जरूरी है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "क्योंकि तेज गति वाले साधारण पार्ट्स दीवारों के पार चले जाते हैं। FastCast किरणों को जोड़कर सटीक टक्कर और बुलेट ड्रॉप सुनिश्चित करता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "रिकॉइल स्प्रिंग साधारण एनिमेशन से बेहतर क्यों है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "क्योंकि यह भौतिकी के नियमों पर काम करता है; तेजी से गोली चलाने पर झटका बढ़ता है और रुकने पर धीरे-धीरे अपने आप शांत हो जाता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "दीवार की मोटाई कैसे नापी जाती है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "दीवार के आगे से और पीछे से विपरीत किरणें चलाकर दोनों बिंदुओं के बीच की दूरी से मोटाई निकाली जाती है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "सर्वर तेज फायरिंग करने वाले चीट्स को कैसे रोकता है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "सर्वर गोलियों के बीच के समय का हिसाब रखता है और तय सीमा से तेज आने वाले पैकेट्स को तुरंत रद्द कर देता है।"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox कॉम्बैट इंजीनियरिंग: FastCast बैलिस्टिक्स, रिकॉइल स्प्रिंग्स और हथियार सिस्टम</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain Roblox कॉम्बैट इंजीनियरिंग टीम</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>कॉम्बैट सिद्धांत:</strong> साधारण Raycast नजदीकी दूरी पर तुरंत परिणाम देता है लेकिन लंबी दूरी की शूटिंग में मजा खराब करता है। बेहतरीन गेम बुलेट ड्रॉप के लिए FastCast और रिकॉइल के लिए स्प्रिंग फिजिक्स का उपयोग करते हैं।
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier162_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Hitscan reflex & trigger response speed</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier162_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Trajectory estimation & ballistic calculations</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier162_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Numerical accuracy & spatial lead timing</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier162_stress_check">
+          <strong>Stress Check</strong>
+          <span>Combat tension & recoil control under pressure</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>Roblox में शूटिंग का बेहतरीन अनुभव बनाने के लिए तुरंत प्रतिक्रिया, यथार्थवादी बुलेट फिजिक्स और सर्वर सुरक्षा का सही तालमेल होना चाहिए। केवल तेज गति वाले पार्ट्स उड़ाने से गोलियां दीवारों के पार निकल जाती हैं।</p>
+      <p>`FastCastRedux` मॉड्यूल और कैमरे के झटके के लिए डैम्प्ड स्प्रिंग्स का उपयोग करके आप कंप्यूटर और मोबाइल दोनों पर कंसोल जैसा हथियार सिस्टम बना सकते हैं।</p>
+
+      <h2>1. FastCast बैलिस्टिक्स बनाम साधारण Raycast Hitscan</h2>
+      <p>हथियार के अनुसार सही मॉडल चुनना:</p>
+      <ul>
+          <li><strong>Hitscan (तुरंत प्रभाव):</strong> <code>workspace:Raycast()</code> से एक ही फ्रेम में परिणाम मिलता है। शॉटगन और लेजर के लिए उत्तम।</li>
+          <li><strong>FastCast प्रोजेक्टाइल:</strong> हर फ्रेम में हवा और गुरुत्वाकर्षण के प्रभाव से किरण को आगे बढ़ाता है। स्नाइपर राइफलों के लिए आवश्यक।</li>
+          <li><strong>दीवार पार होने से रोकना:</strong> यह फ्रेमों के बीच लगातार किरणें जोड़ता है जिससे तेज गोलियां भी पतली दीवारों के पार गायब नहीं होतीं।</li>
+      </ul>
+
+      <h2>2. हुक के नियम पर आधारित रिकॉइल स्प्रिंग</h2>
+      <p>कैमरे के झटके और क्रॉसहेयर के फैलाव की गणना:</p>
+      <ul>
+          <li><strong>स्प्रिंग फिजिक्स मॉडल:</strong> मास, तनाव और डैम्पिंग के तीन नियमों से प्राकृतिक झटका तैयार किया जाता है।</li>
+          <li><strong>मल्टी-एक्सिस झटका:</strong> गोली चलने पर ऊपर (Pitch), अगल-बगल (Yaw), और पीछे की ओर झटका एक साथ लगता है।</li>
+          <li><strong>निशाने की वापसी:</strong> लगातार गोली चलाने से झटका बढ़ता है और रुकने पर आसानी से अपने केंद्र में लौट आता है।</li>
+      </ul>
+
+      <h2>3. दीवार भेदना और ऊर्जा में कमी</h2>
+      <p>दीवार के आर-पार गोली मारने की प्रणाली:</p>
+      <ul>
+          <li><strong>रिवर्स Raycast:</strong> गोली टकराने के बाद दीवार के पीछे से उल्टी किरण भेजकर दीवार की सटीक मोटाई नापी जाती है।</li>
+          <li><strong>सामग्री का प्रभाव:</strong> लकड़ी से गोली आसानी से पार होती है, जबकि कंक्रीट गोली की ऊर्जा को तेजी से सोख लेता है।</li>
+          <li><strong>गति के आधार पर नुकसान:</strong> दीवार से निकलने के बाद बची हुई गति के अनुपात में ही दुश्मन को चोट पहुंचाई जाती है।</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.WeaponFramework.RecoilSpring</div>
+        <pre><code>-- कैमरे के झटके के लिए स्प्रिंग मॉड्यूल
+local RecoilSpring = {}
+RecoilSpring.__index = RecoilSpring
+
+function RecoilSpring.new(mass, stiffness, damping)
+    local self = setmetatable({}, RecoilSpring)
+    self.Mass = mass or 1
+    self.Stiffness = stiffness or 120
+    self.Damping = damping or 14
+    self.Position = Vector3.zero
+    self.Velocity = Vector3.zero
+    self.Target = Vector3.zero
+    return self
+end
+
+function RecoilSpring:Impulse(force)
+    self.Velocity = self.Velocity + force
+end
+
+function RecoilSpring:Update(dt)
+    local displacement = self.Position - self.Target
+    local springForce = -self.Stiffness * displacement
+    local dampingForce = -self.Damping * self.Velocity
+    local acceleration = (springForce + dampingForce) / self.Mass
+    
+    self.Velocity = self.Velocity + acceleration * dt
+    self.Position = self.Position + self.Velocity * dt
+    return self.Position
+end
+
+return RecoilSpring</code></pre>
+      </div>
+
+      <h2>4. विजुअल बुलेट ट्रेल्स और ऑब्जेक्ट पूलिंग</h2>
+      <p>बिना नेटवर्क लैग के 120 FPS ग्राफिक्स बनाए रखना:</p>
+      <ul>
+          <li><strong>लोकल रेंडरिंग:</strong> गोली चलाने वाले की स्क्रीन पर तुरंत गोली का प्रभाव दिखाया जाता है ताकि कोई देरी महसूस न हो।</li>
+          <li><strong>Unreliable ब्रॉडकास्ट:</strong> बाकी खिलाड़ियों को <code>UnreliableRemoteEvent</code> से डेटा भेजा जाता है ताकि नेटवर्क पर दबाव न पड़े।</li>
+          <li><strong>ऑब्जेक्ट पूलिंग:</strong> हर गोली के लिए नया पार्ट बनाने के बजाय पहले से मौजूद पार्ट्स का बार-बार इस्तेमाल किया जाता है।</li>
+      </ul>
+
+      <h2>5. सर्वर अधिकार और चीट रोकथाम</h2>
+      <p>ऑटो-एम और तेज गोली चलाने के चीट्स को रोकना:</p>
+      <ul>
+          <li><strong>नाल की स्थिति की जांच:</strong> सर्वर जांचता है कि क्या गोली वास्तव में खिलाड़ी की बंदूक की नाल से ही निकली है।</li>
+          <li><strong>फायरिंग रेट सीमा:</strong> समय का रिकॉर्ड रखकर सर्वर तय करता है कि कोई तय गति से अधिक तेज गोली न चला सके।</li>
+          <li><strong>लैग कम्पेंसेशन:</strong> निष्पक्ष निर्णय के लिए सर्वर खिलाड़ी के पिंग के अनुसार लक्ष्य की स्थिति को कुछ पलों के लिए पीछे ले जाता है।</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Roblox में FastCast का उपयोग क्यों जरूरी है?</h3>
+          <p>क्योंकि तेज गति वाले साधारण पार्ट्स दीवारों के पार चले जाते हैं। FastCast किरणों को जोड़कर सटीक टक्कर और बुलेट ड्रॉप सुनिश्चित करता है।</p>
+        </div>
+        <div class="faq-item">
+          <h3>रिकॉइल स्प्रिंग साधारण एनिमेशन से बेहतर क्यों है?</h3>
+          <p>क्योंकि यह भौतिकी के नियमों पर काम करता है; तेजी से गोली चलाने पर झटका बढ़ता है और रुकने पर धीरे-धीरे अपने आप शांत हो जाता है।</p>
+        </div>
+        <div class="faq-item">
+          <h3>दीवार की मोटाई कैसे नापी जाती है?</h3>
+          <p>दीवार के आगे से और पीछे से विपरीत किरणें चलाकर दोनों बिंदुओं के बीच की दूरी से मोटाई निकाली जाती है।</p>
+        </div>
+        <div class="faq-item">
+          <h3>सर्वर तेज फायरिंग करने वाले चीट्स को कैसे रोकता है?</h3>
+          <p>सर्वर गोलियों के बीच के समय का हिसाब रखता है और तय सीमा से तेज आने वाले पैकेट्स को तुरंत रद्द कर देता है।</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

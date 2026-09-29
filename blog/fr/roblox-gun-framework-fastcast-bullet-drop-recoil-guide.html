@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Développement d'Armes Roblox : FastCast & Recul 2026 | DopaBrain</title>
+  <meta name="description" content="Programmez des armes dans Roblox : balistique FastCast, recul physique avec ressorts de Hooke, pénétration des murs et sécurité serveur." />
+  <meta name="keywords" content="roblox developpement armes, roblox fastcast balistique, roblox recul ressort, roblox chute de balle physique, roblox script arme" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/fr/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Développement d'Armes Roblox : FastCast & Recul 2026 | DopaBrain" />
+  <meta property="og:description" content="Programmez des armes dans Roblox : balistique FastCast, recul physique avec ressorts de Hooke, pénétration des murs et sécurité serveur." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/fr/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Développement d'Armes Roblox : FastCast & Recul 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Programmez des armes dans Roblox : balistique FastCast, recul physique avec ressorts de Hooke, pénétration des murs et sécurité serveur." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/fr/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/fr/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html"
+      },
+      "headline": "Ingénierie des Armes sur Roblox : Balistique FastCast, Ressorts de Recul et Systèmes de Tir",
+      "description": "Programmez des armes dans Roblox : balistique FastCast, recul physique avec ressorts de Hooke, pénétration des murs et sécurité serveur.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/fr/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Équipe d'Ingénierie Combat Roblox DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "fr"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Ingénierie des Armes sur Roblox : Balistique FastCast, Ressorts de Recul et Systèmes de Tir",
+          "item": "https://dopabrain.com/portal/blog/fr/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Pourquoi FastCast est-il indispensable sur Roblox ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Parce que les Parts physiques franchissent les murs à haute vitesse sans collision. FastCast découpe la trajectoire en rayons précis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quel est l'avantage d'un ressort physique sur une animation fixe ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le ressort réagit dynamiquement au rythme des tirs en accumulant l'énergie et en revenant en place avec fluidité."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment mesurer l'épaisseur d'un mur pour la pénétration ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En lançant un rayon vers l'avant puis un rayon opposé depuis l'autre côté du mur ; la différence détermine la perte d'énergie."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment le serveur neutralise-t-il les tirs trop rapides ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Grâce à un suivi des intervalles temporels de tir sur le serveur, rejetant les requêtes qui violent la cadence maximale."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Ingénierie des Armes sur Roblox : Balistique FastCast, Ressorts de Recul et Systèmes de Tir</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>Équipe d'Ingénierie Combat Roblox DopaBrain</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Axiome de Combat :</strong> Le hitscan instantané convient au corps-à-corps mais brise l'immersion à distance. Les meilleurs jeux associent FastCast pour la chute des balles et des ressorts physiques de Hooke pour un recul percutant.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier162_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Hitscan reflex & trigger response speed</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier162_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Trajectory estimation & ballistic calculations</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier162_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Numerical accuracy & spatial lead timing</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier162_stress_check">
+          <strong>Stress Check</strong>
+          <span>Combat tension & recoil control under pressure</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>Concevoir des armes agréables sur Roblox exige de concilier réactivité des commandes, physique balistique et sécurité anti-triche. Utiliser des Parts avec une simple vitesse entraîne des traversées fantômes de murs.</p>
+      <p>En s'appuyant sur des modules comme `FastCastRedux` pour la balistique segmentée et des ressorts amortis pour le recul caméra, les créateurs obtiennent un ressenti de tir digne d'un jeu console.</p>
+
+      <h2>1. Balistique FastCast vs. Hitscan Instantané</h2>
+      <p>Choisir le modèle adéquat selon le type d'arme :</p>
+      <ul>
+          <li><strong>Hitscan Immédiat :</strong> Impact calculé en une seule frame via <code>workspace:Raycast()</code>. Idéal pour fusils à pompe et lasers.</li>
+          <li><strong>Balistique FastCast :</strong> Rayons courts projetés à chaque frame avec gravité et résistance de l'air. Indispensable pour fusils de précision.</li>
+          <li><strong>Zéro Traversée Fantôme :</strong> Des rayons continus entre les positions éliminent tout passage accidentel à travers les parois.</li>
+      </ul>
+
+      <h2>2. Recul Procédural avec Ressorts de la Loi de Hooke</h2>
+      <p>Création d'un relèvement d'arme et d'une dispersion réalistes :</p>
+      <ul>
+          <li><strong>Oscillateur Harmonique :</strong> Masse, Raideur et Amortissement s'associent pour former une secousse élastique et vivante.</li>
+          <li><strong>Impulsions Multiaxes :</strong> Effets combinés de tangage (Pitch), lacet (Yaw), roulis (Roll) et recul linéaire vers l'arrière.</li>
+          <li><strong>Rétablissement de Visée :</strong> La cadence rapide cumule le recul, qui se résorbe en une courbe harmonieuse dès l'arrêt du tir.</li>
+      </ul>
+
+      <h2>3. Pénétration des Matériaux et Perte de Puissance</h2>
+      <p>Tirs à travers les surfaces (Wallbang) et amortissement :</p>
+      <ul>
+          <li><strong>Double Raycast Inversé :</strong> Après l'impact, un rayon part de la face arrière du mur pour mesurer son épaisseur exacte.</li>
+          <li><strong>Densité des Parois :</strong> Le bois laisse passer les balles avec peu de perte, alors que le béton absorbe l'énergie cinétique.</li>
+          <li><strong>Dégâts Indexés sur la Vitesse :</strong> Les dégâts restants sont directement proportionnels à la vitesse résiduelle après traversée.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.WeaponFramework.RecoilSpring</div>
+        <pre><code>-- Ressort amorti pour recul procédural de caméra
+local RecoilSpring = {}
+RecoilSpring.__index = RecoilSpring
+
+function RecoilSpring.new(mass, stiffness, damping)
+    local self = setmetatable({}, RecoilSpring)
+    self.Mass = mass or 1
+    self.Stiffness = stiffness or 120
+    self.Damping = damping or 14
+    self.Position = Vector3.zero
+    self.Velocity = Vector3.zero
+    self.Target = Vector3.zero
+    return self
+end
+
+function RecoilSpring:Impulse(force)
+    self.Velocity = self.Velocity + force
+end
+
+function RecoilSpring:Update(dt)
+    local displacement = self.Position - self.Target
+    local springForce = -self.Stiffness * displacement
+    local dampingForce = -self.Damping * self.Velocity
+    local acceleration = (springForce + dampingForce) / self.Mass
+    
+    self.Velocity = self.Velocity + acceleration * dt
+    self.Position = self.Position + self.Velocity * dt
+    return self.Position
+end
+
+return RecoilSpring</code></pre>
+      </div>
+
+      <h2>4. Traçantes Visuelles et Object Pooling</h2>
+      <p>Rendu graphique à 120 FPS sans encombrement réseau :</p>
+      <ul>
+          <li><strong>Traçantes Locales Immédiates :</strong> Affichées sans attendre la validation du serveur pour une réactivité optimale.</li>
+          <li><strong>Diffusion Légère aux Autres :</strong> Synchronisation par <code>UnreliableRemoteEvent</code> pour éviter l'accumulation de paquets.</li>
+          <li><strong>Part Pooling :</strong> Réutilisation en boucle d'effets préchargés en mémoire pour éviter les blocages de collecte de déchets.</li>
+      </ul>
+
+      <h2>5. Autorité Serveur et Sécurité Anti-Aimbot</h2>
+      <p>Blocage des tirs accélérés et des impacts impossibles :</p>
+      <ul>
+          <li><strong>Vérification du Canon :</strong> Le serveur confirme que le tir est bien parti à proximité du canon de l'arme.</li>
+          <li><strong>Régulation de Cadence :</strong> Algorithme à réservoir qui élimine toute salve dépassant la cadence autorisée.</li>
+          <li><strong>Compensation du Lag :</strong> Le serveur remonte le temps selon le ping du tireur pour valider les touches équitablement.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Pourquoi FastCast est-il indispensable sur Roblox ?</h3>
+          <p>Parce que les Parts physiques franchissent les murs à haute vitesse sans collision. FastCast découpe la trajectoire en rayons précis.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Quel est l'avantage d'un ressort physique sur une animation fixe ?</h3>
+          <p>Le ressort réagit dynamiquement au rythme des tirs en accumulant l'énergie et en revenant en place avec fluidité.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Comment mesurer l'épaisseur d'un mur pour la pénétration ?</h3>
+          <p>En lançant un rayon vers l'avant puis un rayon opposé depuis l'autre côté du mur ; la différence détermine la perte d'énergie.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Comment le serveur neutralise-t-il les tirs trop rapides ?</h3>
+          <p>Grâce à un suivi des intervalles temporels de tir sur le serveur, rejetant les requêtes qui violent la cadence maximale.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

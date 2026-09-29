@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 총기 개발: FastCast 탄도학 & 반동 스프링 2026 가이드 | DopaBrain</title>
+  <meta name="description" content="로블록스 무기 시스템 개발: FastCast 세그먼트 탄도 시뮬레이션, 절차적 훅의 법칙 반동 스프링, 벽면 관통 및 서버 권한 검증 구현." />
+  <meta name="keywords" content="로블록스 총기 개발, 로블록스 fastcast 탄도학, 로블록스 반동 스프링 공식, 로블록스 탄도 낙차 물리, 로블록스 무기 시스템 스크립트" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 총기 개발: FastCast 탄도학 & 반동 스프링 2026 가이드 | DopaBrain" />
+  <meta property="og:description" content="로블록스 무기 시스템 개발: FastCast 세그먼트 탄도 시뮬레이션, 절차적 훅의 법칙 반동 스프링, 벽면 관통 및 서버 권한 검증 구현." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 총기 개발: FastCast 탄도학 & 반동 스프링 2026 가이드 | DopaBrain" />
+  <meta name="twitter:description" content="로블록스 무기 시스템 개발: FastCast 세그먼트 탄도 시뮬레이션, 절차적 훅의 법칙 반동 스프링, 벽면 관통 및 서버 권한 검증 구현." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html"
+      },
+      "headline": "로블록스 컴뱃 엔지니어링: FastCast 탄도학, 절차적 반동 스프링 및 무기 시스템",
+      "description": "로블록스 무기 시스템 개발: FastCast 세그먼트 탄도 시뮬레이션, 절차적 훅의 법칙 반동 스프링, 벽면 관통 및 서버 권한 검증 구현.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 로블록스 컴뱃 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 컴뱃 엔지니어링: FastCast 탄도학, 절차적 반동 스프링 및 무기 시스템",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-gun-framework-fastcast-bullet-drop-recoil-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "FastCast가 로블록스 총기 개발에 필수적인 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "물리적 Part 투사체는 속도가 빠르면 벽을 뚫고 지나가는 터널링 현상이 생깁니다. FastCast는 프레임 사이를 연속적인 레이캐스트 선분으로 연결하여 완벽한 충돌 감지와 탄도 낙차를 보장합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "절차적 물리 스프링 반동이 키프레임 애니메이션보다 우수한 점은 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "스프링은 질량과 탄성 물리 공식에 의해 작동하므로, 연사 시 자연스럽게 반동이 누적되고 사격을 멈추면 부드러운 감쇠 곡선을 그리며 에임이 복귀하여 훨씬 생동감 넘칩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "로블록스에서 벽 관통(월뱅)은 어떻게 구현하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "탄환이 닿은 벽면에서 관통 방향으로 뚫고 들어간 뒤, 벽 반대편에서 역방향 레이캐스트를 쏘아 두 지점 사이의 두께를 측정하고 그에 비례해 탄속과 대미지를 차감합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "서버에서 연사 속도 변조 핵을 어떻게 막나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "서버에 플레이어별 사격 타임스탬프를 보관하는 누적 버킷(Leaky Bucket)을 두고, 무기 고유의 사이클 속도보다 짧은 간격으로 들어오는 사격 패킷을 강제 드롭합니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>로블록스 컴뱃 엔지니어링: FastCast 탄도학, 절차적 반동 스프링 및 무기 시스템</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain 로블록스 컴뱃 엔지니어링 팀</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>전투 아키텍처 핵심:</strong> 레이캐스트 히트스캔은 근거리에서 즉각적인 타격감을 주지만 장거리 저격의 몰입감을 해칩니다. 하이엔드 슈팅 게임은 FastCast 수치 적분 탄도학과 훅의 법칙 감쇠 진동 스프링을 결합해 영화 같은 반동과 리얼한 탄도 낙차를 구현합니다.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier162_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>히트스캔 반사 신경 및 격발 반응 속도</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier162_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>탄도 궤적 예측 및 탄속 적분 인지 스타일</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier162_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>수치적 정확도와 예측 리드샷 논리 훈련</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier162_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>교전 긴장감과 반동 제어 멘탈 안정도</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>로블록스에서 완벽한 총기 손맛을 구현하려면 즉각적인 클라이언트 조작 반응성과 물리적 탄도, 그리고 치밀한 서버 보안의 균형을 맞춰야 합니다. 단순히 Part에 속도를 주어 날리는 방식은 탄환이 벽이나 적을 뚫고 지나가는 터널링 버그를 유발합니다.</p>
+      <p>레이캐스트 기반의 세그먼트 궤적 적분 모듈인 `FastCastRedux`와 카메라 킥백을 위한 물리 스프링(Damped Harmonic Oscillator)을 적용하면 모바일과 PC 모두에서 콘솔 FPS 수준의 타격감과 탄도학을 완성할 수 있습니다.</p>
+
+      <h2>1. FastCast 탄도학 vs. Raycast 히트스캔 설계</h2>
+      <p>무기 특성에 따른 최적의 탄도 모델 선정:</p>
+      <ul>
+          <li><strong>즉시 판정 히트스캔:</strong> <code>workspace:Raycast()</code> 1회로 한 프레임에 탄착을 계산합니다. 권총, 산탄총, 근접 레이저 무기에 적합합니다.</li>
+          <li><strong>FastCast 세그먼트 탄도학:</strong> 매 물리 틱마다 중력과 공기저항을 반영해 레이캐스트를 짧게 전진시킵니다. 장거리 탄속과 낙차를 고려해야 하는 저격총과 소총에 필수적입니다.</li>
+          <li><strong>터널링(Tunneling) 완벽 차단:</strong> FastCast는 이전 프레임 위치와 현재 위치 사이에 선분 레이를 연속 연결하므로 극초음속 탄환도 얇은 벽을 뚫고 사라지지 않습니다.</li>
+      </ul>
+
+      <h2>2. 훅의 법칙 감쇠 진동 스프링을 이용한 절차적 반동</h2>
+      <p>생동감 넘치는 화면 흔들림과 크로스헤어 팽창 계산법:</p>
+      <ul>
+          <li><strong>물리 스프링 모델:</strong> 질량(Mass), 강성(Stiffness), 감쇠(Damping) 3대 파라미터로 제어되는 조화 진동자 방정식을 통해 기계적이지 않은 유기적인 반동 곡선을 만듭니다.</li>
+          <li><strong>다축 충격량 인가(Impulse):</strong> 사격 시 수직 킥(Pitch), 수평 요동(Yaw), 총기 비틀림(Roll) 각속도와 Z축 후퇴 변위를 동시에 가합니다.</li>
+          <li><strong>자연스러운 탄착군 회복:</strong> 연사 시 스프링에 에너지가 누적되어 에임이 서서히 벌어지고, 사격을 멈추면 매끄러운 곡선을 그리며 원점으로 복귀합니다.</li>
+      </ul>
+
+      <h2>3. 재질별 관통력과 운동 에너지 감쇠</h2>
+      <p>벽 관통 샷(Wallbang)과 거리별 대미지 낙차 구현:</p>
+      <ul>
+          <li><strong>양방향 레이캐스트 관통 측정:</strong> 탄환이 벽에 충돌한 지점 반대편에서 역방향 레이캐스트를 발사하여 벽체의 정확한 두께를 측정합니다.</li>
+          <li><strong>재질 밀도 계수:</strong> 목재와 유리는 적은 에너지 손실로 다중 관통을 허용하지만, 콘크리트나 금속은 탄환을 튕겨내거나 에너지를 흡수합니다.</li>
+          <li><strong>잔여 속도 기반 대미지:</strong> 관통 후 남은 잔여 탄속과 비행 거리에 비례하여 대미지를 정밀하게 차감합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.WeaponFramework.RecoilSpring</div>
+        <pre><code>-- 절차적 카메라 반동을 위한 감쇠 진동자(Spring) 모듈
+local RecoilSpring = {}
+RecoilSpring.__index = RecoilSpring
+
+function RecoilSpring.new(mass, stiffness, damping)
+    local self = setmetatable({}, RecoilSpring)
+    self.Mass = mass or 1
+    self.Stiffness = stiffness or 120
+    self.Damping = damping or 14
+    self.Position = Vector3.zero
+    self.Velocity = Vector3.zero
+    self.Target = Vector3.zero
+    return self
+end
+
+function RecoilSpring:Impulse(force)
+    self.Velocity = self.Velocity + force
+end
+
+function RecoilSpring:Update(dt)
+    -- Hooke's Law: F = -k*x - c*v
+    local displacement = self.Position - self.Target
+    local springForce = -self.Stiffness * displacement
+    local dampingForce = -self.Damping * self.Velocity
+    local acceleration = (springForce + dampingForce) / self.Mass
+    
+    self.Velocity = self.Velocity + acceleration * dt
+    self.Position = self.Position + self.Velocity * dt
+    return self.Position
+end
+
+return RecoilSpring</code></pre>
+      </div>
+
+      <h2>4. 시각적 예광탄 복제와 파티클 풀링</h2>
+      <p>네트워크 렉 없이 120 FPS의 부드러운 시각 효과 유지:</p>
+      <ul>
+          <li><strong>클라이언트 로컬 즉시 렌더링:</strong> 발사자의 화면에서는 서버 응답을 기다리지 않고 클릭 즉시 총구 화염과 예광탄을 렌더링하여 조작 지연을 없앱니다.</li>
+          <li><strong>관전자 Unreliable 복제:</strong> 다른 플레이어들에게는 <code>UnreliableRemoteEvent</code>로 탄환 궤적을 전송하여 네트워크 패킷 지연을 방지합니다.</li>
+          <li><strong>오브젝트 풀링(Part Pooling):</strong> 매 발사마다 인스턴스를 생성/파괴하지 않고 미리 할당된 예광탄 풀을 재사용해 메모리 파편화를 막습니다.</li>
+      </ul>
+
+      <h2>5. 서버 권한 검증과 안티 에임핵 보안</h2>
+      <p>월핵, 오토에임, 연사 속도 변조를 방어하는 서버 검증:</p>
+      <ul>
+          <li><strong>총구 위치 허용 반경 검증:</strong> 클라이언트가 보고한 탄환 발사 시작점이 실제 서버 캐릭터 총구로부터 4스터드 이내인지 검증합니다.</li>
+          <li><strong>연사 속도 누적 버킷(Leaky Bucket):</strong> 사격 타임스탬프를 링 버퍼에 기록하여 스펙상의 RPM보다 빠른 사격 요청을 즉시 폐기합니다.</li>
+          <li><strong>지연 보상 되감기(Lag Compensation):</strong> 사격 순간의 슈터 핑만큼 적의 히트박스를 과거로 되감아 정당한 명중 여부를 서버가 판정합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>FastCast가 로블록스 총기 개발에 필수적인 이유는 무엇인가요?</h3>
+          <p>물리적 Part 투사체는 속도가 빠르면 벽을 뚫고 지나가는 터널링 현상이 생깁니다. FastCast는 프레임 사이를 연속적인 레이캐스트 선분으로 연결하여 완벽한 충돌 감지와 탄도 낙차를 보장합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>절차적 물리 스프링 반동이 키프레임 애니메이션보다 우수한 점은 무엇인가요?</h3>
+          <p>스프링은 질량과 탄성 물리 공식에 의해 작동하므로, 연사 시 자연스럽게 반동이 누적되고 사격을 멈추면 부드러운 감쇠 곡선을 그리며 에임이 복귀하여 훨씬 생동감 넘칩니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>로블록스에서 벽 관통(월뱅)은 어떻게 구현하나요?</h3>
+          <p>탄환이 닿은 벽면에서 관통 방향으로 뚫고 들어간 뒤, 벽 반대편에서 역방향 레이캐스트를 쏘아 두 지점 사이의 두께를 측정하고 그에 비례해 탄속과 대미지를 차감합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>서버에서 연사 속도 변조 핵을 어떻게 막나요?</h3>
+          <p>서버에 플레이어별 사격 타임스탬프를 보관하는 누적 버킷(Leaky Bucket)을 두고, 무기 고유의 사이클 속도보다 짧은 간격으로 들어오는 사격 패킷을 강제 드롭합니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
