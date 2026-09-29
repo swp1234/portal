@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox动画与逆向运动学：IKControl 2026指南 | DopaBrain</title>
+  <meta name="description" content="Roblox角色动画完全指南：基于IKControl的程序化脚步贴地(Foot Planting)、动态头部视线追踪(Look-At)、Animator权重融合及斜坡自适应。" />
+  <meta name="keywords" content="roblox ikcontrol 逆向运动学, roblox 程序化脚步贴地, roblox 动画权重融合, roblox 视线追踪 lookat, roblox 动画优先级" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox动画与逆向运动学：IKControl 2026指南 | DopaBrain" />
+  <meta property="og:description" content="Roblox角色动画完全指南：基于IKControl的程序化脚步贴地(Foot Planting)、动态头部视线追踪(Look-At)、Animator权重融合及斜坡自适应。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox动画与逆向运动学：IKControl 2026指南 | DopaBrain" />
+  <meta name="twitter:description" content="Roblox角色动画完全指南：基于IKControl的程序化脚步贴地(Foot Planting)、动态头部视线追踪(Look-At)、Animator权重融合及斜坡自适应。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-animation-inverse-kinematics-ikcontrol-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/roblox-animation-inverse-kinematics-ikcontrol-guide.html"
+      },
+      "headline": "Roblox动画与逆向运动学：IKControl、程序化脚步贴地与动态动作融合",
+      "description": "Roblox角色动画完全指南：基于IKControl的程序化脚步贴地(Foot Planting)、动态头部视线追踪(Look-At)、Animator权重融合及斜坡自适应。",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/roblox-animation-inverse-kinematics-ikcontrol-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox动画工程团队",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "zh"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox动画与逆向运动学：IKControl、程序化脚步贴地与动态动作融合",
+          "item": "https://dopabrain.com/portal/blog/zh/roblox-animation-inverse-kinematics-ikcontrol-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "为什么必须使用 Animator:LoadAnimation 而不能用 Humanoid:LoadAnimation？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Humanoid上的方法已被官方弃用，容易引发多客户端复制失败；Animator是专门负责底层网络同步的专用容器。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "IKControl 相比传统 Lua 手写 CFrame 有什么性能优势？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "IKControl运行在Roblox底层的C++引擎中，计算效率高出数倍，且天然支持与关键帧动画的平滑权重混合。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何防止膝盖或肘部发生反向翻折？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在关节前方放置一个Pole附件，并指定给IKControl的Pole属性，即可锁定关节朝向前方的正确弯曲方向。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "程序化脚步贴地代码应部署在服务端还是客户端？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "必须在客户端（RenderStepped）执行。如果在服务端运行，网络往返延迟会导致画面卡顿且拖垮服务器Tick率。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "跳跃或浮空时如何退出脚步贴地？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "检测 Humanoid.FloorMaterial，若处于 Air 或自由落体状态，立即将 IKControl.Weight 平滑降为0。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox动画与逆向运动学：IKControl、程序化脚步贴地与动态动作融合</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain Roblox动画工程团队</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>动画架构核心准则：</strong> 静态关键帧走动在斜坡或楼梯上极易导致浮空或穿模。将Animator权重融合与运行期IKControl逆向运动学相结合，打造自然贴地的AAA级角色动作体系。
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier156_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Kinesthetic & spatial processing styles</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier156_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Visual cues & reflex response speed</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier156_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Precision positioning & sequence logic</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier156_stress_check">
+          <strong>Stress Check</strong>
+          <span>Visual fluidity & cognitive immersion</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>在现代Roblox开发中，角色对复杂物理环境的动态适应力是衡量高品质作品的标尺。传统的固化关键帧动画在经过斜坡、碎石或楼梯时，脚步常悬空在空气中或深陷石块，破坏沉浸感。</p>
+      <p>Roblox Studio现已支持原生逆向运动学实例IKControl。通过将向下射线检测（Raycast）、权重混合AnimationTracks与角度受限的视线追踪（Look-At）结合，开发者能以极高执行效率实现逼真的脚步贴地与眼神交流。</p>
+
+      <h2>1. 现代动画管线：Animator 与优先级管理</h2>
+      <p>Luau骨骼动画轨道管理核心准则：</p>
+      <ul>
+          <li><strong>Animator 实例归属：</strong> 切勿调用过时的 <code>Humanoid:LoadAnimation()</code>，始终使用 <code>Animator</code> 加载动画，确保联机网络同步稳定可靠。</li>
+          <li><strong>动画优先级分层：</strong> 严格规范优先级（<code>Core</code>、<code>Idle</code>、<code>Movement</code>、<code>Action</code>、<code>Action2~4</code>）。将换弹动画设为Action，可在下半身保持Movement走动的同时覆盖手臂。</li>
+          <li><strong>权重与淡入淡出：</strong> 利用 <code>track:Play(fadeTime, weight)</code> 和 <code>AdjustWeight()</code>，实现行走、慢跑与冲刺之间的丝滑过渡，避免关节瞬间突变。</li>
+      </ul>
+
+      <h2>2. 基于 IKControl 的逆向运动学架构</h2>
+      <p>根据目标坐标反推关节角度的运行机制：</p>
+      <ul>
+          <li><strong>四大核心属性：</strong> 必须正确配置 <code>Type</code>（LookAt、Position、Transform）、<code>EndEffector</code>（末端如LeftFoot）、<code>Target</code>（目标物体）与 <code>ChainRoot</code>（根关节如LeftUpperLeg）。</li>
+          <li><strong>极点约束（Pole Constraints）：</strong> 在手肘或膝盖前侧设立 <code>Pole</code> 附件，避免深蹲或攀爬时关节发生诡异的反向折断。</li>
+          <li><strong>Weight 动态插值：</strong> 当角色踏上崎岖地形时，将 <code>Weight</code> 从0平滑过渡至1，使关键帧动作与程序化IK自然交融。</li>
+      </ul>
+
+      <h2>3. 程序化脚步贴地（Foot Planting）与法线匹配</h2>
+      <p>确保鞋底完美紧贴台阶与倾斜岩石：</p>
+      <ul>
+          <li><strong>向下发射检测射线：</strong> 在移动中从左右髋部垂直向下发射Raycast，获取距离地面的精准落点及法线向量（Normal）。</li>
+          <li><strong>动态目标点定位：</strong> 将IK目标附件定位在射线碰撞点，加上鞋底厚度偏移量，实时刷新目标WorldPosition。</li>
+          <li><strong>脚踝角度自适应：</strong> 根据碰撞面法线动态旋转脚部附件，使鞋底平稳贴合倾斜坡面。</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.CharacterFramework.ProceduralFootIK</div>
+        <pre><code>-- 程序化脚步贴地IK控制器模块
+local RunService = game:GetService("RunService")
+local FootIK = {}
+FootIK.__index = FootIK
+
+function FootIK.new(character)
+    local self = setmetatable({}, FootIK)
+    self.Char = character
+    self.Humanoid = character:WaitForChild("Humanoid")
+    self.RootPart = character:WaitForChild("HumanoidRootPart")
+    
+    local leftIK = Instance.new("IKControl")
+    leftIK.Name = "LeftFootIK"
+    leftIK.Type = Enum.IKControlType.Transform
+    leftIK.EndEffector = character:WaitForChild("LeftFoot")
+    leftIK.ChainRoot = character:WaitForChild("LeftUpperLeg")
+    
+    local leftTarget = Instance.new("Attachment")
+    leftTarget.Name = "LeftIKTarget"
+    leftTarget.Parent = workspace.Terrain
+    leftIK.Target = leftTarget
+    leftIK.Parent = self.Humanoid
+    
+    self.LeftIK = leftIK
+    self.LeftTarget = leftTarget
+    return self
+end
+
+function FootIK:Update(dt)
+    if self.Humanoid.FloorMaterial == Enum.Material.Air then
+        self.LeftIK.Weight = 0
+        return
+    end
+    
+    local rayOrigin = self.Char.LeftUpperLeg.Position
+    local rayDirection = Vector3.new(0, -3.5, 0)
+    local rayParams = RaycastParams.new()
+    rayParams.FilterDescendantsInstances = {self.Char}
+    rayParams.FilterType = Enum.RaycastFilterType.Exclude
+    
+    local result = workspace:Raycast(rayOrigin, rayDirection, rayParams)
+    if result then
+        self.LeftTarget.WorldPosition = result.Position + Vector3.new(0, 0.4, 0)
+        self.LeftIK.Weight = 0.8
+    else
+        self.LeftIK.Weight = 0
+    end
+end
+
+return FootIK</code></pre>
+      </div>
+
+      <h2>4. 动态头部视线追踪（Look-At）机制</h2>
+      <p>使角色灵动地注视摄像机焦点或临近NPC：</p>
+      <ul>
+          <li><strong>摄像机注视追踪：</strong> 为头部赋予LookAt类型的IKControl，Target设为镜头焦点，让角色散发有意识的灵动神态。</li>
+          <li><strong>角度极限钳制（Clamping）：</strong> 限制水平偏航角在70度以内、垂直俯仰角在45度以内，防止发生非人类的180度恐怖拧脖现象。</li>
+          <li><strong>平滑阻尼插值：</strong> 使用弹簧算法或Lerp插值更新注视位置，消除头部跟随目标时的机械顿挫感。</li>
+      </ul>
+
+      <h2>5. 性能与移动端优化守则</h2>
+      <p>在高密度玩家服务器中确保物理与渲染帧率：</p>
+      <ul>
+          <li><strong>客户端独立结算：</strong> 贴地与视线IK属于纯视觉表现，必须在本地客户端的 <code>RenderStepped</code> 中执行，保障120 FPS高刷流畅度。</li>
+          <li><strong>LOD（视距裁剪）：</strong> 对摄像机60 Studs开外的远端角色禁用IKControl，显著节省移动端CPU开销。</li>
+          <li><strong>内存回收：</strong> 角色死亡或触发布娃娃系统（Ragdoll）时，立即销毁多余附件并解除事件连接。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>为什么必须使用 Animator:LoadAnimation 而不能用 Humanoid:LoadAnimation？</h3>
+          <p>Humanoid上的方法已被官方弃用，容易引发多客户端复制失败；Animator是专门负责底层网络同步的专用容器。</p>
+        </div>
+        <div class="faq-item">
+          <h3>IKControl 相比传统 Lua 手写 CFrame 有什么性能优势？</h3>
+          <p>IKControl运行在Roblox底层的C++引擎中，计算效率高出数倍，且天然支持与关键帧动画的平滑权重混合。</p>
+        </div>
+        <div class="faq-item">
+          <h3>如何防止膝盖或肘部发生反向翻折？</h3>
+          <p>在关节前方放置一个Pole附件，并指定给IKControl的Pole属性，即可锁定关节朝向前方的正确弯曲方向。</p>
+        </div>
+        <div class="faq-item">
+          <h3>程序化脚步贴地代码应部署在服务端还是客户端？</h3>
+          <p>必须在客户端（RenderStepped）执行。如果在服务端运行，网络往返延迟会导致画面卡顿且拖垮服务器Tick率。</p>
+        </div>
+        <div class="faq-item">
+          <h3>跳跃或浮空时如何退出脚步贴地？</h3>
+          <p>检测 Humanoid.FloorMaterial，若处于 Air 或自由落体状态，立即将 IKControl.Weight 平滑降为0。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

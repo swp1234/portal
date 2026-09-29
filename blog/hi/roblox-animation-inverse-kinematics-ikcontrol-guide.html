@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox एनिमेशन और व्युत्क्रम गतिकी: IKControl 2026 गाइड | DopaBrain</title>
+  <meta name="description" content="Roblox कैरेक्टर एनिमेशन गाइड: IKControl प्रक्रियात्मक पैर प्लेसमेंट, गतिशील दृष्टि ट्रैकिंग (Look-At), Animator वेट ब्लेंडिंग और ढलान संरेखण।" />
+  <meta name="keywords" content="roblox ikcontrol व्युत्क्रम गतिकी, roblox प्रक्रियात्मक पैर प्लेसमेंट, roblox एनिमेशन वेट ब्लेंडिंग, roblox दृष्टि ट्रैकिंग lookat" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/hi/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox एनिमेशन और व्युत्क्रम गतिकी: IKControl 2026 गाइड | DopaBrain" />
+  <meta property="og:description" content="Roblox कैरेक्टर एनिमेशन गाइड: IKControl प्रक्रियात्मक पैर प्लेसमेंट, गतिशील दृष्टि ट्रैकिंग (Look-At), Animator वेट ब्लेंडिंग और ढलान संरेखण।" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/hi/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox एनिमेशन और व्युत्क्रम गतिकी: IKControl 2026 गाइड | DopaBrain" />
+  <meta name="twitter:description" content="Roblox कैरेक्टर एनिमेशन गाइड: IKControl प्रक्रियात्मक पैर प्लेसमेंट, गतिशील दृष्टि ट्रैकिंग (Look-At), Animator वेट ब्लेंडिंग और ढलान संरेखण।" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/hi/roblox-animation-inverse-kinematics-ikcontrol-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/hi/roblox-animation-inverse-kinematics-ikcontrol-guide.html"
+      },
+      "headline": "Roblox एनिमेशन और व्युत्क्रम गतिकी: IKControl, प्रक्रियात्मक पैर प्लेसमेंट और गतिशील ब्लेंडिंग",
+      "description": "Roblox कैरेक्टर एनिमेशन गाइड: IKControl प्रक्रियात्मक पैर प्लेसमेंट, गतिशील दृष्टि ट्रैकिंग (Look-At), Animator वेट ब्लेंडिंग और ढलान संरेखण।",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/hi/roblox-animation-inverse-kinematics-ikcontrol-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox एनिमेशन इंजीनियरिंग टीम",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "hi"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox एनिमेशन और व्युत्क्रम गतिकी: IKControl, प्रक्रियात्मक पैर प्लेसमेंट और गतिशील ब्लेंडिंग",
+          "item": "https://dopabrain.com/portal/blog/hi/roblox-animation-inverse-kinematics-ikcontrol-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Humanoid:LoadAnimation के बजाय Animator का उपयोग क्यों करना चाहिए?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Humanoid विधि पुरानी हो चुकी है और नेटवर्क सिंक में समस्याएं पैदा करती है। Animator सही मल्टीप्लेयर सपोर्ट देता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "पारंपरिक CFrame गणना की तुलना में IKControl के क्या फायदे हैं?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "IKControl सीधे Roblox C++ कोर में चलता है, जिससे यह बहुत तेज़ होता है और एनिमेशन के साथ आसानी से मिल जाता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "घुटनों को उलटी दिशा में मुड़ने से कैसे रोकें?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "घुटने के आगे एक Pole अटैचमेंट जोड़ें और इसे IKControl के Pole गुण में सेट करें।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "पैर जमाने का कोड सर्वर पर चलना चाहिए या क्लाइंट पर?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "हमेशा क्लाइंट पर RenderStepped में, ताकि नेटवर्क लैग के बिना सुचारू रूप से चले।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "कूदते समय IK को कैसे बंद करें?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Humanoid.FloorMaterial की जांच करें; हवा में होने पर Weight को तुरंत 0 कर दें।"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox एनिमेशन और व्युत्क्रम गतिकी: IKControl, प्रक्रियात्मक पैर प्लेसमेंट और गतिशील ब्लेंडिंग</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain Roblox एनिमेशन इंजीनियरिंग टीम</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>एनिमेशन वास्तुकला नियम:</strong> समतल न होने वाले रास्तों पर स्थिर एनिमेशन हवा में तैरते हुए दिखते हैं। ढलानों और सीढ़ियों पर पैरों के सटीक संपर्क के लिए Animator और IKControl को एक साथ इस्तेमाल करें।
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier156_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Kinesthetic & spatial processing styles</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier156_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Visual cues & reflex response speed</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier156_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Precision positioning & sequence logic</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier156_stress_check">
+          <strong>Stress Check</strong>
+          <span>Visual fluidity & cognitive immersion</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>आधुनिक Roblox अनुभवों में पात्रों की शारीरिक गतिशीलता खेल की गुणवत्ता तय करती है। केवल रिकॉर्ड किए गए एनिमेशन पर निर्भर रहने से सीढ़ियों या असमान पत्थरों पर चलते समय पैर हवा में लटकते हैं या पत्थरों में धंस जाते हैं।</p>
+      <p>Roblox Studio का आधुनिक सिस्टम IKControl के ज़रिए इनवर्स किनेमैटिक्स (IK) प्रदान करता है। रेकास्ट ग्राउंड डिटेक्शन, वेट ब्लेंडिंग और सीमित कोणों के संयोजन से आप सहज गति और सजीव दृष्टि ट्रैकिंग बना सकते हैं।</p>
+
+      <h2>1. आधुनिक एनिमेशन पाइपलाइन: Animator और प्राथमिकताएं</h2>
+      <p>Luau में कंकाल एनिमेशन ट्रैक प्रबंधन की मूल बातें:</p>
+      <ul>
+          <li><strong>Animator का उपयोग:</strong> पुराने <code>Humanoid:LoadAnimation()</code> के बजाय हमेशा <code>Animator</code> का उपयोग करें ताकि मल्टीप्लेयर में त्रुटियां न हों।</li>
+          <li><strong>प्राथमिकता स्तर:</strong> एनिमेशन को श्रेणियों (<code>Core</code>, <code>Idle</code>, <code>Movement</code>, <code>Action</code>) में बाँटें। Action पर रीलोड चलने से पैर Movement में चलते रहेंगे।</li>
+          <li><strong>वेट ब्लेंडिंग:</strong> चलने और दौड़ने के बीच सहज बदलाव के लिए <code>track:Play(fadeTime, weight)</code> का उपयोग करें।</li>
+      </ul>
+
+      <h2>2. IKControl के साथ व्युत्क्रम गतिकी वास्तुकला</h2>
+      <p>लक्ष्य की ओर जोड़ों के कोणों की स्वतः गणना:</p>
+      <ul>
+          <li><strong>मुख्य गुण:</strong> <code>Type</code> (LookAt, Position, Transform), <code>EndEffector</code> (जैसे LeftFoot), <code>Target</code>, और <code>ChainRoot</code> (LeftUpperLeg) सेट करें।</li>
+          <li><strong>Pole प्रतिबंध:</strong> घुटनों या कोहनियों को पीछे की ओर मुड़ने से रोकने के लिए आगे एक <code>Pole</code> अटैचमेंट जोड़ें।</li>
+          <li><strong>Weight समायोजन:</strong> असमान जमीन पर कदम रखते ही <code>Weight</code> को 0 से 1 तक सहजता से बढ़ाएँ।</li>
+      </ul>
+
+      <h2>3. प्रक्रियात्मक पैर प्लेसमेंट और ढलान संरेखण</h2>
+      <p>सीढ़ियों और पत्थरों पर पैरों को मजबूती से टिकाना:</p>
+      <ul>
+          <li><strong>नीचे की ओर रेकास्ट:</strong> प्रत्येक कूल्हे से नीचे रेकास्ट करके जमीन की दूरी और सतह का सामान्य वेक्टर (Normal) निकालें।</li>
+          <li><strong>लक्ष्य की स्थिति:</strong> रेकास्ट के संपर्क बिंदु पर जूते के तलवे की मोटाई जोड़कर IK लक्ष्य को सेट करें।</li>
+          <li><strong>टखने का कोण मिलाना:</strong> सतह के कोण के अनुसार पैर को घुमाएँ ताकि तलवा ढलान पर पूरी तरह टिके।</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.CharacterFramework.ProceduralFootIK</div>
+        <pre><code>-- IKControl प्रक्रियात्मक पैर प्लेसमेंट मॉड्यूल
+local RunService = game:GetService("RunService")
+local FootIK = {}
+FootIK.__index = FootIK
+
+function FootIK.new(character)
+    local self = setmetatable({}, FootIK)
+    self.Char = character
+    self.Humanoid = character:WaitForChild("Humanoid")
+    self.RootPart = character:WaitForChild("HumanoidRootPart")
+    
+    local leftIK = Instance.new("IKControl")
+    leftIK.Name = "LeftFootIK"
+    leftIK.Type = Enum.IKControlType.Transform
+    leftIK.EndEffector = character:WaitForChild("LeftFoot")
+    leftIK.ChainRoot = character:WaitForChild("LeftUpperLeg")
+    
+    local leftTarget = Instance.new("Attachment")
+    leftTarget.Name = "LeftIKTarget"
+    leftTarget.Parent = workspace.Terrain
+    leftIK.Target = leftTarget
+    leftIK.Parent = self.Humanoid
+    
+    self.LeftIK = leftIK
+    self.LeftTarget = leftTarget
+    return self
+end
+
+function FootIK:Update(dt)
+    if self.Humanoid.FloorMaterial == Enum.Material.Air then
+        self.LeftIK.Weight = 0
+        return
+    end
+    
+    local rayOrigin = self.Char.LeftUpperLeg.Position
+    local rayDirection = Vector3.new(0, -3.5, 0)
+    local rayParams = RaycastParams.new()
+    rayParams.FilterDescendantsInstances = {self.Char}
+    rayParams.FilterType = Enum.RaycastFilterType.Exclude
+    
+    local result = workspace:Raycast(rayOrigin, rayDirection, rayParams)
+    if result then
+        self.LeftTarget.WorldPosition = result.Position + Vector3.new(0, 0.4, 0)
+        self.LeftIK.Weight = 0.8
+    else
+        self.LeftIK.Weight = 0
+    end
+end
+
+return FootIK</code></pre>
+      </div>
+
+      <h2>4. सिर और दृष्टि ट्रैकिंग (Look-At)</h2>
+      <p>कैमरे या पास के खिलाड़ियों की ओर प्राकृतिक रूप से देखना:</p>
+      <ul>
+          <li><strong>कैमरा ट्रैकिंग:</strong> सिर पर LookAt प्रकार का IKControl जोड़ें और कैमरे के फोकस बिंदु को लक्ष्य बनाएँ।</li>
+          <li><strong>कोण सीमा:</strong> सिर को अस्वाभाविक रूप से घूमने से रोकने के लिए क्षैतिज रूप से 70 और लंबवत रूप से 45 डिग्री तक सीमित करें।</li>
+          <li><strong>सहज डैम्पिंग:</strong> Lerp का उपयोग करें ताकि सिर रोबोट की तरह झटके से न घूमे।</li>
+      </ul>
+
+      <h2>5. मोबाइल और प्रदर्शन अनुकूलन</h2>
+      <p>अधिक खिलाड़ियों वाले सर्वर में 60 FPS बनाए रखना:</p>
+      <ul>
+          <li><strong>क्लाइंट पर गणना:</strong> पैरों की IK गणना हमेशा क्लाइंट के <code>RenderStepped</code> में चलाएँ।</li>
+          <li><strong>दूरी अनुसार छंटाई (LOD):</strong> 60 स्टड से दूर के पात्रों पर IKControl बंद कर दें।</li>
+          <li><strong>मेमोरी सफाई:</strong> पात्र के गिरने या मरने पर अटैचमेंट तुरंत हटा दें।</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Humanoid:LoadAnimation के बजाय Animator का उपयोग क्यों करना चाहिए?</h3>
+          <p>Humanoid विधि पुरानी हो चुकी है और नेटवर्क सिंक में समस्याएं पैदा करती है। Animator सही मल्टीप्लेयर सपोर्ट देता है।</p>
+        </div>
+        <div class="faq-item">
+          <h3>पारंपरिक CFrame गणना की तुलना में IKControl के क्या फायदे हैं?</h3>
+          <p>IKControl सीधे Roblox C++ कोर में चलता है, जिससे यह बहुत तेज़ होता है और एनिमेशन के साथ आसानी से मिल जाता है।</p>
+        </div>
+        <div class="faq-item">
+          <h3>घुटनों को उलटी दिशा में मुड़ने से कैसे रोकें?</h3>
+          <p>घुटने के आगे एक Pole अटैचमेंट जोड़ें और इसे IKControl के Pole गुण में सेट करें।</p>
+        </div>
+        <div class="faq-item">
+          <h3>पैर जमाने का कोड सर्वर पर चलना चाहिए या क्लाइंट पर?</h3>
+          <p>हमेशा क्लाइंट पर RenderStepped में, ताकि नेटवर्क लैग के बिना सुचारू रूप से चले।</p>
+        </div>
+        <div class="faq-item">
+          <h3>कूदते समय IK को कैसे बंद करें?</h3>
+          <p>Humanoid.FloorMaterial की जांच करें; हवा में होने पर Weight को तुरंत 0 कर दें।</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

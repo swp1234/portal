@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 애니메이션 & 역운동학: IKControl 가이드 2026 | DopaBrain</title>
+  <meta name="description" content="로블록스 캐릭터 애니메이션 완벽 가이드: IKControl 절차적 발 착지(Foot Planting), 동적 시선 추적(Look-At), Animator 가중치 블렌딩, 지형 경사면 보정." />
+  <meta name="keywords" content="로블록스 ikcontrol 역운동학, 로블록스 절차적 발 착지, 로블록스 애니메이션 가중치 블렌딩, 로블록스 시선 추적, 로블록스 애니메이터 우선순위" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 애니메이션 & 역운동학: IKControl 가이드 2026 | DopaBrain" />
+  <meta property="og:description" content="로블록스 캐릭터 애니메이션 완벽 가이드: IKControl 절차적 발 착지(Foot Planting), 동적 시선 추적(Look-At), Animator 가중치 블렌딩, 지형 경사면 보정." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-animation-inverse-kinematics-ikcontrol-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 애니메이션 & 역운동학: IKControl 가이드 2026 | DopaBrain" />
+  <meta name="twitter:description" content="로블록스 캐릭터 애니메이션 완벽 가이드: IKControl 절차적 발 착지(Foot Planting), 동적 시선 추적(Look-At), Animator 가중치 블렌딩, 지형 경사면 보정." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-animation-inverse-kinematics-ikcontrol-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-animation-inverse-kinematics-ikcontrol-guide.html"
+      },
+      "headline": "로블록스 애니메이션 & 역운동학: IKControl, 절차적 발 착지와 동적 모션 블렌딩",
+      "description": "로블록스 캐릭터 애니메이션 완벽 가이드: IKControl 절차적 발 착지(Foot Planting), 동적 시선 추적(Look-At), Animator 가중치 블렌딩, 지형 경사면 보정.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-animation-inverse-kinematics-ikcontrol-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 로블록스 애니메이션 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 애니메이션 & 역운동학: IKControl, 절차적 발 착지와 동적 모션 블렌딩",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-animation-inverse-kinematics-ikcontrol-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Humanoid:LoadAnimation 대신 Animator:LoadAnimation을 써야 하는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Humanoid:LoadAnimation은 구형 API로 멀티플레이어 환경에서 애니메이션 복제 실패를 초래할 수 있습니다. 최신 Animator 인스턴스를 통해 로드해야 안정적으로 복제됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "기존 CFrame 기반 수동 애니메이션 스크립트 대비 IKControl의 장점은?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "IKControl은 로블록스 C++ 네이티브 물리 엔진 단에서 연산되므로 Lua 스크립트 대비 연산 속도가 압도적으로 빠르며 키프레임과의 자연스러운 가중치 합성이 가능합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "IKControl 사용 시 무릎이나 팔꿈치가 거꾸로 꺾이지 않게 하려면 어떻게 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "관절 앞쪽에 Pole 어태치먼트를 생성하여 IKControl의 Pole 속성에 연결하면 관절이 항상 Pole 방향을 향해 자연스럽게 굽혀집니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "절차적 발 착지는 서버와 클라이언트 중 어디서 실행해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "반드시 클라이언트(RenderStepped)에서 실행해야 합니다. 서버에서 연산하면 네트워크 핑 지연으로 인해 모션이 버벅거리며 서버 프레임이 급락합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "캐릭터가 점프하거나 공중에 떴을 때 발 착지 IK를 어떻게 해제하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Humanoid.FloorMaterial이 Air이거나 자유 낙하(Freefall) 상태일 때 IKControl.Weight 값을 0으로 신속히 낮추어 키프레임 점프 모션으로 복귀시킵니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>로블록스 애니메이션 & 역운동학: IKControl, 절차적 발 착지와 동적 모션 블렌딩</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain 로블록스 애니메이션 엔지니어링 팀</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>애니메이션 아키텍처 원칙:</strong> 고정된 키프레임 보행 모션은 경사로나 계단에서 발이 공중에 뜨거나 파묻히는 어색함을 낳습니다. Animator 가중치 블렌딩과 런타임 IKControl 역운동학을 결합해 어떤 지형에서도 지면에 완벽히 밀착하는 AAA급 캐릭터 모션을 구현하세요.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier156_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>신체 운동 및 공간 인지 처리 스타일</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier156_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>시각적 단서 인지 및 반사 신경 측정</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier156_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>정밀 위치 제어 및 시퀀스 논리 훈련</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier156_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>시각적 부드러움과 몰입도 점검</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>현대 로블록스 게임에서 물리적 환경에 자연스럽게 반응하는 캐릭터 움직임은 완성도를 결정짓는 핵심 요소입니다. 사전에 녹화된 키프레임 애니메이션만 사용하면 계단이나 험난한 지형을 걸을 때 발이 바위에 파묻히거나 허공을 밟는 이질감이 발생합니다.</p>
+      <p>로블록스 스튜디오의 최신 애니메이션 시스템은 IKControl 인스턴스를 통해 네이티브 역운동학(Inverse Kinematics)을 제공합니다. 레이캐스트 지면 감지, 가중치 블렌딩, 시선 각도 제한(Look-At Clamp)을 결합하여 지형에 완벽히 적응하는 발 착지와 자연스러운 머리 회전을 구축하는 법을 다룹니다.</p>
+
+      <h2>1. 모던 애니메이션 파이프라인: Animator와 우선순위</h2>
+      <p>Luau 기반 골격 애니메이션 트랙 관리의 기초:</p>
+      <ul>
+          <li><strong>Animator 인스턴스 사용:</strong> 구형 <code>Humanoid:LoadAnimation()</code> 대신 반드시 Humanoid 내부의 <code>Animator</code> 인스턴스를 통해 애니메이션을 로드해야 멀티플레이 동기화 오류를 방지할 수 있습니다.</li>
+          <li><strong>애니메이션 우선순위(Priority):</strong> <code>Core</code>, <code>Idle</code>, <code>Movement</code>, <code>Action</code>, <code>Action2~4</code> 계층을 명확히 분리합니다. 장전 애니메이션을 Action으로 재생하면 다리는 Movement 보행을 유지하면서 팔만 자연스럽게 오버라이드됩니다.</li>
+          <li><strong>가중치와 페이드 블렌딩:</strong> <code>track:Play(fadeTime, weight)</code>와 <code>track:AdjustWeight()</code>를 활용해 걷기, 달리기, 전력 질주 간의 트랜지션을 끊김 없이 부드럽게 보간합니다.</li>
+      </ul>
+
+      <h2>2. IKControl을 활용한 역운동학 아키텍처</h2>
+      <p>목표 위치에 맞춰 관절 각도를 자동으로 계산하는 구조:</p>
+      <ul>
+          <li><strong>IKControl 필수 속성:</strong> <code>Type</code>(LookAt, Position, Transform), <code>EndEffector</code>(말단 부위: LeftFoot 등), <code>Target</code>(목표 파트 또는 어태치먼트), <code>ChainRoot</code>(관절 시작점: LeftUpperLeg) 4가지 속성을 정의합니다.</li>
+          <li><strong>폴 제약(Pole Constraints):</strong> 다리나 팔이 뒤틀리거나 관절이 비정상적인 방향(뒤로 꺾임)으로 꺾이지 않도록 무릎/팔꿈치 앞쪽에 Pole 어태치먼트를 배치합니다.</li>
+          <li><strong>가중치(Weight) 동적 제어:</strong> 평지에서는 Weight를 0으로 두어 순수 키프레임 모션을 유지하고, 계단이나 암석 지대 진입 시 0.0에서 1.0으로 가중치를 부드럽게 페이드인합니다.</li>
+      </ul>
+
+      <h2>3. 절차적 발 착지(Foot Planting) & 지형 법선 보정</h2>
+      <p>계단과 불규칙한 바위 위에서 발을 바닥에 정확히 밀착시키는 기법:</p>
+      <ul>
+          <li><strong>지면 레이캐스팅:</strong> 캐릭터 골반(Hip) 위치에서 아래 방향으로 레이캐스트를 발사하여 지면까지의 거리와 충돌 표면의 법선 벡터(Normal)를 획득합니다.</li>
+          <li><strong>동적 목표점 배치:</strong> 레이캐스트가 맞닿은 지면 위치에 발창 두께만큼의 오프셋을 더해 IK 타깃의 WorldPosition을 실시간 갱신합니다.</li>
+          <li><strong>발목 피치/롤 회전 일치:</strong> 지면 법선 벡터에 맞춰 발 어태치먼트의 각도를 회전시킴으로써 신발 바닥이 경사면에 들뜸 없이 밀착되도록 만듭니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.CharacterFramework.ProceduralFootIK</div>
+        <pre><code>-- 절차적 발 착지 IK 컨트롤러 모듈
+local RunService = game:GetService("RunService")
+local FootIK = {}
+FootIK.__index = FootIK
+
+function FootIK.new(character)
+    local self = setmetatable({}, FootIK)
+    self.Char = character
+    self.Humanoid = character:WaitForChild("Humanoid")
+    self.RootPart = character:WaitForChild("HumanoidRootPart")
+    
+    -- 왼발 IKControl 인스턴스 생성
+    local leftIK = Instance.new("IKControl")
+    leftIK.Name = "LeftFootIK"
+    leftIK.Type = Enum.IKControlType.Transform
+    leftIK.EndEffector = character:WaitForChild("LeftFoot")
+    leftIK.ChainRoot = character:WaitForChild("LeftUpperLeg")
+    
+    local leftTarget = Instance.new("Attachment")
+    leftTarget.Name = "LeftIKTarget"
+    leftTarget.Parent = workspace.Terrain
+    leftIK.Target = leftTarget
+    leftIK.Parent = self.Humanoid
+    
+    self.LeftIK = leftIK
+    self.LeftTarget = leftTarget
+    return self
+end
+
+function FootIK:Update(dt)
+    if self.Humanoid.FloorMaterial == Enum.Material.Air then
+        self.LeftIK.Weight = 0
+        return
+    end
+    
+    -- 왼쪽 골반에서 바닥으로 하향 레이캐스트
+    local rayOrigin = self.Char.LeftUpperLeg.Position
+    local rayDirection = Vector3.new(0, -3.5, 0)
+    local rayParams = RaycastParams.new()
+    rayParams.FilterDescendantsInstances = {self.Char}
+    rayParams.FilterType = Enum.RaycastFilterType.Exclude
+    
+    local result = workspace:Raycast(rayOrigin, rayDirection, rayParams)
+    if result then
+        self.LeftTarget.WorldPosition = result.Position + Vector3.new(0, 0.4, 0)
+        self.LeftIK.Weight = 0.8
+    else
+        self.LeftIK.Weight = 0
+    end
+end
+
+return FootIK</code></pre>
+      </div>
+
+      <h2>4. 동적 머리 회전 및 시선 추적(Look-At)</h2>
+      <p>카메라 및 주변 상호작용 NPC를 바라보는 생동감 넘치는 연출:</p>
+      <ul>
+          <li><strong>카메라 시선 동기화:</strong> 머리(Head) 파트에 LookAt 타입의 IKControl을 연결하고 타깃을 카메라 초점으로 지정하여 시선 방향을 자연스럽게 일치시킵니다.</li>
+          <li><strong>회전 각도 제한(Angular Clamping):</strong> 머리가 180도 뒤로 꺾이는 기괴한 현상을 방지하기 위해 좌우 회전각을 최대 70도, 상하 45도 이내로 고정합니다.</li>
+          <li><strong>부드러운 에이밍 댐핑:</strong> 타깃 위치를 CFrame:Lerp() 또는 스프링 물리를 통해 부드럽게 추종하도록 만들어 로봇처럼 딱딱 끊어지지 않게 감속합니다.</li>
+      </ul>
+
+      <h2>5. 모바일 최적화 & 성능 보존 원칙</h2>
+      <p>대규모 인원이 참여하는 서버에서 프레임 저하를 막는 전략:</p>
+      <ul>
+          <li><strong>클라이언트 사이드 연산:</strong> 절차적 발 착지와 시선 추적은 서버가 아닌 로컬 클라이언트의 <code>RenderStepped</code>에서 연산하여 60~120 FPS의 부드러움을 보장합니다.</li>
+          <li><strong>LOD 컬링(거리별 연산 제외):</strong> 카메라로부터 60스터드 이상 떨어진 원거리 캐릭터의 IKControl은 비활성화하여 CPU 연산 낭비를 차단합니다.</li>
+          <li><strong>리소스 정리:</strong> 캐릭터가 사망하거나 래그돌 상태로 전환될 때 IKControl과 임시 어태치먼트를 즉시 해제합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Humanoid:LoadAnimation 대신 Animator:LoadAnimation을 써야 하는 이유는 무엇인가요?</h3>
+          <p>Humanoid:LoadAnimation은 구형 API로 멀티플레이어 환경에서 애니메이션 복제 실패를 초래할 수 있습니다. 최신 Animator 인스턴스를 통해 로드해야 안정적으로 복제됩니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>기존 CFrame 기반 수동 애니메이션 스크립트 대비 IKControl의 장점은?</h3>
+          <p>IKControl은 로블록스 C++ 네이티브 물리 엔진 단에서 연산되므로 Lua 스크립트 대비 연산 속도가 압도적으로 빠르며 키프레임과의 자연스러운 가중치 합성이 가능합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>IKControl 사용 시 무릎이나 팔꿈치가 거꾸로 꺾이지 않게 하려면 어떻게 하나요?</h3>
+          <p>관절 앞쪽에 Pole 어태치먼트를 생성하여 IKControl의 Pole 속성에 연결하면 관절이 항상 Pole 방향을 향해 자연스럽게 굽혀집니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>절차적 발 착지는 서버와 클라이언트 중 어디서 실행해야 하나요?</h3>
+          <p>반드시 클라이언트(RenderStepped)에서 실행해야 합니다. 서버에서 연산하면 네트워크 핑 지연으로 인해 모션이 버벅거리며 서버 프레임이 급락합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>캐릭터가 점프하거나 공중에 떴을 때 발 착지 IK를 어떻게 해제하나요?</h3>
+          <p>Humanoid.FloorMaterial이 Air이거나 자유 낙하(Freefall) 상태일 때 IKControl.Weight 값을 0으로 신속히 낮추어 키프레임 점프 모션으로 복귀시킵니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
