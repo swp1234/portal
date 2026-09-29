@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Fizik Mimarisi: Araç Yayları ve Kısıtlamalar 2026 | DopaBrain</title>
+  <meta name="description" content="Roblox fizik rehberi: SpringConstraints süspansiyon, CylindricalConstraints, AlignOrientation devrilme önleme, Massless ve Network Ownership." />
+  <meta name="keywords" content="roblox arac fizik kisitlamalari, roblox springconstraint suspansiyon, roblox alignorientation, roblox network ownership fizik gecikmesi" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/tr/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Fizik Mimarisi: Araç Yayları ve Kısıtlamalar 2026 | DopaBrain" />
+  <meta property="og:description" content="Roblox fizik rehberi: SpringConstraints süspansiyon, CylindricalConstraints, AlignOrientation devrilme önleme, Massless ve Network Ownership." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/tr/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Fizik Mimarisi: Araç Yayları ve Kısıtlamalar 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Roblox fizik rehberi: SpringConstraints süspansiyon, CylindricalConstraints, AlignOrientation devrilme önleme, Massless ve Network Ownership." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/tr/roblox-physics-simulation-vehicle-spring-constraints-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/tr/roblox-physics-simulation-vehicle-spring-constraints-guide.html"
+      },
+      "headline": "Roblox Fizik Mimarisi: Kısıtlama Fiziği, Süspansiyon, AlignOrientation & Network Ownership",
+      "description": "Roblox fizik rehberi: SpringConstraints süspansiyon, CylindricalConstraints, AlignOrientation devrilme önleme, Massless ve Network Ownership.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/tr/roblox-physics-simulation-vehicle-spring-constraints-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox Fizik Mühendislik Ekibi",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "tr"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Fizik Mimarisi: Kısıtlama Fiziği, Süspansiyon, AlignOrientation & Network Ownership",
+          "item": "https://dopabrain.com/portal/blog/tr/roblox-physics-simulation-vehicle-spring-constraints-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Aracım çok oyunculuda neden takılıyor ve geç tepki veriyor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fizik sunucuda hesaplandığı için. Chassis:SetNetworkOwner(player) ile simülasyonu sürücüye devredin."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Aracın virajlarda ters dönmesini nasıl engellerim?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Üst parçaları Massless yaparak ağırlık merkezini düşürün ve AlignOrientation ekleyin."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Stiffness ve Damping oranı nasıl ayarlanmalı?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Damping değeri genelde Stiffness değerinin %10 ila %20'si olarak seçilir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Yeni projelerde neden BodyVelocity ve BodyGyro kullanılmamalı?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Eski nesil nesneler modern PGS motoruyla çakışır. AlignOrientation veya LinearVelocity kullanın."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "CollisionGroups araç performansına nasıl katkı sağlar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gereksiz teker ve yaya temas hesaplamalarını keserek işlemci yükünü ciddi oranda hafifletir."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox Fizik Mimarisi: Kısıtlama Fiziği, Süspansiyon, AlignOrientation & Network Ownership</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain Roblox Fizik Mühendislik Ekibi</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Fizik Mimari İlkesi:</strong> Hızlı araçların fiziğini yalnızca sunucuda hesaplamayın. Gecikmesiz sürüş için <code>SetNetworkOwner(player)</code> ile fizik sahipliğini sürücüye devredin.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier154_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Mechanical vs spatial problem solving</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier154_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>High-speed driving & obstacle reflexes</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier154_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Precision maneuvering & predictive logic</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier154_stress_check">
+          <strong>Stress Check</strong>
+          <span>Physics chaos & high-speed driving focus</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>Roblox Studio'da stabil kara ve hava araçları geliştirmek için PGS (Projected Gauss-Seidel) çözücüsünü iyi kavramak gerekir. Eski BodyMovers sınıflarını kullanmak çok oyunculu sunucularda takılmalara yol açar.</p>
+      <p>Modern Roblox fiziği kısıtlama (Constraint) mimarisine dayanır: Gerçekçi süspansiyon için SpringConstraints, tekerler için CylindricalConstraints, devrilmeyi önleyen AlignOrientation ve dinamik Network Ownership.</p>
+
+      <h2>1. PGS Çözücüsü ve Montaj (Assembly) Mimarisi</h2>
+      <p>Birbirine kaynaklanmış parçaların tek bir rijit gövde oluşturması:</p>
+      <ul>
+          <li><strong>Montajlar ve RootPriority:</strong> Kaynaklı parçalar tek bir Assembly oluşturur. Gövde parçasının değişmemesi için şasiye <code>RootPriority</code> verin.</li>
+          <li><strong>CustomPhysicalProperties:</strong> Yüksek lastik sürtünmesi (1.5) ve düşük ağırlık merkezi savrulmayı önler.</li>
+          <li><strong>Massless Özelliği:</strong> Koltuk ve kanat gibi süs parçalarını <code>Massless = true</code> yaparak dengeyi koruyun.</li>
+      </ul>
+
+      <h2>2. SpringConstraints ile Süspansiyon Ayarı</h2>
+      <p>Farklı arazilerde darbe emilimi sağlama:</p>
+      <ul>
+          <li><strong>FreeLength vs CurrentLength:</strong> <code>FreeLength</code> yayın doğal uzunluğudur; tekerin dikey hareketine alan tanır.</li>
+          <li><strong>Sertlik (Stiffness) ve Sönümleme (Damping):</strong> Stiffness ağırlığı taşır, Damping ise sürekli yaylanmayı keser.</li>
+          <li><strong>CylindricalConstraint Entegrasyonu:</strong> Yana yalpalamayı kesip tekerin sadece dikey eksende çalışmasını sağlar.</li>
+      </ul>
+
+      <h2>3. Modern İticiler: AlignOrientation & AlignPosition</h2>
+      <p>Eski BodyMovers sınıflarının yerini alan modern kuvvetler:</p>
+      <ul>
+          <li><strong>BodyMovers Neden Bırakıldı:</strong> PGS çözücüsüyle çakışarak fiziksel tutarsızlıklara yol açıyordu.</li>
+          <li><strong>AlignOrientation ile Doğrulma:</strong> Aracın devrilmesini önlerken direksiyon açısını serbest bırakır.</li>
+          <li><strong>Responsiveness:</strong> 15–30 arası değerler virajlarda gövdenin doğal yatmasını sağlar.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ServerScriptService.VehiclePhysics.NetworkController</div>
+        <pre><code>-- Sürücüye Dinamik Network Ownership Devretme
+local VehicleSeat = script.Parent.VehicleSeat
+local Chassis = script.Parent.Chassis
+
+VehicleSeat:GetPropertyChangedSignal("Occupant"):Connect(function()
+    local occupant = VehicleSeat.Occupant
+    if occupant then
+        local character = occupant.Parent
+        local player = game.Players:GetPlayerFromCharacter(character)
+        if player then
+            -- Fizik simülasyonunu sürücüye devret
+            local success, err = pcall(function()
+                Chassis:SetNetworkOwner(player)
+            end)
+            if not success then
+                warn("Network Owner hatası:", err)
+            end
+        end
+    else
+        -- Sürücü indi: mülkiyeti sunucuya iade et
+        task.wait(0.2)
+        if not VehicleSeat.Occupant then
+            pcall(function()
+                Chassis:SetNetworkOwner(nil)
+            end)
+        end
+    end
+end)</code></pre>
+      </div>
+
+      <h2>4. Network Ownership ve Çok Oyunculu Fizik Gecikmesi</h2>
+      <p>Işınlanma ve gecikmeli direksiyon tepkilerini engelleme:</p>
+      <ul>
+          <li><strong>Ping Sorunu:</strong> Sunucu tabanlı fizik, gecikme nedeniyle ağır direksiyon hissiyatı yaratır.</li>
+          <li><strong>SetNetworkOwner(player):</strong> Sürücü oturduğunda <code>Chassis:SetNetworkOwner(player)</code> çağırarak yerel 60 FPS hesaplamaya geçin.</li>
+          <li><strong>Hile Denetimi:</strong> Sunucuda olağan dışı hız ve koordinat sıçramalarını izleyin.</li>
+      </ul>
+
+      <h2>5. CollisionGroups ve Fizik Optimizasyonu</h2>
+      <p>Kalabalık sunucularda 60 FPS fizik performansını koruma:</p>
+      <ul>
+          <li><strong>Çarpışma Grupları:</strong> Tekerler ve yayaları ayırarak aracın gökyüzüne fırlama hatasını engelleyin.</li>
+          <li><strong>CanTouch / CanQuery Kapatma:</strong> İç mekanik parçalarda bu özellikleri kapatıp motoru hafifletin.</li>
+          <li><strong>Fiziksel Uyku (Sleep):</strong> Araç boşaldığında Network Ownership'i sunucuya (nil) devredin.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Aracım çok oyunculuda neden takılıyor ve geç tepki veriyor?</h3>
+          <p>Fizik sunucuda hesaplandığı için. Chassis:SetNetworkOwner(player) ile simülasyonu sürücüye devredin.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Aracın virajlarda ters dönmesini nasıl engellerim?</h3>
+          <p>Üst parçaları Massless yaparak ağırlık merkezini düşürün ve AlignOrientation ekleyin.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Stiffness ve Damping oranı nasıl ayarlanmalı?</h3>
+          <p>Damping değeri genelde Stiffness değerinin %10 ila %20'si olarak seçilir.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Yeni projelerde neden BodyVelocity ve BodyGyro kullanılmamalı?</h3>
+          <p>Eski nesil nesneler modern PGS motoruyla çakışır. AlignOrientation veya LinearVelocity kullanın.</p>
+        </div>
+        <div class="faq-item">
+          <h3>CollisionGroups araç performansına nasıl katkı sağlar?</h3>
+          <p>Gereksiz teker ve yaya temas hesaplamalarını keserek işlemci yükünü ciddi oranda hafifletir.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

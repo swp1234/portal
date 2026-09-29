@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Физика в Roblox: Подвеска автомобилей и ограничения 2026 | DopaBrain</title>
+  <meta name="description" content="Руководство по физике Roblox: создание автомобилей с помощью SpringConstraints, CylindricalConstraints, AlignOrientation, Massless и Network Ownership." />
+  <meta name="keywords" content="roblox физика машин ограничения, roblox springconstraint подвеска, roblox alignorientation, roblox network ownership задержка физики" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ru/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Физика в Roblox: Подвеска автомобилей и ограничения 2026 | DopaBrain" />
+  <meta property="og:description" content="Руководство по физике Roblox: создание автомобилей с помощью SpringConstraints, CylindricalConstraints, AlignOrientation, Massless и Network Ownership." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ru/roblox-physics-simulation-vehicle-spring-constraints-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Физика в Roblox: Подвеска автомобилей и ограничения 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Руководство по физике Roblox: создание автомобилей с помощью SpringConstraints, CylindricalConstraints, AlignOrientation, Massless и Network Ownership." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ru/roblox-physics-simulation-vehicle-spring-constraints-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ru/roblox-physics-simulation-vehicle-spring-constraints-guide.html"
+      },
+      "headline": "Архитектура физики в Roblox: Ограничения, подвеска, AlignOrientation и сетевое владение",
+      "description": "Руководство по физике Roblox: создание автомобилей с помощью SpringConstraints, CylindricalConstraints, AlignOrientation, Massless и Network Ownership.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ru/roblox-physics-simulation-vehicle-spring-constraints-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Команда физической инженерии Roblox DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ru"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Архитектура физики в Roblox: Ограничения, подвеска, AlignOrientation и сетевое владение",
+          "item": "https://dopabrain.com/portal/blog/ru/roblox-physics-simulation-vehicle-spring-constraints-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Почему машина дергается при вождении в мультиплеере?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Физика считается на сервере. Примените Chassis:SetNetworkOwner(player) для мгновенного локального отклика."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как предотвратить опрокидывание машины на виражах?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Опустите центр массы, установив Massless на верхние части, и настройте стабилизацию через AlignOrientation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Каково оптимальное соотношение Stiffness и Damping?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Damping обычно составляет 10–20% от Stiffness, что гасит колебания без излишней жесткости подвески."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Почему нельзя использовать BodyVelocity и BodyGyro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Это устаревшие классы, конфликтующие с PGS-солвером. Используйте AlignOrientation или LinearVelocity."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Зачем настраивать CollisionGroups для транспорта?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Отключение коллизий колес с внутренними деталями и пешеходами экономит сотни физических расчетов в секунду."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Архитектура физики в Roblox: Ограничения, подвеска, AlignOrientation и сетевое владение</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>Команда физической инженерии Roblox DopaBrain</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Аксиома физики в Roblox:</strong> Никогда не рассчитывайте физику быстрых машин исключительно на сервере. Делегируйте физику водителю через <code>SetNetworkOwner(player)</code> для мгновенного отклика без задержек.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier154_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Mechanical vs spatial problem solving</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier154_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>High-speed driving & obstacle reflexes</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier154_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Precision maneuvering & predictive logic</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier154_stress_check">
+          <strong>Stress Check</strong>
+          <span>Physics chaos & high-speed driving focus</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>Создание автомобилей, катеров и летательных аппаратов в Roblox Studio требует понимания физического движка PGS (Projected Gauss-Seidel). Использование устаревших BodyMovers приводит к рывкам и рассинхронизации в мультиплеере.</p>
+      <p>Современная физика Roblox построена на ограничениях (Constraints): SpringConstraints для подвески, CylindricalConstraints для колес, AlignOrientation против переворотов и передача Network Ownership для плавной езды.</p>
+
+      <h2>1. Физический солвер PGS и структуры сборок (Assemblies)</h2>
+      <p>Как скрепленные детали объединяются в единое твердое тело:</p>
+      <ul>
+          <li><strong>Сборки и RootPriority:</strong> Сваренные детали образуют одно тело. Настройте <code>RootPriority</code> на шасси для фиксации корневой детали.</li>
+          <li><strong>CustomPhysicalProperties:</strong> Высокое сцепление шин (1.5) и низкий центр тяжести защищают от заносов и опрокидывания.</li>
+          <li><strong>Параметр Massless:</strong> Включайте <code>Massless = true</code> на декоративных деталях, чтобы не смещать центр массы.</li>
+      </ul>
+
+      <h2>2. Настройка подвески через SpringConstraints</h2>
+      <p>Поглощение неровностей на любых трассах:</p>
+      <ul>
+          <li><strong>FreeLength и ход колеса:</strong> <code>FreeLength</code> определяет свободную длину пружины для достаточного вертикального хода.</li>
+          <li><strong>Жесткость (Stiffness) и демпфирование (Damping):</strong> Stiffness держит вес, а Damping исключает бесконечные раскачивания.</li>
+          <li><strong>Направляющая CylindricalConstraint:</strong> Ограничивает колесо строгим вертикальным ходом без поперечного люфта.</li>
+      </ul>
+
+      <h2>3. Современные силы: AlignOrientation и AlignPosition</h2>
+      <p>Замена устаревших BodyMovers:</p>
+      <ul>
+          <li><strong>Почему BodyMovers устарели:</strong> Они конфликтовали с PGS-солвером, порождая рывки и перегрузку сервера.</li>
+          <li><strong>AlignOrientation против переворотов:</strong> Автоматически выравнивает крен и тангаж, сохраняя свободу рулевого рыскания.</li>
+          <li><strong>Responsiveness:</strong> Значения 15–30 создают естественный крен кузова в крутых виражах.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ServerScriptService.VehiclePhysics.NetworkController</div>
+        <pre><code>-- Передача Network Ownership водителю
+local VehicleSeat = script.Parent.VehicleSeat
+local Chassis = script.Parent.Chassis
+
+VehicleSeat:GetPropertyChangedSignal("Occupant"):Connect(function()
+    local occupant = VehicleSeat.Occupant
+    if occupant then
+        local character = occupant.Parent
+        local player = game.Players:GetPlayerFromCharacter(character)
+        if player then
+            -- Делегируем расчет физики клиенту водителя
+            local success, err = pcall(function()
+                Chassis:SetNetworkOwner(player)
+            end)
+            if not success then
+                warn("Ошибка Network Owner:", err)
+            end
+        end
+    else
+        -- Водитель вышел: возвращаем серверу
+        task.wait(0.2)
+        if not VehicleSeat.Occupant then
+            pcall(function()
+                Chassis:SetNetworkOwner(nil)
+            end)
+        end
+    end
+end)</code></pre>
+      </div>
+
+      <h2>4. Network Ownership и физическая задержка в сети</h2>
+      <p>Устранение эффекта телепортации (Rubberbanding):</p>
+      <ul>
+          <li><strong>Проблема пинга:</strong> Расчет физики на сервере создает неприятную задержку между нажатием клавиши и поворотом колес.</li>
+          <li><strong>SetNetworkOwner(player):</strong> При посадке водителя вызовите <code>Chassis:SetNetworkOwner(player)</code> для локального расчета при 60 FPS.</li>
+          <li><strong>Контроль читов:</strong> Сервер должен проверять координаты и скорость машины на предмет телепортаций.</li>
+      </ul>
+
+      <h2>5. CollisionGroups и оптимизация тиков физики</h2>
+      <p>Стабильные 60 FPS физики на заполненных серверах:</p>
+      <ul>
+          <li><strong>Фильтрация столкновений:</strong> Разделяйте кузов, колеса и персонажей по группам коллизий, чтобы исключить улет машины в небо.</li>
+          <li><strong>Отключение CanTouch и CanQuery:</strong> Выключайте эти параметры на внутренних деталях машины.</li>
+          <li><strong>Спящий режим (Sleep):</strong> Возвращайте Network Ownership серверу (nil), когда автомобиль пуст.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Почему машина дергается при вождении в мультиплеере?</h3>
+          <p>Физика считается на сервере. Примените Chassis:SetNetworkOwner(player) для мгновенного локального отклика.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Как предотвратить опрокидывание машины на виражах?</h3>
+          <p>Опустите центр массы, установив Massless на верхние части, и настройте стабилизацию через AlignOrientation.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Каково оптимальное соотношение Stiffness и Damping?</h3>
+          <p>Damping обычно составляет 10–20% от Stiffness, что гасит колебания без излишней жесткости подвески.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Почему нельзя использовать BodyVelocity и BodyGyro?</h3>
+          <p>Это устаревшие классы, конфликтующие с PGS-солвером. Используйте AlignOrientation или LinearVelocity.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Зачем настраивать CollisionGroups для транспорта?</h3>
+          <p>Отключение коллизий колес с внутренними деталями и пешеходами экономит сотни физических расчетов в секунду.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
