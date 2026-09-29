@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arsitektur UI/UX Roblox: Penskalaan Fluida & Tata Letak Responsif 2026 | DopaBrain</title>
+  <meta name="description" content="Panduan desain UI/UX Roblox: penskalaan responsif dengan UDim2 Scale & Offset, UIAspectRatioConstraint, penanganan Safe Area notch ponsel, dan CanvasGroup." />
+  <meta name="keywords" content="roblox ui responsive scaling, roblox udim2 scale offset beda, roblox uiaspectratioconstraint, canvasgroup performa roblox, roblox safe area notch hp" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/id/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Arsitektur UI/UX Roblox: Penskalaan Fluida & Tata Letak Responsif 2026 | DopaBrain" />
+  <meta property="og:description" content="Panduan desain UI/UX Roblox: penskalaan responsif dengan UDim2 Scale & Offset, UIAspectRatioConstraint, penanganan Safe Area notch ponsel, dan CanvasGroup." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/id/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Arsitektur UI/UX Roblox: Penskalaan Fluida & Tata Letak Responsif 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Panduan desain UI/UX Roblox: penskalaan responsif dengan UDim2 Scale & Offset, UIAspectRatioConstraint, penanganan Safe Area notch ponsel, dan CanvasGroup." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/id/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/id/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html"
+      },
+      "headline": "Arsitektur UI/UX Roblox: CanvasGroup, Penskalaan Fluida, Safe Area & Tata Letak Lintas Platform",
+      "description": "Panduan desain UI/UX Roblox: penskalaan responsif dengan UDim2 Scale & Offset, UIAspectRatioConstraint, penanganan Safe Area notch ponsel, dan CanvasGroup.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/id/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Tim Rekayasa UI/UX Roblox DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "id"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Arsitektur UI/UX Roblox: CanvasGroup, Penskalaan Fluida, Safe Area & Tata Letak Lintas Platform",
+          "item": "https://dopabrain.com/portal/blog/id/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Mengapa UI saya terlihat sangat kecil di 4K dan raksasa di layar ponsel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Karena menggunakan ukuran piksel tetap (Offset). Menggunakan Scale relatif (0.0 hingga 1.0) akan membuat UI menyesuaikan proporsinya di semua resolusi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana UIAspectRatioConstraint mencegah tombol terdistorsi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dengan mengunci perbandingan lebar dan tinggi ke angka konstan (misal 1.0), ikon tidak akan memanjang menjadi lonjong di layar lebar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa keunggulan utama CanvasGroup dibanding Frame standar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "CanvasGroup menyatukan seluruh elemen anak ke dalam satu tekstur GPU, memungkinkan animasi GroupTransparency dilakukan hanya dalam 1 draw call yang sangat ringan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana agar tombol tidak terpotong oleh notch kamera ponsel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ubah opsi ScreenInsets menjadi DeviceSafeInsets pada ScreenGui agar UI secara otomatis menghindari area notch dan gestur ponsel."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Berapa ukuran tombol sentuh minimal yang disarankan untuk ponsel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Minimal 44x44 piksel agar nyaman disentuh jari tanpa terjadi klik meleset."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Arsitektur UI/UX Roblox: CanvasGroup, Penskalaan Fluida, Safe Area & Tata Letak Lintas Platform</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>Tim Rekayasa UI/UX Roblox DopaBrain</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Aksioma Arsitektur UI:</strong> Lebih dari 60% sesi Roblox dimainkan di perangkat seluler. Hindari piksel statis; manfaatkan Scale relatif, UIAspectRatioConstraint, dan Safe Area untuk keterbacaan sempurna dari ponsel hingga layar 4K.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier152_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>UI spatial cognition & thinking style</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier152_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Fluid grid UI & rapid swipe interaction</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier152_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Input latency & touch responsiveness</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier152_stress_check">
+          <strong>Stress Check</strong>
+          <span>Cognitive load & clean HUD ergonomics</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>Mendesain antarmuka di Roblox yang tampil tajam di layar ponsel kecil, tablet iPad, monitor 1080p, layar ultra-lebar, hingga TV 4K adalah tantangan teknis utama pengembang. Penggunaan piksel tetap (Offset) sering menyebabkan tombol bertumpuk atau terpotong.</p>
+      <p>Game populer menerapkan arsitektur tata letak responsif. Dengan menguasai UDim2 Scale, AnchorPoint (0.5, 0.5), UIAspectRatioConstraint, Safe Area GuiService, dan rendering CanvasGroup, Anda dapat menghasilkan HUD yang luwes dan berkinerja tinggi.</p>
+
+      <h2>1. Penskalaan Relatif: Memahami UDim2 Scale vs. Offset</h2>
+      <p>Fondasi desain tata letak adaptif di Roblox Studio:</p>
+      <ul>
+          <li><strong>Perbedaan Scale & Offset:</strong> <code>UDim2.new(XScale, XOffset, YScale, YOffset)</code>. Scale adalah persentase (0.0 hingga 1.0) dari wadah induk, sedangkan Offset adalah jumlah piksel absolut.</li>
+          <li><strong>Aturan Scale Murni:</strong> Selalu atur ukuran frame utama menggunakan Scale agar mengecil proporsional di layar ponsel kecil.</li>
+          <li><strong>Penggunaan Offset:</strong> Batasi Offset hanya untuk garis tepi tipis (border), jarak bantalan dalam (UIPadding), atau ikon kecil dengan ukuran fisik tetap.</li>
+      </ul>
+
+      <h2>2. Penguncian Rasio Aspek & Geometri AnchorPoint</h2>
+      <p>Mencegah distorsi visual pada monitor ultra-lebar dan rasio 4:3:</p>
+      <ul>
+          <li><strong>AnchorPoint (0.5, 0.5):</strong> Mengubah titik jangkar default (0, 0) ke (0.5, 0.5) dengan Position <code>UDim2.new(0.5, 0, 0.5, 0)</code> memastikan elemen berada tepat di tengah layar pada semua resolusi.</li>
+          <li><strong>UIAspectRatioConstraint:</strong> Mencegah minimap kotak atau ikon skill bulat terdistorsi menjadi lonjong (mis. AspectRatio = 1.0 untuk bujur sangkar).</li>
+          <li><strong>Kontrol Sumbu Dominan:</strong> Tentukan DominantAxis (Width atau Height) untuk mengontrol batas penskalaan di layar yang sempit.</li>
+      </ul>
+
+      <h2>3. Safe Area Ponsel & Kompensasi Notch Kamera</h2>
+      <p>Menghindari tombol tertutup lubang kamera ponsel pintar:</p>
+      <ul>
+          <li><strong>Risiko Tertutup Notch:</strong> Menaruh tombol di pojok layar berisiko tertutup kamera punch-hole ponsel modern.</li>
+          <li><strong>ScreenGui.ScreenInsets:</strong> Atur <code>ScreenInsets</code> ke <code>DeviceSafeInsets</code> di properti ScreenGui agar elemen otomatis bergeser ke area aman.</li>
+          <li><strong>Batas Margin Tepi:</strong> Sisakan jarak minimal 20 piksel dari tepi fisik layar untuk menghindari konflik gestur sistem kembali di ponsel.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.UIFramework.ResponsiveContainer</div>
+        <pre><code>-- Kontainer UI Responsif dengan Penguncian Rasio & Safe Area
+local GuiService = game:GetService("GuiService")
+local ResponsiveContainer = {}
+ResponsiveContainer.__index = ResponsiveContainer
+
+function ResponsiveContainer.new(parentScreenGui, config)
+    local self = setmetatable({}, ResponsiveContainer)
+    
+    local rootFrame = Instance.new("Frame")
+    rootFrame.Name = config.Name or "ResponsiveRoot"
+    rootFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+    rootFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+    rootFrame.Size = config.Size or UDim2.new(0.8, 0, 0.8, 0)
+    rootFrame.BackgroundTransparency = 1
+    rootFrame.Parent = parentScreenGui
+    
+    if config.AspectRatio then
+        local ratioConstraint = Instance.new("UIAspectRatioConstraint")
+        ratioConstraint.AspectRatio = config.AspectRatio
+        ratioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
+        ratioConstraint.DominantAxis = config.DominantAxis or Enum.DominantAxis.Width
+        ratioConstraint.Parent = rootFrame
+    end
+    
+    local sizeConstraint = Instance.new("UISizeConstraint")
+    sizeConstraint.MinSize = config.MinSize or Vector2.new(300, 200)
+    sizeConstraint.MaxSize = config.MaxSize or Vector2.new(1920, 1080)
+    sizeConstraint.Parent = rootFrame
+    
+    self.Frame = rootFrame
+    return self
+end
+
+return ResponsiveContainer</code></pre>
+      </div>
+
+      <h2>4. Performa CanvasGroup & Render Batching</h2>
+      <p>Mengoptimalkan menu kompleks untuk ponsel kelas bawah:</p>
+      <ul>
+          <li><strong>Cara Kerja CanvasGroup:</strong> Frame standar menggambar ulang setiap elemen anak saat animasi transparansi, sedangkan <code>CanvasGroup</code> menggabungkannya ke dalam 1 tekstur GPU (1 draw call).</li>
+          <li><strong>Transisi Halus:</strong> Animasikan <code>GroupTransparency</code> untuk transisi jendela pop-up 60 FPS yang mulus tanpa beban CPU berlebih.</li>
+          <li><strong>Manajemen VRAM:</strong> Batasi penggunaan CanvasGroup aktif agar tidak membebani memori grafis perangkat seluler.</li>
+      </ul>
+
+      <h2>5. Ergonomi Gamepad & Kontrol Sentuh</h2>
+      <p>Desain kontrol universal untuk konsol dan layar sentuh:</p>
+      <ul>
+          <li><strong>Ukuran Sentuh Minimal:</strong> Pastikan tombol sentuh ponsel berukuran minimal 44x44 piksel guna mencegah salah sentuh.</li>
+          <li><strong>Fokus Kontroler Konsol:</strong> Tentukan <code>GuiService.SelectedObject</code> saat menu terbuka agar navigasi tombol arah berfungsi baik.</li>
+          <li><strong>Jarak Joystick Virtual:</strong> Cek <code>UserInputService.TouchEnabled</code> dan beri ruang kosong di sudut kiri bawah untuk stik analog virtual.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Mengapa UI saya terlihat sangat kecil di 4K dan raksasa di layar ponsel?</h3>
+          <p>Karena menggunakan ukuran piksel tetap (Offset). Menggunakan Scale relatif (0.0 hingga 1.0) akan membuat UI menyesuaikan proporsinya di semua resolusi.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Bagaimana UIAspectRatioConstraint mencegah tombol terdistorsi?</h3>
+          <p>Dengan mengunci perbandingan lebar dan tinggi ke angka konstan (misal 1.0), ikon tidak akan memanjang menjadi lonjong di layar lebar.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Apa keunggulan utama CanvasGroup dibanding Frame standar?</h3>
+          <p>CanvasGroup menyatukan seluruh elemen anak ke dalam satu tekstur GPU, memungkinkan animasi GroupTransparency dilakukan hanya dalam 1 draw call yang sangat ringan.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Bagaimana agar tombol tidak terpotong oleh notch kamera ponsel?</h3>
+          <p>Ubah opsi ScreenInsets menjadi DeviceSafeInsets pada ScreenGui agar UI secara otomatis menghindari area notch dan gestur ponsel.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Berapa ukuran tombol sentuh minimal yang disarankan untuk ponsel?</h3>
+          <p>Minimal 44x44 piksel agar nyaman disentuh jari tanpa terjadi klik meleset.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arquitetura UI/UX no Roblox: Escala Fluida e Layout Responsivo 2026 | DopaBrain</title>
+  <meta name="description" content="Guia de design UI/UX no Roblox: dimensionamento fluido com UDim2 Scale e Offset, UIAspectRatioConstraint, tratamento de notch móvel (Safe Area) e CanvasGroup." />
+  <meta name="keywords" content="roblox ui responsive scaling, roblox udim2 scale offset, roblox uiaspectratioconstraint, canvasgroup performance roblox, roblox safe area notch" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/pt/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Arquitetura UI/UX no Roblox: Escala Fluida e Layout Responsivo 2026 | DopaBrain" />
+  <meta property="og:description" content="Guia de design UI/UX no Roblox: dimensionamento fluido com UDim2 Scale e Offset, UIAspectRatioConstraint, tratamento de notch móvel (Safe Area) e CanvasGroup." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/pt/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Arquitetura UI/UX no Roblox: Escala Fluida e Layout Responsivo 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Guia de design UI/UX no Roblox: dimensionamento fluido com UDim2 Scale e Offset, UIAspectRatioConstraint, tratamento de notch móvel (Safe Area) e CanvasGroup." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/pt/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/pt/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html"
+      },
+      "headline": "Arquitetura UI/UX no Roblox: CanvasGroup, Escala Fluida, Safe Area e Layout Responsivo Multiplataforma",
+      "description": "Guia de design UI/UX no Roblox: dimensionamento fluido com UDim2 Scale e Offset, UIAspectRatioConstraint, tratamento de notch móvel (Safe Area) e CanvasGroup.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/pt/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Equipe de Engenharia UI/UX de Roblox DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "pt"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Arquitetura UI/UX no Roblox: CanvasGroup, Escala Fluida, Safe Area e Layout Responsivo Multiplataforma",
+          "item": "https://dopabrain.com/portal/blog/pt/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Por que minha interface fica minúscula no 4K e enorme no celular?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Isso acontece quando são usados pixels fixos (Offset). Usar Scale relativo (0.0 a 1.0) faz a interface se adaptar proporcionalmente a qualquer tela."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como o UIAspectRatioConstraint previne distorções?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ele força o elemento a manter uma proporção fixa entre largura e altura (ex. 1.0 para quadrados), mesmo em telas ultra-largas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qual a vantagem do CanvasGroup sobre um Frame normal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ele junta todos os filhos numa textura de GPU única, permitindo animar GroupTransparency com apenas um draw call sem recálculos pesados de CPU."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como evitar que o notch da câmera corte meus botões no celular?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Defina ScreenInsets como DeviceSafeInsets nas propriedades do ScreenGui para respeitar os cortes físicos de tela."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qual o tamanho mínimo recomendado para botões de toque?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pelo menos 44x44 pixels para garantir toques precisos e evitar cliques perdidos."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Arquitetura UI/UX no Roblox: CanvasGroup, Escala Fluida, Safe Area e Layout Responsivo Multiplataforma</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>Equipe de Engenharia UI/UX de Roblox DopaBrain</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Axioma de Arquitetura UI:</strong> Mais de 60% das sessões no Roblox ocorrem em dispositivos móveis. Evite pixels fixos; use Scale relativo, UIAspectRatioConstraint e Safe Area para nitidez perfeita do celular até telas 4K.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier152_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>UI spatial cognition & thinking style</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier152_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Fluid grid UI & rapid swipe interaction</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier152_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Input latency & touch responsiveness</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier152_stress_check">
+          <strong>Stress Check</strong>
+          <span>Cognitive load & clean HUD ergonomics</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>Criar uma interface em Roblox que permaneça nítida e proporcional num smartphone pequeno, num iPad, num monitor 1080p ou numa TV 4K é um dos maiores desafios de desenvolvimento. O uso de pixels fixos gera sobreposições e cortes indesejados.</p>
+      <p>Jogos de alto engajamento usam arquitetura de layout responsiva. Dominando UDim2 Scale, AnchorPoint (0.5, 0.5), UIAspectRatioConstraint, Safe Area do GuiService e renderização em CanvasGroup, você criará interfaces elegantes e performáticas.</p>
+
+      <h2>1. Dimensionamento Relativo: UDim2 Scale vs. Offset</h2>
+      <p>A base do design responsivo no Roblox Studio:</p>
+      <ul>
+          <li><strong>Scale vs. Offset:</strong> <code>UDim2.new(XScale, XOffset, YScale, YOffset)</code>. Scale é a porcentagem (0.0 a 1.0) do contêiner pai, enquanto Offset define pixels fixos.</li>
+          <li><strong>Regra do Scale Puro:</strong> Dimensione frames principais com Scale para garantir que encolham proporcionalmente em telas compactas.</li>
+          <li><strong>Uso de Offset:</strong> Reserve Offset apenas para bordas finas, margens internas (UIPadding) ou ícones de tamanho físico fixo.</li>
+      </ul>
+
+      <h2>2. Bloqueio de Proporção e Geometria de AnchorPoint</h2>
+      <p>Evitando distorções em telas ultrawide e formatos 4:3:</p>
+      <ul>
+          <li><strong>AnchorPoint (0.5, 0.5):</strong> Mudar o ponto de (0, 0) para (0.5, 0.5) com Position em <code>UDim2.new(0.5, 0, 0.5, 0)</code> garante centralização matemática perfeita em qualquer resolução.</li>
+          <li><strong>UIAspectRatioConstraint:</strong> Impede que minimapas e ícones redondos virem elipses (ex.: AspectRatio = 1.0 para quadrados).</li>
+          <li><strong>Eixo Dominante:</strong> Escolha DominantAxis (Width ou Height) para controlar a expansão em monitores com proporções extremas.</li>
+      </ul>
+
+      <h2>3. Safe Area Mobile e Compensação de Notches</h2>
+      <p>Evitando cortes de câmeras frontais e barras de gestos em celulares:</p>
+      <ul>
+          <li><strong>Risco de Oclusão:</strong> Botões nos cantos extremos podem ser cobertos por furos de câmera ou cantos arredondados de smartphones modernos.</li>
+          <li><strong>ScreenGui.ScreenInsets:</strong> Ajuste <code>ScreenInsets</code> para <code>DeviceSafeInsets</code> para afastar os elementos de áreas obstruídas automaticamente.</li>
+          <li><strong>Margem de Borda:</strong> Mantenha pelo menos 20 pixels de recuo para não conflitar com gestos nativos de voltar do iOS e Android.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.UIFramework.ResponsiveContainer</div>
+        <pre><code>-- Contêiner UI Responsivo com Bloqueio de Proporção e Safe Area
+local GuiService = game:GetService("GuiService")
+local ResponsiveContainer = {}
+ResponsiveContainer.__index = ResponsiveContainer
+
+function ResponsiveContainer.new(parentScreenGui, config)
+    local self = setmetatable({}, ResponsiveContainer)
+    
+    local rootFrame = Instance.new("Frame")
+    rootFrame.Name = config.Name or "ResponsiveRoot"
+    rootFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+    rootFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+    rootFrame.Size = config.Size or UDim2.new(0.8, 0, 0.8, 0)
+    rootFrame.BackgroundTransparency = 1
+    rootFrame.Parent = parentScreenGui
+    
+    if config.AspectRatio then
+        local ratioConstraint = Instance.new("UIAspectRatioConstraint")
+        ratioConstraint.AspectRatio = config.AspectRatio
+        ratioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
+        ratioConstraint.DominantAxis = config.DominantAxis or Enum.DominantAxis.Width
+        ratioConstraint.Parent = rootFrame
+    end
+    
+    local sizeConstraint = Instance.new("UISizeConstraint")
+    sizeConstraint.MinSize = config.MinSize or Vector2.new(300, 200)
+    sizeConstraint.MaxSize = config.MaxSize or Vector2.new(1920, 1080)
+    sizeConstraint.Parent = rootFrame
+    
+    self.Frame = rootFrame
+    return self
+end
+
+return ResponsiveContainer</code></pre>
+      </div>
+
+      <h2>4. Performance de CanvasGroup e Renderização em Lote</h2>
+      <p>Otimizando menus complexos para celulares de entrada:</p>
+      <ul>
+          <li><strong>Como Funciona o CanvasGroup:</strong> Ao contrário de Frames comuns que redesenham cada elemento filho em animações de opacidade, o <code>CanvasGroup</code> compila a árvore numa textura GPU única para renderização em 1 draw call.</li>
+          <li><strong>Transições Suaves:</strong> Anime <code>GroupTransparency</code> para janelas modais suaves a 60 FPS sem gargalo de CPU.</li>
+          <li><strong>Atenção à VRAM:</strong> Limite o uso simultâneo de CanvasGroups para não estourar a memória de vídeo em dispositivos móveis.</li>
+      </ul>
+
+      <h2>5. Ergonomia para Gamepads e Toque na Tela</h2>
+      <p>Design amigável para consoles e telas táteis:</p>
+      <ul>
+          <li><strong>Tamanho Mínimo de Toque:</strong> Garanta área de clique de pelo menos 44x44 pixels para evitar toques acidentais ou falhas.</li>
+          <li><strong>Foco em Consoles:</strong> Use <code>GuiService.SelectedObject</code> para definir o botão inicial ao abrir menus e configure a navegação D-pad.</li>
+          <li><strong>Área do Joystick Virtual:</strong> Detecte <code>UserInputService.TouchEnabled</code> e preserve o canto inferior esquerdo livre de botões de habilidades.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Por que minha interface fica minúscula no 4K e enorme no celular?</h3>
+          <p>Isso acontece quando são usados pixels fixos (Offset). Usar Scale relativo (0.0 a 1.0) faz a interface se adaptar proporcionalmente a qualquer tela.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Como o UIAspectRatioConstraint previne distorções?</h3>
+          <p>Ele força o elemento a manter uma proporção fixa entre largura e altura (ex. 1.0 para quadrados), mesmo em telas ultra-largas.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Qual a vantagem do CanvasGroup sobre um Frame normal?</h3>
+          <p>Ele junta todos os filhos numa textura de GPU única, permitindo animar GroupTransparency com apenas um draw call sem recálculos pesados de CPU.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Como evitar que o notch da câmera corte meus botões no celular?</h3>
+          <p>Defina ScreenInsets como DeviceSafeInsets nas propriedades do ScreenGui para respeitar os cortes físicos de tela.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Qual o tamanho mínimo recomendado para botões de toque?</h3>
+          <p>Pelo menos 44x44 pixels para garantir toques precisos e evitar cliques perdidos.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox UI/UX架构：自适应流式缩放与跨平台布局 2026 | DopaBrain</title>
+  <meta name="description" content="Roblox UI/UX设计完全指南：UDim2 Scale与Offset流式缩放、UIAspectRatioConstraint宽高比约束、移动端刘海屏安全区域(Safe Area)处理、CanvasGroup性能优化与手柄适配。" />
+  <meta name="keywords" content="roblox ui 响应式缩放, roblox udim2 scale offset 区别, roblox 宽高比约束, canvasgroup 优化 roblox, roblox 手机 刘海屏 safe area" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox UI/UX架构：自适应流式缩放与跨平台布局 2026 | DopaBrain" />
+  <meta property="og:description" content="Roblox UI/UX设计完全指南：UDim2 Scale与Offset流式缩放、UIAspectRatioConstraint宽高比约束、移动端刘海屏安全区域(Safe Area)处理、CanvasGroup性能优化与手柄适配。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox UI/UX架构：自适应流式缩放与跨平台布局 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Roblox UI/UX设计完全指南：UDim2 Scale与Offset流式缩放、UIAspectRatioConstraint宽高比约束、移动端刘海屏安全区域(Safe Area)处理、CanvasGroup性能优化与手柄适配。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html"
+      },
+      "headline": "Roblox UI/UX架构：CanvasGroup、流式缩放、移动端安全区与跨平台响应式布局",
+      "description": "Roblox UI/UX设计完全指南：UDim2 Scale与Offset流式缩放、UIAspectRatioConstraint宽高比约束、移动端刘海屏安全区域(Safe Area)处理、CanvasGroup性能优化与手柄适配。",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox UI/UX工程团队",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "zh"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox UI/UX架构：CanvasGroup、流式缩放、移动端安全区与跨平台响应式布局",
+          "item": "https://dopabrain.com/portal/blog/zh/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "为什么UI在4K屏幕上极小，在手机上却大得超出屏幕？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "这是因为使用了绝对像素（Offset）进行尺寸设置。使用相对于屏幕的Scale（0.0至1.0）可以保证界面在任何分辨率下均按比例自适应缩放。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "UIAspectRatioConstraint 如何防止按钮变形？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "它强制锁定控件的宽高比例（如正方形设为1.0），即使在带鱼屏或窄屏手机上也能避免圆形或方形图标拉伸变形。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "CanvasGroup 相比普通 Frame 的最大性能优势是什么？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "它将所有子级UI元素合并缓存为单一GPU离屏纹理，在执行GroupTransparency透明度动画时仅产生1次Draw Call，消除子元素逐一重绘的CPU开销。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何防止按钮被iPhone的刘海或灵动岛遮挡？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在ScreenGui属性中将ScreenInsets设置为DeviceSafeInsets，引擎会自动避开屏幕刘海与手势横条等遮挡区域。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "针对移动端玩家，触控按钮的推荐最小尺寸是多少？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "推荐交互点击区域不小于44x44像素，以保障手指触控的舒适度并杜绝误触。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox UI/UX架构：CanvasGroup、流式缩放、移动端安全区与跨平台响应式布局</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain Roblox UI/UX工程团队</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>UI架构核心准则：</strong> 超过60%的Roblox游戏会话来自移动设备。切勿使用固定像素设计；采用相对Scale缩放、UIAspectRatioConstraint宽高比锁定与安全区域避让，实现从小屏手机到4K大屏的完美呈现。
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier152_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>UI spatial cognition & thinking style</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier152_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Fluid grid UI & rapid swipe interaction</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier152_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Input latency & touch responsiveness</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier152_stress_check">
+          <strong>Stress Check</strong>
+          <span>Cognitive load & clean HUD ergonomics</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>在Roblox中构建一套能完美适配紧凑型手机、iPad、1080p显示器、带鱼屏甚至4K电视的UI界面，是开发团队面临的核心挑战之一。如果硬编码绝对像素偏移，常会导致按钮错位重叠、血条截断或被前置摄像头遮挡。</p>
+      <p>高留存率的成熟作品均具备严谨的响应式布局架构。通过掌握UDim2 Scale相对缩放、AnchorPoint (0.5, 0.5)居中对齐、UIAspectRatioConstraint比例锁定、GuiService安全区域边距以及CanvasGroup硬件批处理渲染，开发者可以构建出流畅高效的跨平台HUD。</p>
+
+      <h2>1. 相对缩放：深入理解 UDim2 Scale 与 Offset</h2>
+      <p>Roblox Studio响应式界面的核心基石：</p>
+      <ul>
+          <li><strong>Scale 与 Offset 的本质区别：</strong> <code>UDim2.new(XScale, XOffset, YScale, YOffset)</code>。Scale表示相对于父容器的百分比（0.0至1.0），而Offset代表固定的物理像素。</li>
+          <li><strong>纯Scale原则：</strong> 父级容器尺寸应始终使用Scale进行定义，确保在手机窄屏上按比例自适应缩小。</li>
+          <li><strong>Offset的正确使用场景：</strong> 仅在制作微细边框（Border）、内部衬距（UIPadding）或需要保持恒定物理大小的小图标时使用Offset。</li>
+      </ul>
+
+      <h2>2. 宽高比锁定与 AnchorPoint 居中几何学</h2>
+      <p>防止UI在带鱼屏与4:3比例屏幕上发生拉伸形变：</p>
+      <ul>
+          <li><strong>AnchorPoint (0.5, 0.5)：</strong> 默认锚点为(0, 0)左上角。将其修改为(0.5, 0.5)并将Position设为 <code>UDim2.new(0.5, 0, 0.5, 0)</code>，可确保元素在任何分辨率下均完美居中。</li>
+          <li><strong>UIAspectRatioConstraint：</strong> 正方形小地图或圆形技能图标容易被拉扯成椭圆形。添加宽高比约束（如正方形设为1.0）即可锁定几何比例。</li>
+          <li><strong>主导轴（DominantAxis）控制：</strong> 指定以宽度（Width）还是高度（Height）为主导进行等比缩放，避免在窄屏设备上产生溢出。</li>
+      </ul>
+
+      <h2>3. 移动端安全区域（Safe Area）与刘海屏适配</h2>
+      <p>规避智能手机前置挖孔、灵动岛与系统手势横条遮挡：</p>
+      <ul>
+          <li><strong>边缘遮挡风险：</strong> 若将关键按钮置于屏幕死角，容易被现代智能手机的药丸挖孔或圆角遮挡导致无法点击。</li>
+          <li><strong>ScreenGui.ScreenInsets：</strong> 在属性中将 <code>ScreenInsets</code> 设置为 <code>DeviceSafeInsets</code>，系统会自动将界面元素推至安全可视区域。</li>
+          <li><strong>边缘保护间距：</strong> 互动元素距屏幕物理边缘应至少保留20像素间隙，防止触发iOS与Android的系统返回手势。</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.UIFramework.ResponsiveContainer</div>
+        <pre><code>-- 响应式UI容器模块（支持宽高比锁定与安全区域）
+local GuiService = game:GetService("GuiService")
+local ResponsiveContainer = {}
+ResponsiveContainer.__index = ResponsiveContainer
+
+function ResponsiveContainer.new(parentScreenGui, config)
+    local self = setmetatable({}, ResponsiveContainer)
+    
+    local rootFrame = Instance.new("Frame")
+    rootFrame.Name = config.Name or "ResponsiveRoot"
+    rootFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+    rootFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+    rootFrame.Size = config.Size or UDim2.new(0.8, 0, 0.8, 0)
+    rootFrame.BackgroundTransparency = 1
+    rootFrame.Parent = parentScreenGui
+    
+    if config.AspectRatio then
+        local ratioConstraint = Instance.new("UIAspectRatioConstraint")
+        ratioConstraint.AspectRatio = config.AspectRatio
+        ratioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
+        ratioConstraint.DominantAxis = config.DominantAxis or Enum.DominantAxis.Width
+        ratioConstraint.Parent = rootFrame
+    end
+    
+    local sizeConstraint = Instance.new("UISizeConstraint")
+    sizeConstraint.MinSize = config.MinSize or Vector2.new(300, 200)
+    sizeConstraint.MaxSize = config.MaxSize or Vector2.new(1920, 1080)
+    sizeConstraint.Parent = rootFrame
+    
+    self.Frame = rootFrame
+    return self
+end
+
+return ResponsiveContainer</code></pre>
+      </div>
+
+      <h2>4. CanvasGroup 性能优势与批处理渲染</h2>
+      <p>在低端移动设备上流畅运行复杂UI层级的关键技术：</p>
+      <ul>
+          <li><strong>CanvasGroup 运行机制：</strong> 普通Frame在调节透明度时需要逐一重绘所有子元素，而 <code>CanvasGroup</code> 将整个子树编译为离屏GPU纹理，通过单次Draw Call完成渲染。</li>
+          <li><strong>极致丝滑淡入淡出：</strong> 缓动 <code>GroupTransparency</code> 可为弹窗模态框提供毫无卡顿的60 FPS渐变动画，避免CPU重绘雪崩。</li>
+          <li><strong>显存占用警戒：</strong> 每个CanvasGroup都会占用GPU显存，切勿在移动端嵌套过多活跃的CanvasGroup。</li>
+      </ul>
+
+      <h2>5. 跨平台手柄与触控人体工程学</h2>
+      <p>兼顾游戏主机手柄与移动触控的操作体验设计：</p>
+      <ul>
+          <li><strong>触控靶区尺寸：</strong> 移动端触控按钮的有效点击判定区至少应达到44x44像素，防止误触与漏按。</li>
+          <li><strong>主机手柄焦点管理：</strong> 针对Xbox与PlayStation玩家，在打开菜单时通过 <code>GuiService.SelectedObject</code> 设定初始焦点，并规划清晰的方向键导航流。</li>
+          <li><strong>摇杆安全盲区：</strong> 监听 <code>UserInputService.TouchEnabled</code>，为屏幕左下方虚拟摇杆区域预留充足操作空间，避免与技能按钮冲突。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>为什么UI在4K屏幕上极小，在手机上却大得超出屏幕？</h3>
+          <p>这是因为使用了绝对像素（Offset）进行尺寸设置。使用相对于屏幕的Scale（0.0至1.0）可以保证界面在任何分辨率下均按比例自适应缩放。</p>
+        </div>
+        <div class="faq-item">
+          <h3>UIAspectRatioConstraint 如何防止按钮变形？</h3>
+          <p>它强制锁定控件的宽高比例（如正方形设为1.0），即使在带鱼屏或窄屏手机上也能避免圆形或方形图标拉伸变形。</p>
+        </div>
+        <div class="faq-item">
+          <h3>CanvasGroup 相比普通 Frame 的最大性能优势是什么？</h3>
+          <p>它将所有子级UI元素合并缓存为单一GPU离屏纹理，在执行GroupTransparency透明度动画时仅产生1次Draw Call，消除子元素逐一重绘的CPU开销。</p>
+        </div>
+        <div class="faq-item">
+          <h3>如何防止按钮被iPhone的刘海或灵动岛遮挡？</h3>
+          <p>在ScreenGui属性中将ScreenInsets设置为DeviceSafeInsets，引擎会自动避开屏幕刘海与手势横条等遮挡区域。</p>
+        </div>
+        <div class="faq-item">
+          <h3>针对移动端玩家，触控按钮的推荐最小尺寸是多少？</h3>
+          <p>推荐交互点击区域不小于44x44像素，以保障手指触控的舒适度并杜绝误触。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

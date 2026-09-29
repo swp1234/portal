@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox UI/UX Mimarisi: Akıcı Ölçekleme ve Duyarlı Düzen 2026 | DopaBrain</title>
+  <meta name="description" content="Roblox UI/UX tasarım rehberi: UDim2 Scale & Offset ile akıcı ölçekleme, UIAspectRatioConstraint, mobil çentik güvenli alan (Safe Area) yönetimi ve CanvasGroup optimizasyonu." />
+  <meta name="keywords" content="roblox ui responsive scaling, roblox udim2 scale offset farki, roblox uiaspectratioconstraint, canvasgroup optimizasyon roblox, roblox safe area centik" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/tr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox UI/UX Mimarisi: Akıcı Ölçekleme ve Duyarlı Düzen 2026 | DopaBrain" />
+  <meta property="og:description" content="Roblox UI/UX tasarım rehberi: UDim2 Scale & Offset ile akıcı ölçekleme, UIAspectRatioConstraint, mobil çentik güvenli alan (Safe Area) yönetimi ve CanvasGroup optimizasyonu." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/tr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox UI/UX Mimarisi: Akıcı Ölçekleme ve Duyarlı Düzen 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Roblox UI/UX tasarım rehberi: UDim2 Scale & Offset ile akıcı ölçekleme, UIAspectRatioConstraint, mobil çentik güvenli alan (Safe Area) yönetimi ve CanvasGroup optimizasyonu." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/tr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/tr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html"
+      },
+      "headline": "Roblox UI/UX Mimarisi: CanvasGroup, Akıcı Ölçekleme, Mobil Güvenli Alan & Çapraz Platform Düzen",
+      "description": "Roblox UI/UX tasarım rehberi: UDim2 Scale & Offset ile akıcı ölçekleme, UIAspectRatioConstraint, mobil çentik güvenli alan (Safe Area) yönetimi ve CanvasGroup optimizasyonu.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/tr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox UI/UX Mühendislik Ekibi",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "tr"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox UI/UX Mimarisi: CanvasGroup, Akıcı Ölçekleme, Mobil Güvenli Alan & Çapraz Platform Düzen",
+          "item": "https://dopabrain.com/portal/blog/tr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Arayüzüm 4K ekranda neden çok küçük, telefonda neden devasa görünüyor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Boyutlandırmada sabit pikseller (Offset) kullanıldığı için. Ekran boyutuna oranlanan Scale (0.0-1.0) kullanımı arayüzün her çözünürlükte orantılı kalmasını sağlar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "UIAspectRatioConstraint butonların bozulmasını nasıl önler?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Genişlik ve yükseklik oranını sabit tutarak (ör. kare için 1.0) butonların geniş ekranlarda yayılmasını engeller."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Normal Frame yerine CanvasGroup kullanmanın temel avantajı nedir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tüm alt ögeleri tek bir GPU dokusunda önbelleğe alarak GroupTransparency animasyonlarını tek bir draw call ile pürüzsüzce gerçekleştirir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "iPhone kamera çentiğinin butonları kapatması nasıl önlenir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ScreenGui özelliklerinden ScreenInsets ayarını DeviceSafeInsets yaparak arayüzün çentik dışındaki güvenli bölgeye yerleşmesini sağlayabilirsiniz."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Mobil oyuncular için önerilen en küçük buton boyutu nedir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Doğru dokunma ve konforlu oynanış için en az 44x44 piksellik etkileşim alanı önerilir."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox UI/UX Mimarisi: CanvasGroup, Akıcı Ölçekleme, Mobil Güvenli Alan & Çapraz Platform Düzen</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain Roblox UI/UX Mühendislik Ekibi</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>UI Mimari İlkesi:</strong> Roblox oturumlarının %60'ından fazlası mobil cihazlarda gerçekleşir. Sabit piksel tasarımından kaçının; akıllı telefonlardan 4K ekranlara kadar kusursuz görünüm için Scale, UIAspectRatioConstraint ve Safe Area kullanın.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier152_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>UI spatial cognition & thinking style</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier152_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Fluid grid UI & rapid swipe interaction</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier152_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Input latency & touch responsiveness</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier152_stress_check">
+          <strong>Stress Check</strong>
+          <span>Cognitive load & clean HUD ergonomics</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>Kompakt bir akıllı telefonda, iPad'de, 1080p monitörde ve 4K TV'de net ve dengeli görünen bir Roblox arayüzü tasarlamak kritik bir mühendislik görevidir. Sabit piksel kullanımı butonların üst üste binmesine veya ekran dışına taşmasına yol açar.</p>
+      <p>Başarılı oyunlar duyarlı düzen mimarisi benimser. UDim2 Scale bağıl ölçekleme, AnchorPoint (0.5, 0.5) merkezleme, UIAspectRatioConstraint oran kilitleme, GuiService Safe Area telafisi ve CanvasGroup donanım hızlandırmalı render ile akıcı HUD'lar üretebilirsiniz.</p>
+
+      <h2>1. Bağıl Ölçekleme: UDim2 Scale ve Offset Yönetimi</h2>
+      <p>Roblox Studio duyarlı arayüz tasarımının temel taşları:</p>
+      <ul>
+          <li><strong>Scale ve Offset Farkı:</strong> <code>UDim2.new(XScale, XOffset, YScale, YOffset)</code>. Scale ana kapsayıcının yüzdesidir (0.0-1.0), Offset ise sabit piksel sayısıdır.</li>
+          <li><strong>Saf Scale Kuralı:</strong> Küçük ekranlarda orantılı küçülme sağlamak için üst çerçeve boyutlarında daima Scale kullanın.</li>
+          <li><strong>Offset Kullanım Alanı:</strong> Offset'i yalnızca ince kenarlıklar, UIPadding iç boşlukları veya sabit boyutta kalması gereken küçük simgeler için saklayın.</li>
+      </ul>
+
+      <h2>2. En-Boy Oranı Kilitleme ve AnchorPoint Geometrisi</h2>
+      <p>Geniş ekranlarda arayüz bozulmalarını engelleme:</p>
+      <ul>
+          <li><strong>AnchorPoint (0.5, 0.5):</strong> Varsayılan (0, 0) noktasını (0.5, 0.5) yapıp Position'ı <code>UDim2.new(0.5, 0, 0.5, 0)</code> ayarlamak her çözünürlükte kusursuz merkezleme sağlar.</li>
+          <li><strong>UIAspectRatioConstraint:</strong> Kare haritaların veya yuvarlak yetenek simgelerinin elipse dönüşmesini önler (örn. kare için AspectRatio = 1.0).</li>
+          <li><strong>Baskın Eksen Kontrolü:</strong> Geniş veya dar ekranlarda taşmaları önlemek için DominantAxis'i Width veya Height olarak belirleyin.</li>
+      </ul>
+
+      <h2>3. Mobil Safe Area ve Kamera Çentiği Telafisi</h2>
+      <p>Akıllı telefon kamera delikleri ve gezinme çubuklarını yönetme:</p>
+      <ul>
+          <li><strong>Çentik Tehlikesi:</strong> Ekran köşelerine yerleştirilen butonlar kamera delikleri veya yuvarlatılmış köşeler nedeniyle tıklanamaz hale gelebilir.</li>
+          <li><strong>ScreenGui.ScreenInsets:</strong> Özelliklerden <code>ScreenInsets</code> değerini <code>DeviceSafeInsets</code> yaparak butonları otomatik olarak güvenli alana taşıyın.</li>
+          <li><strong>Kenar Boşluğu:</strong> Sistem geri hareketleriyle çakışmamak için ekran kenarlarından en az 20 piksel boşluk bırakın.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.UIFramework.ResponsiveContainer</div>
+        <pre><code>-- En-Boy Oranı Kilitlemeli ve Güvenli Alan Destekli Duyarlı Kapsayıcı
+local GuiService = game:GetService("GuiService")
+local ResponsiveContainer = {}
+ResponsiveContainer.__index = ResponsiveContainer
+
+function ResponsiveContainer.new(parentScreenGui, config)
+    local self = setmetatable({}, ResponsiveContainer)
+    
+    local rootFrame = Instance.new("Frame")
+    rootFrame.Name = config.Name or "ResponsiveRoot"
+    rootFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+    rootFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+    rootFrame.Size = config.Size or UDim2.new(0.8, 0, 0.8, 0)
+    rootFrame.BackgroundTransparency = 1
+    rootFrame.Parent = parentScreenGui
+    
+    if config.AspectRatio then
+        local ratioConstraint = Instance.new("UIAspectRatioConstraint")
+        ratioConstraint.AspectRatio = config.AspectRatio
+        ratioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
+        ratioConstraint.DominantAxis = config.DominantAxis or Enum.DominantAxis.Width
+        ratioConstraint.Parent = rootFrame
+    end
+    
+    local sizeConstraint = Instance.new("UISizeConstraint")
+    sizeConstraint.MinSize = config.MinSize or Vector2.new(300, 200)
+    sizeConstraint.MaxSize = config.MaxSize or Vector2.new(1920, 1080)
+    sizeConstraint.Parent = rootFrame
+    
+    self.Frame = rootFrame
+    return self
+end
+
+return ResponsiveContainer</code></pre>
+      </div>
+
+      <h2>4. CanvasGroup Performansı ve Toplu Çizim</h2>
+      <p>Düşük segment mobil cihazlarda karmaşık menüleri optimize etme:</p>
+      <ul>
+          <li><strong>CanvasGroup Çalışma Prensibi:</strong> Normal Frame saydamlık animasyonunda tüm alt ögeleri tek tek yeniden çizerken, <code>CanvasGroup</code> tüm ağacı tek bir GPU dokusuna derleyerek 1 draw call ile işler.</li>
+          <li><strong>Pürüzsüz Geçişler:</strong> Açılır pencerelerde CPU yükü oluşturmadan 60 FPS akıcı animasyon için <code>GroupTransparency</code> kullanın.</li>
+          <li><strong>VRAM Uyarısı:</strong> Mobil cihazlarda video belleğini tüketmemek için aynı anda çok sayıda aktif CanvasGroup bulundurmayın.</li>
+      </ul>
+
+      <h2>5. Oyun Kolu ve Dokunmatik Kontrol Ergonomisi</h2>
+      <p>Konsollar ve dokunmatik ekranlar için evrensel kontrol tasarımı:</p>
+      <ul>
+          <li><strong>Minimum Dokunma Alanı:</strong> Yanlış basmaları önlemek için dokunmatik buton boyutunu en az 44x44 piksel tutun.</li>
+          <li><strong>Konsol Odak Yönetimi:</strong> Menü açıldığında <code>GuiService.SelectedObject</code> ile başlangıç butonunu seçili hale getirin.</li>
+          <li><strong>Sanal Joystick Alanı:</strong> <code>UserInputService.TouchEnabled</code> durumunda sol alt köşeyi joystick için boş bırakın.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Arayüzüm 4K ekranda neden çok küçük, telefonda neden devasa görünüyor?</h3>
+          <p>Boyutlandırmada sabit pikseller (Offset) kullanıldığı için. Ekran boyutuna oranlanan Scale (0.0-1.0) kullanımı arayüzün her çözünürlükte orantılı kalmasını sağlar.</p>
+        </div>
+        <div class="faq-item">
+          <h3>UIAspectRatioConstraint butonların bozulmasını nasıl önler?</h3>
+          <p>Genişlik ve yükseklik oranını sabit tutarak (ör. kare için 1.0) butonların geniş ekranlarda yayılmasını engeller.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Normal Frame yerine CanvasGroup kullanmanın temel avantajı nedir?</h3>
+          <p>Tüm alt ögeleri tek bir GPU dokusunda önbelleğe alarak GroupTransparency animasyonlarını tek bir draw call ile pürüzsüzce gerçekleştirir.</p>
+        </div>
+        <div class="faq-item">
+          <h3>iPhone kamera çentiğinin butonları kapatması nasıl önlenir?</h3>
+          <p>ScreenGui özelliklerinden ScreenInsets ayarını DeviceSafeInsets yaparak arayüzün çentik dışındaki güvenli bölgeye yerleşmesini sağlayabilirsiniz.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Mobil oyuncular için önerilen en küçük buton boyutu nedir?</h3>
+          <p>Doğru dokunma ve konforlu oynanış için en az 44x44 piksellik etkileşim alanı önerilir.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

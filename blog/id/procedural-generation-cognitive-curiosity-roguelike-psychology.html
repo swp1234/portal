@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neurobiologi Generasi Prosedural & Psikologi Roguelike 2026 | DopaBrain</title>
+  <meta name="description" content="Pelajari ilmu saraf kognitif di balik procedural generation: teori kesenjangan informasi Loewenstein, algoritma Perlin noise, dan lonjakan dopamin permadeath." />
+  <meta name="keywords" content="generasi prosedural psikologi, roguelike neurobiologi dopamin, perlin noise game design kognisi, teori kesenjangan informasi, permadeath" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/id/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Neurobiologi Generasi Prosedural & Psikologi Roguelike 2026 | DopaBrain" />
+  <meta property="og:description" content="Pelajari ilmu saraf kognitif di balik procedural generation: teori kesenjangan informasi Loewenstein, algoritma Perlin noise, dan lonjakan dopamin permadeath." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/id/procedural-generation-cognitive-curiosity-roguelike-psychology.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Neurobiologi Generasi Prosedural & Psikologi Roguelike 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Pelajari ilmu saraf kognitif di balik procedural generation: teori kesenjangan informasi Loewenstein, algoritma Perlin noise, dan lonjakan dopamin permadeath." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/id/procedural-generation-cognitive-curiosity-roguelike-psychology.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/id/procedural-generation-cognitive-curiosity-roguelike-psychology.html"
+      },
+      "headline": "Neurobiologi Generasi Prosedural: Perlin Noise, Kesenjangan Informasi & Daya Tarik Roguelike",
+      "description": "Pelajari ilmu saraf kognitif di balik procedural generation: teori kesenjangan informasi Loewenstein, algoritma Perlin noise, dan lonjakan dopamin permadeath.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/id/procedural-generation-cognitive-curiosity-roguelike-psychology.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Tim Riset Gaming Kognitif DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "id"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Neurobiologi Generasi Prosedural: Perlin Noise, Kesenjangan Informasi & Daya Tarik Roguelike",
+          "item": "https://dopabrain.com/portal/blog/id/procedural-generation-cognitive-curiosity-roguelike-psychology.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Mengapa game prosedural terasa jauh lebih bikin ketagihan dibanding game alur linear?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Karena selalu menghadirkan ketidakpastian baru yang memicu kesenjangan informasi Loewenstein dan lonjakan dopamin tak terduga."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa bedanya keacakan murni dengan generasi prosedural yang koheren?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Keacakan murni melahirkan kekacauan melelahkan, sedangkan Perlin noise meniru keteraturan alam yang mudah diinterpretasikan oleh otak."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Mengapa fitur permadeath justru mendorong pemain untuk terus mencoba lagi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Karena letak kesalahan langsung disadari pemain, memicu dorongan kognitif instan untuk memperbaikinya lewat percobaan berikutnya."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Keterampilan kognitif apa yang terasah dengan bermain game roguelike?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Perhitungan untung-rugi cepat, pemindaian pola heuristik, dan ketenangan berpikir dalam situasi bertekanan tinggi."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana developer mencegah kebosanan dalam game prosedural?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dengan memadukan tata letak ruangan acak dengan sistem sinergi item yang kaya dan progresi meta yang permanen."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Neurobiologi Generasi Prosedural: Perlin Noise, Kesenjangan Informasi & Daya Tarik Roguelike</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>Tim Riset Gaming Kognitif DopaBrain</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Prinsip Arsitektur Kognitif:</strong> Kekacauan murni menimbulkan kelelahan mental, sedangkan kepastian kaku melahirkan kebosanan. Kehebatan roguelike lahir di batas entropi prosedural tempat keharmonisan matematika memicu rasa ingin tahu dopaminergik.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier153_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Algorithmic vs intuitive problem solving</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier153_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Heuristic calculation & dynamic grid probability</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier153_stress_check">
+          <strong>Stress Check</strong>
+          <span>Permadeath pressure & acute stress resilience</span>
+        </a>
+        <a href="/burnout-test/" class="quick-card" data-track="tier153_burnout_test">
+          <strong>Burnout Test</strong>
+          <span>Excessive novelty seeking & dopamine fatigue</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>Mengapa pemain rela menghabiskan ribuan jam kalah dan mengulang dari awal dalam game seperti The Binding of Isaac, Hades, atau Dead Cells? Berbeda dari alur cerita linear, generasi prosedural mengaktifkan sirkuit neurokimiawi paling dasar: dorongan untuk memecahkan ketidakpastian lingkungan.</p>
+      <p>Di perjumpaan matematika komputasi dan neurosains kognitif, generasi prosedural memanfaatkan Teori Kesenjangan Informasi George Loewenstein, penguatan intermiten, dan chunking heuristik. Kami mengulas bagaimana algoritma Perlin noise mengubah permadeath menjadi kepuasan penguasaan.</p>
+
+      <h2>1. Kesenjangan Informasi Loewenstein & Dorongan Dopamin</h2>
+      <p>Mesin psikologis penggerak eksplorasi tiada henti:</p>
+      <ul>
+          <li><strong>Kesenjangan Informasi:</strong> George Loewenstein membuktikan rasa penasaran timbul ketika ada jurang antara apa yang kita ketahui dan apa yang ingin kita ketahui. Setiap seed acak menyuguhkan ruangan misterius.</li>
+          <li><strong>Kesalahan Prediksi Dopamin:</strong> Dopamin mendorong pencarian hal baru. Memasuki ruangan baru dengan potensi hadiah yang tak terduga memicu lonjakan dopamin.</li>
+          <li><strong>Penguatan Intermiten:</strong> Distribusi acak hadiah langka membentuk pola perilaku yang paling kokoh dan sulit dihilangkan dalam psikologi.</li>
+      </ul>
+
+      <h2>2. Koherensi Algoritma: Perlin Noise vs. Kebisingan Putih (White Noise)</h2>
+      <p>Mengapa struktur matematika penting demi imersi mendalam:</p>
+      <ul>
+          <li><strong>Jebakan White Noise:</strong> Keacakan murni membuat pemain bingung dan lelah. Otak menolak kekacauan tanpa arti sebagai beban data.</li>
+          <li><strong>Perlin & Simplex Noise:</strong> Gradien koheren ciptaan Ken Perlin menyuguhkan kontur alam dan tingkat bahaya yang halus, menyerupai pola organik bumi.</li>
+          <li><strong>Automata Seluler & Tata Ruang:</strong> Binary Space Partitioning (BSP) memastikan jalur penghubung antara pintu masuk dan keluar selalu tersedia dan dapat diprediksi secara intuitif.</li>
+      </ul>
+
+      <h2>3. Permadeath, Keengganan Merugi & Paradoks "Sekali Lagi"</h2>
+      <p>Bagaimana kegagalan mutlak melatih ketahanan emosional:</p>
+      <ul>
+          <li><strong>Pembalikan Loss Aversion:</strong> Rasa takut kehilangan seluruh progres mengaktifkan amigdala dan mempertajam fokus indra.</li>
+          <li><strong>Lonjakan Dopamin Pasca-Kalah:</strong> Saat kalah, penyebab kesalahan biasanya sangat jelas ("harusnya saya menghindar ke kiri"). Otak bergegas memulai ulang demi memulihkan rasa puas.</li>
+          <li><strong>Latihan Ketahanan Stres:</strong> Pemain melatih ketenangan dalam menghadapi tekanan hidup melalui simulasi yang aman secara fisik.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Dualitas Algoritma: Entropi vs. Sintaksis dalam Arsitektur Game</div>
+        <pre><code>// Konsep: Binary Space Partitioning (BSP) dengan Tata Ruang Dungeon
+class DungeonGraph {
+    constructor(seed, depth) {
+        this.seed = seed;
+        this.depth = depth;
+        this.nodes = [];
+    }
+    
+    // Keacakan koheren: Percabangan acak dengan aturan konektivitas ketat
+    partition(node, currentDepth) {
+        if (currentDepth >= this.depth) {
+            return this.carveRoom(node); // Penempatan ruangan bermakna
+        }
+        
+        // Pembagian seimbang untuk mencegah lorong buntu
+        const splitDirection = Math.random() > 0.5 ? 'VERTICAL' : 'HORIZONTAL';
+        const [childA, childB] = this.splitWithMargin(node, splitDirection, 0.4, 0.6);
+        
+        this.partition(childA, currentDepth + 1);
+        this.partition(childB, currentDepth + 1);
+        this.connectNodesWithCorridor(childA, childB); // Menjamin akses jalan
+    }
+}</code></pre>
+      </div>
+
+      <h2>4. Chunking Kognitif & Intuisi Heuristik di Seed Tak Terbatas</h2>
+      <p>Cara pemain ahli menaklukkan ribuan peta acak tanpa kelelahan otak:</p>
+      <ul>
+          <li><strong>Model Mental Heuristik:</strong> Para veteran tidak menghafal denah kamar, melainkan membaca pola tata letak algoritmik dan probabilitas hadiah.</li>
+          <li><strong>Mengurangi Beban Memori Kerja:</strong> Pemahaman pola mengalihkan kerja otak dari korteks prefrontal ke ganglia basal untuk refleks otomatis yang lincah.</li>
+          <li><strong>Keadaan Aliran (Flow State):</strong> Tantangan yang meningkat seiring lantai menjaga keseimbangan sempurna antara rasa panik dan bosan.</li>
+      </ul>
+
+      <h2>5. Regulasi Diri & Pelajaran Fokus untuk Kehidupan Nyata</h2>
+      <p>Menerapkan psikologi roguelike ke dalam produktivitas sehari-hari:</p>
+      <ul>
+          <li><strong>Mikro-Iterasi:</strong> Pecah proyek rumit menjadi babak-babak pendek layaknya bermain roguelike, di mana kesalahan awal menjadi data evaluasi berharga.</li>
+          <li><strong>Batasi Keterikatan Sensasi Baru:</strong> Tetapkan batas waktu bermain secara tegas agar terhindar dari penurunan reseptor dopamin dan kurang tidur.</li>
+          <li><strong>Metode Belajar Berselang (Interleaving):</strong> Berikan variasi acak yang teratur dalam belajar demi merangsang plastisitas otak.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Mengapa game prosedural terasa jauh lebih bikin ketagihan dibanding game alur linear?</h3>
+          <p>Karena selalu menghadirkan ketidakpastian baru yang memicu kesenjangan informasi Loewenstein dan lonjakan dopamin tak terduga.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Apa bedanya keacakan murni dengan generasi prosedural yang koheren?</h3>
+          <p>Keacakan murni melahirkan kekacauan melelahkan, sedangkan Perlin noise meniru keteraturan alam yang mudah diinterpretasikan oleh otak.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Mengapa fitur permadeath justru mendorong pemain untuk terus mencoba lagi?</h3>
+          <p>Karena letak kesalahan langsung disadari pemain, memicu dorongan kognitif instan untuk memperbaikinya lewat percobaan berikutnya.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Keterampilan kognitif apa yang terasah dengan bermain game roguelike?</h3>
+          <p>Perhitungan untung-rugi cepat, pemindaian pola heuristik, dan ketenangan berpikir dalam situasi bertekanan tinggi.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Bagaimana developer mencegah kebosanan dalam game prosedural?</h3>
+          <p>Dengan memadukan tata letak ruangan acak dengan sistem sinergi item yang kaya dan progresi meta yang permanen.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

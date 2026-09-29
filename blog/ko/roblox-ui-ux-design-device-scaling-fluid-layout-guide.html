@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 UI/UX 아키텍처: 가변 해상도 반응형 레이아웃 2026 | DopaBrain</title>
+  <meta name="description" content="로블록스 UI/UX 완벽 가이드: UDim2 Scale/Offset 가변 스케일링, UIAspectRatioConstraint 왜곡 방지, 모바일 노치 안전 영역(Safe Area) 처리, CanvasGroup 성능 최적화 및 게임패드 UI 지원." />
+  <meta name="keywords" content="로블록스 UI 반응형 스케일링, 로블록스 udim2 scale offset 차이, 로블록스 UI 종횡비 고정, canvasgroup 최적화, 로블록스 모바일 노치 safe area" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 UI/UX 아키텍처: 가변 해상도 반응형 레이아웃 2026 | DopaBrain" />
+  <meta property="og:description" content="로블록스 UI/UX 완벽 가이드: UDim2 Scale/Offset 가변 스케일링, UIAspectRatioConstraint 왜곡 방지, 모바일 노치 안전 영역(Safe Area) 처리, CanvasGroup 성능 최적화 및 게임패드 UI 지원." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 UI/UX 아키텍처: 가변 해상도 반응형 레이아웃 2026 | DopaBrain" />
+  <meta name="twitter:description" content="로블록스 UI/UX 완벽 가이드: UDim2 Scale/Offset 가변 스케일링, UIAspectRatioConstraint 왜곡 방지, 모바일 노치 안전 영역(Safe Area) 처리, CanvasGroup 성능 최적화 및 게임패드 UI 지원." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html"
+      },
+      "headline": "로블록스 UI/UX 아키텍처: CanvasGroup, 반응형 스케일링, 모바일 안전 영역 & 크로스 플랫폼 레이아웃",
+      "description": "로블록스 UI/UX 완벽 가이드: UDim2 Scale/Offset 가변 스케일링, UIAspectRatioConstraint 왜곡 방지, 모바일 노치 안전 영역(Safe Area) 처리, CanvasGroup 성능 최적화 및 게임패드 UI 지원.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 로블록스 UI/UX 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 UI/UX 아키텍처: CanvasGroup, 반응형 스케일링, 모바일 안전 영역 & 크로스 플랫폼 레이아웃",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-ui-ux-design-device-scaling-fluid-layout-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "4K 모니터에서는 UI가 너무 작게 보이고 모바일에서는 너무 크게 보이는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "UI 크기를 절대 픽셀(Offset)로 지정했기 때문입니다. 부모 프레임 크기에 상대적인 Scale(0.0~1.0) 비율을 사용하면 기기 해상도에 맞게 자동으로 비례 확장 및 축소됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "UIAspectRatioConstraint는 어떻게 버튼 왜곡을 막나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "요소의 가로세로 비율(예: 정사각형 1.0)을 강제로 고정하여 울트라와이드 모니터나 스마트폰 화면에서도 아이콘이 찌그러지지 않고 본래 모양을 유지하도록 만듭니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "일반 Frame 대신 CanvasGroup을 사용하는 주된 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "CanvasGroup은 하위 요소들을 단일 GPU 텍스처로 캐싱하여 GroupTransparency 애니메이션 시 자식 요소 전체를 반복 재렌더링하지 않고 단 1번의 드로우 콜로 매끄럽게 처리할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "스마트폰 카메라 홀이나 노치에 버튼이 가려지지 않게 하려면 어떻게 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ScreenGui 속성에서 ScreenInsets를 DeviceSafeInsets로 설정하면 시스템이 기기의 카메라 홀 및 홈 바 영역을 감지하여 자동으로 여백을 보정해 줍니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "모바일 플레이어를 위한 터치 버튼의 최소 권장 크기는 얼마인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "최소 44x44 픽셀 이상의 터치 영역을 확보해야 손가락 오작동을 방지하고 빠른 게임 플레이 환경을 보장할 수 있습니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>로블록스 UI/UX 아키텍처: CanvasGroup, 반응형 스케일링, 모바일 안전 영역 & 크로스 플랫폼 레이아웃</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain 로블록스 UI/UX 엔지니어링 팀</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>UI 아키텍처 원칙:</strong> 로블록스 플레이의 60% 이상이 모바일 기기에서 발생합니다. 고정 픽셀(Offset) 디자인을 피하고, 상대 스케일(Scale)과 종횡비 제약(UIAspectRatioConstraint), 기기 안전 영역(Safe Area)을 활용해 스마트폰부터 4K 모니터까지 완벽한 UI를 구축하세요.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier152_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>공간 인지력 및 사고 유형 진단</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier152_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>그리드 UI 반응형 레이아웃 훈련</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier152_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>입력 지연시간 및 터치 반응 측정</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier152_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>인지 부하 및 시각적 피로도 점검</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>스마트폰, 태블릿, 1080p 모니터, 울트라와이드 모니터, 4K TV까지 모든 기기에서 선명하고 조화로운 UI를 구현하는 것은 로블록스 개발에서 가장 중요한 과제 중 하나입니다. 고정 픽셀 오프셋을 사용하면 기기 해상도에 따라 버튼이 겹치거나 화면 밖으로 잘리는 문제가 발생합니다.</p>
+      <p>상위 인기 게임들은 체계적인 반응형 레이아웃 시스템을 채택하고 있습니다. UDim2 Scale 활용, AnchorPoint (0.5, 0.5) 중앙 정렬, UIAspectRatioConstraint 비율 고정, GuiService 안전 영역 보정, 그리고 CanvasGroup 하드웨어 렌더링 최적화를 통해 모든 기기에서 매끄러운 HUD를 제작할 수 있습니다.</p>
+
+      <h2>1. 상대 스케일링: UDim2 Scale vs Offset 마스터하기</h2>
+      <p>로블록스 스튜디오 반응형 레이아웃의 핵심 기초:</p>
+      <ul>
+          <li><strong>Scale과 Offset의 차이:</strong> <code>UDim2.new(XScale, XOffset, YScale, YOffset)</code>. Scale은 부모 컨테이너에 대한 상대적 비율(0.0~1.0)이며, Offset은 절대 픽셀 수입니다.</li>
+          <li><strong>순수 Scale 원칙:</strong> 부모 프레임 크기 지정 시 항상 Scale을 우선 사용하여 화면 크기가 작아지더라도 비례하여 축소되도록 설계합니다.</li>
+          <li><strong>Offset의 올바른 사용:</strong> 얇은 테두리(Border), UIPadding 내부 여백, 고정된 물리적 크기를 유지해야 하는 작은 아이콘에만 제한적으로 Offset을 사용합니다.</li>
+      </ul>
+
+      <h2>2. 종횡비 고정 & AnchorPoint 좌표 수학</h2>
+      <p>와이드스크린과 4:3 화면에서 UI가 찌그러지는 현상 방지:</p>
+      <ul>
+          <li><strong>AnchorPoint (0.5, 0.5):</strong> 기본 기준점인 (0, 0)(좌측 상단) 대신 (0.5, 0.5)로 설정하고 Position을 <code>UDim2.new(0.5, 0, 0.5, 0)</code>로 주면 어떤 해상도에서도 완벽하게 화면 정중앙에 고정됩니다.</li>
+          <li><strong>UIAspectRatioConstraint:</strong> 정사각 미니맵이나 원형 스킬 아이콘이 직사각형으로 왜곡되는 것을 방지합니다. AspectRatio = 1.0(정사각형) 또는 1.6(카드형)을 설정합니다.</li>
+          <li><strong>기준 축(DominantAxis) 설정:</strong> 종횡비 유지 시 가로(Width) 기준인지 세로(Height) 기준인지 결정하여 좁은 화면에서도 UI가 화면 밖으로 넘치지 않도록 제어합니다.</li>
+      </ul>
+
+      <h2>3. 모바일 안전 영역(Safe Area) & 노치 보정</h2>
+      <p>카메라 홀, 다이내믹 아일랜드 및 홈 바 간섭 해결:</p>
+      <ul>
+          <li><strong>모바일 카메라 펀치홀 간섭:</strong> 화면 최외곽 모서리에 중요한 버튼을 배치하면 최신 스마트폰의 카메라 홀이나 라운드 코너에 가려져 클릭할 수 없게 됩니다.</li>
+          <li><strong>ScreenGui.ScreenInsets:</strong> 최신 스튜디오 속성에서 <code>DeviceSafeInsets</code> 또는 <code>CoreInsets</code>를 활성화하여 노치 및 시스템 홈 바 영역을 자동으로 우회합니다.</li>
+          <li><strong>가장자리 터치 버퍼:</strong> 화면 가장자리로부터 최소 20px 이상의 여백을 유지하여 모바일 OS의 뒤로가기 제스처와 충돌하지 않도록 설계합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.UIFramework.ResponsiveContainer</div>
+        <pre><code>-- 반응형 UI 레이아웃 헬퍼 모듈 (종횡비 고정 & 안전 영역 지원)
+local GuiService = game:GetService("GuiService")
+local ResponsiveContainer = {}
+ResponsiveContainer.__index = ResponsiveContainer
+
+function ResponsiveContainer.new(parentScreenGui, config)
+    local self = setmetatable({}, ResponsiveContainer)
+    
+    local rootFrame = Instance.new("Frame")
+    rootFrame.Name = config.Name or "ResponsiveRoot"
+    rootFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+    rootFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+    rootFrame.Size = config.Size or UDim2.new(0.8, 0, 0.8, 0)
+    rootFrame.BackgroundTransparency = 1
+    rootFrame.Parent = parentScreenGui
+    
+    if config.AspectRatio then
+        local ratioConstraint = Instance.new("UIAspectRatioConstraint")
+        ratioConstraint.AspectRatio = config.AspectRatio
+        ratioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
+        ratioConstraint.DominantAxis = config.DominantAxis or Enum.DominantAxis.Width
+        ratioConstraint.Parent = rootFrame
+    end
+    
+    local sizeConstraint = Instance.new("UISizeConstraint")
+    sizeConstraint.MinSize = config.MinSize or Vector2.new(300, 200)
+    sizeConstraint.MaxSize = config.MaxSize or Vector2.new(1920, 1080)
+    sizeConstraint.Parent = rootFrame
+    
+    self.Frame = rootFrame
+    return self
+end
+
+return ResponsiveContainer</code></pre>
+      </div>
+
+      <h2>4. CanvasGroup 성능 & 배치 렌더링 최적화</h2>
+      <p>복잡한 UI 계층 구조를 저사양 모바일에서도 부드럽게 구동하는 기법:</p>
+      <ul>
+          <li><strong>CanvasGroup의 원리:</strong> 일반 Frame은 투명도 애니메이션 시 자식 요소를 개별 재렌더링하지만, <code>CanvasGroup</code>은 하위 트리를 단일 GPU 텍스처로 합성하여 1회의 드로우 콜로 처리합니다.</li>
+          <li><strong>부드러운 페이드 인/아웃:</strong> 팝업 창이나 다이얼로그 모달의 <code>GroupTransparency</code>를 트윈(Tween)하여 CPU 연산 부담 없이 60FPS 페이드 효과를 구현합니다.</li>
+          <li><strong>VRAM 주의사항:</strong> 활성화된 CanvasGroup이 너무 많으면 GPU 비디오 메모리를 점유하므로, 필요한 모달 창에만 선별적으로 사용합니다.</li>
+      </ul>
+
+      <h2>5. 크로스 플랫폼 게임패드 & 터치 인체공학</h2>
+      <p>콘솔 컨트롤러와 모바일 터치 조작 최적화 설계:</p>
+      <ul>
+          <li><strong>터치 타깃 크기:</strong> 모바일 터치 버튼은 최소 44x44 픽셀 이상의 히트박스를 유지하여 손가락 오터치 및 클릭 미스를 방지합니다.</li>
+          <li><strong>콘솔 포커스 트래핑:</strong> 엑스박스나 플레이스테이션 유저를 위해 메뉴를 열 때 <code>GuiService.SelectedObject</code>를 첫 버튼으로 자동 지정하고 방향키 탐색 경로를 정의합니다.</li>
+          <li><strong>가상 조이스틱 영역 확보:</strong> 모바일 화면 좌측 하단의 가상 조이스틱 조작 반경과 스킬 버튼이 겹치지 않도록 동적 레이아웃 마진을 부여합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>4K 모니터에서는 UI가 너무 작게 보이고 모바일에서는 너무 크게 보이는 이유는 무엇인가요?</h3>
+          <p>UI 크기를 절대 픽셀(Offset)로 지정했기 때문입니다. 부모 프레임 크기에 상대적인 Scale(0.0~1.0) 비율을 사용하면 기기 해상도에 맞게 자동으로 비례 확장 및 축소됩니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>UIAspectRatioConstraint는 어떻게 버튼 왜곡을 막나요?</h3>
+          <p>요소의 가로세로 비율(예: 정사각형 1.0)을 강제로 고정하여 울트라와이드 모니터나 스마트폰 화면에서도 아이콘이 찌그러지지 않고 본래 모양을 유지하도록 만듭니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>일반 Frame 대신 CanvasGroup을 사용하는 주된 이유는 무엇인가요?</h3>
+          <p>CanvasGroup은 하위 요소들을 단일 GPU 텍스처로 캐싱하여 GroupTransparency 애니메이션 시 자식 요소 전체를 반복 재렌더링하지 않고 단 1번의 드로우 콜로 매끄럽게 처리할 수 있습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>스마트폰 카메라 홀이나 노치에 버튼이 가려지지 않게 하려면 어떻게 하나요?</h3>
+          <p>ScreenGui 속성에서 ScreenInsets를 DeviceSafeInsets로 설정하면 시스템이 기기의 카메라 홀 및 홈 바 영역을 감지하여 자동으로 여백을 보정해 줍니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>모바일 플레이어를 위한 터치 버튼의 최소 권장 크기는 얼마인가요?</h3>
+          <p>최소 44x44 픽셀 이상의 터치 영역을 확보해야 손가락 오작동을 방지하고 빠른 게임 플레이 환경을 보장할 수 있습니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
