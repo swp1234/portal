@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 스트리밍 인에이블드 & 월드 스트리밍 최적화 가이드 2026 | DopaBrain</title>
+  <meta name="description" content="로블록스 StreamingEnabled 완벽 가이드: ModelStreamingMode(Atomic, Persistent), 스트리밍 반경 설정, 400MB 모바일 메모리 예산 관리, 안전한 WaitForChild 패턴 및 LOD 메시 최적화." />
+  <meta name="keywords" content="로블록스 스트리밍인에이블드, 로블록스 메모리 최적화, 로블록스 오픈월드 최적화, 로블록스 모델스트리밍모드, 로블록스 렉 줄이기" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 스트리밍 인에이블드 & 월드 스트리밍 최적화 가이드 2026 | DopaBrain" />
+  <meta property="og:description" content="로블록스 StreamingEnabled 완벽 가이드: ModelStreamingMode(Atomic, Persistent), 스트리밍 반경 설정, 400MB 모바일 메모리 예산 관리, 안전한 WaitForChild 패턴 및 LOD 메시 최적화." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-streamingenabled-world-streaming-memory-optimization-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 스트리밍 인에이블드 & 월드 스트리밍 최적화 가이드 2026 | DopaBrain" />
+  <meta name="twitter:description" content="로블록스 StreamingEnabled 완벽 가이드: ModelStreamingMode(Atomic, Persistent), 스트리밍 반경 설정, 400MB 모바일 메모리 예산 관리, 안전한 WaitForChild 패턴 및 LOD 메시 최적화." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-streamingenabled-world-streaming-memory-optimization-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-streamingenabled-world-streaming-memory-optimization-guide.html"
+      },
+      "headline": "로블록스 스트리밍 인에이블드: 월드 스트리밍, 모델 모드 및 모바일 메모리 최적화",
+      "description": "로블록스 StreamingEnabled 완벽 가이드: ModelStreamingMode(Atomic, Persistent), 스트리밍 반경 설정, 400MB 모바일 메모리 예산 관리, 안전한 WaitForChild 패턴 및 LOD 메시 최적화.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-streamingenabled-world-streaming-memory-optimization-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 로블록스 시스템 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 스트리밍 인에이블드: 월드 스트리밍, 모델 모드 및 모바일 메모리 최적화",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-streamingenabled-world-streaming-memory-optimization-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "로블록스 StreamingEnabled의 가장 큰 장점은 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "플레이어 주변의 3D 공간 청크만 선별 로드하고 원거리 오브젝트를 메모리에서 제거함으로써, 저사양 스마트폰에서도 거대한 오픈월드를 램 부족 크래시 없이 원활히 플레이할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ModelStreamingMode.Atomic은 언제 사용해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "차량, 복잡한 문, 기계 장치처럼 모델의 부품들이 단일 묶음으로 한 번에 로드되지 않으면 물리 연산이 파손되는 객체에 사용합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "workspace:WaitForChild() 호출 시 무한 대기 경고가 뜨는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "StreamingEnabled 환경에서는 플레이어와 멀리 떨어진 오브젝트가 클라이언트에 존재하지 않으므로, 타임아웃 없이 무한 대기하면 스크립트 실행이 영구 중단됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "StreamingPauseMode는 어떤 역할을 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "초고속 주행 등으로 지형이 제때 로드되지 못할 때 캐릭터를 일시적으로 멈추어 허공으로 추락하는 현상을 물리적으로 방지합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "원거리 시야를 유지하면서 스트리밍 반경을 줄이려면 어떻게 해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "원거리 풍경에는 최소한의 폴리곤으로 제작된 저사양 실루엣 메시나 스카이박스 배경을 배치하여 시각적 완성도와 성능을 동시에 잡을 수 있습니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 스트리밍 인에이블드: 월드 스트리밍, 모델 모드 및 모바일 메모리 최적화</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 로블록스 시스템 엔지니어링 팀</span>
+        <span>&bull;</span>
+        <span>2026-09-29</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>초고성능 개발 원칙:</strong> 전 세계 로블록스 플레이 시간의 68% 이상이 RAM 2GB 이하의 저사양 모바일 기기에서 발생합니다. StreamingEnabled와 체계적인 ModelStreamingMode 설정 없이는 대규모 맵 진입 시 메모리 부족(OOM)으로 즉각적인 강제 종료가 발생합니다.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier172_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>공간 기억 모델링 및 세계 분할 인지 스타일</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier172_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>메모리 예산 관리 및 청크 할당 최적화 연산 훈련</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier172_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>차량 스트리밍 로드 및 부하 환경 입력 반응 속도</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier172_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>모바일 프레임 드랍 렉과 튕김 현상 스트레스 제어</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>로블록스에서 광활한 오픈월드를 제작하려면 엄격한 메모리 관리가 필수적입니다. 복잡한 지형과 고폴리곤 에셋, 다양한 상호작용 오브젝트가 맵에 가득 차면, 클라이언트가 모든 워크스페이스를 한 번에 불러오다 저사양 기기에서 치명적인 렉과 크래시를 유발합니다.</p>
+      <p>로블록스 StreamingEnabled는 플레이어의 거리와 클라이언트 메모리 부하에 맞춰 3D 공간 청크를 동적으로 스트리밍합니다. 정밀한 스트리밍 반경 설정, ModelStreamingMode 적용, 비동기 Luau 인스턴스 참조 패턴을 결합하면 저가형 스마트폰에서도 콘솔급 대작 게임을 쾌적하게 구동할 수 있습니다.</p>
+
+      <h2>1. StreamingEnabled 핵심 원리 및 공간 청크 아키텍처</h2>
+      <p>서버가 맵 데이터를 분할하고 동적으로 클라이언트에 전송하는 구조:</p>
+      <ul>
+          <li><strong>공간 분할(64x64 스터드 청크):</strong> 워크스페이스를 입체 격자 단위로 분할하여 플레이어 주변 구역의 에셋만 네트워크를 통해 전송합니다.</li>
+          <li><strong>StreamingTargetRadius vs. StreamingMinRadius:</strong> TargetRadius는 최대 시야 반경(예: 1024 스터드)을 정의하며, MinRadius는 아바타 주변의 즉각적인 충돌 판정을 보장(예: 128 스터드)합니다.</li>
+          <li><strong>기회주의적 언로드(Opportunistic Stream-Out):</strong> 저사양 모바일 기기의 메모리가 한계에 도달하면 접속을 끊지 않고 원거리 청크를 메모리에서 자동으로 제거합니다.</li>
+      </ul>
+
+      <h2>2. ModelStreamingMode: Atomic, Persistent, Nonatomic</h2>
+      <p>오브젝트 파손을 방지하는 모델 스트리밍 모드 설정법:</p>
+      <ul>
+          <li><strong>Atomic:</strong> 모델 내부의 모든 부품이 단일 프레임에 동시에 로드됩니다. 부품이 순차적으로 로드될 경우 물리 엔진이 깨지는 차량, 엘리베이터, 기계 장치에 필수적입니다.</li>
+          <li><strong>Persistent:</strong> 거리나 기기 메모리에 상관없이 접속 시 즉시 로드되고 절대 언로드되지 않습니다. 메인 로비나 핵심 스폰 지점에만 제한적으로 사용합니다.</li>
+          <li><strong>PersistentPerPlayer:</strong> 서버 코드를 통해 특정 플레이어의 개인 하우징이나 소환된 차량만을 동적으로 영구 유지합니다.</li>
+          <li><strong>Nonatomic (기본값):</strong> 거리 조건에 따라 부품 단위로 유연하게 로드 및 언로드되며, 정적 배경 건물과 울창한 숲에 가장 적합합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.Common.StreamHelper</div>
+        <pre><code>-- 안전한 StreamingEnabled 인스턴스 비동기 대기 모듈
+local StreamHelper = {}
+local TIMEOUT_DEFAULT = 8
+
+function StreamHelper.WaitForChildAsync(parent, childName, timeout)
+    local targetTimeout = timeout or TIMEOUT_DEFAULT
+    local child = parent:FindFirstChild(childName)
+    if child then return child end
+
+    local thread = coroutine.running()
+    local conn
+    
+    local timer = task.delay(targetTimeout, function()
+        if conn then conn:Disconnect() end
+        task.spawn(thread, nil)
+    end)
+    
+    conn = parent.ChildAdded:Connect(function(newChild)
+        if newChild.Name == childName then
+            conn:Disconnect()
+            task.cancel(timer)
+            task.spawn(thread, newChild)
+        end
+    end)
+    
+    local result = coroutine.yield()
+    if not result then
+        warn(string.format("[StreamHelper] Timed out waiting for '%s' in %s", childName, parent:GetFullName()))
+    end
+    return result
+end
+
+return StreamHelper</code></pre>
+      </div>
+
+      <h2>3. 안전한 비동기 Luau 패턴: 무한 대기 경고 방지</h2>
+      <p>원거리 오브젝트 참조 시 발생하는 레이스 컨디션 해결책:</p>
+      <ul>
+          <li><strong>WaitForChild의 함정:</strong> 원거리에 있어 아직 스트리밍되지 않은 객체를 타임아웃 없이 <code>workspace:WaitForChild("Boss")</code>로 호출하면 영구 정지 상태에 빠집니다.</li>
+          <li><strong>비동기 스트림 대기 모듈:</strong> 타임아웃과 재시도 로직이 포함된 안전한 래퍼 함수를 사용하여 객체가 나타날 때까지 비동기 코루틴으로 처리합니다.</li>
+          <li><strong>언로드 시 리소스 해제:</strong> 원거리로 이동해 모델이 언로드될 때 <code>AncestryChanged</code> 이벤트를 감지하여 로컬 이벤트 리스너를 정리하고 메모리 누수를 방지합니다.</li>
+      </ul>
+
+      <h2>4. 모바일 기기 메모리 예산 관리 (400MB 이하)</h2>
+      <p>보급형 스마트폰에서 강제 종료를 방지하는 최적화 기법:</p>
+      <ul>
+          <li><strong>텍스처 해상도 제한:</strong> 핵심 아이템 외의 일반 텍스처는 512x512 이하로 압축하고 아틀라스 텍스처 시트로 통합합니다.</li>
+          <li><strong>StreamingPauseMode 설정:</strong> 초고속 이동 중 지형이 미처 스트리밍되지 못할 때 캐릭터를 잠시 일시 정지시켜 맵 아래 허공으로 추락하는 현상을 방지합니다.</li>
+          <li><strong>개발자 콘솔(F9) 메모리 진단:</strong> GraphicsParts, Textures, Sounds 카테고리를 실시간 점검하여 모바일 기준 총 메모리 사용량을 350MB 이하로 유지합니다.</li>
+      </ul>
+
+      <h2>5. 거리 기반 LOD(Level of Detail) 및 임포스터 메시</h2>
+      <p>폴리곤 과부하 없이 광활한 지평선과 도시 경관을 연출하는 방법:</p>
+      <ul>
+          <li><strong>원거리 저폴리곤 교체:</strong> 150스터드 이상 떨어진 배경은 50트라이앵글 이하의 단순한 실루엣 메시로 대체하여 렌더링 비용을 90% 이상 절감합니다.</li>
+          <li><strong>오클루전 컬링(시야 차단 설계):</strong> 협곡, 건물 외벽, 실내 복도를 전략적으로 배치하여 시야 밖의 거대한 맵 청크가 렌더링 파이프라인에서 자동 제외되도록 설계합니다.</li>
+          <li><strong>메시 인스턴싱 재사용:</strong> 동일한 MeshPart ID를 맵 전체에 재활용하여 모바일 GPU 드로우 콜을 획기적으로 줄입니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>로블록스 StreamingEnabled의 가장 큰 장점은 무엇인가요?</h3>
+          <p>플레이어 주변의 3D 공간 청크만 선별 로드하고 원거리 오브젝트를 메모리에서 제거함으로써, 저사양 스마트폰에서도 거대한 오픈월드를 램 부족 크래시 없이 원활히 플레이할 수 있습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>ModelStreamingMode.Atomic은 언제 사용해야 하나요?</h3>
+          <p>차량, 복잡한 문, 기계 장치처럼 모델의 부품들이 단일 묶음으로 한 번에 로드되지 않으면 물리 연산이 파손되는 객체에 사용합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>workspace:WaitForChild() 호출 시 무한 대기 경고가 뜨는 이유는 무엇인가요?</h3>
+          <p>StreamingEnabled 환경에서는 플레이어와 멀리 떨어진 오브젝트가 클라이언트에 존재하지 않으므로, 타임아웃 없이 무한 대기하면 스크립트 실행이 영구 중단됩니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>StreamingPauseMode는 어떤 역할을 하나요?</h3>
+          <p>초고속 주행 등으로 지형이 제때 로드되지 못할 때 캐릭터를 일시적으로 멈추어 허공으로 추락하는 현상을 물리적으로 방지합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>원거리 시야를 유지하면서 스트리밍 반경을 줄이려면 어떻게 해야 하나요?</h3>
+          <p>원거리 풍경에는 최소한의 폴리곤으로 제작된 저사양 실루엣 메시나 스카이박스 배경을 배치하여 시각적 완성도와 성능을 동시에 잡을 수 있습니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
