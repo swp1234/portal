@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema de Inventário no Roblox: Grade, Peso e DataStore 2026 | DopaBrain</title>
+  <meta name="description" content="Aprenda arquitetura de inventário no Roblox: slots de grade espacial, limites de peso, empilhamento no servidor e proteção anti-duplicação no DataStore." />
+  <meta name="keywords" content="roblox sistema de inventario, roblox inventario em grade, roblox limite de peso script, roblox empilhar itens datastore, roblox anti dupe trade" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/pt/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Sistema de Inventário no Roblox: Grade, Peso e DataStore 2026 | DopaBrain" />
+  <meta property="og:description" content="Aprenda arquitetura de inventário no Roblox: slots de grade espacial, limites de peso, empilhamento no servidor e proteção anti-duplicação no DataStore." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/pt/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sistema de Inventário no Roblox: Grade, Peso e DataStore 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Aprenda arquitetura de inventário no Roblox: slots de grade espacial, limites de peso, empilhamento no servidor e proteção anti-duplicação no DataStore." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/pt/roblox-inventory-system-weight-stacking-datastore-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/pt/roblox-inventory-system-weight-stacking-datastore-guide.html"
+      },
+      "headline": "Arquitetura de Inventário no Roblox: Grade, Orçamento de Peso & Servidor Autoritativo",
+      "description": "Aprenda arquitetura de inventário no Roblox: slots de grade espacial, limites de peso, empilhamento no servidor e proteção anti-duplicação no DataStore.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/pt/roblox-inventory-system-weight-stacking-datastore-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox Systems Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "pt"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Arquitetura de Inventário no Roblox: Grade, Orçamento de Peso & Servidor Autoritativo",
+          "item": "https://dopabrain.com/portal/blog/pt/roblox-inventory-system-weight-stacking-datastore-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Por que a lógica de inventário deve rodar no servidor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Processamento no cliente facilita manipulação de dados e duplicação de itens raros."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como a interface otimista melhora a resposta?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O item se move na tela no mesmo instante, sendo corrigido apenas se o servidor rejeitar a ação."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "O que é bloqueio de sessão no DataStore?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Garante que apenas uma instância de servidor salve dados do jogador simultaneamente, prevenindo clonagem."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como evitar falhas ao arrastar itens no celular?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Movendo um clone visual durante o toque e validando a posição do slot apenas ao soltar o dedo."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Arquitetura de Inventário no Roblox: Grade, Orçamento de Peso & Servidor Autoritativo</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain Roblox Systems Engineering Team</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Axioma de Arquitetura:</strong> Nunca confie no cliente para quantidades ou pesos. Toda movimentação deve ser uma transação atômica no servidor com UI otimista.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier164_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Quick item swap & inventory access reflex</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier164_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spatial organization & inventory layout cognitive style</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier164_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Numerical packing & grid stack optimization</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier164_stress_check">
+          <strong>Stress Check</strong>
+          <span>Encumbrance tension & combat looting panic management</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>O inventário é essencial para RPGs e jogos de sobrevivência no Roblox. Falhas de design causam duplicação de itens e atrasos em dispositivos móveis.</p>
+      <p>Usando validação centralizada no servidor, estruturas modulares e bloqueio de sessão no DataStore, desenvolvedores constroem economias protegidas e altamente responsivas.</p>
+
+      <h2>1. Modelos de Inventário: Slots Fixos vs. Grade Espacial vs. Peso</h2>
+      <p>Escolhendo a arquitetura ideal para a dinâmica do jogo:</p>
+      <ul>
+          <li><strong>Slots Fixos:</strong> Modelo clássico de barra rápida com índices pré-definidos. Operações em O(1) e fácil serialização.</li>
+          <li><strong>Grade Espacial (Tetris):</strong> Itens ocupam múltiplas células estilo Diablo, exigindo cálculo de colisão 2D.</li>
+          <li><strong>Limite de Peso:</strong> O acúmulo de massa reduz progressivamente a velocidade de corrida e estamina.</li>
+      </ul>
+
+      <h2>2. Autoridade do Servidor & Interface Otimista</h2>
+      <p>Interações imediatas com máxima segurança:</p>
+      <ul>
+          <li><strong>Previsão de UI Otimista:</strong> O ícone se move localmente na hora, sem aguardar resposta de rede do servidor.</li>
+          <li><strong>Validação no Servidor:</strong> Checagem de propriedade, peso e limites antes de efetivar a mudança.</li>
+          <li><strong>Reversão Transparente:</strong> Transações inválidas provocam retorno suave do item à posição anterior.</li>
+      </ul>
+
+      <h2>3. Estruturas de Dados e Serialização de Pilhas</h2>
+      <p>Organização eficiente de propriedades em Luau:</p>
+      <ul>
+          <li><strong>Modelo Base vs. Instância:</strong> Nomes e pesos base em ReplicatedStorage, UUID e durabilidade salvos no jogador.</li>
+          <li><strong>Fusão de Pilhas:</strong> Cálculo de espaço livre e transferência atômica de quantidades.</li>
+          <li><strong>Compressão de Armazenamento:</strong> Descarte de slots vazios para respeitar o teto de 4MB do DataStore.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ServerScriptService.Inventory.InventoryManager</div>
+        <pre><code>-- Gerenciador de Inventário com Autoridade de Servidor
+local InventoryManager = {}
+InventoryManager.__index = InventoryManager
+local ItemDatabase = require(game.ReplicatedStorage.ItemDatabase)
+
+function InventoryManager.new(player, maxSlots, maxWeight)
+    local self = setmetatable({}, InventoryManager)
+    self.Player = player
+    self.MaxSlots = maxSlots or 30
+    self.MaxWeight = maxWeight or 100
+    self.Slots = table.create(self.MaxSlots, false)
+    self.CurrentWeight = 0
+    self.IsLocked = false
+    return self
+end
+
+function InventoryManager:AddItem(itemId, amount)
+    if self.IsLocked then return false, "INVENTORY_LOCKED" end
+    local itemData = ItemDatabase[itemId]
+    if not itemData then return false, "INVALID_ITEM" end
+    local addedWeight = itemData.Weight * amount
+    if self.CurrentWeight + addedWeight > self.MaxWeight then
+        return false, "OVER_ENCUMBERED"
+    end
+    for slotIndex = 1, self.MaxSlots do
+        local slot = self.Slots[slotIndex]
+        if slot and slot.Id == itemId and slot.Count < itemData.MaxStack then
+            local space = itemData.MaxStack - slot.Count
+            local toAdd = math.min(space, amount)
+            slot.Count = slot.Count + toAdd
+            amount = amount - toAdd
+            self.CurrentWeight = self.CurrentWeight + (itemData.Weight * toAdd)
+            if amount <= 0 then return true end
+        end
+    end
+    for slotIndex = 1, self.MaxSlots do
+        if not self.Slots[slotIndex] then
+            self.Slots[slotIndex] = {
+                UUID = game:GetService("HttpService"):GenerateGUID(false),
+                Id = itemId,
+                Count = amount,
+                Durability = itemData.MaxDurability
+            }
+            self.CurrentWeight = self.CurrentWeight + (itemData.Weight * amount)
+            return true
+        end
+    end
+    return false, "INVENTORY_FULL"
+end
+
+return InventoryManager</code></pre>
+      </div>
+
+      <h2>4. Proteção Anti-Duplicação e Bloqueio de Sessão</h2>
+      <p>Prevenção contra desconexões forçadas e trocas fraudulentas:</p>
+      <ul>
+          <li><strong>Bloqueio no MemoryStore:</strong> Chave distribuída temporária que impede operações concorrentes.</li>
+          <li><strong>Trocas Atômicas:</strong> Troca executada em um único quadro de servidor ou cancelamento geral se alguém cair.</li>
+          <li><strong>Limite de Requisições:</strong> Intervalo mínimo de 100ms para evitar sobrecarga maliciosa de pacotes.</li>
+      </ul>
+
+      <h2>5. Experiência Tátil em Dispositivos Móveis</h2>
+      <p>Navegação fluida em celulares e tablets:</p>
+      <ul>
+          <li><strong>Áreas de Toque de pelo menos 44px:</strong> Ajuste de escala dinâmico para facilitar toques com os dedos.</li>
+          <li><strong>Menus Radiais por Toque Longo:</strong> Solução para substituir o botão direito em telas sensíveis.</li>
+          <li><strong>Feedback Háptico:</strong> Vibrações sutis via HapticService ao equipar ou soltar itens.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Por que a lógica de inventário deve rodar no servidor?</h3>
+          <p>Processamento no cliente facilita manipulação de dados e duplicação de itens raros.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Como a interface otimista melhora a resposta?</h3>
+          <p>O item se move na tela no mesmo instante, sendo corrigido apenas se o servidor rejeitar a ação.</p>
+        </div>
+        <div class="faq-item">
+          <h3>O que é bloqueio de sessão no DataStore?</h3>
+          <p>Garante que apenas uma instância de servidor salve dados do jogador simultaneamente, prevenindo clonagem.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Como evitar falhas ao arrastar itens no celular?</h3>
+          <p>Movendo um clone visual durante o toque e validando a posição do slot apenas ao soltar o dedo.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 인벤토리 시스템 개발: 슬롯, 무게 & DataStore 2026 | DopaBrain</title>
+  <meta name="description" content="로블록스 인벤토리 아키텍처 완벽 가이드: 공간 그리드 슬롯, 무게 과적 한도, 서버 권한 아이템 스택 병합, DataStore 세션 락 복사 버그 차단." />
+  <meta name="keywords" content="로블록스 인벤토리 시스템, 로블록스 그리드 인벤토리 구현, 로블록스 무게 과적 스크립트, 로블록스 아이템 스택 datastore, 로블록스 복사 버그 방지" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 인벤토리 시스템 개발: 슬롯, 무게 & DataStore 2026 | DopaBrain" />
+  <meta property="og:description" content="로블록스 인벤토리 아키텍처 완벽 가이드: 공간 그리드 슬롯, 무게 과적 한도, 서버 권한 아이템 스택 병합, DataStore 세션 락 복사 버그 차단." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-inventory-system-weight-stacking-datastore-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 인벤토리 시스템 개발: 슬롯, 무게 & DataStore 2026 | DopaBrain" />
+  <meta name="twitter:description" content="로블록스 인벤토리 아키텍처 완벽 가이드: 공간 그리드 슬롯, 무게 과적 한도, 서버 권한 아이템 스택 병합, DataStore 세션 락 복사 버그 차단." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-inventory-system-weight-stacking-datastore-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-inventory-system-weight-stacking-datastore-guide.html"
+      },
+      "headline": "로블록스 인벤토리 아키텍처: 그리드 슬롯, 무게 버짓 & 서버 권한 스택 시스템",
+      "description": "로블록스 인벤토리 아키텍처 완벽 가이드: 공간 그리드 슬롯, 무게 과적 한도, 서버 권한 아이템 스택 병합, DataStore 세션 락 복사 버그 차단.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-inventory-system-weight-stacking-datastore-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 로블록스 시스템 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 인벤토리 아키텍처: 그리드 슬롯, 무게 버짓 & 서버 권한 스택 시스템",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-inventory-system-weight-stacking-datastore-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "로블록스 인벤토리 로직을 반드시 서버에서 처리해야 하는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "클라이언트에서 아이템 이전을 계산하면 해커가 가짜 아이템을 주입하거나 복사 버그를 일으킬 수 있습니다. 서버에서 검증해야 모든 경제 데이터의 무결성이 보장됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "낙관적 UI(Optimistic UI)는 어떻게 인벤토리 조작 렉을 없애나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "유저가 드래그를 놓는 즉시 로컬 화면에서 아이콘을 옮겨 0ms 체감을 주고, 서버 승인이 오면 확정, 거절 시에만 원래 위치로 복귀시킵니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "세션 락(Session Locking)이란 무엇이며 왜 필수인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "한 시점에 오직 하나의 서버만 플레이어의 저장 데이터를 수정할 수 있도록 잠그는 기법으로, 다중 접속이나 강제 종료를 이용한 복사 버그를 원천 봉쇄합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "모바일 화면에서 드래그 조작 튐 현상을 어떻게 방지하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "터치 이동 시 가벼운 복제본 아이콘만 손가락 좌표를 따라다니게 하고, 실제 슬롯 안착 판정은 손가락을 뗐을 때(TouchEnded) 1회만 계산합니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>로블록스 인벤토리 아키텍처: 그리드 슬롯, 무게 버짓 & 서버 권한 스택 시스템</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain 로블록스 시스템 엔지니어링 팀</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>시스템 아키텍처 원칙:</strong> 클라이언트의 아이템 수량, 슬롯 좌표, 무게 계산을 결코 신뢰하지 마십시오. 아이템 드래그부터 포션 분할까지 모든 인벤토리 상호작용은 서버의 원자적 트랜잭션으로 처리되고, 낙관적 UI 업데이트를 통해 렉 없는 조작감을 제공해야 합니다.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier164_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>단축키 아이템 스왑 및 핫바 반응 속도</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier164_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>공간 정리 및 인벤토리 배치 인지 스타일</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier164_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>수치 패킹 및 격자 스택 최적화 연산 훈련</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier164_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>과적 페널티 긴장감과 교전 파밍 멘탈 안정도</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>인벤토리 시스템은 RPG, 서바이벌, 익스트랙션 슈터 등 로블록스 핵심 장르의 기반입니다. 설계를 소홀히 하면 복사 버그, 단축키 동기화 오류, 모바일 드래그 앤 드롭 렉으로 인해 게임 경제가 붕괴됩니다.</p>
+      <p>서버 권한 상태 머신, 모듈형 스택 제한, 복합 아이템 딕셔너리 구조, 그리고 ProfileService 기반의 세션 락 영속 저장을 구축하면 동시접속 수천 명에서도 안전하고 견고한 인벤토리를 완성할 수 있습니다.</p>
+
+      <h2>1. 인벤토리 설계 모델: 고정 슬롯 vs. 공간 그리드 vs. 무게 제한</h2>
+      <p>게임 장르와 루프에 최적화된 인벤토리 구조 선택:</p>
+      <ul>
+          <li><strong>고정 슬롯 아키텍처:</strong> 클래식 MMO/핫바 형태로 고정된 인덱스 배열(예: 20슬롯)을 사용합니다. O(1) 검색과 직관적인 데이터 직렬화가 가능하여 빠른 액션 게임에 적합합니다.</li>
+          <li><strong>공간 테트리스 그리드:</strong> 디아블로/타르코프 스타일의 다중 셀 배치(예: 소총 2x5칸). 배치 시 2D 비트마스크나 충돌 검증 배열 계산이 필요합니다.</li>
+          <li><strong>무게 및 과적(Encumbrance) 버짓:</strong> 아이템마다 질량 값을 부여해 총합을 한도와 비교합니다. 한도 초과 시 단계별 이동속도 감소 및 스태미나 소모 페널티를 적용합니다.</li>
+      </ul>
+
+      <h2>2. 서버 권한 상태 검증 & 낙관적 클라이언트 UI</h2>
+      <p>보안 취약점 없이 0초 체감 반응속도를 구현하는 파이프라인:</p>
+      <ul>
+          <li><strong>낙관적 UI 예측(Optimistic UI):</strong> 아이템 드롭 시 클라이언트 화면에서 즉시 슬롯 아이콘을 이동시키고 사운드를 재생해 서버 왕복 핑을 기다리지 않습니다.</li>
+          <li><strong>서버 유효성 검증 & 뮤텍스 락:</strong> 서버는 아이템 소유권, 슬롯 경계, 무게 한도, 쿨다운을 원자적으로 검증한 후 상태를 확정합니다.</li>
+          <li><strong>조정(Reconciliation) 및 롤백:</strong> 유효하지 않은 이동 요청이나 치트 시도가 발생하면 즉시 에러 패킷을 보내 이전 정상 좌표로 아이콘을 원상 복구합니다.</li>
+      </ul>
+
+      <h2>3. 복합 아이템 데이터 구조 & 스택 직렬화 최적화</h2>
+      <p>가변/불변 속성을 깔끔하게 분리하는 Luau 설계 기법:</p>
+      <ul>
+          <li><strong>기본 템플릿과 고유 인스턴스 분리:</strong> 이름, 아이콘, 최대 스택, 기본 무게는 ReplicatedStorage 공용 DB에 두고, 고유 UUID, 내구도, 강화 옵션만 플레이어 상태에 저장합니다.</li>
+          <li><strong>스택 병합 및 분할 공식:</strong> 병합 시 대상 슬롯의 남은 용량 <code>math.min(maxStack - target.Count, source.Count)</code>을 계산해 원자적으로 수량을 이전합니다.</li>
+          <li><strong>DataStore 직렬화 압축:</strong> 빈 슬롯과 기본값은 저장 시 제외하여 데이터 페이로드 용량을 최소화하고 4MB 세이브 제한을 안전하게 준수합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ServerScriptService.Inventory.InventoryManager</div>
+        <pre><code>-- 서버 권한 인벤토리 트랜잭션 핸들러
+local InventoryManager = {}
+InventoryManager.__index = InventoryManager
+
+local ItemDatabase = require(game.ReplicatedStorage.ItemDatabase)
+
+function InventoryManager.new(player, maxSlots, maxWeight)
+    local self = setmetatable({}, InventoryManager)
+    self.Player = player
+    self.MaxSlots = maxSlots or 30
+    self.MaxWeight = maxWeight or 100
+    self.Slots = table.create(self.MaxSlots, false)
+    self.CurrentWeight = 0
+    self.IsLocked = false
+    return self
+end
+
+function InventoryManager:AddItem(itemId, amount)
+    if self.IsLocked then return false, "INVENTORY_LOCKED" end
+    local itemData = ItemDatabase[itemId]
+    if not itemData then return false, "INVALID_ITEM" end
+    
+    local addedWeight = itemData.Weight * amount
+    if self.CurrentWeight + addedWeight > self.MaxWeight then
+        return false, "OVER_ENCUMBERED"
+    end
+    
+    -- 1. 기존 스택 병합 시도
+    for slotIndex = 1, self.MaxSlots do
+        local slot = self.Slots[slotIndex]
+        if slot and slot.Id == itemId and slot.Count < itemData.MaxStack then
+            local space = itemData.MaxStack - slot.Count
+            local toAdd = math.min(space, amount)
+            slot.Count = slot.Count + toAdd
+            amount = amount - toAdd
+            self.CurrentWeight = self.CurrentWeight + (itemData.Weight * toAdd)
+            if amount <= 0 then return true end
+        end
+    end
+    
+    -- 2. 빈 슬롯에 신규 배치
+    for slotIndex = 1, self.MaxSlots do
+        if not self.Slots[slotIndex] then
+            self.Slots[slotIndex] = {
+                UUID = game:GetService("HttpService"):GenerateGUID(false),
+                Id = itemId,
+                Count = amount,
+                Durability = itemData.MaxDurability
+            }
+            self.CurrentWeight = self.CurrentWeight + (itemData.Weight * amount)
+            return true
+        end
+    end
+    return false, "INVENTORY_FULL"
+end
+
+return InventoryManager</code></pre>
+      </div>
+
+      <h2>4. 복사 버그 방지 & 트랜잭션 락 보안 (ProfileService)</h2>
+      <p>강제 종료 복사 버그, 아이템 드롭 경쟁, 거래 악용 차단:</p>
+      <ul>
+          <li><strong>MemoryStore 세션 락:</strong> 아이템 드롭이나 거래 시 임시 분산 락 키를 획득하여 동시 접근으로 인한 이중 사용(Double-spend)을 차단합니다.</li>
+          <li><strong>원자적 거래 커밋:</strong> 플레이어 간 교환 시 단일 서버 프레임에서 동시 교환하거나, 예기치 않은 연결 끊김 시 양쪽 모두 즉시 롤백합니다.</li>
+          <li><strong>요청 빈도 제한(Rate Limiting):</strong> 아이템 이동 요청 간 100ms 이상의 최소 쿨다운을 적용해 패킷 플러딩 공격과 상태 꼬임을 방지합니다.</li>
+      </ul>
+
+      <h2>5. 모바일 친화적 드래그 앤 드롭 & 터치 스케일링 UX</h2>
+      <p>스마트폰, 태블릿, 콘솔 전 환경에서 쾌적한 인벤토리 조작감:</p>
+      <ul>
+          <li><strong>최소 44px 터치 타깃 보장:</strong> 화면 해상도에 맞게 UIScale을 동적 조정하여 모바일 화면에서도 오클릭 없는 쾌적한 터치 영역을 유지합니다.</li>
+          <li><strong>길게 누르기(Long Press) 원형 메뉴:</strong> 우클릭이 없는 터치 환경에서는 길게 누름 제스처로 사용, 분할, 버리기, 상세 정보 원형 메뉴를 호출합니다.</li>
+          <li><strong>햅틱 및 오디오 피드백:</strong> HapticService를 연동해 아이템 슬롯 장착 시 기기 미세 진동과 스냅 사운드를 출력해 완성도 높은 손맛을 제공합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>로블록스 인벤토리 로직을 반드시 서버에서 처리해야 하는 이유는 무엇인가요?</h3>
+          <p>클라이언트에서 아이템 이전을 계산하면 해커가 가짜 아이템을 주입하거나 복사 버그를 일으킬 수 있습니다. 서버에서 검증해야 모든 경제 데이터의 무결성이 보장됩니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>낙관적 UI(Optimistic UI)는 어떻게 인벤토리 조작 렉을 없애나요?</h3>
+          <p>유저가 드래그를 놓는 즉시 로컬 화면에서 아이콘을 옮겨 0ms 체감을 주고, 서버 승인이 오면 확정, 거절 시에만 원래 위치로 복귀시킵니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>세션 락(Session Locking)이란 무엇이며 왜 필수인가요?</h3>
+          <p>한 시점에 오직 하나의 서버만 플레이어의 저장 데이터를 수정할 수 있도록 잠그는 기법으로, 다중 접속이나 강제 종료를 이용한 복사 버그를 원천 봉쇄합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>모바일 화면에서 드래그 조작 튐 현상을 어떻게 방지하나요?</h3>
+          <p>터치 이동 시 가벼운 복제본 아이콘만 손가락 좌표를 따라다니게 하고, 실제 슬롯 안착 판정은 손가락을 뗐을 때(TouchEnded) 1회만 계산합니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
