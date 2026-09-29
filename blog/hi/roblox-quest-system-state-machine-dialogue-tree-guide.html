@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox क्वेस्ट सिस्टम गाइड: DAG, FSM और डायलॉग ट्री 2026 | DopaBrain</title>
+  <meta name="description" content="Roblox में क्वेस्ट सिस्टम बनाना सीखें: निर्देशित चक्रीय ग्राफ (DAG), स्टेट मशीन, ब्रांचिंग डायलॉग ट्री और प्रोफाइलसर्विस सेव अनुकूलन।" />
+  <meta name="keywords" content="roblox quest system hindi, roblox dialogue tree luau, roblox quest state machine, roblox dag quest graph, roblox rpg quest tutorial" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/hi/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox क्वेस्ट सिस्टम गाइड: DAG, FSM और डायलॉग ट्री 2026 | DopaBrain" />
+  <meta property="og:description" content="Roblox में क्वेस्ट सिस्टम बनाना सीखें: निर्देशित चक्रीय ग्राफ (DAG), स्टेट मशीन, ब्रांचिंग डायलॉग ट्री और प्रोफाइलसर्विस सेव अनुकूलन।" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/hi/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox क्वेस्ट सिस्टम गाइड: DAG, FSM और डायलॉग ट्री 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Roblox में क्वेस्ट सिस्टम बनाना सीखें: निर्देशित चक्रीय ग्राफ (DAG), स्टेट मशीन, ब्रांचिंग डायलॉग ट्री और प्रोफाइलसर्विस सेव अनुकूलन।" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/hi/roblox-quest-system-state-machine-dialogue-tree-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/hi/roblox-quest-system-state-machine-dialogue-tree-guide.html"
+      },
+      "headline": "Roblox क्वेस्ट आर्किटेक्चर: DAG ग्राफ, स्टेट मशीन और संवाद ट्री",
+      "description": "Roblox में क्वेस्ट सिस्टम बनाना सीखें: निर्देशित चक्रीय ग्राफ (DAG), स्टेट मशीन, ब्रांचिंग डायलॉग ट्री और प्रोफाइलसर्विस सेव अनुकूलन।",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/hi/roblox-quest-system-state-machine-dialogue-tree-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox Systems Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "hi"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox क्वेस्ट आर्किटेक्चर: DAG ग्राफ, स्टेट मशीन और संवाद ट्री",
+          "item": "https://dopabrain.com/portal/blog/hi/roblox-quest-system-state-machine-dialogue-tree-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "क्वेस्ट्स को DAG ग्राफ में क्यों बनाना चाहिए?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ताकि कोई भी ऐसी स्थिति न बने जहां दो क्वेस्ट एक-दूसरे पर निर्भर होकर हमेशा के लिए अटक जाएं।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "इवेंट बस से क्या फायदा होता है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "यह हर सेकंड जांच करने के बजाय सिर्फ काम होने पर ही सक्रिय होता है, जिससे गेम बेहद स्मूथ चलता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "गेम क्रैश होने पर क्वेस्ट डेटा कैसे बचाएं?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ProfileService के सेशन लॉक का उपयोग करके डेटा को तुरंत और सुरक्षित रूप से स्टोर करें।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "डायलॉग से इनाम सुरक्षित रूप से कैसे दें?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "बातचीत स्क्रीन पर दिखेगी, लेकिन इनाम देने की जांच हमेशा सर्वर पर सुरक्षित तरीके से होगी।"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox क्वेस्ट आर्किटेक्चर: DAG ग्राफ, स्टेट मशीन और संवाद ट्री</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Roblox Systems Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-29</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>सिस्टम नियम:</strong> साधारण बूलियन वेरिएबल्स से क्वेस्ट ट्रैक करने पर कोड उलझ जाता है और सेव फाइल खराब हो जाती है। बड़े RPG गेम्स में क्वेस्ट्स को DAG ग्राफ और स्टेट मशीन से नियंत्रित किया जाता है।
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier170_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Narrative graph logic & branching decision archetype</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier170_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>State machine transitions & DAG prerequisite ordering</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier170_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Dynamic NPC dialogue choice & prompt response speed</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier170_stress_check">
+          <strong>Stress Check</strong>
+          <span>Complex RPG progression anxiety & quest completion relief</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>Roblox पर RPG और एडवेंचर गेम्स की कहानी क्वेस्ट और डायलॉग सिस्टम पर टिकी होती है। कमजोर कोडिंग से प्लेयर्स की प्रोग्रेस अचानक गायब हो सकती है।</p>
+      <p>DAG आर्किटेक्चर, इवेंट बस लिसनर्स और ब्रांचिंग डायलॉग ट्री की मदद से एक सुरक्षित और आकर्षक क्वेस्ट सिस्टम बनाया जा सकता है।</p>
+
+      <h2>1. DAG ग्राफ के रूप में क्वेस्ट डिजाइन</h2>
+      <p>बिना किसी रुकावट के जटिल कहानियों का निर्माण:</p>
+      <ul>
+          <li><strong>शर्तों का ट्री:</strong> मुख्य और साइड क्वेस्ट्स को ऐसे नोड्स के रूप में जोड़ना जो पिछली शर्तें पूरी होने पर ही अनलॉक हों।</li>
+          <li><strong>विकल्पों के रास्ते:</strong> एक गुट को चुनने पर विरोधी गुट के रास्ते सुरक्षित रूप से बंद करना।</li>
+          <li><strong>चक्र रहित जांच:</strong> यह सुनिश्चित करना कि कोई भी क्वेस्ट खुद पर निर्भर होकर अटक न जाए।</li>
+      </ul>
+
+      <h2>2. स्टेट मशीन (FSM) द्वारा क्वेस्ट लाइफसाइकिल</h2>
+      <p>धोखाधड़ी रोकने के लिए कड़े नियम:</p>
+      <ul>
+          <li><strong>6 मुख्य स्थितियां:</strong> लॉक, उपलब्ध, सक्रिय, पूर्ण, क्लेम और विफल।</li>
+          <li><strong>सर्वर नियंत्रण:</strong> केवल सर्वर ही तय करता है कि लक्ष्य पूरा हुआ या नहीं।</li>
+          <li><strong>स्मूथ UI:</strong> सर्वर की पुष्टि मिलते ही स्क्रीन पर प्रोग्रेस बार और साउंड चलना।</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ServerScriptService.QuestSystem.QuestManager</div>
+        <pre><code>-- क्वेस्ट स्टेट मशीन मॉड्यूल
+local QuestManager = {}
+QuestManager.__index = QuestManager
+local QuestDatabase = require(game.ReplicatedStorage.QuestDatabase)
+
+function QuestManager.new(player, profileData)
+    local self = setmetatable({}, QuestManager)
+    self.Player = player
+    self.ActiveQuests = profileData.ActiveQuests or {}
+    self.CompletedQuests = profileData.CompletedQuests or {}
+    return self
+end
+
+function QuestManager:CanStartQuest(questId)
+    local data = QuestDatabase[questId]
+    if not data then return false end
+    if self.CompletedQuests[questId] or self.ActiveQuests[questId] then return false end
+    for _, prereqId in ipairs(data.Prerequisites) do
+        if not self.CompletedQuests[prereqId] then return false end
+    end
+    return true
+end
+
+function QuestManager:AcceptQuest(questId)
+    if not self:CanStartQuest(questId) then return false end
+    self.ActiveQuests[questId] = {
+        Step = 1,
+        Counters = table.create(#QuestDatabase[questId].Steps[1].Objectives, 0)
+    }
+    return true
+end
+
+return QuestManager</code></pre>
+      </div>
+
+      <h2>3. इवेंट बस द्वारा टास्क ट्रैकिंग</h2>
+      <p>गेमप्ले और क्वेस्ट लॉजिक को अलग रखना:</p>
+      <ul>
+          <li><strong>ग्लोबल सिग्नल:</strong> मॉन्स्टर मरने पर सीधा क्वेस्ट कोड चलाने के बजाय एक ग्लोबल सिग्नल भेजना।</li>
+          <li><strong>कुशल फिल्टरिंग:</strong> क्वेस्ट मैनेजर सिर्फ ज़रूरी इवेंट्स पर ही ध्यान देता है जिससे लैग नहीं होता।</li>
+          <li><strong>मिश्रित लक्ष्य:</strong> एक साथ कई टास्क (जैसे फूल तोड़ना और दुश्मन मारना) आसानी से ट्रैक करना।</li>
+      </ul>
+
+      <h2>4. ब्रांचिंग डायलॉग ट्री और प्लेयर चॉइस</h2>
+      <p>NPC से बातचीत और फैसले लेने की आज़ादी:</p>
+      <ul>
+          <li><strong>नोड आधारित संवाद:</strong> कैमरा एंगल, टेक्स्ट और जवाबों के विकल्पों को जोड़कर बातचीत तैयार करना।</li>
+          <li><strong>शर्तिया विकल्प:</strong> खास सामान या स्तर होने पर ही विशेष जवाब का विकल्प दिखना।</li>
+          <li><strong>डायलॉग एक्शन:</strong> बातचीत के बीच में ही कटसीन शुरू करना या इनाम देना।</li>
+      </ul>
+
+      <h2>5. DataStore में स्पेस बचाने की तकनीक</h2>
+      <p>सैकड़ों क्वेस्ट्स का डेटा कम मेमोरी में सुरक्षित रखना:</p>
+      <ul>
+          <li><strong>बिटफील्ड पैकिंग:</strong> 32 क्वेस्ट्स के पूरा होने का डेटा सिर्फ एक 4-बाइट नंबर में सुरक्षित करना।</li>
+          <li><strong>सक्रिय डेटा ही सेव करना:</strong> केवल चालू क्वेस्ट्स के नंबर सेव करके स्टोरेज बचाना।</li>
+          <li><strong>अपडेट माइग्रेशन:</strong> नए पैच आने पर पुराने प्लेयर्स का गेम क्रैश होने से बचाना।</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>क्वेस्ट्स को DAG ग्राफ में क्यों बनाना चाहिए?</h3>
+          <p>ताकि कोई भी ऐसी स्थिति न बने जहां दो क्वेस्ट एक-दूसरे पर निर्भर होकर हमेशा के लिए अटक जाएं।</p>
+        </div>
+        <div class="faq-item">
+          <h3>इवेंट बस से क्या फायदा होता है?</h3>
+          <p>यह हर सेकंड जांच करने के बजाय सिर्फ काम होने पर ही सक्रिय होता है, जिससे गेम बेहद स्मूथ चलता है।</p>
+        </div>
+        <div class="faq-item">
+          <h3>गेम क्रैश होने पर क्वेस्ट डेटा कैसे बचाएं?</h3>
+          <p>ProfileService के सेशन लॉक का उपयोग करके डेटा को तुरंत और सुरक्षित रूप से स्टोर करें।</p>
+        </div>
+        <div class="faq-item">
+          <h3>डायलॉग से इनाम सुरक्षित रूप से कैसे दें?</h3>
+          <p>बातचीत स्क्रीन पर दिखेगी, लेकिन इनाम देने की जांच हमेशा सर्वर पर सुरक्षित तरीके से होगी।</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

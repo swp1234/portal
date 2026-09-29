@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Görev Sistemi Mimarisi: DAG, FSM & Diyalog Ağaçları 2026 | DopaBrain</title>
+  <meta name="description" content="Roblox görev sistemi geliştirme: Yönlendirilmiş Döngüsüz Çizgeler (DAG), sonlu durum makineleri (FSM), dallanan diyaloglar ve ProfileService kayıt optimizasyonu." />
+  <meta name="keywords" content="roblox gorev sistemi, roblox diyalog agaci luau, roblox fsm gorev durum makinesi, roblox dag gorev cizgesi, roblox rpg yapimi" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/tr/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Görev Sistemi Mimarisi: DAG, FSM & Diyalog Ağaçları 2026 | DopaBrain" />
+  <meta property="og:description" content="Roblox görev sistemi geliştirme: Yönlendirilmiş Döngüsüz Çizgeler (DAG), sonlu durum makineleri (FSM), dallanan diyaloglar ve ProfileService kayıt optimizasyonu." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/tr/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Görev Sistemi Mimarisi: DAG, FSM & Diyalog Ağaçları 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Roblox görev sistemi geliştirme: Yönlendirilmiş Döngüsüz Çizgeler (DAG), sonlu durum makineleri (FSM), dallanan diyaloglar ve ProfileService kayıt optimizasyonu." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/tr/roblox-quest-system-state-machine-dialogue-tree-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/tr/roblox-quest-system-state-machine-dialogue-tree-guide.html"
+      },
+      "headline": "Roblox Görev Mimarisi: DAG Çizgeleri, Durum Makineleri & Dallanan Diyalog Ağaçları",
+      "description": "Roblox görev sistemi geliştirme: Yönlendirilmiş Döngüsüz Çizgeler (DAG), sonlu durum makineleri (FSM), dallanan diyaloglar ve ProfileService kayıt optimizasyonu.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/tr/roblox-quest-system-state-machine-dialogue-tree-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox Systems Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "tr"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Görev Mimarisi: DAG Çizgeleri, Durum Makineleri & Dallanan Diyalog Ağaçları",
+          "item": "https://dopabrain.com/portal/blog/tr/roblox-quest-system-state-machine-dialogue-tree-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Görevler neden DAG çizgeleriyle tasarlanmalıdır?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Görevlerin birbirini sonsuz döngüde beklemesini önlemek ve mantıksal önkoşulları hatasız kurmak için."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Olay veriyolu (event bus) performansı nasıl artırır?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Her karede kontrol yapmayı bırakıp sadece ilgili eylem gerçekleştiğinde tetiklenerek CPU kullanımını sıfıra indirir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ani bağlantı kopmasında görev kaybı nasıl önlenir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oturum kilitlemeli ProfileService kullanarak sayaçları bellekte anında güncelleyip güvenle diske yazarak."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Diyalogdan güvenli ödül nasıl dağıtılır?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Diyalog istemcide oynatılır ancak ödül düğümüne basıldığında sunucu RemoteFunction ile koşulları onaylayıp eşyayı verir."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox Görev Mimarisi: DAG Çizgeleri, Durum Makineleri & Dallanan Diyalog Ağaçları</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Roblox Systems Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-29</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Mimari İlkesi:</strong> Görevleri gelişi güzel boolean değişkenlerle yönetmek mantık kilitlenmelerine ve bozuk kayıtlara yol açar. Profesyonel RPG oyunları görevleri DAG çizgeleri ve olay güdümlü durum makineleriyle tasarlar.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier170_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Narrative graph logic & branching decision archetype</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier170_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>State machine transitions & DAG prerequisite ordering</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier170_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Dynamic NPC dialogue choice & prompt response speed</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier170_stress_check">
+          <strong>Stress Check</strong>
+          <span>Complex RPG progression anxiety & quest completion relief</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>Görev ve diyalog sistemleri Roblox'taki RPG ve macera oyunlarının omurgasını oluşturur. Zayıf mimariler ani bağlantı kopmalarında oyuncu ilerlemesini siler.</p>
+      <p>Önkoşullar için DAG grafikleri, modüler olay veriyolu (event bus), dallanan konuşma ağaçları ve DataStore bit sıkıştırma teknikleriyle hatasız görev sistemleri inşa edilebilir.</p>
+
+      <h2>1. Yönlendirilmiş Döngüsüz Çizgeler (DAG) Olarak Görevler</h2>
+      <p>Kısır döngü kilitlenmeleri olmadan zengin hikayeler kurgulama:</p>
+      <ul>
+          <li><strong>Önkoşul Ağaçları:</strong> Görevler, kendisinden önceki tüm aşamalar tamamlanmadan açılmayan çizge düğümleri olarak kurgulanır.</li>
+          <li><strong>Dallanan ve Birbirini Dışlayan Yollar:</strong> Bir fraksiyonu seçmek zıt görev kollarını sorunsuzca devre dışı bırakır.</li>
+          <li><strong>Topolojik Sıralama Denetimi:</strong> Veritabanı test edilirken döngüsel kilitlenmelerin oluşması matematiksel olarak önlenir.</li>
+      </ul>
+
+      <h2>2. Sonlu Durum Makinesi (FSM) ile Görev Döngüsü</h2>
+      <p>Hileleri engelleyen katı durum geçiş kuralları:</p>
+      <ul>
+          <li><strong>6 Temel Durum:</strong> <code>Kilitli ➔ Müsait ➔ Aktif ➔ Tamamlandı ➔ Ödül Alındı</code> (Gerektiğinde <code>Başarısız</code>).</li>
+          <li><strong>Sunucu Yetkisi:</strong> İstemci asla görevi tek başına bitiremez; sunucu eylemleri doğrulayıp durumu değiştirir.</li>
+          <li><strong>İyimser UI Geri Bildirimi:</strong> Sunucu onaylar onaylamaz arayüzde akıcı animasyonlar ve başarı sesleri oynatılır.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ServerScriptService.QuestSystem.QuestManager</div>
+        <pre><code>-- FSM Görev Yöneticisi
+local QuestManager = {}
+QuestManager.__index = QuestManager
+local QuestDatabase = require(game.ReplicatedStorage.QuestDatabase)
+
+function QuestManager.new(player, profileData)
+    local self = setmetatable({}, QuestManager)
+    self.Player = player
+    self.ActiveQuests = profileData.ActiveQuests or {}
+    self.CompletedQuests = profileData.CompletedQuests or {}
+    return self
+end
+
+function QuestManager:CanStartQuest(questId)
+    local data = QuestDatabase[questId]
+    if not data then return false end
+    if self.CompletedQuests[questId] or self.ActiveQuests[questId] then return false end
+    for _, prereqId in ipairs(data.Prerequisites) do
+        if not self.CompletedQuests[prereqId] then return false end
+    end
+    return true
+end
+
+function QuestManager:AcceptQuest(questId)
+    if not self:CanStartQuest(questId) then return false end
+    self.ActiveQuests[questId] = {
+        Step = 1,
+        Counters = table.create(#QuestDatabase[questId].Steps[1].Objectives, 0)
+    }
+    return true
+end
+
+return QuestManager</code></pre>
+      </div>
+
+      <h2>3. Olay Veriyolu (Signal Bus) ile Hedef Takibi</h2>
+      <p>Oyun içi eylemleri görev kodundan tamamen ayırma:</p>
+      <ul>
+          <li><strong>Merkezi Olay Veriyolu:</strong> Yaratık ölüm koduna görev yazmak yerine genel bir <code>EntityKilled</code> sinyali yayılır.</li>
+          <li><strong>Dinamik Filtreleme:</strong> Görev yöneticisi sadece aktif hedeflere uyan sinyalleri dinleyerek işlemciyi yormaz.</li>
+          <li><strong>Bileşik Görevler:</strong> Hem eşya toplama hem düşman kesme gibi çoklu hedefler tek sayaçta senkronize edilir.</li>
+      </ul>
+
+      <h2>4. Dallanan Diyalog Ağaçları & Karar Mantığı</h2>
+      <p>Oyunun akışını değiştiren etkileşimli NPC konuşmaları:</p>
+      <ul>
+          <li><strong>Düğüm Tabanlı Diyaloglar:</strong> Konuşmalar kamera açıları, metinler ve oyuncu cevap seçenekleriyle birbirine bağlanır.</li>
+          <li><strong>Koşullu Seçenekler:</strong> Özel cevaplar yalnızca çantada doğru eşya veya yeterli itibar varsa ekranda belirir.</li>
+          <li><strong>Diyalog İçi Tetikleyiciler:</strong> Eşya verme, ara sahne başlatma veya boss dövüşü açma işlemleri doğrudan diyalogdan yönetilir.</li>
+      </ul>
+
+      <h2>5. ProfileService ile Bitfield Kayıt Sıkıştırması</h2>
+      <p>Yüzlerce tamamlanmış görevi neredeyse sıfır yer kaplayarak kaydetme:</p>
+      <ul>
+          <li><strong>Bitfield Paketleme:</strong> Biten görevler tamsayıların bitlerine kodlanarak 32 görev sadece 4 baytta saklanır.</li>
+          <li><strong>Sadece Aktif Durumu Saklama:</strong> Veritabanına gereksiz açıklamalar yerine sadece aktif görev ID ve sayaçları yazılır.</li>
+          <li><strong>Sürüm Göçü (Migration):</strong> Hikaye güncellendiğinde ProfileService sürüm kancaları eski oyuncu verilerini güvenle uyarlar.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Görevler neden DAG çizgeleriyle tasarlanmalıdır?</h3>
+          <p>Görevlerin birbirini sonsuz döngüde beklemesini önlemek ve mantıksal önkoşulları hatasız kurmak için.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Olay veriyolu (event bus) performansı nasıl artırır?</h3>
+          <p>Her karede kontrol yapmayı bırakıp sadece ilgili eylem gerçekleştiğinde tetiklenerek CPU kullanımını sıfıra indirir.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Ani bağlantı kopmasında görev kaybı nasıl önlenir?</h3>
+          <p>Oturum kilitlemeli ProfileService kullanarak sayaçları bellekte anında güncelleyip güvenle diske yazarak.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Diyalogdan güvenli ödül nasıl dağıtılır?</h3>
+          <p>Diyalog istemcide oynatılır ancak ödül düğümüne basıldığında sunucu RemoteFunction ile koşulları onaylayıp eşyayı verir.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

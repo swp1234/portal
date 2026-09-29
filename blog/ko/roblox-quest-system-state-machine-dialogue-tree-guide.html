@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 퀘스트 시스템 개발: DAG 그래프, 상태머신 & 대화트리 2026 | DopaBrain</title>
+  <meta name="description" content="로블록스 퀘스트 시스템 아키텍처 완벽 가이드: 방향성 비순환 그래프(DAG) 선행 조건, 유한 상태 머신(FSM), 분기형 NPC 대화 트리, DataStore 비트필드 저장." />
+  <meta name="keywords" content="로블록스 퀘스트 시스템, 로블록스 대화 트리 구현, 로블록스 퀘스트 상태머신, 로블록스 dag 퀘스트 그래프, 로블록스 rpg 제작 튜토리얼" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 퀘스트 시스템 개발: DAG 그래프, 상태머신 & 대화트리 2026 | DopaBrain" />
+  <meta property="og:description" content="로블록스 퀘스트 시스템 아키텍처 완벽 가이드: 방향성 비순환 그래프(DAG) 선행 조건, 유한 상태 머신(FSM), 분기형 NPC 대화 트리, DataStore 비트필드 저장." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-quest-system-state-machine-dialogue-tree-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 퀘스트 시스템 개발: DAG 그래프, 상태머신 & 대화트리 2026 | DopaBrain" />
+  <meta name="twitter:description" content="로블록스 퀘스트 시스템 아키텍처 완벽 가이드: 방향성 비순환 그래프(DAG) 선행 조건, 유한 상태 머신(FSM), 분기형 NPC 대화 트리, DataStore 비트필드 저장." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-quest-system-state-machine-dialogue-tree-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-quest-system-state-machine-dialogue-tree-guide.html"
+      },
+      "headline": "로블록스 퀘스트 아키텍처: DAG 의존성 그래프, 유한 상태 머신 & 분기형 대화 트리",
+      "description": "로블록스 퀘스트 시스템 아키텍처 완벽 가이드: 방향성 비순환 그래프(DAG) 선행 조건, 유한 상태 머신(FSM), 분기형 NPC 대화 트리, DataStore 비트필드 저장.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-quest-system-state-machine-dialogue-tree-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 로블록스 시스템 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 퀘스트 아키텍처: DAG 의존성 그래프, 유한 상태 머신 & 분기형 대화 트리",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-quest-system-state-machine-dialogue-tree-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "왜 퀘스트 의존성을 DAG(방향성 비순환 그래프)로 모델링해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "순환 참조(A를 깨려면 B가 필요하고, B를 깨려면 A가 필요한 교착 상태)를 수학적으로 100% 방지하고 선행 관계를 명확히 정의할 수 있기 때문입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "이벤트 버스(Signal Bus)는 퀘스트 성능을 어떻게 개선하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "모든 퀘스트가 매 프레임 아이템이나 몬스터 상태를 감시하는 대신, 사건이 발생했을 때만 신호를 받아 카운트를 올리므로 CPU 사용량이 거의 0에 수렴합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "갑작스러운 튕김 현상 시 퀘스트 데이터 손실을 어떻게 막나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ProfileService 세션 락을 사용해 카운터 변경 시 인메모리 캐시를 즉시 갱신하고 주기적 자동 저장과 종료 시 원자적 커밋으로 무결성을 보장합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "대화 트리에서 안전하게 퀘스트 보상을 지급하는 방법은?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "대화 출력은 클라이언트에서 즉각 렌더링하되, 최종 보상 노드 선택 시 서버의 RemoteFunction을 호출하여 서버가 조건을 재검증한 후 보상을 지급해야 합니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 퀘스트 아키텍처: DAG 의존성 그래프, 유한 상태 머신 & 분기형 대화 트리</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 로블록스 시스템 엔지니어링 팀</span>
+        <span>&bull;</span>
+        <span>2026-09-29</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>시스템 아키텍처 공리:</strong> 수십 개의 불리언(Boolean) 변수로 퀘스트를 주먹구구식 추적하면 로직이 스파게티처럼 꼬이고 세이브 데이터가 오염됩니다. 대규모 RPG는 퀘스트를 방향성 비순환 그래프(DAG)로 모델링하고 이벤트 버스 기반의 유한 상태 머신(FSM)으로 제어해야 합니다.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier170_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>스토리 분기 로직 및 선택지 판단 인지 스타일</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier170_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>상태 머신 전이 및 DAG 선행 조건 알고리즘 훈련</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier170_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>NPC 대화 선택지 판단 및 순간 응답 속도</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier170_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>방대한 퀘스트 목표 과부하와 임무 완수 안도감</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>퀘스트와 대화 시스템은 로블록스 RPG, 어드벤처, 스토리 게임의 서사를 이끄는 핵심 척추입니다. 아키텍처가 부실하면 퀘스트 포기, 컷신 중 튕김 현상에서 데이터가 영구 증발합니다.</p>
+      <p>선행 조건을 관리하는 DAG(Directed Acyclic Graph), 결합도를 낮춘 이벤트 버스 리스너, 플레이어의 선택에 따라 분기하는 대화 트리, 그리고 DataStore 용량을 90% 아끼는 비트필드 압축 저장 기법을 심층 분석합니다.</p>
+
+      <h2>1. 방향성 비순환 그래프(DAG)로 설계하는 퀘스트 라인</h2>
+      <p>순환 의존성 데드락 없는 안정적인 스토리 트리 구축:</p>
+      <ul>
+          <li><strong>선행 조건 트리(Prerequisite Tree):</strong> 메인 스토리와 서브 퀘스트를 그래프 노드로 구성하고, 모든 선행 노드가 완료 상태일 때만 다음 퀘스트가 해금되도록 통제합니다.</li>
+          <li><strong>상호 배타적 분기 노드:</strong> 진영 선택이나 도덕성 분기에서 한쪽을 선택하면 반대편 퀘스트 노드를 비활성화(Ineligible) 처리해 스토리 충돌을 차단합니다.</li>
+          <li><strong>위상 정렬(Topological Sort) 사전 검증:</strong> 퀘스트 데이터베이스 빌드 시 위상 정렬 알고리즘을 돌려 순환 참조(A를 깨려면 B가 필요하고, B를 깨려면 A가 필요한 버그)를 100% 검출합니다.</li>
+      </ul>
+
+      <h2>2. 퀘스트 수명 주기를 제어하는 유한 상태 머신(FSM)</h2>
+      <p>치트 패킷을 원천 차단하는 엄격한 상태 전이 파이프라인:</p>
+      <ul>
+          <li><strong>6대 표준 상태 정의:</strong> <code>Locked(잠김) ➔ Available(수락가능) ➔ Active(진행중) ➔ Completed(완료) ➔ Claimed(보상수령)</code> (실패 시 <code>Failed</code> 전이).</li>
+          <li><strong>서버 권한 상태 전이:</strong> 클라이언트는 완료 신호를 보낼 수 없습니다. 유저는 행동(사냥/채집)만 수행하고 서버가 목표 달성 여부를 검증한 후 상태를 바꿉니다.</li>
+          <li><strong>낙관적 UI 애니메이션:</strong> 서버 승인 패킷을 수신하는 즉시 클라이언트 HUD에서 목표 게이지가 차오르고 경쾌한 보상 사운드를 출력합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ServerScriptService.QuestSystem.QuestManager</div>
+        <pre><code>-- 유한 상태 머신 기반 퀘스트 관리자
+local QuestManager = {}
+QuestManager.__index = QuestManager
+
+local QuestDatabase = require(game.ReplicatedStorage.QuestDatabase)
+
+function QuestManager.new(player, profileData)
+    local self = setmetatable({}, QuestManager)
+    self.Player = player
+    self.ActiveQuests = profileData.ActiveQuests or {} -- [questId] = {Step = 1, Progress = {}}
+    self.CompletedQuests = profileData.CompletedQuests or {} -- 완료된 퀘스트 ID 셋
+    return self
+end
+
+function QuestManager:CanStartQuest(questId)
+    local data = QuestDatabase[questId]
+    if not data then return false end
+    if self.CompletedQuests[questId] or self.ActiveQuests[questId] then return false end
+    
+    -- DAG 선행 조건 검증
+    for _, prereqId in ipairs(data.Prerequisites) do
+        if not self.CompletedQuests[prereqId] then
+            return false
+        end
+    end
+    return true
+end
+
+function QuestManager:AcceptQuest(questId)
+    if not self:CanStartQuest(questId) then return false end
+    self.ActiveQuests[questId] = {
+        Step = 1,
+        Counters = table.create(#QuestDatabase[questId].Steps[1].Objectives, 0)
+    }
+    return true
+end
+
+return QuestManager</code></pre>
+      </div>
+
+      <h2>3. 이벤트 버스(Signal Bus) 기반의 목표 추적 시스템</h2>
+      <p>게임플레이 루프와 퀘스트 검증 코드의 완전한 디커플링:</p>
+      <ul>
+          <li><strong>중앙 집중형 게임 이벤트 버스:</strong> 몬스터 사망 스크립트에 퀘스트 코드를 직접 넣지 않고, 범용 <code>EntityKilled(entityId, player)</code> 신호를 발생시킵니다.</li>
+          <li><strong>동적 이벤트 필터링:</strong> QuestManager가 이벤트 버스를 구독하여 현재 진행 중인 퀘스트의 목표 조건과 일치할 때만 카운터를 증가시켜 CPU 부하를 없앱니다.</li>
+          <li><strong>복합 목표 처리:</strong> 약초 5개 수집 및 고블린 3마리 처치 같은 다중 목표를 정형화된 카운터 딕셔너리로 동시 추적합니다.</li>
+      </ul>
+
+      <h2>4. 분기형 대화 트리(Dialogue Tree) & 선택지 로직</h2>
+      <p>선택에 따라 전개가 달라지는 상호작용형 NPC 대화 설계:</p>
+      <ul>
+          <li><strong>노드 기반 대화 딕셔너리:</strong> NPC 대사를 카메라 앵글, 화자 텍스트, 그리고 플레이어 선택지 배열이 포함된 상호 연결 노드로 구조화합니다.</li>
+          <li><strong>조건부 선택지 필터링:</strong> 특정 퀘스트 진행 상태, 인벤토리 아이템 소지 여부, 평판 수치에 따라 숨겨진 대화 선택지를 동적으로 노출합니다.</li>
+          <li><strong>노드 진입 액션 페이로드:</strong> 대화 노드 선택 시 즉시 아이템 지급, 컷신 재생, 보스전 진입 등 게임 내 트리거를 실행합니다.</li>
+      </ul>
+
+      <h2>5. ProfileService 기반 비트필드 저장 압축 기법</h2>
+      <p>수백 개의 퀘스트 완료 기록을 최소 바이트로 안전하게 영속화:</p>
+      <ul>
+          <li><strong>비트필드(Bitfield) 패킹:</strong> 완료된 퀘스트 번호를 정수 1개의 32개 비트에 1:1 매핑하여 4바이트 정수 하나에 32개 퀘스트 완료 상태를 압축 저장합니다.</li>
+          <li><strong>진행 중인 상태 슬라이스:</strong> 현재 진행 중인 퀘스트의 ID와 세부 카운터만 저장하고 기본 메타데이터는 제외하여 용량을 95% 절감합니다.</li>
+          <li><strong>데이터 스키마 마이그레이션:</strong> 스토리 패치로 퀘스트가 수정될 때 ProfileService 버전 훅을 통해 기존 유저의 퀘스트 진행도를 오류 없이 보정합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>왜 퀘스트 의존성을 DAG(방향성 비순환 그래프)로 모델링해야 하나요?</h3>
+          <p>순환 참조(A를 깨려면 B가 필요하고, B를 깨려면 A가 필요한 교착 상태)를 수학적으로 100% 방지하고 선행 관계를 명확히 정의할 수 있기 때문입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>이벤트 버스(Signal Bus)는 퀘스트 성능을 어떻게 개선하나요?</h3>
+          <p>모든 퀘스트가 매 프레임 아이템이나 몬스터 상태를 감시하는 대신, 사건이 발생했을 때만 신호를 받아 카운트를 올리므로 CPU 사용량이 거의 0에 수렴합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>갑작스러운 튕김 현상 시 퀘스트 데이터 손실을 어떻게 막나요?</h3>
+          <p>ProfileService 세션 락을 사용해 카운터 변경 시 인메모리 캐시를 즉시 갱신하고 주기적 자동 저장과 종료 시 원자적 커밋으로 무결성을 보장합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>대화 트리에서 안전하게 퀘스트 보상을 지급하는 방법은?</h3>
+          <p>대화 출력은 클라이언트에서 즉각 렌더링하되, 최종 보상 노드 선택 시 서버의 RemoteFunction을 호출하여 서버가 조건을 재검증한 후 보상을 지급해야 합니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
