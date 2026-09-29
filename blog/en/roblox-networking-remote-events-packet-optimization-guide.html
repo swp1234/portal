@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Networking & Remote Optimization: 2026 Packet Guide | DopaBrain</title>
+  <meta name="description" content="Master Roblox client-server networking: RemoteEvents vs UnreliableRemoteEvents, Luau buffer serialization, 50KB/s replication budget, and packet packing." />
+  <meta name="keywords" content="roblox networking guide, roblox remoteevents packet optimization, roblox unreliable remote events, luau buffer serialization, roblox network bandwidth budget" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/en/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Networking & Remote Optimization: 2026 Packet Guide | DopaBrain" />
+  <meta property="og:description" content="Master Roblox client-server networking: RemoteEvents vs UnreliableRemoteEvents, Luau buffer serialization, 50KB/s replication budget, and packet packing." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/en/roblox-networking-remote-events-packet-optimization-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Networking & Remote Optimization: 2026 Packet Guide | DopaBrain" />
+  <meta name="twitter:description" content="Master Roblox client-server networking: RemoteEvents vs UnreliableRemoteEvents, Luau buffer serialization, 50KB/s replication budget, and packet packing." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/en/roblox-networking-remote-events-packet-optimization-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/en/roblox-networking-remote-events-packet-optimization-guide.html"
+      },
+      "headline": "Roblox Networking Architecture: RemoteEvents, UnreliableRemoteEvents & Packet Optimization",
+      "description": "Master Roblox client-server networking: RemoteEvents vs UnreliableRemoteEvents, Luau buffer serialization, 50KB/s replication budget, and packet packing.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/en/roblox-networking-remote-events-packet-optimization-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox Network Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Networking Architecture: RemoteEvents, UnreliableRemoteEvents & Packet Optimization",
+          "item": "https://dopabrain.com/portal/blog/en/roblox-networking-remote-events-packet-optimization-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the primary difference between RemoteEvent and UnreliableRemoteEvent in Roblox?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "RemoteEvent guarantees packet delivery and strict ordering via reliable transport, retrying lost packets. UnreliableRemoteEvent functions like UDP, discarding dropped or out-of-order packets without resending, making it far superior for high-frequency transient telemetry and audio/visual cues."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Luau buffer serialization reduce network lag?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standard Lua tables transmit variable key strings and bloated metadata. Luau buffers pack raw binary bytes (e.g. 16-bit integers and bitmasks) into contiguous memory, slashing payload size by 70–85% and significantly reducing packet parsing overhead."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why should developers avoid firing RemoteEvents inside RenderStepped?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "RenderStepped runs at the client display refresh rate (up to 144Hz or 240Hz). Transmitting network packets at this frequency rapidly overwhelms Roblox client egress limits (~50 KB/s), causing synthetic ping spikes and packet drops. Network updates should be throttled to 20Hz."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is server lag compensation in Roblox combat games?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Lag compensation stores a rolling history of all player positions on the server. When a client fires at an enemy, the server rewinds time to the client's timestamp to verify whether the shot hit the target as seen on the shooter's screen, ensuring fair hits without rubberbanding."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox Networking Architecture: RemoteEvents, UnreliableRemoteEvents & Packet Optimization</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain Roblox Network Engineering Team</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Network Architecture Axiom:</strong> The default Roblox network pipeline provides roughly 50 KB/s per client of replication bandwidth. Sending uncompressed dictionaries every frame causes massive packet queues, ping spikes, and disconnects. Optimize payloads with Luau buffers and UnreliableRemoteEvents.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier158_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Network latency & sub-50ms input response</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier158_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Logical structures & systems architecture</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier158_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Spatial efficiency & packet packing logic</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier158_stress_check">
+          <strong>Stress Check</strong>
+          <span>Network jitter & latency frustration assessment</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>Multiplayer responsiveness is the lifeblood of competitive Roblox experiences. When developers fire individual RemoteEvents for every bullet fired, footstep taken, or position update, network buffers quickly saturate, creating severe desynchronization and latency spikes on mobile cellular connections.</p>
+      <p>With modern Luau features like the native `buffer` library and the `UnreliableRemoteEvent` class, developers have unprecedented control over network replication. By adopting binary serialization, packet batching, and client-side reconciliation, you can build seamless 100-player servers that consume a fraction of standard bandwidth.</p>
+
+      <h2>1. The Client-Server Replication Budget & Packet Limits</h2>
+      <p>Understanding the physical and architectural network constraints in Roblox:</p>
+      <ul>
+          <li><strong>The 50 KB/s Rule:</strong> While high-speed fiber can handle megabytes, mobile networks and Roblox engine caps throttle client replication around 50 KB/s. Exceeding this introduces synthetic latency and packet queuing.</li>
+          <li><strong>RemoteEvent Overhead:</strong> Every single Remote invocation carries roughly 9 bytes of engine packet header metadata. Firing 60 times a second wastes over 500 bytes per second purely on headers.</li>
+          <li><strong>Server Influx Limits:</strong> Roblox drops incoming client packets if an individual client exceeds ~50 KB/s or spams hundreds of calls per frame, leading to silent drops and broken game states.</li>
+      </ul>
+
+      <h2>2. RemoteEvent vs. UnreliableRemoteEvent</h2>
+      <p>Selecting the appropriate transport protocol for game events:</p>
+      <ul>
+          <li><strong>RemoteEvent (TCP-like Reliability):</strong> Guarantees delivery and strict order. Perfect for critical state changes: purchasing items, inventory trades, health damage events, and round transitions.</li>
+          <li><strong>UnreliableRemoteEvent (UDP-like Speed):</strong> Packets are dropped if network conditions deteriorate, and out-of-order packets are discarded. Ideal for transient data: visual projectile tracers, cosmetic particles, audio triggers, and vehicle telemetry.</li>
+          <li><strong>Bandwidth Economy:</strong> UnreliableRemoteEvents bypass the engine's resend queue, preventing packet pile-up during temporary network packet loss or WiFi interference.</li>
+      </ul>
+
+      <h2>3. Binary Serialization with the Luau Buffer Library</h2>
+      <p>Compressing bloated table payloads into lightweight binary byte streams:</p>
+      <ul>
+          <li><strong>The Wastefulness of Tables:</strong> A standard table like <code>{ x = 120.5, y = 14.2, z = -80.1, id = 42 }</code> serializes keys as strings, consuming 40+ bytes per transmission.</li>
+          <li><strong>Compact Buffer Layout:</strong> Using <code>buffer.create(7)</code>, developers can store three 16-bit fixed-point floats (6 bytes) and one 8-bit unsigned integer (1 byte), reducing transmission size to just 7 bytes (an 82% bandwidth reduction).</li>
+          <li><strong>Bitpacking Techniques:</strong> Multiple boolean flags (e.g. isSprinting, isCrouching, isAiming, isGrounded) can be packed into a single 8-bit bitmask using bitwise operations (<code>bit32.bor</code>, <code>bit32.band</code>).</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.Network.PacketCompressor</div>
+        <pre><code>-- Binary Buffer Serialization for Player Input Replication
+local PacketCompressor = {}
+
+-- Compress Position & 4 Booleans into 7 Bytes
+function PacketCompressor.serialize(posX, posY, posZ, flags)
+    local buf = buffer.create(7)
+    
+    -- Quantize 3D coordinates (divide by precision scale, write as i16)
+    buffer.writei16(buf, 0, math.clamp(math.round(posX * 10), -32768, 32767))
+    buffer.writei16(buf, 2, math.clamp(math.round(posY * 10), -32768, 32767))
+    buffer.writei16(buf, 4, math.clamp(math.round(posZ * 10), -32768, 32767))
+    
+    -- Pack 4 booleans into 1 bitmask byte
+    local mask = 0
+    if flags.isSprinting then mask = bit32.bor(mask, 1) end
+    if flags.isCrouching then mask = bit32.bor(mask, 2) end
+    if flags.isAiming    then mask = bit32.bor(mask, 4) end
+    if flags.isGrounded  then mask = bit32.bor(mask, 8) end
+    buffer.writeu8(buf, 6, mask)
+    
+    return buf
+end
+
+-- Decompress 7-Byte Buffer on Server
+function PacketCompressor.deserialize(buf)
+    local posX = buffer.readi16(buf, 0) / 10
+    local posY = buffer.readi16(buf, 2) / 10
+    local posZ = buffer.readi16(buf, 4) / 10
+    
+    local mask = buffer.readu8(buf, 6)
+    local flags = {
+        isSprinting = bit32.band(mask, 1) ~= 0,
+        isCrouching = bit32.band(mask, 2) ~= 0,
+        isAiming    = bit32.band(mask, 4) ~= 0,
+        isGrounded  = bit32.band(mask, 8) ~= 0,
+    }
+    
+    return posX, posY, posZ, flags
+end
+
+return PacketCompressor</code></pre>
+      </div>
+
+      <h2>4. Packet Packing & Frequency Throttling</h2>
+      <p>Batching micro-events into structured tick-based network frames:</p>
+      <ul>
+          <li><strong>Fixed Tick Rate Replication:</strong> Never fire remotes directly inside <code>RenderStepped</code> (60–144 Hz). Buffer client inputs and transmit them at a stable 20 Hz tick rate (every 50ms).</li>
+          <li><strong>Array Batching:</strong> Combine multiple micro-events occurring within the same frame (e.g., 5 rapid hitscan shots) into a single batched array or buffer before invoking the remote.</li>
+          <li><strong>Delta Compression:</strong> Instead of transmitting full 3D CFrame coordinates every tick, transmit only the delta change from the previous acknowledged server state.</li>
+      </ul>
+
+      <h2>5. Server Validation, Client Prediction & Reconciliation</h2>
+      <p>Preventing exploits and rubberbanding through authoritative design:</p>
+      <ul>
+          <li><strong>Client-Side Prediction:</strong> Apply local movement, gun recoil, and UI feedback instantly on the client without awaiting round-trip server confirmation to eliminate perceived latency.</li>
+          <li><strong>Strict Server Validation:</strong> Never trust client timestamps or raycast hits. The server must verify projectile origins, fire rates, player speed limits, and obstacle line-of-sight.</li>
+          <li><strong>Lag Compensation & History Buffers:</strong> Maintain a circular buffer of character hitboxes on the server for the past 1000ms. Rewind target hitboxes to the client's timestamp to accurately validate high-ping hits.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>What is the primary difference between RemoteEvent and UnreliableRemoteEvent in Roblox?</h3>
+          <p>RemoteEvent guarantees packet delivery and strict ordering via reliable transport, retrying lost packets. UnreliableRemoteEvent functions like UDP, discarding dropped or out-of-order packets without resending, making it far superior for high-frequency transient telemetry and audio/visual cues.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does Luau buffer serialization reduce network lag?</h3>
+          <p>Standard Lua tables transmit variable key strings and bloated metadata. Luau buffers pack raw binary bytes (e.g. 16-bit integers and bitmasks) into contiguous memory, slashing payload size by 70–85% and significantly reducing packet parsing overhead.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Why should developers avoid firing RemoteEvents inside RenderStepped?</h3>
+          <p>RenderStepped runs at the client display refresh rate (up to 144Hz or 240Hz). Transmitting network packets at this frequency rapidly overwhelms Roblox client egress limits (~50 KB/s), causing synthetic ping spikes and packet drops. Network updates should be throttled to 20Hz.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What is server lag compensation in Roblox combat games?</h3>
+          <p>Lag compensation stores a rolling history of all player positions on the server. When a client fires at an enemy, the server rewinds time to the client's timestamp to verify whether the shot hit the target as seen on the shooter's screen, ensuring fair hits without rubberbanding.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
