@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roblox NPC AI आर्किटेक्चर: बिहेवियर ट्री और FSM गाइड 2026 | DopaBrain</title>
+  <meta name="description" content="Roblox NPC AI सीखें: फाइनाइट स्टेट मशीन (FSM), बिहेवियर ट्री (BT), दृष्टि कोण रेकास्टिंग और सर्वर ऑप्टिमाइज़ेशन।">
+  <meta name="keywords" content="roblox npc ai behavior tree, roblox finite state machine fsm, roblox npc line of sight raycast, enemy ai roblox studio, server optimization npc">
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/hi/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox NPC AI आर्किटेक्चर: बिहेवियर ट्री और FSM गाइड 2026 | DopaBrain">
+  <meta property="og:description" content="Roblox NPC AI सीखें: फाइनाइट स्टेट मशीन (FSM), बिहेवियर ट्री (BT), दृष्टि कोण रेकास्टिंग और सर्वर ऑप्टिमाइज़ेशन।">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/hi/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <meta property="og:site_name" content="DopaBrain">
+  <meta property="og:image" content="https://dopabrain.com/portal/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Roblox NPC AI आर्किटेक्चर: बिहेवियर ट्री और FSM गाइड 2026 | DopaBrain">
+  <meta name="twitter:description" content="Roblox NPC AI सीखें: फाइनाइट स्टेट मशीन (FSM), बिहेवियर ट्री (BT), दृष्टि कोण रेकास्टिंग और सर्वर ऑप्टिमाइज़ेशन।">
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Roblox NPC AI आर्किटेक्चर: बिहेवियर ट्री, स्टेट मशीन और सेंसरी सिस्टम",
+  "description": "Roblox NPC AI सीखें: फाइनाइट स्टेट मशीन (FSM), बिहेवियर ट्री (BT), दृष्टि कोण रेकास्टिंग और सर्वर ऑप्टिमाइज़ेशन।",
+  "datePublished": "2026-09-29",
+  "dateModified": "2026-09-29",
+  "author": {
+    "@type": "Organization",
+    "name": "DopaBrain Roblox AI Engineering Team"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DopaBrain",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://dopabrain.com/portal/img/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://dopabrain.com/portal/blog/hi/roblox-npc-behavior-tree-finite-state-machine-guide.html"
+  }
+}
+  </script>
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DopaBrain",
+      "item": "https://dopabrain.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Portal",
+      "item": "https://dopabrain.com/portal/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Roblox NPC AI आर्किटेक्चर: बिहेवियर ट्री, स्टेट मशीन और सेंसरी सिस्टम",
+      "item": "https://dopabrain.com/portal/blog/hi/roblox-npc-behavior-tree-finite-state-machine-guide.html"
+    }
+  ]
+}
+  </script>
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "30 NPC पर सर्वर क्यों लैग करता है?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "हर फ्रेम पर रेकास्ट करने से सीपीयू भर जाता है; AI LOD का प्रयोग करें।"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "दीवार के आर-पार देखने से कैसे रोकें?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "सिर से खिलाड़ी के शरीर तक रेकास्ट करके दीवार की जांच करें।"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "क्या क्लाइंट पर AI चला सकते हैं?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "नहीं, चीटिंग से बचने के लिए निर्णय हमेशा सर्वर पर होने चाहिए।"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "FSM पर BT का क्या फायदा है?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "यह जटिल फैसलों को बिना कोड उलझाए जोड़ने की सुविधा देता है।"
+      }
+    }
+  ]
+}
+  </script>
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0 0 12px;
+      font-size: 1.4rem;
+    }
+    .portal-btn {
+      display: inline-block;
+      min-height: 44px;
+      line-height: 44px;
+      padding: 0 24px;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 700;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 14px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox NPC AI आर्किटेक्चर: बिहेवियर ट्री, स्टेट मशीन और सेंसरी सिस्टम</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Roblox AI Engineering Team</span>
+        <span>•</span>
+        <span>Updated: September 2026</span>
+        <span>•</span>
+        <span>Reading Time: 9 min</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>AI आर्किटेक्चर नियम:</strong> एनिमी AI के लिए कभी भी एक बड़ा while-true लूप न लिखें। FSM और बिहेवियर ट्री से निर्णय और एक्शन को अलग रखें।
+    </div>
+
+    <!-- Quick Cognitive Rail (4 Tools) -->
+    <div class="quick-rail" data-content-surface="quick_rail">
+      <h2>इंजीनियरिंग और संज्ञानात्मक उपकरण</h2>
+      <div class="quick-grid">
+        <a href="https://dopabrain.com/brain-type/" class="quick-card">
+          <strong>ब्रेन टाइप टेस्ट</strong>
+          <span>सिस्टम आर्किटेक्चर और समस्या समाधान शैली</span>
+        </a>
+        <a href="https://dopabrain.com/puzzle-2048/" class="quick-card">
+          <strong>2048 पहेली</strong>
+          <span>लॉजिक और डेटा पदानुक्रम प्रशिक्षण</span>
+        </a>
+        <a href="https://dopabrain.com/reaction-test/" class="quick-card">
+          <strong>प्रतिक्रिया समय टेस्ट</strong>
+          <span>रीयल-टाइम मोटर स्पीड का परीक्षण</span>
+        </a>
+        <a href="https://dopabrain.com/stress-check/" class="quick-card">
+          <strong>तनाव परीक्षण</strong>
+          <span>डिप्लॉयमेंट और बग के दौरान मानसिक नियंत्रण</span>
+        </a>
+      </div>
+    </div>
+
+    <p>Roblox में स्मार्ट एनिमी बनाने के लिए एक स्पष्ट निर्णय प्रणाली आवश्यक है। एक ही स्क्रिप्ट में ढेर सारी if-else शर्तें लिखने से गेम लैग करता है और सर्वर स्लो हो जाता है।</p>
+    <p>प्रोफेशनल गेम्स फाइनाइट स्टेट मशीन (FSM) और बिहेवियर ट्री का संयोजन उपयोग करते हैं। इस गाइड में ब्लैकबोर्ड डेटा, विज़न रेकास्ट और AI LOD के बारे में विस्तार से बताया गया है।</p>
+
+    <h2>1. FSM बनाम बिहेवियर ट्री (BT)</h2>
+    <p>गेम के अनुसार सही आर्किटेक्चर चुनें:</p>
+    <ul>
+      <li><strong>FSM:</strong> गश्त, पीछा और हमले जैसी स्पष्ट अवस्थाओं के लिए उपयुक्त।</li>
+      <li><strong>Behavior Trees:</strong> जटिल बॉस और रणनीतिक फैसलों के लिए सबसे अच्छा।</li>
+      <li><strong>हाइब्रिड आर्किटेक्चर:</strong> FSM को बड़े स्तर पर और BT को सूक्ष्म स्तर पर उपयोग करना।</li>
+    </ul>
+
+    <h2>2. ब्लैकबोर्ड पैटर्न और विज़न रेकास्टिंग</h2>
+    <p>बिना लैग के देखने की क्षमता देना:</p>
+    <ul>
+      <li><strong>ब्लैकबोर्ड:</strong> NPC की मेमोरी (टारगेट, पिछली स्थिति, स्वास्थ्य) का डेटा स्टोर।</li>
+      <li><strong>विज़न कोन:</strong> 110 डिग्री का दृष्टि कोण और दीवार के पीछे देखने से रोकने के लिए रेकास्ट।</li>
+      <li><strong>रेकास्ट बजटिंग:</strong> हर 0.2 से 0.4 सेकंड में चेक करना।</li>
+    </ul>
+
+        <h2>3. Production Implementation Architecture</h2>
+    <div class="code-block">
+      <div class="code-title">ServerScriptService.NPCFramework.StateMachine</div>
+      <pre><code>-- Modular Finite State Machine for Roblox NPC
+local StateMachine = {}
+StateMachine.__index = StateMachine
+
+function StateMachine.new(npcInstance, states, initialState)
+    local self = setmetatable({}, StateMachine)
+    self.NPC = npcInstance
+    self.States = states
+    self.CurrentState = nil
+    self.Blackboard = {
+        Target = nil,
+        LastSeenPos = nil,
+        Health = 100,
+        PatrolPoints = {}
+    }
+    
+    self:ChangeState(initialState)
+    return self
+end
+
+function StateMachine:ChangeState(newStateName)
+    if self.CurrentState and self.States[self.CurrentState].Exit then
+        self.States[self.CurrentState]:Exit(self.NPC, self.Blackboard)
+    end
+    
+    self.CurrentState = newStateName
+    if self.States[newStateName] and self.States[newStateName].Enter then
+        self.States[newStateName]:Enter(self.NPC, self.Blackboard)
+    end
+end
+
+function StateMachine:Update(dt)
+    if self.CurrentState and self.States[self.CurrentState].Update then
+        local nextState = self.States[self.CurrentState]:Update(self.NPC, self.Blackboard, dt)
+        if nextState and nextState ~= self.CurrentState then
+            self:ChangeState(nextState)
+        end
+    end
+end
+
+return StateMachine</code></pre>
+    </div>
+
+    <h2>4. बिहेवियर ट्री के नोड्स</h2>
+    <p>प्राथमिकता तय करने के नियम:</p>
+    <ul>
+      <li><strong>सेलेक्टर (?):</strong> पहली सफल शाखा तक चलना (हमला -> पीछा -> गश्त)।</li>
+      <li><strong>सीक्वेंस (&):</strong> सभी चरणों का पूरा होना जरूरी (पास जाना -> मारना)।</li>
+    </ul>
+
+    <h2>5. सर्वर ऑप्टिमाइज़ेशन और AI LOD</h2>
+    <p>100+ दुश्मनों के साथ 60 FPS बनाए रखना:</p>
+    <ul>
+      <li><strong>AI LOD:</strong> पास होने पर तेज और दूर होने पर धीमा अपडेट करना।</li>
+      <li><strong>ऑब्जेक्ट पूलिंग:</strong> बार-बार नए NPC बनाने के बजाय पुराने मॉडल्स का पुनः उपयोग।</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>30 NPC पर सर्वर क्यों लैग करता है?</h3>
+      <p>हर फ्रेम पर रेकास्ट करने से सीपीयू भर जाता है; AI LOD का प्रयोग करें।</p>
+    </div>
+    <div class="faq-item">
+      <h3>दीवार के आर-पार देखने से कैसे रोकें?</h3>
+      <p>सिर से खिलाड़ी के शरीर तक रेकास्ट करके दीवार की जांच करें।</p>
+    </div>
+    <div class="faq-item">
+      <h3>क्या क्लाइंट पर AI चला सकते हैं?</h3>
+      <p>नहीं, चीटिंग से बचने के लिए निर्णय हमेशा सर्वर पर होने चाहिए।</p>
+    </div>
+    <div class="faq-item">
+      <h3>FSM पर BT का क्या फायदा है?</h3>
+      <p>यह जटिल फैसलों को बिना कोड उलझाए जोड़ने की सुविधा देता है।</p>
+    </div>
+
+    <div class="portal-cta">
+      <h2>अपनी इंजीनियरिंग और तार्किक क्षमता बढ़ाएं</h2>
+      <p>DopaBrain पर अपने संज्ञानात्मक कौशल का परीक्षण करें।</p>
+      <a href="https://dopabrain.com/brain-type/" class="portal-btn">DopaBrain टेस्ट शुरू करें</a>
+    </div>
+  </div>
+</body>
+</html>

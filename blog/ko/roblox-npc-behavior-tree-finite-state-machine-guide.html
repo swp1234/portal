@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로블록스 NPC AI 아키텍처: 행동 트리(BT) 및 유한 상태 머신(FSM) 가이드 2026 | DopaBrain</title>
+  <meta name="description" content="로블록스 NPC 인공지능 완전 정복: 확장 가능한 유한 상태 머신(FSM) 구축, 모듈식 행동 트리(Behavior Tree) 구현, 시야각 레이캐스팅 및 서버 틱 최적화.">
+  <meta name="keywords" content="로블록스 npc ai 행동트리, 로블록스 유한상태머신 fsm, 로블록스 npc 시야각 레이캐스트, 로블록스 적 ai 모듈화, 서버 부하 최적화 npc">
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 NPC AI 아키텍처: 행동 트리(BT) 및 유한 상태 머신(FSM) 가이드 2026 | DopaBrain">
+  <meta property="og:description" content="로블록스 NPC 인공지능 완전 정복: 확장 가능한 유한 상태 머신(FSM) 구축, 모듈식 행동 트리(Behavior Tree) 구현, 시야각 레이캐스팅 및 서버 틱 최적화.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-npc-behavior-tree-finite-state-machine-guide.html">
+  <meta property="og:site_name" content="DopaBrain">
+  <meta property="og:image" content="https://dopabrain.com/portal/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="로블록스 NPC AI 아키텍처: 행동 트리(BT) 및 유한 상태 머신(FSM) 가이드 2026 | DopaBrain">
+  <meta name="twitter:description" content="로블록스 NPC 인공지능 완전 정복: 확장 가능한 유한 상태 머신(FSM) 구축, 모듈식 행동 트리(Behavior Tree) 구현, 시야각 레이캐스팅 및 서버 틱 최적화.">
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "로블록스 NPC AI 아키텍처: 행동 트리, 유한 상태 머신과 감각 인지 시스템",
+  "description": "로블록스 NPC 인공지능 완전 정복: 확장 가능한 유한 상태 머신(FSM) 구축, 모듈식 행동 트리(Behavior Tree) 구현, 시야각 레이캐스팅 및 서버 틱 최적화.",
+  "datePublished": "2026-09-29",
+  "dateModified": "2026-09-29",
+  "author": {
+    "@type": "Organization",
+    "name": "DopaBrain 로블록스 AI 엔지니어링 팀"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DopaBrain",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://dopabrain.com/portal/img/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://dopabrain.com/portal/blog/ko/roblox-npc-behavior-tree-finite-state-machine-guide.html"
+  }
+}
+  </script>
+  <!-- BreadcrumbList Schema -->
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "DopaBrain",
+      "item": "https://dopabrain.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Portal",
+      "item": "https://dopabrain.com/portal/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "로블록스 NPC AI 아키텍처: 행동 트리, 유한 상태 머신과 감각 인지 시스템",
+      "item": "https://dopabrain.com/portal/blog/ko/roblox-npc-behavior-tree-finite-state-machine-guide.html"
+    }
+  ]
+}
+  </script>
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "적 몬스터가 30마리만 넘어가면 왜 서버가 멈칫거리나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Heartbeat마다 모든 NPC의 레이캐스트와 경로 계산을 실행하기 때문입니다. AI LOD를 적용해 원거리 NPC의 연산 주기를 늘리고 프레임별로 분산 처리해야 합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "행동 트리가 상태 머신보다 우수한 점은 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "새로운 행동을 추가할 때 기존 상태들의 전이 화살표를 일일이 수정할 필요 없이, 트리에 노드 하나만 끼워 넣으면 되는 유연성과 모듈성입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "NPC가 벽 뒤의 플레이어를 투시하지 못하게 하려면?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "NPC의 머리에서 플레이어의 몸통으로 레이캐스트를 쏘아, 벽이나 기둥에 가려지는지 RaycastResult로 검증해야 합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "클라이언트 스크립트에서 NPC 인공지능을 직접 돌려도 되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "대미지 판정이나 타깃 지정 등 핵심 로직은 반드시 서버가 제어해야 핵과 변조를 방지할 수 있습니다. 클라이언트는 시각적 애니메이션 보간만 담당해야 합니다."
+      }
+    }
+  ]
+}
+  </script>
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0 0 12px;
+      font-size: 1.4rem;
+    }
+    .portal-btn {
+      display: inline-block;
+      min-height: 44px;
+      line-height: 44px;
+      padding: 0 24px;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 700;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 14px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>로블록스 NPC AI 아키텍처: 행동 트리, 유한 상태 머신과 감각 인지 시스템</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 로블록스 AI 엔지니어링 팀</span>
+        <span>•</span>
+        <span>Updated: September 2026</span>
+        <span>•</span>
+        <span>Reading Time: 9 min</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>AI 아키텍처 원칙:</strong> 단일 while-true 루프에 적의 모든 행동을 작성하지 마십시오. 행동 트리와 모듈형 상태 머신으로 의사결정과 실행을 분리해야 수백 마리의 NPC가 있어도 서버 렉이 발생하지 않습니다.
+    </div>
+
+    <!-- Quick Cognitive Rail (4 Tools) -->
+    <div class="quick-rail" data-content-surface="quick_rail">
+      <h2>엔지니어링 & 인지 분석 도구</h2>
+      <div class="quick-grid">
+        <a href="https://dopabrain.com/brain-type/" class="quick-card">
+          <strong>뇌 유형 테스트</strong>
+          <span>시스템 아키텍처 및 논리적 문제해결 스타일</span>
+        </a>
+        <a href="https://dopabrain.com/puzzle-2048/" class="quick-card">
+          <strong>2048 퍼즐</strong>
+          <span>로직 분기 및 데이터 계층 구조화 훈련</span>
+        </a>
+        <a href="https://dopabrain.com/reaction-test/" class="quick-card">
+          <strong>반응속도 테스트</strong>
+          <span>실시간 엔진 반응 및 렌더링 프레임 감각</span>
+        </a>
+        <a href="https://dopabrain.com/stress-check/" class="quick-card">
+          <strong>스트레스 체크</strong>
+          <span>서버 장애 및 복잡한 디버깅 스트레스 회복력</span>
+        </a>
+      </div>
+    </div>
+
+    <p>생존 공포 게임의 추적자, RPG 던전 보스, 전술 밀리터리 봇 등 몰입감 있는 NPC를 제작할 때 가장 큰 문제는 비구조화된 코드입니다. 단일 스크립트에 수백 줄의 if-else 분기를 작성하면 길찾기가 먹통이 되고 서버 프레임이 급락합니다.</p>
+    <p>상용 게임 개발에서는 거시적 상태를 관리하는 유한 상태 머신(FSM)과 유연한 하위 전술을 결정하는 행동 트리(Behavior Tree)를 결합하여 사용합니다. 본 가이드에서는 블랙보드 데이터 저장소, 시야각(FOV) 레이캐스트, 어그로 시스템, 서버 틱 LOD 분산 기법을 상세히 다룹니다.</p>
+
+    <h2>1. 유한 상태 머신(FSM)과 행동 트리(Behavior Tree) 비교</h2>
+    <p>게임 장르와 복잡도에 따른 아키텍처 선정 기준:</p>
+    <ul>
+      <li><strong>유한 상태 머신(FSM):</strong> 대기(Idle), 순찰(Patrol), 경계(Investigate), 추격(Chase), 공격(Attack) 등 명확한 단계가 있는 몹에 이상적입니다. 각 상태의 진입(Enter), 갱신(Update), 퇴장(Exit) 주기가 분리됩니다.</li>
+      <li><strong>행동 트리(BT):</strong> 체력이나 상황에 따라 엄폐, 버프 시전, 무기 교체, 후퇴 등 복합 전술을 구사하는 보스 몬스터에 최적화되어 있습니다.</li>
+      <li><strong>하이브리드 구조:</strong> 거시적 상태 전환은 FSM으로 관리하고, 전투 상태 내부의 세부 의사결정은 행동 트리로 처리하는 것이 업계 표준입니다.</li>
+    </ul>
+
+    <h2>2. 공유 블랙보드(Blackboard)와 시야각 감각 인지</h2>
+    <p>서버 성능 저하 없이 NPC에게 정밀한 지각 능력을 부여하는 방법:</p>
+    <ul>
+      <li><strong>블랙보드 패턴:</strong> NPC의 기억 데이터(목표 플레이어, 마지막 목격 위치, 경계도, 탄약 수)를 중앙 테이블에 저장하여 상태 간 공유합니다.</li>
+      <li><strong>시야각(FOV)과 레이캐스팅:</strong> 내적(Dot Product) 연산으로 플레이어가 110도 전방 시야각 내에 있는지 확인한 후, 레이캐스트로 벽 뒤에 가려져 있는지 검증합니다.</li>
+      <li><strong>감각 틱 분산:</strong> 60 FPS 매 프레임마다 레이캐스트를 돌리지 말고, 0.2~0.4초 간격으로 NPC들을 그룹화하여 엇갈리게 틱을 수행합니다.</li>
+    </ul>
+
+        <h2>3. Production Implementation Architecture</h2>
+    <div class="code-block">
+      <div class="code-title">ServerScriptService.NPCFramework.StateMachine</div>
+      <pre><code>-- Modular Finite State Machine for Roblox NPC
+local StateMachine = {}
+StateMachine.__index = StateMachine
+
+function StateMachine.new(npcInstance, states, initialState)
+    local self = setmetatable({}, StateMachine)
+    self.NPC = npcInstance
+    self.States = states
+    self.CurrentState = nil
+    self.Blackboard = {
+        Target = nil,
+        LastSeenPos = nil,
+        Health = 100,
+        PatrolPoints = {}
+    }
+    
+    self:ChangeState(initialState)
+    return self
+end
+
+function StateMachine:ChangeState(newStateName)
+    if self.CurrentState and self.States[self.CurrentState].Exit then
+        self.States[self.CurrentState]:Exit(self.NPC, self.Blackboard)
+    end
+    
+    self.CurrentState = newStateName
+    if self.States[newStateName] and self.States[newStateName].Enter then
+        self.States[newStateName]:Enter(self.NPC, self.Blackboard)
+    end
+end
+
+function StateMachine:Update(dt)
+    if self.CurrentState and self.States[self.CurrentState].Update then
+        local nextState = self.States[self.CurrentState]:Update(self.NPC, self.Blackboard, dt)
+        if nextState and nextState ~= self.CurrentState then
+            self:ChangeState(nextState)
+        end
+    end
+end
+
+return StateMachine</code></pre>
+    </div>
+
+    <h2>4. 행동 트리 노드 메커니즘: 선택자, 시퀀스와 데코레이터</h2>
+    <p>계층적 우선순위 판단 시스템 구성:</p>
+    <ul>
+      <li><strong>선택자 노드 (Selector, ?):</strong> 자식 노드 중 하나라도 성공하면 즉시 성공을 반환합니다. (공격 시도 -> 사거리 부족 시 추격 시도 -> 타깃 상실 시 순찰 복귀)</li>
+      <li><strong>시퀀스 노드 (Sequence, &):</strong> 모든 자식 노드가 차례로 성공해야 완료됩니다. (목표 접근 -> 공격 모션 재생 -> 대미지 적용 연계)</li>
+      <li><strong>데코레이터 노드 (Decorator):</strong> 쿨다운 타이머, 조건 반전, 반복 실행 등 자식 노드의 반환값을 제어합니다.</li>
+    </ul>
+
+    <h2>5. 대규모 서버 스케일링: AI LOD와 오브젝트 풀링</h2>
+    <p>100마리 이상의 몬스터가 동시 활동할 때 서버 60 FPS를 사수하는 비결:</p>
+    <ul>
+      <li><strong>AI LOD(Level of Detail):</strong> 플레이어 근처(100 Stud)는 10Hz로 지각하고, 원거리(250 Stud 이상)는 1Hz로 갱신하며, 500 Stud 밖은 물리 연산을 중지합니다.</li>
+      <li><strong>클라이언트 이동 보간:</strong> 서버는 굵직한 웨이포인트 경로만 계산하고, 부드러운 회전과 걷기 애니메이션은 클라이언트가 보간하게 맡깁니다.</li>
+      <li><strong>오브젝트 풀링(Object Pooling):</strong> 스폰 시마다 <code>Instance.new</code>와 <code>Destroy</code>를 반복하지 않고, 미리 생성된 NPC 풀에서 투명도와 CFrame만 변경해 재사용합니다.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>적 몬스터가 30마리만 넘어가면 왜 서버가 멈칫거리나요?</h3>
+      <p>Heartbeat마다 모든 NPC의 레이캐스트와 경로 계산을 실행하기 때문입니다. AI LOD를 적용해 원거리 NPC의 연산 주기를 늘리고 프레임별로 분산 처리해야 합니다.</p>
+    </div>
+    <div class="faq-item">
+      <h3>행동 트리가 상태 머신보다 우수한 점은 무엇인가요?</h3>
+      <p>새로운 행동을 추가할 때 기존 상태들의 전이 화살표를 일일이 수정할 필요 없이, 트리에 노드 하나만 끼워 넣으면 되는 유연성과 모듈성입니다.</p>
+    </div>
+    <div class="faq-item">
+      <h3>NPC가 벽 뒤의 플레이어를 투시하지 못하게 하려면?</h3>
+      <p>NPC의 머리에서 플레이어의 몸통으로 레이캐스트를 쏘아, 벽이나 기둥에 가려지는지 RaycastResult로 검증해야 합니다.</p>
+    </div>
+    <div class="faq-item">
+      <h3>클라이언트 스크립트에서 NPC 인공지능을 직접 돌려도 되나요?</h3>
+      <p>대미지 판정이나 타깃 지정 등 핵심 로직은 반드시 서버가 제어해야 핵과 변조를 방지할 수 있습니다. 클라이언트는 시각적 애니메이션 보간만 담당해야 합니다.</p>
+    </div>
+
+    <div class="portal-cta">
+      <h2>시스템 엔지니어링 역량과 논리적 사고력 강화</h2>
+      <p>시스템 아키텍처 설계 역량을 진단하고 정밀한 인지 분석 도구를 DopaBrain에서 체험해 보세요.</p>
+      <a href="https://dopabrain.com/brain-type/" class="portal-btn">DopaBrain 인지 테스트 시작하기</a>
+    </div>
+  </div>
+</body>
+</html>
