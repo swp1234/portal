@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Физика машин в Roblox: Raycast-подвеска и Дрифт 2026 | DopaBrain</title>
+  <meta name="description" content="Создание физики автомобилей в Roblox: 4-колесная raycast-подвеска, кривые сцепления шин Pacejka, стабилизаторы поперечной устойчивости и сетевые права." />
+  <meta name="keywords" content="roblox физика машин, roblox raycast подвеска туториал, roblox шасси авто luau, roblox трение шин pacejka, roblox гоночная игра" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ru/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Физика машин в Roblox: Raycast-подвеска и Дрифт 2026 | DopaBrain" />
+  <meta property="og:description" content="Создание физики автомобилей в Roblox: 4-колесная raycast-подвеска, кривые сцепления шин Pacejka, стабилизаторы поперечной устойчивости и сетевые права." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ru/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Физика машин в Roblox: Raycast-подвеска и Дрифт 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Создание физики автомобилей в Roblox: 4-колесная raycast-подвеска, кривые сцепления шин Pacejka, стабилизаторы поперечной устойчивости и сетевые права." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ru/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ru/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html"
+      },
+      "headline": "Кастомная физика автомобилей в Roblox: 4-колесная Raycast-подвеска, Трение Шин и Luau-пружины",
+      "description": "Создание физики автомобилей в Roblox: 4-колесная raycast-подвеска, кривые сцепления шин Pacejka, стабилизаторы поперечной устойчивости и сетевые права.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ru/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox Kinematics & Physics Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ru"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Кастомная физика автомобилей в Roblox: 4-колесная Raycast-подвеска, Трение Шин и Luau-пружины",
+          "item": "https://dopabrain.com/portal/blog/ru/roblox-custom-vehicle-physics-raycast-suspension-springs-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Почему физические колеса в Roblox подпрыгивают на скорости?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Дискретный шаг физики позволяет колесу провалиться в геометрию дороги, после чего движок резко выталкивает его в воздух."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как лучи Raycast решают эту проблему?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Колеса лишены физических коллизий; невидимые лучи постоянно вычисляют зазор и поддерживают шасси силой VectorForce."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Что дает формула Пасейки в гонках?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Она обеспечивает реалистичный переход от максимального сцепления к управляемому заносу без мгновенного разворота."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как избежать дерганий машины на экранах других игроков?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Передачей прав физики водителю и плавной интерполяцией координат на устройствах наблюдателей."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Кастомная физика автомобилей в Roblox: 4-колесная Raycast-подвеска, Трение Шин и Luau-пружины</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain Roblox Kinematics & Physics Team</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Кинематическая аксиома:</strong> Физические цилиндрические колеса в Roblox на скорости свыше 80 стадов/сек проваливаются в меши трасс, вызывая резкие подбрасывания. В качественных гонках физические колеса заменяют невидимыми лучами (Raycast), рассчитывая подвеску и дрифт в коде Luau.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier168_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Apex cornering reflex & drift counter-steer response</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier168_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Kinematic physics intuition & vehicular trajectory modeling style</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier168_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Mechanical spring parameter tuning & numerical gear ratio logic</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier168_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-speed racing tension & precision drift composure</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>Создание реалистичной или аркадной физики автомобилей в Roblox требует полного отказа от стандартных CylindricalConstraints, которые приводят к рассинхрону и багам столкновения.</p>
+      <p>Используя закон Гука для 4-колесной подвески, формулу сцепления шин Пасейки (Pacejka), стабилизаторы поперечной устойчивости и сетевые права водителя, разработчики добиваются гладкого управления на 120 FPS.</p>
+
+      <h2>1. Почему Raycast-подвеска надежнее физических колес</h2>
+      <p>Преодоление ограничений физического движка Roblox:</p>
+      <ul>
+          <li><strong>Полное отсутствие застреваний:</strong> Лучи моментально фиксируют расстояние до поверхности независимо от скорости перемещения машины.</li>
+          <li><strong>Точный математический контроль:</strong> Жесткость пружин, демпфирование и дорожный просвет настраиваются прямо в скриптах Luau.</li>
+          <li><strong>Минимум сетевого трафика:</strong> Синхронизируется только центральная координата шасси, а не вращение четырех колес.</li>
+      </ul>
+
+      <h2>2. Формула 4-колесной Raycast-подвески (Закон Гука + Демпфирование)</h2>
+      <p>Вычисление силы выталкивания под каждым колесом:</p>
+      <ul>
+          <li><strong>Направление луча:</strong> Луч выпускается вниз из точки крепления: <code>Длина = ДлинаПокоя + РадиусКолеса</code>.</li>
+          <li><strong>Сила пружины:</strong> <code>Сжатие = ДлинаПокоя - Расстояние</code>; СилаПружины = <code>Жесткость * Сжатие</code>.</li>
+          <li><strong>Сила демпфирования (амортизатор):</strong> Гашение колебаний с учетом относительной вертикальной скорости кузова.</li>
+          <li><strong>Итоговый вектор:</strong> Приложение VectorForce по нормали поверхности для удержания авто над землей.</li>
+      </ul>
+
+      <h2>3. Модель трения шин: Продольное ускорение и Дрифт (Pacejka)</h2>
+      <p>Реалистичное прохождение поворотов и плавный дрифт:</p>
+      <ul>
+          <li><strong>Угол увода (Slip Angle):</strong> Угол между направлением колеса и реальным вектором движения автомобиля.</li>
+          <li><strong>Кривая Пасейки:</strong> Сцепление достигает пика при 6–10 градусах скольжения, после чего машина переходит в плавный контролируемый занос.</li>
+          <li><strong>Продольная тяга:</strong> Ограничение крутящего момента двигателя предельной нормальной нагрузкой на колесо.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.VehiclePhysics.RaycastWheel</div>
+        <pre><code>-- Функция расчета силы Raycast-подвески
+local function CalculateWheelForce(wheelAttachment, restLength, stiffness, damping, wheelRadius)
+    local origin = wheelAttachment.WorldPosition
+    local direction = -wheelAttachment.WorldCFrame.UpVector * (restLength + wheelRadius)
+    local raycastParams = RaycastParams.new()
+    raycastParams.FilterType = RaycastFilterType.Exclude
+    raycastParams.FilterDescendantsInstances = {wheelAttachment.Parent}
+    local result = workspace:Raycast(origin, direction, raycastParams)
+    if not result then return Vector3.zero end
+    local hitDistance = result.Distance - wheelRadius
+    local compression = restLength - hitDistance
+    if compression <= 0 then return Vector3.zero end
+    local pointVelocity = wheelAttachment.Parent.AssemblyLinearVelocity
+    local suspensionVelocity = wheelAttachment.WorldCFrame.UpVector:Dot(pointVelocity)
+    local springForce = stiffness * compression
+    local dampingForce = damping * suspensionVelocity
+    local totalForceMagnitude = math.max(0, springForce - dampingForce)
+    return result.Normal * totalForceMagnitude
+end</code></pre>
+      </div>
+
+      <h2>4. Перенос веса и Стабилизаторы поперечной устойчивости</h2>
+      <p>Стабилизация кузова при резком торможении и кренах:</p>
+      <ul>
+          <li><strong>Продольный крен (Pitch):</strong> При торможении вес переносится вперед, увеличивая сцепление передних колес с дорогой.</li>
+          <li><strong>Стабилизаторы (Anti-Roll Bars):</strong> Выравнивание разницы сжатия левых и правых пружин предотвращает опрокидывание на виражах.</li>
+          <li><strong>Прижимная сила (Downforce):</strong> Увеличение прижима пропорционально квадрату скорости без утяжеления кузова.</li>
+      </ul>
+
+      <h2>5. Network Ownership и Отзывчивое управление</h2>
+      <p>Управление без сетевой задержки для пилота и плавность для зрителей:</p>
+      <ul>
+          <li><strong>Права на физику водителя:</strong> Вызов <code>SetNetworkOwner</code> передает расчет физики автомобилю на устройство водителя.</li>
+          <li><strong>Unreliable Remote Events:</strong> Быстрая трансляция визуального поворота колес без ожидания подтверждения пакетов.</li>
+          <li><strong>Серверная проверка скорости:</strong> Регулярная сверка векторов перемещения блокирует спидхаки.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Почему физические колеса в Roblox подпрыгивают на скорости?</h3>
+          <p>Дискретный шаг физики позволяет колесу провалиться в геометрию дороги, после чего движок резко выталкивает его в воздух.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Как лучи Raycast решают эту проблему?</h3>
+          <p>Колеса лишены физических коллизий; невидимые лучи постоянно вычисляют зазор и поддерживают шасси силой VectorForce.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Что дает формула Пасейки в гонках?</h3>
+          <p>Она обеспечивает реалистичный переход от максимального сцепления к управляемому заносу без мгновенного разворота.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Как избежать дерганий машины на экранах других игроков?</h3>
+          <p>Передачей прав физики водителю и плавной интерполяцией координат на устройствах наблюдателей.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
