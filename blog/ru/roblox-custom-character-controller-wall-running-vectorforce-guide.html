@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Паркур-Физика в Roblox: Бег по Стенам и VectorForce 2026 | DopaBrain</title>
+  <meta name="description" content="Создание физики кастомного движения в Roblox: бег по стенам (Wall Running), перелезание уступов, физические связки LinearVelocity и Raycast." />
+  <meta name="keywords" content="roblox паркур физика, roblox бег по стенам гайд, roblox linearvelocity vectorforce, roblox скрипт паркура, roblox кастомное движение" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Паркур-Физика в Roblox: Бег по Стенам и VectorForce 2026 | DopaBrain" />
+  <meta property="og:description" content="Создание физики кастомного движения в Roblox: бег по стенам (Wall Running), перелезание уступов, физические связки LinearVelocity и Raycast." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Паркур-Физика в Roblox: Бег по Стенам и VectorForce 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Создание физики кастомного движения в Roblox: бег по стенам (Wall Running), перелезание уступов, физические связки LinearVelocity и Raycast." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-wall-running-vectorforce-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-wall-running-vectorforce-guide.html"
+      },
+      "headline": "Кастомное Движение Персонажа в Roblox: Бег по Стенам, Уступы и Физика VectorForce",
+      "description": "Создание физики кастомного движения в Roblox: бег по стенам (Wall Running), перелезание уступов, физические связки LinearVelocity и Raycast.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-wall-running-vectorforce-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Команда Физических Решений Roblox DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ru"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Кастомное Движение Персонажа в Roblox: Бег по Стенам, Уступы и Физика VectorForce",
+          "item": "https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-wall-running-vectorforce-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Почему нужно использовать LinearVelocity вместо BodyVelocity?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "BodyVelocity устарел и не поддерживается. LinearVelocity работает на новом движке ограничений, учитывает массу и дает высокую стабильность."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как избежать падения со стены во время бега?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Создать направленную вверх силу VectorForce, равную массе персонажа, умноженной на гравитацию мира."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как рассчитывается вектор движения вдоль стены?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Через векторное произведение нормали стены и глобального вектора верха (0, 1, 0)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как сервер защищает механику бега по стенам от читеров?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Сервер сам пускает Raycast для проверки наличия стены и контролирует предельную скорость перемещения."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Кастомное Движение Персонажа в Roblox: Бег по Стенам, Уступы и Физика VectorForce</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>Команда Физических Решений Roblox DopaBrain</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Физическая Аксиома:</strong> Базовый Humanoid в Roblox рассчитан на простую ходьбу. Для динамичного паркура необходимы физические регуляторы на базе LinearVelocity и VectorForce, отключающие гравитационное падение вдоль стен.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier160_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Wall jumping & reflex timing windows</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier160_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spatial trajectory & physics cognition</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier160_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Momentum calculation & chaining logic</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier160_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-speed traversal & adrenaline control</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>Бег по стенам, подкаты и преодоление препятствий формируют динамику современных игр. Попытки сделать это на стандартном Humanoid приводят к застреваниям и потере скорости.</p>
+      <p>Используя новые физические ограничения Luau (`LinearVelocity` и `VectorForce`) вместе с лучами Raycast, вы создадите отзывчивую систему перемещения консольного качества для всех платформ.</p>
+
+      <h2>1. Переопределение Состояний Humanoid для Плавного Паркура</h2>
+      <p>Построение конечного автомата состояний перемещения:</p>
+      <ul>
+          <li><strong>Отключение Конфликтных Состояний:</strong> При входе в бег по стене отключите стандартное лазание и свободное падение, чтобы анимации не сбивали расчеты.</li>
+          <li><strong>Сетевой Владелец (Network Owner):</strong> На сервере закрепите RootPart за клиентом для моментального отклика на клавиши управления.</li>
+          <li><strong>Модульный Автомат:</strong> Разделите поведение на ходьбу, спринт, бег по стене, вис на уступе и подтягивание с событиями входа и выхода.</li>
+      </ul>
+
+      <h2>2. Направленные Лучи Raycast и Нормали Поверхностей</h2>
+      <p>Поиск стен и математика направления бега:</p>
+      <ul>
+          <li><strong>Боковые Лучи-Датчики:</strong> Горизонтальные лучи от бедер и плеч (длиной 3,5 студа) мгновенно определяют приближение к стене.</li>
+          <li><strong>Проверка Наклона:</strong> Убедитесь, что нормаль перпендикулярна земле (угол от 75° до 105°), чтобы исключить бег по пологим горкам.</li>
+          <li><strong>Векторное Произведение:</strong> Направление движения вперед вдоль стены вычисляется как <code>wallNormal:Cross(Vector3.yAxis)</code>.</li>
+      </ul>
+
+      <h2>3. Физические Ограничения: LinearVelocity и VectorForce</h2>
+      <p>Замена устаревших BodyMovers на современные констрейнты:</p>
+      <ul>
+          <li><strong>LinearVelocity для Постоянной Скорости:</strong> Обеспечивает непрерывный импульс вперед, преодолевая трение о стену.</li>
+          <li><strong>VectorForce Антигравитации:</strong> Компенсирует ускорение свободного падения (196,2 студа/с²) силой, рассчитанной по массе аватара.</li>
+          <li><strong>Плавное Снижение Силы:</strong> Через 1,5–2 секунды подъемная сила начинает угасать, создавая естественное соскальзывание вниз.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.Controllers.WallRunController</div>
+        <pre><code>-- Клиентский контроллер бега по стенам
+local RunService = game:GetService("RunService")
+local WallRun = {}
+WallRun.__index = WallRun
+
+function WallRun.new(character)
+    local self = setmetatable({}, WallRun)
+    self.Char = character
+    self.RootPart = character:WaitForChild("HumanoidRootPart")
+    self.Humanoid = character:WaitForChild("Humanoid")
+    
+    local att = Instance.new("Attachment", self.RootPart)
+    local lv = Instance.new("LinearVelocity")
+    lv.Attachment0 = att
+    lv.MaxForce = 15000
+    lv.RelativeTo = Enum.ActuatorRelativeTo.World
+    lv.Enabled = false
+    lv.Parent = self.RootPart
+    
+    self.Attachment = att
+    self.LinearVelocity = lv
+    self.IsRunning = false
+    return self
+end
+
+function WallRun:CheckWall(side)
+    local rightVec = self.RootPart.CFrame.RightVector
+    local rayDir = (side == "Left" and -rightVec or rightVec) * 3.5
+    local params = RaycastParams.new()
+    params.FilterDescendantsInstances = {self.Char}
+    params.FilterType = Enum.RaycastFilterType.Exclude
+    return workspace:Raycast(self.RootPart.Position, rayDir, params)
+end
+
+function WallRun:Start(hitNormal, forwardDir)
+    self.IsRunning = true
+    self.LinearVelocity.VectorVelocity = forwardDir * 32 + Vector3.new(0, 4, 0)
+    self.LinearVelocity.Enabled = true
+    self.Humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+end
+
+function WallRun:Stop()
+    self.IsRunning = false
+    self.LinearVelocity.Enabled = false
+    self.Humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
+end
+
+return WallRun</code></pre>
+      </div>
+
+      <h2>4. Определение Уступов и Залезание (Mantle)</h2>
+      <p>Захват кромок и плавное преодоление преград:</p>
+      <ul>
+          <li><strong>Двухуровневый Raycast:</strong> Луч на уровне груди находит стену, а вертикальный луч сверху определяет точный край уступа.</li>
+          <li><strong>Фиксация через AlignPosition:</strong> В момент хвата персонаж притягивается к краю и зависает на руках.</li>
+          <li><strong>Подъем по Кривой Безье:</strong> По нажатию прыжка RootPart плавно поднимается и переносится через край по дуге.</li>
+      </ul>
+
+      <h2>5. Мобильное Управление и Серверная Защита от Читов</h2>
+      <p>Удобство на смартфонах и безопасность игрового процесса:</p>
+      <ul>
+          <li><strong>Крупные Сенсорные Кнопки:</strong> Прыжок от стены и карабканье привязываются к экранным кнопкам размером от 48x48 пикселей.</li>
+          <li><strong>Проверка Скорости на Сервере:</strong> Сервер вычисляет дистанцию за кадр и пресекает телепортацию и полеты.</li>
+          <li><strong>Верификация Наличия Стены:</strong> Сервер пускает собственный луч, подтверждая, что игрок действительно бежал вдоль стены.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Почему нужно использовать LinearVelocity вместо BodyVelocity?</h3>
+          <p>BodyVelocity устарел и не поддерживается. LinearVelocity работает на новом движке ограничений, учитывает массу и дает высокую стабильность.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Как избежать падения со стены во время бега?</h3>
+          <p>Создать направленную вверх силу VectorForce, равную массе персонажа, умноженной на гравитацию мира.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Как рассчитывается вектор движения вдоль стены?</h3>
+          <p>Через векторное произведение нормали стены и глобального вектора верха (0, 1, 0).</p>
+        </div>
+        <div class="faq-item">
+          <h3>Как сервер защищает механику бега по стенам от читеров?</h3>
+          <p>Сервер сам пускает Raycast для проверки наличия стены и контролирует предельную скорость перемещения.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

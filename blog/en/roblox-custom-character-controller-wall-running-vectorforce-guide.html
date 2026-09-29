@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Movement & Wall Running: VectorForce Guide 2026 | DopaBrain</title>
+  <meta name="description" content="Master custom Roblox character movement: procedural wall running, ledge grabbing, LinearVelocity physics, and Raycast normal alignment." />
+  <meta name="keywords" content="roblox custom character controller, roblox wall running guide, roblox vectorforce linearvelocity, roblox ledge grab parkour, roblox physics movement" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Movement & Wall Running: VectorForce Guide 2026 | DopaBrain" />
+  <meta property="og:description" content="Master custom Roblox character movement: procedural wall running, ledge grabbing, LinearVelocity physics, and Raycast normal alignment." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Movement & Wall Running: VectorForce Guide 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Master custom Roblox character movement: procedural wall running, ledge grabbing, LinearVelocity physics, and Raycast normal alignment." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-wall-running-vectorforce-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-wall-running-vectorforce-guide.html"
+      },
+      "headline": "Roblox Custom Character Movement: Wall Running, Ledge Grabs & VectorForce Physics",
+      "description": "Master custom Roblox character movement: procedural wall running, ledge grabbing, LinearVelocity physics, and Raycast normal alignment.",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-wall-running-vectorforce-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox Physics Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Custom Character Movement: Wall Running, Ledge Grabs & VectorForce Physics",
+          "item": "https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-wall-running-vectorforce-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why should developers use LinearVelocity instead of BodyVelocity in Roblox?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "BodyVelocity is a legacy BodyMover deprecated by Roblox. LinearVelocity uses the modern constraint solver, offering superior physical stability, proper integration with mass properties, and predictable multi-platform replication."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you prevent a character from sliding down a wall while wall running?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Apply an upward force via VectorForce or configure the Y component of LinearVelocity to cancel workspace gravity (mass * 196.2). To balance gameplay, decay this upward force over 1.5–2 seconds."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does surface normal raycasting work for wall running?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Raycasts cast horizontally from the character detect the wall and return a hit surface normal. The cross product of the normal with the global up vector (0, 1, 0) yields a forward traversal vector parallel to the wall."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can developers prevent wall-running exploits on the server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Maintain an authoritative server state check that casts rays from the player's replicated position to ensure a physical wall exists within 4 studs, and clamp maximum velocity to prevent fly-hacking."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox Custom Character Movement: Wall Running, Ledge Grabs & VectorForce Physics</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain Roblox Physics Engineering Team</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Physics Architecture Axiom:</strong> The default Roblox Humanoid is designed for basic walking and jumping. High-velocity parkour experiences require procedural physics controllers using LinearVelocity and VectorForce to override gravitational decay during wall traversal.
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier160_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Wall jumping & reflex timing windows</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier160_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spatial trajectory & physics cognition</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier160_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Momentum calculation & chaining logic</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier160_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-speed traversal & adrenaline control</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>Fast-paced movement mechanics like wall running, sliding, and ledge mantling define modern competitive action games. Attempting to build fluid parkour using default Humanoid state changes often results in sticky collision glitches, erratic momentum loss, and frustrating falls.</p>
+      <p>By leveraging modern Luau physics constraints—specifically `LinearVelocity`, `VectorForce`, and directional raycasting—developers can construct responsive, server-authoritative custom movement controllers that deliver AAA platforming feel across PC, console, and mobile.</p>
+
+      <h2>1. Overriding Default Humanoid States for Fluid Parkour</h2>
+      <p>Foundations of custom movement state machines in Roblox Studio:</p>
+      <ul>
+          <li><strong>Disabling Conflicting Humanoid States:</strong> When wall running initiates, immediately invoke <code>Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing, false)</code> and disable <code>Freefall</code> to prevent the default falling animation from overriding procedural physics.</li>
+          <li><strong>RootPart Network Ownership:</strong> Ensure the client maintains explicit network ownership of their character's <code>HumanoidRootPart</code> via <code>rootPart:SetNetworkOwner(player)</code> to eliminate input-to-physics latency.</li>
+          <li><strong>State Machine Modularity:</strong> Architecture movement using a finite state machine (Walking, Sprinting, WallRunning, LedgeHanging, Vaulting) with distinct entry, tick, and exit hooks.</li>
+      </ul>
+
+      <h2>2. Directional Raycasting & Surface Normal Alignment</h2>
+      <p>Detecting runnable geometry and calculating traversal vectors:</p>
+      <ul>
+          <li><strong>Multi-Raycast Probes:</strong> Cast horizontal raycasts from the character's hip and shoulder positions to the left and right (typically 2.5–3.5 studs) to detect vertical wall surfaces.</li>
+          <li><strong>Surface Normal Evaluation:</strong> Extract the hit surface normal vector. Ensure the surface angle is perpendicular (within 75° to 105° relative to the world up vector) to prevent running on shallow ramps.</li>
+          <li><strong>Forward Vector Projection:</strong> Calculate the wall-run direction using the cross product: <code>wallNormal:Cross(Vector3.yAxis)</code>, orienting traversal parallel to the wall contour.</li>
+      </ul>
+
+      <h2>3. Modern Physics Constraints: LinearVelocity & VectorForce</h2>
+      <p>Replacing deprecated BodyMovers with constraint-based forces:</p>
+      <ul>
+          <li><strong>LinearVelocity for Constant Speed:</strong> Attach a <code>LinearVelocity</code> constraint to HumanoidRootPart. Set <code>VelocityConstraintMode</code> to Vector and configure <code>MaxForce</code> high enough to counteract lateral friction while maintaining a constant forward pace.</li>
+          <li><strong>VectorForce for Anti-Gravity:</strong> Counteract the workspace gravity acceleration (typically 196.2 studs/s²) with an upward <code>VectorForce</code> calculated as <code>characterMass * workspace.Gravity * antiGravityFactor</code>.</li>
+          <li><strong>Controlled Vertical Drift:</strong> Gradually decay the upward force over 1.5–2.5 seconds to create a realistic downward arc, establishing a skill-based time limit on continuous wall runs.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.Controllers.WallRunController</div>
+        <pre><code>-- Modern Wall Running Physics Controller (Client-Side)
+local RunService = game:GetService("RunService")
+local WallRun = {}
+WallRun.__index = WallRun
+
+function WallRun.new(character)
+    local self = setmetatable({}, WallRun)
+    self.Char = character
+    self.RootPart = character:WaitForChild("HumanoidRootPart")
+    self.Humanoid = character:WaitForChild("Humanoid")
+    
+    -- Setup LinearVelocity Constraint
+    local att = Instance.new("Attachment", self.RootPart)
+    local lv = Instance.new("LinearVelocity")
+    lv.Attachment0 = att
+    lv.MaxForce = 15000
+    lv.RelativeTo = Enum.ActuatorRelativeTo.World
+    lv.Enabled = false
+    lv.Parent = self.RootPart
+    
+    self.Attachment = att
+    self.LinearVelocity = lv
+    self.IsRunning = false
+    return self
+end
+
+function WallRun:CheckWall(side)
+    local rayDir = (side == "Left" and -self.RootPart.CFrame.RightVector or self.RootPart.CFrame.RightVector) * 3.5
+    local params = RaycastParams.new()
+    params.FilterDescendantsInstances = {self.Char}
+    params.FilterType = Enum.RaycastFilterType.Exclude
+    
+    return workspace:Raycast(self.RootPart.Position, rayDir, params)
+end
+
+function WallRun:Start(hitNormal, forwardDir)
+    self.IsRunning = true
+    self.LinearVelocity.VectorVelocity = forwardDir * 32 + Vector3.new(0, 4, 0)
+    self.LinearVelocity.Enabled = true
+    self.Humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+end
+
+function WallRun:Stop()
+    self.IsRunning = false
+    self.LinearVelocity.Enabled = false
+    self.Humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
+end
+
+return WallRun</code></pre>
+      </div>
+
+      <h2>4. Procedural Ledge Grabbing & Mantle Transitions</h2>
+      <p>Detecting ledges and executing seamless climb-up animations:</p>
+      <ul>
+          <li><strong>Two-Tier Ledge Detection:</strong> Cast a chest-height ray forward to confirm wall contact, combined with a downward ray cast from above the wall to find the exact ledge top edge.</li>
+          <li><strong>RootPart Snapping:</strong> Anchor or clamp character position using an <code>AlignPosition</code> constraint when the ledge is grabbed, allowing the player to hang or shimmy.</li>
+          <li><strong>Tweened Mantle Curve:</strong> When the jump key is pressed while hanging, play a climb animation while smoothly interpolating the RootPart position up and over the ledge edge using a quadratic bezier curve.</li>
+      </ul>
+
+      <h2>5. Mobile Touch Controls & Server Validation</h2>
+      <p>Ensuring accessibility across devices while preventing teleport exploits:</p>
+      <ul>
+          <li><strong>ContextActionService Touch Binding:</strong> Bind wall-jump and mantle inputs to dynamic on-screen action buttons with generous touch hitboxes (minimum 48x48 pixels).</li>
+          <li><strong>Server-Side Speed Clamping:</strong> The server must calculate velocity deltas between replication ticks. Allow higher velocity thresholds exclusively during verified wall-run states.</li>
+          <li><strong>Sanity Raycasts on Server:</strong> Re-verify that a valid wall existed near the player's position during the reported wall-run window before confirming client positions.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why should developers use LinearVelocity instead of BodyVelocity in Roblox?</h3>
+          <p>BodyVelocity is a legacy BodyMover deprecated by Roblox. LinearVelocity uses the modern constraint solver, offering superior physical stability, proper integration with mass properties, and predictable multi-platform replication.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do you prevent a character from sliding down a wall while wall running?</h3>
+          <p>Apply an upward force via VectorForce or configure the Y component of LinearVelocity to cancel workspace gravity (mass * 196.2). To balance gameplay, decay this upward force over 1.5–2 seconds.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does surface normal raycasting work for wall running?</h3>
+          <p>Raycasts cast horizontally from the character detect the wall and return a hit surface normal. The cross product of the normal with the global up vector (0, 1, 0) yields a forward traversal vector parallel to the wall.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How can developers prevent wall-running exploits on the server?</h3>
+          <p>Maintain an authoritative server state check that casts rays from the player's replicated position to ensure a physical wall exists within 4 studs, and clamp maximum velocity to prevent fly-hacking.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

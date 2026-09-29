@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox 跑酷物理：蹬墙跑与 VectorForce 实战 2026 指南 | DopaBrain</title>
+  <meta name="description" content="掌握 Roblox 角色运动物理：程序化蹬墙跑（Wall Running）、悬崖攀爬（Ledge Grab）、LinearVelocity 约束与 Raycast 法线对齐。" />
+  <meta name="keywords" content="Roblox跑酷物理, Roblox蹬墙跑指南, Roblox LinearVelocity VectorForce, Roblox悬崖攀爬, Roblox自定义移动" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox 跑酷物理：蹬墙跑与 VectorForce 实战 2026 指南 | DopaBrain" />
+  <meta property="og:description" content="掌握 Roblox 角色运动物理：程序化蹬墙跑（Wall Running）、悬崖攀爬（Ledge Grab）、LinearVelocity 约束与 Raycast 法线对齐。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-wall-running-vectorforce-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox 跑酷物理：蹬墙跑与 VectorForce 实战 2026 指南 | DopaBrain" />
+  <meta name="twitter:description" content="掌握 Roblox 角色运动物理：程序化蹬墙跑（Wall Running）、悬崖攀爬（Ledge Grab）、LinearVelocity 约束与 Raycast 法线对齐。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .faq-item h3 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: #ffffff;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #94a3b8;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #131a29, #090d16);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-wall-running-vectorforce-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-wall-running-vectorforce-guide.html"
+      },
+      "headline": "Roblox 自定义角色移动：蹬墙跑、攀爬与 VectorForce 物理学",
+      "description": "掌握 Roblox 角色运动物理：程序化蹬墙跑（Wall Running）、悬崖攀爬（Ledge Grab）、LinearVelocity 约束与 Raycast 法线对齐。",
+      "datePublished": "2026-09-29T09:00:00+09:00",
+      "dateModified": "2026-09-29T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-wall-running-vectorforce-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox 物理工程团队",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "zh"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox 自定义角色移动：蹬墙跑、攀爬与 VectorForce 物理学",
+          "item": "https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-wall-running-vectorforce-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "为什么应当使用 LinearVelocity 而非传统的 BodyVelocity？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "BodyVelocity 已被官方废弃。LinearVelocity 采用全新约束求解器，质量计算严密，在多平台多人网络环境下表现更加稳定。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何防止角色在蹬墙跑过程中沿墙面下滑？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "施加向上的 VectorForce 或在 LinearVelocity 的 Y 轴设定向上推力以抵消世界重力（质量 * 196.2），并通过倒计时平滑减小推力。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何精确计算贴墙前进的动力向量？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "使用 Raycast 返回的碰撞表面法线与世界向上向量 (0, 1, 0) 进行叉乘运算，即可得出与墙面完全平行的水平前冲向量。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "服务端如何防范利用蹬墙机制实现的飞行外挂？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "服务端独立发射射线核查玩家当前位置身侧是否存在真实墙体，并严格校验位移距离，超出速度阈值直接执行位置回滚。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox 自定义角色移动：蹬墙跑、攀爬与 VectorForce 物理学</h1>
+      <div class="meta-bar">
+        <span>2026-09-29</span>
+        <span>•</span>
+        <span>DopaBrain Roblox 物理工程团队</span>
+        <span>•</span>
+        <span>DopaBrain Engineering</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>物理架构铁律：</strong>Roblox 默认的 Humanoid 仅适用于基础行走和跳跃。构建高速流畅的跑酷体验必须使用 LinearVelocity 和 VectorForce 等现代物理约束来克服重力衰减。
+    </div>
+
+    <!-- Quick Tool Rail (Strict 4 Cards) -->
+    <div class="quick-rail">
+      <h2>Featured DopaBrain Interactive Tools</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier160_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Wall jumping & reflex timing windows</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier160_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spatial trajectory & physics cognition</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier160_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Momentum calculation & chaining logic</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier160_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-speed traversal & adrenaline control</span>
+        </a>
+      </div>
+    </div>
+
+    <article class="article-content">
+      <p>蹬墙跑、滑铲与攀爬翻越是现代竞技跑酷游戏的核心魅力。如果仅依赖默认 Humanoid 状态机，往往会导致角色卡在墙壁表面或出现动量丢失等严重物理毛病。</p>
+      <p>通过结合最新 Luau 物理约束（`LinearVelocity` 与 `VectorForce`）与方向性射线检测（Raycast），开发者能够构建出兼顾 PC、移动端与主机的高水准物理移动手感。</p>
+
+      <h2>1. 重写默认 Humanoid 状态以实现流畅跑酷</h2>
+      <p>自定义移动状态机的架构规范：</p>
+      <ul>
+          <li><strong>禁用冲突状态：</strong>进入蹬墙跑时立即调用 <code>Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing, false)</code> 并禁用自由落体，防止默认下落动作打断物理运算。</li>
+          <li><strong>网络所有权确认：</strong>服务端必须对角色执行 <code>rootPart:SetNetworkOwner(player)</code>，确保客户端拥有完全的物理计算权以消除操作延迟。</li>
+          <li><strong>有限状态机（FSM）：</strong>将移动解耦为行走、冲刺、蹬墙跑、悬挂和翻越，并定义清晰的进出回调函数。</li>
+      </ul>
+
+      <h2>2. 方向性射线检测与墙面法线计算</h2>
+      <p>检测可跑墙面与推进方向的几何数学：</p>
+      <ul>
+          <li><strong>多重射线探针：</strong>从角色臀部和肩部向左右两侧各发射长约 3.5 螺栓的水平射线，精准检测墙面。</li>
+          <li><strong>法线垂直度校验：</strong>提取碰撞法线向量，确保墙面坡度接近垂直（与世界向上向量夹角在 75° 到 105° 之间），过滤掉斜坡。</li>
+          <li><strong>切线推进向量：</strong>通过法线与向上向量的外积计算（<code>wallNormal:Cross(Vector3.yAxis)</code>），得出紧贴墙面行进的矢量。</li>
+      </ul>
+
+      <h2>3. 现代物理约束：LinearVelocity 与 VectorForce</h2>
+      <p>淘汰过时的 BodyMovers 并转向现代物理架构：</p>
+      <ul>
+          <li><strong>LinearVelocity 恒速推进：</strong>挂载至 HumanoidRootPart，提供充足的推力克服侧向摩擦并保持恒定前冲速度。</li>
+          <li><strong>VectorForce 抗重力悬浮：</strong>根据角色总质量计算向上推力，抵消世界基础重力加速度（196.2 studs/s²）。</li>
+          <li><strong>动态衰减机制：</strong>在 1.5 至 2.5 秒内逐渐衰减向上的悬浮力，形成自然的抛物线下滑，提升跑酷操作门槛。</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.Controllers.WallRunController</div>
+        <pre><code>-- 基于物理约束的客户端蹬墙跑控制器
+local RunService = game:GetService("RunService")
+local WallRun = {}
+WallRun.__index = WallRun
+
+function WallRun.new(character)
+    local self = setmetatable({}, WallRun)
+    self.Char = character
+    self.RootPart = character:WaitForChild("HumanoidRootPart")
+    self.Humanoid = character:WaitForChild("Humanoid")
+    
+    local att = Instance.new("Attachment", self.RootPart)
+    local lv = Instance.new("LinearVelocity")
+    lv.Attachment0 = att
+    lv.MaxForce = 15000
+    lv.RelativeTo = Enum.ActuatorRelativeTo.World
+    lv.Enabled = false
+    lv.Parent = self.RootPart
+    
+    self.Attachment = att
+    self.LinearVelocity = lv
+    self.IsRunning = false
+    return self
+end
+
+function WallRun:CheckWall(side)
+    local rightVec = self.RootPart.CFrame.RightVector
+    local rayDir = (side == "Left" and -rightVec or rightVec) * 3.5
+    local params = RaycastParams.new()
+    params.FilterDescendantsInstances = {self.Char}
+    params.FilterType = Enum.RaycastFilterType.Exclude
+    return workspace:Raycast(self.RootPart.Position, rayDir, params)
+end
+
+function WallRun:Start(hitNormal, forwardDir)
+    self.IsRunning = true
+    self.LinearVelocity.VectorVelocity = forwardDir * 32 + Vector3.new(0, 4, 0)
+    self.LinearVelocity.Enabled = true
+    self.Humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+end
+
+function WallRun:Stop()
+    self.IsRunning = false
+    self.LinearVelocity.Enabled = false
+    self.Humanoid:ChangeState(Enum.HumanoidStateType.Freefall)
+end
+
+return WallRun</code></pre>
+      </div>
+
+      <h2>4. 程序化悬崖抓取与翻越（Mantle）</h2>
+      <p>精准检测边缘并平滑衔接攀爬动画：</p>
+      <ul>
+          <li><strong>双层射线检测：</strong>胸部水平射线确认前方墙面，配合上方下向下射的垂直射线计算出台阶顶部的精准边缘。</li>
+          <li><strong>位置吸附固定：</strong>抓住边缘瞬间启用 <code>AlignPosition</code> 将角色牢牢吸附在边缘进入悬挂状态。</li>
+          <li><strong>贝塞尔曲线翻越：</strong>玩家按下跳跃键时，播放攀登动作并使用二次贝塞尔曲线平滑抬升角色翻越至平台上。</li>
+      </ul>
+
+      <h2>5. 移动端触控优化与服务端防作弊</h2>
+      <p>兼顾跨平台可用性与服务器安全防护：</p>
+      <ul>
+          <li><strong>触控按键映射：</strong>使用 ContextActionService 将蹬墙跳与攀爬映射至屏幕显眼的大尺寸按钮（至少 48x48 像素）。</li>
+          <li><strong>服务端速度截断：</strong>根据网络复制 Tick 计算位移差，严厉限制非蹬墙状态下的超常移动速度。</li>
+          <li><strong>物理墙面核验：</strong>当客户端上报蹬墙状态时，服务端需发射射线核实玩家身旁 4 螺栓内是否真实存在有效实体墙。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>为什么应当使用 LinearVelocity 而非传统的 BodyVelocity？</h3>
+          <p>BodyVelocity 已被官方废弃。LinearVelocity 采用全新约束求解器，质量计算严密，在多平台多人网络环境下表现更加稳定。</p>
+        </div>
+        <div class="faq-item">
+          <h3>如何防止角色在蹬墙跑过程中沿墙面下滑？</h3>
+          <p>施加向上的 VectorForce 或在 LinearVelocity 的 Y 轴设定向上推力以抵消世界重力（质量 * 196.2），并通过倒计时平滑减小推力。</p>
+        </div>
+        <div class="faq-item">
+          <h3>如何精确计算贴墙前进的动力向量？</h3>
+          <p>使用 Raycast 返回的碰撞表面法线与世界向上向量 (0, 1, 0) 进行叉乘运算，即可得出与墙面完全平行的水平前冲向量。</p>
+        </div>
+        <div class="faq-item">
+          <h3>服务端如何防范利用蹬墙机制实现的飞行外挂？</h3>
+          <p>服务端独立发射射线核查玩家当前位置身侧是否存在真实墙体，并严格校验位移距离，超出速度阈值直接执行位置回滚。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
