@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 전투 판정 아키텍처: 히트박스, 랙 보정 및 롤백 버퍼 가이드 2026 | DopaBrain</title>
+  <meta name="description" content="로블록스 대전 액션 전투 시스템 마스터: 서버 권한 히트박스 검증, 원형 롤백 위치 버퍼, 핑 보정 알고리즘, 공간 해시 그리드 및 안티 치트 판정 설계." />
+  <meta name="keywords" content="로블록스 전투 시스템, 로블록스 랙보정, 로블록스 히트박스 검증, 로블록스 롤백 버퍼, 로블록스 칼싸움 판정 튜토리얼" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 전투 판정 아키텍처: 히트박스, 랙 보정 및 롤백 버퍼 가이드 2026 | DopaBrain" />
+  <meta property="og:description" content="로블록스 대전 액션 전투 시스템 마스터: 서버 권한 히트박스 검증, 원형 롤백 위치 버퍼, 핑 보정 알고리즘, 공간 해시 그리드 및 안티 치트 판정 설계." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 전투 판정 아키텍처: 히트박스, 랙 보정 및 롤백 버퍼 가이드 2026 | DopaBrain" />
+  <meta name="twitter:description" content="로블록스 대전 액션 전투 시스템 마스터: 서버 권한 히트박스 검증, 원형 롤백 위치 버퍼, 핑 보정 알고리즘, 공간 해시 그리드 및 안티 치트 판정 설계." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-combat-hitbox-lag-compensation-rollback-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-combat-hitbox-lag-compensation-rollback-guide.html"
+      },
+      "headline": "로블록스 전투 판정 아키텍처: 서버 히트박스 검증, 랙 보정 및 롤백 버퍼",
+      "description": "로블록스 대전 액션 전투 시스템 마스터: 서버 권한 히트박스 검증, 원형 롤백 위치 버퍼, 핑 보정 알고리즘, 공간 해시 그리드 및 안티 치트 판정 설계.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-combat-hitbox-lag-compensation-rollback-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 로블록스 시스템 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 전투 판정 아키텍처: 서버 히트박스 검증, 랙 보정 및 롤백 버퍼",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-combat-hitbox-lag-compensation-rollback-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "로블록스에서 클라이언트 판정을 그대로 믿으면 안 되는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "악성 유저가 클라이언트 메모리를 조작해 공격 좌표를 위조하거나 무기 사거리를 맵 전체로 늘려 벽 뒤의 상대까지 즉사시킬 수 있기 때문입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "랙 보정 롤백 버퍼란 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "서버가 플레이어들의 과거 위치를 저장해 두었다가, 공격자의 핑만큼 시간을 되돌려 공격 시점에 상대가 사거리 내에 있었는지 검증하는 기법입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "서버 롤백 시간을 왜 200ms로 제한해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "되감기 시간을 무제한 허용하면, 핑이 매우 높은 유저가 이미 엄폐물 뒤로 안전하게 숨은 저핑 유저를 벽 뒤에서 타격하는 불합리한 현상이 발생하기 때문입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "공간 해시 그리드가 대규모 전투 성능에 왜 중요한가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "서버 내 수십 명의 플레이어를 일일이 검사하지 않고 공격자 주변 격자에 위치한 플레이어만 골라내어 연산량을 극적으로 줄여주기 때문입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "고속 휘두름 시 칼날이 적을 통과해버리는 버그는 어떻게 막나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "이전 프레임의 칼끝 위치와 현재 프레임의 칼끝 위치 사이에 다중 레이캐스트 스윕(Sweep)을 발사하여 연속된 평면을 형성하면 절대 누락되지 않습니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 전투 판정 아키텍처: 서버 히트박스 검증, 랙 보정 및 롤백 버퍼</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 로블록스 시스템 엔지니어링 팀</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>경쟁 게임 불변의 원칙:</strong> 클라이언트 권한 판정은 핵과 조작에 취약하며, 단순 현재 서버 좌표 판정은 핑 80ms 이상의 유저에게 끔찍한 타격 씹힘을 유발합니다. 업계 표준은 클라이언트 즉각 예측과 서버의 시공간 롤백(Rollback) 검증의 융합입니다.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier178_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>근접 패링 타이밍 및 핑 지연 보정 순간 반응 속도</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier178_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>원형 링 버퍼 시공간 보간 및 공간 해시 격자 연산 훈련</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier178_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>시간 축 역추적 및 운동 궤적 모델링 인지 스타일</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier178_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>고핑 환경 타격 씹힘 분노와 의문사 스트레스 제어</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>로블록스의 액션 RPG, 배틀그라운드, 검술 대전 게임에서 타격 판정의 정밀도는 게임의 생명을 결정합니다. 눈앞에서 칼날이 적을 분명히 베었는데도 대미지가 들어가지 않거나, 엄폐물 뒤로 피한 뒤 1초 뒤에 의문사하는 현상은 유저 이탈의 주원인입니다.</p>
+      <p>서버 측 위치 기록 롤백 버퍼, 핑 보정 레이캐스트 궤적 연산, 공간 해시 분할 그리드, 이동 속도 한계 기반의 안티 치트 필터를 결합하면, 핵 위협을 100% 차단하면서도 로컬 화면에서 칼날이 닿는 즉시 쾌적하게 베이는 최고 수준의 타격감을 구현할 수 있습니다.</p>
+
+      <h2>1. 클라이언트-서버 판정의 딜레마와 타협점</h2>
+      <p>타격감(반응성)과 서버 보안 사이의 핵심 트레이드오프:</p>
+      <ul>
+          <li><strong>클라이언트 신뢰의 치명적 위험:</strong> 클라이언트가 <code>DamageRemote:FireServer(target, 50)</code>를 직접 호출하게 두면 악성 유저가 전체 서버 유저를 1초 만에 학살할 수 있습니다.</li>
+          <li><strong>순수 서버 현재 시점 판정의 한계:</strong> 서버가 공격 패킷을 받은 현재 시점의 적 위치만 검사하면, 핑이 높은 유저는 로컬 화면에서 완벽히 맞추고도 빗나가는 타격 씹힘을 겪습니다.</li>
+          <li><strong>클라이언트 예측-서버 검증(Client Prediction):</strong> 클라이언트는 이펙트와 사운드를 즉시 재생하고 공격 의도 패킷을 전송하며, 서버는 공격 당시의 시간으로 세계를 되돌려 타격 타당성을 역추적 검증합니다.</li>
+      </ul>
+
+      <h2>2. 시공간 위치 롤백 버퍼 (Temporal Ring Buffer)</h2>
+      <p>과거 시점의 플레이어 위치를 복원하여 타격을 정밀 판정하는 원리:</p>
+      <ul>
+          <li><strong>원형 링 버퍼(Circular Buffer):</strong> 최근 1.0초간의 플레이어 좌표 스냅샷을 30~60Hz 주기로 메모리에 기록합니다.</li>
+          <li><strong>타임스탬프 선형 보간(Lerp):</strong> 공격 시각 <code>T = 현재서버시간 - (공격자핑 / 2)</code>에 해당하는 두 스냅샷 사이의 위치를 선형 보간하여 타격 당시 적의 실제 위치를 계산합니다.</li>
+          <li><strong>최대 되감기 한계선(Max Rewind Clamping):</strong> 되감기 범위를 최대 200ms로 엄격히 제한하여, 핑 500ms 이상의 초고핑 유저가 벽 뒤로 이미 숨은 상대를 맞추는 억까를 방지합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ServerScriptService.Combat.RollbackValidator</div>
+        <pre><code>-- 서버 측 시공간 롤백 히트박스 판정 검증 모듈
+local RollbackValidator = {}
+RollbackValidator.__index = RollbackValidator
+
+local MAX_REWIND_SECONDS = 0.20 -- 최대 200ms 핑 보정 제한
+local BUFFER_CAPACITY = 60
+
+function RollbackValidator.new()
+    local self = setmetatable({}, RollbackValidator)
+    self.History = {} -- [player] = { {Time = t, Pos = Vector3} }
+    return self
+end
+
+function RollbackValidator:RecordPosition(player, currentPos, serverTime)
+    local buffer = self.History[player]
+    if not buffer then
+        buffer = {}
+        self.History[player] = buffer
+    end
+    table.insert(buffer, {Time = serverTime, Pos = currentPos})
+    if #buffer > BUFFER_CAPACITY then
+        table.remove(buffer, 1)
+    end
+end
+
+function RollbackValidator:GetHistoricalPosition(player, targetTime)
+    local buffer = self.History[player]
+    if not buffer or #buffer == 0 then return nil end
+
+    -- 최대 롤백 시간 제한
+    local clampedTime = math.max(targetTime, os.clock() - MAX_REWIND_SECONDS)
+    
+    for i = #buffer, 2, -1 do
+        local pCurrent = buffer[i]
+        local pPrev = buffer[i - 1]
+        if pCurrent.Time >= clampedTime and pPrev.Time <= clampedTime then
+            local alpha = (clampedTime - pPrev.Time) / (pCurrent.Time - pPrev.Time)
+            return pPrev.Pos:Lerp(pCurrent.Pos, math.clamp(alpha, 0, 1))
+        end
+    end
+    return buffer[1].Pos
+end
+
+return RollbackValidator</code></pre>
+      </div>
+
+      <h2>3. 고밀도 근접 탐색을 위한 공간 해시 그리드 (Spatial Hash Grid)</h2>
+      <p>전체 유저 루프 순회 없이 O(1) 수준으로 공격 범위 내 적을 추출하는 기법:</p>
+      <ul>
+          <li><strong>2D/3D 공간 버킷 분할:</strong> 맵을 16x16 스터드 크기의 격자(버킷)로 분할하고 플레이어 이동 시 해당 버킷에만 등록합니다.</li>
+          <li><strong>O(1) 인접 버킷 쿼리:</strong> 공격 발생 시 서버 내 100명의 유저를 전부 검사하지 않고, 칼날 주변 인접 9개 버킷에 속한 캐릭터만 선별 검사하여 연산량을 90% 이상 절감합니다.</li>
+          <li><strong>수학적 해시 키 생성:</strong> <code>chunkX * 73856093 ^ chunkZ * 83492791</code> 형태의 소수 기반 정수 해시를 활용하여 Luau 테이블 탐색 속도를 극대화합니다.</li>
+      </ul>
+
+      <h2>4. 기하학적 히트박스 궤적과 레이캐스트 스윕 (Sweep)</h2>
+      <p>프레임 누락 없이 칼날의 궤적 전체를 검증하는 볼륨 판정:</p>
+      <ul>
+          <li><strong>칼날 다중 레이캐스트 스윕:</strong> 칼자루와 칼끝에 Attachment를 배치하고, 이전 프레임 위치와 현재 프레임 위치 사이에 레이를 빗살무늬 형태로 발사하여 고속 휘두름 누락을 방지합니다.</li>
+          <li><strong>회전된 바운딩 박스(OBB) 검증:</strong> 서버 롤백 시점에서 무기의 궤적 회전 박스(CFrame 볼륨) 내에 피격자의 히트박스가 물리적으로 교차했는지 확인합니다.</li>
+          <li><strong>시야선(Line of Sight) 검사:</strong> 공격자와 피격자 사이에 단단한 지형 벽이나 엄폐물이 가로막고 있지 않은지 레이캐스트로 검증하여 벽 뚫기 타격을 무효화합니다.</li>
+      </ul>
+
+      <h2>5. 휴리스틱 안티 치트 필터: 속도 한계 및 거리 클램핑</h2>
+      <p>클라이언트의 리치 핵, 스피드 핵, 텔레포트 변조를 원천 무력화하는 규칙:</p>
+      <ul>
+          <li><strong>최대 리치 클램핑(Reach Clamping):</strong> 공격자와 피격자 사이의 거리가 ‘무기 사거리 + 지연 시간 이동 허용 오차’를 초과하면 판정을 즉시 기각합니다.</li>
+          <li><strong>이동 속도 델타 검증:</strong> 공격자가 이전 위치에서 공격 위치까지 도달하는 데 필요한 속도가 캐릭터의 WalkSpeed 한계를 넘지 않았는지 검사합니다.</li>
+          <li><strong>공격 빈도 상태 머신(Rate Limiter):</strong> 무기별 최소 쿨다운 주기를 서버에서 강제하여 매크로나 자동 클릭 프로그램의 비정상적 고속 연타를 차단합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>로블록스에서 클라이언트 판정을 그대로 믿으면 안 되는 이유는 무엇인가요?</h3>
+          <p>악성 유저가 클라이언트 메모리를 조작해 공격 좌표를 위조하거나 무기 사거리를 맵 전체로 늘려 벽 뒤의 상대까지 즉사시킬 수 있기 때문입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>랙 보정 롤백 버퍼란 무엇인가요?</h3>
+          <p>서버가 플레이어들의 과거 위치를 저장해 두었다가, 공격자의 핑만큼 시간을 되돌려 공격 시점에 상대가 사거리 내에 있었는지 검증하는 기법입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>서버 롤백 시간을 왜 200ms로 제한해야 하나요?</h3>
+          <p>되감기 시간을 무제한 허용하면, 핑이 매우 높은 유저가 이미 엄폐물 뒤로 안전하게 숨은 저핑 유저를 벽 뒤에서 타격하는 불합리한 현상이 발생하기 때문입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>공간 해시 그리드가 대규모 전투 성능에 왜 중요한가요?</h3>
+          <p>서버 내 수십 명의 플레이어를 일일이 검사하지 않고 공격자 주변 격자에 위치한 플레이어만 골라내어 연산량을 극적으로 줄여주기 때문입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>고속 휘두름 시 칼날이 적을 통과해버리는 버그는 어떻게 막나요?</h3>
+          <p>이전 프레임의 칼끝 위치와 현재 프레임의 칼끝 위치 사이에 다중 레이캐스트 스윕(Sweep)을 발사하여 연속된 평면을 형성하면 절대 누락되지 않습니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

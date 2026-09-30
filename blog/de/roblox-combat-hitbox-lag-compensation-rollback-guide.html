@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Kampfsystem-Architektur: Hitbox, Lag-Kompensation & Rollback 2026 | DopaBrain</title>
+  <meta name="description" content="Meistern Sie Kampfsysteme in Roblox: Server-Hitbox-Verifizierung, zirkuläre Rollback-Puffer, Ping-Kompensation und Spatial-Hash-Gitter." />
+  <meta name="keywords" content="roblox combat system, roblox lag compensation, roblox hitbox verification luau, roblox rollback buffer, roblox melee combat tutorial" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/de/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Kampfsystem-Architektur: Hitbox, Lag-Kompensation & Rollback 2026 | DopaBrain" />
+  <meta property="og:description" content="Meistern Sie Kampfsysteme in Roblox: Server-Hitbox-Verifizierung, zirkuläre Rollback-Puffer, Ping-Kompensation und Spatial-Hash-Gitter." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/de/roblox-combat-hitbox-lag-compensation-rollback-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Kampfsystem-Architektur: Hitbox, Lag-Kompensation & Rollback 2026 | DopaBrain" />
+  <meta name="twitter:description" content="Meistern Sie Kampfsysteme in Roblox: Server-Hitbox-Verifizierung, zirkuläre Rollback-Puffer, Ping-Kompensation und Spatial-Hash-Gitter." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/de/roblox-combat-hitbox-lag-compensation-rollback-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/de/roblox-combat-hitbox-lag-compensation-rollback-guide.html"
+      },
+      "headline": "Roblox Kampfsystem-Architektur: Hitbox-Verifizierung, Lag-Kompensation & Rollback",
+      "description": "Meistern Sie Kampfsysteme in Roblox: Server-Hitbox-Verifizierung, zirkuläre Rollback-Puffer, Ping-Kompensation und Spatial-Hash-Gitter.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/de/roblox-combat-hitbox-lag-compensation-rollback-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Roblox Systems Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "de"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Kampfsystem-Architektur: Hitbox-Verifizierung, Lag-Kompensation & Rollback",
+          "item": "https://dopabrain.com/portal/blog/de/roblox-combat-hitbox-lag-compensation-rollback-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why is purely client-side combat verification dangerous in Roblox?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Exploiters can manipulate client memory to forge hit coordinates, extend weapon hitboxes across the entire map, and kill opponents instantly through walls."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a lag compensation rollback buffer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A rollback buffer stores past player coordinates on the server, allowing the server to rewind time by the attacker's latency and verify if the target was actually in range when swung at."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why should server rollback be capped at 200ms?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Rewinding beyond 200ms causes unfair \"hit behind walls\" deaths for low-ping victims who have already moved into cover on their screens."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do Spatial Hash Grids improve combat performance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They group nearby players into spatial buckets, so melee checks only test against players within the local bucket rather than iterating through the entire server."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I prevent raycast weapon swings from missing between frames?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cast raycast sweeps between the blade attachment's previous frame position and current frame position, creating a solid cutting plane that cannot be bypassed by fast movement."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox Kampfsystem-Architektur: Hitbox-Verifizierung, Lag-Kompensation & Rollback</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Roblox Systems Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Competitive Invariant:</strong> Client-authoritative hit detection invites game-breaking exploits, while naive server-side hit detection feels laggy and unresponsive to players with >80ms latency. The industry gold standard is client prediction validated by server-side temporal rollback buffers.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier178_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Melee parry timing & ping latency compensation response</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier178_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Circular ring buffer math & spatial hash grid indexing</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier178_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Temporal interpolation & kinematic trajectory modeling style</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier178_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-ping combat frustration & ghost-hit tilt control</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>Combat responsiveness is the defining metric for action RPGs, battlegrounds, and sword fighting games on Roblox. If swings pass cleanly through opponents or register two seconds after the blade swings, competitive integrity dissolves.</p>
+      <p>By implementing server-side position history buffers, ping-compensated raycasting, spatial hash indexing, and heuristic anti-exploit velocity validation, developers can create razor-sharp melee and projectile combat that feels instantaneous on client viewports while remaining 100% exploit-proof.</p>
+
+      <h2>1. The Client-Server Hit Detection Dilemma</h2>
+      <p>Balancing player feedback latency against server security:</p>
+      <ul>
+          <li><strong>The Exploiter Vulnerability of Client Trust:</strong> Never let clients fire <code>DamageRemote:FireServer(targetHumanoid, 50)</code>. Malicious executors can wipe entire servers instantly.</li>
+          <li><strong>The Lag Penalty of Pure Server Detection:</strong> If the server tests hitboxes in present time, high-ping players miss targets they clearly sliced on their local screens due to round-trip transit delay.</li>
+          <li><strong>Client-Prediction / Server-Validation Paradigm:</strong> The client plays visual FX instantly and sends a timestamped swing intent; the server rewinds time to verify if the attack was physically possible.</li>
+      </ul>
+
+      <h2>2. Temporal Position Rollback Buffers (History Ring Buffers)</h2>
+      <p>Tracking historical player positions to evaluate attacks in the past:</p>
+      <ul>
+          <li><strong>Circular Ring Buffer:</strong> Maintain an array of recent position snapshots for every character over the last 1.0 second (sampled at 30Hz or 60Hz).</li>
+          <li><strong>Timestamp Interpolation:</strong> When validating an attack at time <code>T = ServerTime - (PlayerPing / 2)</code>, lerp between the two closest recorded history snapshots.</li>
+          <li><strong>Maximum Rewind Clamping:</strong> Cap the rewind limit strictly to 200ms to prevent extreme high-ping players from hitting opponents who have long since dashed behind cover.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ServerScriptService.Combat.RollbackValidator</div>
+        <pre><code>-- Server-Side Temporal Rollback Hitbox Validator
+local RollbackValidator = {}
+RollbackValidator.__index = RollbackValidator
+
+local MAX_REWIND_SECONDS = 0.20 -- Maximum 200ms ping compensation
+local BUFFER_CAPACITY = 60
+
+function RollbackValidator.new()
+    local self = setmetatable({}, RollbackValidator)
+    self.History = {} -- [player] = { {Time = t, Pos = Vector3} }
+    return self
+end
+
+function RollbackValidator:RecordPosition(player, currentPos, serverTime)
+    local buffer = self.History[player]
+    if not buffer then
+        buffer = {}
+        self.History[player] = buffer
+    end
+    table.insert(buffer, {Time = serverTime, Pos = currentPos})
+    if #buffer > BUFFER_CAPACITY then
+        table.remove(buffer, 1)
+    end
+end
+
+function RollbackValidator:GetHistoricalPosition(player, targetTime)
+    local buffer = self.History[player]
+    if not buffer or #buffer == 0 then return nil end
+
+    -- Clamp to maximum rewind threshold
+    local clampedTime = math.max(targetTime, os.clock() - MAX_REWIND_SECONDS)
+    
+    for i = #buffer, 2, -1 do
+        local pCurrent = buffer[i]
+        local pPrev = buffer[i - 1]
+        if pCurrent.Time >= clampedTime and pPrev.Time <= clampedTime then
+            local alpha = (clampedTime - pPrev.Time) / (pCurrent.Time - pPrev.Time)
+            return pPrev.Pos:Lerp(pCurrent.Pos, math.clamp(alpha, 0, 1))
+        end
+    end
+    return buffer[1].Pos
+end
+
+return RollbackValidator</code></pre>
+      </div>
+
+      <h2>3. Spatial Hash Grids for High-Density Proximity Queries</h2>
+      <p>Optimizing spatial entity lookups without iterating over all server players:</p>
+      <ul>
+          <li><strong>2D/3D Spatial Bucketing:</strong> Partition the map into 16x16 stud buckets; entities register their current bucket index upon moving.</li>
+          <li><strong>O(1) Proximity Filtering:</strong> During an attack, only query characters situated in neighboring buckets rather than looping through all 100 players in the server.</li>
+          <li><strong>Garbage Collection & Memory Footprint:</strong> Use numerical hash keys (e.g., <code>chunkX * 73856093 ^ chunkZ * 83492791</code>) to keep bucket lookups ultra-fast in Luau.</li>
+      </ul>
+
+      <h2>4. Geometric Hitbox Verification & Raycast Sweeps</h2>
+      <p>Constructing physically accurate, non-laggy weapon swing volumes:</p>
+      <ul>
+          <li><strong>Shaft Raycast Sweeps:</strong> Attach multiple attachments along the weapon blade and cast rays between consecutive frames to form an unbroken cutting polygon.</li>
+          <li><strong>Rotated Bounding Box (OBB) Checks:</strong> Test if target limb positions fall inside the weapon swing arc CFrame volume during the validated historical frame.</li>
+          <li><strong>Line-of-Sight (LoS) Raycasting:</strong> Verify that no walls or solid obstacles obstructed the space between the attacker and victim at the moment of impact.</li>
+      </ul>
+
+      <h2>5. Heuristic Anti-Exploit Filters: Velocity & Teleport Clamping</h2>
+      <p>Neutralizing client-side speed hacks, noclip, and reach modifiers:</p>
+      <ul>
+          <li><strong>Maximum Reach Clamping:</strong> Reject any hit where the distance between attacker and target exceeds weapon length plus latency movement tolerance.</li>
+          <li><strong>Delta Velocity Verification:</strong> Verify that the attacker was physically capable of reaching the attack origin without exceeding maximum Humanoid WalkSpeed.</li>
+          <li><strong>Attack Rate Limiting:</strong> Enforce strict cooldown state machines per weapon archetype to discard rapid-fire macro injection attacks.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why is purely client-side combat verification dangerous in Roblox?</h3>
+          <p>Exploiters can manipulate client memory to forge hit coordinates, extend weapon hitboxes across the entire map, and kill opponents instantly through walls.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What is a lag compensation rollback buffer?</h3>
+          <p>A rollback buffer stores past player coordinates on the server, allowing the server to rewind time by the attacker's latency and verify if the target was actually in range when swung at.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Why should server rollback be capped at 200ms?</h3>
+          <p>Rewinding beyond 200ms causes unfair "hit behind walls" deaths for low-ping victims who have already moved into cover on their screens.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do Spatial Hash Grids improve combat performance?</h3>
+          <p>They group nearby players into spatial buckets, so melee checks only test against players within the local bucket rather than iterating through the entire server.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I prevent raycast weapon swings from missing between frames?</h3>
+          <p>Cast raycast sweeps between the blade attachment's previous frame position and current frame position, creating a solid cutting plane that cannot be bypassed by fast movement.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
