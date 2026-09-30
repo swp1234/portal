@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 서버 권한 안티치트 아키텍처: 스피드핵·노클립·물리 검증 (2026)</title>
+  <meta name="description" content="로블록스 서버 권한 안티치트 개발 완벽 가이드: 델타타임 기반 속도 이상 감지, 레이캐스트 벽 뚫기 방지, 래그돌/넉백 물리 보정, 핑 지연 수용 알고리즘 설계." />
+  <meta name="keywords" content="로블록스 안티치트, 로블록스 스피드핵 감지, 로블록스 노클립 방지, 서버 검증 로블록스, Luau 보안, 게임 개발 보안" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 서버 권한 안티치트 아키텍처: 스피드핵·노클립·물리 검증 (2026)" />
+  <meta property="og:description" content="로블록스 서버 권한 안티치트 개발 완벽 가이드: 델타타임 기반 속도 이상 감지, 레이캐스트 벽 뚫기 방지, 래그돌/넉백 물리 보정, 핑 지연 수용 알고리즘 설계." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 서버 권한 안티치트 아키텍처: 스피드핵·노클립·물리 검증 (2026)" />
+  <meta name="twitter:description" content="로블록스 서버 권한 안티치트 개발 완벽 가이드: 델타타임 기반 속도 이상 감지, 레이캐스트 벽 뚫기 방지, 래그돌/넉백 물리 보정, 핑 지연 수용 알고리즘 설계." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html"
+      },
+      "headline": "로블록스 서버 권한 안티치트 시스템: 스피드핵, 노클립 방지 및 공간 물리 검증 가이드",
+      "description": "로블록스 서버 권한 안티치트 개발 완벽 가이드: 델타타임 기반 속도 이상 감지, 레이캐스트 벽 뚫기 방지, 래그돌/넉백 물리 보정, 핑 지연 수용 알고리즘 설계.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 서버 권한 안티치트 시스템: 스피드핵, 노클립 방지 및 공간 물리 검증 가이드",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "클라이언트 LocalScript에서 WalkSpeed를 감시하면 왜 안 되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LocalScript는 유저 컴퓨터의 메모리에서 실행됩니다. 치트 툴을 쓰면 스크립트 실행을 멈추거나, WalkSpeed 값을 읽어갈 때 항상 16으로 반환하도록 가상화할 수 있습니다. 보안의 유일한 진실은 오직 서버에만 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "넉백 스킬이나 자동차 탑승 시 스피드핵으로 오탐되지 않나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "스킬이나 탈것 같은 정상적인 가속 요인은 서버 상태 머신에 기록되어야 합니다. 서버가 넉백을 가할 때 해당 플레이어의 허용 속도 상한치를 해당 시간 동안 임시로 올려주는 방식을 사용합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "서버에서 수십 명의 레이캐스트를 쏘면 렉이 발생하지 않나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "최적화된 필터와 단순 광선 검사는 50명 기준 프레임당 0.2ms 미만의 CPU 시간만 소비합니다. 프레임 교차 분할 기법을 적용하면 렉 없이 완벽히 동작합니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 서버 권한 안티치트 시스템: 스피드핵, 노클립 방지 및 공간 물리 검증 가이드</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      엔터프라이즈 안티치트 아키텍처: 제로 트러스트 클라이언트 모델, 서버 공간 레이캐스트 검증, 델타타임 속도 이상 탐지 및 롤백 러버밴딩.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier190_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>공간 좌표 매트릭스 검증 및 이산 격자 상태 동기화 분석</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier190_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>클라이언트-서버 간 네트워크 레이턴시 및 핑 지터 측정</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier190_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>시스템 보안 엔지니어링 사고방식 및 공격자 위협 모델링</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier190_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>멀티플레이어 공정성 침해 및 핵 유저 조우 시 스트레스 제어</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>로블록스 멀티플레이어 게임에서 클라이언트(LocalScript)에 의존하는 안티치트는 아무런 방어 효과를 내지 못합니다. 덱스 익스플로러(Dex Explorer), 리모트 스파이(RemoteSpy), 메타메소드 후킹(Hookmetamethod)을 사용하는 변조 클라이언트는 로컬 감시 스크립트를 즉시 무력화하고 속도를 조작합니다.</p>
+      <p>공정한 경쟁과 랭킹을 보호하기 위해서는 클라이언트를 신뢰하지 않는 서버 권한(Server-Authoritative) 보안 모델을 구축해야 합니다. 서버 Heartbeat 주기마다 플레이어 위치의 델타타임을 추적하고, 충돌체를 관통하는 레이캐스트를 투사하여 노클립을 탐지하며, 비정상 이동 시 위치를 강제 회수(러버밴딩)함으로써 핑이 높은 일반 유저에게 피해를 주지 않고 핵을 완벽히 차단할 수 있습니다.</p>
+
+      <h2>1. 클라이언트 익스플로잇 생태계: 로컬 방어가 실패하는 이유</h2>
+      <p>로블록스 클라이언트 해킹 원리를 정확히 이해해야 완벽한 서버 보안망을 구축할 수 있습니다:</p>
+      <ul>
+          <li>로컬 실행 환경 장악: 치트 인젝터는 높은 권한에서 Lua 코드를 실행합니다. `hookmetamethod`, `getrawmetatable`을 통해 리모트 호출 인자를 변조하거나 검사 로직을 우회합니다.</li>
+          <li>로컬스크립트 무력화: 클라이언트에서 실행되는 모든 스크립트는 메모리 상에서 일시정지, 디컴파일 또는 파괴될 수 있습니다.</li>
+          <li>물리 소유권(Network Ownership) 한계: 로블록스 엔진은 반응성 높은 조작을 위해 플레이어 캐릭터(HumanoidRootPart)의 물리 계산 권한을 클라이언트에 넘겨줍니다. 이로 인해 임의의 CFrame 순간이동이 엔진 단에서 전파됩니다.</li>
+          <li>제로 트러스트 원칙: 클라이언트는 완전히 조작된 환경으로 간주해야 합니다. 클라이언트에게 "핵을 썼는가?"를 묻지 말고, 서버가 물리적 증거를 독립적으로 측정해야 합니다.</li>
+      </ul>
+
+      <h2>2. 서버 권한 스피드핵 및 순간이동 검증 알고리즘</h2>
+      <p>네트워크 지연(핑 튐) 오탐 없이 프레임별 이동 변위를 측정하여 이상 속도를 감지하는 기법:</p>
+      <ul>
+          <li>델타타임 거리 연산: 매 Heartbeat마다 현재 위치와 직전 검증 위치 사이의 유클리드 거리 `(currentPos - lastPos).Magnitude`를 측정합니다.</li>
+          <li>동적 허용 속도 상한선: 허용 가능한 최대 변위는 `(WalkSpeed * dt * 1.35) + 0.5`로 계산하여 완충 마진을 둡니다. 낙하, 수영, 차량 탑승 상태에 따라 상한선을 유연하게 변경합니다.</li>
+          <li>슬라이딩 윈도우 이상 누적 버퍼: 단 1프레임의 위치 오차로 즉시 제재하면 네트워크 패킷 지연으로 인한 무고한 유저가 피해를 입습니다. 1초간 누적 버퍼를 쌓아 기준치를 넘길 때만 개입합니다.</li>
+          <li>서버 러버밴딩(Rubberbanding): 허용치를 초과하는 이상 이동 발생 시 즉시 직전 유효 좌표로 캐릭터 CFrame을 복원하고 선형 속도를 0으로 초기화합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau 서버 안티치트 서비스: 속도 감지 및 레이캐스트 노클립 차단 시스템</div>
+        <pre><code>--!strict
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local AntiCheatService = {}
+
+type PlayerRecord = {
+    lastPosition: Vector3,
+    lastTick: number,
+    anomalyBuffer: number,
+    isFalling: boolean
+}
+
+local trackedPlayers: { [Player]: PlayerRecord } = {}
+
+local RAY_PARAMS = RaycastParams.new()
+RAY_PARAMS.FilterType = RaycastFilterType.Exclude
+RAY_PARAMS.IgnoreWater = true
+
+function AntiCheatService.InitPlayer(player: Player)
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart") :: BasePart
+    
+    trackedPlayers[player] = {
+        lastPosition = hrp.Position,
+        lastTick = os.clock(),
+        anomalyBuffer = 0,
+        isFalling = false
+    }
+end
+
+function AntiCheatService.OnHeartbeat(dt: number)
+    local now = os.clock()
+    
+    for player, record in pairs(trackedPlayers) do
+        local char = player.Character
+        if not char then continue end
+        
+        local hrp = char:FindFirstChild("HumanoidRootPart") :: BasePart?
+        local humanoid = char:FindFirstChildOfClass("Humanoid")
+        if not hrp or not humanoid or humanoid.Health <= 0 then continue end
+        
+        local currentPos = hrp.Position
+        local displacement = (currentPos - record.lastPosition).Magnitude
+        
+        -- 허용 이동 거리 계산 (속도 * 시간 + 지연 완충값)
+        local baseSpeed = humanoid.WalkSpeed
+        local maxAllowedDistance = (baseSpeed * dt * 1.35) + 0.5
+        
+        -- 1. 속도 및 순간이동 판정
+        if displacement > maxAllowedDistance and not record.isFalling then
+            record.anomalyBuffer += (displacement - maxAllowedDistance)
+            if record.anomalyBuffer > 15 then
+                -- 러버밴딩: 비정상 이동 적발 시 직전 유효 좌표로 강제 복귀
+                hrp.CFrame = CFrame.new(record.lastPosition)
+                hrp.AssemblyLinearVelocity = Vector3.zero
+                record.anomalyBuffer = 0
+                continue
+            end
+        else
+            -- 정상 이동 시 이상 버퍼 점진적 감소
+            record.anomalyBuffer = math.max(0, record.anomalyBuffer - (dt * 5))
+        end
+        
+        -- 2. 레이캐스트 기반 공간 노클립 검증
+        RAY_PARAMS.FilterDescendantsInstances = { char }
+        local rayDirection = currentPos - record.lastPosition
+        if rayDirection.Magnitude > 0.1 then
+            local hit = Workspace:Raycast(record.lastPosition, rayDirection, RAY_PARAMS)
+            if hit and hit.Instance and hit.Instance.CanCollide then
+                -- 고체 벽 관통 감지 시 이동 무효화
+                hrp.CFrame = CFrame.new(record.lastPosition)
+                hrp.AssemblyLinearVelocity = Vector3.zero
+                continue
+            end
+        end
+        
+        record.lastPosition = currentPos
+        record.lastTick = now
+    end
+end
+
+RunService.Heartbeat:Connect(AntiCheatService.OnHeartbeat)
+Players.PlayerAdded:Connect(AntiCheatService.InitPlayer)
+
+return AntiCheatService</code></pre>
+      </div>
+
+      <h2>3. 레이캐스트 공간 캡슐 검사를 통한 노클립 벽 관통 방지</h2>
+      <p>금고 벽, 밀폐된 맵 경계, 장애물을 뚫고 이동하는 핵을 차단하는 기법:</p>
+      <ul>
+          <li>궤적 레이캐스트 검사: 이전 유효 위치에서 현재 위치를 잇는 광선을 발사합니다. `CanCollide = true`인 장애물과 교차하면 즉시 벽 뚫기로 판정합니다.</li>
+          <li>다중 레이 캡슐 판정: 단일 광선은 모서리나 얇은 벽에서 틈이 생길 수 있습니다. 머리, 가슴, 발 높이의 3중 평행 광선을 투사하여 캐릭터 부피 캡슐을 검증합니다.</li>
+          <li>동적 충돌 필터링: 장식용 파티클, 풀잎, 충돌 비활성화된 문은 `RaycastParams.FilterDescendantsInstances`로 검사 대상에서 제외합니다.</li>
+          <li>정상 순간이동 예외 처리: 게임 내 포털이나 엘리베이터 이동 시 서버 API를 통해 사전에 `record.lastPosition`을 갱신하여 오탐을 방지합니다.</li>
+      </ul>
+
+      <h2>4. 네트워크 핑 지연 보상 및 패킷 버스트 수용</h2>
+      <p>글로벌 유저의 높은 지연 시간과 모바일 네트워크 불안정성을 고려한 최적화:</p>
+      <ul>
+          <li>실시간 RTT 측정: `player:GetNetworkPing()`을 주기적으로 조회하여 핑이 급증한 플레이어에게는 순간 허용 임계치를 동적으로 확장합니다.</li>
+          <li>패킷 버스트 완충: 모바일 환경에서는 3~4개의 이동 패킷이 묶여서 한 번에 도착할 수 있습니다. 단일 프레임 스파이크를 즉시 처벌하지 않는 완충 기제가 필수적입니다.</li>
+          <li>서버 롤백 히스토리: 무기 타격 판정 시 `ServerTime - (ClientPing / 2)` 시점의 과거 좌표 링 버퍼를 참조하여 지연 시간 오차를 보정합니다.</li>
+          <li>네트워크 품질 피드백: 패킷 손실이 지속되는 유저에게는 강제 튕김 대신 UI 경고를 표시하여 조작 불쾌감을 줄입니다.</li>
+      </ul>
+
+      <h2>5. 대규모 프로덕션 아키텍처: 성능 최적화와 텔레메트리 로깅</h2>
+      <p>서버 틱 저하(FPS 드랍)를 유발하지 않으면서 치트 공격을 추적하는 엔터프라이즈 설계:</p>
+      <ul>
+          <li>플레이어 프레임 분할 검사(Batching): 60인 서버에서 매 프레임 모든 유저를 검사하면 서버 부하가 커집니다. 짝수 프레임과 홀수 프레임으로 30명씩 교차 검증합니다.</li>
+          <li>은밀한 로깅(Silent Flagging): 경쟁 랭크 게임에서는 핵을 켜는 즉시 튕기지 않고 외부 파이프라인(OpenCloud, Discord 웹훅)에 이상 로그를 조용히 누적하여 치트 제작자에게 방어 공식을 노출하지 않습니다.</li>
+          <li>리플레이 스냅샷 저장: 이상 징후 발생 시점 전후 5초간의 좌표 데이터를 메모리에 보관하여 관리자가 검토할 수 있도록 합니다.</li>
+          <li>엔진 레벨 보안 설정: `RejectCharacterDeletions` 활성화, 명확한 `CollisionGroups` 분리, 핵심 데이터의 클라이언트 복제 금지를 철저히 유지합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>클라이언트 LocalScript에서 WalkSpeed를 감시하면 왜 안 되나요?</h3>
+          <p>LocalScript는 유저 컴퓨터의 메모리에서 실행됩니다. 치트 툴을 쓰면 스크립트 실행을 멈추거나, WalkSpeed 값을 읽어갈 때 항상 16으로 반환하도록 가상화할 수 있습니다. 보안의 유일한 진실은 오직 서버에만 있습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>넉백 스킬이나 자동차 탑승 시 스피드핵으로 오탐되지 않나요?</h3>
+          <p>스킬이나 탈것 같은 정상적인 가속 요인은 서버 상태 머신에 기록되어야 합니다. 서버가 넉백을 가할 때 해당 플레이어의 허용 속도 상한치를 해당 시간 동안 임시로 올려주는 방식을 사용합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>서버에서 수십 명의 레이캐스트를 쏘면 렉이 발생하지 않나요?</h3>
+          <p>최적화된 필터와 단순 광선 검사는 50명 기준 프레임당 0.2ms 미만의 CPU 시간만 소비합니다. 프레임 교차 분할 기법을 적용하면 렉 없이 완벽히 동작합니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

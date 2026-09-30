@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>音游认知神经科学：毫秒级知觉时序与小脑内部时钟 (2026)</title>
+  <meta name="description" content="探索硬核音游的神经科学原理：毫秒级判定区间、视听反应延迟差、小脑前馈预测机制与 NoteLock 连锁失误现象。" />
+  <meta name="keywords" content="音游神经科学, 毫秒级反应, 视听延迟差, osu认知负荷, 小脑内部时钟, 节拍知觉" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="音游认知神经科学：毫秒级知觉时序与小脑内部时钟 (2026)" />
+  <meta property="og:description" content="探索硬核音游的神经科学原理：毫秒级判定区间、视听反应延迟差、小脑前馈预测机制与 NoteLock 连锁失误现象。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="音游认知神经科学：毫秒级知觉时序与小脑内部时钟 (2026)" />
+  <meta name="twitter:description" content="探索硬核音游的神经科学原理：毫秒级判定区间、视听反应延迟差、小脑前馈预测机制与 NoteLock 连锁失误现象。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/zh/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html"
+      },
+      "headline": "音游认知神经科学：亚秒级感知时序、视听同步与小脑前馈运动模型",
+      "description": "探索硬核音游的神经科学原理：毫秒级判定区间、视听反应延迟差、小脑前馈预测机制与 NoteLock 连锁失误现象。",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Cognitive Performance Lab",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "zh"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "音游认知神经科学：亚秒级感知时序、视听同步与小脑前馈运动模型",
+          "item": "https://dopabrain.com/portal/blog/zh/rhythm-game-sub-second-perceptual-timing-audio-visual-sync-neuroscience.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "为什么听觉反应比视觉反应速度更快？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "听觉信号经由耳蜗毛细胞物理转化后走较短的脑干通路，约 10ms 即可抵达皮层；而视觉信号的光化学反应与复杂中继需要 30~50ms。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "为什么往往在歌曲快要结束的最后几个音符失误？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "即将胜利的意识唤醒了大脑前额叶，意识的介入打断了小脑自动化的前馈控制，引发肌肉僵硬与时序脱节。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "为什么高 AR（更快的缩圈/落速）反而更好读图？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "因为高 AR 减少了同屏显示的音符数量，消除了视觉干扰与记忆混淆，使大脑能专注于单一目标的即时反射。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">音游认知神经科学：亚秒级感知时序、视听同步与小脑前馈运动模型</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Cognitive Performance Lab</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      毫秒级感知同步的脑科学：在 osu!、Beat Saber 与节奏电竞中，大脑如何将听觉信号与手指按键精确同步到10毫秒内。
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier191_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Sub-second visual reaction latency & millisecond motor impulse speed</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier191_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-BPM note density stress & cardiovascular flow-state regulation</span>
+        </a>
+        <a href="/burnout-test/" class="quick-card" data-track="tier191_burnout_test">
+          <strong>Burnout Test</strong>
+          <span>Repetitive strain injury (RSI) & neuromuscular gaming fatigue</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier191_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Auditory vs visual sensory processing preference & motor coordination</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>在竞技音游（如 osu!、Beat Saber、太鼓达人、DDR 等）中，人类极限与超凡操作的差距仅仅以毫秒（1/1000秒）计算。例如 osu! OD10 的 ±19.5ms 或 DDR Marvelous 的 ±15ms 判定窗口，早已超越了人类意识层面的反应极限。</p>
+      <p>为了达成这种微秒级精度，大脑放弃了常规的意识反馈回路，转而调用小脑（Cerebellum）的前馈内部预测模型、眼跳扫视（Saccade）与基底核节拍同调网络。深入了解音游的认知神经机制，能帮助玩家更好地进入心流状态并有效克服连锁失误（NoteLock）。</p>
+
+      <h2>1. 亚秒级时序悖论：有意识反应 vs 小脑前馈预测</h2>
+      <p>在高 BPM 密集连打中，意识反应为何彻底失效的神经生理学解释：</p>
+      <ul>
+          <li>意识感知的延迟瓶颈：从视网膜接收光信号、经皮层决策再到运动神经元发放动作冲动，意识回路至少需要 180 至 250 毫秒。</li>
+          <li>高密度音符的时间间隔：在 240 BPM 的十六分音符连打中，音符间隔仅为 62.5 毫秒。试图靠眼睛看完再按键，必然导致工作记忆过载和肌肉僵死。</li>
+          <li>小脑前馈（Feedforward）内部模型：顶尖玩家不是在“反应”，而是小脑根据音乐节拍提前预测肢体在时空中的位置，在视觉反馈抵达前就已经触发了按键。</li>
+          <li>动作组块化（Motor Chunking）：三连打、五连打或特定双押跳跃被压缩为单个“神经运动模块”，在脊髓反射层面自动释放。</li>
+      </ul>
+
+      <h2>2. 视听输入延迟差与跨通道感官绑定（Sensory Binding）</h2>
+      <p>大脑如何消除光速与声速在人体内部的处理时间差：</p>
+      <ul>
+          <li>感受器转导速度的巨大差异：听觉信号通过耳蜗毛细胞机械去极化，仅需 10~15 毫秒即可到达听觉皮层；而视觉光化学反应与丘脑中继需要 30~50 毫秒。</li>
+          <li>时间绑定窗口（Temporal Binding Window）：大脑在上丘和颞叶有意将听觉信号处理滞后约 25 毫秒，使其在主观感知中与视觉“同时”发生。</li>
+          <li>听觉主导的运动同调：运动皮层对音乐节拍的锁定精度远高于视觉击打圈。靠耳朵打歌的玩家判定方差通常比纯靠眼睛看打击线的玩家低 3 倍以上。</li>
+          <li>硬件音频延迟（Jitter）的破坏力：超过 40 毫秒的蓝牙音频延迟或驱动抖动会直接瓦解跨感官绑定，导致按键时序全面漂移。</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">毫秒级判定区间与击打正态分布模拟模型</div>
+        <pre><code>// Sub-Second Timing Judgment Distribution Model
+interface TimingResult {
+  hitOffsetMs: number;
+  judgment: 'Marvelous' | 'Perfect' | 'Great' | 'Good' | 'Miss';
+}
+
+function evaluateTapTiming(actualTapTime: number, expectedNoteTime: number, latencyOffsetMs: number = 0): TimingResult {
+  const hitOffsetMs = actualTapTime - expectedNoteTime - latencyOffsetMs;
+  const absOffset = Math.abs(hitOffsetMs);
+
+  if (absOffset <= 16.5) return { hitOffsetMs, judgment: 'Marvelous' };
+  if (absOffset <= 33.0) return { hitOffsetMs, judgment: 'Perfect' };
+  if (absOffset <= 65.0) return { hitOffsetMs, judgment: 'Great' };
+  if (absOffset <= 100.0) return { hitOffsetMs, judgment: 'Good' };
+  return { hitOffsetMs, judgment: 'Miss' };
+}</code></pre>
+      </div>
+
+      <h2>3. 预测性眼跳（Saccades）、副中央凹预览与接近速率（AR）</h2>
+      <p>高阶音游选手阅读超高速音符流的眼动策略：</p>
+      <ul>
+          <li>副中央凹（Parafoveal）提前预读：顶尖选手的中心注视点绝不停留在当前击打的音符上，而是固定在前方 200~400 毫秒的新音符区域。</li>
+          <li>眼跳锚定点：眼动追踪研究表明，选手并不是平滑追踪音符，而是在几何簇之间进行快速跳跃式注视。</li>
+          <li>高 AR（接近速率）的认知减负优势：AR 越高，屏幕上同时残留的音符越少，这极大降低了视觉皮层的干扰，释放工作记忆以聚焦空间定位。</li>
+          <li>低速密集过载：在低 AR 高密度配置下，大量音符重叠会诱发视觉掩蔽效应，导致大脑无法辨识时序。</li>
+      </ul>
+
+      <h2>4. NoteLock 连锁失误与错误相关负波（ERN）</h2>
+      <p>断连（Choke）瞬间手部肌肉僵死的神经学真相：</p>
+      <ul>
+          <li>错误相关负波（ERN）：一旦漏击音符，前扣带回（ACC）在 50 毫秒内爆发强烈的错误信号，下意识抑制后续运动输出。</li>
+          <li>机制性 NoteLock：在严格按顺序判定的音游中，未按下的音符会导致后续判定被机械锁死，彻底破坏手指的节拍周期。</li>
+          <li>肾上腺素与交感神经暴增：Full Combo 破灭引发的心率飙升会加剧手指肌腱紧张度，引发多连 Miss。</li>
+          <li>认知重置重构：主动眨眼一次或重新注视音乐小节线，能强行重置小脑的内部节拍器。</li>
+      </ul>
+
+      <h2>5. 神经肌肉调适与认知疲劳管理</h2>
+      <p>在长时间练习中保持微秒级准确度的高效方案：</p>
+      <ul>
+          <li>多巴胺奖赏预测误差（RPE）：连续 Perfect 会促使多巴胺持续分泌维持心流；必须有效控制断连后的挫败情绪以防神经递质透支。</li>
+          <li>神经肌肉疲劳指标：当击打时间标准差扩大超过 4ms 时，表明外周神经突触的乙酰胆碱已耗尽，必须立即休息。</li>
+          <li>预防腱鞘炎与腕管综合征：高 BPM 连打对伸肌和屈肌肌腱冲击巨大，每练习 45 分钟必须进行 5 分钟手腕静态拉伸。</li>
+          <li>热身校准期：大脑需要大约 10~15 分钟逐步提升 BPM 的热身，以将生物时钟与实际设备的音频视讯延迟完全校准。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>为什么听觉反应比视觉反应速度更快？</h3>
+          <p>听觉信号经由耳蜗毛细胞物理转化后走较短的脑干通路，约 10ms 即可抵达皮层；而视觉信号的光化学反应与复杂中继需要 30~50ms。</p>
+        </div>
+        <div class="faq-item">
+          <h3>为什么往往在歌曲快要结束的最后几个音符失误？</h3>
+          <p>即将胜利的意识唤醒了大脑前额叶，意识的介入打断了小脑自动化的前馈控制，引发肌肉僵硬与时序脱节。</p>
+        </div>
+        <div class="faq-item">
+          <h3>为什么高 AR（更快的缩圈/落速）反而更好读图？</h3>
+          <p>因为高 AR 减少了同屏显示的音符数量，消除了视觉干扰与记忆混淆，使大脑能专注于单一目标的即时反射。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

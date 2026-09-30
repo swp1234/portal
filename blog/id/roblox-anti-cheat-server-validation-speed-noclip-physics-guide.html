@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arsitektur Anti-Cheat Server Roblox: Speed Hack, Noclip & Fisika (2026)</title>
+  <meta name="description" content="Kuasai pembuatan anti-cheat berbasis server di Roblox: deteksi anomali WalkSpeed, pencegahan noclip dengan raycast, dan kompensasi latensi." />
+  <meta name="keywords" content="Roblox anti-cheat, deteksi speed hack Roblox, cegah noclip Roblox, validasi server Roblox, keamanan game Luau" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/id/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Arsitektur Anti-Cheat Server Roblox: Speed Hack, Noclip & Fisika (2026)" />
+  <meta property="og:description" content="Kuasai pembuatan anti-cheat berbasis server di Roblox: deteksi anomali WalkSpeed, pencegahan noclip dengan raycast, dan kompensasi latensi." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/id/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Arsitektur Anti-Cheat Server Roblox: Speed Hack, Noclip & Fisika (2026)" />
+  <meta name="twitter:description" content="Kuasai pembuatan anti-cheat berbasis server di Roblox: deteksi anomali WalkSpeed, pencegahan noclip dengan raycast, dan kompensasi latensi." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/id/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/id/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html"
+      },
+      "headline": "Anti-Cheat Otoriter Server Roblox: Deteksi Speed Hack, Noclip & Validasi Spasial",
+      "description": "Kuasai pembuatan anti-cheat berbasis server di Roblox: deteksi anomali WalkSpeed, pencegahan noclip dengan raycast, dan kompensasi latensi.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/id/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "id"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Anti-Cheat Otoriter Server Roblox: Deteksi Speed Hack, Noclip & Validasi Spasial",
+          "item": "https://dopabrain.com/portal/blog/id/roblox-anti-cheat-server-validation-speed-noclip-physics-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Mengapa LocalScript tidak aman untuk mendeteksi cheat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Peretas dapat memanipulasi memori lokal dan menghentikan eksekusi LocalScript secara instan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana sistem menangani knockback atau kendaraan cepat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Saat server memberikan gaya dorong, batas kecepatan maksimum pemain dinaikkan sementara."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah raycasting di server menyebabkan lag?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "50 raycast teroptimasi per frame hanya memakan kurang dari 0.2ms waktu CPU server."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Anti-Cheat Otoriter Server Roblox: Deteksi Speed Hack, Noclip & Validasi Spasial</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Keamanan Game Roblox: Model zero-trust klien, validasi raycast spasial di server, dan rekonsiliasi rubberbanding.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier190_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Spatial coordinate matrix validation & discrete grid state verification</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier190_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Client-to-server network latency & ping jitter measurement</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier190_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Systems security engineering archetype & adversarial threat modeling</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier190_stress_check">
+          <strong>Stress Check</strong>
+          <span>Multiplayer competitive integrity & exploit frustration mitigation</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>Di game multiplayer Roblox, skrip anti-cheat sisi klien tidak efektif melawan memory injector modern yang dapat mematikan LocalScript dengan mudah.</p>
+      <p>Untuk melindungi integritas game, diperlukan arsitektur keamanan otoritatif di server. Dengan menghitung delta-time pergerakan, memproyeksikan raycast penembus dinding, dan menerapkan rubberbanding, kecurangan dapat dicegah total.</p>
+
+      <h2>1. Mengapa Anti-Cheat Lokal Selalu Gagal</h2>
+      <p>Memahami cara kerja eksploitasi klien pada ekosistem Roblox:</p>
+      <ul>
+          <li>Eksploitasi Lingkungan Lokal: Fungsi hookmetamethod memungkinkan peretas memodifikasi argumen remote.</li>
+          <li>Manipulasi Skrip: Skrip yang berjalan di klien dapat dihentikan atau dihapus sesuka hati.</li>
+          <li>Kepemilikan Fisika: Klien memiliki otoritas jaringan atas pergerakan HumanoidRootPart miliknya.</li>
+          <li>Prinsip Zero-Trust: Jangan pernah mempercayai data posisi yang dikirim langsung oleh klien.</li>
+      </ul>
+
+      <h2>2. Verifikasi Kecepatan dan Teleportasi di Sisi Server</h2>
+      <p>Mengukur perpindahan per frame tanpa memicu false positive akibat latensi:</p>
+      <ul>
+          <li>Jarak Delta-Time: Mengukur jarak Euclidean antara posisi sekarang dan posisi valid sebelumnya.</li>
+          <li>Batas Kecepatan Dinamis: Toleransi pergerakan dihitung dari WalkSpeed dikali dt ditambah toleransi ping.</li>
+          <li>Buffer Anomali: Mengumpulkan poin anomali sebelum memberikan tindakan hukuman.</li>
+          <li>Rubberbanding: Membalikkan posisi karakter ke koordinat valid terakhir saat terjadi pelanggaran.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Layanan Anti-Cheat Luau: Validasi Kecepatan dan Noclip Raycast</div>
+        <pre><code>--!strict
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local AntiCheatService = {}
+
+type PlayerRecord = {
+    lastPosition: Vector3,
+    lastTick: number,
+    anomalyBuffer: number,
+    isFalling: boolean
+}
+
+local trackedPlayers: { [Player]: PlayerRecord } = {}
+local RAY_PARAMS = RaycastParams.new()
+RAY_PARAMS.FilterType = RaycastFilterType.Exclude
+
+function AntiCheatService.InitPlayer(player: Player)
+    local char = player.Character or player.CharacterAdded:Wait()
+    local hrp = char:WaitForChild("HumanoidRootPart") :: BasePart
+    trackedPlayers[player] = {
+        lastPosition = hrp.Position,
+        lastTick = os.clock(),
+        anomalyBuffer = 0,
+        isFalling = false
+    }
+end
+
+function AntiCheatService.OnHeartbeat(dt: number)
+    local now = os.clock()
+    for player, record in pairs(trackedPlayers) do
+        local char = player.Character
+        if not char then continue end
+        local hrp = char:FindFirstChild("HumanoidRootPart") :: BasePart?
+        local humanoid = char:FindFirstChildOfClass("Humanoid")
+        if not hrp or not humanoid or humanoid.Health <= 0 then continue end
+        
+        local currentPos = hrp.Position
+        local displacement = (currentPos - record.lastPosition).Magnitude
+        local maxAllowed = (humanoid.WalkSpeed * dt * 1.35) + 0.5
+        
+        if displacement > maxAllowed and not record.isFalling then
+            record.anomalyBuffer += (displacement - maxAllowed)
+            if record.anomalyBuffer > 15 then
+                hrp.CFrame = CFrame.new(record.lastPosition)
+                hrp.AssemblyLinearVelocity = Vector3.zero
+                record.anomalyBuffer = 0
+                continue
+            end
+        else
+            record.anomalyBuffer = math.max(0, record.anomalyBuffer - (dt * 5))
+        end
+        
+        RAY_PARAMS.FilterDescendantsInstances = { char }
+        local dir = currentPos - record.lastPosition
+        if dir.Magnitude > 0.1 then
+            local hit = Workspace:Raycast(record.lastPosition, dir, RAY_PARAMS)
+            if hit and hit.Instance and hit.Instance.CanCollide then
+                hrp.CFrame = CFrame.new(record.lastPosition)
+                hrp.AssemblyLinearVelocity = Vector3.zero
+                continue
+            end
+        end
+        record.lastPosition = currentPos
+        record.lastTick = now
+    end
+end
+
+RunService.Heartbeat:Connect(AntiCheatService.OnHeartbeat)
+Players.PlayerAdded:Connect(AntiCheatService.InitPlayer)
+return AntiCheatService</code></pre>
+      </div>
+
+      <h2>3. Pencegahan Noclip dan Menembus Tembok Menggunakan Raycast</h2>
+      <p>Mencegah karakter berjalan menembus dinding padat dan pintu terkunci:</p>
+      <ul>
+          <li>Uji Lintasan Raycast: Menembakkan berkas raycast antara dua titik pergerakan.</li>
+          <li>Kapsul Multi-Ray: Tiga sinar sejajar di kaki, tubuh, dan kepala untuk deteksi akurat.</li>
+          <li>Filter Dinamis: Mengabaikan objek tanpa CanCollide agar tidak membebani komputasi.</li>
+          <li>Pengecualian Teleportasi: API server khusus untuk memperbarui posisi saat teleport resmi.</li>
+      </ul>
+
+      <h2>4. Kompensasi Ping dan Fluktuasi Jaringan</h2>
+      <p>Menjaga keamanan tanpa mengorbankan kenyamanan pemain berping tinggi:</p>
+      <ul>
+          <li>Pemantauan RTT: Mengubah ambang batas pergerakan mengikuti fluktuasi ping.</li>
+          <li>Penyerapan Paket Burst: Menghadapi paket data seluler yang menumpuk di jaringan.</li>
+          <li>Sistem Rollback Server: Riwayat posisi historis untuk validasi tembakan yang adil.</li>
+          <li>Pemberitahuan UI: Memberikan peringatan koneksi daripada melakukan kick instan.</li>
+      </ul>
+
+      <h2>5. Arsitektur Produksi Skala Besar & Telemetri</h2>
+      <p>Menerapkan sistem keamanan tanpa menyebabkan penurunan performa server:</p>
+      <ul>
+          <li>Batching Pemain: Membagi validasi pemain ke dalam frame genap dan ganjil.</li>
+          <li>Pencatatan Senyap: Mengirim log anomali ke webhook tanpa memberitahu pembuat cheat.</li>
+          <li>Snapshot Replay: Menyimpan riwayat pergerakan beberapa detik sebelum pelanggaran.</li>
+          <li>Konfigurasi Mesin: Memanfaatkan RejectCharacterDeletions dan CollisionGroups terisolasi.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Mengapa LocalScript tidak aman untuk mendeteksi cheat?</h3>
+          <p>Peretas dapat memanipulasi memori lokal dan menghentikan eksekusi LocalScript secara instan.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Bagaimana sistem menangani knockback atau kendaraan cepat?</h3>
+          <p>Saat server memberikan gaya dorong, batas kecepatan maksimum pemain dinaikkan sementara.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Apakah raycasting di server menyebabkan lag?</h3>
+          <p>50 raycast teroptimasi per frame hanya memakan kurang dari 0.2ms waktu CPU server.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
