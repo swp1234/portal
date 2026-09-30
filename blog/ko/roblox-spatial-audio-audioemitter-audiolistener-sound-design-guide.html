@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 차세대 공간 음향 엔진: AudioEmitter, Listener 및 와이어 가이드 2026 | DopaBrain</title>
+  <meta name="description" content="로블록스 차세대 공간 음향 완벽 가이드: AudioEmitter, AudioListener, Wire 인스턴스, 거리 감쇠 곡선, 레이캐스트 음향 차폐(Occlusion) 및 동적 리버브 존 설계." />
+  <meta name="keywords" content="로블록스 공간음향 튜토리얼, 로블록스 오디오이미터, 로블록스 와이어 오디오 api, 로블록스 사운드 디자인, 로블록스 벽 소리 차폐" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 차세대 공간 음향 엔진: AudioEmitter, Listener 및 와이어 가이드 2026 | DopaBrain" />
+  <meta property="og:description" content="로블록스 차세대 공간 음향 완벽 가이드: AudioEmitter, AudioListener, Wire 인스턴스, 거리 감쇠 곡선, 레이캐스트 음향 차폐(Occlusion) 및 동적 리버브 존 설계." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 차세대 공간 음향 엔진: AudioEmitter, Listener 및 와이어 가이드 2026 | DopaBrain" />
+  <meta name="twitter:description" content="로블록스 차세대 공간 음향 완벽 가이드: AudioEmitter, AudioListener, Wire 인스턴스, 거리 감쇠 곡선, 레이캐스트 음향 차폐(Occlusion) 및 동적 리버브 존 설계." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html"
+      },
+      "headline": "로블록스 차세대 공간 음향 엔진: AudioEmitter, AudioListener, 와이어 및 음향 차폐",
+      "description": "로블록스 차세대 공간 음향 완벽 가이드: AudioEmitter, AudioListener, Wire 인스턴스, 거리 감쇠 곡선, 레이캐스트 음향 차폐(Occlusion) 및 동적 리버브 존 설계.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 로블록스 시스템 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 차세대 공간 음향 엔진: AudioEmitter, AudioListener, 와이어 및 음향 차폐",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-audioemitter-audiolistener-sound-design-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "로블록스의 새로운 Audio API가 기존 Sound 객체보다 뛰어난 점은 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "기존의 일체형 방식과 달리 소리의 생성, 신호 필터링, 공간 방사가 모듈형 노드(Emitter, Listener, Wire, Filter)로 분리되어 실제 음향 장비처럼 자유롭게 연결할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "AudioEmitter와 AudioListener의 차이는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AudioEmitter는 3D 월드에서 소리를 퍼뜨리는 가상의 스피커이며, AudioListener는 카메라나 아바타 머리에 장착되어 소리를 수음하는 가상의 귀입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "게임 사운드에서 음향 차폐(Occlusion)란 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "벽이나 문과 같은 단단한 물리적 장애물로 인해 소리의 직접 경로가 차단되었을 때, 고주파가 흡수되어 먹먹하게 들리는 물리 음향 현상입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "난전 상황에서 소리가 시끄럽게 찢어지는 현상을 어떻게 방지하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AudioFader를 활용한 오디오 더킹(Ducking)을 적용하여, 중요 발소리나 음성 대사가 나올 때 배경음과 총성을 일시적으로 낮추어 명료도를 확보합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "모든 소리에 레이캐스트 차폐 연산을 적용하면 모바일에서 렉이 걸리지 않나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "근거리의 핵심 발소리와 장전음 등 주요 타격음(반경 80스터드 이내)에만 레이캐스트를 적용하고, 원거리 환경음은 차폐 연산을 생략하여 성능을 보존합니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 차세대 공간 음향 엔진: AudioEmitter, AudioListener, 와이어 및 음향 차폐</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 로블록스 시스템 엔지니어링 팀</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>사운드 엔지니어링 원칙:</strong> 평면적인 2D 사운드는 3D 공간 몰입도를 파괴하고 발소리와 총성의 방향 정위를 불가능하게 만듭니다. 로블록스의 신규 노드형 Audio API는 기존 Sound 객체를 대체하여 물리 기반의 AudioEmitter, AudioListener, 모듈형 Wire DSP 라우팅을 지원합니다.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier180_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>공간 음향 위치 정위 및 적 발소리 반응 속도 훈련</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier180_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>오디오 DSP 노드 라우팅 및 거리 감쇠 곡선 연산 훈련</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier180_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>바이노럴 청각 인지 및 3D 사운드스케이프 인지 스타일</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier180_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>난전 속 청각적 소음 피로도와 오디오 더킹 평정심 유지</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>3D 게임에서 사운드 디자인은 플레이어 감각 경험의 50%를 차지합니다. 기존의 로블록스 사운드 시스템은 단순 볼륨 감쇄에 의존했으나, 현대의 몰입형 타이틀은 정밀한 바이노럴 입체 음향, 도플러 효과, 환경 잔향(Reverb), 그리고 벽 뒤에서 먹먹해지는 차폐 효과를 요구합니다.</p>
+      <p>새롭게 도입된 모듈형 Audio API(<code>AudioEmitter</code>, <code>AudioListener</code>, <code>Wire</code>, <code>AudioFilter</code>, <code>AudioReverb</code>)를 활용하면 가상 스튜디오 패치 케이블처럼 오디오 신호를 유연하게 연결하여 콘솔급 사운드스케이프를 구축할 수 있습니다.</p>
+
+      <h2>1. 모듈형 Audio API 아키텍처: Emitter, Listener, Wire</h2>
+      <p>단일 Sound 객체에서 노드형 디지털 신호 처리(DSP) 그래프로의 패러다임 전환:</p>
+      <ul>
+          <li><strong>AudioEmitter (소리 발원지):</strong> Attachment나 Part에 부착되어 3차원 월드 공간에서 소리를 방사하며, 방사 원뿔 각도와 거리별 감쇠 곡선을 맞춤 설정할 수 있습니다.</li>
+          <li><strong>AudioListener (가상 귀):</strong> 플레이어의 카메라나 아바타 머리에 장착되어 머리전달함수(HRTF) 기반으로 입체적인 소리를 수음합니다.</li>
+          <li><strong>Wire 인스턴스 (가상 오디오 케이블):</strong> 음원 생성 노드와 필터 노드, 이미터를 자유롭게 연결합니다 (예: AudioPlayer ➔ Wire ➔ AudioFilter ➔ Wire ➔ AudioEmitter).</li>
+      </ul>
+
+      <h2>2. 거리 감쇠 곡선(Attenuation)과 볼륨 입체 음원</h2>
+      <p>넓은 평원과 좁은 실내 복도에 걸맞은 자연스러운 소리 감쇄 설계:</p>
+      <ul>
+          <li><strong>맞춤형 롤오프(Roll-Off) 곡선:</strong> 부자연스러운 선형 감쇄 대신 현실 물리와 유사한 역제곱(1/R) 및 로그형 감쇠 곡선을 적용합니다.</li>
+          <li><strong>볼륨형 입체 음원(Volumetric Audio):</strong> 점(Point) 형태의 음원을 폭포나 해안선에 어울리는 선(Line) 및 박스(Box) 형태로 확장하여 청자를 자연스럽게 감싸도록 만듭니다.</li>
+          <li><strong>MinDistance & MaxDistance 최적화:</strong> 미세한 환경음이 서버 전체의 오디오 채널을 불필요하게 점유하지 않도록 명확한 청취 반경을 지정합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ReplicatedStorage.Common.SpatialAudioRig</div>
+        <pre><code>-- 실시간 차폐 필터가 결합된 모듈형 공간 음향 릭
+local Workspace = game:GetService("Workspace")
+
+local SpatialAudioRig = {}
+SpatialAudioRig.__index = SpatialAudioRig
+
+function SpatialAudioRig.new(sourcePart)
+    local self = setmetatable({}, SpatialAudioRig)
+    self.Source = sourcePart
+    
+    -- 이미터 및 저주파 필터 생성
+    self.Emitter = Instance.new("AudioEmitter")
+    self.Emitter.Parent = sourcePart
+    
+    self.Filter = Instance.new("AudioFilter")
+    self.Filter.FilterType = Enum.AudioFilterType.Lowpass
+    self.Filter.CutoffFrequency = 20000
+    self.Filter.Parent = sourcePart
+    
+    self.Wire = Instance.new("Wire")
+    self.Wire.SourceInstance = self.Filter
+    self.Wire.TargetInstance = self.Emitter
+    self.Wire.Parent = sourcePart
+    
+    self.RayParams = RaycastParams.new()
+    self.RayParams.FilterType = RaycastParamsType.Exclude
+    return self
+end
+
+function SpatialAudioRig:UpdateOcclusion(listenerPosition)
+    local sourcePos = self.Source.Position
+    local dir = listenerPosition - sourcePos
+    local hit = Workspace:Raycast(sourcePos, dir, self.RayParams)
+    
+    if hit and (hit.Position - listenerPosition).Magnitude > 2 then
+        -- 벽 뒤에 가려졌을 때 저주파만 통과 (먹먹한 소리)
+        self.Filter.CutoffFrequency = 900
+    else
+        -- 가림막 없는 직접 경로
+        self.Filter.CutoffFrequency = 20000
+    end
+end
+
+return SpatialAudioRig</code></pre>
+      </div>
+
+      <h2>3. 실시간 벽 음향 차폐 (Acoustic Wall Occlusion)</h2>
+      <p>콘크리트 벽이나 문 뒤에서 소리가 둔탁하게 먹먹해지는 물리적 구현:</p>
+      <ul>
+          <li><strong>레이캐스트 차폐 감지:</strong> AudioEmitter와 AudioListener 사이에 시야 레이를 발사하여 벽이나 지형이 가로막을 경우 저주파 필터를 활성화합니다.</li>
+          <li><strong>동적 AudioFilter 컷오프 조절:</strong> 직접 전달될 때는 20,000Hz로 열려 있던 로우패스 필터를 벽 뒤에서는 800Hz 수준으로 낮추어 리얼한 먹먹함을 연출합니다.</li>
+          <li><strong>재질별 소리 흡수율 차등:</strong> 나무 문은 고음을 가볍게 감쇄시키고 두꺼운 석조 벽은 고주파를 완전히 차단하도록 차폐 계수를 세분화합니다.</li>
+      </ul>
+
+      <h2>4. 동적 리버브 존(Reverb Zones)과 공간 음향 프로파일링</h2>
+      <p>동굴, 대성당, 금속 환기구의 고유한 공간 울림을 생성하는 기법:</p>
+      <ul>
+          <li><strong>AudioReverb 노드:</strong> 방의 크기, 반사음 지연 시간, 고주파 댐핑 파라미터를 조절하여 특정 공간만의 독특한 잔향을 부여합니다.</li>
+          <li><strong>공간 트리거 영역 연동:</strong> 울창한 숲에서 메아리치는 지하 동굴로 진입할 때 리버브 파라미터를 페이드 전환하여 부드러운 청각 전이를 만듭니다.</li>
+          <li><strong>초기 반사음과 후기 잔향의 밸런스:</strong> 즉각적인 벽 반사음(Slap-back)과 길게 남는 잔향 꼬리의 비율을 조절하여 대사나 발소리가 뭉개지지 않도록 정돈합니다.</li>
+      </ul>
+
+      <h2>5. 사운드 우선순위, 오디오 더킹(Ducking) 및 모바일 메모리 최적화</h2>
+      <p>폭발과 총성이 빗발치는 대규모 교전 중에도 소리의 선명도를 유지하는 법:</p>
+      <ul>
+          <li><strong>AudioFader 기반 오디오 더킹:</strong> 주요 알림음, 아군 보이스, 근접 발소리가 발생할 때 배경음악과 환경 소음을 즉시 -6dB 감쇄시켜 핵심 정보를 명확히 전달합니다.</li>
+          <li><strong>클라이언트 보이스 컬링:</strong> 모바일 기기 CPU 오디오 연산 부하를 방지하기 위해 플레이어 주변 32개의 최우선 이미터만 선별 연산합니다.</li>
+          <li><strong>오디오 에셋 압축 가이드:</strong> 타격감 있는 단발 효과음은 22kHz 모노로, 웅장한 배경 음악은 44.1kHz 스테레오로 인코딩하여 오디오 메모리 점유율을 60% 절감합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>로블록스의 새로운 Audio API가 기존 Sound 객체보다 뛰어난 점은 무엇인가요?</h3>
+          <p>기존의 일체형 방식과 달리 소리의 생성, 신호 필터링, 공간 방사가 모듈형 노드(Emitter, Listener, Wire, Filter)로 분리되어 실제 음향 장비처럼 자유롭게 연결할 수 있습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>AudioEmitter와 AudioListener의 차이는 무엇인가요?</h3>
+          <p>AudioEmitter는 3D 월드에서 소리를 퍼뜨리는 가상의 스피커이며, AudioListener는 카메라나 아바타 머리에 장착되어 소리를 수음하는 가상의 귀입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>게임 사운드에서 음향 차폐(Occlusion)란 무엇인가요?</h3>
+          <p>벽이나 문과 같은 단단한 물리적 장애물로 인해 소리의 직접 경로가 차단되었을 때, 고주파가 흡수되어 먹먹하게 들리는 물리 음향 현상입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>난전 상황에서 소리가 시끄럽게 찢어지는 현상을 어떻게 방지하나요?</h3>
+          <p>AudioFader를 활용한 오디오 더킹(Ducking)을 적용하여, 중요 발소리나 음성 대사가 나올 때 배경음과 총성을 일시적으로 낮추어 명료도를 확보합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>모든 소리에 레이캐스트 차폐 연산을 적용하면 모바일에서 렉이 걸리지 않나요?</h3>
+          <p>근거리의 핵심 발소리와 장전음 등 주요 타격음(반경 80스터드 이내)에만 레이캐스트를 적용하고, 원거리 환경음은 차폐 연산을 생략하여 성능을 보존합니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
