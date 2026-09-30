@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neurosains Kognitif Deckbuilder Roguelike: Balatro, Probabilitas & RPE | DopaBrain</title>
+  <meta name="description" content="Ilmu kognitif deckbuilder roguelike (Balatro, Slay the Spire): Reward Prediction Error (RPE), heuristik probabilitas Bayesian, dan regulasi tilt permadeath." />
+  <meta name="keywords" content="balatro cognitive science, roguelike deckbuilder psychology, reward prediction error gaming, slay the spire probability heuristic, gamblers fallacy deckbuilder" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/id/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Neurosains Kognitif Deckbuilder Roguelike: Balatro, Probabilitas & RPE | DopaBrain" />
+  <meta property="og:description" content="Ilmu kognitif deckbuilder roguelike (Balatro, Slay the Spire): Reward Prediction Error (RPE), heuristik probabilitas Bayesian, dan regulasi tilt permadeath." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/id/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Neurosains Kognitif Deckbuilder Roguelike: Balatro, Probabilitas & RPE | DopaBrain" />
+  <meta name="twitter:description" content="Ilmu kognitif deckbuilder roguelike (Balatro, Slay the Spire): Reward Prediction Error (RPE), heuristik probabilitas Bayesian, dan regulasi tilt permadeath." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/id/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/id/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html"
+      },
+      "headline": "Neurosains Kognitif Deckbuilder Roguelike: Heuristik Probabilitas & Mekanika Balatro",
+      "description": "Ilmu kognitif deckbuilder roguelike (Balatro, Slay the Spire): Reward Prediction Error (RPE), heuristik probabilitas Bayesian, dan regulasi tilt permadeath.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/id/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Laboratorium Ilmu Kognitif Game DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "id"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Neurosains Kognitif Deckbuilder Roguelike: Heuristik Probabilitas & Mekanika Balatro",
+          "item": "https://dopabrain.com/portal/blog/id/roguelike-deckbuilder-probability-heuristics-reward-prediction-error-neuroscience.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why is Balatro so extraordinarily addictive compared to standard poker?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Balatro replaces fixed poker payouts with exponential multiplier scaling, continuous rogue shop synergies, and variable ratio reinforcement, triggering intense Reward Prediction Errors on every hand."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Reward Prediction Error (RPE) in gaming?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "RPE is the neurochemical discrepancy between the reward your brain expects and what actually occurs. Exceeding expectations produces a massive dopamine surge that drives compulsive play."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the gambler's fallacy ruin deckbuilder runs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Players assume that a string of non-scoring draws increases the likelihood of drawing the desired card next, causing them to exhaust critical rerolls and discards recklessly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does exponential scaling feel more rewarding than flat number additions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Human cognition struggles to intuitively predict exponential growth. Watching scores balloon from hundreds into millions continuously surpasses mental predictions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can players prevent tilt after losing a 50-minute god-run?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Focus on process over outcome. Analyzing whether your probability calculations were sound rather than fixating on bad RNG maintains emotional regulation and prefrontal cortex control."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Neurosains Kognitif Deckbuilder Roguelike: Heuristik Probabilitas & Mekanika Balatro</h1>
+      <div class="meta-bar">
+        <span>By Laboratorium Ilmu Kognitif Game DopaBrain</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      <strong>Neurocomputational Reality:</strong> Roguelike deckbuilders like Balatro and Slay the Spire do not just test strategic planning—they engineer a precision loop of mesolimbic dopamine firing via variable ratio reinforcement, exponential multiplier scaling, and calculated Bayesian risk assessment.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier177_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Bayesian draw calculation & risk-reward cognitive archetype</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier177_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Exponential chip mult arithmetic & combinatorial chunking</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier177_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-stake blind anxiety & permadeath loss-chasing control</span>
+        </a>
+        <a href="/burnout-test/" class="quick-card" data-track="tier177_burnout_test">
+          <strong>Burnout Test</strong>
+          <span>Endless mode dopamine fatigue & cognitive decision burnout</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>From the mathematical poker rogue synergies of Balatro to the ironclad relic optimization of Slay the Spire, roguelike deckbuilders have emerged as one of the most intellectually compelling and addictive genres in modern gaming.</p>
+      <p>Behind the soothing card flips and satisfying chip multipliers lies a masterclass in cognitive neuroscience. By manipulating Reward Prediction Errors (RPE), incomplete information heuristics, cognitive load under combinatorial explosion, and the emotional sting of permadeath, these games trigger profound neurochemical flow states.</p>
+
+      <h2>1. The Neurochemistry of Card Synergy: Dopamine & Reward Prediction Error (RPE)</h2>
+      <p>How variable ratio schedules and exponential scaling trigger dopamine surges:</p>
+      <ul>
+          <li><strong>The RPE Formula:</strong> Dopamine neurons in the ventral tegmental area (VTA) fire not upon expected rewards, but upon <code>Actual Outcome - Expected Outcome</code>. When a joker synergy triggers 10x higher score than anticipated, the brain experiences an intoxicating dopamine burst.</li>
+          <li><strong>Mult-Trigger Auditory Cadence:</strong> Rapid ascending audio chimes on successive card scoring mimic the sensory feedback of slot machines, transforming cold math into visceral sensory delight.</li>
+          <li><strong>Anticipation vs. Consumption:</strong> Neuroimaging shows the highest dopamine spike occurs during the shuffle and draw animation—the moment of pure possibility—rather than the actual round completion.</li>
+      </ul>
+
+      <h2>2. Bayesian Updating vs. The Gambler's Fallacy in Draw Probabilities</h2>
+      <p>How cognitive biases distort rational decision-making during high-stakes hands:</p>
+      <ul>
+          <li><strong>Bayesian Prior Recalculation:</strong> Elite deckbuilders constantly update the conditional probability of drawing key cards (e.g., drawing the 5th Spade) based on discarded pool counts.</li>
+          <li><strong>The Gambler's Fallacy Trap:</strong> Under pressure, novice brains irrationally believe that after discarding three non-spades, a spade is "due", leading to catastrophic overconfidence and lethal misplays.</li>
+          <li><strong>Risk Premium & Preservation:</strong> Choosing between a safe 10,000-point hand vs. a high-variance 50,000-point royal flush highlights human prospect theory and asymmetric loss aversion.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Simulation: Bayesian Draw Probability & RPE Dopamine Spike Model</div>
+        <pre><code>-- Roguelike Deckbuilder Expected Value & RPE Model
+local DeckEngine = {}
+DeckEngine.__index = DeckEngine
+
+function DeckEngine.new(deckSize, targetSuitCount)
+    local self = setmetatable({}, DeckEngine)
+    self.RemainingCards = deckSize or 52
+    self.RemainingSuits = targetSuitCount or 13
+    self.ExpectedScore = 5000
+    return self
+end
+
+function DeckEngine:CalculateDrawProbability(drawCount)
+    -- Hypergeometric distribution approximation
+    local pSingle = self.RemainingSuits / self.RemainingCards
+    local pAtLeastOne = 1 - math.pow((1 - pSingle), drawCount)
+    return pAtLeastOne
+end
+
+function DeckEngine:EvaluateHand(actualScore)
+    -- Dopamine Reward Prediction Error (RPE)
+    local rpe = actualScore - self.ExpectedScore
+    local dopamineSpike = math.clamp(rpe / 2000, -1.0, 3.0)
+    
+    return {
+        RPE = rpe,
+        DopamineSurge = dopamineSpike,
+        IsJackpot = (dopamineSpike > 1.5)
+    }
+end
+
+return DeckEngine</code></pre>
+      </div>
+
+      <h2>3. Exponential Multiplier Satiation & The Sunk Cost Heuristic</h2>
+      <p>Why linear additions feel boring while multiplicative scaling captivates human attention:</p>
+      <ul>
+          <li><strong>Exponential Growth Comprehension:</strong> Human brains naturally think linearly; games that compound chips by multipliers (Chips x Mult x Joker Mult) shatter intuitive expectation ceilings, sustaining cognitive awe.</li>
+          <li><strong>The Sunk Cost Relic Attachment:</strong> Players frequently refuse to pivot away from an early-game build archetype even when shop offerings strongly favor an alternative strategy, falling victim to sunk-cost cognitive inertia.</li>
+          <li><strong>High-Roller Dopamine Exhaustion:</strong> Endless mode runs eventually reach cognitive desensitization as numbers surpass billions (scientific notation), decoupling numbers from tangible stakes.</li>
+      </ul>
+
+      <h2>4. Working Memory Bandwidth & Combinatorial Mental Arithmetic</h2>
+      <p>Managing cognitive overload when calculating 8-card poker scoring permutations:</p>
+      <ul>
+          <li><strong>Working Memory Saturation (The 4-Chunk Limit):</strong> Tracking base chips, flat mult, multiplicative mult, and trigger orders simultaneously saturates the dorsolateral prefrontal cortex.</li>
+          <li><strong>Mental Chunking Shortcuts:</strong> Veteran players compress complex calculations into mental heuristics (e.g., "Any flush wins the blind"), preserving working memory for shop resource decisions.</li>
+          <li><strong>Decision Fatigue in Long Runs:</strong> Continuous high-stakes probability evaluation depletes executive glucose reserves, leading to unforced errors after 45 minutes of continuous play.</li>
+      </ul>
+
+      <h2>5. Tilt Mitigation & Emotional Regulation in Permadeath Runs</h2>
+      <p>How high-level players manage emotional frustration when RNG destroys a winning build:</p>
+      <ul>
+          <li><strong>Attributional Style (Skill vs. Luck):</strong> Mindful players attribute losses to controllable tactical decisions (suboptimal shop rerolls) rather than uncontrollable RNG, maintaining internal locus of control.</li>
+          <li><strong>The Permadeath Clean-Slate Effect:</strong> Sudden defeat eliminates accumulated cognitive clutter, providing an immediate neurochemical reset that fuels the irresistible urge to "start one more run".</li>
+          <li><strong>Transferable Decision-Making:</strong> Mastering roguelike deckbuilders sharpens real-world executive skills: portfolio diversification, risk tolerance under uncertainty, and cognitive flexibility.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why is Balatro so extraordinarily addictive compared to standard poker?</h3>
+          <p>Balatro replaces fixed poker payouts with exponential multiplier scaling, continuous rogue shop synergies, and variable ratio reinforcement, triggering intense Reward Prediction Errors on every hand.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What is Reward Prediction Error (RPE) in gaming?</h3>
+          <p>RPE is the neurochemical discrepancy between the reward your brain expects and what actually occurs. Exceeding expectations produces a massive dopamine surge that drives compulsive play.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does the gambler's fallacy ruin deckbuilder runs?</h3>
+          <p>Players assume that a string of non-scoring draws increases the likelihood of drawing the desired card next, causing them to exhaust critical rerolls and discards recklessly.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Why does exponential scaling feel more rewarding than flat number additions?</h3>
+          <p>Human cognition struggles to intuitively predict exponential growth. Watching scores balloon from hundreds into millions continuously surpasses mental predictions.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How can players prevent tilt after losing a 50-minute god-run?</h3>
+          <p>Focus on process over outcome. Analyzing whether your probability calculations were sound rather than fixating on bad RNG maintains emotional regulation and prefrontal cortex control.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
