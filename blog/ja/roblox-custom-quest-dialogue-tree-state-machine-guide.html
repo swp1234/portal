@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Quest & Dialogue System: Finite State Machine & Branching Guide (2026) (JA)</title>
+  <meta name="description" content="Master Roblox RPG quest design: Hierarchical state machines (HFSM), node-based dialogue trees, conditional prerequisites, client UI animation, and secure server-side DataStore persistence." />
+  <meta name="keywords" content="roblox quest system, roblox dialogue tree, finite state machine roblox, quest datastore persistence, branching narrative roblox 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ja/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Quest & Dialogue System: Finite State Machine & Branching Guide (2026) (JA)" />
+  <meta property="og:description" content="Master Roblox RPG quest design: Hierarchical state machines (HFSM), node-based dialogue trees, conditional prerequisites, client UI animation, and secure server-side DataStore persistence." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ja/roblox-custom-quest-dialogue-tree-state-machine-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Quest & Dialogue System: Finite State Machine & Branching Guide (2026) (JA)" />
+  <meta name="twitter:description" content="Master Roblox RPG quest design: Hierarchical state machines (HFSM), node-based dialogue trees, conditional prerequisites, client UI animation, and secure server-side DataStore persistence." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ja/roblox-custom-quest-dialogue-tree-state-machine-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ja/roblox-custom-quest-dialogue-tree-state-machine-guide.html"
+      },
+      "headline": "Roblox Quest & Dialogue Architecture: Finite State Machines, Node-Based Branching & DataStore Persistence [JA]",
+      "description": "Master Roblox RPG quest design: Hierarchical state machines (HFSM), node-based dialogue trees, conditional prerequisites, client UI animation, and secure server-side DataStore persistence.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ja/roblox-custom-quest-dialogue-tree-state-machine-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Game Systems Architecture Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Quest & Dialogue Architecture: Finite State Machines, Node-Based Branching & DataStore Persistence [JA]",
+          "item": "https://dopabrain.com/portal/blog/ja/roblox-custom-quest-dialogue-tree-state-machine-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why should quest progress never be calculated on the client?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If the client sends 'I killed 5 bandits' or 'I finished the quest' to the server via RemoteEvents, exploiters can immediately fire the event in a loop to instantly complete all quests and duplicate rewards. The server must validate every combat and interaction event."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best way to structure dialogue trees in Roblox Studio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Structure dialogue as a table of nodes identified by string IDs (e.g., 'start', 'ask_reward', 'decline'). Each node lists response choices that link to the next NodeId and specify optional conditional requirements."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I prevent quest data loss during server crashes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use ProfileService with session-locking and periodic auto-saving. Serialize quest progress as compact dictionaries containing only objective numerical values and timestamp."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can quest state machines handle non-linear branching storylines?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. By evaluating condition flags in the state machine, completing Quest A can permanently lock out Quest B and unlock Quest C, enabling deep branching faction narratives."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox Quest & Dialogue Architecture: Finite State Machines, Node-Based Branching & DataStore Persistence [JA]</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Game Systems Architecture Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting non-linear storytelling and quest logic in Roblox Studio: From hierarchical finite state machines to server-authoritative progression validation and node-based dialogue graphs.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier212_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Dialogue tree graph theory & finite state machine permutation models</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier212_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Prompt interaction trigger latency & rapid dialogue choice speed</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier212_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Narrative branching agency & moral dilemma decision archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier212_stress_check">
+          <strong>Stress Check</strong>
+          <span>Quest completion anxiety, irreversible choice regret & FOMO relief</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>In modern story-driven Roblox games, open-world RPGs, and quest-based simulators, dynamic narrative interactions and multi-stage objectives form the backbone of player retention. Naively scripting quest logic inside individual NPC ProximityPrompts or managing quest progress via scattered BoolValues produces fragile, unmaintainable code vulnerable to race conditions, progression blockers, and exploit duplication.</p>
+      <p>In this comprehensive systems architecture guide, we engineer a production-ready, server-authoritative quest and dialogue engine. We implement a Hierarchical Finite State Machine (HFSM) for multi-step quest lifecycles, a node-based branching dialogue interpreter with conditional requirements (level, inventory, prior choices), and atomic DataStore serialization.</p>
+
+      <h2>1. Quest Lifecycle Architecture: Hierarchical Finite State Machines (HFSM)</h2>
+      <p>A quest is not a binary flag (Completed / Not Completed); it is a stateful lifecycle that transitions across deterministic stages under server validation:</p>
+      <ul>
+          <li>Core Lifecycle States: Locked (unmet prerequisites) -> Available (NPC indicator active) -> Active (in progress) -> Completable (turn-in ready) -> Completed (archived) -> Failed.</li>
+          <li>Server-Authoritative Progress Verification: Kill counts, item collections, and exploration triggers must validate on the server to prevent client-side exploit injection.</li>
+          <li>Atomic Quest State Storage: Serialize quest progress into compact dictionaries (QuestId -> { Stage, Progress, Timestamp }) integrated into the player's primary profile.</li>
+          <li>Event-Driven Progress Signals: Use a global game signal bus (e.g., Signal / GoodSignal) to notify quest trackers when combat, foraging, or crafting events fire.</li>
+      </ul>
+
+      <h2>2. Production-Grade Server Quest Manager & State Machine Implementation</h2>
+      <p>Below is a fully functional Luau module implementing an event-driven Quest State Machine with prerequisite checks and secure progression updating:</p>
+      <ul>
+          <li>Prerequisite Evaluation: Evaluates required player levels, completed parent quests, or specific inventory badges before unlocking available quests.</li>
+          <li>Dynamic Objective Increments: Atomically advances progress counters, automatically transitioning state from Active to Completable when targets are met.</li>
+          <li>Cross-Network Client Synchronization: Fires remote events to notify the local client UI only when state or progress values actually mutate.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">QuestStateMachine.luau (Server-Side Quest Engine)</div>
+        <pre><code>--!strict
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+
+local QuestManager = {}
+QuestManager.__index = QuestManager
+
+export type QuestState = "Locked" | "Available" | "Active" | "Completable" | "Completed" | "Failed"
+
+export type Objective = {
+    Id: string,
+    Type: "Kill" | "Gather" | "Interact",
+    TargetId: string,
+    Current: number,
+    Required: number
+}
+
+export type QuestData = {
+    QuestId: string,
+    State: QuestState,
+    Objectives: { [string]: Objective },
+    StartTime: number
+}
+
+local playerQuests: { [Player]: { [string]: QuestData } } = {}
+local questDefinitions = {
+    ["bandit_camp_1"] = {
+        RequiredLevel = 5,
+        Objectives = {
+            ["kill_bandits"] = { Type = "Kill", TargetId = "Bandit", Required = 5 },
+            ["find_chest"] = { Type = "Interact", TargetId = "CampChest", Required = 1 }
+        }
+    }
+}
+
+function QuestManager.StartQuest(player: Player, questId: string): boolean
+    local def = questDefinitions[questId]
+    if not def then return false end
+
+    local userQuests = playerQuests[player]
+    if not userQuests then return false end
+
+    local existing = userQuests[questId]
+    if existing and existing.State ~= "Available" then return false end
+
+    local objTable: { [string]: Objective } = {}
+    for objId, objDef in pairs(def.Objectives) do
+        objTable[objId] = {
+            Id = objId,
+            Type = objDef.Type,
+            TargetId = objDef.TargetId,
+            Current = 0,
+            Required = objDef.Required
+        }
+    end
+
+    userQuests[questId] = {
+        QuestId = questId,
+        State = "Active",
+        Objectives = objTable,
+        StartTime = os.time()
+    }
+
+    QuestManager.SyncClient(player, questId)
+    return true
+end
+
+function QuestManager.RecordAction(player: Player, actionType: string, targetId: string, amount: number)
+    local userQuests = playerQuests[player]
+    if not userQuests then return end
+
+    for questId, quest in pairs(userQuests) do
+        if quest.State == "Active" then
+            local allComplete = true
+            for _, obj in pairs(quest.Objectives) do
+                if obj.Type == actionType and obj.TargetId == targetId then
+                    obj.Current = math.clamp(obj.Current + amount, 0, obj.Required)
+                end
+                if obj.Current < obj.Required then
+                    allComplete = false
+                end
+            end
+
+            if allComplete then
+                quest.State = "Completable"
+            end
+            QuestManager.SyncClient(player, questId)
+        end
+    end
+end
+
+function QuestManager.SyncClient(player: Player, questId: string)
+    -- Fire Client RemoteEvent with replicated quest state dictionary
+end
+
+return QuestManager</code></pre>
+      </div>
+
+      <h2>3. Branching Dialogue Trees: Graph-Based Narrative Engine</h2>
+      <p>Linear monologue reduces player engagement; branching dialogue gives players agency and moral weight. In Roblox, dialogue trees are structured as directed graphs:</p>
+      <ul>
+          <li>Node-Based Dialogue Graph: Each dialogue node contains speaker text, voice audio stinger, optional camera angle CFrame, and an array of player response choices.</li>
+          <li>Conditional Choice Filtering: Hide or lock specific response choices unless the player possesses required quest states, faction reputation, or stat thresholds.</li>
+          <li>Action Payoffs on Exit: Trigger custom narrative callbacks (grant item, start cutscene, spawn ambush enemies) upon reaching specific terminal dialogue leaves.</li>
+          <li>Typewriter Text Animation: Render dialogue character-by-character using task.wait() or TweenService, with an instant-skip option for experienced players.</li>
+      </ul>
+
+      <h2>4. DataStore Serialization & Edge-Case Protection</h2>
+      <p>Quest progress is high-value player metadata; data loss or desync creates massive support friction. Applying robust persistence patterns is essential:</p>
+      <ul>
+          <li>ProfileService Integration: Store active and completed quest IDs inside a centralized ProfileService table to leverage session-locking and auto-backups.</li>
+          <li>Schema Migration for Patch Updates: When a game update modifies quest requirements, implement automated migration scripts to resolve obsolete objective IDs.</li>
+          <li>Combat Log-Out & Failure Handling: Mark timed escape quests as Failed if the player disconnects during active critical trial encounters.</li>
+          <li>Exploit Injection Defense: Never expose a RemoteFunction allowing the client to invoke 'CompleteQuest' directly; all progress increments must be validated on the server.</li>
+      </ul>
+
+      <h2>5. Production Verification & Systems QA Checklist</h2>
+      <p>Deploying complex multi-step quests requires methodical edge-case validation across development testing environments:</p>
+      <ul>
+          <li>Boundary Count Testing: Verify objectives requiring 0/1 or 0/5 items correctly cap at max limits and do not roll over into negative integers.</li>
+          <li>Multi-Player Shared Kill Credit: Determine whether party members receive shared objective progress when hunting world bosses.</li>
+          <li>NPC Occlusion & UI Priority: Confirm dialogue frames correctly render on top of HUD elements with clean mouse lock management.</li>
+          <li>Memory Leak Verification: Ensure quest completion listeners disconnect cleanly from event signal connections when players log out.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why should quest progress never be calculated on the client?</h3>
+          <p>If the client sends 'I killed 5 bandits' or 'I finished the quest' to the server via RemoteEvents, exploiters can immediately fire the event in a loop to instantly complete all quests and duplicate rewards. The server must validate every combat and interaction event.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What is the best way to structure dialogue trees in Roblox Studio?</h3>
+          <p>Structure dialogue as a table of nodes identified by string IDs (e.g., 'start', 'ask_reward', 'decline'). Each node lists response choices that link to the next NodeId and specify optional conditional requirements.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I prevent quest data loss during server crashes?</h3>
+          <p>Use ProfileService with session-locking and periodic auto-saving. Serialize quest progress as compact dictionaries containing only objective numerical values and timestamp.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can quest state machines handle non-linear branching storylines?</h3>
+          <p>Yes. By evaluating condition flags in the state machine, completing Quest A can permanently lock out Quest B and unlock Quest C, enabling deep branching faction narratives.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
