@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 메시 LOD & 드로우콜 최적화 가이드 (2026)</title>
+  <meta name="description" content="모바일 60 FPS 달성을 위한 로블록스 그래픽 최적화: RenderFidelity 튜닝, Luau 거리별 LOD 매니저, 2D 빌보드 임포스터 및 드로우콜 절감 기술." />
+  <meta name="keywords" content="로블록스 메시 LOD, 로블록스 드로우콜 최적화, RenderFidelity 로블록스, 지오메트리 스트리밍, 모바일 최적화 로블록스" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 메시 LOD & 드로우콜 최적화 가이드 (2026)" />
+  <meta property="og:description" content="모바일 60 FPS 달성을 위한 로블록스 그래픽 최적화: RenderFidelity 튜닝, Luau 거리별 LOD 매니저, 2D 빌보드 임포스터 및 드로우콜 절감 기술." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 메시 LOD & 드로우콜 최적화 가이드 (2026)" />
+  <meta name="twitter:description" content="모바일 60 FPS 달성을 위한 로블록스 그래픽 최적화: RenderFidelity 튜닝, Luau 거리별 LOD 매니저, 2D 빌보드 임포스터 및 드로우콜 절감 기술." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html"
+      },
+      "headline": "로블록스 지오메트리 최적화 아키텍처: MeshPart LOD, 임포스터 렌더링 및 드로우콜 배칭",
+      "description": "모바일 60 FPS 달성을 위한 로블록스 그래픽 최적화: RenderFidelity 튜닝, Luau 거리별 LOD 매니저, 2D 빌보드 임포스터 및 드로우콜 절감 기술.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "도파브레인 스튜디오 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 지오메트리 최적화 아키텍처: MeshPart LOD, 임포스터 렌더링 및 드로우콜 배칭",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "RenderFidelity.Performance와 커스텀 Luau LOD의 차이점은 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Performance는 단일 메시의 버텍스를 엔진이 자동 감축하지만, 모델 전체를 2D 빌보드로 바꾸거나 부속 파츠를 완전히 숨길 수는 없습니다. 둘을 결합해야 최대 성능을 냅니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "배경 오브젝트의 CanCollide를 끄면 그래픽 렌더링도 빨라지나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "네. CanCollide와 CanQuery를 끄면 물리 엔진뿐만 아니라 로블록스의 공간 파티셔닝 트리(Octree) 연산이 간소화되어 PrepareJob 렌더링 준비 단계가 대폭 단축됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "모바일 환경에서 안전한 드로우콜 한계치는 얼마인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "일반적으로 400~800 드로우콜 이내가 안전합니다. 1,200 드로우콜을 넘어서면 보급형 안드로이드 스마트폰에서 심각한 프레임 드랍과 발열이 발생합니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 지오메트리 최적화 아키텍처: MeshPart LOD, 임포스터 렌더링 및 드로우콜 배칭</h1>
+      <div class="meta-bar">
+        <span>By 도파브레인 스튜디오 엔지니어링 팀</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      타협 없는 60 FPS: 다단계 메시 LOD, 거리별 컬링(Distance Culling), 2D 빌보드 임포스터를 활용한 모바일 GPU 병목 완벽 제거.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier204_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>매트릭스 지오메트리 LOD 폴리곤 모델 및 메모리 예산 연산</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier204_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>60 FPS 프레임 페이싱 지연 및 드로우콜 스파이크 반응 잠복기</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier204_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>시각 아키텍처 멘탈 모델 및 공간 LOD 파이프라인 인지 스타일</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier204_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>모바일 스로틀링, 프레임 드랍 붕괴 및 틸트 인지 완화</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>로블록스에서 시각적으로 화려한 거대 오픈월드를 제작할 때, 가장 큰 장애물은 저사양 모바일 기기의 심각한 렉과 튕김 현상입니다. 수백 개의 고폴리곤 MeshPart가 워크스페이스에 배치되면 과도한 드로우콜(Draw Call)과 버텍스 연산으로 인해 프레임이 곤두박질치고 발열 쓰로틀링이 발생합니다.</p>
+      <p>체계적인 Level of Detail (LOD) 파이프라인을 구축하면 시각적 퀄리티를 유지하면서도 저사양 기기 호환성을 완벽히 확보할 수 있습니다. `RenderFidelity.Performance` 엔진 내장 LOD, Luau 기반의 거리별 지오메트리 스왑 매니저, 2D 빌보드 임포스터(Impostor), 그리고 StreamingEnabled 메모리 제어를 결합해 전 기기 60 FPS 방어를 달성할 수 있습니다.</p>
+
+      <h2>1. GPU 병목의 근원: 드로우콜과 버텍스 연산 과부하</h2>
+      <p>로블록스 렌더링 파이프라인의 하드웨어 한계 분석:</p>
+      <ul>
+          <li>드로우콜(Draw Call) 오버헤드: 고유한 재질과 텍스처를 가진 개별 메시마다 CPU가 GPU에 그리기 명령을 전달합니다. 드로우콜이 1,500회를 넘어서면 모바일 CPU 병목으로 프레임이 급락합니다.</li>
+          <li>원거리 버텍스 낭비: 화면에서 고작 15픽셀을 차지하는 먼 거리의 나무에 10,000개의 삼각형 버텍스를 연산하는 것은 심각한 GPU 래스터화 자원 낭비입니다.</li>
+          <li>재질 전환 쓰래싱(Texture Thrashing): 텍스처 아틀라스를 사용하지 않아 재질 교체가 잦아지면 GPU 파이프라인이 정체됩니다.</li>
+          <li>모바일 발열 쓰로틀링: GPU 사용률이 100%에 달하면 기기가 발열을 막기 위해 5분 만에 클럭을 강제 다운시켜 60 FPS에서 20 FPS 이하로 추락합니다.</li>
+      </ul>
+
+      <h2>2. RenderFidelity와 로블록스 네이티브 LOD 시스템</h2>
+      <p>엔진 내장 메시 간소화 기능을 극대화하는 설정법:</p>
+      <ul>
+          <li>`RenderFidelity.Precise`: 모든 거리에서 100% 원본 지오메트리를 유지합니다. 1인칭 손에 든 무기나 상호작용 퍼즐에는 필수적이지만, 거대 환경 프랍에 적용하면 치명적입니다.</li>
+          <li>`RenderFidelity.Performance`: 원본의 100%, 50%, 25%, 12.5% 삼각형으로 구성된 4단계 LOD를 엔진이 자동 생성하고 화면 면적에 따라 매끄럽게 교체합니다.</li>
+          <li>`CollisionFidelity.Box` 적용: 원거리 배경이나 작은 장식 오브젝트는 충돌 모델을 `Box`로 단순화하거나 `CanCollide`를 꺼서 CPU 물리 스레드를 해방합니다.</li>
+          <li>자동 메시 인스턴싱(Instancing): 동일한 크기와 재질을 공유하는 동일 MeshPart들은 최신 렌더러가 자동으로 1개의 드로우콜로 묶어 처리합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau 커스텀 거리별 LOD 및 2D 임포스터 전환 컨트롤러</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local LODManager = {}
+
+type LODModel = {
+    HighDetail: Model,
+    LowDetail: Model,
+    Impostor: BillboardGui,
+    Position: Vector3,
+    CurrentTier: number -- 1: 고화질, 2: 저폴리, 3: 2D 임포스터, 4: 완전 컬링
+}
+
+local registeredLODs: {LODModel} = {}
+
+local DIST_HIGH_TO_LOW = 120
+local DIST_LOW_TO_IMPOSTOR = 350
+local DIST_CULL = 800
+
+function LODManager.Register(high: Model, low: Model, impostor: BillboardGui, centerPos: Vector3)
+    table.insert(registeredLODs, {
+        HighDetail = high,
+        LowDetail = low,
+        Impostor = impostor,
+        Position = centerPos,
+        CurrentTier = 1
+    })
+    low.Parent = nil
+    impostor.Enabled = false
+end
+
+local frameCounter = 0
+RunService.Heartbeat:Connect(function()
+    frameCounter += 1
+    if frameCounter % 6 ~= 0 then return end -- 6프레임마다 1회 실행 (~10Hz) CPU 절약
+    
+    local camera = Workspace.CurrentCamera
+    if not camera then return end
+    local camPos = camera.CFrame.Position
+    
+    for _, lod in ipairs(registeredLODs) do
+        local offset = lod.Position - camPos
+        local distSq = offset.X * offset.X + offset.Y * offset.Y + offset.Z * offset.Z
+        local newTier = 1
+        
+        if distSq > (DIST_CULL * DIST_CULL) then
+            newTier = 4 -- 완전 컬링 (렌더링 제외)
+        elseif distSq > (DIST_LOW_TO_IMPOSTOR * DIST_LOW_TO_IMPOSTOR) then
+            newTier = 3 -- 2D 빌보드 임포스터
+        elseif distSq > (DIST_HIGH_TO_LOW * DIST_HIGH_TO_LOW) then
+            newTier = 2 -- 저폴리곤 메시 모델
+        else
+            newTier = 1 -- 고화질 원본 모델
+        end
+        
+        if newTier ~= lod.CurrentTier then
+            lod.CurrentTier = newTier
+            lod.HighDetail.Parent = (newTier == 1) and Workspace or nil
+            lod.LowDetail.Parent = (newTier == 2) and Workspace or nil
+            lod.Impostor.Enabled = (newTier == 3)
+        end
+    end
+end)
+
+return LODManager</code></pre>
+      </div>
+
+      <h2>3. 빌보드 임포스터(Impostor)와 2D 스프라이트 캐싱</h2>
+      <p>원거리 3D 지오메트리를 극도로 가벼운 2D 스프라이트로 교체하는 기법:</p>
+      <ul>
+          <li>빌보드 임포스터 원리: 300스터드 밖의 5,000폴리곤 건물이나 나무를 1장의 2D 평면 텍스처(Quad)로 대체하여 원거리 시각차 없이 연산량을 제로화합니다.</li>
+          <li>극적인 폴리곤 절감: 원거리 숲의 나무 500그루를 3D 모델에서 2D BillboardGui로 교체하면 폴리곤 수가 250만 개에서 단 1,000개로 감소합니다.</li>
+          <li>드로우콜 압축: 임포스터에 사용되는 텍스처를 1장의 스프라이트 시트로 묶어 수백 개의 배경 오브젝트를 단 1회의 드로우콜로 렌더링합니다.</li>
+          <li>디더링(Dithering) 교차 전환: 3D 모델과 2D 임포스터 사이의 전환 시 깜빡임(Popping)을 방지하기 위해 디더링 투명도 페이드를 적용합니다.</li>
+      </ul>
+
+      <h2>4. StreamingEnabled와 메모리 경계 아키텍처</h2>
+      <p>광활한 맵을 모바일 메모리에 안전하게 로드하는 스트리밍 설계:</p>
+      <ul>
+          <li>`StreamingMinRadius` 최소화: 모바일 기기의 스폰 초기 튕김을 막기 위해 최소 반경을 64스터드 수준으로 타이트하게 설정합니다.</li>
+          <li>`ModelStreamingMode.Atomic`: 엘리베이터나 탑승물처럼 조각나면 물리 버그가 생기는 복합 모델은 원자 단위(Atomic)로 한꺼번에 로드되도록 강제합니다.</li>
+          <li>`ModelStreamingMode.Persistent`: 랜드마크나 핵심 건물은 메모리에서 영구 유지(Persistent)하여 원거리 수평선이 비어 보이는 현상을 차단합니다.</li>
+          <li>저메모리 감지 대응: 클라이언트에서 `Workspace.LowMemory` 신호를 수신하면 파티클 생성률을 50% 깎고 임포스터 전환 거리를 단축합니다.</li>
+      </ul>
+
+      <h2>5. 모바일 우선 상용 프로덕션 최적화 체크리스트</h2>
+      <p>부드러운 60 FPS 출시를 위한 실전 가이드라인:</p>
+      <ul>
+          <li>텍스처 아틀라스 통합: 자잘한 소품 텍스처들을 1024x1024 한 장에 패킹하여 GPU 배칭 효율을 극대화합니다.</li>
+          <li>불필요한 CastShadow 제거: 풀잎, 자갈, 작은 쓰레기 등 미세 소품들의 `CastShadow`를 꺼서 동적 그림자 맵 연산을 경감합니다.</li>
+          <li>로블록스 마이크로프로파일러 검증: `RenderJob`과 `PrepareJob` 소요 시간을 확인하여 1프레임 렌더 타임이 16.6ms(60FPS) 이하를 유지하는지 확인합니다.</li>
+          <li>모바일 에뮬레이터 저사양 테스트: 출시 전 스튜디오의 저사양 기기 프로필에서 메모리 피크와 프레임 드랍을 철저히 검증합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>RenderFidelity.Performance와 커스텀 Luau LOD의 차이점은 무엇인가요?</h3>
+          <p>Performance는 단일 메시의 버텍스를 엔진이 자동 감축하지만, 모델 전체를 2D 빌보드로 바꾸거나 부속 파츠를 완전히 숨길 수는 없습니다. 둘을 결합해야 최대 성능을 냅니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>배경 오브젝트의 CanCollide를 끄면 그래픽 렌더링도 빨라지나요?</h3>
+          <p>네. CanCollide와 CanQuery를 끄면 물리 엔진뿐만 아니라 로블록스의 공간 파티셔닝 트리(Octree) 연산이 간소화되어 PrepareJob 렌더링 준비 단계가 대폭 단축됩니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>모바일 환경에서 안전한 드로우콜 한계치는 얼마인가요?</h3>
+          <p>일반적으로 400~800 드로우콜 이내가 안전합니다. 1,200 드로우콜을 넘어서면 보급형 안드로이드 스마트폰에서 심각한 프레임 드랍과 발열이 발생합니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

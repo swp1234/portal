@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>रोब्लॉक्स मेश LOD और ड्रा कॉल ऑप्टिमाइज़ेशन गाइड (2026)</title>
+  <meta name="description" content="मोबाइल पर 60 FPS प्राप्त करें: RenderFidelity सेटिंग्स, Luau दूरी आधारित LOD प्रबंधक, 2D बिलबोर्ड इम्पोस्टर्स और ज्यामिति स्ट्रीमिंग।" />
+  <meta name="keywords" content="रोब्लॉक्स मेश LOD, ड्रा कॉल ऑप्टिमाइज़ेशन रोब्लॉक्स, RenderFidelity रोब्लॉक्स, मोबाइल गेम ऑप्टिमाइज़ेशन" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/hi/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="रोब्लॉक्स मेश LOD और ड्रा कॉल ऑप्टिमाइज़ेशन गाइड (2026)" />
+  <meta property="og:description" content="मोबाइल पर 60 FPS प्राप्त करें: RenderFidelity सेटिंग्स, Luau दूरी आधारित LOD प्रबंधक, 2D बिलबोर्ड इम्पोस्टर्स और ज्यामिति स्ट्रीमिंग।" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/hi/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="रोब्लॉक्स मेश LOD और ड्रा कॉल ऑप्टिमाइज़ेशन गाइड (2026)" />
+  <meta name="twitter:description" content="मोबाइल पर 60 FPS प्राप्त करें: RenderFidelity सेटिंग्स, Luau दूरी आधारित LOD प्रबंधक, 2D बिलबोर्ड इम्पोस्टर्स और ज्यामिति स्ट्रीमिंग।" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/hi/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/hi/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html"
+      },
+      "headline": "रोब्लॉक्स ज्यामिति अनुकूलन: मेशपार्ट LOD, इम्पोस्टर रेंडरिंग और ड्रा कॉल बैचिंग",
+      "description": "मोबाइल पर 60 FPS प्राप्त करें: RenderFidelity सेटिंग्स, Luau दूरी आधारित LOD प्रबंधक, 2D बिलबोर्ड इम्पोस्टर्स और ज्यामिति स्ट्रीमिंग।",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/hi/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "hi"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "रोब्लॉक्स ज्यामिति अनुकूलन: मेशपार्ट LOD, इम्पोस्टर रेंडरिंग और ड्रा कॉल बैचिंग",
+          "item": "https://dopabrain.com/portal/blog/hi/roblox-mesh-lod-geometry-streaming-draw-call-optimization-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "RenderFidelity और कस्टम LOD में क्या अंतर है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "RenderFidelity केवल वर्टेक्स घटाता है, जबकि कस्टम स्क्रिप्ट वस्तुओं को 2D इमेज से बदल सकती है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "क्या कोलिजन बंद करने से ग्राफिक्स तेज होते हैं?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "हाँ, क्योंकि इससे इंजन का आंतरिक डेटा हल्का हो जाता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "मोबाइल के लिए ड्रा कॉल की सुरक्षित सीमा क्या है?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "400 से 800 ड्रा कॉल सबसे सुरक्षित माने जाते हैं।"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">रोब्लॉक्स ज्यामिति अनुकूलन: मेशपार्ट LOD, इम्पोस्टर रेंडरिंग और ड्रा कॉल बैचिंग</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      60 FPS पर उत्कृष्ट ग्राफिक्स: मल्टी-टियर मेश LOD, दूरी आधारित कलिंग और 2D इम्पोस्टर्स द्वारा मोबाइल लैग का समाधान।
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier204_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Matrix geometry LOD polycount models & memory budget calculation</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier204_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>60 FPS frame pacing latency & draw call hitch reaction delay</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier204_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Visual architecture mental model & spatial LOD pipeline archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier204_stress_check">
+          <strong>Stress Check</strong>
+          <span>Mobile thermal throttling, frame rate collapse & gameplay tilt relief</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>रोब्लॉक्स में बड़े खुले संसार बनाते समय मोबाइल फोन पर अत्यधिक लैग और क्रैश की समस्या आम है।</p>
+      <p>व्यवस्थित Level of Detail (LOD) पाइपलाइन बनाकर उच्च ग्राफिक्स गुणवत्ता के साथ कम क्षमता वाले फोन पर भी 60 FPS बनाए रखा जा सकता है।</p>
+
+      <h2>1. जीपीयूँ बाधाएं: ड्रा कॉल और पॉलीगॉन भार</h2>
+      <p>हार्डवेयर सीमाओं का तकनीकी विश्लेषण:</p>
+      <ul>
+          <li>ड्रा कॉल का बोझ: 1,500 से अधिक ड्रा कॉल मोबाइल प्रोसेसर को धीमा कर देते हैं।</li>
+          <li>वर्टेक्स की बर्बादी: दूर के पेड़ों पर हजारों पॉलीगॉन बनाना शक्ति की बर्बादी है।</li>
+          <li>बार-बार टेक्सचर बदलना: ग्राफिक्स पाइपलाइन को रोक देता है।</li>
+          <li>मोबाइल ओवरहीटिंग: ज्यादा भार से फोन गर्म होकर गति धीमी कर देता है।</li>
+      </ul>
+
+      <h2>2. RenderFidelity और रोब्लॉक्स का अपना LOD सिस्टम</h2>
+      <p>स्वचालित मेश सरलीकरण का सही उपयोग:</p>
+      <ul>
+          <li>`RenderFidelity.Precise`: पूरी ज्यामिति रखता है; केवल पास की वस्तुओं के लिए उपयोग करें।</li>
+          <li>`RenderFidelity.Performance`: दूरी के अनुसार स्वचालित रूप से 4 स्तर बनाता है।</li>
+          <li>`CollisionFidelity.Box`: सजावटी वस्तुओं के टकराव बॉक्स को सरल बनाना।</li>
+          <li>स्वचालित इंस्टेंसिंग: एक जैसे मेश को एक साथ रेंडर करना।</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">लुआउ कस्टम दूरी आधारित LOD और इम्पोस्टर स्क्रिप्ट</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local LODManager = {}
+type LODModel = { HighDetail: Model, LowDetail: Model, Impostor: BillboardGui, Position: Vector3, CurrentTier: number }
+local registeredLODs: {LODModel} = {}
+
+function LODManager.Register(high: Model, low: Model, impostor: BillboardGui, centerPos: Vector3)
+    table.insert(registeredLODs, { HighDetail = high, LowDetail = low, Impostor = impostor, Position = centerPos, CurrentTier = 1 })
+    low.Parent = nil
+    impostor.Enabled = false
+end
+
+local frameCounter = 0
+RunService.Heartbeat:Connect(function()
+    frameCounter += 1
+    if frameCounter % 6 ~= 0 then return end
+    local camera = Workspace.CurrentCamera
+    if not camera then return end
+    local camPos = camera.CFrame.Position
+    for _, lod in ipairs(registeredLODs) do
+        local offset = lod.Position - camPos
+        local distSq = offset.X * offset.X + offset.Y * offset.Y + offset.Z * offset.Z
+        local newTier = distSq > 640000 and 4 or (distSq > 122500 and 3 or (distSq > 14400 and 2 or 1))
+        if newTier ~= lod.CurrentTier then
+            lod.CurrentTier = newTier
+            lod.HighDetail.Parent = (newTier == 1) and Workspace or nil
+            lod.LowDetail.Parent = (newTier == 2) and Workspace or nil
+            lod.Impostor.Enabled = (newTier == 3)
+        end
+    end
+end)
+
+return LODManager</code></pre>
+      </div>
+
+      <h2>3. 2D बिलबोर्ड इम्पोस्टर्स</h2>
+      <p>दूर की 3D वस्तुओं को 2D फ्लैट इमेज से बदलना:</p>
+      <ul>
+          <li>इम्पोस्टर तकनीक: 300 स्टड्स से दूर जटिल भवन को 2D टेक्सचर से बदलना।</li>
+          <li>पॉलीगॉन में भारी बचत: लाखों वर्टेक्स को केवल सैकड़ों में समेटना।</li>
+          <li>कम ड्रा कॉल: एक ही इमेज शीट से कई वस्तुओं को प्रदर्शित करना।</li>
+          <li>सॉफ्ट ट्रांज़िशन: अचानक बदलने से रोकने के लिए हल्का फेड इफेक्ट।</li>
+      </ul>
+
+      <h2>4. StreamingEnabled और मेमोरी प्रबंधन</h2>
+      <p>बड़े नक्शों को फोन की मेमोरी में सुरक्षित लोड करना:</p>
+      <ul>
+          <li>कम StreamingMinRadius: फोन क्रैश होने से बचाना।</li>
+          <li>`ModelStreamingMode.Atomic`: वाहनों को एक पूरे हिस्से के रूप में लोड करना।</li>
+          <li>`ModelStreamingMode.Persistent`: मुख्य इमारतों को हमेशा लोड रखना।</li>
+          <li>मेमोरी अलर्ट पर रेंडर दूरी को कम करना।</li>
+      </ul>
+
+      <h2>5. मोबाइल प्रोडक्शन चेकलिस्ट</h2>
+      <p>सुचारू गेमप्ले के नियम:</p>
+      <ul>
+          <li>छोटी वस्तुओं के टेक्सचर को एक 1024x1024 शीट में जोड़ना।</li>
+          <li>घास और पत्थरों पर CastShadow बंद करना।</li>
+          <li>MicroProfiler में फ्रेम समय 16.6ms से कम रखना।</li>
+          <li>सस्ते फोन पर नियमित परीक्षण करना।</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>RenderFidelity और कस्टम LOD में क्या अंतर है?</h3>
+          <p>RenderFidelity केवल वर्टेक्स घटाता है, जबकि कस्टम स्क्रिप्ट वस्तुओं को 2D इमेज से बदल सकती है।</p>
+        </div>
+        <div class="faq-item">
+          <h3>क्या कोलिजन बंद करने से ग्राफिक्स तेज होते हैं?</h3>
+          <p>हाँ, क्योंकि इससे इंजन का आंतरिक डेटा हल्का हो जाता है।</p>
+        </div>
+        <div class="faq-item">
+          <h3>मोबाइल के लिए ड्रा कॉल की सुरक्षित सीमा क्या है?</h3>
+          <p>400 से 800 ड्रा कॉल सबसे सुरक्षित माने जाते हैं।</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
