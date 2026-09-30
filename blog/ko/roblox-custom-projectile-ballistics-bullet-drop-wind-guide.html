@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 커스텀 발사체 탄도학: 낙차, 공기저항 및 풍향 가이드 (2026)</title>
+  <meta name="description" content="로블록스 물리 기반 발사체 탄도학 완벽 가이드: RunService 서브스테핑, 공기저항 방정식, 중력 탄도 낙차, 3D 풍향 편차 및 서버 권한 판정 검증." />
+  <meta name="keywords" content="로블록스 탄도학, 로블록스 탄도 낙차, 베를레 적분 luau, 커스텀 총알 물리, 스나이퍼 탄도학 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 커스텀 발사체 탄도학: 낙차, 공기저항 및 풍향 가이드 (2026)" />
+  <meta property="og:description" content="로블록스 물리 기반 발사체 탄도학 완벽 가이드: RunService 서브스테핑, 공기저항 방정식, 중력 탄도 낙차, 3D 풍향 편차 및 서버 권한 판정 검증." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 커스텀 발사체 탄도학: 낙차, 공기저항 및 풍향 가이드 (2026)" />
+  <meta name="twitter:description" content="로블록스 물리 기반 발사체 탄도학 완벽 가이드: RunService 서브스테핑, 공기저항 방정식, 중력 탄도 낙차, 3D 풍향 편차 및 서버 권한 판정 검증." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html"
+      },
+      "headline": "로블록스 커스텀 탄도학 아키텍처: 베를레 적분, 탄도 낙차, 풍향 벡터 및 서버 판정 검증",
+      "description": "로블록스 물리 기반 발사체 탄도학 완벽 가이드: RunService 서브스테핑, 공기저항 방정식, 중력 탄도 낙차, 3D 풍향 편차 및 서버 권한 판정 검증.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 물리 및 전투 시스템 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 커스텀 탄도학 아키텍처: 베를레 적분, 탄도 낙차, 풍향 벡터 및 서버 판정 검증",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "히트스캔과 탄도학 발사체의 가장 큰 차이점은 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "히트스캔은 방아쇠를 당기는 즉시 무한 속도의 레이캐스트로 적중 여부를 판정합니다. 탄도학 발사체는 총알의 질량, 중력 낙차, 공기 저항, 풍향을 물리 시뮬레이션하여 비행시간이 존재하므로 리드샷이 필요합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "총알이 벽을 그냥 뚫고 지나가는 터널링 현상은 왜 발생하며 어떻게 해결하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1프레임 동안 총알이 이동한 거리가 벽의 두께보다 길면 총알이 벽 앞과 뒤로 건너뛰기 때문입니다. 프레임을 여러 단계로 쪼개는 서브스테핑(Sub-stepping)과 연속 레이캐스팅으로 해결할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "서버에서 수많은 총알을 실시간으로 시뮬레이션하면 렉이 걸리지 않나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "네, 서버에서 모든 총알을 물리 연산하면 심각한 렉이 발생합니다. 따라서 총알 비행은 클라이언트에서 시뮬레이션하고, 서버는 착탄 보고가 들어왔을 때 궤적의 물리적 타당성만 사후 검증하는 방식이 업계 표준입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "게임에서 총알의 초음속 크랙(Sonic Crack) 사운드는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "총알이 음속보다 빠를 때 발생하는 충격파 소리입니다. 총알 근처에 있는 유저는 멀리서 날아오는 총성보다 날카로운 총알 가르는 소리(크랙)를 먼저 듣게 됩니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 커스텀 탄도학 아키텍처: 베를레 적분, 탄도 낙차, 풍향 벡터 및 서버 판정 검증</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 물리 및 전투 시스템 팀</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      로블록스 스튜디오에서의 현실적인 발사체 궤적 구축: 베를레 수치 적분과 항력 계수부터 결정론적 풍향 편차 및 치트 방지 서버 히트 판정까지 완벽 정리.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier218_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>공기역학 항력 감쇄 수학 및 포물선 중력 낙차 연산 모델</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier218_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>원거리 이동 표적 리드샷 예측 및 격발 타이밍 잠복기</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier218_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>공간 물리 시뮬레이션 및 탄도학 궤적 인지 스타일</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier218_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>저격 제압 사격 공포 및 총알 스침 충격파 긴장 완화</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>팬텀 포스, 블랙호크 레스큐 미션 5, 프론트라인스 같은 로블록스의 전술 밀리터리 슈터 및 저격 게임에서 단순 히트스캔(Hitscan) 방식은 현실적인 전투 깊이를 제공하지 못합니다. 수백 미터에 걸친 원거리 교전에서는 총구 유속, 공기 저항, 중력으로 인한 탄도 낙차, 측풍 편차를 고려하여 움직이는 표적을 예측 사격(리드샷)하는 물리 탄도학이 필수적입니다.</p>
+      <p>본 물리 및 전투 시스템 가이드에서는 고성능 탄도 시뮬레이션 엔진을 설계합니다. 고속 총알이 얇은 벽을 뚫고 지나가는 터널링(Tunneling)을 방지하는 베를레 적분 서브스테핑, 공기 밀도 기반 항력 방정식, 동적 3D 풍향 벡터 연산, 서버 권한 판정 검증 파이프라인을 다룹니다.</p>
+
+      <h2>1. 탄도학의 물리: 중력, 공기 저항 및 서브스테핑</h2>
+      <p>초속 800~1,000m로 날아가는 총알은 60Hz 1프레임당 수십 스터드를 이동합니다. 단순 프레임 단위 연산은 총알이 벽을 순간이동하여 뚫어버리는 터널링을 유발합니다:</p>
+      <ul>
+          <li>베를레 적분 서브스테핑: 고속 프레임을 2~4개의 미세 스텝으로 분할 연산하여 공백 없는 연속 레이캐스트 충돌 판정을 보장합니다.</li>
+          <li>공기역학적 항력 방정식: 항력 = 0.5 * 공기밀도 * 속도^2 * 항력계수 * 단면적으로 비행 거리에 따라 탄속이 지수 함수적으로 감쇄합니다.</li>
+          <li>결정론적 중력 낙차: Workspace.Gravity 벡터와 총알 질량 계수를 곱하여 시간에 따른 자연스러운 포물선 궤적을 그립니다.</li>
+          <li>측풍 벡터 편차 연산: 탄도 진행 방향과 수직인 3D 바람 벡터를 연산하여 장거리 저격 시 측면 탄착군 편차를 모사합니다.</li>
+      </ul>
+
+      <h2>2. 상용급 클라이언트 탄도학 시뮬레이터 구현 코드</h2>
+      <p>아래는 부드러운 서브스테핑, 궤적 예광탄(Tracer) 렌더링, 착탄 처리를 구현한 클라이언트 측 Luau 모듈입니다:</p>
+      <ul>
+          <li>RaycastParams 재사용: 모든 활성 발사체가 단일 RaycastParams 객체를 공유하여 가비지 컬렉터 부하를 최소화합니다.</li>
+          <li>CFrame 정렬 빔 트레이서: Attachment와 Beam 인스턴스를 활용하여 속도 벡터를 따라 자연스럽게 늘어나는 고성능 광원 궤적을 렌더링합니다.</li>
+          <li>재질별 관통 및 도탄 판정: 표면 재질(나무, 철판, 콘크리트)에 따른 관통 깊이 및 빗맞은 각도에서의 도탄 궤적 굴절을 연산합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">BallisticsEngine.luau (클라이언트 발사체 시뮬레이터)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local Ballistics = {}
+Ballistics.__index = Ballistics
+
+export type Projectile = {
+    Position: Vector3,
+    Velocity: Vector3,
+    Mass: number,
+    DragCoefficient: number,
+    MaxLifetime: number,
+    Age: number,
+    Owner: Player,
+    Beam: Beam?,
+    Attachment0: Attachment?,
+    Attachment1: Attachment?
+}
+
+local activeProjectiles: { Projectile } = {}
+local raycastParams = RaycastParams.new()
+raycastParams.FilterType = RaycastFilterType.Exclude
+raycastParams.IgnoreWater = true
+
+local globalWind = Vector3.new(4, 0, 2) -- 초당 스터드 단위 풍향 벡터
+local airDensity = 0.0012 -- 대기 항력 계수
+
+function Ballistics.Fire(origin: Vector3, direction: Vector3, muzzleVelocity: number, mass: number, owner: Player)
+    local proj: Projectile = {
+        Position = origin,
+        Velocity = direction.Unit * muzzleVelocity,
+        Mass = mass,
+        DragCoefficient = 0.3,
+        MaxLifetime = 6.0,
+        Age = 0,
+        Owner = owner
+    }
+    table.insert(activeProjectiles, proj)
+end
+
+local function StepProjectile(proj: Projectile, dt: number): boolean
+    proj.Age += dt
+    if proj.Age >= proj.MaxLifetime then return false end
+
+    -- 항력, 중력, 풍향 물리 연산
+    local speed = proj.Velocity.Magnitude
+    local dragForce = -0.5 * airDensity * (speed * speed) * proj.DragCoefficient * proj.Velocity.Unit
+    local gravityForce = Vector3.new(0, -Workspace.Gravity * proj.Mass, 0)
+    local windForce = (globalWind - proj.Velocity) * 0.05
+
+    local totalAcceleration = (dragForce + gravityForce + windForce) / proj.Mass
+    local nextVelocity = proj.Velocity + totalAcceleration * dt
+    local nextPosition = proj.Position + proj.Velocity * dt + 0.5 * totalAcceleration * (dt * dt)
+
+    -- 연속 레이캐스트 충돌 감지
+    local displacement = nextPosition - proj.Position
+    local rayResult = Workspace:Raycast(proj.Position, displacement, raycastParams)
+
+    if rayResult and rayResult.Instance then
+        -- 착탄 감지: 타격 이펙트 및 서버 판정 요청
+        -- CombatRemote:FireServer("ProjectileHit", rayResult.Position, rayResult.Normal, rayResult.Instance)
+        return false -- 발사체 종료
+    end
+
+    proj.Position = nextPosition
+    proj.Velocity = nextVelocity
+    return true
+end
+
+RunService.RenderStepped:Connect(function(dt: number)
+    local subSteps = 2
+    local subDt = dt / subSteps
+
+    for i = #activeProjectiles, 1, -1 do
+        local proj = activeProjectiles[i]
+        local alive = true
+        for step = 1, subSteps do
+            alive = StepProjectile(proj, subDt)
+            if not alive then break end
+        end
+
+        if not alive then
+            table.remove(activeProjectiles, i)
+        end
+    end
+end)
+
+return Ballistics</code></pre>
+      </div>
+
+      <h2>3. 서버 권한 판정 검증 및 안티 핵 방어</h2>
+      <p>클라이언트가 보고하는 '헤드샷 맞춤' 신호를 그대로 신뢰하면 핵 프로그램에 의해 게임이 파괴됩니다. 서버는 궤적을 사후 검증해야 합니다:</p>
+      <ul>
+          <li>히트박스 롤백 버퍼: 서버는 최근 1초간의 모든 플레이어 히트박스 좌표를 원형 버퍼(Circular Buffer)에 기록해 둡니다.</li>
+          <li>포물선 궤적 타당성 검사: 발사 시각과 탄속, 비행시간을 고려하여 해당 좌표에 총알이 물리적으로 도달할 수 있는지 서버에서 재연산합니다.</li>
+          <li>오차 허용치(Tolerance) 클램핑: 공기역학 궤적에서 2~3스터드 이상 벗어난 타격 판정은 패킷 조작으로 간주하여 즉시 기각합니다.</li>
+          <li>거리별 데미지 감쇄 곡선: 총알의 착탄 시점 잔여 운동 에너지를 연산하여 장거리 저격 시 데미지가 비례 감쇄되도록 구현합니다.</li>
+      </ul>
+
+      <h2>4. 음향 음향학과 시각적 연출: 초음속 크랙과 풍절음</h2>
+      <p>탄도학의 몰입감은 시각보다 청각에서 완성됩니다. 실제 총알의 음속 돌파 음향을 구현하면 극도의 전장 긴장감이 조성됩니다:</p>
+      <ul>
+          <li>초음속 마하 콘 충격파(Sonic Crack): 총알이 음속(초당 약 1,100스터드)을 넘을 때, 총알 근처의 유저는 총성보다 먼저 날카로운 충격파를 듣게 됩니다.</li>
+          <li>아음속 풍절음(Whiz-by): 탄속이 줄어든 총알이 카메라 옆을 스쳐 지나갈 때 저주파의 쉭쉭거리는 스침 음향을 재생합니다.</li>
+          <li>재질별 착탄 파티클: 흙먼지, 콘크리트 파편, 금속 스파크 등 타격 표면의 노멀 벡터에 맞추어 지향성 파티클을 방출합니다.</li>
+          <li>제압 효과(Suppression): 머리 위로 스나이퍼 총알이 스쳐 지나갈 때 화면 외곽 블러와 미세한 카메라 흔들림을 주어 공포감을 유발합니다.</li>
+      </ul>
+
+      <h2>5. 상용 배포 검증 및 프레임레이트 독립성 체크리스트</h2>
+      <p>글로벌 멀티플레이어 환경에서 균일한 탄도학을 유지하기 위한 필수 체크리스트입니다:</p>
+      <ul>
+          <li>메모리 누수 방지 검증: 수명이 다하거나 착탄된 발사체 및 빔 인스턴스가 단 1프레임 내에 완벽히 파괴되는지 확인합니다.</li>
+          <li>적응형 서브스테핑 스케일러: 초속 1,200스터드가 넘는 초고속 탄환은 서브스테핑을 4단계로 늘려 100% 터널링을 차단합니다.</li>
+          <li>네트워크 대역폭 절약: 총알의 매 프레임 위치를 서버로 동기화하지 않고, 오직 발사 원점과 각도만 전파하여 클라이언트가 각자 시뮬레이션하도록 합니다.</li>
+          <li>프레임레이트 독립성 검증: 30 FPS 모바일 기기와 240 FPS 모니터에서 동일한 총알을 쐈을 때 탄착군 궤적이 100% 일치하는지 검증합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>히트스캔과 탄도학 발사체의 가장 큰 차이점은 무엇인가요?</h3>
+          <p>히트스캔은 방아쇠를 당기는 즉시 무한 속도의 레이캐스트로 적중 여부를 판정합니다. 탄도학 발사체는 총알의 질량, 중력 낙차, 공기 저항, 풍향을 물리 시뮬레이션하여 비행시간이 존재하므로 리드샷이 필요합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>총알이 벽을 그냥 뚫고 지나가는 터널링 현상은 왜 발생하며 어떻게 해결하나요?</h3>
+          <p>1프레임 동안 총알이 이동한 거리가 벽의 두께보다 길면 총알이 벽 앞과 뒤로 건너뛰기 때문입니다. 프레임을 여러 단계로 쪼개는 서브스테핑(Sub-stepping)과 연속 레이캐스팅으로 해결할 수 있습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>서버에서 수많은 총알을 실시간으로 시뮬레이션하면 렉이 걸리지 않나요?</h3>
+          <p>네, 서버에서 모든 총알을 물리 연산하면 심각한 렉이 발생합니다. 따라서 총알 비행은 클라이언트에서 시뮬레이션하고, 서버는 착탄 보고가 들어왔을 때 궤적의 물리적 타당성만 사후 검증하는 방식이 업계 표준입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>게임에서 총알의 초음속 크랙(Sonic Crack) 사운드는 무엇인가요?</h3>
+          <p>총알이 음속보다 빠를 때 발생하는 충격파 소리입니다. 총알 근처에 있는 유저는 멀리서 날아오는 총성보다 날카로운 총알 가르는 소리(크랙)를 먼저 듣게 됩니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

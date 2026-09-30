@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Projectile Ballistics: Bullet Drop, Drag & Wind Guide (2026)</title>
+  <meta name="description" content="Comprehensive guide to building custom projectile physics in Roblox: RunService sub-stepping, aerodynamic drag equations, gravity bullet drop, wind deflection, and server-authoritative raycast verification." />
+  <meta name="keywords" content="roblox projectile ballistics, bullet drop luau, verlet integration roblox, custom bullet physics, sniper ballistics roblox 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/en/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Projectile Ballistics: Bullet Drop, Drag & Wind Guide (2026)" />
+  <meta property="og:description" content="Comprehensive guide to building custom projectile physics in Roblox: RunService sub-stepping, aerodynamic drag equations, gravity bullet drop, wind deflection, and server-authoritative raycast verification." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/en/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Projectile Ballistics: Bullet Drop, Drag & Wind Guide (2026)" />
+  <meta name="twitter:description" content="Comprehensive guide to building custom projectile physics in Roblox: RunService sub-stepping, aerodynamic drag equations, gravity bullet drop, wind deflection, and server-authoritative raycast verification." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/en/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/en/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html"
+      },
+      "headline": "Roblox Custom Ballistics Architecture: Verlet Integration, Bullet Drop, Wind Vectors & Server Hit Validation",
+      "description": "Comprehensive guide to building custom projectile physics in Roblox: RunService sub-stepping, aerodynamic drag equations, gravity bullet drop, wind deflection, and server-authoritative raycast verification.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/en/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Physics & Combat Systems Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Custom Ballistics Architecture: Verlet Integration, Bullet Drop, Wind Vectors & Server Hit Validation",
+          "item": "https://dopabrain.com/portal/blog/en/roblox-custom-projectile-ballistics-bullet-drop-wind-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the difference between hitscan and ballistic projectile systems?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hitscan instantly casts an infinite raycast on trigger pull with zero travel time. Ballistic projectile systems physically simulate bullet mass, gravity drop, drag, and wind over time, requiring players to lead moving targets and compensate for range."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do high-speed projectiles pass through walls (tunneling) and how do I fix it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tunneling happens when a bullet's per-frame displacement is larger than the wall's thickness, allowing it to skip from one side of the wall to the other in a single frame. Sub-stepping (breaking the frame into smaller steps) and continuous raycasting resolve tunneling."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should the server simulate every bullet in real time?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Simulating thousands of bullets on the server causes massive CPU bottlenecks. The optimal architecture is to let the firing client simulate the projectile, while the server retrospectively validates the trajectory curve upon hit confirmation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a supersonic bullet crack in game audio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When a projectile travels faster than the speed of sound, it creates a shockwave. A player near the bullet's path hears the sharp supersonic crack first, followed seconds later by the distant gunfire sound."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox Custom Ballistics Architecture: Verlet Integration, Bullet Drop, Wind Vectors & Server Hit Validation</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Physics & Combat Systems Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting authentic projectile trajectories in Roblox Studio: From numerical Verlet integration and air drag coefficients to deterministic wind deflection and exploit-proof server hit registration.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier218_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Aerodynamic drag deceleration math & parabolic gravity curve models</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier218_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Long-range moving target lead prediction & trigger timing latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier218_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spatial physics simulation & ballistic trajectory mental model</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier218_stress_check">
+          <strong>Stress Check</strong>
+          <span>Sniper suppression anxiety & near-miss sonic crack acoustic dread</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>In tactical shooters, military simulators, and sniper experiences on Roblox—such as Phantom Forces, Blackhawk Rescue Mission 5, or Frontlines—standard hitscan weapons fail to deliver authentic combat depth. Realistic long-range engagements demand physically simulated projectiles governed by muzzle velocity, aerodynamic drag, gravity bullet drop, and crosswind deflection over flight times spanning hundreds of meters.</p>
+      <p>In this comprehensive physics and combat systems guide, we engineer a high-performance ballistic simulation engine. We implement numerical Verlet integration sub-stepping to eliminate high-velocity tunneling, calculate aerodynamic drag using standard drag coefficients, apply dynamic 3D wind vector deflection, and enforce secure server-side hit validation.</p>
+
+      <h2>1. The Physics of Ballistics: Gravity, Air Resistance & Sub-Stepping</h2>
+      <p>Projectiles traveling at 800 to 1,000 meters per second move dozens of studs per 60 Hz frame. Naive frame updates cause projectiles to teleport through thin geometry (tunneling):</p>
+      <ul>
+          <li>Verlet Integration Sub-Stepping: Dividing high-velocity frames into 2-4 sub-steps guarantees continuous raycast line-of-sight coverage without gaps.</li>
+          <li>Aerodynamic Drag Equation: Force_drag = 0.5 * rho * v^2 * Cd * Area, exponentially slowing down bullets over flight distance.</li>
+          <li>Deterministic Gravity Drop: Applying Roblox's Workspace.Gravity vector scaled by customized projectile mass coefficients.</li>
+          <li>Crosswind Vector Deflection: Calculating relative lateral forces perpendicular to bullet trajectory based on dynamic global or regional wind vectors.</li>
+      </ul>
+
+      <h2>2. Production-Grade Client Ballistics Tracer Implementation</h2>
+      <p>Below is a fully functional client-side Luau module implementing smooth projectile sub-stepping, tracer rendering, and hit dispatching:</p>
+      <ul>
+          <li>Non-Allocating RaycastParams: Reuses a single RaycastParams object across all active projectiles to minimize garbage collection pauses.</li>
+          <li>CFrame-Aligned Beam Tracers: Renders luminous visual bullet tracers via Attachments and Beam instances that stretch dynamically along velocity vectors.</li>
+          <li>Penetration & Material Ricochet: Simulates surface penetration depth and glancing ricochet angle reflections based on hit surface materials.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">BallisticsEngine.luau (Client Projectile Simulator)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local Ballistics = {}
+Ballistics.__index = Ballistics
+
+export type Projectile = {
+    Position: Vector3,
+    Velocity: Vector3,
+    Mass: number,
+    DragCoefficient: number,
+    MaxLifetime: number,
+    Age: number,
+    Owner: Player,
+    Beam: Beam?,
+    Attachment0: Attachment?,
+    Attachment1: Attachment?
+}
+
+local activeProjectiles: { Projectile } = {}
+local raycastParams = RaycastParams.new()
+raycastParams.FilterType = RaycastFilterType.Exclude
+raycastParams.IgnoreWater = true
+
+local globalWind = Vector3.new(4, 0, 2) -- Crosswind vector in studs/sec
+local airDensity = 0.0012 -- Atmospheric drag factor
+
+function Ballistics.Fire(origin: Vector3, direction: Vector3, muzzleVelocity: number, mass: number, owner: Player)
+    local proj: Projectile = {
+        Position = origin,
+        Velocity = direction.Unit * muzzleVelocity,
+        Mass = mass,
+        DragCoefficient = 0.3,
+        MaxLifetime = 6.0,
+        Age = 0,
+        Owner = owner
+    }
+    table.insert(activeProjectiles, proj)
+end
+
+local function StepProjectile(proj: Projectile, dt: number): boolean
+    proj.Age += dt
+    if proj.Age >= proj.MaxLifetime then return false end
+
+    -- Physics calculations: Drag & Gravity & Wind
+    local speed = proj.Velocity.Magnitude
+    local dragForce = -0.5 * airDensity * (speed * speed) * proj.DragCoefficient * proj.Velocity.Unit
+    local gravityForce = Vector3.new(0, -Workspace.Gravity * proj.Mass, 0)
+    local windForce = (globalWind - proj.Velocity) * 0.05
+
+    local totalAcceleration = (dragForce + gravityForce + windForce) / proj.Mass
+    local nextVelocity = proj.Velocity + totalAcceleration * dt
+    local nextPosition = proj.Position + proj.Velocity * dt + 0.5 * totalAcceleration * (dt * dt)
+
+    -- Continuous Raycast collision detection
+    local displacement = nextPosition - proj.Position
+    local rayResult = Workspace:Raycast(proj.Position, displacement, raycastParams)
+
+    if rayResult and rayResult.Instance then
+        -- Hit detected: trigger impact effects and report to server
+        -- CombatRemote:FireServer("ProjectileHit", rayResult.Position, rayResult.Normal, rayResult.Instance)
+        return false -- Terminate projectile
+    end
+
+    proj.Position = nextPosition
+    proj.Velocity = nextVelocity
+    return true
+end
+
+RunService.RenderStepped:Connect(function(dt: number)
+    local subSteps = 2
+    local subDt = dt / subSteps
+
+    for i = #activeProjectiles, 1, -1 do
+        local proj = activeProjectiles[i]
+        local alive = true
+        for step = 1, subSteps do
+            alive = StepProjectile(proj, subDt)
+            if not alive then break end
+        end
+
+        if not alive then
+            table.remove(activeProjectiles, i)
+        end
+    end
+end)
+
+return Ballistics</code></pre>
+      </div>
+
+      <h2>3. Server-Authoritative Hit Validation & Anti-Lag Compensation</h2>
+      <p>Never trust client hit claims without verification. Because client physics can be manipulated by exploiters, the server must reconstruct trajectory history:</p>
+      <ul>
+          <li>Historical Spatial Rollback: The server stores player character hitbox CFrames in a circular 1-second history buffer.</li>
+          <li>Trajectory Parabolic Feasibility Checks: The server verifies whether a projectile fired from origin at timestamp T could physically reach target position at timestamp T + flightTime.</li>
+          <li>Tolerance Radius Clamping: Reject hits that deviate more than 2-3 studs from the verified ballistic curve to eliminate teleporting bullet exploits.</li>
+          <li>Damage Falloff Curves: Calculate terminal impact velocity to scale damage proportionally to kinetic energy loss over flight distance.</li>
+      </ul>
+
+      <h2>4. Visual Juice & Audio Acoustics: Supersonic Cracks & Whiz-Bys</h2>
+      <p>Ballistic feedback is not merely visual; realistic acoustic propagation creates immense combat immersion and psychological threat:</p>
+      <ul>
+          <li>Supersonic Sonic Booms (Mach Cones): If bullet velocity exceeds the speed of sound (~1,100 studs/sec), nearby players hear a sharp, deafening 'crack' before the distant muzzle blast.</li>
+          <li>Subsonic Bullet Whiz-Bys: Slower or decelerated rounds produce low-frequency whizzing sounds when passing within 10 studs of a player's camera.</li>
+          <li>Particle Impact Debris: Spawn material-specific impact emitters (dust for dirt, concrete chips for stone, spark bursts for metal) aligned to hit normals.</li>
+          <li>Suppression Blur & Camera Shake: Near-miss sniper rounds trigger subtle chromatic aberration and camera rumble to convey near-death tension.</li>
+      </ul>
+
+      <h2>5. Production Verification & Optimization Checklists</h2>
+      <p>Deploying high-speed ballistics across multiplayer servers requires thorough profiling:</p>
+      <ul>
+          <li>Memory Cleanup Verification: Ensure inactive projectiles and expired tracer attachments are completely garbage collected within 1 frame of termination.</li>
+          <li>Automatic Sub-Stepping Scaler: Dynamically increase sub-steps from 2 to 4 for hyper-velocity sniper rounds (>1,200 studs/sec) to ensure zero tunnel pass-throughs.</li>
+          <li>Network Bandwidth Budgeting: Never replicate every projectile position tick over the network; only replicate fire origin, direction, and seed, allowing clients to simulate locally.</li>
+          <li>Cross-Device Frame-Rate Independence: Validate that bullet flight paths remain 100% identical on 30 FPS mobile devices and 240 FPS high-end PC monitors.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>What is the difference between hitscan and ballistic projectile systems?</h3>
+          <p>Hitscan instantly casts an infinite raycast on trigger pull with zero travel time. Ballistic projectile systems physically simulate bullet mass, gravity drop, drag, and wind over time, requiring players to lead moving targets and compensate for range.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Why do high-speed projectiles pass through walls (tunneling) and how do I fix it?</h3>
+          <p>Tunneling happens when a bullet's per-frame displacement is larger than the wall's thickness, allowing it to skip from one side of the wall to the other in a single frame. Sub-stepping (breaking the frame into smaller steps) and continuous raycasting resolve tunneling.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Should the server simulate every bullet in real time?</h3>
+          <p>No. Simulating thousands of bullets on the server causes massive CPU bottlenecks. The optimal architecture is to let the firing client simulate the projectile, while the server retrospectively validates the trajectory curve upon hit confirmation.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What is a supersonic bullet crack in game audio?</h3>
+          <p>When a projectile travels faster than the speed of sound, it creates a shockwave. A player near the bullet's path hears the sharp supersonic crack first, followed seconds later by the distant gunfire sound.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
