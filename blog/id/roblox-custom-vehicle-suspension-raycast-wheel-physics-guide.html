@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Vehicle Suspension: Raycast Wheels & Spring Physics Guide (2026)</title>
+  <meta name="description" content="Master custom vehicle physics in Roblox: raycast wheel collision detection, spring-damper compression forces, lateral tire friction curves, anti-roll bars, and server replication." />
+  <meta name="keywords" content="roblox vehicle physics, raycast suspension luau, spring damper roblox, car chassis physics, anti roll bar roblox 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/id/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Vehicle Suspension: Raycast Wheels & Spring Physics Guide (2026)" />
+  <meta property="og:description" content="Master custom vehicle physics in Roblox: raycast wheel collision detection, spring-damper compression forces, lateral tire friction curves, anti-roll bars, and server replication." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/id/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Vehicle Suspension: Raycast Wheels & Spring Physics Guide (2026)" />
+  <meta name="twitter:description" content="Master custom vehicle physics in Roblox: raycast wheel collision detection, spring-damper compression forces, lateral tire friction curves, anti-roll bars, and server replication." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.08));
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      color: #e2e8f0;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .code-header {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      font-family: monospace;
+      border-bottom: 1px solid #334155;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: "Fira Code", monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 32px 0;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    .quick-card span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .faq-container {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      color: #94a3b8;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .portal-btn {
+      display: inline-block;
+      margin-top: 16px;
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+      min-height: 44px;
+      line-height: 20px;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1.25rem; }
+      .container { padding: 16px; }
+      .quick-links { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/id/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/id/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html"
+      },
+      "headline": "Roblox Vehicle Physics Architecture: Raycast Wheel Suspension, Hooke's Law Dynamics & Anti-Roll Sway Bars",
+      "description": "Master custom vehicle physics in Roblox: raycast wheel collision detection, spring-damper compression forces, lateral tire friction curves, anti-roll bars, and server replication.",
+      "url": "https://dopabrain.com/portal/blog/id/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html",
+      "inLanguage": "id",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/id/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html",
+      "datePublished": "2026-09-30T10:00:00+09:00",
+      "dateModified": "2026-09-30T10:00:00+09:00",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Physics & Vehicle Simulation Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "image": "https://dopabrain.com/assets/icon-512.svg"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Vehicle Physics Architecture: Raycast Wheel Suspension, Hooke's Law Dynamics & Anti-Roll Sway Bars",
+          "item": "https://dopabrain.com/portal/blog/id/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/id/roblox-custom-vehicle-suspension-raycast-wheel-physics-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why use Raycast Suspension over Roblox CylindricalConstraints and Springs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Raycast suspension eliminates physics constraint jitter, prevents wheel tunneling at high velocities, reduces server physics CPU load, and gives developers full programmatic control over tire friction, drift physics, and terrain damping."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you calculate wheel spin and steering angle visually?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On client RenderStepped, calculate wheel angular velocity by dividing forward ground speed by wheel radius (w = v / r). Steer angle is computed using Ackerman geometry where the inner wheel turns slightly sharper than the outer wheel."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What prevents raycast vehicles from flipping over on sharp turns?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Anti-roll sway bar calculations transfer suspension force from the heavily compressed outer wheel to the uncompressed inner wheel, keeping the chassis level. Additionally, lowering the center of mass (AssemblyCenterOfMass offset) dramatically increases roll stability."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox Vehicle Physics Architecture: Raycast Wheel Suspension, Hooke's Law Dynamics & Anti-Roll Sway Bars</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Physics & Vehicle Simulation Team</span>
+        <span>Updated: 2026-09-30</span>
+        <span>12 min read</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting arcade & simulation grade vehicle suspension in Roblox: From raycast wheel contact sweeps and Hooke's law spring-damper dynamics to anti-roll torque stabilization and drift friction curves.
+    </div>
+
+    <div class="quick-links">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier222_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Spring-damper matrix math, Hooke's law vector solves & physics optimization</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier222_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>High-speed apex cornering, counter-steer latency & drift initiation windows</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier222_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Vehicular trajectory anticipation & spatial navigation mental model</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier222_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-speed collision anxiety, race tilt & competitive composure recovery</span>
+        </a>
+    </div>
+
+    <article>
+      <p>In driving simulators, open-world racers, and tactical combat vehicles on Roblox—such as Jailbreak, Driving Empire, and Drive World—vehicle physics make or break player retention. Default Roblox constraint assemblies relying on CylindricalConstraints and physical Wheel parts suffer from catastrophic instability: wheels clip through terrain at high speeds, physics solvers induce uncontrollable jitter, and tire friction cannot be customized for nuanced drifting or arcade handling.</p>
+      <p>To overcome Roblox physics engine limitations, AAA Roblox experiences utilize Raycast Suspension. In this engineering guide, we build a production-grade 4-wheel raycast vehicle chassis in Luau. We derive Hooke's law with viscous damping, implement lateral tire friction curves, calculate anti-roll sway bar stabilization, and architect smooth client-side wheel visual interpolation.</p>
+
+      <h2>1. Why Physical Wheel Constraints Fail: The Case for Raycast Suspension</h2>
+      <p>Physical wheel cylinders in Roblox Physics (Havok/PGS Solver) introduce severe real-time simulation bottlenecks:</p>
+      <ul>
+        <li>High-Speed Voxel Tunneling: At speeds exceeding 120 studs/second, physical wheel cylinders frequently tunnel through thin terrain geometry or MeshParts.</li>
+        <li>Solver Sleep/Wake Thrashing: Four spinning physical wheels generate continuous multi-body constraint solves, causing frame rate drops on low-end mobile devices.</li>
+        <li>Uncontrollable Friction Anomalies: Roblox CustomPhysicalProperties friction transitions abruptly between static and kinetic states, making smooth drifting impossible.</li>
+        <li>Raycast Wheel Paradigm: In a raycast vehicle, the wheels are purely visual meshes. Four downward raycasts simulate suspension travel and ground contact, applying forces directly to the rigid vehicle chassis.</li>
+      </ul>
+
+      <h2>2. The Mathematical Foundation: Spring-Damper & Hooke's Law</h2>
+      <p>Each suspension corner is modeled as a damped harmonic oscillator. The net normal force along the suspension axis is given by Hooke's Law combined with viscous damping:</p>
+      <ul>
+        <li>Spring Compression: x = L_rest - L_ray, where L_rest is the relaxed suspension length and L_ray is the measured raycast hit distance.</li>
+        <li>Compression Velocity: v_rel = (x_current - x_previous) / dt, representing the speed at which the suspension is compressing or expanding.</li>
+        <li>Spring Force: F_spring = k * x, where k is the spring stiffness constant in Newtons/stud.</li>
+        <li>Damper Force: F_damper = c * v_rel, where c is the damping coefficient to dissipate rebound oscillations.</li>
+        <li>Net Suspension Force: F_susp = math.clamp(F_spring + F_damper, 0, maxForce) * contactNormal.</li>
+      </ul>
+
+      <h2>3. Production-Grade Raycast Vehicle Controller Implementation</h2>
+      <p>Below is a complete, modular Luau implementation of a 4-wheel raycast suspension controller running on RunService.Heartbeat:</p>
+      <ul>
+        <li>VectorForce Application: Applies upward suspension thrust and lateral tire friction forces directly at chassis attachment coordinates.</li>
+        <li>Tire Friction Decomposition: Splits wheel contact velocity into forward (longitudinal) and sideways (lateral) components to calculate grip and drift slip.</li>
+        <li>Terrain Material Filtering: Adapts tire friction coefficients dynamically based on whether the hit material is Asphalt, Grass, Sand, or Mud.</li>
+      </ul>
+
+      <div class="code-container">
+        <div class="code-header">RaycastSuspensionEngine.luau (Vehicle Physics Core)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local VehicleSuspension = {}
+VehicleSuspension.__index = VehicleSuspension
+
+export type WheelConfig = {
+    Attachment: Attachment,
+    RestLength: number,
+    SpringStiffness: number,
+    DampingFactor: number,
+    TireGrip: number,
+    LastLength: number,
+}
+
+export type VehicleChassis = {
+    RootPart: BasePart,
+    Wheels: { WheelConfig },
+    RayParams: RaycastParams,
+    AntiRollStiffness: number,
+}
+
+function VehicleSuspension.New(chassis: BasePart, wheelAttachments: { Attachment }): VehicleChassis
+    local rayParams = RaycastParams.new()
+    rayParams.FilterType = RaycastFilterType.Exclude
+    rayParams.FilterDescendantsInstances = { chassis.Parent or chassis }
+    rayParams.IgnoreWater = true
+
+    local wheels: { WheelConfig } = {}
+    for _, att in ipairs(wheelAttachments) do
+        table.insert(wheels, {
+            Attachment = att,
+            RestLength = 4.2,
+            SpringStiffness = 18500,
+            DampingFactor = 2200,
+            TireGrip = 1.8,
+            LastLength = 4.2,
+        })
+    end
+
+    local vehicle: VehicleChassis = {
+        RootPart = chassis,
+        Wheels = wheels,
+        RayParams = rayParams,
+        AntiRollStiffness = 6500,
+    }
+    return vehicle
+end
+
+function VehicleSuspension.Step(vehicle: VehicleChassis, dt: number)
+    local root = vehicle.RootPart
+    local chassisCFrame = root.CFrame
+    local downDir = -chassisCFrame.UpVector
+
+    for i, wheel in ipairs(vehicle.Wheels) do
+        local origin = wheel.Attachment.WorldPosition
+        local rayLength = wheel.RestLength + 1.2
+        local cast = Workspace:Raycast(origin, downDir * rayLength, vehicle.RayParams)
+
+        if cast then
+            local currentLength = (origin - cast.Position).Magnitude
+            local compression = math.clamp(wheel.RestLength - currentLength, 0, wheel.RestLength)
+            local compressionRate = (wheel.LastLength - currentLength) / dt
+            wheel.LastLength = currentLength
+
+            -- Spring-damper force calculation
+            local springForce = wheel.SpringStiffness * compression
+            local damperForce = wheel.DampingFactor * compressionRate
+            local totalNormalForce = math.max(0, springForce + damperForce)
+
+            -- Lateral & Longitudinal tire friction
+            local pointVel = root:GetVelocityAtPosition(cast.Position)
+            local forwardDir = wheel.Attachment.WorldCFrame.LookVector
+            local sideDir = wheel.Attachment.WorldCFrame.RightVector
+            local forwardSpeed = pointVel:Dot(forwardDir)
+            local lateralSpeed = pointVel:Dot(sideDir)
+
+            local lateralFrictionForce = -sideDir * (lateralSpeed * wheel.TireGrip * (totalNormalForce / 10))
+            local totalForce = (cast.Normal * totalNormalForce) + lateralFrictionForce
+
+            root:ApplyImpulseAtPosition(totalForce * dt, origin)
+        else
+            wheel.LastLength = wheel.RestLength
+        end
+    end
+end
+
+return VehicleSuspension</code></pre>
+      </div>
+
+      <h2>4. Anti-Roll Sway Bars & Drift Slip Angle Mechanics</h2>
+      <p>High-center-of-gravity vehicles roll over violently during aggressive cornering. Anti-roll bars counteract this torque:</p>
+      <ul>
+        <li>Cross-Axle Force Transfer: When the left wheel compresses more than the right wheel during a right turn, the sway bar applies a downward force to the right wheel and an upward force to the left chassis.</li>
+        <li>Anti-Roll Torque Formula: F_sway = (Compression_Left - Compression_Right) * K_swayBar.</li>
+        <li>Pacejka 'Magic Formula' Approximation: Calculating normalized slip angles to blend between sticky cornering traction and progressive, predictable drift oversteer.</li>
+        <li>Handbrake Grip Reduction: Lowering the rear axle lateral friction multiplier by 70% while applying braking counter-torque to initiate immediate drift rotation.</li>
+      </ul>
+
+      <h2>5. Server Authority, Network Ownership & Client Visuals</h2>
+      <p>Achieving zero-latency handling while maintaining server-authoritative integrity across multiplayer games:</p>
+      <ul>
+        <li>Client Network Ownership: Assigning SetNetworkOwner(driver) to the vehicle RootPart to eliminate client input lag on steering and acceleration.</li>
+        <li>Visual Wheel CFrame Interpolation: Running RunService.RenderStepped on the client to smoothly offset visual wheel meshes along suspension travel and rotate them according to vehicle speed and steering angle.</li>
+        <li>Server Teleport & Speed Clamping: Monitoring root linear and angular velocity on the server to prevent speed hacks and flying exploits.</li>
+        <li>Audio Engine Integration: Modulating engine SoundGroup Pitch and Volume based on RPM calculations and tire screech particles on high lateral slip.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why use Raycast Suspension over Roblox CylindricalConstraints and Springs?</h3>
+          <p>Raycast suspension eliminates physics constraint jitter, prevents wheel tunneling at high velocities, reduces server physics CPU load, and gives developers full programmatic control over tire friction, drift physics, and terrain damping.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do you calculate wheel spin and steering angle visually?</h3>
+          <p>On client RenderStepped, calculate wheel angular velocity by dividing forward ground speed by wheel radius (w = v / r). Steer angle is computed using Ackerman geometry where the inner wheel turns slightly sharper than the outer wheel.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What prevents raycast vehicles from flipping over on sharp turns?</h3>
+          <p>Anti-roll sway bar calculations transfer suspension force from the heavily compressed outer wheel to the uncompressed inner wheel, keeping the chassis level. Additionally, lowering the center of mass (AssemblyCenterOfMass offset) dramatically increases roll stability.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
