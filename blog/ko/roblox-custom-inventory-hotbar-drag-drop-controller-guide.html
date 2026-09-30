@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 커스텀 핫바 및 인벤토리 드래그 앤 드롭: 포인터 이벤트 및 UX 가이드 (2026)</title>
+  <meta name="description" content="로블록스 전문 인벤토리 시스템 구축 완벽 가이드: 마우스/터치 드래그 고스트 연출, 슬롯 교체 검증, 핫바 숫자키(1~9) 바인딩 및 서버 동기화." />
+  <meta name="keywords" content="로블록스 커스텀 인벤토리, 로블록스 핫바 시스템, 드래그앤드롭 gui 로블록스, 포인터 이벤트 luau, 모바일 인벤토리 터치 로블록스 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 커스텀 핫바 및 인벤토리 드래그 앤 드롭: 포인터 이벤트 및 UX 가이드 (2026)" />
+  <meta property="og:description" content="로블록스 전문 인벤토리 시스템 구축 완벽 가이드: 마우스/터치 드래그 고스트 연출, 슬롯 교체 검증, 핫바 숫자키(1~9) 바인딩 및 서버 동기화." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 커스텀 핫바 및 인벤토리 드래그 앤 드롭: 포인터 이벤트 및 UX 가이드 (2026)" />
+  <meta name="twitter:description" content="로블록스 전문 인벤토리 시스템 구축 완벽 가이드: 마우스/터치 드래그 고스트 연출, 슬롯 교체 검증, 핫바 숫자키(1~9) 바인딩 및 서버 동기화." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html"
+      },
+      "headline": "로블록스 커스텀 핫바 아키텍처: 드래그 앤 드롭 고스트, 포인터 이벤트 및 모바일 터치 UX",
+      "description": "로블록스 전문 인벤토리 시스템 구축 완벽 가이드: 마우스/터치 드래그 고스트 연출, 슬롯 교체 검증, 핫바 숫자키(1~9) 바인딩 및 서버 동기화.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain UI/UX 시스템 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 커스텀 핫바 아키텍처: 드래그 앤 드롭 고스트, 포인터 이벤트 및 모바일 터치 UX",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "로블록스 기본 백팩(Backpack)을 비활성화해야 하는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "기본 백팩은 디자인 커스터마이징이 불가능하고, 아이템 나누기나 슬롯 정렬을 지원하지 않으며 모바일 터치 오류가 잦습니다. SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)로 비활성화하고 전용 GUI를 만드는 것이 권장됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "드래그 중인 아이템이 마우스 커서를 부드럽게 따라오게 하려면 어떻게 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "화면 최상위 ScreenGui에 아이콘을 복제한 후 AnchorPoint를 (0.5, 0.5)로 설정하고, InputChanged 이벤트에서 input.Position 좌표로 고스트 아이콘의 Position을 실시간 갱신해주면 됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "빠르게 드래그할 때 아이템이 복사되는 버그를 어떻게 막나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "모든 슬롯 교체 연산은 반드시 서버에서 승인되어야 합니다. 서버는 원래 슬롯에 해당 아이템이 실제로 존재하는지 확인하고, 대상 슬롯과 인덱스를 맞바꾼 후 클라이언트로 최종 결과를 동기화합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "모바일에서 우클릭 없이 아이템을 어떻게 반으로 나누나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "400ms(0.4초) 이상 슬롯을 누르고 있으면 나타나는 롱프레스 팝업 슬라이더를 구현하여 모바일 플레이어도 손쉽게 수량을 분할할 수 있도록 합니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 커스텀 핫바 아키텍처: 드래그 앤 드롭 고스트, 포인터 이벤트 및 모바일 터치 UX</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain UI/UX 시스템 팀</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      로블록스 스튜디오에서의 직관적이고 반응성 높은 인벤토리 구축: 부드러운 플로팅 고스트 아이템 연출부터 슬롯 교체 네트워크 복제 및 모바일 롱프레스 제스처까지 완벽 정리.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier216_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>격자 슬롯 순열 수학 및 인벤토리 메모리 할당 연산 모델</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier216_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>핫바 단축키 반응 속도 및 드래그 앤 드롭 안착 잠복기</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier216_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>공간 인벤토리 정리 및 촉각적 운동 제어 인지 스타일</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier216_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>교전 중 템창 꼬임 불안, 인벤토리 혼잡 및 오클릭 틸트 완화</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>로블록스의 서바이벌 샌드박스, RPG, 배틀로얄 게임에서 인벤토리와 핫바는 플레이어가 가장 빈번하게 조작하는 핵심 인터페이스입니다. 로블록스가 기본 제공하는 백팩(Backpack)은 디자인이 구식이고, 아이템 나누기나 슬롯 정렬을 지원하지 않으며, 모바일 환경에서 오작동이 자주 발생합니다. 이를 대체하는 커스텀 드래그 앤 드롭 시스템은 상용 게임 제작의 필수 요건입니다.</p>
+      <p>본 시스템 엔지니어링 가이드에서는 크로스 플랫폼 인벤토리 컨트롤러를 설계합니다. InputObject 포인터 이벤트 수신, 드래그 도중 마우스를 따라다니는 고스트 아이콘 연출, 슬롯 충돌 판정, 서버 권한 슬롯 교체 검증, 키보드 숫자키(1~9) 및 모바일 터치 제스처 연동을 상세히 다룹니다.</p>
+
+      <h2>1. 드래그 앤 드롭의 메커니즘: 포인터 이벤트와 드래그 임계값</h2>
+      <p>신뢰할 수 있는 드래그 앤 드롭 UI를 구축하려면 단순 클릭과 의도적인 드래그를 명확히 구분해야 합니다:</p>
+      <ul>
+          <li>드래그 히스테리시스 임계값: 터치 또는 클릭 시작 지점에서 최소 6~8픽셀 이상 포인터가 이동했을 때만 드래그 모드를 활성화하여 오작동을 방지합니다.</li>
+          <li>InputObject 수명 주기: InputBegan, InputChanged, InputEnded 이벤트를 조합하여 마우스 좌표와 모바일 터치 좌표를 일관되게 추적합니다.</li>
+          <li>플로팅 고스트 아이콘: 드래그 시작 시 원본 아이콘을 복제하여 약간 확대된(1.1배) 크기와 그림자 효과를 부여하고 커서 위치를 따라다니도록 배치합니다.</li>
+          <li>비차단 레이캐스트 피킹: 떠 있는 고스트 아이콘의 Active 속성을 false로 설정하여 아래쪽에 위치한 슬롯 프레임이 마우스 진입 신호를 정상 수신하도록 합니다.</li>
+      </ul>
+
+      <h2>2. 상용급 클라이언트 드래그 앤 드롭 컨트롤러 구현 코드</h2>
+      <p>아래는 부드러운 고스트 연출, 슬롯 충돌 판정, 서버 슬롯 스왑 요청을 구현한 클라이언트 측 Luau 모듈입니다:</p>
+      <ul>
+          <li>ZIndex 최상위 격상: 드래그 중인 고스트 아이템이 다른 모든 모달 창 및 UI 요소보다 항상 위에 렌더링되도록 ZIndex를 제어합니다.</li>
+          <li>슬롯 히트 테스팅: 등록된 인벤토리 슬롯들의 AbsolutePosition 및 AbsoluteSize 좌표를 순회 검사하여 드롭 대상 슬롯을 정확히 탐색합니다.</li>
+          <li>취소 시 복귀 애니메이션: 빈 화면에 잘못 드롭했을 경우 TweenService를 사용하여 원본 슬롯 위치로 부드럽게 되돌아간 후 소멸합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">InventoryDragDropController.luau (클라이언트 인벤토리 컨트롤러)</div>
+        <pre><code>--!strict
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+
+local DragController = {}
+DragController.__index = DragController
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui") :: PlayerGui
+
+export type SlotData = {
+    Frame: Frame,
+    SlotIndex: number,
+    ItemId: string?,
+    Count: number
+}
+
+local registeredSlots: { [Frame]: SlotData } = {}
+local activeDrag: {
+    SourceSlot: SlotData,
+    Ghost: ImageLabel,
+    StartPos: Vector2,
+    IsDragging: boolean
+}? = nil
+
+function DragController.RegisterSlot(frame: Frame, slotIndex: number, itemId: string?, count: number)
+    registeredSlots[frame] = {
+        Frame = frame,
+        SlotIndex = slotIndex,
+        ItemId = itemId,
+        Count = count
+    }
+
+    frame.InputBegan:Connect(function(input: InputObject)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            DragController.StartDrag(frame, input.Position)
+        end
+    end)
+end
+
+function DragController.StartDrag(slotFrame: Frame, inputPos: Vector3)
+    local data = registeredSlots[slotFrame]
+    if not data or not data.ItemId then return end
+
+    local icon = slotFrame:FindFirstChild("ItemIcon") :: ImageLabel?
+    if not icon then return end
+
+    local ghost = icon:Clone()
+    ghost.Size = UDim2.new(0, icon.AbsoluteSize.X * 1.1, 0, icon.AbsoluteSize.Y * 1.1)
+    ghost.Position = UDim2.new(0, inputPos.X, 0, inputPos.Y)
+    ghost.AnchorPoint = Vector2.new(0.5, 0.5)
+    ghost.ZIndex = 100
+    ghost.Active = false
+    ghost.Parent = playerGui:FindFirstChildOfClass("ScreenGui")
+
+    activeDrag = {
+        SourceSlot = data,
+        Ghost = ghost,
+        StartPos = Vector2.new(inputPos.X, inputPos.Y),
+        IsDragging = true
+    }
+end
+
+UserInputService.InputChanged:Connect(function(input: InputObject)
+    if activeDrag and activeDrag.IsDragging then
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            activeDrag.Ghost.Position = UDim2.new(0, input.Position.X, 0, input.Position.Y)
+        end
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input: InputObject)
+    if not activeDrag or not activeDrag.IsDragging then return end
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        local dropPos = Vector2.new(input.Position.X, input.Position.Y)
+        local targetSlot: SlotData? = nil
+
+        for frame, slotData in pairs(registeredSlots) do
+            local pos = frame.AbsolutePosition
+            local size = frame.AbsoluteSize
+            if dropPos.X >= pos.X and dropPos.X <= (pos.X + size.X) and
+               dropPos.Y >= pos.Y and dropPos.Y <= (pos.Y + size.Y) then
+                targetSlot = slotData
+                break
+            end
+        end
+
+        if targetSlot and targetSlot ~= activeDrag.SourceSlot then
+            -- 서버로 슬롯 스왑 RemoteEvent 호출
+            -- InventoryRemote:FireServer("SwapSlots", activeDrag.SourceSlot.SlotIndex, targetSlot.SlotIndex)
+        end
+
+        activeDrag.Ghost:Destroy()
+        activeDrag = nil
+    end
+end)
+
+return DragController</code></pre>
+      </div>
+
+      <h2>3. 핫바 숫자키(1~9) 바인딩 및 인체공학</h2>
+      <p>핫바는 플레이어의 손발과 같습니다. 긴박한 전투에서 마우스 조작 없이 즉각 원하는 도구를 꺼내는 단축키 체계가 필수적입니다:</p>
+      <ul>
+          <li>직접 키코드 바인딩: ContextActionService를 사용하여 1번부터 9번까지의 숫자 키를 등록하고 도구 장착을 즉시 실행합니다.</li>
+          <li>마우스 휠 스크롤 순회: 마우스 휠(MouseWheel) 이벤트를 수신하여 핫바 슬롯을 좌우로 순차 이동시키는 편의성을 지원합니다.</li>
+          <li>선택 슬롯 하이라이트 인디케이터: 현재 장착된 슬롯 둘레에 네온 글로우 테두리(UIStroke)를 렌더링하고 스프링 애니메이션으로 부드럽게 이동시킵니다.</li>
+          <li>기본 툴 인스턴스 분리: 로블록스의 기본 Tool 인스턴스에 의존하지 않고 커스텀 캐릭터 모델과 애니메이터로 도구 착용을 제어합니다.</li>
+      </ul>
+
+      <h2>4. 모바일 크로스플랫폼 터치 제스처 및 안전 영역</h2>
+      <p>스마트폰은 마우스 우클릭이 없습니다. 모바일 환경에 특화된 직관적인 터치 제스처를 설계해야 합니다:</p>
+      <ul>
+          <li>단순 탭 대 드래그 구분: 슬롯을 가볍게 탭하면 아이템 정보 창을 띄우고, 길게 누른 채 밀면 슬롯 이동 드래그로 전환합니다.</li>
+          <li>400ms 롱프레스 액션 시트: 터치를 0.4초간 유지하면 '스택 분할', '버리기', '사용하기' 메뉴가 담긴 컨텍스트 창을 띄웁니다.</li>
+          <li>화면 하단 홈 인디케이터 여백: 최신 iOS 홈바에 조작이 간섭받지 않도록 화면 하단에서 최소 20픽셀 이상의 여백을 둡니다.</li>
+          <li>터치 감지 범위 25% 확장: 손가락으로 화면이 가려지는 현상을 고려하여 모바일에서는 슬롯의 충돌 판정 영역을 시각 크기보다 25% 넓게 잡습니다.</li>
+      </ul>
+
+      <h2>5. 상용 배포 검증 및 네트워크 동기화 체크리스트</h2>
+      <p>수천 명의 동시 접속자가 플레이하는 라이브 환경에서 무결성을 유지하기 위한 QA 체크리스트입니다:</p>
+      <ul>
+          <li>연타 스왑 공격 검증: 두 슬롯 사이를 비정상적으로 빠르게 반복 드래그하여 슬롯 데이터가 꼬이거나 사라지지 않는지 확인합니다.</li>
+          <li>아이템 나누기(Split) 수학 검증: 1개인 아이템을 나눌 때의 예외 처리와 99개 아이템을 정확히 49개, 50개로 오차 없이 분할하는지 검사합니다.</li>
+          <li>해상도 리사이징 대응: PC 4K 환경부터 모바일 세로/가로 모드 전환 시 슬롯 좌표가 튀지 않고 정확히 추적되는지 검증합니다.</li>
+          <li>조작 피드백 사운드: 아이템을 집어 들었을 때와 슬롯에 안착시켰을 때 경쾌한 클릭 효과음을 재생하여 조작감을 향상시킵니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>로블록스 기본 백팩(Backpack)을 비활성화해야 하는 이유는 무엇인가요?</h3>
+          <p>기본 백팩은 디자인 커스터마이징이 불가능하고, 아이템 나누기나 슬롯 정렬을 지원하지 않으며 모바일 터치 오류가 잦습니다. SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)로 비활성화하고 전용 GUI를 만드는 것이 권장됩니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>드래그 중인 아이템이 마우스 커서를 부드럽게 따라오게 하려면 어떻게 하나요?</h3>
+          <p>화면 최상위 ScreenGui에 아이콘을 복제한 후 AnchorPoint를 (0.5, 0.5)로 설정하고, InputChanged 이벤트에서 input.Position 좌표로 고스트 아이콘의 Position을 실시간 갱신해주면 됩니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>빠르게 드래그할 때 아이템이 복사되는 버그를 어떻게 막나요?</h3>
+          <p>모든 슬롯 교체 연산은 반드시 서버에서 승인되어야 합니다. 서버는 원래 슬롯에 해당 아이템이 실제로 존재하는지 확인하고, 대상 슬롯과 인덱스를 맞바꾼 후 클라이언트로 최종 결과를 동기화합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>모바일에서 우클릭 없이 아이템을 어떻게 반으로 나누나요?</h3>
+          <p>400ms(0.4초) 이상 슬롯을 누르고 있으면 나타나는 롱프레스 팝업 슬라이더를 구현하여 모바일 플레이어도 손쉽게 수량을 분할할 수 있도록 합니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

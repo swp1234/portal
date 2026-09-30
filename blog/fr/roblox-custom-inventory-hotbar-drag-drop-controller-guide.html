@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Hotbar & Inventory Drag-and-Drop: Pointer Events & UX Guide (2026) (FR)</title>
+  <meta name="description" content="Comprehensive guide to building professional Roblox inventory systems: Mouse/touch drag-and-drop ghosting, slot swap validation, hotbar keybinding (1-9), and client-server synchronization." />
+  <meta name="keywords" content="roblox custom inventory, roblox hotbar system, drag and drop gui roblox, pointer events luau, mobile inventory touch roblox 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/fr/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Hotbar & Inventory Drag-and-Drop: Pointer Events & UX Guide (2026) (FR)" />
+  <meta property="og:description" content="Comprehensive guide to building professional Roblox inventory systems: Mouse/touch drag-and-drop ghosting, slot swap validation, hotbar keybinding (1-9), and client-server synchronization." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/fr/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Hotbar & Inventory Drag-and-Drop: Pointer Events & UX Guide (2026) (FR)" />
+  <meta name="twitter:description" content="Comprehensive guide to building professional Roblox inventory systems: Mouse/touch drag-and-drop ghosting, slot swap validation, hotbar keybinding (1-9), and client-server synchronization." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/fr/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/fr/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html"
+      },
+      "headline": "Roblox Custom Hotbar Architecture: Drag-and-Drop Ghosting, Pointer Events & Cross-Platform Touch UX [FR]",
+      "description": "Comprehensive guide to building professional Roblox inventory systems: Mouse/touch drag-and-drop ghosting, slot swap validation, hotbar keybinding (1-9), and client-server synchronization.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/fr/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain UI/UX Systems Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "fr"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Custom Hotbar Architecture: Drag-and-Drop Ghosting, Pointer Events & Cross-Platform Touch UX [FR]",
+          "item": "https://dopabrain.com/portal/blog/fr/roblox-custom-inventory-hotbar-drag-drop-controller-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why should I disable the default Roblox Backpack system?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The default Backpack is rigid, lacks support for custom inventory styling, cannot handle item splitting, and suffers from poor mobile touch support. Disabling it via SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false) allows full creative control."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I make the dragging ghost icon follow the mouse smoothly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Clone the item icon into an active ScreenGui, set its AnchorPoint to (0.5, 0.5), and update its Position to UDim2.new(0, input.Position.X, 0, input.Position.Y) during InputChanged events."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I prevent slot duplication exploits during rapid dragging?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All slot swap requests must be verified on the server. The server confirms that the source slot actually contains the item, validates the destination slot, swaps the indices in the player's data table, and then replicates the final state."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I support item splitting without a right-click button on mobile?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Implement a long-press gesture (400ms touch hold) that opens a modal popup slider allowing mobile players to choose how many items to split from the stack."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox Custom Hotbar Architecture: Drag-and-Drop Ghosting, Pointer Events & Cross-Platform Touch UX [FR]</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain UI/UX Systems Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting tactile, responsive inventory management in Roblox Studio: From smooth floating drag ghost items to robust slot swap network replication and mobile long-press gestures.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier216_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Grid slot permutation math & inventory memory allocation models</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier216_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Hotbar keycode trigger speed & drag-and-drop landing latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier216_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spatial inventory organization & tactile motor control archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier216_stress_check">
+          <strong>Stress Check</strong>
+          <span>Combat fumble anxiety, inventory clutter & mis-click tilt relief</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>In modern survival sandbox titles, RPGs, and battle royales on Roblox, the inventory and hotbar represent the most frequently accessed user interface. Roblox provides a rudimentary default backpack, but it is visually dated, lacks split-stacking and slot organization, and behaves erratically across mobile touch devices. Replacing it with a responsive, customizable drag-and-drop inventory is essential for any professional production.</p>
+      <p>In this systems engineering guide, we build a cross-platform inventory controller. We detail how to handle InputObject pointer events, render smooth floating 'ghost' icons during drag operations, implement slot collision detection, process slot swap requests on the server, and support keyboard hotkeys (1-9) alongside mobile touch drag gestures.</p>
+
+      <h2>1. The Mechanics of Drag-and-Drop: Pointer Events & Drag Thresholds</h2>
+      <p>Building a reliable drag-and-drop system requires distinguishing between intentional drags and accidental micro-clicks:</p>
+      <ul>
+          <li>Drag Hysteresis Threshold: Require the cursor or touch point to move at least 6-8 pixels from the mouse-down origin before initiating a drag operation.</li>
+          <li>InputObject Lifecycle: Bind InputBegan, InputChanged, and InputEnded events to capture mouse movement and touch coordinates seamlessly.</li>
+          <li>Floating Ghost Icon: Create a lightweight detached ImageLabel anchored to the player's cursor CFrame/viewport position with a slight scale boost (1.1x) and drop shadow.</li>
+          <li>Non-Blocking Raycast Picking: Set Active = false on the floating ghost icon so underneath GUI slots receive MouseEnter and InputEnded signals.</li>
+      </ul>
+
+      <h2>2. Production-Grade Client Drag-and-Drop Controller Implementation</h2>
+      <p>Below is a fully functional client-side Luau module implementing smooth drag ghosting, slot hover highlights, and slot swap network dispatch:</p>
+      <ul>
+          <li>ZIndex Elevation: Ensures the dragging ghost renders above all standard UI layers during transit across modals.</li>
+          <li>Slot Hit-Testing: Iterates over registered inventory slots to locate the drop target using AbsolutePosition and AbsoluteSize boundaries.</li>
+          <li>Smooth Cancellation Animation: If dropped over invalid empty screen space, the ghost tweens smoothly back to its source slot before destroying.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">InventoryDragDropController.luau (Client UI Systems Controller)</div>
+        <pre><code>--!strict
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+
+local DragController = {}
+DragController.__index = DragController
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui") :: PlayerGui
+
+export type SlotData = {
+    Frame: Frame,
+    SlotIndex: number,
+    ItemId: string?,
+    Count: number
+}
+
+local registeredSlots: { [Frame]: SlotData } = {}
+local activeDrag: {
+    SourceSlot: SlotData,
+    Ghost: ImageLabel,
+    StartPos: Vector2,
+    IsDragging: boolean
+}? = nil
+
+function DragController.RegisterSlot(frame: Frame, slotIndex: number, itemId: string?, count: number)
+    registeredSlots[frame] = {
+        Frame = frame,
+        SlotIndex = slotIndex,
+        ItemId = itemId,
+        Count = count
+    }
+
+    frame.InputBegan:Connect(function(input: InputObject)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            DragController.StartDrag(frame, input.Position)
+        end
+    end)
+end
+
+function DragController.StartDrag(slotFrame: Frame, inputPos: Vector3)
+    local data = registeredSlots[slotFrame]
+    if not data or not data.ItemId then return end
+
+    local icon = slotFrame:FindFirstChild("ItemIcon") :: ImageLabel?
+    if not icon then return end
+
+    local ghost = icon:Clone()
+    ghost.Size = UDim2.new(0, icon.AbsoluteSize.X * 1.1, 0, icon.AbsoluteSize.Y * 1.1)
+    ghost.Position = UDim2.new(0, inputPos.X, 0, inputPos.Y)
+    ghost.AnchorPoint = Vector2.new(0.5, 0.5)
+    ghost.ZIndex = 100
+    ghost.Active = false
+    ghost.Parent = playerGui:FindFirstChildOfClass("ScreenGui")
+
+    activeDrag = {
+        SourceSlot = data,
+        Ghost = ghost,
+        StartPos = Vector2.new(inputPos.X, inputPos.Y),
+        IsDragging = true
+    }
+end
+
+UserInputService.InputChanged:Connect(function(input: InputObject)
+    if activeDrag and activeDrag.IsDragging then
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            activeDrag.Ghost.Position = UDim2.new(0, input.Position.X, 0, input.Position.Y)
+        end
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input: InputObject)
+    if not activeDrag or not activeDrag.IsDragging then return end
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        local dropPos = Vector2.new(input.Position.X, input.Position.Y)
+        local targetSlot: SlotData? = nil
+
+        for frame, slotData in pairs(registeredSlots) do
+            local pos = frame.AbsolutePosition
+            local size = frame.AbsoluteSize
+            if dropPos.X >= pos.X and dropPos.X <= (pos.X + size.X) and
+               dropPos.Y >= pos.Y and dropPos.Y <= (pos.Y + size.Y) then
+                targetSlot = slotData
+                break
+            end
+        end
+
+        if targetSlot and targetSlot ~= activeDrag.SourceSlot then
+            -- Dispatch RemoteEvent to swap slots on server
+            -- InventoryRemote:FireServer("SwapSlots", activeDrag.SourceSlot.SlotIndex, targetSlot.SlotIndex)
+        end
+
+        activeDrag.Ghost:Destroy()
+        activeDrag = nil
+    end
+end)
+
+return DragController</code></pre>
+      </div>
+
+      <h2>3. Hotbar Keybinding (1-9) & Motor Ergonomics</h2>
+      <p>The hotbar is an extension of the player's hands. Instant access without manual dragging is critical in fast-paced combat encounters:</p>
+      <ul>
+          <li>Direct KeyCode Binding: Bind Enum.KeyCode.One through Nine using ContextActionService to equip items instantaneously.</li>
+          <li>Scroll Wheel Traversal: Support mouse wheel scrolling (InputObject.UserInputType == Enum.UserInputType.MouseWheel) for sequential slot cycling.</li>
+          <li>Active Slot Indicator: Display a glowing neon selection border (UIStroke) with spring-based position interpolation around the equipped slot.</li>
+          <li>Tool Activation Decoupling: Never tie tool usage directly to default Roblox Backpack Tool instances; manage equips via custom character models and animators.</li>
+      </ul>
+
+      <h2>4. Cross-Platform Touch Gestures & Mobile Safe Zones</h2>
+      <p>Mobile devices lack a mouse cursor and separate right-click modifiers. Designing intuitive inventory touch UX requires custom gesture mapping:</p>
+      <ul>
+          <li>Tap-to-Select vs. Drag-to-Move: A quick tap selects an item and displays details; dragging initiates an immediate slot relocation.</li>
+          <li>Long-Press Context Menu: A 400ms sustained touch opens an action sheet with 'Split Stack', 'Drop', 'Use', and 'Inspect' buttons.</li>
+          <li>Screen Bottom Hotbar Clearance: Position the mobile hotbar at least 20px above the screen bottom to clear the iOS home indicator bar.</li>
+          <li>Enlarged Mobile Drop Zones: Expand slot hit-detection thresholds by 25% on touch devices to compensate for imprecise finger occlusion.</li>
+      </ul>
+
+      <h2>5. Production Verification & Network Desync Checklists</h2>
+      <p>Deploying custom inventory systems across thousands of active players requires rigorous edge-case testing:</p>
+      <ul>
+          <li>Rapid Slot Spam Testing: Rapidly drag and swap items between two slots simultaneously to confirm the server maintains inventory consistency.</li>
+          <li>Split-Stack Math Validation: Ensure splitting a stack of 1 item is rejected; verify that splitting a stack of 99 items results in 49 and 50 without item loss.</li>
+          <li>Resolution Re-scaling Audit: Verify slot coordinates update dynamically when changing studio viewport size from 1080p to phone portrait mode.</li>
+          <li>Sound & Haptic Feedback: Trigger subtle UI click sounds on drag pickup and a satisfying snap sound upon slot landing.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why should I disable the default Roblox Backpack system?</h3>
+          <p>The default Backpack is rigid, lacks support for custom inventory styling, cannot handle item splitting, and suffers from poor mobile touch support. Disabling it via SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false) allows full creative control.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I make the dragging ghost icon follow the mouse smoothly?</h3>
+          <p>Clone the item icon into an active ScreenGui, set its AnchorPoint to (0.5, 0.5), and update its Position to UDim2.new(0, input.Position.X, 0, input.Position.Y) during InputChanged events.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I prevent slot duplication exploits during rapid dragging?</h3>
+          <p>All slot swap requests must be verified on the server. The server confirms that the source slot actually contains the item, validates the destination slot, swaps the indices in the player's data table, and then replicates the final state.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How can I support item splitting without a right-click button on mobile?</h3>
+          <p>Implement a long-press gesture (400ms touch hold) that opens a modal popup slider allowing mobile players to choose how many items to split from the stack.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
