@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Física de Flotabilidad de Barcos y Simulación de Agua en Roblox (2026)</title>
+  <meta name="description" content="Guía técnica para barcos en Roblox: Flotabilidad hidrostática de Arquímedes multipunto, olas de Gerstner en Luau, tensores de arrastre y sincronización de red." />
+  <meta name="keywords" content="Roblox flotabilidad barcos, Roblox física de agua, olas de Gerstner Luau, resistencia de fluidos Roblox, simulación náutica Roblox" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/es/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Física de Flotabilidad de Barcos y Simulación de Agua en Roblox (2026)" />
+  <meta property="og:description" content="Guía técnica para barcos en Roblox: Flotabilidad hidrostática de Arquímedes multipunto, olas de Gerstner en Luau, tensores de arrastre y sincronización de red." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/es/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Física de Flotabilidad de Barcos y Simulación de Agua en Roblox (2026)" />
+  <meta name="twitter:description" content="Guía técnica para barcos en Roblox: Flotabilidad hidrostática de Arquímedes multipunto, olas de Gerstner en Luau, tensores de arrastre y sincronización de red." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/es/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/es/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html"
+      },
+      "headline": "Física de Agua y Flotabilidad en Roblox: Olas de Gerstner, Resistencia de Fluidos y Simulación Náutica",
+      "description": "Guía técnica para barcos en Roblox: Flotabilidad hidrostática de Arquímedes multipunto, olas de Gerstner en Luau, tensores de arrastre y sincronización de red.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/es/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "es"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Física de Agua y Flotabilidad en Roblox: Olas de Gerstner, Resistencia de Fluidos y Simulación Náutica",
+          "item": "https://dopabrain.com/portal/blog/es/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Por qué usar olas de Gerstner en lugar de agua nativa?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "El agua nativa es plana; las olas de Gerstner permiten oleajes oceánicos dinámicos sin sobrecargar la red."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuántos puntos de flotabilidad se recomiendan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "4 puntos en las esquinas proporcionan excelente balance para lanchas habituales; barcos grandes usan de 6 a 8."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo evitar que el barco salga disparado hacia arriba al saltar olas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Limitando la fuerza ascendente máxima y aplicando resistencia aerodinámica descendente."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Física de Agua y Flotabilidad en Roblox: Olas de Gerstner, Resistencia de Fluidos y Simulación Náutica</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Hidrodinámica Avanzada: Simulación multipunto que supera el agua de terreno nativa mediante desplazamientos de olas analíticos y amortiguadores de torque.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier198_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Hydrodynamic force vectors & Archimedes buoyancy calculations</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier198_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>High-speed hydroplane wave collision & steering reaction latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier198_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spatial fluid motion perception & vehicle handling archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier198_stress_check">
+          <strong>Stress Check</strong>
+          <span>Oceanic wave turbulence motion sickness & vestibular fatigue</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>El agua de terreno predeterminada de Roblox sirve para nadar, pero carece de la física hidrodinámica requerida para lanchas rápidas, veleros y batallas navales realistas.</p>
+      <p>Al diseñar un sistema de flotabilidad multipunto, los desarrolladores calculan fuerzas de Arquímedes en cada esquina del casco. Junto con las olas de Gerstner en Luau y tensores de resistencia de fluidos, las embarcaciones navegan olas dinámicas con total estabilidad.</p>
+
+      <h2>1. Límites del Agua de Terreno Nativa en Roblox</h2>
+      <p>Por qué el agua nativa falla en vehículos acuáticos avanzados:</p>
+      <ul>
+          <li>Fuerza de flotabilidad homogénea: Aplica aceleración uniforme sin calcular cabeceo ni balanceo del casco.</li>
+          <li>Superficie plana sin oleaje: No se deforma tridimensionalmente en olas marinas dinámicas.</li>
+          <li>Lanzamientos violentos a alta velocidad: Fallos de colisión discreta que expulsan las lanchas hacia el aire.</li>
+          <li>Falta de amortiguación de balanceo: Riesgo continuo de vuelco sin torsión estabilizadora.</li>
+      </ul>
+
+      <h2>2. Flotabilidad Multipunto de Arquímedes y Muestreo de Olas</h2>
+      <p>Cálculo de empuje hidrostático en puntos individuales del casco:</p>
+      <ul>
+          <li>Muestreo en cuatro esquinas: Attachments en proa y popa que calculan la profundidad del agua independientemente.</li>
+          <li>Fórmula analítica de Gerstner: Determinación matemática de la elevación en cualquier punto `(X, Z)`.</li>
+          <li>Cálculo de fuerza de empuje: `F = (Profundidad * Volumen * Gravedad * Densidad) - (Velocidad * Amortiguación)`.</li>
+          <li>Par de adrizamiento natural: La mayor sumersión de un costado endereza el barco automáticamente.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Controlador Luau de Flotabilidad Multipunto con Olas de Gerstner</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local BoatPhysics = {}
+
+local WAVES = {
+    {Dir = Vector2.new(1, 0).Unit, Steepness = 0.4, Length = 60, Speed = 12},
+    {Dir = Vector2.new(0.7, 0.7).Unit, Steepness = 0.25, Length = 35, Speed = 9}
+}
+
+local GRAVITY = Workspace.Gravity
+local WATER_DENSITY = 1.025
+local POINT_SUBMERGED_VOLUME = 850
+local DAMPING = 280
+
+function BoatPhysics.GetWaveHeight(worldX: number, worldZ: number, timeVal: number): number
+    local elevation = 0
+    for _, wave in ipairs(WAVES) do
+        local k = (2 * math.pi) / wave.Length
+        local c = wave.Speed
+        local dot = wave.Dir.X * worldX + wave.Dir.Y * worldZ
+        local phase = k * (dot - c * timeVal)
+        elevation += math.sin(phase) * (wave.Steepness / k)
+    end
+    return elevation
+end
+
+function BoatPhysics.UpdateBuoyancy(hullRoot: BasePart, sampleAttachments: {Attachment}, vectorForces: {VectorForce})
+    local t = Workspace:GetServerTimeNow()
+    for i, attach in ipairs(sampleAttachments) do
+        local pos = attach.WorldPosition
+        local waterY = BoatPhysics.GetWaveHeight(pos.X, pos.Z, t)
+        local depth = waterY - pos.Y
+        local vf = vectorForces[i]
+        if depth > 0 then
+            local vel = hullRoot:GetVelocityAtPosition(pos)
+            local upwardForce = math.clamp((depth * POINT_SUBMERGED_VOLUME * GRAVITY * WATER_DENSITY) - (vel.Y * DAMPING), 0, 80000)
+            local lateralDrag = -Vector3.new(vel.X, 0, vel.Z) * 45
+            vf.Force = Vector3.new(lateralDrag.X, upwardForce, lateralDrag.Z)
+        else
+            vf.Force = Vector3.zero
+        end
+    end
+end
+
+return BoatPhysics</code></pre>
+      </div>
+
+      <h2>3. Resistencia Hidrodinámica y Comportamiento del Casco</h2>
+      <p>Simulación de arrastre anisotrópico según la hidrodinámica del barco:</p>
+      <ul>
+          <li>Arrastre cuadrático anisotrópico: Baja resistencia hacia adelante (~0.05) y alta resistencia lateral (~1.2) para evitar derrapes irreales.</li>
+          <li>Modo planeo vs. desplazamiento: Transición suave de empujar agua a elevarse a alta velocidad.</li>
+          <li>Amortiguación de velocidad angular: Estabilización de balanceo mediante límites de rotación.</li>
+          <li>Vector de empuje en popa: Giro realista con inclinación natural hacia el interior de la curva.</li>
+      </ul>
+
+      <h2>4. Propiedad de Red y Sincronización Multijugador</h2>
+      <p>Garantía de rendimiento sin retrasos en la red:</p>
+      <ul>
+          <li>Propiedad de red del piloto: Asignación con `SetNetworkOwner(player)` para respuesta instantánea.</li>
+          <li>Olas deterministas idénticas: Cálculo sincronizado mediante el reloj del servidor sin enviar datos pesados.</li>
+          <li>Fijación de pasajeros: Anclaje de avatares para evitar eyecciones durante oleajes fuertes.</li>
+          <li>Modo reposo: Desactivación de física en barcos vacíos para ahorrar procesamiento del servidor.</li>
+      </ul>
+
+      <h2>5. Lista de Verificación para Producción</h2>
+      <p>Normas clave para embarcaciones estables en Roblox Studio:</p>
+      <ul>
+          <li>Centro de masa bajo la línea de flotación para evitar vuelcos.</li>
+          <li>Geometría de colisión optimizada con fricción cero en bloques invisibles.</li>
+          <li>VFX de estela y sonido de impacto de olas calibrados por velocidad.</li>
+          <li>Deformación visual del agua vinculada exactamente al cálculo matemático.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>¿Por qué usar olas de Gerstner en lugar de agua nativa?</h3>
+          <p>El agua nativa es plana; las olas de Gerstner permiten oleajes oceánicos dinámicos sin sobrecargar la red.</p>
+        </div>
+        <div class="faq-item">
+          <h3>¿Cuántos puntos de flotabilidad se recomiendan?</h3>
+          <p>4 puntos en las esquinas proporcionan excelente balance para lanchas habituales; barcos grandes usan de 6 a 8.</p>
+        </div>
+        <div class="faq-item">
+          <h3>¿Cómo evitar que el barco salga disparado hacia arriba al saltar olas?</h3>
+          <p>Limitando la fuerza ascendente máxima y aplicando resistencia aerodinámica descendente.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

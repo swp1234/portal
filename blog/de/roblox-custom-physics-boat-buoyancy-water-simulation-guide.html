@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Bootsauftrieb & Wassersimulations-Physik (2026)</title>
+  <meta name="description" content="Meistern Sie realistische Wasserfahrzeug-Physik in Roblox: Mehrpunkt-Auftrieb nach Archimedes, Luau Gerstner-Wellen, Strömungswiderstands-Tensoren und Netzwerk-Sync." />
+  <meta name="keywords" content="Roblox Bootsauftrieb, Roblox Wasserphysik, Gerstner Wellen Luau, Roblox Strömungswiderstand, Schiffssimulation Roblox" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/de/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Bootsauftrieb & Wassersimulations-Physik (2026)" />
+  <meta property="og:description" content="Meistern Sie realistische Wasserfahrzeug-Physik in Roblox: Mehrpunkt-Auftrieb nach Archimedes, Luau Gerstner-Wellen, Strömungswiderstands-Tensoren und Netzwerk-Sync." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/de/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Bootsauftrieb & Wassersimulations-Physik (2026)" />
+  <meta name="twitter:description" content="Meistern Sie realistische Wasserfahrzeug-Physik in Roblox: Mehrpunkt-Auftrieb nach Archimedes, Luau Gerstner-Wellen, Strömungswiderstands-Tensoren und Netzwerk-Sync." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/de/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/de/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html"
+      },
+      "headline": "Roblox Wasserphysik & Bootsauftrieb: Gerstner-Wellen, Strömungswiderstand & Schiffssimulation",
+      "description": "Meistern Sie realistische Wasserfahrzeug-Physik in Roblox: Mehrpunkt-Auftrieb nach Archimedes, Luau Gerstner-Wellen, Strömungswiderstands-Tensoren und Netzwerk-Sync.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/de/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "de"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Wasserphysik & Bootsauftrieb: Gerstner-Wellen, Strömungswiderstand & Schiffssimulation",
+          "item": "https://dopabrain.com/portal/blog/de/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Warum Gerstner-Wellen statt Terrain-Raycasts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Terrainwasser ist statisch; Gerstner-Wellen ermöglichen synchrone, hochdynamische Ozeanwellen ohne Server-Mesh-Übertragung."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie viele Auftriebspunkte sind optimal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "4 Punkte an den Rumpfecken genügen für normale Boote; Großschiffe nutzen 6 bis 8 Punkte."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie verhindert man Katapultflüge bei Wellenkontakt?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Begrenzen der maximalen Auftriebskraft pro Frame und Einbeziehung aerodynamischer Dämpfung."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox Wasserphysik & Bootsauftrieb: Gerstner-Wellen, Strömungswiderstand & Schiffssimulation</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Hydrodynamik der nächsten Generation: Mehrpunkt-Auftriebs-Raycasting jenseits von Standard-Terrainwasser, Gerstner-Wellenverschiebungen und stabile Drehmomentdämpfer.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier198_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Hydrodynamic force vectors & Archimedes buoyancy calculations</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier198_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>High-speed hydroplane wave collision & steering reaction latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier198_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spatial fluid motion perception & vehicle handling archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier198_stress_check">
+          <strong>Stress Check</strong>
+          <span>Oceanic wave turbulence motion sickness & vestibular fatigue</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>Das Standard-Terrainwasser in Roblox bietet einfache Schwimmmechaniken für Avatare, reicht jedoch für anspruchsvolle maritime Simulationen, Schnellboote und Seeschlachten nicht aus.</p>
+      <p>Mit einem Mehrpunkt-Auftriebssystem berechnen Entwickler archimedische Auftriebskräfte an jedem Rumpfpunkt separat. In Kombination mit Luau-Gerstner-Wellen und Strömungswiderstands-Tensoren bewegen sich Schiffe physikalisch stabil auf dynamischen Wellen.</p>
+
+      <h2>1. Warum Standard-Terrainwasser für Schiffe unzureichend ist</h2>
+      <p>Technische Grenzen des nativen Roblox-Wassers bei komplexen Wasserfahrzeugen:</p>
+      <ul>
+          <li>Homogener Bounding-Box-Auftrieb: Standardwasser wendet gleichförmige Beschleunigung an, was Neigungswinkel und Rumpfkrängung verhindert.</li>
+          <li>Flache Wasseroberfläche: Nativ verformt sich Terrainwasser nicht zu dreidimensionalen Wellenkämmen.</li>
+          <li>Instabilität bei hohen Geschwindigkeiten: Schnelle Boote erleiden extreme Stoßimpulse bei Kollisionen mit Wasseroberflächen.</li>
+          <li>Mangelnde Roll-Dämpfung: Ohne gezielte Strömungswiderstandskraft kentern Boote bei scharfen Wendemanövern.</li>
+      </ul>
+
+      <h2>2. Mehrpunkt-Archimedes-Auftrieb & Gerstner-Wellensampling</h2>
+      <p>Berechnung von Auftriebskräften an verteilten Rumpfpunkten:</p>
+      <ul>
+          <li>Vierpunkt-Rumpfsampling: Attachments an Bug und Heck (links/rechts) tasten die Wassertiefe unabhängig ab.</li>
+          <li>Analytische Gerstner-Wellenformel: Mathematische Höhenberechnung an beliebigen Koordinaten `(X, Z)` ohne Geometrie-Meshes.</li>
+          <li>Verdrängungsvolumen & Auftriebskraft: Berechnung über `F = (Tiefe * Volumen * Gravitation * Dichte) - (Geschwindigkeit * Dämpfung)`.</li>
+          <li>Aufrichtendes Drehmoment: Asymmetrischer Auftrieb richtet den Schiffsrumpf in rauer See automatisch auf.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau Mehrpunkt-Gerstner-Wellenauftrieb & Dämpfungs-Controller</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local BoatPhysics = {}
+
+local WAVES = {
+    {Dir = Vector2.new(1, 0).Unit, Steepness = 0.4, Length = 60, Speed = 12},
+    {Dir = Vector2.new(0.7, 0.7).Unit, Steepness = 0.25, Length = 35, Speed = 9}
+}
+
+local GRAVITY = Workspace.Gravity
+local WATER_DENSITY = 1.025
+local POINT_SUBMERGED_VOLUME = 850
+local DAMPING = 280
+
+function BoatPhysics.GetWaveHeight(worldX: number, worldZ: number, timeVal: number): number
+    local elevation = 0
+    for _, wave in ipairs(WAVES) do
+        local k = (2 * math.pi) / wave.Length
+        local c = wave.Speed
+        local dot = wave.Dir.X * worldX + wave.Dir.Y * worldZ
+        local phase = k * (dot - c * timeVal)
+        elevation += math.sin(phase) * (wave.Steepness / k)
+    end
+    return elevation
+end
+
+function BoatPhysics.UpdateBuoyancy(hullRoot: BasePart, sampleAttachments: {Attachment}, vectorForces: {VectorForce})
+    local t = Workspace:GetServerTimeNow()
+    for i, attach in ipairs(sampleAttachments) do
+        local pos = attach.WorldPosition
+        local waterY = BoatPhysics.GetWaveHeight(pos.X, pos.Z, t)
+        local depth = waterY - pos.Y
+        local vf = vectorForces[i]
+        if depth > 0 then
+            local vel = hullRoot:GetVelocityAtPosition(pos)
+            local upwardForce = math.clamp((depth * POINT_SUBMERGED_VOLUME * GRAVITY * WATER_DENSITY) - (vel.Y * DAMPING), 0, 80000)
+            local lateralDrag = -Vector3.new(vel.X, 0, vel.Z) * 45
+            vf.Force = Vector3.new(lateralDrag.X, upwardForce, lateralDrag.Z)
+        else
+            vf.Force = Vector3.zero
+        end
+    end
+end
+
+return BoatPhysics</code></pre>
+      </div>
+
+      <h2>3. Strömungswiderstands-Tensoren & Hydrodynamik</h2>
+      <p>Mathematische Modellierung von Wasserwiderstand am Rumpf:</p>
+      <ul>
+          <li>Anisotroper quadratischer Widerstand: Geringer Widerstand entlang des Kiels (~0.05), hoher Querwiderstand (~1.2).</li>
+          <li>Gleit- vs. Verdrängerfahrt: Übergang vom Verdrängen des Wassers zum dynamischen Gleiten bei hoher Geschwindigkeit.</li>
+          <li>Winkelgeschwindigkeits-Dämpfung: Begrenzung von Schaukelbewegungen über Drehmomentbegrenzer.</li>
+          <li>Heckantrieb & Rudervektoren: Realistische Krängung nach innen bei Kurvenfahrten.</li>
+      </ul>
+
+      <h2>4. Netzwerk-Eigentümerschaft & Replikation</h2>
+      <p>Nahtlose Synchronisation zwischen Steuermann und Beobachtern:</p>
+      <ul>
+          <li>Driver Network Ownership: Zuweisung von `SetNetworkOwner(player)` für latenzfreie Steuerung.</li>
+          <li>Deterministische Wellen: Alle Clients berechnen identische Wellenhöhen synchron über Serverzeit.</li>
+          <li>Passagier-Stabilisierung: Befestigung über Seat-Attachments gegen unbeabsichtigtes Herausschleudern.</li>
+          <li>Schlafmodus für leere Boote: Ressourcenersparnis durch Pausieren der Physik bei unbemannten Schiffen.</li>
+      </ul>
+
+      <h2>5. Best Practices & Produktions-Checkliste</h2>
+      <p>Entwicklungsrichtlinien für performante Roblox-Schiffe:</p>
+      <ul>
+          <li>Schwerpunktlage unter Wasserlinie: Verhindert unkontrolliertes Kentern.</li>
+          <li>Kollisionsvereinfachung: Unsichtbare reibungsfreie Hüllenblöcke verhindern Hängenbleiben.</li>
+          <li>Partikel- & Soundeffekte: Geschwindigkeitsabhängige Schaumkronen und Motorsounds.</li>
+          <li>Mesh-Deformation: Visuelle Übereinstimmung der Wasserwellen mittels Bone-Rigging.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Warum Gerstner-Wellen statt Terrain-Raycasts?</h3>
+          <p>Terrainwasser ist statisch; Gerstner-Wellen ermöglichen synchrone, hochdynamische Ozeanwellen ohne Server-Mesh-Übertragung.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Wie viele Auftriebspunkte sind optimal?</h3>
+          <p>4 Punkte an den Rumpfecken genügen für normale Boote; Großschiffe nutzen 6 bis 8 Punkte.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Wie verhindert man Katapultflüge bei Wellenkontakt?</h3>
+          <p>Begrenzen der maximalen Auftriebskraft pro Frame und Einbeziehung aerodynamischer Dämpfung.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 보트 부력 및 해양 파도 물리 시뮬레이션 (2026)</title>
+  <meta name="description" content="로블록스 맞춤형 선박 물리 구현 완벽 가이드: 다지점 아르키메데스 부력, Luau 게르스트너 파도 샘플링, 비등방성 유체 항력 텐서 및 네트워크 소유권 동기화." />
+  <meta name="keywords" content="로블록스 보트 부력, 로블록스 수중 물리, 게르스트너 파도 Luau, 로블록스 유체 저항, 선박 시뮬레이션 개발" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 보트 부력 및 해양 파도 물리 시뮬레이션 (2026)" />
+  <meta property="og:description" content="로블록스 맞춤형 선박 물리 구현 완벽 가이드: 다지점 아르키메데스 부력, Luau 게르스트너 파도 샘플링, 비등방성 유체 항력 텐서 및 네트워크 소유권 동기화." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 보트 부력 및 해양 파도 물리 시뮬레이션 (2026)" />
+  <meta name="twitter:description" content="로블록스 맞춤형 선박 물리 구현 완벽 가이드: 다지점 아르키메데스 부력, Luau 게르스트너 파도 샘플링, 비등방성 유체 항력 텐서 및 네트워크 소유권 동기화." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html"
+      },
+      "headline": "로블록스 수중 물리 & 선박 부력: 게르스트너 파도, 유체 항력 및 보트 시뮬레이션 아키텍처",
+      "description": "로블록스 맞춤형 선박 물리 구현 완벽 가이드: 다지점 아르키메데스 부력, Luau 게르스트너 파도 샘플링, 비등방성 유체 항력 텐서 및 네트워크 소유권 동기화.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "도파브레인 스튜디오 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 수중 물리 & 선박 부력: 게르스트너 파도, 유체 항력 및 보트 시뮬레이션 아키텍처",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-physics-boat-buoyancy-water-simulation-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "지형 수면 레이캐스트 대신 수학적 게르스트너 파도를 사용하는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "로블록스 기본 지형 수면은 정적이며 3D 파도로 변형되지 않습니다. 해석적 게르스트너 파도를 사용하면 지오메트리 쿼리 없이 서버와 클라이언트 모두에서 무한한 대양 파도를 가볍고 정확하게 동기화할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "보트 하나에 몇 개의 부력 샘플링 포인트가 가장 적절한가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "모터보트나 일반 크기 선박은 선수 좌/우, 선미 좌/우 4개 포인트로도 충분히 안정적인 피치 및 롤 복원력을 냅니다. 거대 군함이나 화물선은 6~8개 포인트를 사용하여 여러 파도 봉우리에 걸치는 물리 현상을 구현합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "파도에 고속으로 부딪힐 때 배가 하늘로 튀어 오르는 버그는 어떻게 막나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "프레임당 인가되는 최대 상향 부력을 클램핑(Clamp)하고, 선체가 수면을 완전히 벗어났을 때는 즉시 부력을 0으로 설정하며 공기 저항을 인가해야 합니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 수중 물리 & 선박 부력: 게르스트너 파도, 유체 항력 및 보트 시뮬레이션 아키텍처</h1>
+      <div class="meta-bar">
+        <span>By 도파브레인 스튜디오 엔지니어링 팀</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      차세대 해양 역학: 기본 지형 수면을 넘어선 다지점 부력 레이캐스트, 게르스트너 수식 기반 3D 파도 변위, 안정적인 복원력 토크 댐퍼 시스템.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier198_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>유체역학 양력 벡터 및 아르키메데스 부력 선형대수 연산</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier198_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>고속 활주정 파도 충돌 및 조타 긴급 회피 반응 잠복기</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier198_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>공간 유체 역학 인지 및 선박 조작 스타일 인지 유형</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier198_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>거친 파도 난류 주행에 따른 전정 감각 피로 및 긴장 완화</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>로블록스의 기본 지형(Terrain) 수면은 아바타의 기초적인 수영과 플로팅을 지원하지만, 사실적인 해양 시뮬레이션, 고속 모터보트, 범선, 해상 전투 게임을 구현하기에는 물리적 한계가 큽니다. 기본 부력은 선박의 제어 불가능한 요동, 전복 버그, 움직이는 파도와의 비동기 문제를 야기합니다.</p>
+      <p>선체 각 모서리에 다지점 아르키메데스 부력 시스템을 구축하면 선체의 각 부분에 가해지는 양력을 독립적으로 계산할 수 있습니다. Luau 기반의 해석적 게르스트너(Gerstner) 파도 공식, 2차 유체 항력 텐서, AngularVelocity 감쇠 제어를 결합하면 파도의 고저차에 맞춰 자연스럽게 피치(Pitch)와 롤(Roll)을 형성하며 흔들리지 않는 조작감을 제공합니다.</p>
+
+      <h2>1. 기본 지형 수면의 한계와 커스텀 선박 물리 엔진의 필요성</h2>
+      <p>로블록스 기본 수면이 복잡한 해양 이동체에서 실패하는 구조적 이유:</p>
+      <ul>
+          <li>균일한 바운딩 박스 부력: 내장 지형 수면은 선체 전체에 단일한 상향 가속도를 부여하므로, 선수(Bow) 들림, 선회 시 측면 뱅킹, 파도 타기 연산이 불가능합니다.</li>
+          <li>평면 수면 가정: 기본 지형 수면은 3D로 너울지는 파도로 변형되지 않으므로, 수학적 파도 변위 알고리즘 없이는 폭풍우 치는 바다를 연출할 수 없습니다.</li>
+          <li>고속 주행 충돌 이탈(Physics Launch): 고속 보트가 수면에 진입할 때 이산 충돌(Discrete collision) 침투 스파이크로 인해 배가 공중으로 솟구치는 현상이 발생합니다.</li>
+          <li>선회 롤 제어 불가: 선회 시 발생하는 원심력과 수면 저항에 따른 복원력 토크가 없어 보트가 뒤집히거나 팽이처럼 회전합니다.</li>
+      </ul>
+
+      <h2>2. 다지점 아르키메데스 부력 & 게르스트너 파도 샘플링</h2>
+      <p>선체 분할 샘플링 포인트를 활용한 정밀 양력 연산:</p>
+      <ul>
+          <li>4지점 선체 레이캐스팅: 선체의 4개 모서리(선수 좌/우, 선미 좌/우)에 Attachment를 배치하여 수면 깊이를 독립적으로 샘플링합니다.</li>
+          <li>해석적 게르스트너 파도 공식: 파도의 파장, 진폭, 이동 속도, 첨두도(Steepness) 벡터를 결합하여 임의의 좌표 `(X, Z)`에서 파도 높이 `Y`를 수학적으로 계산합니다.</li>
+          <li>침수 체적 기반 아르키메데스 양력: 수면 아래로 잠긴 깊이에 비례하여 상향 부력을 계산합니다: `F = (잠긴깊이 * 체적 * 중력 * 밀도) - (수직속도 * 댐핑)`.</li>
+          <li>자연스러운 복원력(Righting Torque): 파도나 선회로 인해 한쪽이 기울어지면 더 깊이 잠긴 쪽의 부력이 자동으로 커져 배가 원래 자세로 복원됩니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau 다지점 게르스트너 파도 부력 및 유체 감쇠 물리 컨트롤러</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local BoatPhysics = {}
+
+-- 게르스트너 파도 구성 요소: {방향벡터, 첨두도, 파장, 전파속도}
+local WAVES = {
+    {Dir = Vector2.new(1, 0).Unit, Steepness = 0.4, Length = 60, Speed = 12},
+    {Dir = Vector2.new(0.7, 0.7).Unit, Steepness = 0.25, Length = 35, Speed = 9},
+    {Dir = Vector2.new(-0.3, 0.9).Unit, Steepness = 0.15, Length = 18, Speed = 7}
+}
+
+local GRAVITY = Workspace.Gravity
+local WATER_DENSITY = 1.025
+local POINT_SUBMERGED_VOLUME = 850 -- 각 포인트별 가상 배수 체적
+local DAMPING = 280
+
+-- 월드 X, Z 좌표에서 현재 시간 기준 수면 높이 Y 계산
+function BoatPhysics.GetWaveHeight(worldX: number, worldZ: number, timeVal: number): number
+    local elevation = 0
+    for _, wave in ipairs(WAVES) do
+        local k = (2 * math.pi) / wave.Length
+        local c = wave.Speed
+        local dot = wave.Dir.X * worldX + wave.Dir.Y * worldZ
+        local phase = k * (dot - c * timeVal)
+        local amplitude = wave.Steepness / k
+        elevation += math.sin(phase) * amplitude
+    end
+    return elevation
+end
+
+-- 선체 Attachment들의 부력 및 유체 저항 실시간 업데이트
+function BoatPhysics.UpdateBuoyancy(hullRoot: BasePart, sampleAttachments: {Attachment}, vectorForces: {VectorForce})
+    local t = Workspace:GetServerTimeNow()
+    
+    for i, attach in ipairs(sampleAttachments) do
+        local worldPos = attach.WorldPosition
+        local waterY = BoatPhysics.GetWaveHeight(worldPos.X, worldPos.Z, t)
+        local depth = waterY - worldPos.Y
+        
+        local vf = vectorForces[i]
+        if depth > 0 then
+            -- 수면 아래 침수: 부력 및 수직 감쇠력 적용
+            local pointVelocity = hullRoot:GetVelocityAtPosition(worldPos)
+            local upwardForce = (depth * POINT_SUBMERGED_VOLUME * GRAVITY * WATER_DENSITY) - (pointVelocity.Y * DAMPING)
+            upwardForce = math.clamp(upwardForce, 0, 80000)
+            
+            -- 수평 방향 물 저항(횡미끄러짐 억제)
+            local horizontalDrag = -Vector3.new(pointVelocity.X, 0, pointVelocity.Z) * 45
+            vf.Force = Vector3.new(horizontalDrag.X, upwardForce, horizontalDrag.Z)
+        else
+            -- 수면 위: 부력 제로
+            vf.Force = Vector3.zero
+        end
+    end
+end
+
+return BoatPhysics</code></pre>
+      </div>
+
+      <h2>3. 비등방성 유체 항력 텐서와 선체 유체역학</h2>
+      <p>선체 형태에 따른 물의 저항력을 수학적으로 모델링하는 기법:</p>
+      <ul>
+          <li>비등방성 2차 항력(Anisotropic Quadratic Drag): 선체는 전진 방향(용골 방향) 저항 계수가 낮고(~0.05), 측면 횡미끄러짐 저항 계수가 매우 높아(~1.2) 미끄러지지 않고 레일을 타듯 직진합니다.</li>
+          <li>활주(Planing) 모드 전환: 저속에서는 물을 밀어내는 배수(Displacement) 모드로 작동하다가, 가속 시 동적 양력이 선체를 들어 올려 저항이 급감하는 활주 모드로 전환됩니다.</li>
+          <li>각속도 댐핑(Angular Velocity Damping): 피치, 롤, 요 축의 회전 진동을 감쇠하기 위해 AngularVelocity 제약 조건이나 반대 방향 토크를 가해 흔들림을 안정화합니다.</li>
+          <li>선미 추진기 및 방향타 벡터: 선미(Stern) 프로펠러 위치에서 추진력과 방향타 회전 각도를 인가하여 실제 보트처럼 선미가 회전하며 안쪽으로 뱅킹(Heel)을 유도합니다.</li>
+      </ul>
+
+      <h2>4. 네트워크 소유권 및 래그 없는 멀티플레이어 동기화</h2>
+      <p>운전자와 관전자 모두에게 완벽한 물리 동기화를 보장하는 네트워크 설계:</p>
+      <ul>
+          <li>조종자 네트워크 소유권(Network Ownership): 플레이어가 조타석에 탑승하는 순간 `hullRoot:SetNetworkOwner(player)`를 호출하여 로컬에서 무지연 물리 시뮬레이션을 수행합니다.</li>
+          <li>동기화된 결정론적 파도 연산: 게르스트너 수식은 서버와 모든 클라이언트가 `Workspace:GetServerTimeNow()`를 기준으로 계산하므로, 별도의 네트워크 패킷 전송 없이 완벽히 일치하는 수면을 공유합니다.</li>
+          <li>승객 CFrame 앵커링: 격렬한 파도 주행 시 승객 아바타가 선체 바깥으로 튕겨 나가지 않도록 Seat Attachment나 물리 Weld로 선체에 구속합니다.</li>
+          <li>빈 선박 저주파 절전 모드: 운전자가 없는 정박 선박은 부력 연산 빈도를 낮추거나 앵커링 상태로 전환하여 서버 CPU 부하를 극소화합니다.</li>
+      </ul>
+
+      <h2>5. 상용 프로덕션 최적화 체크리스트</h2>
+      <p>로블록스 스튜디오에서 버그 없는 선박 시스템을 출시하기 위한 핵심 원칙:</p>
+      <ul>
+          <li>선체 무게중심(Center of Mass) 하향 배치: 무게중심(`AssemblyCenterOfMass`)을 흘수선(Waterline)보다 낮게 설정하여 전복 위험을 원천 차단합니다.</li>
+          <li>충돌 지오메트리 간소화: 선체 충돌 모델을 `PreciseConvexDecomposition` 또는 마찰력 0인 보이지 않는 웨지 블록으로 단순화하여 지형 끼임 현상을 방지합니다.</li>
+          <li>항적(Wake) 파티클 및 사운드 연동: 선체 속도와 파도 충격 강도에 맞춰 물보라 파티클과 바다 사운드그룹 음량을 실시간 조절합니다.</li>
+          <li>클라이언트 전용 수면 메시 디포메이션: `EditableMesh`나 Bone 리깅을 활용하여 Luau 게르스트너 파도 높이와 시각적 수면 렌더링을 100% 일치시킵니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>지형 수면 레이캐스트 대신 수학적 게르스트너 파도를 사용하는 이유는 무엇인가요?</h3>
+          <p>로블록스 기본 지형 수면은 정적이며 3D 파도로 변형되지 않습니다. 해석적 게르스트너 파도를 사용하면 지오메트리 쿼리 없이 서버와 클라이언트 모두에서 무한한 대양 파도를 가볍고 정확하게 동기화할 수 있습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>보트 하나에 몇 개의 부력 샘플링 포인트가 가장 적절한가요?</h3>
+          <p>모터보트나 일반 크기 선박은 선수 좌/우, 선미 좌/우 4개 포인트로도 충분히 안정적인 피치 및 롤 복원력을 냅니다. 거대 군함이나 화물선은 6~8개 포인트를 사용하여 여러 파도 봉우리에 걸치는 물리 현상을 구현합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>파도에 고속으로 부딪힐 때 배가 하늘로 튀어 오르는 버그는 어떻게 막나요?</h3>
+          <p>프레임당 인가되는 최대 상향 부력을 클램핑(Clamp)하고, 선체가 수면을 완전히 벗어났을 때는 즉시 부력을 0으로 설정하며 공기 저항을 인가해야 합니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
