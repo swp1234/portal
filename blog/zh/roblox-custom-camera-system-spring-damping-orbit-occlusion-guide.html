@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox 自定义相机系统架构：弹簧阻尼、肩射视角与穿墙遮挡 (2026)</title>
+  <meta name="description" content="掌握 Roblox 自定义相机架构：二阶微分弹簧物理、越肩（Over-the-shoulder）瞄准切换、体积投射（Spherecast）防穿模与移动端手势。" />
+  <meta name="keywords" content="Roblox自定义相机, 弹簧相机Roblox, 相机碰撞检测Roblox, 越肩视角Roblox, Luau相机脚本, 游戏手感" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox 自定义相机系统架构：弹簧阻尼、肩射视角与穿墙遮挡 (2026)" />
+  <meta property="og:description" content="掌握 Roblox 自定义相机架构：二阶微分弹簧物理、越肩（Over-the-shoulder）瞄准切换、体积投射（Spherecast）防穿模与移动端手势。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox 自定义相机系统架构：弹簧阻尼、肩射视角与穿墙遮挡 (2026)" />
+  <meta name="twitter:description" content="掌握 Roblox 自定义相机架构：二阶微分弹簧物理、越肩（Over-the-shoulder）瞄准切换、体积投射（Spherecast）防穿模与移动端手势。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html"
+      },
+      "headline": "Roblox 自定义相机工程：二阶弹簧阻尼、动态肩射偏移与 Spherecast 空间防穿墙",
+      "description": "掌握 Roblox 自定义相机架构：二阶微分弹簧物理、越肩（Over-the-shoulder）瞄准切换、体积投射（Spherecast）防穿模与移动端手势。",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "zh"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox 自定义相机工程：二阶弹簧阻尼、动态肩射偏移与 Spherecast 空间防穿墙",
+          "item": "https://dopabrain.com/portal/blog/zh/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "相机碰撞检测为什么必须用 Spherecast 代替 Raycast？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Raycast 没有物理厚度，擦过薄墙角落时光线会穿漏，导致相机近裁剪面透视穿帮。Spherecast 带有物理半径，能确保镜头与墙体始终保持安全缓冲。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何消除角色贴近墙壁行走时的镜头微小颤抖？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "不要直接将碰撞距离硬赋给相机，使用渐近滤波公式 `currentDist += (targetDist - currentDist) * math.min(1, dt * 25)` 进行高频平滑即可消除颤抖。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "在 RenderStepped 每帧计算球体检测会导致低端手机掉帧吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "一次 Spherecast 与基础矢量运算在每帧仅消耗不到 0.05ms 的 CPU 时间，远低于 60 FPS 渲染周期的 16.6ms 预算。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox 自定义相机工程：二阶弹簧阻尼、动态肩射偏移与 Spherecast 空间防穿墙</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      电影级相机运镜工程：二阶微分临界阻尼、平滑越肩瞄准切换、移动端双指缩放与体积 Spherecast 零穿模。
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier194_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Vector matrix interpolation & second-order spring physics math</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier194_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Over-the-shoulder crosshair tracking & ADS view reaction latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier194_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>3D spatial camera manipulation & kinematic perception archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier194_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-speed camera motion sickness & vestibular conflict mitigation</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>Roblox 默认的 `PopperCam` 在社交聚会类场景表现尚可，但在快节奏动作射击、动作 RPG 与极限跑酷游戏中，镜头碰到障碍物时的生硬跳跃与缺乏重量感极度破坏游戏体验。</p>
+      <p>通过声明 `CameraType.Scriptable` 并在 `RenderStepped` 渲染管线中接管运算，开发者能打造出主机级的丝滑镜头。利用二阶弹簧阻尼模拟真实的物理惯性，借助三维 `Spherecast` 空间扫掠杜绝任何穿墙露陷，并配合动态越肩偏移，让游戏手感迈入 AAA 级水准。</p>
+
+      <h2>1. 突破默认相机局限：为何必须自研相机系统</h2>
+      <p>原生相机脚本在高强度竞技与射击玩法中的致命短板：</p>
+      <ul>
+          <li>碰撞瞬间生硬裁切：在拐角或天花板下方，原生相机瞬间拉近引发视野剧烈晃动，极易引起眩晕。</li>
+          <li>缺乏物理质量惯性：相机机械锁定角色头部，没有任何急停、起步与落地的回弹缓冲。</li>
+          <li>居中遮挡射击视野：角色模型常年占据屏幕死中心，在远程魔法与精确瞄准时遮挡弹道。</li>
+          <li>Scriptable 模式完全控制：接管相机后完全绕过原生封装，彻底掌控 CFrame 的插值过程。</li>
+      </ul>
+
+      <h2>2. 二阶微分弹簧物理与临界阻尼（Critical Damping）</h2>
+      <p>消除橡皮筋式回弹抖动，构建沉稳自然的镜头惯性模型：</p>
+      <ul>
+          <li>胡克定律与阻尼比：弹簧由刚度（(k)）与阻尼（(d)）决定。将阻尼比设为临界阻尼（(zeta = 1.0)），能确保相机以最快速度趋近目标且不产生来回超调摆动。</li>
+          <li>速度状态迭代：通过 `force = (target - pos) * k - (vel * d)` 并在每帧积加速度与位移，赋予角色移动时稳重的重量感。</li>
+          <li>角度与位移解耦：Yaw（偏航）与 Pitch（俯仰）直接响应鼠标输入保证瞄准跟手度，仅在位置偏移上应用弹簧平滑。</li>
+          <li>帧率独立性计算：务必使用 `RenderStepped` 传入的 `dt` 进行积分，确保 60Hz 手机与 240Hz 电竞屏拥有完全一致的手感。</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau 二阶弹簧相机控制器与 Spherecast 防穿墙系统</div>
+        <pre><code>--!strict
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+local CameraController = {}
+local camera = Workspace.CurrentCamera
+local player = Players.LocalPlayer
+
+local yaw, pitch = 0, 0
+local targetDistance, currentDistance = 12, 12
+local springPos, springVel = Vector3.zero, Vector3.zero
+local SPRING_STIFFNESS = 140
+local SPRING_DAMPING = 22
+
+local SPHERE_RADIUS = 0.6
+local RAY_PARAMS = RaycastParams.new()
+RAY_PARAMS.FilterType = RaycastFilterType.Exclude
+
+function CameraController.Init()
+    camera.CameraType = Enum.CameraType.Scriptable
+    UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
+    RunService.RenderStepped:Connect(CameraController.Update)
+end
+
+function CameraController.Update(dt: number)
+    local char = player.Character
+    if not char then return end
+    local head = char:FindFirstChild("Head") :: BasePart?
+    if not head then return end
+    
+    RAY_PARAMS.FilterDescendantsInstances = { char }
+    
+    -- 1. 目标基准坐标系与右肩偏移
+    local focusCFrame = CFrame.new(head.Position) * CFrame.Angles(0, yaw, 0) * CFrame.Angles(pitch, 0, 0)
+    local desiredOffset = Vector3.new(2.2, 1.0, 0) -- 右肩偏移
+    
+    -- 2. 二阶弹簧物理平滑计算
+    local force = (desiredOffset - springPos) * SPRING_STIFFNESS - (springVel * SPRING_DAMPING)
+    springVel += force * dt
+    springPos += springVel * dt
+    
+    -- 3. 体积 Spherecast 预测性防穿墙碰撞检测
+    local rayOrigin = head.Position
+    local targetCamPos = (focusCFrame * CFrame.new(springPos)).Position - (focusCFrame.LookVector * targetDistance)
+    local castDirection = targetCamPos - rayOrigin
+    
+    local hit = Workspace:Spherecast(rayOrigin, SPHERE_RADIUS, castDirection, RAY_PARAMS)
+    local adjustedDistance = targetDistance
+    if hit and hit.Instance and hit.Instance.CanCollide then
+        adjustedDistance = math.max(1.5, (hit.Position - rayOrigin).Magnitude - SPHERE_RADIUS)
+    end
+    
+    -- 距离平滑渐变防止突兀抽搐
+    currentDistance += (adjustedDistance - currentDistance) * math.min(1, dt * 25)
+    
+    -- 4. 应用最终 CFrame 变换矩阵
+    camera.CFrame = focusCFrame * CFrame.new(springPos) * CFrame.new(0, 0, currentDistance)
+end
+
+return CameraController</code></pre>
+      </div>
+
+      <h2>3. 基于 Spherecast 的三维体积空间防穿墙检测</h2>
+      <p>彻底阻断镜头近裁剪面（Near Plane）穿透实体墙体的破绽：</p>
+      <ul>
+          <li>单线 Raycast 的致命缺陷：普通射线没有体积，极易擦过墙角薄片，导致镜头机身陷入墙体内部露出虚空。</li>
+          <li>三维球体扫掠 Spherecast：`Workspace:Spherecast` 以指定半径的球体沿轨迹探测，在镜片碰触墙壁前提前感应。</li>
+          <li>保留空气安全缓冲垫：在检测击中距离中扣除球体半径（(0.5)~(0.8) studs），使相机永远与障碍物维持安全距离。</li>
+          <li>渐进式出墙回弹：脱离窄道时，采用渐近衰减平滑拉开镜头，绝不瞬移回原始距离。</li>
+      </ul>
+
+      <h2>4. 动态换肩切换与机瞄（ADS）焦段联动</h2>
+      <p>在战术交火中释放极致视野空间的工程实践：</p>
+      <ul>
+          <li>左右肩视点无缝切换：按下 Q/E 键时，将弹簧目标偏移反转为 `Vector3.new(-2.2, 1.0, 0)`，方便在掩体左侧侦察。</li>
+          <li>开镜 FOV 焦段渐变：右键精细瞄准时将 FOV 由 70 度平滑收窄至 50 度，同时将弹簧位置向角色脸颊靠拢。</li>
+          <li>视差（Parallax）弹道修正：由于镜头位于肩部，枪口发射的子弹必须向屏幕正中央的 3D 汇聚点投射。</li>
+          <li>冲刺动能拉远：疾跑状态下将相机目标距离微弱拉远，营造风驰电掣的速度张力。</li>
+      </ul>
+
+      <h2>5. 移动端触摸手势与多端跨平台人体工学</h2>
+      <p>兼容键鼠、触屏与手柄的全平台操作方案：</p>
+      <ul>
+          <li>双指捏合缩放（Pinch-to-Zoom）：在手机端捕获双指触摸距离，平滑修改 targetDistance。</li>
+          <li>右半屏专属运镜区：将手机屏幕右半侧划分为转角滑动手势区，与左侧虚拟摇杆物理隔离。</li>
+          <li>手柄摇杆非线性曲线：对摇杆输入施加 `math.sign(x) * (x^2)` 二次方响应，实现微瞄与 180 度大转向兼备。</li>
+          <li>纯本地内存闭环：所有相机运算必须在客户端 RenderStepped 闭环完成，禁止向服务器同步原始相机数据。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>相机碰撞检测为什么必须用 Spherecast 代替 Raycast？</h3>
+          <p>Raycast 没有物理厚度，擦过薄墙角落时光线会穿漏，导致相机近裁剪面透视穿帮。Spherecast 带有物理半径，能确保镜头与墙体始终保持安全缓冲。</p>
+        </div>
+        <div class="faq-item">
+          <h3>如何消除角色贴近墙壁行走时的镜头微小颤抖？</h3>
+          <p>不要直接将碰撞距离硬赋给相机，使用渐近滤波公式 `currentDist += (targetDist - currentDist) * math.min(1, dt * 25)` 进行高频平滑即可消除颤抖。</p>
+        </div>
+        <div class="faq-item">
+          <h3>在 RenderStepped 每帧计算球体检测会导致低端手机掉帧吗？</h3>
+          <p>一次 Spherecast 与基础矢量运算在每帧仅消耗不到 0.05ms 的 CPU 时间，远低于 60 FPS 渲染周期的 16.6ms 预算。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Camera Architecture: Springs, Damping & Occlusion (2026)</title>
+  <meta name="description" content="Master custom camera systems in Roblox: second-order spring physics, over-the-shoulder offsets, spherecast wall clipping prevention, and orbit controls." />
+  <meta name="keywords" content="Roblox custom camera, Roblox camera spring, camera occlusion Roblox, over the shoulder camera Roblox, Luau camera script, Roblox game dev" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/en/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Camera Architecture: Springs, Damping & Occlusion (2026)" />
+  <meta property="og:description" content="Master custom camera systems in Roblox: second-order spring physics, over-the-shoulder offsets, spherecast wall clipping prevention, and orbit controls." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/en/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Camera Architecture: Springs, Damping & Occlusion (2026)" />
+  <meta name="twitter:description" content="Master custom camera systems in Roblox: second-order spring physics, over-the-shoulder offsets, spherecast wall clipping prevention, and orbit controls." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/en/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/en/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html"
+      },
+      "headline": "Roblox Custom Camera Engineering: Spring Damping, Shoulder Shifts & Predictive Wall Occlusion",
+      "description": "Master custom camera systems in Roblox: second-order spring physics, over-the-shoulder offsets, spherecast wall clipping prevention, and orbit controls.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/en/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Custom Camera Engineering: Spring Damping, Shoulder Shifts & Predictive Wall Occlusion",
+          "item": "https://dopabrain.com/portal/blog/en/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why use Workspace:Spherecast instead of Workspace:Raycast for camera collision?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Raycasts have zero thickness. If a ray grazes an edge or passes between small gaps, the camera lens will clip inside solid geometry. Spherecasts sweep a volume with physical radius, ensuring the camera near-plane never intersects walls."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I prevent the camera from jittering when the character walks near walls?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Smooth the distance adjustment using asymptotic interpolation `currentDist += (targetDist - currentDist) * math.min(1, dt * 25)` instead of snapping directly to the collision distance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will running camera math on RenderStepped drop frame rates on low-end mobile devices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A single spherecast and basic spring vector math take less than 0.05ms of CPU time per frame, well within the 16.6ms budget of a 60 FPS mobile render cycle."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox Custom Camera Engineering: Spring Damping, Shoulder Shifts & Predictive Wall Occlusion</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Cinematic Camera Engineering: Second-order differential spring physics, smooth over-the-shoulder transitions, mobile touch gestures, and swept spherecast wall collision.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier194_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Vector matrix interpolation & second-order spring physics math</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier194_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Over-the-shoulder crosshair tracking & ADS view reaction latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier194_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>3D spatial camera manipulation & kinematic perception archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier194_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-speed camera motion sickness & vestibular conflict mitigation</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>While Roblox's default `PopperCam` and player scripts suffice for casual social hangouts, they lack the responsiveness, weight, and polish demanded by modern third-person shooters, action RPGs, and precision platformers.</p>
+      <p>By setting `CameraType.Scriptable` and taking full control of the render pipeline on `RenderStepped`, developers can build fluid cinematic cameras. Using second-order spring damping models for organic inertia, calculating spherical swept collision raycasts to eliminate jarring wall clipping, and implementing seamless over-the-shoulder offsets, your experience achieves AAA visual fluidity.</p>
+
+      <h2>1. Beyond Default PopperCam: Why Custom Cameras Matter</h2>
+      <p>The limitations of default camera scripts in high-intensity gameplay environments:</p>
+      <ul>
+          <li>Rigid Positional Snapping: Vanilla cameras snap abruptly when colliding with geometric obstructions, causing disorienting camera jitter during close-quarters combat.</li>
+          <li>Lack of Inertial Weight: Default cameras track the player's root part with zero physical delay, producing an artificial, robotic feeling that breaks game immersion.</li>
+          <li>Restricted Combat Framing: Default scripts center the character directly in the middle of the screen, obstructing line-of-sight during crosshair aiming and ranged spellcasting.</li>
+          <li>The Scriptable Invariant: Setting `workspace.CurrentCamera.CameraType = Enum.CameraType.Scriptable` decouples camera logic from vanilla player scripts, granting 100% control over CFrame interpolation.</li>
+      </ul>
+
+      <h2>2. Second-Order Spring Physics & Critical Damping</h2>
+      <p>Modeling organic camera inertia and smooth aim tracking without rubberband oscillation:</p>
+      <ul>
+          <li>Hooke's Law & Damping Ratio: A physical spring is governed by stiffness ((k)) and damping ((d)). Setting the damping ratio (zeta = 1.0) achieves critical damping—reaching the target in minimal time without overshoot oscillation.</li>
+          <li>Target Smoothing: Update position via `x += v * dt; v += (k * (target - x) - d * v) * dt`. This provides visceral physical weight during sudden sprint acceleration or jump landings.</li>
+          <li>Rotational Decoupling: Smooth camera pitch and yaw separately from character orientation, enabling cinematic head tracking and responsive mouse flick aiming.</li>
+          <li>Framerate Independence: Always integrate spring equations using true delta-time ((dt)) from `RunService.RenderStepped` to guarantee identical camera physics at 60, 144, or 240 FPS.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau Second-Order Spring Camera Controller with Swept Spherecast Occlusion</div>
+        <pre><code>--!strict
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+local CameraController = {}
+
+local camera = Workspace.CurrentCamera
+local player = Players.LocalPlayer
+
+local yaw = 0
+local pitch = 0
+local targetDistance = 12
+local currentDistance = 12
+
+-- Spring physics state for camera offset
+local springPos = Vector3.zero
+local springVel = Vector3.zero
+local SPRING_STIFFNESS = 140
+local SPRING_DAMPING = 22
+
+local SPHERE_RADIUS = 0.6
+local RAY_PARAMS = RaycastParams.new()
+RAY_PARAMS.FilterType = RaycastFilterType.Exclude
+
+function CameraController.Init()
+    camera.CameraType = Enum.CameraType.Scriptable
+    UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
+    
+    UserInputService.InputChanged:Connect(function(input, processed)
+        if processed then return end
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            local sensitivity = 0.003
+            yaw -= input.Delta.X * sensitivity
+            pitch = math.clamp(pitch - (input.Delta.Y * sensitivity), -1.2, 1.2)
+        end
+    end)
+    
+    RunService.RenderStepped:Connect(CameraController.Update)
+end
+
+function CameraController.Update(dt: number)
+    local char = player.Character
+    if not char then return end
+    local head = char:FindFirstChild("Head") :: BasePart?
+    if not head then return end
+    
+    RAY_PARAMS.FilterDescendantsInstances = { char }
+    
+    -- 1. Base Focus Point and Shoulder Offset
+    local focusCFrame = CFrame.new(head.Position) * CFrame.Angles(0, yaw, 0) * CFrame.Angles(pitch, 0, 0)
+    local desiredOffset = Vector3.new(2.2, 1.0, 0) -- Right shoulder offset
+    
+    -- 2. Spring Integration for Smooth Movement
+    local force = (desiredOffset - springPos) * SPRING_STIFFNESS - (springVel * SPRING_DAMPING)
+    springVel += force * dt
+    springPos += springVel * dt
+    
+    -- 3. Predictive Spherecast Wall Occlusion
+    local rayOrigin = head.Position
+    local targetCamPos = (focusCFrame * CFrame.new(springPos)).Position - (focusCFrame.LookVector * targetDistance)
+    local castDirection = targetCamPos - rayOrigin
+    
+    local hit = Workspace:Spherecast(rayOrigin, SPHERE_RADIUS, castDirection, RAY_PARAMS)
+    local adjustedDistance = targetDistance
+    if hit and hit.Instance and hit.Instance.CanCollide then
+        adjustedDistance = math.max(1.5, (hit.Position - rayOrigin).Magnitude - SPHERE_RADIUS)
+    end
+    
+    -- Smoothly interpolate camera collision zoom
+    currentDistance += (adjustedDistance - currentDistance) * math.min(1, dt * 25)
+    
+    -- 4. Apply Final Camera Transform
+    local finalCFrame = focusCFrame * CFrame.new(springPos) * CFrame.new(0, 0, currentDistance)
+    camera.CFrame = finalCFrame
+end
+
+return CameraController</code></pre>
+      </div>
+
+      <h2>3. Predictive Wall Clipping Prevention via Spherecasting</h2>
+      <p>Eliminating visual pop-in, geometric clipping, and ceiling collision glitches:</p>
+      <ul>
+          <li>Single Raycast Limitations: Standard line raycasts can pass between thin railings or grazing corners, allowing the near clipping plane to penetrate walls and reveal void space.</li>
+          <li>Volumetric Spherecasting: `Workspace:Spherecast` sweeps a 3D sphere along the camera vector, detecting nearby obstacle faces before the camera lens touches geometry.</li>
+          <li>Collision Buffer Distance: Subtract the sphere radius ((r approx 0.5)–(0.8) studs) from the hit distance to preserve a clean air cushion between the camera and walls.</li>
+          <li>Graceful Recovery Interpolation: When emerging from a narrow hallway into an open room, smoothly interpolate camera distance back outward using asymptotic decay rather than instant snapping.</li>
+      </ul>
+
+      <h2>4. Dynamic Shoulder Shifts & Aim Down Sights (ADS)</h2>
+      <p>Creating responsive over-the-shoulder framing for combat encounters:</p>
+      <ul>
+          <li>Shoulder Peeking Mechanics: Allow players to press a toggle key (e.g., Q/E or Middle Mouse) to flip the spring offset from `Vector3.new(2.2, 1.0, 0)` to `Vector3.new(-2.2, 1.0, 0)` for tactical corner peeking.</li>
+          <li>ADS Transition Framing: When the player aims down sights, dynamically tween FieldOfView from 70 to 50 degrees while pulling the spring offset tighter to the character's cheek.</li>
+          <li>Crosshair Raycast Parallax Correction: Because the camera is offset to the shoulder, bullet trajectories from the weapon barrel must raycast forward toward the screen-center 3D focal point.</li>
+          <li>Sprint Inertia Lag: Under high movement velocity, subtly lag the camera offset backwards to amplify the sensation of kinetic speed.</li>
+      </ul>
+
+      <h2>5. Mobile Touch Gestures & Cross-Platform Ergonomics</h2>
+      <p>Designing universal camera control across touchscreens, gamepads, and keyboards:</p>
+      <ul>
+          <li>Two-Finger Pinch-to-Zoom: Capture `UserInputType.Touch` pinch events on mobile devices to smoothly adjust `targetDistance` between 5 and 25 studs.</li>
+          <li>Right-Screen Swipe Orbiting: Dedicate the right half of the touchscreen to drag swipe delta panning while isolating virtual thumbstick movement to the left.</li>
+          <li>Gamepad Thumbstick Exponential Curves: Apply quadratic curve filtering `math.sign(x) * (x^2)` to gamepad right stick inputs to enable microscopic sniper aim and rapid 180-degree turns.</li>
+          <li>Performance Guardrails: Perform vector math locally within the render thread; never replicate raw camera positions to the server to preserve bandwidth.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why use Workspace:Spherecast instead of Workspace:Raycast for camera collision?</h3>
+          <p>Raycasts have zero thickness. If a ray grazes an edge or passes between small gaps, the camera lens will clip inside solid geometry. Spherecasts sweep a volume with physical radius, ensuring the camera near-plane never intersects walls.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I prevent the camera from jittering when the character walks near walls?</h3>
+          <p>Smooth the distance adjustment using asymptotic interpolation `currentDist += (targetDist - currentDist) * math.min(1, dt * 25)` instead of snapping directly to the collision distance.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Will running camera math on RenderStepped drop frame rates on low-end mobile devices?</h3>
+          <p>A single spherecast and basic spring vector math take less than 0.05ms of CPU time per frame, well within the 16.6ms budget of a 60 FPS mobile render cycle.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

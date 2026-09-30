@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neurociencia en Juegos de Lucha: Footsies y Mental Stack (2026)</title>
+  <meta name="description" content="Domina la neurociencia de los juegos de lucha: límites de reacción de 14 frames, división del mental stack, heurísticas de footsies y psicología de trampas de frames." />
+  <meta name="keywords" content="neurociencia fighting games, footsies espaciado, Street Fighter frame data, whiff punish reacción, mental stack" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/es/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Neurociencia en Juegos de Lucha: Footsies y Mental Stack (2026)" />
+  <meta property="og:description" content="Domina la neurociencia de los juegos de lucha: límites de reacción de 14 frames, división del mental stack, heurísticas de footsies y psicología de trampas de frames." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/es/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Neurociencia en Juegos de Lucha: Footsies y Mental Stack (2026)" />
+  <meta name="twitter:description" content="Domina la neurociencia de los juegos de lucha: límites de reacción de 14 frames, división del mental stack, heurísticas de footsies y psicología de trampas de frames." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/es/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/es/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html"
+      },
+      "headline": "Neurociencia Cognitiva en Fighting Games: Espaciado Footsies, Sobrecarga de Mental Stack y Castigos",
+      "description": "Domina la neurociencia de los juegos de lucha: límites de reacción de 14 frames, división del mental stack, heurísticas de footsies y psicología de trampas de frames.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/es/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Cognitive Performance Lab",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "es"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Neurociencia Cognitiva en Fighting Games: Espaciado Footsies, Sobrecarga de Mental Stack y Castigos",
+          "item": "https://dopabrain.com/portal/blog/es/fighting-game-footsies-spacing-frame-data-reaction-neuroscience.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Por qué castigo bien en entrenamiento pero fallo en partidas reales?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En entrenamiento vigilas un único movimiento; en combate real atiendes hasta cinco amenazas a la vez."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuál es el truco para castigar golpes fallidos (whiff punish)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No mirar la animación del rival, sino vigilar la zona del suelo donde aparecerá su extremidad extendida."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo funciona la defensa con Delay Tech?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pulsar agarre con un ligero retraso tras bloquear permite frenar golpes directos y escapar agarres simultáneamente."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Neurociencia Cognitiva en Fighting Games: Espaciado Footsies, Sobrecarga de Mental Stack y Castigos</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Cognitive Performance Lab</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Mecánicas Cognitivas del Juego Neutral: Cómo los jugadores de élite superan límites de reacción mediante compresión de mental stack.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier195_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Sub-250ms visual choice reaction latency & 14-frame human limits</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier195_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-stakes ranked set tilt control & cortisol surge regulation</span>
+        </a>
+        <a href="/burnout-test/" class="quick-card" data-track="tier195_burnout_test">
+          <strong>Burnout Test</strong>
+          <span>Competitive ladder mental stack exhaustion & working memory fatigue</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier195_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Bayesian predictive spacing & footsies threat-prioritization archetype</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>En los juegos de lucha competitivos (Street Fighter 6, Tekken 8, Guilty Gear), el combate se define en fracciones de segundo. Un frame equivale a 16.6 ms, y los castigos exigen actuar en 200-300 ms.</p>
+      <p>Dado que el tiempo de reacción consciente supera los 250 ms, los profesionales recurren a la gestión del mental stack y la inferencia espacial bayesiana para castigar ataques que parecen humanamente imposibles de interceptar.</p>
+
+      <h2>1. La paradoja del tiempo de reacción en el juego neutral</h2>
+      <p>Límites biológicos que condicionan las decisiones bajo presión:</p>
+      <ul>
+          <li>Reacción simple vs de elección: Elegir entre varias respuestas eleva el tiempo de reacción a 300 ms.</li>
+          <li>La barrera de los 14 frames: Reaccionar a golpes rápidos con atención dividida es biológicamente inviable.</li>
+          <li>Saturación del mental stack: Cada nueva opción rival divide los recursos de la memoria de trabajo.</li>
+          <li>Preparación sensorial: Fijar la atención en una coordenada concreta para disparar respuestas automáticas.</li>
+      </ul>
+
+      <h2>2. Footsies y heurísticas de espaciado bayesiano</h2>
+      <p>Control del espacio neutral mediante anticipación probabilística:</p>
+      <ul>
+          <li>Extensión del hurtbox: La vulnerabilidad del personaje avanza antes que el golpe y persiste en recuperación.</li>
+          <li>Inferencia espacial: El cerebro calcula probabilidades de posicionamiento según el ritmo rival.</li>
+          <li>Micropasos (Microwalking): Entrar y salir del rango máximo rival provoca ataques fallidos.</li>
+          <li>Zona de peligro: Poner al oponente entre el riesgo del contragolpe y la pérdida de terreno.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Modelo Matemático: Mental Stack y Probabilidad de Castigo</div>
+        <pre><code>// Mental Stack Cognitive Load & Reaction Latency Model
+interface CombatCognitionState {
+  mentalStackOptions: number;
+  spatialFocusAccuracy: number;
+  opponentMoveDurationFrames: number;
+}
+
+function evaluateWhiffPunishSuccess(state: CombatCognitionState) {
+  const FRAME_MS = 16.666;
+  const choiceDelay = 65 * Math.log2(state.mentalStackOptions + 1);
+  const primingBonus = state.spatialFocusAccuracy * 80;
+  const effectiveLatency = Math.round(190 + choiceDelay - primingBonus);
+  const moveWindow = state.opponentMoveDurationFrames * FRAME_MS;
+  const delta = moveWindow - effectiveLatency;
+  const punishProbability = Math.min(0.99, Math.max(0.01, 1 / (1 + Math.exp(-delta / 25))));
+  return { effectiveLatency, punishProbability: Math.round(punishProbability * 100) / 100 };
+}</code></pre>
+      </div>
+
+      <h2>3. Trampas de frames y condicionamiento estriatal</h2>
+      <p>Manipulación de reflejos rivales para asegurar golpes críticos:</p>
+      <ul>
+          <li>Ventaja de frames (Plus): Prioridad ofensiva absoluta tras bloquear un golpe ventajoso.</li>
+          <li>Condicionamiento motor: La presión repetida acostumbra al rival a quedarse bloqueando.</li>
+          <li>Trampa de 3 frames: Dejar un hueco milimétrico castiga los intentos desesperados de responder.</li>
+          <li>Escape tardío (Delay Tech): Opción defensiva que cubre bloqueo e intercepción de agarres a la vez.</li>
+      </ul>
+
+      <h2>4. Sobrecarga del mental stack como herramienta ofensiva</h2>
+      <p>Saturación deliberada de la memoria de trabajo enemiga:</p>
+      <ul>
+          <li>Efectos visuales del Drive Rush: Los destellos resetean la percepción visual del defensor.</li>
+          <li>División de atención: Atacar con múltiples opciones simultáneas provoca parálisis motora.</li>
+          <li>Jaque mate cognitivo: Plantear 4 estímulos en 200 ms fuerza fallos incluso ante ataques lentos.</li>
+          <li>Ataques invencibles (Reversals): Salidas arriesgadas que resetean la presión psicológica rival.</li>
+      </ul>
+
+      <h2>5. Entrenamiento neuromuscular y control del tilt</h2>
+      <p>Metodología científica para sostener el rendimiento en torneos:</p>
+      <ul>
+          <li>Ejercicios aislados de castigo: Práctica en modo entrenamiento ante secuencias aleatorias.</li>
+          <li>Respiración contra el tilt: Tres segundos de exhalación profunda reactivan la corteza prefrontal.</li>
+          <li>Calentamiento progresivo: Quince minutos de juego gradual sincronizan ojo y mano.</li>
+          <li>Reevaluación de derrotas: Entender los fallos como errores de atención y no de reflejos puros.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>¿Por qué castigo bien en entrenamiento pero fallo en partidas reales?</h3>
+          <p>En entrenamiento vigilas un único movimiento; en combate real atiendes hasta cinco amenazas a la vez.</p>
+        </div>
+        <div class="faq-item">
+          <h3>¿Cuál es el truco para castigar golpes fallidos (whiff punish)?</h3>
+          <p>No mirar la animación del rival, sino vigilar la zona del suelo donde aparecerá su extremidad extendida.</p>
+        </div>
+        <div class="faq-item">
+          <h3>¿Cómo funciona la defensa con Delay Tech?</h3>
+          <p>Pulsar agarre con un ligero retraso tras bloquear permite frenar golpes directos y escapar agarres simultáneamente.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

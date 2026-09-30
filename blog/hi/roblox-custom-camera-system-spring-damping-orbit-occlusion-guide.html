@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox कस्टम कैमरा आर्किटेक्चर: स्प्रिंग्स और वॉल कोलिशन (2026)</title>
+  <meta name="description" content="Roblox में कस्टम कैमरा सिस्टम बनाएं: सेकंड-ऑर्डर स्प्रिंग फिजिक्स, शोल्डर व्यू, स्फीयरकास्ट वॉल क्लिपिंग रोकथाम और टच जेस्चर।" />
+  <meta name="keywords" content="Roblox कस्टम कैमरा, कैमरा स्प्रिंग Roblox, कैमरा कोलिशन Roblox, शोल्डर कैमरा Roblox, Luau कैमरा स्क्रिप्ट" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/hi/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox कस्टम कैमरा आर्किटेक्चर: स्प्रिंग्स और वॉल कोलिशन (2026)" />
+  <meta property="og:description" content="Roblox में कस्टम कैमरा सिस्टम बनाएं: सेकंड-ऑर्डर स्प्रिंग फिजिक्स, शोल्डर व्यू, स्फीयरकास्ट वॉल क्लिपिंग रोकथाम और टच जेस्चर।" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/hi/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox कस्टम कैमरा आर्किटेक्चर: स्प्रिंग्स और वॉल कोलिशन (2026)" />
+  <meta name="twitter:description" content="Roblox में कस्टम कैमरा सिस्टम बनाएं: सेकंड-ऑर्डर स्प्रिंग फिजिक्स, शोल्डर व्यू, स्फीयरकास्ट वॉल क्लिपिंग रोकथाम और टच जेस्चर।" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/hi/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/hi/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html"
+      },
+      "headline": "Roblox कस्टम कैमरा इंजीनियरिंग: स्प्रिंग डैम्पिंग, शोल्डर शिफ्ट और स्फीयरकास्ट दीवार सुरक्षा",
+      "description": "Roblox में कस्टम कैमरा सिस्टम बनाएं: सेकंड-ऑर्डर स्प्रिंग फिजिक्स, शोल्डर व्यू, स्फीयरकास्ट वॉल क्लिपिंग रोकथाम और टच जेस्चर।",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/hi/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "hi"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox कस्टम कैमरा इंजीनियरिंग: स्प्रिंग डैम्पिंग, शोल्डर शिफ्ट और स्फीयरकास्ट दीवार सुरक्षा",
+          "item": "https://dopabrain.com/portal/blog/hi/roblox-custom-camera-system-spring-damping-orbit-occlusion-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "कैमरे के लिए रेकास्ट के बजाय स्फीयरकास्ट क्यों चुनें?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "स्फीयरकास्ट एक 3D क्षेत्र की जांच करता है, जिससे कैमरा दीवारों के अंदर नहीं घुसता।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "दीवार के पास कैमरे के कंपन को कैसे रोकें?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "दूरी में बदलाव को तुरंत न करके धीरे-धीरे स्मूथ करने से कंपन दूर होता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "क्या इससे मोबाइल फोन पर गेम लैग होगा?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "यह गणना प्रति फ्रेम 0.05ms से भी कम समय लेती है, जिससे गेम 60 FPS पर चलता रहता है।"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox कस्टम कैमरा इंजीनियरिंग: स्प्रिंग डैम्पिंग, शोल्डर शिफ्ट और स्फीयरकास्ट दीवार सुरक्षा</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      सिनेमैटिक कैमरा इंजीनियरिंग: स्प्रिंग फिजिक्स, शोल्डर ऑफसेट, मोबाइल जेस्चर और स्फीयरकास्ट वॉल कोलिशन रोकथाम।
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier194_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Vector matrix interpolation & second-order spring physics math</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier194_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Over-the-shoulder crosshair tracking & ADS view reaction latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier194_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>3D spatial camera manipulation & kinematic perception archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier194_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-speed camera motion sickness & vestibular conflict mitigation</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>Roblox का डिफॉल्ट कैमरा साधारण खेलों के लिए ठीक है, लेकिन एक्शन गेम्स में दीवारों से टकराने पर झटके देने लगता है।</p>
+      <p>CameraType.Scriptable का उपयोग करके और RenderStepped पर कैमरा नियंत्रित करके बेहतरीन सिनेमाई अनुभव दिया जा सकता है। स्प्रिंग डैम्पिंग और स्फीयरकास्ट से स्मूथ कैमरा तैयार होता है।</p>
+
+      <h2>1. डिफॉल्ट कैमरे की सीमाएं और कस्टम कैमरे की जरूरत</h2>
+      <p>फास्ट-पेस्ड गेम्स में डिफॉल्ट कैमरे की कमियां:</p>
+      <ul>
+          <li>अचानक झटके: दीवारों से टकराने पर कैमरा तेजी से कटता है।</li>
+          <li>वजन की कमी: मुड़ने पर स्वाभाविक इनर्शिया का न होना।</li>
+          <li>नजर में रुकावट: बीच में खड़ा कैरेक्टर शूटिंग में बाधा बनता है।</li>
+          <li>स्क्रिप्टेबल कंट्रोल: कैमरा मैट्रिक्स पर पूरा नियंत्रण हासिल करना।</li>
+      </ul>
+
+      <h2>2. सेकंड-ऑर्डर स्प्रिंग फिजिक्स और डैम्पिंग</h2>
+      <p>बिना किसी अवांछित कंपन के स्वाभाविक कैमरा गति:</p>
+      <ul>
+          <li>क्रिटिकल डैम्पिंग: 1.0 डैम्पिंग रेशियो से कैमरा बिना हिले तुरंत स्थिर होता है।</li>
+          <li>गति इनर्शिया: दौड़ने और कूदने पर वजनदार अहसास।</li>
+          <li>स्वतंत्र घूर्णन: माउस का नियंत्रण तेज और सटीक बना रहता है।</li>
+          <li>फ्रेमरेट स्वतंत्रता: dt का उपयोग करके सभी उपकरणों पर समान गति।</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau स्प्रिंग कैमरा कंट्रोलर और स्फीयरकास्ट सुरक्षा</div>
+        <pre><code>--!strict
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+local CameraController = {}
+local camera = Workspace.CurrentCamera
+local player = Players.LocalPlayer
+local yaw, pitch = 0, 0
+local targetDistance, currentDistance = 12, 12
+local springPos, springVel = Vector3.zero, Vector3.zero
+local SPHERE_RADIUS = 0.6
+local RAY_PARAMS = RaycastParams.new()
+RAY_PARAMS.FilterType = RaycastFilterType.Exclude
+
+function CameraController.Init()
+    camera.CameraType = Enum.CameraType.Scriptable
+    UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
+    RunService.RenderStepped:Connect(CameraController.Update)
+end
+
+function CameraController.Update(dt: number)
+    local char = player.Character
+    if not char or not char:FindFirstChild("Head") then return end
+    local head = char.Head :: BasePart
+    RAY_PARAMS.FilterDescendantsInstances = { char }
+    
+    local focus = CFrame.new(head.Position) * CFrame.Angles(0, yaw, 0) * CFrame.Angles(pitch, 0, 0)
+    local force = (Vector3.new(2.2, 1.0, 0) - springPos) * 140 - (springVel * 22)
+    springVel += force * dt
+    springPos += springVel * dt
+    
+    local targetPos = (focus * CFrame.new(springPos)).Position - (focus.LookVector * targetDistance)
+    local hit = Workspace:Spherecast(head.Position, SPHERE_RADIUS, targetPos - head.Position, RAY_PARAMS)
+    local adjDist = targetDistance
+    if hit and hit.Instance and hit.Instance.CanCollide then
+        adjDist = math.max(1.5, (hit.Position - head.Position).Magnitude - SPHERE_RADIUS)
+    end
+    currentDistance += (adjDist - currentDistance) * math.min(1, dt * 25)
+    camera.CFrame = focus * CFrame.new(springPos) * CFrame.new(0, 0, currentDistance)
+end
+return CameraController</code></pre>
+      </div>
+
+      <h2>3. स्फीयरकास्ट द्वारा दीवार पार करने की रोकथाम</h2>
+      <p>दीवारों के आर-पार देखने की समस्या का समाधान:</p>
+      <ul>
+          <li>वॉल्यूमेट्रिक जांच: स्फीयरकास्ट 3D गोले के रूप में दीवारों को पहचानता है।</li>
+          <li>सुरक्षा दायरा: दीवार छूने से पहले सुरक्षित दूरी बनाए रखना।</li>
+          <li>स्मूथ वापसी: संकरी जगह से बाहर आने पर धीरे-धीरे सामान्य होना।</li>
+          <li>कोनों पर सटीक: तेज मोड़ों पर भी कैमरा नहीं अटकता।</li>
+      </ul>
+
+      <h2>4. डायनामिक शोल्डर शिफ्ट और निशाना साधना (ADS)</h2>
+      <p>लड़ाई के दौरान दृश्य को बेहतर बनाना:</p>
+      <ul>
+          <li>शोल्डर शिफ्ट: जरूरत के अनुसार बाएं या दाएं कंधे से देखना।</li>
+          <li>निशाना ज़ूम: गोली चलाते समय व्यू एंगल को छोटा करना।</li>
+          <li>पैरालेक्स सुधार: क्रॉसहेयर को स्क्रीन के केंद्र से मिलाना।</li>
+          <li>स्प्रिंट प्रभाव: तेजी से दौड़ते समय हल्का पीछे हटना।</li>
+      </ul>
+
+      <h2>5. मोबाइल टच जेस्चर और रिस्पॉन्सिव कंट्रोल</h2>
+      <p>मोबाइल और कंसोल पर बेहतरीन गेमप्ले अनुभव:</p>
+      <ul>
+          <li>पिंच ज़ूम: दो उंगलियों से कैमरा दूरी आसानी से बदलना।</li>
+          <li>राइट-स्क्रीन स्वाइप: स्क्रीन के दाएं हिस्से से कैमरा घुमाना।</li>
+          <li>कंट्रोलर कर्व्स: जॉयस्टिक से सटीक निशाना साधने की सुविधा।</li>
+          <li>लोकल कैलकुलेशन: सभी गणनाएं फोन पर ही पूरी करना।</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>कैमरे के लिए रेकास्ट के बजाय स्फीयरकास्ट क्यों चुनें?</h3>
+          <p>स्फीयरकास्ट एक 3D क्षेत्र की जांच करता है, जिससे कैमरा दीवारों के अंदर नहीं घुसता।</p>
+        </div>
+        <div class="faq-item">
+          <h3>दीवार के पास कैमरे के कंपन को कैसे रोकें?</h3>
+          <p>दूरी में बदलाव को तुरंत न करके धीरे-धीरे स्मूथ करने से कंपन दूर होता है।</p>
+        </div>
+        <div class="faq-item">
+          <h3>क्या इससे मोबाइल फोन पर गेम लैग होगा?</h3>
+          <p>यह गणना प्रति फ्रेम 0.05ms से भी कम समय लेती है, जिससे गेम 60 FPS पर चलता रहता है।</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
