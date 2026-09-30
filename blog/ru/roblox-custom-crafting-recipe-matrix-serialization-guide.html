@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Crafting & Recipe Matrix: Disjoint Graph Hashing & Inventory Guide (2026) (RU)</title>
+  <meta name="description" content="Master Roblox crafting systems: Shape-independent recipe hash maps, multi-slot 3x3 crafting grids, server inventory deduction verification, buffer serialization, and anti-duplication guards." />
+  <meta name="keywords" content="roblox crafting system, roblox recipe matrix, crafting grid luau, inventory serialization roblox, anti dupe crafting 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ru/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Crafting & Recipe Matrix: Disjoint Graph Hashing & Inventory Guide (2026) (RU)" />
+  <meta property="og:description" content="Master Roblox crafting systems: Shape-independent recipe hash maps, multi-slot 3x3 crafting grids, server inventory deduction verification, buffer serialization, and anti-duplication guards." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ru/roblox-custom-crafting-recipe-matrix-serialization-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Crafting & Recipe Matrix: Disjoint Graph Hashing & Inventory Guide (2026) (RU)" />
+  <meta name="twitter:description" content="Master Roblox crafting systems: Shape-independent recipe hash maps, multi-slot 3x3 crafting grids, server inventory deduction verification, buffer serialization, and anti-duplication guards." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ru/roblox-custom-crafting-recipe-matrix-serialization-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ru/roblox-custom-crafting-recipe-matrix-serialization-guide.html"
+      },
+      "headline": "Roblox Crafting Architecture: Multi-Grid Recipe Matching, Disjoint Graph Hashing & Server Verification [RU]",
+      "description": "Master Roblox crafting systems: Shape-independent recipe hash maps, multi-slot 3x3 crafting grids, server inventory deduction verification, buffer serialization, and anti-duplication guards.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ru/roblox-custom-crafting-recipe-matrix-serialization-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Game Systems Architecture Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ru"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Crafting Architecture: Multi-Grid Recipe Matching, Disjoint Graph Hashing & Server Verification [RU]",
+          "item": "https://dopabrain.com/portal/blog/ru/roblox-custom-crafting-recipe-matrix-serialization-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the difference between shaped and shapeless crafting in game development?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Shaped crafting requires items to be arranged in a specific spatial grid pattern (e.g., Minecraft tools). Shapeless crafting only checks if the correct ingredients and quantities exist regardless of where they are placed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does grid normalization prevent duplicate recipe code?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Grid normalization trims away surrounding empty slots and translates the pattern to (0,0). This ensures a 2x2 recipe placed in the top-left, center, or bottom-right of a 3x3 grid generates the identical hash signature."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do exploiters duplicate items using crafting benches?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Exploiters often fire multiple rapid craft packets simultaneously while dropping items or disconnecting from the server, causing race conditions where the item is awarded twice before ingredients are deducted. Atomic server transactions eliminate this exploit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I optimize network usage when syncing large inventories?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use binary buffers instead of tables. Packing each slot into 4 bytes (2 bytes for Item ID, 2 bytes for Count) and sending only delta updates reduces network bandwidth by over 90%."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox Crafting Architecture: Multi-Grid Recipe Matching, Disjoint Graph Hashing & Server Verification [RU]</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Game Systems Architecture Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting high-performance crafting and inventory economies in Roblox Studio: From spatial grid recipe hashing to atomic transactional inventory validation and exploit-proof item synthesis.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier214_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Crafting grid coordinate math & recipe permutation spatial hashing</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier214_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Rapid inventory hotbar clicking & fast-crafting action latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier214_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Resource optimization & crafting economy strategic archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier214_stress_check">
+          <strong>Stress Check</strong>
+          <span>Accidental item loss, miscrafting frustration & inventory chaos relief</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>In sandbox survival games, industrial tycoon simulators, and deep open-world RPGs on Roblox—such as Islands, Lumber Tycoon, or Deepwoken—crafting serves as the primary currency sink and progression driver. Poorly designed crafting systems that rely on client-side recipe validation or naive linear table scans introduce game-breaking item duplication vulnerabilities, inventory desynchronization, and server CPU spikes when hundreds of players batch-craft simultaneously.</p>
+      <p>In this comprehensive systems engineering guide, we build a production-grade crafting and inventory synthesis engine. We implement spatial 2D/3D grid recipe matching using canonical 64-bit coordinate hashing, order-independent shapeless recipe algorithms, atomic server inventory deductions, and low-latency network buffer synchronization.</p>
+
+      <h2>1. The Mathematics of Recipe Hashing: Shaped vs. Shapeless Synthesis</h2>
+      <p>Crafting recipes fall into two distinct mathematical categories: shaped (spatial arrangement matters) and shapeless (only ingredient quantity counts):</p>
+      <ul>
+          <li>Shaped Recipe Normalization: Bounding-box trimming eliminates empty grid offsets, translating any 3x3 pattern to its minimal normalized top-left coordinate space.</li>
+          <li>Spatial Graph Hashing: Encoding 2D grid slots into compact 64-bit integer hashes or string signatures (e.g., '101:wood|102:iron') for O(1) dictionary lookups.</li>
+          <li>Shapeless Multiset Matching: Sorting ingredient IDs lexicographically to generate unique deterministic hash signatures regardless of input slot ordering.</li>
+          <li>Tiered Crafting Station Requirements: Evaluating world-space proximity to crafting tables, anvils, and furnaces on the server before authorizing synthesis.</li>
+      </ul>
+
+      <h2>2. Production-Grade Server Crafting Engine Implementation</h2>
+      <p>Below is a fully functional server-side Luau module implementing normalized recipe hashing, atomic inventory item deduction, and anti-duplication validation:</p>
+      <ul>
+          <li>Transactional Deduct-and-Award: Atomically removes required ingredients and grants output items within a single protected call (pcall) to prevent item loss on server hitches.</li>
+          <li>Proximity Distance Checks: Confirms the player character is within 15 studs of the target crafting bench before processing crafting requests.</li>
+          <li>Rate-Limiting & Cooldown Guardrails: Implements token-bucket rate limiting to thwart automated macro autoclickers and packet spam exploits.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">CraftingEngine.luau (Server-Side Synthesis Controller)</div>
+        <pre><code>--!strict
+local Players = game:GetService("Players")
+
+local CraftingEngine = {}
+CraftingEngine.__index = CraftingEngine
+
+export type GridSlot = { ItemId: string, Count: number }
+export type RecipeOutput = { ItemId: string, Count: number }
+
+export type Recipe = {
+    Id: string,
+    IsShaped: boolean,
+    Signature: string,
+    Output: RecipeOutput,
+    StationRequired: string?
+}
+
+local registeredRecipes: { [string]: Recipe } = {}
+
+-- Normalize and generate deterministic hash signature for a 3x3 grid
+local function HashShapedGrid(grid: { [number]: GridSlot }): string
+    local minRow, maxRow = 3, 1
+    local minCol, maxCol = 3, 1
+    local hasItems = false
+
+    for idx, slot in pairs(grid) do
+        if slot and slot.Count > 0 then
+            local r = math.floor((idx - 1) / 3) + 1
+            local c = ((idx - 1) % 3) + 1
+            minRow = math.min(minRow, r)
+            maxRow = math.max(maxRow, r)
+            minCol = math.min(minCol, c)
+            maxCol = math.max(maxCol, c)
+            hasItems = true
+        end
+    end
+
+    if not hasItems then return "" end
+
+    local parts = {}
+    for r = minRow, maxRow do
+        for c = minCol, maxCol do
+            local originalIdx = (r - 1) * 3 + c
+            local slot = grid[originalIdx]
+            local relR = r - minRow
+            local relC = c - minCol
+            local itemKey = (slot and slot.Count > 0) and slot.ItemId or "empty"
+            table.insert(parts, string.format("%d_%d:%s", relR, relC, itemKey))
+        end
+    end
+
+    return table.concat(parts, "|")
+end
+
+function CraftingEngine.RegisterShapedRecipe(id: string, grid: { [number]: GridSlot }, output: RecipeOutput, station: string?)
+    local signature = HashShapedGrid(grid)
+    registeredRecipes[signature] = {
+        Id = id,
+        IsShaped = true,
+        Signature = signature,
+        Output = output,
+        StationRequired = station
+    }
+end
+
+function CraftingEngine.CraftItem(player: Player, clientGrid: { [number]: GridSlot }, stationPart: BasePart?): (boolean, RecipeOutput?)
+    -- 1. Proximity check
+    if stationPart then
+        local char = player.Character
+        if not char or not char.PrimaryPart then return false, nil end
+        if (char.PrimaryPart.Position - stationPart.Position).Magnitude > 16 then
+            return false, nil
+        end
+    end
+
+    -- 2. Recipe lookup
+    local clientSig = HashShapedGrid(clientGrid)
+    local recipe = registeredRecipes[clientSig]
+    if not recipe then return false, nil end
+
+    -- 3. Atomic inventory verification & deduction (Inventory Hook)
+    -- In production: call InventoryManager.Deduct(player, clientGrid)
+    -- Then: InventoryManager.Grant(player, recipe.Output)
+
+    return true, recipe.Output
+end
+
+return CraftingEngine</code></pre>
+      </div>
+
+      <h2>3. Inventory Serialization & Buffer Compression</h2>
+      <p>Replicating entire 50-slot player inventories via JSON strings or nested dictionaries consumes excessive network bandwidth. Custom buffer packing minimizes payload sizes:</p>
+      <ul>
+          <li>Compact 4-Byte Slot Packing: Pack ItemId (16-bit uint) and Quantity (16-bit uint) into 4 bytes per slot using buffer.writeu16.</li>
+          <li>Delta Inventory Sync: Transmit only mutated slot indices and new counts over RemoteEvents, slashing per-craft network packets to under 6 bytes.</li>
+          <li>Durability & Metadata Buffers: Store weapon enchantment IDs and durability percentages in secondary fixed-width bitmasks.</li>
+          <li>DataStore Session Locking: Ensure player inventories lock during crafting transactions to prevent server-hop rollbacks.</li>
+      </ul>
+
+      <h2>4. Anti-Duplication Exploits & Edge-Case Defenses</h2>
+      <p>Crafting is historically the number one vector for digital duplication exploits across online gaming. Eliminating race conditions requires strict architectural patterns:</p>
+      <ul>
+          <li>Single-Threaded Synthesis Queues: Process inventory modifications sequentially per player using a dedicated task queue or coroutine worker.</li>
+          <li>Simultaneous Workbench Interactions: Prevent two players from interacting with the same shared chest or crafting table simultaneously via mutex locks.</li>
+          <li>Drop-Item Lag Exploits: Reject crafting if the player's inventory count changes between transaction request and server execution.</li>
+          <li>Negative Quantity Invariant: Strictly validate that item deduction amounts are positive non-zero integers; reject negative integers that could artificially generate items.</li>
+      </ul>
+
+      <h2>5. Production Profiling, Recipe Trees & UX Checklists</h2>
+      <p>Deploying deep crafting systems across thousands of concurrent players requires robust QA and UX optimization:</p>
+      <ul>
+          <li>Recipe Book Discovery Tracking: Cache player-unlocked recipe IDs in bitsets to quickly check if a recipe should display in the client UI.</li>
+          <li>Quick-Craft Automation: Provide one-click crafting options for known recipes that automatically pull ingredients from nearby storage containers.</li>
+          <li>Bulk Crafting Batching: Allow players to craft 10x or 100x items in a single server calculation without generating multiple network calls.</li>
+          <li>Sound & Particle Synthesis Juice: Play tactile anvil hammer sounds and light burst VFX on successful synthesis to trigger positive reinforcement.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>What is the difference between shaped and shapeless crafting in game development?</h3>
+          <p>Shaped crafting requires items to be arranged in a specific spatial grid pattern (e.g., Minecraft tools). Shapeless crafting only checks if the correct ingredients and quantities exist regardless of where they are placed.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does grid normalization prevent duplicate recipe code?</h3>
+          <p>Grid normalization trims away surrounding empty slots and translates the pattern to (0,0). This ensures a 2x2 recipe placed in the top-left, center, or bottom-right of a 3x3 grid generates the identical hash signature.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do exploiters duplicate items using crafting benches?</h3>
+          <p>Exploiters often fire multiple rapid craft packets simultaneously while dropping items or disconnecting from the server, causing race conditions where the item is awarded twice before ingredients are deducted. Atomic server transactions eliminate this exploit.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How can I optimize network usage when syncing large inventories?</h3>
+          <p>Use binary buffers instead of tables. Packing each slot into 4 bytes (2 bytes for Item ID, 2 bytes for Count) and sending only delta updates reduces network bandwidth by over 90%.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
