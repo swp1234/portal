@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 커스텀 라이팅 및 애트모스피어: 퓨처 엔진 섀도우 및 포스트FX 가이드 (2026)</title>
+  <meta name="description" content="로블록스 커스텀 라이팅 아키텍처 완벽 가이드: 퓨처 라이팅 동적 그림자 맵, 애트모스피어 산란, 볼류메트릭 구름, 동적 ColorCorrection 및 모바일 성능 튜닝." />
+  <meta name="keywords" content="로블록스 퓨처 라이팅, 로블록스 그림자 최적화, 로블록스 볼륨 애트모스피어, 포스트 프로세싱 로블록스, 컬러코렉션 로블록스 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 커스텀 라이팅 및 애트모스피어: 퓨처 엔진 섀도우 및 포스트FX 가이드 (2026)" />
+  <meta property="og:description" content="로블록스 커스텀 라이팅 아키텍처 완벽 가이드: 퓨처 라이팅 동적 그림자 맵, 애트모스피어 산란, 볼류메트릭 구름, 동적 ColorCorrection 및 모바일 성능 튜닝." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 커스텀 라이팅 및 애트모스피어: 퓨처 엔진 섀도우 및 포스트FX 가이드 (2026)" />
+  <meta name="twitter:description" content="로블록스 커스텀 라이팅 아키텍처 완벽 가이드: 퓨처 라이팅 동적 그림자 맵, 애트모스피어 산란, 볼류메트릭 구름, 동적 ColorCorrection 및 모바일 성능 튜닝." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html"
+      },
+      "headline": "로블록스 커스텀 라이팅: 퓨처 라이팅 그림자, 볼륨 클라우드, 포스트FX 및 모바일 최적화",
+      "description": "로블록스 커스텀 라이팅 아키텍처 완벽 가이드: 퓨처 라이팅 동적 그림자 맵, 애트모스피어 산란, 볼류메트릭 구름, 동적 ColorCorrection 및 모바일 성능 튜닝.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 테크니컬 아트 그룹",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 커스텀 라이팅: 퓨처 라이팅 그림자, 볼륨 클라우드, 포스트FX 및 모바일 최적화",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "ShadowMap과 Future 라이팅 기술의 가장 큰 차이점은 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ShadowMap은 오직 태양/달의 지향성 빛에 대해서만 그림자를 만듭니다. 반면 Future 기술은 맵 곳곳에 배치된 전등, 횃불 등 모든 로컬 포인트/스팟 라이트에서 실시간 픽셀 그림자를 렌더링합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "모바일 기기에서 로컬 조명의 그림자가 보이지 않는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "로블록스 모바일 클라이언트는 낮은 그래픽 품질 설정(1~3단계)에서 GPU 성능을 보호하기 위해 Future 기술을 ShadowMap이나 Voxel 모드로 자동 다운그레이드하기 때문입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "원활한 60 FPS를 유지하려면 몇 개의 동적 그림자 조명을 사용할 수 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "화면 내에 동시에 보이는 그림자 지원 조명은 8~12개 이하로 제한하는 것이 좋습니다. 보조 간접광이나 잔잔한 조명은 Shadows 속성을 끄는 것이 권장됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Atmosphere와 Clouds가 프레임레이트에 큰 영향을 미치나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Atmosphere는 매우 가벼운 뎁스 패스로 프레임 영향이 거의 없습니다. 볼류메트릭 구름(Clouds)은 GPU 필레이트를 약간 소모하므로 Cover와 Density 값을 적절히 조절하는 것이 좋습니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 커스텀 라이팅: 퓨처 라이팅 그림자, 볼륨 클라우드, 포스트FX 및 모바일 최적화</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 테크니컬 아트 그룹</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      로블록스 렌더링 파이프라인 마스터: 영화 같은 퓨처 라이팅 기술, 부드러운 반그림자 필터링, 물리 기반 대기 산란 및 적응형 모바일 포스트FX 프로파일 구현.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier208_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>섀도우 맵 메모리 수학 및 동적 렌더링 예산 배분 연산 모델</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier208_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>시각 명도 대비, 동적 조명 콘트라스트 및 표적 식별 반응 잠복기</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier208_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>대기 환경 몰입 및 그래픽 렌더링 시각 인지 스타일</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier208_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>과도한 블룸 눈부심, 시각적 피로 및 안구 긴장 완화</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>조명과 환경 대기(Atmosphere)는 로블록스 경험에서 플레이어의 시각적 몰입도, 시각적 계층 구조, 감정적 분위기를 좌우하는 핵심 요소입니다. 최신 Future 라이팅 기술의 보편화로 개발자는 물리적으로 정확한 포인트/서피스 라이트 그림자, 고역광 HDR 블룸, 볼류메트릭 클라우드를 구현할 수 있게 되었습니다. 그러나 제약 없이 배치된 동적 라이트와 섀도우 맵은 중저사양 모바일 기기에서 프레임 드랍과 발열을 초래합니다.</p>
+      <p>본 테크니컬 아트 및 렌더링 최적화 가이드에서는 로블록스 라이팅 파이프라인의 내부 구조를 분석합니다. 동적 시간대(Time-of-Day) 전환, 데스크톱 Future 라이팅과 모바일 ShadowMap/Voxel 간 적응형 퀄리티 스케일링, 세밀한 ColorCorrection 및 피사계 심도(DepthOfField) 조절 Luau 시스템을 제공합니다.</p>
+
+      <h2>1. 로블록스 라이팅 파이프라인: Compatibility vs Voxel vs ShadowMap vs Future</h2>
+      <p>로블록스 스튜디오는 Lighting 서비스 하에 4가지 렌더링 기술을 제공합니다. 각 기술의 광원 계산 및 섀도우 프러스텀 처리 방식을 이해하는 것이 크로스 플랫폼 최적화의 첫걸음입니다:</p>
+      <ul>
+          <li>Compatibility & Voxel: 픽셀 단위 동적 그림자 없이 복셀 격자로 근사 계산하는 초경량 기술로 캐주얼 게임에 적합합니다.</li>
+          <li>ShadowMap: 태양광 및 지향성 빛의 그림자 캐스케이드를 고해상도로 렌더링하지만 로컬 광원 그림자는 지원하지 않습니다.</li>
+          <li>Future (Phase 3): PointLight, SpotLight, SurfaceLight 등 모든 로컬 광원에서 실시간 동적 그림자와 반그림자(Penumbra) 및 스펙큘러를 계산합니다.</li>
+          <li>동적 섀도우 맵 예산: Future 라이팅은 동적 광원마다 섀도우 아틀라스 메모리를 할당하므로 시야각 내 그림자 광원이 10~15개를 초과하면 GPU 병목이 발생합니다.</li>
+      </ul>
+
+      <h2>2. 적응형 라이팅 퀄리티 스케일러 구현 코드</h2>
+      <p>아래는 플레이어의 하드웨어 프레임레이트를 실시간 모니터링하여 원거리 로컬 광원의 그림자를 자동 컬링하고 포스트 프로세싱을 조절하는 클라이언트 Luau 모듈입니다:</p>
+      <ul>
+          <li>하드웨어 인식 자동 튜닝: RunService.RenderStepped 델타 스무딩을 통해 프레임 드랍 발생 여부를 감지합니다.</li>
+          <li>광원 그림자 컬링: 원거리 또는 중요도가 낮은 광원의 Shadows 속성을 동적으로 비활성화하여 GPU 필레이트를 보존합니다.</li>
+          <li>애트모스피어 및 포스트FX 보간: 구역 이동 시 Atmosphere 밀도, ColorCorrection 대비, Bloom 강도를 부드럽게 크로스페이드합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">AdaptiveLightingManager.luau (클라이언트 환경 컨트롤러)</div>
+        <pre><code>--!strict
+local Lighting = game:GetService("Lighting")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+local AdaptiveLighting = {}
+AdaptiveLighting.__index = AdaptiveLighting
+
+local isMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
+local camera = workspace.CurrentCamera
+
+local function ConfigureBaselineSettings()
+    Lighting.Technology = Enum.Technology.Future
+    Lighting.GlobalShadows = true
+    Lighting.GeographicLatitude = 41.5
+    
+    local atmosphere = Lighting:FindFirstChildOfClass("Atmosphere")
+    if not atmosphere then
+        atmosphere = Instance.new("Atmosphere")
+        atmosphere.Density = 0.35
+        atmosphere.Offset = 0.25
+        atmosphere.Haze = 1.2
+        atmosphere.Color = Color3.fromRGB(199, 199, 215)
+        atmosphere.Decay = Color3.fromRGB(106, 112, 125)
+        atmosphere.Parent = Lighting
+    end
+end
+
+local trackedLights: { Light } = {}
+
+function AdaptiveLighting.RegisterLight(light: Light)
+    table.insert(trackedLights, light)
+end
+
+local frameSamples = {}
+local sampleIndex = 1
+local maxSamples = 60
+
+local function GetAverageFPS(): number
+    local sum = 0
+    for _, dt in ipairs(frameSamples) do sum += dt end
+    if #frameSamples == 0 then return 60 end
+    return #frameSamples / sum
+end
+
+local updateTimer = 0
+RunService.RenderStepped:Connect(function(dt: number)
+    frameSamples[sampleIndex] = dt
+    sampleIndex = (sampleIndex % maxSamples) + 1
+
+    updateTimer += dt
+    if updateTimer < 0.5 then return end
+    updateTimer = 0
+
+    local avgFps = GetAverageFPS()
+    local camPos = camera.CFrame.Position
+    local shadowDistanceThreshold = (avgFps < 45 or isMobile) and 40 or 100
+
+    for _, light in ipairs(trackedLights) do
+        local parentPart = light.Parent
+        if parentPart and parentPart:IsA("BasePart") then
+            local dist = (parentPart.Position - camPos).Magnitude
+            if dist > shadowDistanceThreshold then
+                light.Shadows = false
+            else
+                light.Shadows = true
+            end
+        end
+    end
+end)
+
+ConfigureBaselineSettings()
+return AdaptiveLighting</code></pre>
+      </div>
+
+      <h2>3. 애트모스피어, 볼류메트릭 클라우드 및 대기 산란</h2>
+      <p>대기 효과는 단조로운 블록 환경을 한 편의 영화 같은 예술적 공간으로 바꿉니다. 로블록스의 Atmosphere와 Clouds 인스턴스는 레일리 산란과 고도별 구름을 모사합니다:</p>
+      <ul>
+          <li>레일리 및 미 산란: Atmosphere.Haze와 Decay 속성을 통해 정오의 청명한 하늘과 일몰 골든아워의 붉은 노을을 정밀하게 연출합니다.</li>
+          <li>볼류메트릭 구름 연동: Clouds.Cover(구름양)와 Clouds.Density(밀도)를 동적으로 제어하여 실시간 기상 악화 및 폭풍 전조를 표현합니다.</li>
+          <li>원근 대기 안개: 거리 기반 포그(Fog)로 깊이감을 형성하고 원거리 지오메트리 스트리밍 경계선을 자연스럽게 차폐합니다.</li>
+          <li>선레이 및 블룸의 조화: SunRaysEffect(Intensity 0.15)와 Bloom(Intensity 0.25)을 적절히 결합하여 과하지 않은 자연스러운 렌즈 플레어를 연출합니다.</li>
+      </ul>
+
+      <h2>4. ColorCorrection 및 포스트FX 인체공학</h2>
+      <p>포스트 프로세싱은 화면에 픽셀이 출력되기 직전의 최종 보정 파이프라인입니다. 과도한 포스트FX는 시각 피로를 부르고 전투 판정 시각성을 떨어뜨립니다:</p>
+      <ul>
+          <li>LUT 보정 모사: 약간의 대비(+0.08)와 채도(+0.1) 향상으로 암부 손실이나 하이라이트 클리핑 없이 선명한 색감을 구현합니다.</li>
+          <li>피사계 심도(DoF) 주의사항: 빠른 교전 상황에서는 전체 화면 DoF를 피하고 시네마틱 대화 연출 시에만 한정적으로 적용합니다.</li>
+          <li>하이라이트(Highlight) 인스턴스 제한: Highlight는 별도의 스텐실 버퍼 패스를 요구하므로 화면 내 20~30개를 초과하지 않도록 관리합니다.</li>
+          <li>접근성 색상 프로파일: 플레이어가 고대비 모드나 색약 보정 컬러 프로파일을 선택할 수 있는 클라이언트 옵션을 제공합니다.</li>
+      </ul>
+
+      <h2>5. 상용 배포 검증 및 최적화 체크리스트</h2>
+      <p>데스크톱, 콘솔, 모바일 전반에서 고품질 라이팅을 안정적으로 유지하기 위한 필수 검증 단계입니다:</p>
+      <ul>
+          <li>마이크로프로파일러 GPU 패스 확인: ScenePass와 ShadowMap 생성 시간을 점검하여 모바일에서 라이팅 패스가 3.5ms 미만을 유지하도록 합니다.</li>
+          <li>실내 빛 누출(Light Leaking) 점검: 지하 밀폐 공간이나 실내 방의 벽면 모서리에서 태양광이 새어나오지 않도록 양면 지오메트리를 설계합니다.</li>
+          <li>모바일 발열 및 배터리 테스트: iOS 및 안드로이드 기기에서 15분 이상 연속 플레이 시 쓰로틀링으로 인한 프레임 드랍이 없는지 검증합니다.</li>
+          <li>PBR 텍스처 메모리 압축: 커스텀 표면 텍스처(Roughness, Metalness, Normal)를 1024x1024 이하로 압축하여 비디오 메모리 과점유를 방지합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>ShadowMap과 Future 라이팅 기술의 가장 큰 차이점은 무엇인가요?</h3>
+          <p>ShadowMap은 오직 태양/달의 지향성 빛에 대해서만 그림자를 만듭니다. 반면 Future 기술은 맵 곳곳에 배치된 전등, 횃불 등 모든 로컬 포인트/스팟 라이트에서 실시간 픽셀 그림자를 렌더링합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>모바일 기기에서 로컬 조명의 그림자가 보이지 않는 이유는 무엇인가요?</h3>
+          <p>로블록스 모바일 클라이언트는 낮은 그래픽 품질 설정(1~3단계)에서 GPU 성능을 보호하기 위해 Future 기술을 ShadowMap이나 Voxel 모드로 자동 다운그레이드하기 때문입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>원활한 60 FPS를 유지하려면 몇 개의 동적 그림자 조명을 사용할 수 있나요?</h3>
+          <p>화면 내에 동시에 보이는 그림자 지원 조명은 8~12개 이하로 제한하는 것이 좋습니다. 보조 간접광이나 잔잔한 조명은 Shadows 속성을 끄는 것이 권장됩니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Atmosphere와 Clouds가 프레임레이트에 큰 영향을 미치나요?</h3>
+          <p>Atmosphere는 매우 가벼운 뎁스 패스로 프레임 영향이 거의 없습니다. 볼류메트릭 구름(Clouds)은 GPU 필레이트를 약간 소모하므로 Cover와 Density 값을 적절히 조절하는 것이 좋습니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

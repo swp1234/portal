@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Lighting & Atmosphere: Future Engine Shadows & Post-FX Guide (2026) (TR)</title>
+  <meta name="description" content="Comprehensive guide to Roblox Custom Lighting architectures: Future lighting shadow maps, Atmosphere scattering, volumetric Clouds, dynamic ColorCorrection, and low-end mobile performance optimization." />
+  <meta name="keywords" content="roblox future lighting, roblox shadows optimization, roblox volumetric atmosphere, post processing effects roblox, colorcorrection roblox 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/tr/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Lighting & Atmosphere: Future Engine Shadows & Post-FX Guide (2026) (TR)" />
+  <meta property="og:description" content="Comprehensive guide to Roblox Custom Lighting architectures: Future lighting shadow maps, Atmosphere scattering, volumetric Clouds, dynamic ColorCorrection, and low-end mobile performance optimization." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/tr/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Lighting & Atmosphere: Future Engine Shadows & Post-FX Guide (2026) (TR)" />
+  <meta name="twitter:description" content="Comprehensive guide to Roblox Custom Lighting architectures: Future lighting shadow maps, Atmosphere scattering, volumetric Clouds, dynamic ColorCorrection, and low-end mobile performance optimization." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/tr/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/tr/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html"
+      },
+      "headline": "Roblox Custom Lighting: Future Lighting Shadows, Volumetric Clouds, Post-FX & Mobile Budget Tuning [TR]",
+      "description": "Comprehensive guide to Roblox Custom Lighting architectures: Future lighting shadow maps, Atmosphere scattering, volumetric Clouds, dynamic ColorCorrection, and low-end mobile performance optimization.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/tr/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Technical Art Group",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "tr"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Custom Lighting: Future Lighting Shadows, Volumetric Clouds, Post-FX & Mobile Budget Tuning [TR]",
+          "item": "https://dopabrain.com/portal/blog/tr/roblox-custom-lighting-shadows-volumetric-atmosphere-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the performance difference between ShadowMap and Future lighting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ShadowMap only renders shadows for the sun/directional light. Future lighting calculates real-time shadow maps for every local PointLight, SpotLight, and SurfaceLight, creating realistic shadows at a significantly higher GPU cost."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do local light shadows disappear on mobile devices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On low graphics settings (Graphics Level 1-3), Roblox automatically downgrades Future lighting to Voxel or ShadowMap fallback modes to protect mobile GPU budgets."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many dynamic shadowed lights can Roblox handle smoothly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For stable 60 FPS across mid-range hardware, maintain fewer than 8-12 simultaneously visible shadowed lights. Turn off Shadows on fill lights and ambient bulbs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do Atmosphere and Clouds affect frame rate significantly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Atmosphere has negligible performance impact as it runs as an efficient post-processing depth pass. Volumetric Clouds have a modest GPU fillrate cost, which can be dialed back by reducing Cloud Cover and Density."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox Custom Lighting: Future Lighting Shadows, Volumetric Clouds, Post-FX & Mobile Budget Tuning [TR]</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Technical Art Group</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Mastering the Roblox Lighting Pipeline: Implementing cinematic Future technology, soft shadow filtering, physically-based atmospheric scattering, and adaptive mobile post-processing profiles.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier208_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Lighting shadow map memory math & dynamic budget allocation models</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier208_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Visual acuity, dynamic light contrast & target spotting latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier208_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Atmospheric immersion & visual rendering perception archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier208_stress_check">
+          <strong>Stress Check</strong>
+          <span>Over-bloom screen glare, visual fatigue & ocular strain relief</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>Lighting and environmental atmosphere are the primary visual drivers of player immersion, visual hierarchy, and emotional mood in Roblox experiences. With the widespread adoption of the Future lighting technology, developers can harness physically accurate point and surface light shadows, high-dynamic-range (HDR) bloom, and volumetric cloud rendering. However, unconstrained dynamic lights and shadow maps quickly cripple performance, causing frame drops and battery drain across mid-to-low tier mobile devices.</p>
+      <p>In this technical art and rendering optimization guide, we explore the internal architecture of Roblox's Lighting pipeline. We provide production-tested Luau systems for dynamic time-of-day transitions, adaptive quality scaling between desktop Future lighting and mobile ShadowMap/Voxel fallbacks, and fine-tuned ColorCorrection and DepthOfField balancing.</p>
+
+      <h2>1. The Roblox Lighting Pipeline: Compatibility vs. Voxel vs. ShadowMap vs. Future</h2>
+      <p>Roblox Studio offers four distinct lighting technologies under the Lighting service. Understanding how each technology renders lights and calculates shadow frustums is critical for cross-platform fidelity:</p>
+      <ul>
+          <li>Compatibility & Voxel: Grid-based voxel approximations without per-pixel dynamic shadows; extremely lightweight for retro or hyper-casual experiences.</li>
+          <li>ShadowMap: Renders sun/directional shadow cascades in high detail, but local point and spot lights remain unshadowed.</li>
+          <li>Future (Phase 3): Per-pixel dynamic shadows from all light types (PointLight, SpotLight, SurfaceLight) with accurate penumbra blurring and specular highlights.</li>
+          <li>Dynamic Shadow Map Budgets: Future lighting allocates shadow atlas memory per dynamic light; exceeding 10-15 active shadowed lights within view frustum induces GPU bottlenecks.</li>
+      </ul>
+
+      <h2>2. Adaptive Lighting & Quality Scaler Implementation</h2>
+      <p>Below is a production-grade client-side script that dynamically adapts Lighting properties, disables non-essential local shadows, and modulates post-processing based on player hardware performance:</p>
+      <ul>
+          <li>Hardware-Aware Technology Tuning: Monitors local frame rate via RunService.RenderStepped delta smoothing to detect frame drops.</li>
+          <li>Light Shadow Culling: Selectively toggles Shadows property on distant or low-priority lights to preserve GPU fillrate.</li>
+          <li>Atmosphere & Post-Processing Blend: Smoothly interpolates Atmosphere Density, ColorCorrection Contrast, and Bloom Intensity during zone changes.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">AdaptiveLightingManager.luau (Client-Side Environmental Controller)</div>
+        <pre><code>--!strict
+local Lighting = game:GetService("Lighting")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+local AdaptiveLighting = {}
+AdaptiveLighting.__index = AdaptiveLighting
+
+local isMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
+local camera = workspace.CurrentCamera
+
+local function ConfigureBaselineSettings()
+    Lighting.Technology = Enum.Technology.Future
+    Lighting.GlobalShadows = true
+    Lighting.GeographicLatitude = 41.5
+    
+    local atmosphere = Lighting:FindFirstChildOfClass("Atmosphere")
+    if not atmosphere then
+        atmosphere = Instance.new("Atmosphere")
+        atmosphere.Density = 0.35
+        atmosphere.Offset = 0.25
+        atmosphere.Haze = 1.2
+        atmosphere.Color = Color3.fromRGB(199, 199, 215)
+        atmosphere.Decay = Color3.fromRGB(106, 112, 125)
+        atmosphere.Parent = Lighting
+    end
+end
+
+local trackedLights: { Light } = {}
+
+function AdaptiveLighting.RegisterLight(light: Light)
+    table.insert(trackedLights, light)
+end
+
+local frameSamples = {}
+local sampleIndex = 1
+local maxSamples = 60
+
+local function GetAverageFPS(): number
+    local sum = 0
+    for _, dt in ipairs(frameSamples) do sum += dt end
+    if #frameSamples == 0 then return 60 end
+    return #frameSamples / sum
+end
+
+local updateTimer = 0
+RunService.RenderStepped:Connect(function(dt: number)
+    frameSamples[sampleIndex] = dt
+    sampleIndex = (sampleIndex % maxSamples) + 1
+
+    updateTimer += dt
+    if updateTimer < 0.5 then return end
+    updateTimer = 0
+
+    local avgFps = GetAverageFPS()
+    local camPos = camera.CFrame.Position
+    local shadowDistanceThreshold = (avgFps < 45 or isMobile) and 40 or 100
+
+    for _, light in ipairs(trackedLights) do
+        local parentPart = light.Parent
+        if parentPart and parentPart:IsA("BasePart") then
+            local dist = (parentPart.Position - camPos).Magnitude
+            if dist > shadowDistanceThreshold then
+                light.Shadows = false
+            else
+                light.Shadows = true
+            end
+        end
+    end
+end)
+
+ConfigureBaselineSettings()
+return AdaptiveLighting</code></pre>
+      </div>
+
+      <h2>3. Atmosphere, Volumetric Clouds & Skybox Scattering</h2>
+      <p>Atmospheric depth transforms sterile blocky scenes into painterly cinematic vistas. In Roblox, the Atmosphere and Clouds instances simulate Rayleigh scattering and sky elevation:</p>
+      <ul>
+          <li>Rayleigh & Mie Scattering: Atmosphere.Haze and Atmosphere.Decay dictate horizon tinting at golden hour (sunrise/sunset) versus high noon.</li>
+          <li>Volumetric Clouds Integration: Adjust Clouds.Cover (cloud density) and Clouds.Density (opacity) dynamically to simulate impending weather shifts.</li>
+          <li>Aerial Perspective: Distance fog creates perceived depth scale, naturally masking far geometry streaming boundaries.</li>
+          <li>SunRays & Bloom Harmony: Pair SunRaysEffect (Intensity 0.15, Spread 0.6) with Bloom (Intensity 0.25, Size 18) to produce subtle cinematic lens flares.</li>
+      </ul>
+
+      <h2>4. ColorCorrection & Post-FX Ergonomics</h2>
+      <p>Post-processing effects shape the final pixel pipeline before display on the player's screen. Overusing post-FX causes eye strain and obscures critical combat telegraphs:</p>
+      <ul>
+          <li>ColorCorrection LUT Emulation: Subtle Contrast (+0.08) and Saturation (+0.1) give vibrancy without crushing black levels or clipping highlights.</li>
+          <li>DepthOfField Precision: Avoid aggressive full-screen DoF during fast-paced gameplay; restrict FarIntensity and FocusDistance to cinematic dialogue cutscenes.</li>
+          <li>Highlight Instance Guardrails: Never exceed 20-30 concurrent Highlight instances on screen, as they incur separate stencil buffer render passes.</li>
+          <li>Accessibility Tone Mapping: Provide client settings to toggle high-contrast or colorblind-friendly color grading profiles.</li>
+      </ul>
+
+      <h2>5. Production Verification & Performance Checklists</h2>
+      <p>Deploying high-fidelity lighting across desktop, console, and mobile platforms requires rigorous profiling:</p>
+      <ul>
+          <li>RenderDoc & MicroProfiler GPU Passes: Audit ScenePass and ShadowMap generation times; ensure lighting passes take less than 3.5ms on mobile targets.</li>
+          <li>Overshadowing Cull Audits: Verify that indoor and subterranean rooms do not leak sunlight through wall seams by using double-sided geometry.</li>
+          <li>Mobile Battery & Thermal Checks: Profile test 15-minute play sessions on iOS and Android devices to verify zero thermal throttling.</li>
+          <li>Memory Footprint Validation: Keep custom texture maps (RoughnessMap, MetalnessMap, NormalMap) compressed under 1024x1024 to prevent memory thrashing.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>What is the performance difference between ShadowMap and Future lighting?</h3>
+          <p>ShadowMap only renders shadows for the sun/directional light. Future lighting calculates real-time shadow maps for every local PointLight, SpotLight, and SurfaceLight, creating realistic shadows at a significantly higher GPU cost.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Why do local light shadows disappear on mobile devices?</h3>
+          <p>On low graphics settings (Graphics Level 1-3), Roblox automatically downgrades Future lighting to Voxel or ShadowMap fallback modes to protect mobile GPU budgets.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How many dynamic shadowed lights can Roblox handle smoothly?</h3>
+          <p>For stable 60 FPS across mid-range hardware, maintain fewer than 8-12 simultaneously visible shadowed lights. Turn off Shadows on fill lights and ambient bulbs.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Do Atmosphere and Clouds affect frame rate significantly?</h3>
+          <p>Atmosphere has negligible performance impact as it runs as an efficient post-processing depth pass. Volumetric Clouds have a modest GPU fillrate cost, which can be dialed back by reducing Cloud Cover and Density.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
