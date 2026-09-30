@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 커스텀 수상 부력: 거스트너 파도 및 보트 물리 가이드 (2026)</title>
+  <meta name="description" content="로블록스 커스텀 수상 물리 완벽 가이드: 거스트너(Gerstner) 파도 변위 공식, 다중 프로브 아르키메데스 부력 연산, 유체 항력 댐핑 및 멀티플레이어 파도 동기화." />
+  <meta name="keywords" content="로블록스 수상 부력, 거스트너 파도 루아우, 보트 물리 로블록스, 커스텀 유체 시뮬레이션, 부력 계산 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 커스텀 수상 부력: 거스트너 파도 및 보트 물리 가이드 (2026)" />
+  <meta property="og:description" content="로블록스 커스텀 수상 물리 완벽 가이드: 거스트너(Gerstner) 파도 변위 공식, 다중 프로브 아르키메데스 부력 연산, 유체 항력 댐핑 및 멀티플레이어 파도 동기화." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 커스텀 수상 부력: 거스트너 파도 및 보트 물리 가이드 (2026)" />
+  <meta name="twitter:description" content="로블록스 커스텀 수상 물리 완벽 가이드: 거스트너(Gerstner) 파도 변위 공식, 다중 프로브 아르키메데스 부력 연산, 유체 항력 댐핑 및 멀티플레이어 파도 동기화." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.08));
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      color: #e2e8f0;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .code-header {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      font-family: monospace;
+      border-bottom: 1px solid #334155;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: "Fira Code", monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 32px 0;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    .quick-card span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .faq-container {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      color: #94a3b8;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .portal-btn {
+      display: inline-block;
+      margin-top: 16px;
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+      min-height: 44px;
+      line-height: 20px;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1.25rem; }
+      .container { padding: 16px; }
+      .quick-links { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-water-buoyancy-fluid-simulation-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-water-buoyancy-fluid-simulation-guide.html"
+      },
+      "headline": "로블록스 선박 물리 아키텍처: 다중 프로브 선체 샘플링, 거스트너 파고 벡터 및 유체 동역학 저항",
+      "description": "로블록스 커스텀 수상 물리 완벽 가이드: 거스트너(Gerstner) 파도 변위 공식, 다중 프로브 아르키메데스 부력 연산, 유체 항력 댐핑 및 멀티플레이어 파도 동기화.",
+      "url": "https://dopabrain.com/portal/blog/ko/roblox-custom-water-buoyancy-fluid-simulation-guide.html",
+      "inLanguage": "ko",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-water-buoyancy-fluid-simulation-guide.html",
+      "datePublished": "2026-09-30T10:00:00+09:00",
+      "dateModified": "2026-09-30T10:00:00+09:00",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 물리 및 유체 시뮬레이션 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "image": "https://dopabrain.com/assets/icon-512.svg"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 선박 물리 아키텍처: 다중 프로브 선체 샘플링, 거스트너 파고 벡터 및 유체 동역학 저항",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-water-buoyancy-fluid-simulation-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-water-buoyancy-fluid-simulation-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "왜 로블록스 바다 표현에 단순 사인파 대신 거스트너 파도를 써야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "단순 사인파는 둥근 언덕 형태만 만들어 인공적인 느낌을 줍니다. 거스트너 파도는 수평 벡터 변위를 함께 연산하여 파도의 꼭짓점을 뾰족하게 모으고 골을 넓혀 실제 해양 너울의 물리학을 정확하게 재현하기 때문입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "선박 물리가 뒤집히지 않고 안정되려면 몇 개의 프로브가 필요한가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "안정적인 피치와 롤 모멘트를 생성하기 위해서는 최소 4개의 프로브(선수, 선미, 좌현, 우현)가 필요하며, 대형 전함이나 요트의 경우 6~8개의 프로브를 균등 배치하는 것이 부드러운 승선감을 제공합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "서버와 클라이언트 간의 파도 높이가 어긋나지 않게 맞추는 원리는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "서버와 클라이언트 모두 동기화된 Workspace:GetServerTimeNow()를 시간 인자로 사용해 동일한 시드와 파라미터의 거스트너 공식을 계산하므로, 물리적 충돌과 시각적 파도 높이가 완전히 일치하게 됩니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>로블록스 선박 물리 아키텍처: 다중 프로브 선체 샘플링, 거스트너 파고 벡터 및 유체 동역학 저항</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 물리 및 유체 시뮬레이션 엔지니어링 팀</span>
+        <span>Updated: 2026-09-30</span>
+        <span>12 min read</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      로블록스 스튜디오 고정밀 수상 선박 물리 엔지니어링: 수학적 거스트너 파고 변위 연산과 다중 선체 프로브 샘플링부터 유체 동역학 저항 및 서버-클라이언트 시간 동기화까지.
+    </div>
+
+    <div class="quick-links">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier224_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>거스트너 파고 벡터 미적분, 유체 밀도 연산 및 부력 매트릭스 최적화</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier224_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>폭풍우 파도 너울 돌파, 조타 미세 조절 및 전복 회피 반응 잠복기</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier224_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>유체 동역학적 공간 궤적 예측 및 해양 항법 인지 아키타입</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier224_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>원양 해상전 교전 긴장감, 침몰 공포 및 실시간 틸트 완화</span>
+        </a>
+    </div>
+
+    <article>
+      <p>해상 무역, 함대전, 해양 서바이벌 게임—예를 들어 Tradelands, SharkBite 및 대규모 해전 시뮬레이터—에서 현실감 넘치는 선박 물리 엔진은 게임의 몰입감을 결정하는 핵심입니다. 하지만 로블록스의 기본 지형 수면(Terrain Water)은 높이가 평평한 수평 그리드에 고정되어 있고 선체 형상에 따른 부력 조절이 불가능하며 역동적인 파도 너울을 물리적으로 구현할 수 없습니다.</p>
+      <p>최상위 로블록스 개발팀은 지형 수면 물리 대신 Luau로 자체 수학적 부력 엔진을 구축합니다. 본 가이드에서는 선체 다중 프로브(Multi-Probe) 보트 물리 시스템을 구현합니다. 해석적 거스트너(Gerstner) 파고 벡터 유도, 선체 각 지점별 아르키메데스 부력 연산, 방향성 유체 저항력(Drag) 제어 및 Workspace:GetServerTimeNow() 기반 파도 그래픽-물리 완벽 동기화 기법을 다룹니다.</p>
+
+      <h2>1. 왜 지형 수면(Terrain Water) 대신 커스텀 부력을 사용하는가?</h2>
+      <p>로블록스 지형 복셀 수면 물리는 역동적인 해양 게임 제작 시 다음과 같은 한계를 가집니다:</p>
+      <ul>
+        <li>평면 수면의 한계: 지형 수면은 모든 표면을 정적인 수평 평면으로 처리하므로 굽이치는 파도 너울, 폭풍우의 높은 파고를 물리적으로 구현할 수 없습니다.</li>
+        <li>불안정한 부유 진동: 지형 수면에 뜬 파트는 질량 중심 계산 오류로 인해 지속적으로 위아래로 진동하거나 뒤집히는 물리 불안정이 발생합니다.</li>
+        <li>유체 항력 제어 불가: 지형 수면은 선체 단면적이나 용골(Keel) 형상을 고려하지 않고 균일한 선형 감쇠만을 적용하여 부자연스러운 조작감을 낳습니다.</li>
+        <li>커스텀 부력 패러다임: 지형 수면 상호작용을 끄고 선체의 여러 프로브 좌표에서 수학적 파고 함수를 직접 계산하여 상향력과 토크를 가함으로써 완벽한 선박 제어력을 얻습니다.</li>
+      </ul>
+
+      <h2>2. 수학적 기초: 거스트너 파도(Gerstner Waves)와 아르키메데스 원리</h2>
+      <p>실제 바다 파도는 단순한 사인파가 아니며 파도의 마루(Crest)는 뾰족해지고 골(Trough)은 넓어집니다. 이를 거스트너 파도 공식으로 정밀하게 모델링합니다:</p>
+      <ul>
+        <li>거스트너 변위 벡터: P(x, z, t) = [x + sum(Q_i * A_i * D_x * cos(theta_i)), y_0 + sum(A_i * sin(theta_i)), z + sum(Q_i * A_i * D_z * cos(theta_i))] (여기서 theta_i = k_i * (D_i . [x, z]) + w_i * t).</li>
+        <li>파도 파라미터: A_i는 파고 진폭, D_i는 진행 방향 벡터, w_i는 각진동수, k_i는 파수(2*pi/파장), Q_i는 마루의 뾰족함을 결정하는 가파름 계수.</li>
+        <li>프로브별 아르키메데스 침수 깊이: 프로브 위치 P_probe에서 침수 깊이 d = math.max(0, WaveHeight(P_probe) - P_probe.Y).</li>
+        <li>상향 부력 연산식: F_buoyant = probe_volume * water_density * gravity * (d / probe_height) (파도 표면 법선 벡터 방향으로 가해짐).</li>
+        <li>유체 항력(Drag) 공식: F_drag = -0.5 * water_density * relative_velocity * |relative_velocity| * drag_coefficient * area.</li>
+      </ul>
+
+      <h2>3. 프로덕션 등급 다중 프로브 선박 부력 Luau 구현</h2>
+      <p>다음은 RunService.Heartbeat에서 실행되는 다중 프로브 선체 샘플링 및 거스트너 파력 연산 모듈 전체 코드입니다:</p>
+      <ul>
+        <li>다중 선체 프로브 분산: 이물(선수), 고물(선미), 좌현, 우현에 4~8개의 Attachment 프로브를 배치하여 자연스러운 피치(Pitch) 및 롤(Roll) 모멘트를 형성합니다.</li>
+        <li>실시간 수면 법선 벡터 유도: 파고 함수의 편미분을 통해 파도 표면의 기울기 법선 벡터를 즉시 도출하여 경사면에 맞게 부력을 전달합니다.</li>
+        <li>국소 충격량 가산: ApplyImpulseAtPosition을 사용하여 각 프로브의 월드 좌표에 직접 상향 부력과 항력 댐핑을 가합니다.</li>
+      </ul>
+
+      <div class="code-container">
+        <div class="code-header">BoatBuoyancyEngine.luau (선박 물리 엔진 코어)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local BoatEngine = {}
+BoatEngine.__index = BoatEngine
+
+export type WaveConfig = {
+    Direction: Vector2,
+    Amplitude: number,
+    Wavelength: number,
+    Speed: number,
+    Steepness: number,
+}
+
+export type ProbeAttachment = {
+    Attachment: Attachment,
+    DisplacementVolume: number,
+    MaxDepth: number,
+}
+
+export type BoatChassis = {
+    RootPart: BasePart,
+    Probes: { ProbeAttachment },
+    Waves: { WaveConfig },
+    WaterDensity: number,
+    LinearDragCoeff: number,
+    AngularDragCoeff: number,
+}
+
+local GRAVITY = Workspace.Gravity
+
+function BoatEngine.GetWaveHeight(waves: { WaveConfig }, worldPos: Vector3, timeSec: number): (number, Vector3)
+    local height = 0
+    local normalX = 0
+    local normalZ = 0
+
+    for _, wave in ipairs(waves) do
+        local dir = wave.Direction.Unit
+        local k = (2 * math.pi) / wave.Wavelength
+        local c = wave.Speed
+        local w = math.sqrt(GRAVITY * k)
+        local dot = (dir.X * worldPos.X) + (dir.Y * worldPos.Z)
+        local phase = (dot * k) - (w * timeSec)
+
+        height += wave.Amplitude * math.sin(phase)
+        local dCos = wave.Amplitude * k * math.cos(phase)
+        normalX -= dir.X * dCos
+        normalZ -= dir.Y * dCos
+    end
+
+    local surfaceNormal = Vector3.new(normalX, 1, normalZ).Unit
+    return height, surfaceNormal
+end
+
+function BoatEngine.Step(boat: BoatChassis, dt: number)
+    local root = boat.RootPart
+    local currentTime = Workspace:GetServerTimeNow()
+
+    for _, probe in ipairs(boat.Probes) do
+        local probePos = probe.Attachment.WorldPosition
+        local waveHeight, waveNormal = BoatEngine.GetWaveHeight(boat.Waves, probePos, currentTime)
+        local immersion = math.clamp((waveHeight - probePos.Y) / probe.MaxDepth, 0, 1)
+
+        if immersion &gt; 0 then
+            -- 아르키메데스 수직 부력 계산
+            local buoyantForceMagnitude = probe.DisplacementVolume * boat.WaterDensity * GRAVITY * immersion
+            local buoyantForce = waveNormal * buoyantForceMagnitude
+
+            -- 유체 항력 댐핑
+            local probeVel = root:GetVelocityAtPosition(probePos)
+            local dragForce = -probeVel * (probeVel.Magnitude * 0.5 * boat.WaterDensity * boat.LinearDragCoeff * immersion)
+
+            local totalForce = buoyantForce + dragForce
+            root:ApplyImpulseAtPosition(totalForce * dt, probePos)
+        end
+    end
+
+    -- 각속도 선체 회전 감쇠
+    local angVel = root.AssemblyAngularVelocity
+    root.AssemblyAngularVelocity = angVel * math.clamp(1 - (boat.AngularDragCoeff * dt), 0, 1)
+end
+
+return BoatEngine</code></pre>
+      </div>
+
+      <h2>4. 유체 동역학 항력, 용골(Keel) 안정성 및 타각(Rudder) 메커니즘</h2>
+      <p>단순 부력만 적용하면 배는 물 위에서 공처럼 튀거나 미끄러집니다. 방향성 유체 역학이 필수적입니다:</p>
+      <ul>
+        <li>용골의 측면 양력: 배가 옆으로 밀릴 때 수중 날개 역할을 하는 용골이 측면 복원력을 발생시켜 직진성을 보장합니다.</li>
+        <li>종/횡 항력 비대칭 설계: 전진 방향 수중 저항은 최소화하고 측면 저항은 극대화하여 과도한 표류(Drift) 현상을 억제합니다.</li>
+        <li>키(Rudder) 선회 토크: 전진 속도에 비례하여 선회력을 인가합니다 (Torque_turn = ForwardSpeed * SteerInput * RudderPower).</li>
+        <li>전복 방지 복원 모멘트(Righting Moment): AssemblyCenterOfMass를 선체 바닥 아래로 인위적으로 낮추어 30도 이상 기울어졌을 때 자연스럽게 오뚝이처럼 복원되도록 설계합니다.</li>
+      </ul>
+
+      <h2>5. 멀티플레이어 네트워크 동기화 및 클라이언트 수면 버텍스 셰이더</h2>
+      <p>지연 시간이 다른 여러 클라이언트 환경에서 시각적 수면과 서버 물리 위치를 오차 없이 일치시키는 기법:</p>
+      <ul>
+        <li>글로벌 타임 에포크 동기화: Workspace:GetServerTimeNow()를 기준으로 파고를 계산하여 서버와 모든 클라이언트가 1ms 오차 없이 동일한 파도 높이를 산출합니다.</li>
+        <li>클라이언트 수면 메쉬 디포메이션: 클라이언트에서 EditableMesh 또는 Skinned Mesh 본(Bone) 구조를 사용해 파도 시각 메쉬를 렌더링하여 서버 대역폭 낭비를 0%로 줄입니다.</li>
+        <li>선장 클라이언트 네트워크 오너십: 조타기를 잡은 유저에게 선체 파트의 SetNetworkOwner를 부여하여 조타 반응 랙을 0ms로 제거합니다.</li>
+        <li>거리 기반 적응형 파도 LOD: 선박 근처 수면은 4개 고조파 거스트너 파도를 정밀 연산하고, 원거리 해양은 기본 단일 파도로 단순화하여 프레임 드랍을 원천 방지합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>왜 로블록스 바다 표현에 단순 사인파 대신 거스트너 파도를 써야 하나요?</h3>
+          <p>단순 사인파는 둥근 언덕 형태만 만들어 인공적인 느낌을 줍니다. 거스트너 파도는 수평 벡터 변위를 함께 연산하여 파도의 꼭짓점을 뾰족하게 모으고 골을 넓혀 실제 해양 너울의 물리학을 정확하게 재현하기 때문입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>선박 물리가 뒤집히지 않고 안정되려면 몇 개의 프로브가 필요한가요?</h3>
+          <p>안정적인 피치와 롤 모멘트를 생성하기 위해서는 최소 4개의 프로브(선수, 선미, 좌현, 우현)가 필요하며, 대형 전함이나 요트의 경우 6~8개의 프로브를 균등 배치하는 것이 부드러운 승선감을 제공합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>서버와 클라이언트 간의 파도 높이가 어긋나지 않게 맞추는 원리는 무엇인가요?</h3>
+          <p>서버와 클라이언트 모두 동기화된 Workspace:GetServerTimeNow()를 시간 인자로 사용해 동일한 시드와 파라미터의 거스트너 공식을 계산하므로, 물리적 충돌과 시각적 파도 높이가 완전히 일치하게 됩니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

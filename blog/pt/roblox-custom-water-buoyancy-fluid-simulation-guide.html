@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Water Buoyancy: Gerstner Waves & Boat Physics Guide (2026)</title>
+  <meta name="description" content="Master custom aquatic physics in Roblox: Gerstner wave displacement equations, multi-point Archimedes buoyancy probes, hydrodynamic drag, and synchronized multiplayer water simulation." />
+  <meta name="keywords" content="roblox water buoyancy, gerstner wave luau, boat physics roblox, custom fluid simulation, buoyancy force calculation 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/pt/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Water Buoyancy: Gerstner Waves & Boat Physics Guide (2026)" />
+  <meta property="og:description" content="Master custom aquatic physics in Roblox: Gerstner wave displacement equations, multi-point Archimedes buoyancy probes, hydrodynamic drag, and synchronized multiplayer water simulation." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/pt/roblox-custom-water-buoyancy-fluid-simulation-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Water Buoyancy: Gerstner Waves & Boat Physics Guide (2026)" />
+  <meta name="twitter:description" content="Master custom aquatic physics in Roblox: Gerstner wave displacement equations, multi-point Archimedes buoyancy probes, hydrodynamic drag, and synchronized multiplayer water simulation." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.08));
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      color: #e2e8f0;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .code-header {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      font-family: monospace;
+      border-bottom: 1px solid #334155;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: "Fira Code", monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 32px 0;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    .quick-card span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .faq-container {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      color: #94a3b8;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .portal-btn {
+      display: inline-block;
+      margin-top: 16px;
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+      min-height: 44px;
+      line-height: 20px;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1.25rem; }
+      .container { padding: 16px; }
+      .quick-links { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/pt/roblox-custom-water-buoyancy-fluid-simulation-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/pt/roblox-custom-water-buoyancy-fluid-simulation-guide.html"
+      },
+      "headline": "Roblox Custom Water Buoyancy: Multi-Point Hull Sampling, Gerstner Wave Vectors & Hydrodynamic Drag",
+      "description": "Master custom aquatic physics in Roblox: Gerstner wave displacement equations, multi-point Archimedes buoyancy probes, hydrodynamic drag, and synchronized multiplayer water simulation.",
+      "url": "https://dopabrain.com/portal/blog/pt/roblox-custom-water-buoyancy-fluid-simulation-guide.html",
+      "inLanguage": "pt",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/pt/roblox-custom-water-buoyancy-fluid-simulation-guide.html",
+      "datePublished": "2026-09-30T10:00:00+09:00",
+      "dateModified": "2026-09-30T10:00:00+09:00",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Physics & Fluid Simulation Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "image": "https://dopabrain.com/assets/icon-512.svg"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Custom Water Buoyancy: Multi-Point Hull Sampling, Gerstner Wave Vectors & Hydrodynamic Drag",
+          "item": "https://dopabrain.com/portal/blog/pt/roblox-custom-water-buoyancy-fluid-simulation-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/pt/roblox-custom-water-buoyancy-fluid-simulation-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why use Gerstner waves instead of standard Sine waves for ocean water?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standard sine waves produce rounded crests that look artificial. Gerstner waves add horizontal displacement that pinches wave crests into sharp peaks while widening troughs, accurately replicating physical ocean swells."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many hull probes are needed for stable boat physics?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A minimum of 4 probes (quadrilateral arrangement: bow, stern, port, starboard) is required for stable pitch and roll. Larger ships or catamarans typically utilize 6 to 8 probes for smoother wave transitions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you synchronize ocean waves between server physics and client graphics?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both the server physics script and client visual mesh deformation scripts evaluate identical Gerstner wave parameters using Workspace:GetServerTimeNow() as the synchronized global time variable."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox Custom Water Buoyancy: Multi-Point Hull Sampling, Gerstner Wave Vectors & Hydrodynamic Drag</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Physics & Fluid Simulation Team</span>
+        <span>Updated: 2026-09-30</span>
+        <span>12 min read</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting high-fidelity aquatic vehicle physics in Roblox: From analytical Gerstner wave displacement math and multi-point hull probe sampling to hydrodynamic drag and server-client epoch time synchronization.
+    </div>
+
+    <div class="quick-links">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier224_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Gerstner wave vector calculus, fluid density solves & buoyant matrix models</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier224_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Storm swell crest navigation, rudder micro-adjustment & capsize latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier224_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Hydrodynamic spatial trajectory anticipation & naval navigation model</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier224_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-seas naval combat tension, sinking panic & competitive tilt recovery</span>
+        </a>
+    </div>
+
+    <article>
+      <p>Aquatic exploration, naval combat, and seafaring games—such as Tradelands, SharkBite, and naval military simulators—demand responsive, physically believable water buoyancy. Default Roblox Terrain water physics are notoriously rigid: water heights are locked to uniform horizontal voxel grids, buoyancy cannot be modulated for different hull geometries, and dynamic ocean swells cannot be simulated with directional wave crests.</p>
+      <p>To create thrilling ocean physics, top developers bypass terrain water and construct custom mathematical buoyancy engines in Luau. In this comprehensive technical guide, we engineer a full multi-probe boat physics system. We derive analytical Gerstner wave elevation vectors, calculate localized Archimedes upward buoyant forces across hull points, apply directional water resistance drag, and synchronize wave visual meshes with server physics using Workspace:GetServerTimeNow().</p>
+
+      <h2>1. Why Default Terrain Water Fails for Dynamic Naval Games</h2>
+      <p>Roblox Terrain water voxel physics introduce severe constraints for competitive boat mechanics:</p>
+      <ul>
+        <li>Flat Plane Buoyancy Limitation: Terrain water treats all surfaces as static horizontal planes, making rolling swells, stormy seas, and cresting waves physically impossible.</li>
+        <li>Unpredictable Float Points: Standard parts floating in terrain water suffer from center-of-mass oscillations, erratic tipping, and unstable angular momentum.</li>
+        <li>Zero Hydrodynamic Drag Control: Terrain water applies generic linear damping without accounting for hull surface area, streamlined bows, or keel resistance.</li>
+        <li>Custom Buoyancy Solution: By disabling terrain water interaction and evaluating mathematical wave functions at discrete hull probe coordinates, developers achieve 100% control over boat roll, pitch, heave, and water resistance.</li>
+      </ul>
+
+      <h2>2. The Mathematical Foundation: Gerstner Waves & Archimedes' Principle</h2>
+      <p>Realistic ocean waves are not simple sine waves; wave crests sharpen while troughs flatten. This is modeled using Gerstner wave equations:</p>
+      <ul>
+        <li>Gerstner Displacement Vector: P(x, z, t) = [x + sum(Q_i * A_i * D_x * cos(theta_i)), y_0 + sum(A_i * sin(theta_i)), z + sum(Q_i * A_i * D_z * cos(theta_i))], where theta_i = k_i * (D_i . [x, z]) + w_i * t.</li>
+        <li>Wave Parameters: A_i is wave amplitude, D_i is wave travel direction vector, w_i is angular frequency, k_i is wave number (2*pi/wavelength), and Q_i controls wave steepness.</li>
+        <li>Archimedes Buoyancy at Submerged Probes: For each probe at position P_probe, submerged depth is d = math.max(0, WaveHeight(P_probe) - P_probe.Y).</li>
+        <li>Upward Buoyant Force: F_buoyant = probe_volume * water_density * gravity * (d / probe_height), directed along the surface wave normal vector.</li>
+        <li>Hydrodynamic Drag Equation: F_drag = -0.5 * water_density * relative_velocity * |relative_velocity| * drag_coefficient * area.</li>
+      </ul>
+
+      <h2>3. Complete Multi-Point Boat Buoyancy Luau Implementation</h2>
+      <p>Below is a production-ready Luau module implementing multi-point hull probe sampling and Gerstner wave force application on RunService.Heartbeat:</p>
+      <ul>
+        <li>Multi-Point Hull Distribution: Distributes 4 to 8 Attachment probes across bow, stern, port, and starboard to generate natural hull pitch and roll.</li>
+        <li>Real-Time Normal Vector Solve: Computes wave surface normal derivatives analytically to tilt the buoyant thrust correctly against oncoming swells.</li>
+        <li>Localized Force Dispatches: Uses ApplyImpulseAtPosition or VectorForce instances to transfer torque and upward lift directly to probe world coordinates.</li>
+      </ul>
+
+      <div class="code-container">
+        <div class="code-header">BoatBuoyancyEngine.luau (Naval Physics Controller)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local BoatEngine = {}
+BoatEngine.__index = BoatEngine
+
+export type WaveConfig = {
+    Direction: Vector2,
+    Amplitude: number,
+    Wavelength: number,
+    Speed: number,
+    Steepness: number,
+}
+
+export type ProbeAttachment = {
+    Attachment: Attachment,
+    DisplacementVolume: number,
+    MaxDepth: number,
+}
+
+export type BoatChassis = {
+    RootPart: BasePart,
+    Probes: { ProbeAttachment },
+    Waves: { WaveConfig },
+    WaterDensity: number,
+    LinearDragCoeff: number,
+    AngularDragCoeff: number,
+}
+
+local GRAVITY = Workspace.Gravity
+
+function BoatEngine.GetWaveHeight(waves: { WaveConfig }, worldPos: Vector3, timeSec: number): (number, Vector3)
+    local height = 0
+    local normalX = 0
+    local normalZ = 0
+
+    for _, wave in ipairs(waves) do
+        local dir = wave.Direction.Unit
+        local k = (2 * math.pi) / wave.Wavelength
+        local c = wave.Speed
+        local w = math.sqrt(GRAVITY * k)
+        local dot = (dir.X * worldPos.X) + (dir.Y * worldPos.Z)
+        local phase = (dot * k) - (w * timeSec)
+
+        height += wave.Amplitude * math.sin(phase)
+        local dCos = wave.Amplitude * k * math.cos(phase)
+        normalX -= dir.X * dCos
+        normalZ -= dir.Y * dCos
+    end
+
+    local surfaceNormal = Vector3.new(normalX, 1, normalZ).Unit
+    return height, surfaceNormal
+end
+
+function BoatEngine.Step(boat: BoatChassis, dt: number)
+    local root = boat.RootPart
+    local currentTime = Workspace:GetServerTimeNow()
+
+    for _, probe in ipairs(boat.Probes) do
+        local probePos = probe.Attachment.WorldPosition
+        local waveHeight, waveNormal = BoatEngine.GetWaveHeight(boat.Waves, probePos, currentTime)
+        local immersion = math.clamp((waveHeight - probePos.Y) / probe.MaxDepth, 0, 1)
+
+        if immersion &gt; 0 then
+            -- Archimedes upward buoyant force
+            local buoyantForceMagnitude = probe.DisplacementVolume * boat.WaterDensity * GRAVITY * immersion
+            local buoyantForce = waveNormal * buoyantForceMagnitude
+
+            -- Hydrodynamic drag damping
+            local probeVel = root:GetVelocityAtPosition(probePos)
+            local dragForce = -probeVel * (probeVel.Magnitude * 0.5 * boat.WaterDensity * boat.LinearDragCoeff * immersion)
+
+            local totalForce = buoyantForce + dragForce
+            root:ApplyImpulseAtPosition(totalForce * dt, probePos)
+        end
+    end
+
+    -- Angular damping on hull rotation
+    local angVel = root.AssemblyAngularVelocity
+    root.AssemblyAngularVelocity = angVel * math.clamp(1 - (boat.AngularDragCoeff * dt), 0, 1)
+end
+
+return BoatEngine</code></pre>
+      </div>
+
+      <h2>4. Hydrodynamic Drag, Keel Stability & Rudder Mechanics</h2>
+      <p>Buoyancy alone produces a boat that skips or capsizes like a hollow sphere. Directional hydrodynamic forces provide stability:</p>
+      <ul>
+        <li>Keel Lateral Lift: The keel acts like an underwater wing, generating lateral counter-lift when the boat drifts sideways, keeping travel aligned with the bow.</li>
+        <li>Longitudinal vs. Lateral Drag Asymmetry: Forward water resistance is minimized (streamlined hull shape), while lateral resistance is maximized to prevent aggressive sliding.</li>
+        <li>Rudder Turning Torque: Angular torque is applied proportionally to forward hull velocity: Torque_turn = Speed_forward * Steering_Input * Rudder_Authority.</li>
+        <li>Anti-Capsize Righting Moment: Incorporating a ballast weight with an artificially lowered CenterOfMass (AssemblyCenterOfMass offset) generates positive righting lever arm torque when rolling past 30 degrees.</li>
+      </ul>
+
+      <h2>5. Multiplayer Network Synchronization & Client Vertex Waves</h2>
+      <p>Ensuring visual water meshes and server physics remain perfectly synchronized across high-latency clients:</p>
+      <ul>
+        <li>Shared Epoch Clock: Evaluating wave heights using Workspace:GetServerTimeNow() ensures server physics and client vertex shaders compute identical wave positions down to the millisecond.</li>
+        <li>Client Mesh Deformation / Bones: Deforming visual ocean water meshes on the client using EditableMesh or Skinned Mesh bone hierarchies running identically seeded Gerstner equations.</li>
+        <li>Physics Network Ownership: Assigning SetNetworkOwner(captain) to the boat RootPart while operating the helm, granting zero-latency rudder responsiveness.</li>
+        <li>Adaptive LOD Wave Sampling: Evaluating full 4-harmonic Gerstner waves near active boats while throttling distant ocean zones to single fundamental waves to preserve CPU cycles.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why use Gerstner waves instead of standard Sine waves for ocean water?</h3>
+          <p>Standard sine waves produce rounded crests that look artificial. Gerstner waves add horizontal displacement that pinches wave crests into sharp peaks while widening troughs, accurately replicating physical ocean swells.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How many hull probes are needed for stable boat physics?</h3>
+          <p>A minimum of 4 probes (quadrilateral arrangement: bow, stern, port, starboard) is required for stable pitch and roll. Larger ships or catamarans typically utilize 6 to 8 probes for smoother wave transitions.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do you synchronize ocean waves between server physics and client graphics?</h3>
+          <p>Both the server physics script and client visual mesh deformation scripts evaluate identical Gerstner wave parameters using Workspace:GetServerTimeNow() as the synchronized global time variable.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
