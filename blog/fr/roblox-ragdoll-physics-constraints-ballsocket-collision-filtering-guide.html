@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physique Ragdoll sur Roblox, BallSocketConstraints & Réseau (2026)</title>
+  <meta name="description" content="Maîtrisez la physique ragdoll sur Roblox : limites angulaires BallSocketConstraint, bascule Motor6D, NoCollisionConstraints, réplication réseau et animations de relevage." />
+  <meta name="keywords" content="Roblox physique ragdoll, BallSocketConstraint Roblox, Network Ownership Roblox, CollisionFiltering, Motor6D ragdoll" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/fr/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Physique Ragdoll sur Roblox, BallSocketConstraints & Réseau (2026)" />
+  <meta property="og:description" content="Maîtrisez la physique ragdoll sur Roblox : limites angulaires BallSocketConstraint, bascule Motor6D, NoCollisionConstraints, réplication réseau et animations de relevage." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/fr/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Physique Ragdoll sur Roblox, BallSocketConstraints & Réseau (2026)" />
+  <meta name="twitter:description" content="Maîtrisez la physique ragdoll sur Roblox : limites angulaires BallSocketConstraint, bascule Motor6D, NoCollisionConstraints, réplication réseau et animations de relevage." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/fr/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/fr/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html"
+      },
+      "headline": "Architecture Physique Ragdoll sur Roblox : BallSocketConstraints & Relevage Fluide",
+      "description": "Maîtrisez la physique ragdoll sur Roblox : limites angulaires BallSocketConstraint, bascule Motor6D, NoCollisionConstraints, réplication réseau et animations de relevage.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/fr/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Équipe d'Ingénierie DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "fr"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Architecture Physique Ragdoll sur Roblox : BallSocketConstraints & Relevage Fluide",
+          "item": "https://dopabrain.com/portal/blog/fr/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Pourquoi mon ragdoll est-il propulsé dans le ciel ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En raison d'autocollisions internes. Liez les pièces voisines avec des NoCollisionConstraints et désactivez CanCollide sur HumanoidRootPart."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Où la physique doit-elle être calculée ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sur le client pour le joueur actif (`SetNetworkOwner(player)`) et sur le serveur pour les cadavres ou PNJ (`SetNetworkOwner(nil)`)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment éviter que le personnage ne se téléporte à son point de chute ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Réalignez le HumanoidRootPart sur les coordonnées du Torso immédiatement avant de réactiver les Motor6D."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Pourquoi TwistLimits est-il indispensable ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Il empêche les membres de tourner à 360 degrés sur leur axe comme un tire-bouchon, préservant ainsi l'anatomie humaine."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Architecture Physique Ragdoll sur Roblox : BallSocketConstraints & Relevage Fluide</h1>
+      <div class="meta-bar">
+        <span>By Équipe d'Ingénierie DopaBrain</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Physique de Personnage Haute Fidélité : Limites anatomiques BallSocketConstraint, suppression des collisions internes et réplication réseau fluide.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier186_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Physics solver tick frequency & knockback reflex responsiveness</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier186_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Constraint network matrix math & multi-body physics budgeting</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier186_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Kinematic physics simulation & anatomical joint modeling archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier186_stress_check">
+          <strong>Stress Check</strong>
+          <span>Ragdoll glitch troubleshooting & physics desynchronization fatigue</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>La physique ragdoll apporte du punch et du dynamisme aux scènes d'action sur Roblox. Cependant, un système mal calibré provoque des saccades réseau et des personnages éjectés hors de la carte.</p>
+      <p>Une architecture de production repose sur des contraintes angulaires précises via BallSocketConstraints, l'élimination des collisions mutuelles avec NoCollisionConstraints et une gestion rigoureuse de la NetworkOwnership.</p>
+
+      <h2>1. Bascule Motor6D et Limites de BallSocketConstraint</h2>
+      <p>Remplacement en temps réel des articulations rigides animées par des liaisons physiques :</p>
+      <ul>
+          <li>Désactivation des Motor6D : Réglez Motor6D.Enabled = false sans détruire l'instance afin de permettre au personnage de se relever.</li>
+          <li>Limites Angulaires : Activez LimitsEnabled et TwistLimitsEnabled pour respecter les amplitudes de mouvement anatomiques.</li>
+          <li>Préparation des Attachments : Générez les paires Attachment0 et Attachment1 dès l'apparition du personnage pour éviter les microsaccades.</li>
+          <li>Machine d'États : Passez en état Enum.HumanoidStateType.Physics et désactivez GettingUp pendant la chute.</li>
+      </ul>
+
+      <h2>2. Groupes de Collision et NoCollisionConstraints</h2>
+      <p>Éviter les explosions physiques dues au chevauchement des membres :</p>
+      <ul>
+          <li>Explosions d'Autocollision : Les membres qui se superposent génèrent des forces répulsives projetant le personnage en l'air.</li>
+          <li>Emploi de NoCollisionConstraints : Reliez les membres voisins pour désactiver les calculs d'impact mutuels.</li>
+          <li>CollisionFilteringService : Isolez les parties ragdoll dans un groupe qui n'interagit qu'avec le décor statique.</li>
+          <li>CanCollide : Désactivez CanCollide sur HumanoidRootPart et maintenez-le actif sur le Torso pour rouler sans accrochage.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Gestionnaire Luau de Ragdoll avec Relevage Fluide</div>
+        <pre><code>--!strict
+-- Gestionnaire Luau de Ragdoll avec relevage
+local PhysicsService = game:GetService("PhysicsService")</code></pre>
+      </div>
+
+      <h2>3. Network Ownership et Réplication</h2>
+      <p>La répartition du calcul physique détermine la fluidité visuelle :</p>
+      <ul>
+          <li>Joueur Actif : Attribuez `SetNetworkOwner(player)` pour que le client simule le ragdoll sans latence réseau.</li>
+          <li>PNJ et Cadavres : Utilisez `SetNetworkOwner(nil)` pour que le serveur gère la physique de manière déterministe.</li>
+          <li>Économie de Bande Passante : Mettez en veille (sleep) les membres immobiles pour préserver les paquets réseau.</li>
+          <li>Protection Téléportation : Ne changez pas de propriétaire dans la même frame que la désactivation des Motor6D.</li>
+      </ul>
+
+      <h2>4. Animation de Relevage et Rétablissement</h2>
+      <p>Comment se relever d'une chute sans saut brutal de caméra :</p>
+      <ul>
+          <li>Alignement au Sol : Effectuez un raycast depuis le torse pour adapter l'orientation du HumanoidRootPart au terrain.</li>
+          <li>Suppression du Snap : Recalez le HumanoidRootPart sur le torse avant de réactiver les Motor6D.</li>
+          <li>Transition Animée : Jouez une animation de redressement pendant la réactivation progressive des articulations.</li>
+          <li>Période d'Invulnérabilité : Accordez une brève immunité pour éviter les boucles d'éjection infinies.</li>
+      </ul>
+
+      <h2>5. Bonnes Pratiques et Optimisation Mobile</h2>
+      <p>Règles essentielles pour préserver le processeur des téléphones :</p>
+      <ul>
+          <li>Nombre Limité de Liaisons : Restreignez les BallSockets aux articulations principales ; les accessoires restent rigides.</li>
+          <li>Mise en Sommeil : Laissez le moteur physique endormir automatiquement les corps ragdoll au sol.</li>
+          <li>Nettoyage Mémoire : Supprimez contraintes et attachments 10 secondes après la mort du personnage.</li>
+          <li>Audit MicroProfiler : Vérifiez avec Ctrl+F6 que `physics::step` reste inférieur à 3 ms par image.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Pourquoi mon ragdoll est-il propulsé dans le ciel ?</h3>
+          <p>En raison d'autocollisions internes. Liez les pièces voisines avec des NoCollisionConstraints et désactivez CanCollide sur HumanoidRootPart.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Où la physique doit-elle être calculée ?</h3>
+          <p>Sur le client pour le joueur actif (`SetNetworkOwner(player)`) et sur le serveur pour les cadavres ou PNJ (`SetNetworkOwner(nil)`).</p>
+        </div>
+        <div class="faq-item">
+          <h3>Comment éviter que le personnage ne se téléporte à son point de chute ?</h3>
+          <p>Réalignez le HumanoidRootPart sur les coordonnées du Torso immédiatement avant de réactiver les Motor6D.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Pourquoi TwistLimits est-il indispensable ?</h3>
+          <p>Il empêche les membres de tourner à 360 degrés sur leur axe comme un tire-bouchon, préservant ainsi l'anatomie humaine.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox 布娃娃物理系统、BallSocketConstraint 与网络所有权优化指南 (2026)</title>
+  <meta name="description" content="全面掌握 Roblox 布娃娃（Ragdoll）物理开发：BallSocketConstraint 角度极限限制、Motor6D 动态切换、NoCollisionConstraint 消除穿模爆炸、网络所有权同步与平滑起身状态机。" />
+  <meta name="keywords" content="Roblox布娃娃物理, BallSocketConstraint Roblox, Roblox网络所有权, CollisionFiltering, Motor6D布娃娃, Roblox物理系统" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox 布娃娃物理系统、BallSocketConstraint 与网络所有权优化指南 (2026)" />
+  <meta property="og:description" content="全面掌握 Roblox 布娃娃（Ragdoll）物理开发：BallSocketConstraint 角度极限限制、Motor6D 动态切换、NoCollisionConstraint 消除穿模爆炸、网络所有权同步与平滑起身状态机。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox 布娃娃物理系统、BallSocketConstraint 与网络所有权优化指南 (2026)" />
+  <meta name="twitter:description" content="全面掌握 Roblox 布娃娃（Ragdoll）物理开发：BallSocketConstraint 角度极限限制、Motor6D 动态切换、NoCollisionConstraint 消除穿模爆炸、网络所有权同步与平滑起身状态机。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html"
+      },
+      "headline": "Roblox 布娃娃物理架构深度解析：BallSocketConstraint、碰撞滤波与平滑起身机制",
+      "description": "全面掌握 Roblox 布娃娃（Ragdoll）物理开发：BallSocketConstraint 角度极限限制、Motor6D 动态切换、NoCollisionConstraint 消除穿模爆炸、网络所有权同步与平滑起身状态机。",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio 物理工程团队",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "zh"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox 布娃娃物理架构深度解析：BallSocketConstraint、碰撞滤波与平滑起身机制",
+          "item": "https://dopabrain.com/portal/blog/zh/roblox-ragdoll-physics-constraints-ballsocket-collision-filtering-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "为什么我的布娃娃角色会突然飞天或遁地穿模？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "绝大多数是由于四肢部件相互重叠导致的自碰撞反冲（Self-Collision）。请为相邻肢体添加 NoCollisionConstraint，并将 HumanoidRootPart 的 CanCollide 设为 false。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "布娃娃物理应该在客户端还是服务端计算？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "操作中的活体玩家使用 `SetNetworkOwner(player)` 在本地客户端计算以保证平滑；死亡后的尸体与 NPC 必须使用 `SetNetworkOwner(nil)` 在服务端计算以确保多端同步。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "角色起身时为什么会瞬间瞬移回最初摔倒的位置？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "因为摔倒过程中 HumanoidRootPart 未跟随躯干移动。重新开启 Motor6D 前，必须先将 HumanoidRootPart 的坐标同步至当前 Torso 的实际物理位置。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "BallSocketConstraint 的 TwistLimits 为什么不可或缺？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "若无 TwistLimits，手肘与膝盖会沿着肢体长轴像开瓶器一样发生 360 度怪异自旋，严重破坏人体骨骼正常外观。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox 布娃娃物理架构深度解析：BallSocketConstraint、碰撞滤波与平滑起身机制</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio 物理工程团队</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      高拟真角色物理工程：BallSocketConstraint 解剖学旋转限位、肢体自碰撞爆炸规避与零抖动网络所有权复制。
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier186_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Physics solver tick frequency & knockback reflex responsiveness</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier186_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Constraint network matrix math & multi-body physics budgeting</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier186_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Kinematic physics simulation & anatomical joint modeling archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier186_stress_check">
+          <strong>Stress Check</strong>
+          <span>Ragdoll glitch troubleshooting & physics desynchronization fatigue</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>布娃娃（Ragdoll）物理能够将角色受击、击飞、高空坠落转化为极具沉浸感与趣味性的动态物理反馈。然而，欠缺优化的布娃娃系统极易引发肢体剧烈抽搐抖动、严重的网络橡皮筋回拉（Rubber-banding）甚至角色直接穿透地面跌出虚空等灾难性漏洞。</p>
+      <p>构建商业级成熟的布娃娃系统，必须通过 BallSocketConstraint 严格锁定人体解剖学关节角限位，利用 NoCollisionConstraint 根除肢体间自碰撞冲击波，精确分配 NetworkOwnership 归属，并设计无缝衔接的起身状态机将倒地角色平滑插值回骨骼动画。</p>
+
+      <h2>1. Motor6D 动态切换与 BallSocketConstraint 旋转限位</h2>
+      <p>将动画驱动的刚性骨骼平滑无缝转化为物理引擎驱动的柔性铰链：</p>
+      <ul>
+          <li>Motor6D 禁用机制：将连接四肢与躯干的 Motor6D 设为 Enabled = false，切勿直接 Destroy()，否则后续无法恢复站立姿态。</li>
+          <li>BallSocketConstraint 角度极限：开启 LimitsEnabled 与 TwistLimitsEnabled。UpperAngle 限制肢体反向超屈，TwistLowerAngle 与 TwistUpperAngle 杜绝小臂或小腿发生 360 度麻花式怪异反转。</li>
+          <li>Attachment 预制缓存：在角色刚 Spawn 生成时预先在关节处创建好 Attachment0 与 Attachment1，避免在受击布娃娃瞬间因创建实例造成掉帧。</li>
+          <li>Humanoid 状态机接管：将 Humanoid 状态切换为 Enum.HumanoidStateType.Physics，并在跌落期间临时禁用 GettingUp 状态，防止动作动画与物理刚体争抢控制权。</li>
+      </ul>
+
+      <h2>2. 碰撞组隔离与 NoCollisionConstraint 自碰撞抑制</h2>
+      <p>彻底解决肢体间穿模挤压产生的超强反冲斥力：</p>
+      <ul>
+          <li>自碰撞爆炸效应 (Self-Collision Chaos)：当多个开启了物理碰撞的肢体在跌落过程中发生穿模重叠，物理求解器会产生数万数值的排斥冲量，将角色瞬间弹射上天。</li>
+          <li>NoCollisionConstraint 配对：在所有相邻骨骼（如左大腿与左小腿、躯干与上臂）之间建立 NoCollisionConstraint，物理引擎将彻底跳过两者间的接触检测。</li>
+          <li>CollisionFilteringService 隔离：将处于布娃娃状态的部件归入专用的 "RagdollCharacters" 碰撞组，配置为仅与静态地面墙体碰撞，忽略其他角色的碰撞体积。</li>
+          <li>CanCollide 精细化配置：关闭 HumanoidRootPart 的 CanCollide，仅保留 Torso 的碰撞属性，确保角色在地面顺畅翻滚而不被根节点卡绊。</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">具备平滑起身特性的 Luau 生产级布娃娃管理系统</div>
+        <pre><code>--!strict
+local Players = game:GetService("Players")
+local PhysicsService = game:GetService("PhysicsService")
+
+local RagdollManager = {}
+RagdollManager.__index = RagdollManager
+
+type RagdollRig = {
+    character: Model,
+    humanoid: Humanoid,
+    rootPart: BasePart,
+    motors: { Motor6D },
+    constraints: { BallSocketConstraint },
+}
+
+function RagdollManager.SetupRig(character: Model): RagdollRig
+    local humanoid = character:WaitForChild("Humanoid") :: Humanoid
+    local rootPart = character:WaitForChild("HumanoidRootPart") :: BasePart
+    local motors: { Motor6D } = {}
+    local constraints: { BallSocketConstraint } = {}
+    
+    for _, desc in ipairs(character:GetDescendants()) do
+        if desc:IsA("Motor6D") and desc.Name ~= "Root" then
+            table.insert(motors, desc)
+            
+            local part0 = desc.Part0
+            local part1 = desc.Part1
+            if part0 and part1 then
+                -- 预建连接点
+                local att0 = Instance.new("Attachment")
+                att0.CFrame = desc.C0
+                att0.Name = "RagdollAtt_" .. desc.Name
+                att0.Parent = part0
+                
+                local att1 = Instance.new("Attachment")
+                att1.CFrame = desc.C1
+                att1.Name = "RagdollAtt_" .. desc.Name
+                att1.Parent = part1
+                
+                -- 球窝铰链约束
+                local bsc = Instance.new("BallSocketConstraint")
+                bsc.Attachment0 = att0
+                bsc.Attachment1 = att1
+                bsc.LimitsEnabled = true
+                bsc.UpperAngle = 45
+                bsc.TwistLimitsEnabled = true
+                bsc.TwistLowerAngle = -30
+                bsc.TwistUpperAngle = 30
+                bsc.Enabled = false
+                bsc.Parent = part0
+                table.insert(constraints, bsc)
+                
+                -- 相邻肢体防穿模排斥
+                local ncc = Instance.new("NoCollisionConstraint")
+                ncc.Part0 = part0
+                ncc.Part1 = part1
+                ncc.Parent = part0
+            end
+        end
+    end
+    
+    return {
+        character = character,
+        humanoid = humanoid,
+        rootPart = rootPart,
+        motors = motors,
+        constraints = constraints,
+    }
+end
+
+function RagdollManager.EnableRagdoll(rig: RagdollRig)
+    rig.humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+    rig.rootPart.CanCollide = false
+    
+    for _, motor in ipairs(rig.motors) do
+        motor.Enabled = false
+    end
+    for _, bsc in ipairs(rig.constraints) do
+        bsc.Enabled = true
+    end
+end
+
+function RagdollManager.DisableRagdoll(rig: RagdollRig)
+    for _, bsc in ipairs(rig.constraints) do
+        bsc.Enabled = false
+    end
+    for _, motor in ipairs(rig.motors) do
+        motor.Enabled = true
+    end
+    
+    rig.rootPart.CanCollide = true
+    rig.humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+end
+
+return RagdollManager</code></pre>
+      </div>
+
+      <h2>3. 网络所有权 (Network Ownership) 与复制确定性</h2>
+      <p>物理模拟由哪台设备计算，直接决定了其他玩家眼中画面的流畅度：</p>
+      <ul>
+          <li>本地玩家网络所有权：玩家自身角色布娃娃化时，调用 `BasePart:SetNetworkOwner(player)` 将物理运算交由玩家客户端处理，实现 0ms 延迟物理并向服务器广播。</li>
+          <li>NPC 与死亡尸体所有权：对于阵亡尸体或 NPC，必须调用 `SetNetworkOwner(nil)` 让服务器权威计算物理，防止客户端外挂劫持或坐标脱节。</li>
+          <li>网络带宽节流：剧烈翻滚的布娃娃会生成高额网络封包，在角速度衰减至 0.1 rad/s 时应允许物理部件自动进入休眠（Sleep）。</li>
+          <li>防瞬移同步时序：切勿在关闭 Motor6D 的同一帧内直接重置网络所有权，应留出至少 1 个服务端 Tick 缓冲。</li>
+      </ul>
+
+      <h2>4. 起身混合 (Get-Up Blending) 与状态平滑恢复</h2>
+      <p>从翻滚倒地状态平滑恢复至正常站立行走姿态：</p>
+      <ul>
+          <li>地表倾角探测：在重新激活 Motor6D 之前，从 Torso 向下发射射线测量法线，将 HumanoidRootPart 的 CFrame 贴合地表坡度。</li>
+          <li>杜绝原地瞬移拉扯：角色跌落过程中 RootPart 若滞留在半空中，重新开启关节会导致角色瞬间被吸回空中。必须在开启前将 RootPart 坐标与 Torso 强制对齐。</li>
+          <li>起身动作过渡插值：播放专属起身动画，在 0.3 秒的混合窗口内渐进式恢复骨骼关节约束。</li>
+          <li>免控霸体保护：起身动作期间赋予 0.5 秒短暂霸体，避免玩家陷入被连续击退倒地的恶性循环。</li>
+      </ul>
+
+      <h2>5. 移动端性能优化与生产发布规范</h2>
+      <p>确保低配手机在多角色物理碰撞下维持 60 FPS 的准则：</p>
+      <ul>
+          <li>严格限制物理约束数量：仅在躯干、颈部、肩部与髋部等大关节放置 BallSocket，帽子、披风等饰品保持静态。</li>
+          <li>充分利用物理引擎休眠：静止在地面上的布娃娃会自动进入休眠状态，将 CPU 占用直接降至 0。</li>
+          <li>死亡垃圾回收：角色死亡后设置 10 秒倒计时，彻底销毁所有物理约束与 Attachment 释放内存。</li>
+          <li>MicroProfiler 性能审查：通过 Ctrl+F6 监控 `physics::step` 的开销，确保单帧物理求解耗时小于 3ms。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>为什么我的布娃娃角色会突然飞天或遁地穿模？</h3>
+          <p>绝大多数是由于四肢部件相互重叠导致的自碰撞反冲（Self-Collision）。请为相邻肢体添加 NoCollisionConstraint，并将 HumanoidRootPart 的 CanCollide 设为 false。</p>
+        </div>
+        <div class="faq-item">
+          <h3>布娃娃物理应该在客户端还是服务端计算？</h3>
+          <p>操作中的活体玩家使用 `SetNetworkOwner(player)` 在本地客户端计算以保证平滑；死亡后的尸体与 NPC 必须使用 `SetNetworkOwner(nil)` 在服务端计算以确保多端同步。</p>
+        </div>
+        <div class="faq-item">
+          <h3>角色起身时为什么会瞬间瞬移回最初摔倒的位置？</h3>
+          <p>因为摔倒过程中 HumanoidRootPart 未跟随躯干移动。重新开启 Motor6D 前，必须先将 HumanoidRootPart 的坐标同步至当前 Torso 的实际物理位置。</p>
+        </div>
+        <div class="faq-item">
+          <h3>BallSocketConstraint 的 TwistLimits 为什么不可或缺？</h3>
+          <p>若无 TwistLimits，手肘与膝盖会沿着肢体长轴像开瓶器一样发生 360 度怪异自旋，严重破坏人体骨骼正常外观。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
