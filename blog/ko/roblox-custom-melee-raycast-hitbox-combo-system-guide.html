@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 커스텀 근접 전투: 레이캐스트 히트박스 및 콤보 가이드 (2026)</title>
+  <meta name="description" content="로블록스 상용급 근접 전투 시스템 구축 완벽 가이드: RaycastHitboxV4 어태치먼트 궤적 추적, 스윙 트레일 정렬, 콤보 버퍼링 윈도우, 패링 스턴 및 서버 판정 검증." />
+  <meta name="keywords" content="로블록스 근접 전투, 레이캐스트 히트박스 luau, 콤보 버퍼 로블록스, 검투 전투 시스템, 패링 스턴 시스템 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 커스텀 근접 전투: 레이캐스트 히트박스 및 콤보 가이드 (2026)" />
+  <meta property="og:description" content="로블록스 상용급 근접 전투 시스템 구축 완벽 가이드: RaycastHitboxV4 어태치먼트 궤적 추적, 스윙 트레일 정렬, 콤보 버퍼링 윈도우, 패링 스턴 및 서버 판정 검증." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 커스텀 근접 전투: 레이캐스트 히트박스 및 콤보 가이드 (2026)" />
+  <meta name="twitter:description" content="로블록스 상용급 근접 전투 시스템 구축 완벽 가이드: RaycastHitboxV4 어태치먼트 궤적 추적, 스윙 트레일 정렬, 콤보 버퍼링 윈도우, 패링 스턴 및 서버 판정 검증." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-melee-raycast-hitbox-combo-system-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-melee-raycast-hitbox-combo-system-guide.html"
+      },
+      "headline": "로블록스 근접 전투 아키텍처: 다중 어태치먼트 레이캐스트 히트박스, 검기 궤적 및 콤보 상태 트리",
+      "description": "로블록스 상용급 근접 전투 시스템 구축 완벽 가이드: RaycastHitboxV4 어태치먼트 궤적 추적, 스윙 트레일 정렬, 콤보 버퍼링 윈도우, 패링 스턴 및 서버 판정 검증.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-melee-raycast-hitbox-combo-system-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 물리 및 전투 시스템 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 근접 전투 아키텍처: 다중 어태치먼트 레이캐스트 히트박스, 검기 궤적 및 콤보 상태 트리",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-melee-raycast-hitbox-combo-system-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "로블록스에서 근접 무기를 만들 때 Touched 이벤트를 쓰면 안 되는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Touched 이벤트는 물리 엔진 업데이트 주기에 따라 판정되므로 무기를 빠르게 휘두르면 적을 그냥 통과하는 터널링이 발생하고, 네트워크 핑에 따라 헛손질 판정이 자주 나기 때문입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "칼날에 어태치먼트는 몇 개나 달아야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "보통 3개에서 5개가 가장 이상적입니다. 손잡이 근처에 1개, 칼날 중간에 2~3개, 칼끝에 1개를 배치하면 휘두를 때 빈틈없는 완벽한 궤적 판정 면이 형성됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "콤보 선입력 버퍼링(Input Buffering)이란 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "이전 공격 애니메이션이 끝나기 직전 살짝 일찍 클릭하더라도 입력을 무시하지 않고 기억해 두었다가, 콤보가 가능한 첫 프레임에 다음 연계 공격을 즉시 발동시키는 반응성 개선 기술입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "핵 유저가 맵 반대편에 있는 적을 칼로 때리는 핵을 어떻게 막나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "서버에서 공격자와 피격자 간의 유클리드 거리를 검증하면 됩니다. 무기의 칼날 길이(예: 6스터드)에 핑 보정치를 더한 거리를 초과하면 서버가 타격 판정을 즉시 무효화합니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 근접 전투 아키텍처: 다중 어태치먼트 레이캐스트 히트박스, 검기 궤적 및 콤보 상태 트리</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 물리 및 전투 시스템 팀</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      로블록스 스튜디오에서의 프레임 정밀 근접 전투 구축: 다중 어태치먼트 검기 궤적 레이캐스팅부터 동적 콤보 분기 트리 및 치트 방지 서버 히트 검증까지 완벽 정리.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier220_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>칼날 기하학 궤적 수학 및 히트박스 보간 매트릭스 연산 모델</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier220_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>120ms 미만 패링 프레임 윈도우 및 공격 캔슬 반응 잠복기</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier220_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>근접 전투 타격 리듬 및 전술적 거리 조절 인지 스타일</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier220_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>가드 파괴 그로기 공포, 무한 경직 콤보 및 교전 틸트 완화</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>딥워큰(Deepwoken), 로그 리니지, 컴뱃 워리어스 같은 로블록스의 하이엔드 액션 RPG 및 대전 격투 게임에서 손맛 넘치는 근접 전투는 유저 몰입을 결정짓는 핵심 기둥입니다. 로블록스의 기본 Touched 이벤트에 의존하는 공격 판정은 고속 스윙 시 헛손질 판정이 나거나 위치 랙으로 인한 허공 피격(고스트 히트) 버그를 유발합니다.</p>
+      <p>본 전투 시스템 엔지니어링 가이드에서는 프로급 근접 전투 엔진을 구축합니다. 이전 프레임과 현재 프레임의 무기 좌표를 연결하여 100% 충돌을 잡아내는 다중 어태치먼트 레이캐스트 히트박스, 선입력 버퍼링 콤보 상태 트리, 찰나의 패링(Parry) 및 서버 권한 히트 검증을 다룹니다.</p>
+
+      <h2>1. 레이캐스트 히트박스의 구조: 왜 Touched 이벤트를 버려야 하는가</h2>
+      <p>로블록스 물리 엔진의 Touched 이벤트는 물리 시뮬레이션 주기에 종속되어 고속 스윙 시 터널링(관통 통과) 현상이 발생합니다. 레이캐스트 히트박스는 이를 완벽히 해결합니다:</p>
+      <ul>
+          <li>연속 무기 기하학 추적: 무기 칼날을 따라 3~5개의 Attachment 인스턴스(자루, 칼날 중앙, 칼끝)를 배치하여 정확한 궤적 호를 생성합니다.</li>
+          <li>프레임 간 레이캐스트 보간: 매 프레임 이전 프레임의 어태치먼트 위치에서 현재 위치로 레이캐스트를 발사하여 공백 없는 완벽한 베기 면(Sheet)을 형성합니다.</li>
+          <li>타격 중복 방지 테이블: 단 한 번의 휘두름에 동일한 적이 중복 피격되지 않도록 프레임 단위 피격 대상 목록을 관리합니다.</li>
+          <li>스윙 트레일(Trail) 시각 동기화: 무기 어태치먼트와 Trail 이펙트를 완벽히 일치시켜 시각적 검기와 실제 물리 타격 판정 영역을 일체화합니다.</li>
+      </ul>
+
+      <h2>2. 상용급 레이캐스트 근접 전투 컨트롤러 구현 코드</h2>
+      <p>아래는 어태치먼트 기반 레이캐스트 히트박스 추적 및 타격 판정 디스패치를 구현한 클라이언트 측 Luau 모듈입니다:</p>
+      <ul>
+          <li>콤보 입력 버퍼링: 공격 애니메이션 후딜레이 도중 들어온 추가 클릭을 큐에 저장하여 연계 타이밍에 즉시 다음 콤보 모션이 나가도록 지원합니다.</li>
+          <li>동적 RaycastParams 필터링: 공격자 본인 캐릭터 및 장식 오브젝트를 제외하고 오직 적군 캐릭터 모델만을 대상으로 레이를 발사합니다.</li>
+          <li>타격 시각 피드백 연출: 타격 성공 시 즉각적인 화면 미세 흔들림(Camera Shake)과 금속 타격 사운드를 로컬에서 재생하여 극상의 손맛을 제공합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">MeleeHitboxController.luau (클라이언트 근접 전투 컨트롤러)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+
+local MeleeController = {}
+MeleeController.__index = MeleeController
+
+local player = Players.LocalPlayer
+local raycastParams = RaycastParams.new()
+raycastParams.FilterType = RaycastFilterType.Exclude
+raycastParams.IgnoreWater = true
+
+export type WeaponHitbox = {
+    BladePart: BasePart,
+    Attachments: { Attachment },
+    PreviousPositions: { Vector3 },
+    IsActive: boolean,
+    HitTargets: { [Model]: boolean }
+}
+
+function MeleeController.NewHitbox(bladePart: BasePart): WeaponHitbox
+    local attachments: { Attachment } = {}
+    for _, child in ipairs(bladePart:GetChildren()) do
+        if child:IsA("Attachment") and string.find(child.Name, "DmgPoint") then
+            table.insert(attachments, child)
+        end
+    end
+
+    local hitbox: WeaponHitbox = {
+        BladePart = bladePart,
+        Attachments = attachments,
+        PreviousPositions = {},
+        IsActive = false,
+        HitTargets = {}
+    }
+    return hitbox
+end
+
+function MeleeController.StartSwing(hitbox: WeaponHitbox)
+    hitbox.IsActive = true
+    hitbox.HitTargets = {}
+    hitbox.PreviousPositions = {}
+    for i, att in ipairs(hitbox.Attachments) do
+        hitbox.PreviousPositions[i] = att.WorldPosition
+    end
+end
+
+function MeleeController.StopSwing(hitbox: WeaponHitbox)
+    hitbox.IsActive = false
+    hitbox.HitTargets = {}
+    hitbox.PreviousPositions = {}
+end
+
+function MeleeController.UpdateHitbox(hitbox: WeaponHitbox, characterModel: Model)
+    if not hitbox.IsActive then return end
+
+    raycastParams.FilterDescendantsInstances = { characterModel }
+
+    for i, att in ipairs(hitbox.Attachments) do
+        local currentPos = att.WorldPosition
+        local prevPos = hitbox.PreviousPositions[i] or currentPos
+        local displacement = currentPos - prevPos
+
+        if displacement.Magnitude > 0.05 then
+            local result = Workspace:Raycast(prevPos, displacement, raycastParams)
+            if result and result.Instance then
+                local hitModel = result.Instance:FindFirstAncestorOfClass("Model")
+                if hitModel and not hitbox.HitTargets[hitModel] then
+                    local hum = hitModel:FindFirstChildOfClass("Humanoid")
+                    if hum and hum.Health > 0 then
+                        hitbox.HitTargets[hitModel] = true
+                        -- 서버로 검증된 타격 이벤트 전송
+                        -- CombatRemote:FireServer("MeleeHit", hitModel, result.Position, result.Normal)
+                    end
+                end
+            end
+        end
+        hitbox.PreviousPositions[i] = currentPos
+    end
+end
+
+return MeleeController</code></pre>
+      </div>
+
+      <h2>3. 콤보 상태 트리: 평타 연계, 캔슬 및 경직(Stun) 시스템</h2>
+      <p>뛰어난 액션 게임은 리듬감과 조작의 자유도를 제공합니다. 견고한 유한 상태 머신은 콤보 연계와 방어 심리전을 유기적으로 연결합니다:</p>
+      <ul>
+          <li>약공-약공-강공 콤보 분기: 공격 모션을 선딜(Startup) -> 활성(Active, 판정 ON) -> 후딜(Recovery, 판정 OFF) -> 연계 윈도우로 분할 관리합니다.</li>
+          <li>모션 캔슬 윈도우: 후딜레이 구간에서 회피(Dodge Roll), 막기(Block), 페이크 페인트(Feint) 입력 시 즉시 모션을 캔슬하고 방어 행동으로 전환합니다.</li>
+          <li>경직(Hitstun)과 가드 경직(Blockstun): 타격 시 20프레임, 가드 시 12프레임의 확정 경직을 주어 무한 콤보 루프를 방지하고 심리전을 유도합니다.</li>
+          <li>가드 게이지(Posture) 시스템: 무한 방어를 막기 위해 막기 성공 시 자세 게이지를 깎고, 게이지 고갈 시 2초간 무방비 그로기 상태에 빠지게 합니다.</li>
+      </ul>
+
+      <h2>4. 패링(Parry) 타이밍 윈도우와 무기 맞부딪힘 연출</h2>
+      <p>패링은 근접 전투 실력의 상징입니다. 공격이 들어오는 100~150ms 찰나에 방어를 성공시키면 전세를 단숨에 역전할 수 있습니다:</p>
+      <ul>
+          <li>패링 프레임 판정: 방어 모션 시작 후 최초 6~8프레임(약 100~130ms) 동안 들어오는 타격을 패링으로 판정합니다.</li>
+          <li>불꽃 튕김과 공격자 역스턴: 패링 성공 시 날카로운 챙 소리와 함께 화려한 스파크를 방출하며 공격자를 40프레임 동안 역경직에 빠뜨립니다.</li>
+          <li>무기 맞부딪힘(Weapon Clash): 두 플레이어가 동시에 공격하여 히트박스가 교차할 경우 둘 다 뒤로 튕겨 나가며 중립 프레임으로 리셋됩니다.</li>
+          <li>타격 임팩트 카메라 줌: 강공격 적중 시 카메라 FOV를 5% 순간적으로 좁혔다 복귀시키는 연출로 묵직한 타격감을 전달합니다.</li>
+      </ul>
+
+      <h2>5. 상용 배포 검증 및 핵 방어 체크리스트</h2>
+      <p>네트워크 핑 차이가 존재하는 글로벌 멀티플레이어 환경에서 공정한 판정을 보장하기 위한 체크리스트입니다:</p>
+      <ul>
+          <li>서버 무기 사거리 검증: 클라이언트가 타격을 보고했을 때 공격자의 무기 위치와 피격자의 몸통 거리가 무기 사거리 + 허용 오차 이내인지 서버에서 재검증합니다.</li>
+          <li>인벤토리 무기 스왑 꼼수 방지: 공격 모션 도중 무기를 집어넣거나 다른 도구로 바꾸면 즉시 히트박스를 종료하여 잔여 판정 버그를 차단합니다.</li>
+          <li>개발자 히트박스 시각화 디버그: 스튜디오에서 빨간색 네온 레이를 시각화하는 명령어를 구현하여 칼날 궤적이 빈틈없이 연결되는지 점검합니다.</li>
+          <li>클라이언트 예측 렌더링: 피격 불꽃과 사운드는 공격자 화면에서 즉시 재생하고, 체력 차감은 서버의 승인이 떨어진 후 동기화하여 지연감을 제거합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>로블록스에서 근접 무기를 만들 때 Touched 이벤트를 쓰면 안 되는 이유는 무엇인가요?</h3>
+          <p>Touched 이벤트는 물리 엔진 업데이트 주기에 따라 판정되므로 무기를 빠르게 휘두르면 적을 그냥 통과하는 터널링이 발생하고, 네트워크 핑에 따라 헛손질 판정이 자주 나기 때문입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>칼날에 어태치먼트는 몇 개나 달아야 하나요?</h3>
+          <p>보통 3개에서 5개가 가장 이상적입니다. 손잡이 근처에 1개, 칼날 중간에 2~3개, 칼끝에 1개를 배치하면 휘두를 때 빈틈없는 완벽한 궤적 판정 면이 형성됩니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>콤보 선입력 버퍼링(Input Buffering)이란 무엇인가요?</h3>
+          <p>이전 공격 애니메이션이 끝나기 직전 살짝 일찍 클릭하더라도 입력을 무시하지 않고 기억해 두었다가, 콤보가 가능한 첫 프레임에 다음 연계 공격을 즉시 발동시키는 반응성 개선 기술입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>핵 유저가 맵 반대편에 있는 적을 칼로 때리는 핵을 어떻게 막나요?</h3>
+          <p>서버에서 공격자와 피격자 간의 유클리드 거리를 검증하면 됩니다. 무기의 칼날 길이(예: 6스터드)에 핑 보정치를 더한 거리를 초과하면 서버가 타격 판정을 즉시 무효화합니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

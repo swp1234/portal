@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Melee Combat: Raycast Hitboxes & Combo State Guide (2026) (ES)</title>
+  <meta name="description" content="Comprehensive guide to building professional Roblox melee combat: RaycastHitboxV4 attachment tracing, swing trail alignment, combo buffering windows, parry stuns, and server hit verification." />
+  <meta name="keywords" content="roblox melee combat, raycast hitbox luau, combo buffer roblox, sword combat mechanics, parry stun system 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/es/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Melee Combat: Raycast Hitboxes & Combo State Guide (2026) (ES)" />
+  <meta property="og:description" content="Comprehensive guide to building professional Roblox melee combat: RaycastHitboxV4 attachment tracing, swing trail alignment, combo buffering windows, parry stuns, and server hit verification." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/es/roblox-custom-melee-raycast-hitbox-combo-system-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Melee Combat: Raycast Hitboxes & Combo State Guide (2026) (ES)" />
+  <meta name="twitter:description" content="Comprehensive guide to building professional Roblox melee combat: RaycastHitboxV4 attachment tracing, swing trail alignment, combo buffering windows, parry stuns, and server hit verification." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/es/roblox-custom-melee-raycast-hitbox-combo-system-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/es/roblox-custom-melee-raycast-hitbox-combo-system-guide.html"
+      },
+      "headline": "Roblox Melee Combat Architecture: Multi-Attachment Raycast Hitboxes, Frame Trails & Combo State Trees [ES]",
+      "description": "Comprehensive guide to building professional Roblox melee combat: RaycastHitboxV4 attachment tracing, swing trail alignment, combo buffering windows, parry stuns, and server hit verification.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/es/roblox-custom-melee-raycast-hitbox-combo-system-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Physics & Combat Systems Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "es"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Melee Combat Architecture: Multi-Attachment Raycast Hitboxes, Frame Trails & Combo State Trees [ES]",
+          "item": "https://dopabrain.com/portal/blog/es/roblox-custom-melee-raycast-hitbox-combo-system-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why are Touched events considered bad for melee weapons in Roblox?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Touched events rely on physics engine collision checks, which update irregularly and miss collisions during fast swings (tunneling). Raycast hitboxes trace exact attachment paths frame-by-frame, guaranteeing 100% collision accuracy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many attachments should I place on a sword blade for raycasting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Between 3 and 5 attachments is standard: one at the hilt, 2-3 along the blade length, and one at the tip. This creates an airtight geometric sweep sheet during swings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does input buffering improve melee combat feel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Input buffering remembers an attack press made slightly before the current swing finishes. Instead of ignoring early inputs, it automatically queues the next combo swing, making combat feel smooth and responsive."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I prevent exploiters from hitting enemies across the entire map with melee weapons?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Enforce strict server-side reach validation. When the client reports a hit, the server calculates the distance between the attacker and victim; if the distance exceeds weapon blade length (plus reasonable ping tolerance), the hit is rejected."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox Melee Combat Architecture: Multi-Attachment Raycast Hitboxes, Frame Trails & Combo State Trees [ES]</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Physics & Combat Systems Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting frame-precise melee combat in Roblox Studio: From multi-attachment raycast blade tracing and dynamic combo branching to server hit validation and responsive block-parry frames.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier220_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Blade geometry sweep math & hitbox interpolation matrix models</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier220_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Sub-120ms parry frame window & attack cancel reaction latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier220_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Melee combat rhythm & tactical swordplay spacing mental model</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier220_stress_check">
+          <strong>Stress Check</strong>
+          <span>Guard break stagger dread, infinite stun lock & combat tilt relief</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>In fighting games, action RPGs, and hack-and-slash titles on Roblox—such as Deepwoken, Rogue Lineage, or Combat Warriors—satisfying melee combat is the single greatest competitive pillar. Naive melee implementations relying on Touched events produce notorious phantom hits, missed collisions during fast swings, and extreme latency desynchronization. Achieving crisp, esports-grade swordplay requires frame-by-frame geometric raycast hitboxes.</p>
+      <p>In this comprehensive combat systems guide, we engineer a production-ready melee engine. We implement multi-attachment raycast blade tracing that interpolates between consecutive frame positions, design a robust combo state tree with input buffering and cancel windows, and enforce secure server-side hit validation with latency rollback.</p>
+
+      <h2>1. The Anatomy of Raycast Hitboxes: Why Touched Events Fail</h2>
+      <p>Roblox BasePart.Touched events rely on physics engine overlap tests, which are delayed by physics simulation steps and prone to tunneling. Raycast hitboxes eliminate this completely:</p>
+      <ul>
+          <li>Continuous Blade Geometry Tracing: Placing 3-5 Attachment instances along the length of a weapon blade (hilt, mid, tip) to track exact spatial arcs.</li>
+          <li>Frame-to-Frame Raycast Interpolation: Each frame, raycasts are cast from the previous frame's attachment position to the current frame's position, creating a solid sweep sheet.</li>
+          <li>Hitbox De-duplication Lists: Storing already-hit Humanoid instances in a frame-reset table to prevent a single swing from registering multiple hits against one enemy.</li>
+          <li>Swing Trail Synchronization: Aligning Trail instances exactly to weapon attachments to give players 100% visual feedback matching physical hit boundaries.</li>
+      </ul>
+
+      <h2>2. Production-Grade Raycast Melee Controller Implementation</h2>
+      <p>Below is a fully functional client-side Luau module implementing attachment-based raycast hitbox tracing and input buffer combo chaining:</p>
+      <ul>
+          <li>Combo Input Buffering: Stores attack button presses during active animation recovery frames, automatically triggering the next combo branch upon window opening.</li>
+          <li>Dynamic RaycastParams Whitelisting: Configures RaycastParams to test exclusively against enemy characters, ignoring cosmetic armor parts and debris.</li>
+          <li>Hit Reaction & Sound Stagger: Dispatches confirmed hits to the server while triggering instantaneous local camera shake and blade impact audio.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">MeleeHitboxController.luau (Client Combat Controller)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+
+local MeleeController = {}
+MeleeController.__index = MeleeController
+
+local player = Players.LocalPlayer
+local raycastParams = RaycastParams.new()
+raycastParams.FilterType = RaycastFilterType.Exclude
+raycastParams.IgnoreWater = true
+
+export type WeaponHitbox = {
+    BladePart: BasePart,
+    Attachments: { Attachment },
+    PreviousPositions: { Vector3 },
+    IsActive: boolean,
+    HitTargets: { [Model]: boolean }
+}
+
+function MeleeController.NewHitbox(bladePart: BasePart): WeaponHitbox
+    local attachments: { Attachment } = {}
+    for _, child in ipairs(bladePart:GetChildren()) do
+        if child:IsA("Attachment") and string.find(child.Name, "DmgPoint") then
+            table.insert(attachments, child)
+        end
+    end
+
+    local hitbox: WeaponHitbox = {
+        BladePart = bladePart,
+        Attachments = attachments,
+        PreviousPositions = {},
+        IsActive = false,
+        HitTargets = {}
+    }
+    return hitbox
+end
+
+function MeleeController.StartSwing(hitbox: WeaponHitbox)
+    hitbox.IsActive = true
+    hitbox.HitTargets = {}
+    hitbox.PreviousPositions = {}
+    for i, att in ipairs(hitbox.Attachments) do
+        hitbox.PreviousPositions[i] = att.WorldPosition
+    end
+end
+
+function MeleeController.StopSwing(hitbox: WeaponHitbox)
+    hitbox.IsActive = false
+    hitbox.HitTargets = {}
+    hitbox.PreviousPositions = {}
+end
+
+function MeleeController.UpdateHitbox(hitbox: WeaponHitbox, characterModel: Model)
+    if not hitbox.IsActive then return end
+
+    raycastParams.FilterDescendantsInstances = { characterModel }
+
+    for i, att in ipairs(hitbox.Attachments) do
+        local currentPos = att.WorldPosition
+        local prevPos = hitbox.PreviousPositions[i] or currentPos
+        local displacement = currentPos - prevPos
+
+        if displacement.Magnitude > 0.05 then
+            local result = Workspace:Raycast(prevPos, displacement, raycastParams)
+            if result and result.Instance then
+                local hitModel = result.Instance:FindFirstAncestorOfClass("Model")
+                if hitModel and not hitbox.HitTargets[hitModel] then
+                    local hum = hitModel:FindFirstChildOfClass("Humanoid")
+                    if hum and hum.Health > 0 then
+                        hitbox.HitTargets[hitModel] = true
+                        -- Send verified hit to server
+                        -- CombatRemote:FireServer("MeleeHit", hitModel, result.Position, result.Normal)
+                    end
+                end
+            end
+        end
+        hitbox.PreviousPositions[i] = currentPos
+    end
+end
+
+return MeleeController</code></pre>
+      </div>
+
+      <h2>3. Combo State Trees: Attack Strings, Cancels & Stun Locks</h2>
+      <p>Great combat feels rhythmic and expressive. A robust combo state machine allows fluid string progression while providing defensive counters:</p>
+      <ul>
+          <li>Light-Light-Heavy Branching: Structure attacks into discrete animation phases: Startup -> Active (Hitbox ON) -> Recovery (Hitbox OFF) -> Chain Window.</li>
+          <li>Animation Cancel Windows: Allow players to cancel recovery frames into a defensive Block, Dodge Roll, or Feint by pressing key inputs during the chain window.</li>
+          <li>Hitstun & Blockstun Duration: Apply deterministic stun durations (e.g., 20 frames for hitstun, 12 frames for blockstun) to prevent infinite loop stun locks.</li>
+          <li>Posture / Guard Break Meter: Sustained blocking drains a secondary posture bar; depleting posture triggers a 2-second helpless stagger vulnerability.</li>
+      </ul>
+
+      <h2>4. Parry Timing Windows & Audio-Visual Clashes</h2>
+      <p>The parry mechanic is the pinnacle of melee skill expression. Timing a block input within 100-150ms of an incoming strike completely turns the tide:</p>
+      <ul>
+          <li>Active Parry Frame Window: Grant parry invulnerability during the first 6-8 frames (100-130ms) of a block animation.</li>
+          <li>Sparks & Stun Reversal: Successfully parrying deflects the attacker's weapon, plays a resonant metallic clash sound, and stuns the attacker for 40 frames.</li>
+          <li>Weapon Clash Physics: When two attacking hitboxes intersect simultaneously, trigger a weapon clash event where both players bounce backward with neutral frame advantage.</li>
+          <li>Camera Impact Zoom: Apply an instantaneous 5% field-of-view punch on heavy hits to emphasize kinetic weight and impact authority.</li>
+      </ul>
+
+      <h2>5. Production Verification & Anti-Exploit Checklist</h2>
+      <p>Deploying competitive melee combat across varied multiplayer latency conditions requires rigorous QA:</p>
+      <ul>
+          <li>Server Distance Reach Capping: The server must verify that the distance between the attacker's weapon and the victim's Torso is within blade reach + ping buffer.</li>
+          <li>Backpack Unequip Exploit Guards: Ensure unequipping or swapping weapons during an active swing instantly cancels the hitbox to prevent lingering invisible blades.</li>
+          <li>Hitbox Visualizer Toggle: Provide a developer debug command to render neon red raycast lines in Studio to audit spatial sweep coverage.</li>
+          <li>Client-Side Prediction & Rollback: Replicate hit sparks and sound locally on the attacker's client immediately, confirming health damage once the server validates.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why are Touched events considered bad for melee weapons in Roblox?</h3>
+          <p>Touched events rely on physics engine collision checks, which update irregularly and miss collisions during fast swings (tunneling). Raycast hitboxes trace exact attachment paths frame-by-frame, guaranteeing 100% collision accuracy.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How many attachments should I place on a sword blade for raycasting?</h3>
+          <p>Between 3 and 5 attachments is standard: one at the hilt, 2-3 along the blade length, and one at the tip. This creates an airtight geometric sweep sheet during swings.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does input buffering improve melee combat feel?</h3>
+          <p>Input buffering remembers an attack press made slightly before the current swing finishes. Instead of ignoring early inputs, it automatically queues the next combo swing, making combat feel smooth and responsive.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I prevent exploiters from hitting enemies across the entire map with melee weapons?</h3>
+          <p>Enforce strict server-side reach validation. When the client reports a hit, the server calculates the distance between the attacker and victim; if the distance exceeds weapon blade length (plus reasonable ping tolerance), the hit is rejected.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

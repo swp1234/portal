@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rhythm Game Sub-Frame Timing: Perceptual Binding & Motor Jitter (2026) (ZH)</title>
+  <meta name="description" content="Deconstruct the cognitive neuroscience and psychophysics of rhythm gaming: Sub-10ms timing windows, audiovisual temporal binding, motor readiness potentials (Bereitschaftspotential), and micro-jitter compensation." />
+  <meta name="keywords" content="rhythm game timing neuroscience, temporal binding window, sub frame precision osu, motor readiness potential, rhythm game psychophysics 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Rhythm Game Sub-Frame Timing: Perceptual Binding & Motor Jitter (2026) (ZH)" />
+  <meta property="og:description" content="Deconstruct the cognitive neuroscience and psychophysics of rhythm gaming: Sub-10ms timing windows, audiovisual temporal binding, motor readiness potentials (Bereitschaftspotential), and micro-jitter compensation." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rhythm Game Sub-Frame Timing: Perceptual Binding & Motor Jitter (2026) (ZH)" />
+  <meta name="twitter:description" content="Deconstruct the cognitive neuroscience and psychophysics of rhythm gaming: Sub-10ms timing windows, audiovisual temporal binding, motor readiness potentials (Bereitschaftspotential), and micro-jitter compensation." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/zh/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html"
+      },
+      "headline": "Rhythm Game Millisecond Precision: Temporal Binding Windows, Motor Readiness & Micro-Jitter Adaptation [ZH]",
+      "description": "Deconstruct the cognitive neuroscience and psychophysics of rhythm gaming: Sub-10ms timing windows, audiovisual temporal binding, motor readiness potentials (Bereitschaftspotential), and micro-jitter compensation.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Auditory Psychophysics & Motor Control Group",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "zh"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Rhythm Game Millisecond Precision: Temporal Binding Windows, Motor Readiness & Micro-Jitter Adaptation [ZH]",
+          "item": "https://dopabrain.com/portal/blog/zh/rhythm-game-sub-frame-timing-perceptual-binding-neuroscience.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How precise is human reaction time in rhythm games?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Human visual reaction time is typically 180-250ms, but rhythm gaming is not purely reactive; it is predictive. Because players anticipate the beat, their timing accuracy reaches sub-15 millisecond precision."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Temporal Binding Window (TBW)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Temporal Binding Window is the interval of time within which the brain fuses separate sensory inputs (like seeing a note hit a line and hearing a drumbeat) into a single perceived simultaneous event, usually spanning 30-50 milliseconds."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do my hands lock up or tense during fast rhythm game streams?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When tapping speed exceeds your cerebellar motor automation limit, the conscious motor cortex tries to force control, causing simultaneous contraction of antagonistic flexor and extensor muscles (muscular co-contraction/tetanus)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does audio offset calibration work in rhythm games?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Audio offset shifts the judgment window earlier or later by a set number of milliseconds to compensate for audio driver processing delay, monitor display lag, and your personal perceptual processing latency."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Rhythm Game Millisecond Precision: Temporal Binding Windows, Motor Readiness & Micro-Jitter Adaptation [ZH]</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Auditory Psychophysics & Motor Control Group</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      The cognitive neuroscience of millisecond synchronization: Deconstructing sub-frame note accuracy, auditory-visual cross-modal integration, motor cortex readiness, and tactile latency calibration.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier221_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Sub-10ms auditory-visual binding trigger & predictive tap latency</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier221_stress_check">
+          <strong>Stress Check</strong>
+          <span>Full Combo tournament choke anxiety & acute sympathetic heart surge</span>
+        </a>
+        <a href="/burnout-test/" class="quick-card" data-track="tier221_burnout_test">
+          <strong>Burnout Test</strong>
+          <span>300+ BPM finger stream fatigue & repetitive motor neuron strain</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier221_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Cerebellar temporal pacemaker & motor readiness potential archetype</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>In hyper-competitive rhythm gaming—spanning titles like osu!, Beat Saber, Chunithm, and StepMania—players operate at the absolute biological limit of human neuromuscular precision. While action games consider a 50-millisecond reaction window generous, rhythm games evaluate performance down to sub-10ms intervals (e.g., osu! OD10 requiring ±13.5ms for a Perfect 300, and StepMania Marvelous requiring ±15ms).</p>
+      <p>Achieving consecutive thousands of frame-perfect finger taps is not simply mechanical practice; it is a profound synchronization of the brain's internal temporal clock. In this deep investigation, we deconstruct the psychophysics of rhythm gaming: audiovisual cross-modal temporal binding windows, cerebellar timing pacemakers, the Bereitschaftspotential (motor readiness potential), and sub-threshold neural jitter compensation.</p>
+
+      <h2>1. The Temporal Binding Window (TBW): Audio-Visual Cross-Modal Fusion</h2>
+      <p>In the physical world, light travels faster than sound, yet the brain perceives flashes and bangs as simultaneous events. This is managed by the Temporal Binding Window (TBW):</p>
+      <ul>
+          <li>The 30-50ms Asynchrony Buffer: Sensory cortex buffers auditory and visual inputs within a 40ms window, binding them into a unified conscious percept.</li>
+          <li>Auditory Dominance in Temporal Acuity: Auditory temporal resolution is up to 10 times sharper than visual processing; the brain's temporal pacemaker locks onto the drumbeat rather than the falling note sprite.</li>
+          <li>Cross-Modal Recalibration: Expert rhythm players dynamically shrink their TBW through training, reducing audiovisual integration ambiguity down to ±12ms.</li>
+          <li>Input Hardware Latency Desync: Mismatches between monitor display lag (e.g., 5ms), USB polling rate (1,000 Hz = 1ms), and audio driver buffer size (64 samples = ~1.5ms) shatter temporal binding unless calibrated.</li>
+      </ul>
+
+      <h2>2. The Cerebellar Internal Clock & Pacemaker Neurons</h2>
+      <p>Sub-second timing is not managed by conscious prefrontal deliberation; it is computed by the cerebellum and basal ganglia:</p>
+      <ul>
+          <li>Purkinje Cell Interval Timing: Cerebellar Purkinje neurons generate climbing-fiber rhythmic oscillations that track milliseconds with atomic-clock precision.</li>
+          <li>Entrainment to Musical Metronomes: Striatal dopamine pulses synchronize with recurring downbeats, creating an automated predictive feed-forward rhythm generator.</li>
+          <li>Predictive Motor Feed-Forward: The brain does not react to the note reaching the judgment line; it fires motor commands 80-100ms in advance so finger contact coincides with the zero-error axis.</li>
+          <li>Syncopation & Dopaminergic Reward: Off-beat syncopated rhythms create momentary prediction errors that resolve on subsequent downbeats, generating intense dopaminergic pleasure.</li>
+      </ul>
+
+
+      <h2>3. Motor Readiness Potentials (Bereitschaftspotential) & Sub-Frame Tapping</h2>
+      <p>Before a finger physically presses a mechanical switch, a massive wave of electrical activity sweeps across the motor cortex:</p>
+      <ul>
+          <li>The Bereitschaftspotential: Electroencephalogram (EEG) readings demonstrate negative cortical voltage shifts starting 200-400ms prior to finger strike.</li>
+          <li>Motor Unit Recruitment Synchronization: Elite speed players train spinal motor neuron pools to fire in micro-bursts, enabling continuous 300+ BPM finger streaming without muscular tetanus.</li>
+          <li>Mechanical Switch Actuation Hysteresis: Players optimize finger depression depth to actuate mechanical switches right at the 1.2mm trip point, shaving off 15ms of key travel latency.</li>
+          <li>Micro-Jitter Adaptation: The central nervous system constantly injects small random micro-adjustments to counteract natural physiological tremor and muscle fatigue.</li>
+      </ul>
+
+      <h2>4. The Neurobiology of the '100 / Great' Tilt & Performance Anxiety</h2>
+      <p>In a 2,000-note marathon chart, dropping a single note accuracy from 'Perfect' to 'Good' induces an immediate cognitive shockwave:</p>
+      <ul>
+          <li>The Error-Related Negativity (ERN): The anterior cingulate cortex fires a massive ERN spike 50ms after a mistimed tap, instantly registering error before visual score popups appear.</li>
+          <li>Sympathetic Arousal Spike: A near-miss triggers an involuntary epinephrine release, tightening forearm muscles and destroying delicate timing calibration for subsequent notes.</li>
+          <li>The Choke Cascade: High acute anxiety forces conscious attention back onto automated finger movements, dismantling cerebellar motor engrams into clumsy voluntary actions.</li>
+          <li>Heart Rate Telemetry in FC Runs: Heart rates climb steadily from 100 BPM to over 170 BPM during the final 30 seconds of a Full Combo (FC) tournament run.</li>
+      </ul>
+
+      <h2>5. Neuro-Conditioning & Ergonomic Calibration for Rhythm Athletes</h2>
+      <p>Sustaining millisecond accuracy across multi-hour gaming sessions requires systematic cognitive and physical conditioning:</p>
+      <ul>
+          <li>Universal Audio Offset Calibration: Calibrate hardware offset using blind auditory taps to align local sensory latency with game engine judgment windows.</li>
+          <li>Forearm Tendon Health & Micro-Breaks: Perform flexor/extensor stretches every 30 minutes to prevent repetitive strain injury (RSI) and maintain rapid finger actuation.</li>
+          <li>Error Habituation & Cognitive Reappraisal: Train mental detachment by treating non-300 hits as neutral timing feedback data rather than catastrophic failures.</li>
+          <li>Slow-Speed Metronome Practice: Practice difficult rhythm patterns at 75% speed to build clean synaptic connections before accelerating to maximum tempo.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>How precise is human reaction time in rhythm games?</h3>
+          <p>Human visual reaction time is typically 180-250ms, but rhythm gaming is not purely reactive; it is predictive. Because players anticipate the beat, their timing accuracy reaches sub-15 millisecond precision.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What is the Temporal Binding Window (TBW)?</h3>
+          <p>The Temporal Binding Window is the interval of time within which the brain fuses separate sensory inputs (like seeing a note hit a line and hearing a drumbeat) into a single perceived simultaneous event, usually spanning 30-50 milliseconds.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Why do my hands lock up or tense during fast rhythm game streams?</h3>
+          <p>When tapping speed exceeds your cerebellar motor automation limit, the conscious motor cortex tries to force control, causing simultaneous contraction of antagonistic flexor and extensor muscles (muscular co-contraction/tetanus).</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does audio offset calibration work in rhythm games?</h3>
+          <p>Audio offset shifts the judgment window earlier or later by a set number of milliseconds to compensate for audio driver processing delay, monitor display lag, and your personal perceptual processing latency.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
