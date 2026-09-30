@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 커스텀 HUD 및 반응형 GUI: CanvasGroup 및 크로스플랫폼 UI 가이드 (2026)</title>
+  <meta name="description" content="로블록스 상용급 GUI/HUD 시스템 구축 가이드: Scale 대 Offset 좌표 수학, UIAspectRatioConstraint, CanvasGroup 렌더 캐싱, 레이아웃 재연산 방지 및 44px 터치 규격." />
+  <meta name="keywords" content="로블록스 커스텀 hud, 로블록스 gui 반응형, uiaspectratioconstraint, 캔버스그룹 로블록스, 모바일 ui 인체공학 로블록스 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 커스텀 HUD 및 반응형 GUI: CanvasGroup 및 크로스플랫폼 UI 가이드 (2026)" />
+  <meta property="og:description" content="로블록스 상용급 GUI/HUD 시스템 구축 가이드: Scale 대 Offset 좌표 수학, UIAspectRatioConstraint, CanvasGroup 렌더 캐싱, 레이아웃 재연산 방지 및 44px 터치 규격." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-hud-gui-scaling-layout-optimization-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 커스텀 HUD 및 반응형 GUI: CanvasGroup 및 크로스플랫폼 UI 가이드 (2026)" />
+  <meta name="twitter:description" content="로블록스 상용급 GUI/HUD 시스템 구축 가이드: Scale 대 Offset 좌표 수학, UIAspectRatioConstraint, CanvasGroup 렌더 캐싱, 레이아웃 재연산 방지 및 44px 터치 규격." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-hud-gui-scaling-layout-optimization-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-hud-gui-scaling-layout-optimization-guide.html"
+      },
+      "headline": "로블록스 반응형 HUD 아키텍처: UIAspectRatioConstraint, CanvasGroup 최적화 및 모바일 터치 인체공학",
+      "description": "로블록스 상용급 GUI/HUD 시스템 구축 가이드: Scale 대 Offset 좌표 수학, UIAspectRatioConstraint, CanvasGroup 렌더 캐싱, 레이아웃 재연산 방지 및 44px 터치 규격.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-hud-gui-scaling-layout-optimization-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain UI/UX 시스템 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 반응형 HUD 아키텍처: UIAspectRatioConstraint, CanvasGroup 최적화 및 모바일 터치 인체공학",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-hud-gui-scaling-layout-optimization-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "스마트폰 모델에 따라 UI 버튼이 납작해지거나 길쭉하게 늘어나는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Scale 좌표를 지정했더라도 화면 종횡비(16:9, 21:9 등)가 다르면 화면 비율대로 늘어나기 때문입니다. UIAspectRatioConstraint를 추가하여 가로세로 비율을 고정하면 왜곡을 방지할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "일반 Frame 대신 CanvasGroup을 사용해야 하는 시점은 언제인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "하위 요소가 복잡하게 얽힌 모달 창 전체를 한꺼번에 서서히 나타나거나 사라지게 할 때(GroupTransparency), 또는 둥근 모서리로 하위 그래픽을 깔끔하게 자를 때 사용합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "로블록스 모바일 UI에서 권장되는 최소 버튼 크기는 얼마인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "모바일 터치 표준 가이드라인에 따라 최소 44x44 물리 픽셀 크기를 확보해야 사용자가 오터치 없이 편안하게 조작할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "아이폰 노치나 안드로이드 펀치홀 카메라에 UI가 가려지지 않게 하려면 어떻게 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ScreenGui.IgnoreGuiInset을 true로 둔 상태에서 GuiService:GetGuiInset()을 호출하여 반환된 상단/하단 여백만큼 루트 프레임의 위치와 크기를 빼주면 됩니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 반응형 HUD 아키텍처: UIAspectRatioConstraint, CanvasGroup 최적화 및 모바일 터치 인체공학</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain UI/UX 시스템 팀</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      로블록스 스튜디오에서의 반응형 고성능 인터페이스 구축: 해상도 독립적 레이아웃 제약조건부터 CanvasGroup 드로우콜 캐싱 및 모바일 엄지 영역 인체공학까지 완벽 정리.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier210_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>해상도 스케일 좌표 수학 및 종횡비 레이아웃 매트릭스 연산</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier210_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>HUD 요소 시인성 및 주변 시야 상태 표시기 반응 잠복기</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier210_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>공간 UI 아키텍처 및 시각 계층 정보 처리 인지 스타일</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier210_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>화면 과밀 정보 과부하 및 UI 시야 차폐 스트레스 완화</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>로블록스에서의 사용자 인터페이스(UI) 엔지니어링은 플랫폼 내 하드웨어의 극단적인 다양성으로 인해 까다롭기로 유명합니다. 단 하나의 게임이 고해상도 4K PC 모니터, 울트라와이드 디스플레이, 중형 태블릿, 카메라 노치가 있는 보급형 스마트폰, TV 콘솔 디스플레이에서 모두 왜곡 없이 실행되어야 합니다. 고정 픽셀 Offset에 의존하거나 무분별하게 CanvasGroup을 사용하면 텍스트 잘림 현상, 터치 불가능한 버튼, 심각한 프레임 드랍이 발생합니다.</p>
+      <p>본 인터페이스 엔지니어링 가이드에서는 상용급 반응형 HUD의 아키텍처를 심층 분석합니다. Scale 대 Offset 배치 수학, UIAspectRatioConstraint 비율 고정, CanvasGroup 래스터화 성능 경계, 노치 세이프존 보정, 엄격한 모바일 터치 인체공학 불변 규칙을 상세히 제공합니다.</p>
+
+      <h2>1. 반응형 GUI 배치 수학: Scale, Offset 및 AnchorPoint의 조화</h2>
+      <p>로블록스의 UDim2 좌표계는 상대적 비율인 Scale(부모 크기의 0.0~1.0)과 절대 픽셀인 Offset을 결합합니다. 해상도 독립성을 달성하기 위한 기본 원칙은 다음과 같습니다:</p>
+      <ul>
+          <li>순수 Scale 레이아웃 규칙: 최상위 프레임과 화면 영역은 Scale(예: UDim2.new(0.3, 0, 0.08, 0))로 선언하여 화면 종횡비에 맞춰 자동 비례 확대/축소되도록 합니다.</li>
+          <li>미세 마이크로 Offset 규칙: 픽셀 Offset은 내부 여백(Padding), 테두리 스트로크, 고정 아이콘 마진(예: 8px)에만 한정적으로 사용합니다.</li>
+          <li>AnchorPoint 중앙 정렬: AnchorPoint를 화면 사분면 원점과 일치시켜(화면 중앙은 Vector2.new(0.5, 0.5), 우상단 미니맵은 (1, 0)) 화면비 변경 시 가장자리 밀림을 방지합니다.</li>
+          <li>UIAspectRatioConstraint 비율 고정: 가로세로 비율(16:9 또는 1:1)을 고정하여 긴 세로형 스마트폰이나 울트라와이드 화면에서 UI가 길쭉하게 늘어나는 왜곡을 차단합니다.</li>
+      </ul>
+
+      <h2>2. 상용급 동적 반응형 HUD 매니저 구현 코드</h2>
+      <p>아래는 카메라 노치 세이프존 보정, 종횡비 유지, 모바일 터치 영역 자동 확장을 구현한 클라이언트 측 Luau 모듈입니다:</p>
+      <ul>
+          <li>GuiService 안전 영역 인셋 보정: GuiService:GetGuiInset()을 동적으로 조회하여 스마트폰 카메라 노치 및 홈바 여백을 정확히 계산합니다.</li>
+          <li>터치-마우스 컨트롤러 감지 전환: 모바일 터치스크린 환경에서는 클릭 가능한 모든 버튼이 최소 44x44px 이상의 터치 타깃을 갖도록 보정합니다.</li>
+          <li>부드러운 CanvasGroup 알파 페이딩: 하위 드로우콜 재연산 없이 TweenService를 사용하여 CanvasGroup의 투명도 전환을 효율적으로 처리합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">ResponsiveHUDManager.luau (클라이언트 UI 컨트롤러)</div>
+        <pre><code>--!strict
+local GuiService = game:GetService("GuiService")
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+
+local HUDManager = {}
+HUDManager.__index = HUDManager
+
+local player = Players.LocalPlayer
+local isTouch = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
+
+export type HUDConfig = {
+    ScreenGui: ScreenGui,
+    RootFrame: Frame,
+    CanvasGroup: CanvasGroup?,
+    MinTouchSize: number
+}
+
+function HUDManager.Init(screenGui: ScreenGui, rootFrame: Frame): HUDConfig
+    screenGui.ResetOnSpawn = false
+    screenGui.IgnoreGuiInset = true -- 노치 안전영역 커스텀 처리
+    screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+    local config: HUDConfig = {
+        ScreenGui = screenGui,
+        RootFrame = rootFrame,
+        CanvasGroup = rootFrame:FindFirstChildOfClass("CanvasGroup"),
+        MinTouchSize = 44
+    }
+
+    HUDManager.ApplySafeInsets(config)
+    GuiService:GetPropertyChangedSignal("TopBarInset"):Connect(function()
+        HUDManager.ApplySafeInsets(config)
+    end)
+
+    return config
+end
+
+function HUDManager.ApplySafeInsets(config: HUDConfig)
+    local topLeftInset, bottomRightInset = GuiService:GetGuiInset()
+    local root = config.RootFrame
+
+    -- 안전 표시 영역 내에 루트 프레임 배치
+    root.Position = UDim2.new(0, topLeftInset.X, 0, topLeftInset.Y)
+    root.Size = UDim2.new(1, -(topLeftInset.X + bottomRightInset.X), 1, -(topLeftInset.Y + bottomRightInset.Y))
+end
+
+function HUDManager.EnforceTouchErgonomics(button: GuiButton)
+    if not isTouch then return end
+
+    local currentSize = button.AbsoluteSize
+    local minSize = 44
+    local scaleX = math.max(currentSize.X, minSize)
+    local scaleY = math.max(currentSize.Y, minSize)
+
+    local sizeConstraint = button:FindFirstChildOfClass("UISizeConstraint")
+    if not sizeConstraint then
+        sizeConstraint = Instance.new("UISizeConstraint")
+        sizeConstraint.MinSize = Vector2.new(scaleX, scaleY)
+        sizeConstraint.Parent = button
+    else
+        sizeConstraint.MinSize = Vector2.new(scaleX, scaleY)
+    end
+end
+
+function HUDManager.FadeHUD(canvasGroup: CanvasGroup, visible: boolean, duration: number)
+    local targetAlpha = visible and 1 or 0
+    canvasGroup.Visible = true
+    
+    local tween = TweenService:Create(
+        canvasGroup,
+        TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        { GroupTransparency = 1 - targetAlpha }
+    )
+    tween:Play()
+    tween.Completed:Connect(function()
+        if not visible then
+            canvasGroup.Visible = false
+        end
+    end)
+end
+
+return HUDManager</code></pre>
+      </div>
+
+      <h2>3. CanvasGroup 성능 분석: 렌더 캐싱과 메모리 트랩</h2>
+      <p>CanvasGroup은 하위 UI 요소들을 오프스크린 텍스처로 래스터화하여 렌더링합니다. 일괄 페이드와 모서리 클리핑에는 이상적이지만 잘못 사용하면 모바일 성능에 심각한 타격을 줍니다:</p>
+      <ul>
+          <li>래스터화 텍스처 캐싱: 대화창이나 정적 팝업 패널은 텍스처로 1회 렌더링되어 애니메이션 도중 드로우콜을 크게 줄여줍니다.</li>
+          <li>동적 하위 요소 무효화 트랩: CanvasGroup 내부에서 텍스트를 실시간 변경하거나 하위 프레임을 움직이면 매 프레임 전체 텍스처를 다시 굽는 비용이 발생합니다.</li>
+          <li>텍스처 메모리 오버헤드: VRAM이 작은 저사양 기기에서 전체 화면 크기 CanvasGroup을 다수 생성하면 인스턴스당 수십 MB의 비디오 메모리가 소모됩니다.</li>
+          <li>전략적 배치 기준: 실시간 수치가 변하는 스크롤 인벤토리는 일반 Frame을 쓰고, 모달 팝업이나 페이드 인/아웃 전환 패널에만 CanvasGroup을 제한 적용합니다.</li>
+      </ul>
+
+      <h2>4. 모바일 터치 인체공학: 엄지 영역 및 불변 원칙</h2>
+      <p>모바일 플레이어는 양손으로 기기를 쥐고 엄지손가락으로 조작합니다. 엄지 가동 범위를 벗어난 UI 배치는 피로감을 유발하고 조작 실수를 낳습니다:</p>
+      <ul>
+          <li>자연스러운 엄지 조작 아크: 발사 버튼, 점프, 스킬 등 긴급 조작 키는 화면 하단 30% 좌우 모서리 영역에 집중 배치합니다.</li>
+          <li>44px 터치 타깃 불변 조건: 모든 터치 버튼은 최소 44x44px 이상의 물리적 터치 감지 영역을 확보하여 오작동을 차단합니다.</li>
+          <li>조이스틱 간섭 방지: 모바일 가상 조이스틱 반경과 UI 버튼이 겹치지 않도록 적절한 여백을 유지합니다.</li>
+          <li>노치 및 홈 인디케이터 침범 차단: 최신 스마트폰의 카메라 펀치홀 및 하단 스와이프 홈바 영역에 중요 HUD가 가려지지 않도록 안전 영역을 적용합니다.</li>
+      </ul>
+
+      <h2>5. 상용 배포 검증 및 접근성 체크리스트</h2>
+      <p>모든 기기에서 안정적인 UI를 제공하기 위한 단계별 검증 절차입니다:</p>
+      <ul>
+          <li>디바이스 에뮬레이터 검증: 스튜디오 에뮬레이터에서 스마트폰, 태블릿, PC 4K 프리셋을 순회하며 UI 비율 왜곡 및 텍스트 넘침을 확인합니다.</li>
+          <li>콘솔 컨트롤러 내비게이션: D-Pad 및 게임패드 조작 시 GuiService.SelectedObject가 모달 버튼 사이를 자연스럽게 탐색하는지 검증합니다.</li>
+          <li>다국어 텍스트 길이 팽창 대비: 독일어, 러시아어 등 영어 대비 30% 이상 길어지는 번역 텍스트가 박스 밖으로 탈출하지 않도록 TextScaled/AutomaticSize를 점검합니다.</li>
+          <li>드로우콜 계층 단순화: 불필요하게 깊은 중첩 프레임을 지양하고 UIListLayout과 UIGridLayout을 활용하여 레이아웃 트리를 평탄화합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>스마트폰 모델에 따라 UI 버튼이 납작해지거나 길쭉하게 늘어나는 이유는 무엇인가요?</h3>
+          <p>Scale 좌표를 지정했더라도 화면 종횡비(16:9, 21:9 등)가 다르면 화면 비율대로 늘어나기 때문입니다. UIAspectRatioConstraint를 추가하여 가로세로 비율을 고정하면 왜곡을 방지할 수 있습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>일반 Frame 대신 CanvasGroup을 사용해야 하는 시점은 언제인가요?</h3>
+          <p>하위 요소가 복잡하게 얽힌 모달 창 전체를 한꺼번에 서서히 나타나거나 사라지게 할 때(GroupTransparency), 또는 둥근 모서리로 하위 그래픽을 깔끔하게 자를 때 사용합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>로블록스 모바일 UI에서 권장되는 최소 버튼 크기는 얼마인가요?</h3>
+          <p>모바일 터치 표준 가이드라인에 따라 최소 44x44 물리 픽셀 크기를 확보해야 사용자가 오터치 없이 편안하게 조작할 수 있습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>아이폰 노치나 안드로이드 펀치홀 카메라에 UI가 가려지지 않게 하려면 어떻게 하나요?</h3>
+          <p>ScreenGui.IgnoreGuiInset을 true로 둔 상태에서 GuiService:GetGuiInset()을 호출하여 반환된 상단/하단 여백만큼 루트 프레임의 위치와 크기를 빼주면 됩니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
