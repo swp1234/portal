@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 공간 오디오 폐색 및 잔향 구역: 동적 레이캐스팅 음향 가이드 (2026)</title>
+  <meta name="description" content="로블록스 3D 공간 오디오의 레이캐스트 벽면 관통 폐색, 지오메트리 인식 잔향 구역, EqualizerSoundEffect 고주파 감쇄 및 저지연 클라이언트 청취자 파이프라인 마스터 가이드." />
+  <meta name="keywords" content="로블록스 오디오 폐색, 로블록스 리버브 구역, 공간 오디오 레이캐스팅, 로블록스 로우패스 필터, 사운드그룹 음향, 사운드 물리 로블록스 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 공간 오디오 폐색 및 잔향 구역: 동적 레이캐스팅 음향 가이드 (2026)" />
+  <meta property="og:description" content="로블록스 3D 공간 오디오의 레이캐스트 벽면 관통 폐색, 지오메트리 인식 잔향 구역, EqualizerSoundEffect 고주파 감쇄 및 저지연 클라이언트 청취자 파이프라인 마스터 가이드." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 공간 오디오 폐색 및 잔향 구역: 동적 레이캐스팅 음향 가이드 (2026)" />
+  <meta name="twitter:description" content="로블록스 3D 공간 오디오의 레이캐스트 벽면 관통 폐색, 지오메트리 인식 잔향 구역, EqualizerSoundEffect 고주파 감쇄 및 저지연 클라이언트 청취자 파이프라인 마스터 가이드." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 32px;
+      font-size: 1.05rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 36px;
+    }
+    .quick-rail h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 1.25rem;
+      border-left: none;
+      padding-left: 0;
+      color: #ffffff;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 1rem;
+    }
+    .quick-card span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-block {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .code-title {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: block;
+      white-space: pre;
+    }
+    .faq-container {
+      margin-top: 24px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 16px;
+      min-height: 44px;
+      transition: background-color 0.2s ease;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html"
+      },
+      "headline": "로블록스 공간 오디오 폐색: 동적 레이캐스팅, 음향 잔향 구역 및 로우패스 감쇄 필터링",
+      "description": "로블록스 3D 공간 오디오의 레이캐스트 벽면 관통 폐색, 지오메트리 인식 잔향 구역, EqualizerSoundEffect 고주파 감쇄 및 저지연 클라이언트 청취자 파이프라인 마스터 가이드.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 오디오 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 공간 오디오 폐색: 동적 레이캐스팅, 음향 잔향 구역 및 로우패스 감쇄 필터링",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-occlusion-raycasting-reverb-zones-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "로블록스에는 기본적으로 소리가 벽에 막히는 오디오 폐색 기능이 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "아닙니다. 2026년 현재 로블록스의 기본 3D 오디오는 거리 감쇄 및 팬닝만 지원하며, 소리는 벽과 지형을 그대로 통과합니다. 사실적인 장애물 감쇄를 구현하려면 레이캐스팅과 EqualizerSoundEffect를 결합한 커스텀 구현이 필요합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "로블록스에서 가장 성능 효율적인 오디오 폐색 구현 방식은 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "클라이언트에서 단독으로 연산하고, 이미터 거리에 따라 라운드로빈 방식으로 레이캐스트 주기를 분산하며, 단일 RaycastParams 객체를 재사용하고 EqualizerSoundEffect의 HighGain/MidGain 프로퍼티를 부드럽게 보간하는 것입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "개별 Sound 인스턴스마다 ReverbSoundEffect를 적용할 수 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "아닙니다. ReverbSoundEffect는 오직 SoundGroup에만 적용할 수 있습니다. 따라서 지역 잔향 구역을 구현하려면 플레이어 카메라 위치에 따라 마스터 환경 SoundGroup의 Reverb 프로퍼티나 WetLevel을 조절해야 합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "자잘한 장식 오브젝트나 가구로 인해 사운드가 비정상적으로 먹먹해지는 것을 막으려면 어떻게 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "가구, 식생, 작은 소품에는 별도의 CollisionGroup을 부여하거나 CollectionService 태그를 지정한 후, RaycastParams.FilterDescendantsInstances나 CollisionGroup 필터로 감지 대상에서 제외하면 됩니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 공간 오디오 폐색: 동적 레이캐스팅, 음향 잔향 구역 및 로우패스 감쇄 필터링</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 오디오 엔지니어링 팀</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      로블록스 스튜디오에서의 음향 물리 현실감 구축: 물리 기반 레이캐스트 장애물 감지부터 절차적 EqualizerSoundEffect 필터링 및 환경 잔향 구역 자동화까지 완벽 정리.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier206_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>음향 DSP 데시벨 수학 및 주파수 필터링 매트릭스 연산 모델</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier206_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>벽면 차단 음향 인지 및 가시선 청각 트리거 반응 잠복기</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier206_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>공간 음향 매핑 및 3D 잔향 환경 몰입 인지 스타일</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier206_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>돌발 음향 공포 반응 및 청각 과부하 자율신경계 긴장 완화</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>전술 탈출 슈터부터 서바이벌 공포 게임에 이르기까지 경쟁적이고 몰입감 넘치는 로블록스 경험에서 사운드 전파는 시각적 그래픽만큼이나 생존에 결정적입니다. 기본적으로 로블록스 공간 오디오는 거리 감쇄 및 기본 스테레오 패닝을 처리하지만 콘크리트 벽, 철제 방화문, 탁 트인 안마당을 동일하게 취급하여 소리가 벽을 그대로 뚫고 전달됩니다. 진정한 음향 깊이를 구현하려면 클라이언트 기반 커스텀 오디오 폐색 및 환경 잔향 엔진이 필수적입니다.</p>
+      <p>본 엔지니어링 가이드에서는 고성능 오디오 폐색 파이프라인의 아키텍처를 심층 분석합니다. 메모리 할당 없는 멀티포인트 레이캐스팅, 재질 인식 음향 밀도 프로파일링, 동적 EqualizerSoundEffect 고주파 롤오프, 바운딩 박스 잔향 구역 컨트롤러를 결합하여 모바일 프레임레이트를 유지하면서 사실적인 음향 물리를 제공하는 기법을 소개합니다.</p>
+
+      <h2>1. 오디오 폐색의 물리: 가시선(LOS)과 음파 회절의 원리</h2>
+      <p>현실 세계의 소리는 장애물이 가로막는다고 해서 단순히 사라지지 않습니다. 저주파는 모서리를 돌아 나가며(회절), 고주파는 흡수되거나 반사됩니다(투과 손실). 게임 엔진에서 이를 시뮬레이션하려면 감쇄를 명확한 지각 채널로 나누어야 합니다:</p>
+      <ul>
+          <li>고주파 흡수: 단단한 고체 장벽(콘크리트, 석재)은 고주파 명료도(3kHz~20kHz)를 깎아내고 저주파(<500Hz)만 웅웅거리며 통과시킵니다.</li>
+          <li>음향 회절: 음파가 벽 모퉁이나 문틀을 휘감아 돌면서 약간의 위상 지연과 낮은 음압으로 귀에 도달합니다.</li>
+          <li>동적 레이캐스트 탐침: 클라이언트 카메라 CFrame과 활성 사운드 이미터 간에 주기적으로 레이캐스트를 실행하여 가시선 차단 지수를 계산합니다.</li>
+          <li>성능 스로틀링 및 우선순위 정렬: 클라이언트 프레임 예산을 보호하기 위해 가청 반경 내의 높은 우선순위 사운드(발소리, 총성, 대사)로 레이캐스트를 제한합니다.</li>
+      </ul>
+
+      <h2>2. 상용급 동적 폐색 레이캐스터 구현 코드</h2>
+      <p>아래는 로블록스의 RaycastParams와 EqualizerSoundEffect를 사용하여 부드러운 장애물 음향 필터링을 구현한 클라이언트 측 Luau 모듈입니다:</p>
+      <ul>
+          <li>RaycastParams 태그 필터링: CollectionService와 충돌 그룹을 사용하여 물리 충돌이 없는 파편, 파티클 이미터, 로컬 캐릭터 지오메트리를 자동 제외합니다.</li>
+          <li>EqualizerSoundEffect 변조: 장애물의 두께와 재질별 음향 밀도에 따라 HighGain(-60dB~0dB)과 MidGain을 동적으로 보간합니다.</li>
+          <li>프레임 분산 라운드로빈 스케줄링: 이미터 레이캐스팅 검사를 연속 프레임에 나누어 실행함으로써 프레임 드랍과 히치를 원천 차단합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">SpatialAudioOcclusionManager.luau (클라이언트 음향 컨트롤러)</div>
+        <pre><code>--!strict
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+
+local OcclusionManager = {}
+OcclusionManager.__index = OcclusionManager
+
+export type TrackedEmitter = {
+    Sound: Sound,
+    Attachment: Attachment,
+    Equalizer: EqualizerSoundEffect,
+    CurrentGain: number,
+    MaxDistance: number,
+    Priority: number
+}
+
+local raycastParams = RaycastParams.new()
+raycastParams.FilterType = RaycastFilterType.Exclude
+raycastParams.IgnoreWater = true
+
+local trackedSounds: { [Sound]: TrackedEmitter } = {}
+local camera = Workspace.CurrentCamera
+
+function OcclusionManager.RegisterSound(sound: Sound, attachment: Attachment, maxDistance: number, priority: number)
+    local eq = sound:FindFirstChildOfClass("EqualizerSoundEffect")
+    if not eq then
+        eq = Instance.new("EqualizerSoundEffect")
+        eq.HighGain = 0
+        eq.MidGain = 0
+        eq.LowGain = 0
+        eq.Priority = 1
+        eq.Parent = sound
+    end
+
+    trackedSounds[sound] = {
+        Sound = sound,
+        Attachment = attachment,
+        Equalizer = eq,
+        CurrentGain = 0,
+        MaxDistance = maxDistance,
+        Priority = priority
+    }
+end
+
+function OcclusionManager.UnregisterSound(sound: Sound)
+    trackedSounds[sound] = nil
+end
+
+local function CalculateOcclusion(origin: Vector3, target: Vector3, charModel: Model?): (boolean, number)
+    local direction = target - origin
+    local distance = direction.Magnitude
+    if distance <= 0.5 then return false, 0 end
+
+    local filterList = { camera }
+    if charModel then table.insert(filterList, charModel) end
+    raycastParams.FilterDescendantsInstances = filterList
+
+    local result = Workspace:Raycast(origin, direction, raycastParams)
+    if result and result.Instance then
+        local hitDist = (result.Position - origin).Magnitude
+        if hitDist < (distance - 0.5) then
+            local material = result.Material
+            local densityFactor = 1.0
+            if material == Enum.Material.Wood or material == Enum.Material.WoodPlanks then
+                densityFactor = 0.5
+            elseif material == Enum.Material.Glass then
+                densityFactor = 0.3
+            elseif material == Enum.Material.Metal or material == Enum.Material.DiamondPlate then
+                densityFactor = 1.4
+            end
+            return true, densityFactor
+        end
+    end
+    return false, 0
+end
+
+local frameCount = 0
+RunService.RenderStepped:Connect(function(dt: number)
+    frameCount += 1
+    local listenerPos = camera.CFrame.Position
+    local char = game.Players.LocalPlayer.Character
+
+    for sound, emitter in pairs(trackedSounds) do
+        if not sound.IsPlaying or not emitter.Attachment.Parent then
+            continue
+        end
+
+        local emitterPos = emitter.Attachment.WorldPosition
+        local dist = (emitterPos - listenerPos).Magnitude
+        if dist > emitter.MaxDistance then continue end
+
+        -- 거리에 따른 라운드로빈 부하 분산
+        if dist > 60 and (frameCount % 4 ~= 0) then continue end
+        if dist > 30 and (frameCount % 2 ~= 0) then continue end
+
+        local isOccluded, density = CalculateOcclusion(listenerPos, emitterPos, char)
+        local targetHighGain = isOccluded and (-32 * density) or 0
+        local targetMidGain = isOccluded and (-12 * density) or 0
+
+        -- 로우패스 감쇄 보간
+        emitter.Equalizer.HighGain += (targetHighGain - emitter.Equalizer.HighGain) * math.clamp(dt * 12, 0, 1)
+        emitter.Equalizer.MidGain += (targetMidGain - emitter.Equalizer.MidGain) * math.clamp(dt * 12, 0, 1)
+    end
+end)
+
+return OcclusionManager</code></pre>
+      </div>
+
+      <h2>3. 환경 잔향 구역: 공간 오디오 지오메트리 자동화</h2>
+      <p>폐색은 장애물 차단만을 처리할 뿐, 진정한 공간감은 잔향(리버브)에 달려 있습니다. 타일로 둘러싸인 좁은 욕실은 동굴이나 지하 하수도 터널과 전혀 다른 울림을 갖습니다. 로블록스의 ReverbSoundEffect를 전역 적용하면 공간별 이질감이 발생합니다:</p>
+      <ul>
+          <li>바운딩 박스 공간 트리거: 가벼운 Region3, WorldRoot:GetPartsInPart, 또는 공간 해시 그리드를 사용하여 지역 음향 구역을 정의합니다.</li>
+          <li>잔향 프로파일 프리셋: 건축 공간의 크기와 재질에 맞춰 프리셋(Cave, ConcertHall, PaddedCell, SewerPipe 등)을 매핑합니다.</li>
+          <li>Wet/Dry 음향 크로스페이드: 구역 전환 시 어색한 끊김 현상을 방지하기 위해 마스터 SoundGroup Reverb의 WetLevel을 부드럽게 보간합니다.</li>
+          <li>야외 개활지 감쇄: 탁 트인 야외 지형에서는 잔향 감쇄 시간을 0에 가깝게 조절하고 장거리 고주파 공기 흡수를 증대시킵니다.</li>
+      </ul>
+
+      <h2>4. 모바일 프로파일링 및 오디오 스레드 최적화</h2>
+      <p>오디오 처리는 전용 엔진 스레드에서 실행되지만 레이캐스트 쿼리와 프로퍼티 연산은 Lua 런타임에서 발생합니다. 저사양 모바일 기기에서 최적화되지 않은 공간 쿼리는 심각한 CPU 발열 및 스로틀링을 유발합니다:</p>
+      <ul>
+          <li>청취자 상대 컬링: Vector3 벡터 연산을 수행하기 전에 가청 한계 구체 외부에 있는 사운드 이미터를 즉시 제외합니다.</li>
+          <li>거리별 단계적 갱신 빈도: 근거리(0~30스터드)는 매 프레임, 중거리(30~80스터드)는 2프레임마다, 원거리는 4프레임마다 분산 검사합니다.</li>
+          <li>메모리 절감 및 사운드그룹 계층 구조: 개별 인스턴스에 중복 이펙트를 생성하지 않고 전용 SoundGroup 하위로 그룹화하여 일괄 DSP를 적용합니다.</li>
+          <li>오디오 스타베이션 방지: 사운드 인스턴스를 빠르게 생성 및 파괴하지 않고 사운드 풀링(Sound Pooling)을 통해 재사용합니다.</li>
+      </ul>
+
+      <h2>5. 상용 배포 검증 및 벤치마크 체크리스트</h2>
+      <p>상용 수준의 공간 오디오를 배포하려면 다양한 디바이스와 음향 환경에서 체계적인 검증이 선행되어야 합니다:</p>
+      <ul>
+          <li>마이크로프로파일러 검증: 개발자 콘솔(F9)과 마이크로프로파일러를 통해 오디오 폐색 로직이 프레임당 0.25ms 미만의 렌더 예산을 소비하는지 확인합니다.</li>
+          <li>A/B 헤드폰 검증: 열린 문틈을 드나들며 고주파 롤오프가 시각적 시야 변화와 청각적으로 정확히 일치하는지 바이노럴 청취 테스트를 수행합니다.</li>
+          <li>모서리 회절 예외 처리: 레이가 열린 통로 2스터드 이내의 모서리에 닿을 경우 폐색 페널티를 줄여 자연스러운 음파 회절을 모사합니다.</li>
+          <li>사운드그룹 마스터 버스: 무기 폭발음, 대사, 발소리, 배경 음악을 개별 믹싱 버스로 라우팅하여 사운드 더킹과 음량 우선순위를 제어합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>로블록스에는 기본적으로 소리가 벽에 막히는 오디오 폐색 기능이 있나요?</h3>
+          <p>아닙니다. 2026년 현재 로블록스의 기본 3D 오디오는 거리 감쇄 및 팬닝만 지원하며, 소리는 벽과 지형을 그대로 통과합니다. 사실적인 장애물 감쇄를 구현하려면 레이캐스팅과 EqualizerSoundEffect를 결합한 커스텀 구현이 필요합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>로블록스에서 가장 성능 효율적인 오디오 폐색 구현 방식은 무엇인가요?</h3>
+          <p>클라이언트에서 단독으로 연산하고, 이미터 거리에 따라 라운드로빈 방식으로 레이캐스트 주기를 분산하며, 단일 RaycastParams 객체를 재사용하고 EqualizerSoundEffect의 HighGain/MidGain 프로퍼티를 부드럽게 보간하는 것입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>개별 Sound 인스턴스마다 ReverbSoundEffect를 적용할 수 있나요?</h3>
+          <p>아닙니다. ReverbSoundEffect는 오직 SoundGroup에만 적용할 수 있습니다. 따라서 지역 잔향 구역을 구현하려면 플레이어 카메라 위치에 따라 마스터 환경 SoundGroup의 Reverb 프로퍼티나 WetLevel을 조절해야 합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>자잘한 장식 오브젝트나 가구로 인해 사운드가 비정상적으로 먹먹해지는 것을 막으려면 어떻게 하나요?</h3>
+          <p>가구, 식생, 작은 소품에는 별도의 CollisionGroup을 부여하거나 CollectionService 태그를 지정한 후, RaycastParams.FilterDescendantsInstances나 CollisionGroup 필터로 감지 대상에서 제외하면 됩니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
