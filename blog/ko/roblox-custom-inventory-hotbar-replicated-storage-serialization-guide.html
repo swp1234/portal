@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 커스텀 인벤토리, 핫바 및 버퍼 직렬화 가이드 (2026)</title>
+  <meta name="description" content="로블록스 커스텀 인벤토리 개발 완벽 가이드: 기본 Backpack Tool 탈피, 네이티브 버퍼 비트패킹 네트워크 동기화, Motor6D 무기 장착 및 아이템 복사 방지 트랜잭션 락." />
+  <meta name="keywords" content="로블록스 커스텀 인벤토리, 로블록스 핫바 시스템, 버퍼 직렬화 로블록스, 아이템 복사 방지, Luau 인벤토리 시스템, 로블록스 게임 개발" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 커스텀 인벤토리, 핫바 및 버퍼 직렬화 가이드 (2026)" />
+  <meta property="og:description" content="로블록스 커스텀 인벤토리 개발 완벽 가이드: 기본 Backpack Tool 탈피, 네이티브 버퍼 비트패킹 네트워크 동기화, Motor6D 무기 장착 및 아이템 복사 방지 트랜잭션 락." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 커스텀 인벤토리, 핫바 및 버퍼 직렬화 가이드 (2026)" />
+  <meta name="twitter:description" content="로블록스 커스텀 인벤토리 개발 완벽 가이드: 기본 Backpack Tool 탈피, 네이티브 버퍼 비트패킹 네트워크 동기화, Motor6D 무기 장착 및 아이템 복사 방지 트랜잭션 락." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html"
+      },
+      "headline": "로블록스 커스텀 인벤토리 아키텍처: 데이터 기반 핫바, 버퍼 직렬화 및 복사 버그 방지 뮤텍스",
+      "description": "로블록스 커스텀 인벤토리 개발 완벽 가이드: 기본 Backpack Tool 탈피, 네이티브 버퍼 비트패킹 네트워크 동기화, Motor6D 무기 장착 및 아이템 복사 방지 트랜잭션 락.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 스튜디오 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 커스텀 인벤토리 아키텍처: 데이터 기반 핫바, 버퍼 직렬화 및 복사 버그 방지 뮤텍스",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "로블록스 기본 Tool과 Backpack을 쓰지 말아야 하는 가장 큰 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "기본 Tool은 물리 파트와 스크립트를 캐릭터 인스턴스 트리에 직접 복제하므로 물리 렉을 유발하고, 클라이언트가 메모리를 조작해 아이템을 무한 복사하는 취약점에 쉽게 노출되기 때문입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "버퍼(Buffer) 직렬화가 네트워크 렉을 줄이는 데 얼마나 효과적인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "일반적인 딕셔너리 테이블 동기화 대비 네트워크 데이터 전송량을 80~90% 절감합니다. 40칸 인벤토리 전체를 단 160바이트의 바이너리 버퍼로 압축 전송할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "아이템 복사 버그는 코드로 어떻게 원천 차단하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "서버 측에 `isLocked` 뮤텍스 락을 적용하여 인벤토리 이동 연산이 완전히 완료될 때까지 다른 패킷 처리를 차단하고, 바닥에 아이템을 떨어뜨릴 때도 인벤토리에서 먼저 차감한 후 3D 오브젝트를 생성해야 합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "커스텀 핫바 무기는 캐릭터에 어떻게 연결해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "일반 Weld 대신 Motor6D를 사용하여 무기의 기준 파트를 캐릭터의 RightHand에 용접해야 합니다. Motor6D를 써야 무기 휘두르기 애니메이션이 캐릭터 뼈대 애니메이션과 매끄럽게 결합됩니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 커스텀 인벤토리 아키텍처: 데이터 기반 핫바, 버퍼 직렬화 및 복사 버그 방지 뮤텍스</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 스튜디오 엔지니어링 팀</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      엔터프라이즈급 인벤토리 엔지니어링: 기본 툴 인스턴스 제거, 초저대역폭 버퍼 비트패킹 및 아이템 복사 원천 차단 트랜잭션 락.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier188_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>버퍼 바이트 오프셋 연산 및 비트패킹 인벤토리 용량 최적화</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier188_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>핫바 슬롯 스왑 디바운스 및 무기 장착 입력 반응 속도</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier188_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>모듈형 인벤토리 상태 구조 및 데이터 기반 UI 설계 스타일</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier188_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>멀티플레이어 아이템 복사 버그 디버깅 및 동시성 제어 피로도</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>현대 로블록스 게임에서 엔진 기본 제공 기능인 `Backpack`과 `Tool` 인스턴스에 의존하는 것은 심각한 기술적 부채를 초래합니다. 기본 Tool 방식은 제어되지 않는 물리 복제와 무기 장착 시 캐릭터 튕김 버그를 일으키며, 클라이언트 메모리 변조를 통한 아이템 복사 버그에 극히 취약합니다.</p>
+      <p>상용 RPG, 생존 샌드박스, 익스트랙션 게임을 제작하려면 순수 데이터 기반 커스텀 인벤토리 시스템이 필수적입니다. Luau 테이블로 상태를 관리하고, 네이티브 `buffer` 비트패킹을 통해 네트워크 패킷을 90% 절감하며, 서버 뮤텍스(Mutex) 락을 통해 아이템 복사를 완벽히 방어하는 아키텍처를 소개합니다.</p>
+
+      <h2>1. 기본 Tool 탈피: 데이터 기반 인벤토리 아키텍처</h2>
+      <p>프로덕션 프로젝트에서 기본 Backpack Tool을 버리고 데이터 기반 설계를 택하는 이유:</p>
+      <ul>
+          <li>물리 및 계층 구조 오버헤드: 기본 Tool은 파트, 스크립트, 핸들 인스턴스를 통째로 캐릭터에 복제하므로 물리 엔진에 불필요한 부하를 주고 래그돌 시 튕김을 유발합니다.</li>
+          <li>순수 데이터 상태 관리: 아이템은 단순히 `{ itemId: number, quantity: number, durability: number }` 형태의 불변 데이터로만 존재하며, 3D 메시는 실제로 장착했을 때만 Workspace에 동적 스폰합니다.</li>
+          <li>네트워크 복제 분리: 인벤토리 데이터는 서버의 PlayerProfile에 안전하게 보관되고, 단일 압축 RemoteEvent를 통해 클라이언트로 전송되어 인스턴스 스폰 렉이 0ms가 됩니다.</li>
+          <li>단일 진실 공급원(SSOT): 아이템 소비, 이동, 버리기는 오직 서버에서만 연산하며, 클라이언트 UI는 서버 데이터의 시각적 반영체에 불과합니다.</li>
+      </ul>
+
+      <h2>2. 버퍼 비트패킹(Bitpacking) 및 네트워크 직렬화</h2>
+      <p>40칸 인벤토리 전체를 수백 바이트의 네이티브 바이너리 버퍼로 압축 동기화하는 기법:</p>
+      <ul>
+          <li>Luau 버퍼 기본 함수: `buffer.create`, `buffer.writeu16`, `buffer.writeu8`를 활용하여 슬롯당 단 4바이트로 아이템 데이터를 완벽히 인코딩합니다.</li>
+          <li>바이너리 슬롯 레이아웃: ItemID에 2바이트(u16, 최대 65,535종 아이템), 수량에 1바이트(u8, 0~255개), 내구도 비율에 1바이트(u8, 0~100%)를 배정합니다.</li>
+          <li>대역폭 절감 효과: 40칸 인벤토리를 일반 JSON/딕셔너리로 전송하면 약 1.2 KB가 소모되지만, 버퍼 비트패킹 시 단 160바이트(87% 대역폭 절감)로 축소됩니다.</li>
+          <li>델타 동기화: 게임 도중 변경이 발생한 특정 슬롯 번호만 부분 전송하여 대규모 멀티플레이어 환경에서도 핑 튐이 전혀 발생하지 않습니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau 버퍼 직렬화 인벤토리 및 뮤텍스 트랜잭션 엔진</div>
+        <pre><code>--!strict
+local Players = game:GetService("Players")
+
+local InventoryService = {}
+InventoryService.__index = InventoryService
+
+export type ItemSlot = {
+    itemId: number,      -- u16 (0 - 65535)
+    quantity: number,    -- u8  (0 - 255)
+    durability: number,  -- u8  (0 - 100)
+}
+
+local playerInventories: { [Player]: { slots: { ItemSlot }, isLocked: boolean } } = {}
+
+-- 40칸 빈 인벤토리 초기화
+function InventoryService.InitPlayer(player: Player)
+    local emptySlots: { ItemSlot } = {}
+    for i = 1, 40 do
+        emptySlots[i] = { itemId = 0, quantity = 0, durability = 0 }
+    end
+    playerInventories[player] = { slots = emptySlots, isLocked = false }
+end
+
+-- 40칸 슬롯을 단 160바이트 바이너리 버퍼로 직렬화
+function InventoryService.SerializeToBuffer(player: Player): buffer?
+    local data = playerInventories[player]
+    if not data then return nil end
+    
+    local buf = buffer.create(160) -- 40슬롯 * 4바이트
+    for i = 1, 40 do
+        local slot = data.slots[i]
+        local offset = (i - 1) * 4
+        buffer.writeu16(buf, offset, slot.itemId)
+        buffer.writeu8(buf, offset + 2, slot.quantity)
+        buffer.writeu8(buf, offset + 3, slot.durability)
+    end
+    return buf
+end
+
+-- 아이템 복사 방지 뮤텍스 락 기반 슬롯 교환
+function InventoryService.MoveItem(player: Player, fromSlot: number, toSlot: number): boolean
+    local data = playerInventories[player]
+    if not data or data.isLocked then return false end
+    
+    if fromSlot < 1 or fromSlot > 40 or toSlot < 1 or toSlot > 40 then return false end
+    if fromSlot == toSlot then return false end
+    
+    -- 트랜잭션 락 획득 (경쟁 상태 차단)
+    data.isLocked = true
+    
+    local source = data.slots[fromSlot]
+    local target = data.slots[toSlot]
+    
+    -- 원자적 교환 수행
+    data.slots[fromSlot] = target
+    data.slots[toSlot] = source
+    
+    -- 트랜잭션 락 해제
+    data.isLocked = false
+    return true
+end
+
+return InventoryService</code></pre>
+      </div>
+
+      <h2>3. 핫바 슬롯 관리 및 Motor6D 무기 장착 연동</h2>
+      <p>캐릭터 물리 충돌 없이 3D 무기 모델을 손에 쥐여주는 정밀 구현:</p>
+      <ul>
+          <li>동적 모델 생성: 1~9번 숫자키로 핫바를 선택하면 클라이언트가 서버에 장착을 요청하고, 서버는 ReplicatedStorage에서 해당 3D 모델을 클론하여 장착합니다.</li>
+          <li>Motor6D 용접: 기존 Weld 대신 Motor6D를 사용하여 캐릭터의 RightHand와 무기 손잡이를 결합합니다. 이를 통해 무기 흔들림 및 휘두르기 애니메이션이 자연스럽게 골격에 블렌딩됩니다.</li>
+          <li>고속 슬롯 스왑 디바운스: 0.2초의 스왑 쿨다운을 강제하여 무기 교체 키 연타로 인한 애니메이션 깨짐과 공격 판정 꼬임을 방지합니다.</li>
+          <li>클라이언트 예측 렌더링: 조작감을 위해 클라이언트는 즉시 발도 애니메이션을 재생하고 UI 하이라이트를 이동시키며, 서버는 쿨다운을 검증한 뒤 공식 히트박스를 활성화합니다.</li>
+      </ul>
+
+      <h2>4. 복사 버그 방지 뮤텍스 락 및 트랜잭션 안전성</h2>
+      <p>멀티플레이어 경제를 파탄 내는 아이템 복사 버그의 완벽한 기술적 차단:</p>
+      <ul>
+          <li>비동기 경쟁 상태(Race Condition) 취약점: 창고에 아이템을 넣음과 동시에 바닥에 버리는 패킷을 같은 프레임에 전송하는 방식이 대표적인 복사 취약점입니다.</li>
+          <li>서버 측 트랜잭션 뮤텍스: 모든 인벤토리 및 보관함 객체에 `isLocked` 불리언 락을 배치하여, 하나의 이동 작업이 처리 중일 때는 다른 모든 요청을 즉시 거부합니다.</li>
+          <li>유저 간 거래의 2단계 커밋(2-Phase Commit): 양측 인벤토리를 동시에 잠그고, 한쪽이라도 접속이 끊기거나 취소하면 이전 스냅샷으로 롤백합니다.</li>
+          <li>아이템 드롭 원자성: 아이템을 월드에 떨어뜨릴 때, Workspace에 물리 오브젝트를 스폰하기 전에 인벤토리 데이터에서 먼저 아이템을 완전히 삭제해야 합니다.</li>
+      </ul>
+
+      <h2>5. 모바일 터치 UX 최적화 및 프로덕션 수칙</h2>
+      <p>PC, 콘솔, 모바일 터치스크린을 모두 아우르는 인벤토리 UI 구축 원칙:</p>
+      <ul>
+          <li>터치 타깃 최소 면적 보장: 모바일 화면의 핫바 슬롯 크기를 최소 48x48 포인트 이상으로 확보하여 난전 중 오작동을 차단합니다.</li>
+          <li>드래그 앤 드롭 대안 인터페이스: 모바일에서는 손가락이 화면을 가리는 드래그 방식 대신 "선택 슬롯 탭 -> 이동 대상 슬롯 탭" 방식의 2스텝 모달을 병행 지원해야 합니다.</li>
+          <li>UI 슬롯 오브젝트 풀링: 인벤토리를 열 때마다 GuiObject를 새로 생성하지 말고, 40개 슬롯 Frame을 미리 생성해 둔 뒤 Visible과 아이콘 텍스처만 동적으로 변경합니다.</li>
+          <li>MicroProfiler UI 렌더링 검증: 100칸짜리 대형 인벤토리를 열 때 UI 레이아웃 재계산(`AutomaticSize`)으로 인한 프레임 드랍이 없도록 1.5ms 미만을 유지합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>로블록스 기본 Tool과 Backpack을 쓰지 말아야 하는 가장 큰 이유는 무엇인가요?</h3>
+          <p>기본 Tool은 물리 파트와 스크립트를 캐릭터 인스턴스 트리에 직접 복제하므로 물리 렉을 유발하고, 클라이언트가 메모리를 조작해 아이템을 무한 복사하는 취약점에 쉽게 노출되기 때문입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>버퍼(Buffer) 직렬화가 네트워크 렉을 줄이는 데 얼마나 효과적인가요?</h3>
+          <p>일반적인 딕셔너리 테이블 동기화 대비 네트워크 데이터 전송량을 80~90% 절감합니다. 40칸 인벤토리 전체를 단 160바이트의 바이너리 버퍼로 압축 전송할 수 있습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>아이템 복사 버그는 코드로 어떻게 원천 차단하나요?</h3>
+          <p>서버 측에 `isLocked` 뮤텍스 락을 적용하여 인벤토리 이동 연산이 완전히 완료될 때까지 다른 패킷 처리를 차단하고, 바닥에 아이템을 떨어뜨릴 때도 인벤토리에서 먼저 차감한 후 3D 오브젝트를 생성해야 합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>커스텀 핫바 무기는 캐릭터에 어떻게 연결해야 하나요?</h3>
+          <p>일반 Weld 대신 Motor6D를 사용하여 무기의 기준 파트를 캐릭터의 RightHand에 용접해야 합니다. Motor6D를 써야 무기 휘두르기 애니메이션이 캐릭터 뼈대 애니메이션과 매끄럽게 결합됩니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

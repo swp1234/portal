@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox 自定义背包系统、快捷栏与 Buffer 二进制序列化指南 (2026)</title>
+  <meta name="description" content="掌握 Roblox 商业级自定义背包开发：彻底弃用 Backpack Tool 实例、利用原生 Buffer 压缩 90% 网络带宽、Motor6D 武器动态挂接与防复制原子事务锁。" />
+  <meta name="keywords" content="Roblox自定义背包, Roblox快捷栏系统, Buffer序列化Roblox, 防刷物互斥锁, Luau背包系统, Roblox游戏开发" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox 自定义背包系统、快捷栏与 Buffer 二进制序列化指南 (2026)" />
+  <meta property="og:description" content="掌握 Roblox 商业级自定义背包开发：彻底弃用 Backpack Tool 实例、利用原生 Buffer 压缩 90% 网络带宽、Motor6D 武器动态挂接与防复制原子事务锁。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox 自定义背包系统、快捷栏与 Buffer 二进制序列化指南 (2026)" />
+  <meta name="twitter:description" content="掌握 Roblox 商业级自定义背包开发：彻底弃用 Backpack Tool 实例、利用原生 Buffer 压缩 90% 网络带宽、Motor6D 武器动态挂接与防复制原子事务锁。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html"
+      },
+      "headline": "Roblox 自定义背包架构深度解析：数据驱动快捷栏、Buffer 序列化与防刷物互斥锁",
+      "description": "掌握 Roblox 商业级自定义背包开发：彻底弃用 Backpack Tool 实例、利用原生 Buffer 压缩 90% 网络带宽、Motor6D 武器动态挂接与防复制原子事务锁。",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio 引擎架构团队",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "zh"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox 自定义背包架构深度解析：数据驱动快捷栏、Buffer 序列化与防刷物互斥锁",
+          "item": "https://dopabrain.com/portal/blog/zh/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "为什么现代 Roblox 游戏必须弃用内置的 Tool 和 Backpack？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "原生 Tool 会将物理零件直接插入角色体内，容易导致物理穿模乱飞，并且其逻辑过度依赖客户端状态，极易被黑客利用刷出无限复制物品。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Buffer 二进制序列化相比传统方式能节省多少流量？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "相比传统 JSON 或字典表，Buffer 能够减少 80% 至 90% 的网络流量，40 格的完整背包数据仅需 160 字节即可传输完毕。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何彻底防范多人交易或存取箱子时的刷物品漏洞？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "在服务端引入 `isLocked` 互斥锁实现原子操作，在物品完全转移前拒绝并发请求，并在丢弃物品时遵循“先扣数据、后生实体”的严格时序。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "自定义快捷栏手持武器应该如何装配在角色身上？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "应使用 Motor6D 铰链将武器基座零件连接到角色的 RightHand。Motor6D 能够完美继承骨骼动画位移，让武器挥动轨迹与身体动作协调自然。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox 自定义背包架构深度解析：数据驱动快捷栏、Buffer 序列化与防刷物互斥锁</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio 引擎架构团队</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      工业级背包架构工程：淘汰引擎默认 Tool 实例、极低带宽 Buffer 二进制编码与杜绝刷物品的原子事务互斥锁。
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier188_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Buffer byte offset math & bitpacked inventory storage allocation</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier188_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Hotbar slot switching debounce & weapon equip input latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier188_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Modular inventory state architecture & data-driven UI design archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier188_stress_check">
+          <strong>Stress Check</strong>
+          <span>Multiplayer item duplication debugging & race condition prevention</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>在现代 Roblox 游戏开发中，继续沿用引擎内置的 `Backpack` 与 `Tool` 实例机制是极其严重的架构隐患。原生的 Tool 会在玩家角色模型中直接挂接带有物理碰撞的实体部件，不仅导致角色受击倒地时产生剧烈的物理弹飞 Bug，而且极易被客户端内存外挂利用并引发灾难性的“无限复制刷物品（Duplication Glitch）”。</p>
+      <p>高品质商业项目（如大型 RPG、开放世界沙盒与撤离射击游戏）必须建立在纯粹的“数据驱动型自定义背包”之上。将物品抽象为轻量级 Luau 字典数据、借助原生 `buffer` 原始类型压缩网络包达 90%、并通过服务端严格的互斥锁（Mutex）确保原子事务安全，即可构建运行在 60 FPS 下无懈可击的背包系统。</p>
+
+      <h2>1. 告别默认 Tool：数据驱动型背包核心架构</h2>
+      <p>大型商业级 Roblox 项目全面弃用原生 Tool 改用纯数据架构的根本原因：</p>
+      <ul>
+          <li>物理与层级开销根除：原生 Tool 会将 Part、脚本与 Handle 整体塞进角色模型树中，干扰物理碰撞求解器并诱发肢体穿模弹飞。</li>
+          <li>纯数据状态解耦：背包内的物品仅是一行轻量级数据：`{ itemId: number, quantity: number, durability: number }`，3D 武器模型仅在玩家实际手持装备时才在客户端/场景中动态生成。</li>
+          <li>网络复制链路解耦：背包全量数据保存在服务端专用的 PlayerProfile 字典中，通过单次压缩的 RemoteEvent 统一向客户端派发，彻底消除大量零件生成卡顿。</li>
+          <li>单项唯一事实来源 (SSOT)：物品的丢弃、合成、消耗与交换完全由服务端裁决，客户端 UI 仅仅是服务端底层数据的一层可视化投影。</li>
+      </ul>
+
+      <h2>2. Buffer 二进制位打包与极低网络带宽序列化</h2>
+      <p>利用 Luau 原生 Buffer 将 40 格全量背包压缩至仅百余字节的二进制流：</p>
+      <ul>
+          <li>Luau Buffer 原生方法：调用 `buffer.create`、`buffer.writeu16` 与 `buffer.writeu8`，仅需 4 个字节即可完整封包单个物品格的所有属性。</li>
+          <li>紧凑型位布局规划：分配 2 字节存储 ItemID（u16，支持多达 65,535 种道具）、1 字节存储数量（u8，0~255 叠加上限）、1 字节存储耐久百分比（u8，0~100%）。</li>
+          <li>网络带宽断崖式节省：以传统 JSON 或字典表结构同步 40 格背包需占用约 1.2 KB 网络数据包；采用 Buffer 位打包后仅需 160 字节，带宽消耗直降 87%。</li>
+          <li>增量（Delta）局部同步：在游戏进行中仅同步发生数值变动的槽位索引号，杜绝全量重发，保障数百人同服下的零网络跳 Ping。</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">基于 Buffer 序列化与原子事务互斥锁的 Luau 背包引擎</div>
+        <pre><code>--!strict
+local Players = game:GetService("Players")
+
+local InventoryService = {}
+InventoryService.__index = InventoryService
+
+export type ItemSlot = {
+    itemId: number,      -- u16 (0 - 65535)
+    quantity: number,    -- u8  (0 - 255)
+    durability: number,  -- u8  (0 - 100)
+}
+
+local playerInventories: { [Player]: { slots: { ItemSlot }, isLocked: boolean } } = {}
+
+-- 初始化 40 格空白背包
+function InventoryService.InitPlayer(player: Player)
+    local emptySlots: { ItemSlot } = {}
+    for i = 1, 40 do
+        emptySlots[i] = { itemId = 0, quantity = 0, durability = 0 }
+    end
+    playerInventories[player] = { slots = emptySlots, isLocked = false }
+end
+
+-- 将 40 格背包序列化为仅 160 字节的紧凑型二进制 Buffer
+function InventoryService.SerializeToBuffer(player: Player): buffer?
+    local data = playerInventories[player]
+    if not data then return nil end
+    
+    local buf = buffer.create(160) -- 40 格 * 4 字节
+    for i = 1, 40 do
+        local slot = data.slots[i]
+        local offset = (i - 1) * 4
+        buffer.writeu16(buf, offset, slot.itemId)
+        buffer.writeu8(buf, offset + 2, slot.quantity)
+        buffer.writeu8(buf, offset + 3, slot.durability)
+    end
+    return buf
+end
+
+-- 具备互斥锁保护的原子性物品槽位交换（杜绝竞争刷物）
+function InventoryService.MoveItem(player: Player, fromSlot: number, toSlot: number): boolean
+    local data = playerInventories[player]
+    if not data or data.isLocked then return false end
+    
+    if fromSlot < 1 or fromSlot > 40 or toSlot < 1 or toSlot > 40 then return false end
+    if fromSlot == toSlot then return false end
+    
+    -- 获取事务互斥锁
+    data.isLocked = true
+    
+    local source = data.slots[fromSlot]
+    local target = data.slots[toSlot]
+    
+    -- 执行原子槽位交换
+    data.slots[fromSlot] = target
+    data.slots[toSlot] = source
+    
+    -- 释放事务锁
+    data.isLocked = false
+    return true
+end
+
+return InventoryService</code></pre>
+      </div>
+
+      <h2>3. 快捷栏槽位管理与 Motor6D 武器动态焊接</h2>
+      <p>将 3D 武器模型完美贴合手部骨骼并消除物理拉扯：</p>
+      <ul>
+          <li>按需动态生成：玩家按下数字快捷键 1~9 时，客户端发送请求，服务端从 ReplicatedStorage 动态克隆对应的 3D 视觉模型并附加在角色手上。</li>
+          <li>Motor6D 骨骼焊接：使用 Motor6D 替代过时的 Weld 约束，将武器主零件固定至 RightHand 或 LeftHand。Motor6D 支持骨骼位移插值，使得挥刀攻击动作与奔跑骨骼动画浑然一体。</li>
+          <li>高频切枪防抖 (Debounce)：在快捷栏切换时强制加入 0.2 秒防抖 CD，杜绝玩家快速狂按切枪导致攻击判定与动画脱节。</li>
+          <li>客户端手感先行预测：客户端在点击瞬间立即播放拔刀手势与快捷栏高亮反馈，服务端在后台校验冷却并同步激活真实命中判定框。</li>
+      </ul>
+
+      <h2>4. 防刷物互斥锁 (Mutex) 与原子事务安全</h2>
+      <p>从底层彻底根除摧毁游戏经济的物品复制 Bug：</p>
+      <ul>
+          <li>竞态条件 (Race Condition) 漏洞原理：利用网络延迟在同一毫秒内并发发送“存入仓库”和“扔在地上”两个封包，往往导致两边同时存在该道具。</li>
+          <li>服务端事务互斥锁：为每个容器对象（玩家背包、箱子、交易栏）赋予 `isLocked` 状态变量，当有任何未决操作时直接驳回一切并发请求。</li>
+          <li>玩家交易的两阶段提交 (2-Phase Commit)：双方在确认交易时，系统同时锁死双方背包，任何一方异常掉线或取消则立即回滚至初始镜像。</li>
+          <li>丢弃物品原子操作：在将物品掷于地面时，必须在服务端内存数据中先行扣除，之后才在 Workspace 中生成掉落物实体。</li>
+      </ul>
+
+      <h2>5. 移动端触控 UX 适配与生产环境清单</h2>
+      <p>兼容 PC、主机手柄与移动触屏的全端背包开发准则：</p>
+      <ul>
+          <li>保证最小触控尺寸：移动端快捷栏图标大小必须达到至少 48x48 逻辑像素以上，避免激烈交战时发生致命的误触。</li>
+          <li>替代拖拽的双击模式：在触屏上，手指拖拽会严重遮挡视线；应提供“先点选起始格 -> 再点选目标格”的两步点选替换方案。</li>
+          <li>UI 对象池化技术：切勿在每次打开背包时销毁并新建 GuiObject，提前常驻预建 40 个槽位 Frame，仅动态更新 Visible 和 Image 属性。</li>
+          <li>MicroProfiler 渲染检查：确保在移动端打开上百格大仓库时，UI 自动排版计算耗时小于 1.5ms，杜绝掉帧卡顿。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>为什么现代 Roblox 游戏必须弃用内置的 Tool 和 Backpack？</h3>
+          <p>原生 Tool 会将物理零件直接插入角色体内，容易导致物理穿模乱飞，并且其逻辑过度依赖客户端状态，极易被黑客利用刷出无限复制物品。</p>
+        </div>
+        <div class="faq-item">
+          <h3>Buffer 二进制序列化相比传统方式能节省多少流量？</h3>
+          <p>相比传统 JSON 或字典表，Buffer 能够减少 80% 至 90% 的网络流量，40 格的完整背包数据仅需 160 字节即可传输完毕。</p>
+        </div>
+        <div class="faq-item">
+          <h3>如何彻底防范多人交易或存取箱子时的刷物品漏洞？</h3>
+          <p>在服务端引入 `isLocked` 互斥锁实现原子操作，在物品完全转移前拒绝并发请求，并在丢弃物品时遵循“先扣数据、后生实体”的严格时序。</p>
+        </div>
+        <div class="faq-item">
+          <h3>自定义快捷栏手持武器应该如何装配在角色身上？</h3>
+          <p>应使用 Motor6D 铰链将武器基座零件连接到角色的 RightHand。Motor6D 能够完美继承骨骼动画位移，让武器挥动轨迹与身体动作协调自然。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

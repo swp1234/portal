@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Inventory Systems, Hotbar & Buffer Serialization Guide (2026)</title>
+  <meta name="description" content="Master Roblox custom inventory engineering: replacing Backpack Tools with data tables, buffer bitpacking serialization, hotbar Motor6D welds, and server mutex locks." />
+  <meta name="keywords" content="Roblox custom inventory, Roblox hotbar system, buffer serialization Roblox, anti-duplication Roblox, Luau inventory system, Roblox game dev" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Inventory Systems, Hotbar & Buffer Serialization Guide (2026)" />
+  <meta property="og:description" content="Master Roblox custom inventory engineering: replacing Backpack Tools with data tables, buffer bitpacking serialization, hotbar Motor6D welds, and server mutex locks." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Inventory Systems, Hotbar & Buffer Serialization Guide (2026)" />
+  <meta name="twitter:description" content="Master Roblox custom inventory engineering: replacing Backpack Tools with data tables, buffer bitpacking serialization, hotbar Motor6D welds, and server mutex locks." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html"
+      },
+      "headline": "Roblox Custom Inventory Architecture: Data-Driven Hotbars, Buffer Serialization & Anti-Duplication Locks",
+      "description": "Master Roblox custom inventory engineering: replacing Backpack Tools with data tables, buffer bitpacking serialization, hotbar Motor6D welds, and server mutex locks.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Custom Inventory Architecture: Data-Driven Hotbars, Buffer Serialization & Anti-Duplication Locks",
+          "item": "https://dopabrain.com/portal/blog/en/roblox-custom-inventory-hotbar-replicated-storage-serialization-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why should I avoid using Roblox's built-in Tool and Backpack system?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Default Tools replicate physical Part instances into characters, causing physics hitches, weld flings, and unverified client-side manipulation. Data-driven inventories keep data purely in tables, instantiating visual models only when actively equipped."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much bandwidth does buffer serialization save in multiplayer games?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Buffer bitpacking typically reduces inventory network payloads by 80% to 90% compared to JSON or dictionaries, cutting a 40-slot sync from ~1.2 KB down to 160 bytes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the most effective way to prevent item duplication bugs in trading?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use server-side mutex locks and atomic two-phase commit transactions. Lock both players' inventories before swapping items, and deduct items from memory before spawning physical dropped world objects."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How should weapon models be attached to the character for custom hotbars?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use a Motor6D connecting the weapon's root part to the character's RightHand or LeftHand. Unlike legacy Welds, Motor6Ds permit weapon animations to blend naturally with character skeletal animations."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox Custom Inventory Architecture: Data-Driven Hotbars, Buffer Serialization & Anti-Duplication Locks</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Engineering Robust Inventory Systems: Moving beyond vanilla Backpack Tools, ultra-low bandwidth buffer serialization, and transactional anti-duplication mutex locks.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier188_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Buffer byte offset math & bitpacked inventory storage allocation</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier188_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Hotbar slot switching debounce & weapon equip input latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier188_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Modular inventory state architecture & data-driven UI design archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier188_stress_check">
+          <strong>Stress Check</strong>
+          <span>Multiplayer item duplication debugging & race condition prevention</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>In modern Roblox experiences, relying on default engine `Backpack` and `Tool` instances is a recipe for technical debt. Vanilla Tools introduce uncontrolled physics replication, cause character desynchronization when equipping items, and are notoriously vulnerable to client-side item duplication exploits.</p>
+      <p>High-performance games (such as survival sandboxes, RPGs, and extraction looters) require custom data-driven inventory systems. By storing items as lightweight Luau dictionary records, serializing state with native `buffer` primitives, and enforcing atomic server-side transaction locks, you can build scalable, 60 FPS inventories immune to race conditions and duplication hacks.</p>
+
+      <h2>1. Beyond Vanilla Tools: Data-Driven Inventory Architecture</h2>
+      <p>Why enterprise-grade Roblox projects abandon default Backpack tools in favor of pure data:</p>
+      <ul>
+          <li>Physics & Hierarchy Overhead: Default Tools replicate physical Part instances, scripts, and handles into the player's character hierarchy, polluting physics solvers and triggering unexpected weld flings.</li>
+          <li>Data-Driven State: An item is simply an immutable record: `{ id: string, stack: number, durability: number, metadata: table }`. The physical 3D model only exists in Workspace when the item is actively equipped.</li>
+          <li>Replication Separation: Inventory data lives on the server in a secure PlayerProfile table and syncs to the client via a single compressed RemoteEvent rather than replicating dozens of Workspace instances.</li>
+          <li>Single Source of Truth: The server exclusively validates item consumption, swaps, and drops; the client UI is purely a visual projection of server state.</li>
+      </ul>
+
+      <h2>2. Buffer Bitpacking & Network Bandwidth Serialization</h2>
+      <p>Packing large inventories into compact binary buffers for millisecond network synchronization:</p>
+      <ul>
+          <li>Luau Buffer Primitives: Native `buffer.create`, `buffer.writeu16`, and `buffer.writeu8` allow developers to represent an entire inventory slot in just 4 to 8 bytes.</li>
+          <li>Binary Slot Layout: Allocate 2 bytes for ItemID (up to 65,535 distinct items), 1 byte for StackCount (0-255), and 1 byte for Durability percentage (0-100%).</li>
+          <li>Bandwidth Comparison: Replicating a 40-slot inventory using standard JSON or dictionary tables consumes ~1.2 KB of network data. The same inventory bitpacked into a buffer requires only 160 bytes—an 87% reduction in network overhead.</li>
+          <li>Buffer Delta Sync: Transmit only modified slot indices during active gameplay rather than resending the entire inventory payload.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau Buffer-Serialized Inventory Engine with Mutex Transaction Safety</div>
+        <pre><code>--!strict
+local Players = game:GetService("Players")
+
+local InventoryService = {}
+InventoryService.__index = InventoryService
+
+export type ItemSlot = {
+    itemId: number,      -- u16 (0 - 65535)
+    quantity: number,    -- u8  (0 - 255)
+    durability: number,  -- u8  (0 - 100)
+}
+
+local playerInventories: { [Player]: { slots: { ItemSlot }, isLocked: boolean } } = {}
+
+-- Allocates a new empty 40-slot inventory
+function InventoryService.InitPlayer(player: Player)
+    local emptySlots: { ItemSlot } = {}
+    for i = 1, 40 do
+        emptySlots[i] = { itemId = 0, quantity = 0, durability = 0 }
+    end
+    playerInventories[player] = { slots = emptySlots, isLocked = false }
+end
+
+-- Serializes 40 slots into a compact 160-byte buffer (4 bytes per slot)
+function InventoryService.SerializeToBuffer(player: Player): buffer?
+    local data = playerInventories[player]
+    if not data then return nil end
+    
+    local buf = buffer.create(160) -- 40 slots * 4 bytes
+    for i = 1, 40 do
+        local slot = data.slots[i]
+        local offset = (i - 1) * 4
+        buffer.writeu16(buf, offset, slot.itemId)
+        buffer.writeu8(buf, offset + 2, slot.quantity)
+        buffer.writeu8(buf, offset + 3, slot.durability)
+    end
+    return buf
+end
+
+-- Atomic item move with mutex lock to prevent duplication race conditions
+function InventoryService.MoveItem(player: Player, fromSlot: number, toSlot: number): boolean
+    local data = playerInventories[player]
+    if not data or data.isLocked then return false end
+    
+    if fromSlot < 1 or fromSlot > 40 or toSlot < 1 or toSlot > 40 then return false end
+    if fromSlot == toSlot then return false end
+    
+    -- Acquire transaction lock
+    data.isLocked = true
+    
+    local source = data.slots[fromSlot]
+    local target = data.slots[toSlot]
+    
+    -- Swap slots atomically
+    data.slots[fromSlot] = target
+    data.slots[toSlot] = source
+    
+    -- Release transaction lock
+    data.isLocked = false
+    return true
+end
+
+return InventoryService</code></pre>
+      </div>
+
+      <h2>3. Hotbar Slot Management & Motor6D Weapon Welding</h2>
+      <p>Equipping 3D weapon models without causing character physics glitches:</p>
+      <ul>
+          <li>Dynamic Model Instantiation: When the player presses a hotbar slot (keys 1-9), the client requests the server to equip the item. The server clones the cosmetic visual model from ReplicatedStorage into the character.</li>
+          <li>Motor6D Weld Alignment: Attach the weapon's `BodyAttach` part to the character's `RightHand` or `LeftHand` using a Motor6D rather than a legacy Weld. Motor6Ds allow weapon animations to blend seamlessly with character movement.</li>
+          <li>Rapid Slot Switching Protection: Enforce a 0.2-second debounce on hotbar slot changes to prevent players from desynchronizing attack animations through rapid key spamming.</li>
+          <li>Client-Side Prediction: The client immediately plays the unholstering animation and updates the hotbar UI highlight, while the server verifies cooldowns and attaches the authoritative hitbox.</li>
+      </ul>
+
+      <h2>4. Anti-Duplication Mutex Locks & Transactional Safety</h2>
+      <p>Eliminating the classic duplication bugs that plague multi-player economies:</p>
+      <ul>
+          <li>The Asynchronous Race Condition: Item duplication exploits exploit the latency gap between two simultaneous requests (e.g., dropping an item into a chest while dropping it onto the ground on the same frame).</li>
+          <li>Server-Side Transaction Mutex: Every container (player inventory, storage chest, trade window) must possess a boolean `isLocked` mutex flag. Any incoming operation rejects immediately if a transaction is currently in progress.</li>
+          <li>Two-Phase Commit for Trading: When trading between Player A and Player B, lock both inventories simultaneously. If either player disconnects or cancels, roll back both inventories to their pre-trade snapshot.</li>
+          <li>Drop Verification: When dropping an item into the world, deduct it from the player's inventory data BEFORE instantiating the dropped Part in Workspace. If Workspace fails to spawn the item, return it to the inventory.</li>
+      </ul>
+
+      <h2>5. Mobile Touch UX & Production Checklist</h2>
+      <p>Designing responsive cross-platform inventories across PC, console, and touchscreens:</p>
+      <ul>
+          <li>Touch Hitbox Padding: Ensure hotbar slots on mobile displays have an active touch area of at least 48x48 points to prevent frustrating mis-taps during intense combat.</li>
+          <li>Drag-and-Drop vs Tap-to-Swap: While PC players favor dragging items between slots, mobile touch screens require an alternative "Tap source -> Tap destination" modal to avoid finger-blocking visual occlusion.</li>
+          <li>Memory Pooling for UI Slots: Pre-create all UI slot Frames during game loading; toggle their visibility and icon image assets dynamically rather than creating new GuiObjects on open.</li>
+          <li>MicroProfiler UI Audit: Ensure that opening a 100-slot inventory screen takes less than 1.5ms on mobile devices by avoiding layout recalculation thrashing (`AutomaticSize`).</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why should I avoid using Roblox's built-in Tool and Backpack system?</h3>
+          <p>Default Tools replicate physical Part instances into characters, causing physics hitches, weld flings, and unverified client-side manipulation. Data-driven inventories keep data purely in tables, instantiating visual models only when actively equipped.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How much bandwidth does buffer serialization save in multiplayer games?</h3>
+          <p>Buffer bitpacking typically reduces inventory network payloads by 80% to 90% compared to JSON or dictionaries, cutting a 40-slot sync from ~1.2 KB down to 160 bytes.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What is the most effective way to prevent item duplication bugs in trading?</h3>
+          <p>Use server-side mutex locks and atomic two-phase commit transactions. Lock both players' inventories before swapping items, and deduct items from memory before spawning physical dropped world objects.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How should weapon models be attached to the character for custom hotbars?</h3>
+          <p>Use a Motor6D connecting the weapon's root part to the character's RightHand or LeftHand. Unlike legacy Welds, Motor6Ds permit weapon animations to blend naturally with character skeletal animations.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
