@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 커스텀 넷코드: 비트패킹 및 델타 압축 가이드 (2026)</title>
+  <meta name="description" content="50인 이상 대규모 서버 최적화: Luau 네이티브 버퍼 비트패킹, 고정소수점 좌표 양자화, 델타 압축 및 패킷 주파수 감축 엔지니어링 완벽 해설." />
+  <meta name="keywords" content="로블록스 넷코드, Luau 버퍼 비트패킹, 로블록스 델타 압축, 네트워크 동기화 로블록스, 대규모 멀티플레이어 최적화" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 커스텀 넷코드: 비트패킹 및 델타 압축 가이드 (2026)" />
+  <meta property="og:description" content="50인 이상 대규모 서버 최적화: Luau 네이티브 버퍼 비트패킹, 고정소수점 좌표 양자화, 델타 압축 및 패킷 주파수 감축 엔지니어링 완벽 해설." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 커스텀 넷코드: 비트패킹 및 델타 압축 가이드 (2026)" />
+  <meta name="twitter:description" content="50인 이상 대규모 서버 최적화: Luau 네이티브 버퍼 비트패킹, 고정소수점 좌표 양자화, 델타 압축 및 패킷 주파수 감축 엔지니어링 완벽 해설." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html"
+      },
+      "headline": "로블록스 커스텀 넷코드 아키텍처: 버퍼 비트패킹, 델타 스냅샷 압축 및 대규모 멀티플레이어 동기화",
+      "description": "50인 이상 대규모 서버 최적화: Luau 네이티브 버퍼 비트패킹, 고정소수점 좌표 양자화, 델타 압축 및 패킷 주파수 감축 엔지니어링 완벽 해설.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "도파브레인 스튜디오 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 커스텀 넷코드 아키텍처: 버퍼 비트패킹, 델타 스냅샷 압축 및 대규모 멀티플레이어 동기화",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "JSON이나 일반 문자열 직렬화 대신 Luau 버퍼를 써야 하는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Luau 버퍼는 문자열 파싱이나 테이블 해싱 오버헤드가 전혀 없는 순수 메모리 바이트 배열입니다. 원격 이벤트를 통과할 때 바이트 그대로 전송되어 테이블 대비 대역폭을 80% 이상 절감합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "UnreliableRemoteEvent는 언제 사용해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "플레이어 이동 좌표, 카메라 조준 각도, 일회성 발사체 궤적 등 다음 프레임 패킷으로 즉시 갱신되는 휘발성 고빈도 데이터에 사용해야 합니다. 인벤토리 거래나 게임 승패 결과는 반드시 일반 RemoteEvent를 써야 합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "좌표를 16비트로 양자화하면 인게임 조작감이 어색해지지 않나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "2048 스터드 맵을 16비트로 나누면 약 0.03 스터드(약 1cm) 단위의 해상도를 갖습니다. 이는 캐릭터의 충돌 히트박스보다 훨씬 미세한 수치이므로 플레이어는 압축 사실을 전혀 인지할 수 없습니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 커스텀 넷코드 아키텍처: 버퍼 비트패킹, 델타 스냅샷 압축 및 대규모 멀티플레이어 동기화</h1>
+      <div class="meta-bar">
+        <span>By 도파브레인 스튜디오 엔지니어링 팀</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      200번째 티어 마일스톤 기념: Luau 네이티브 버퍼, 비트 단위 좌표 양자화, 델타 브로드캐스팅을 통해 패킷 용량을 85% 감축하는 실전 넷코드 기술.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier200_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>행렬 고정소수점 양자화 및 비트 연산 데이터 압축 수학</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier200_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>50ms 미만 패킷 틱레이트 및 클라이언트 보간 지연시간</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier200_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>시스템 아키텍처 추상화 및 데이터 파이프라인 인지 유형</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier200_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>네트워크 고무줄 랙 및 판정 불일치로 인한 틸트 완화</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>50인 이상 배틀로얄, 오픈월드 MMO, 전술 아레나 슈터 등 대규모 멀티플레이어 게임에서 로블록스의 기본 `RemoteEvent` 직렬화 방식은 심각한 대역폭 병목을 유발합니다. 압축되지 않은 테이블, 64비트 실수 좌표, 문자열 키 전송은 클라이언트 네트워크를 포화시키고 핑 급증과 패킷 손실을 초래합니다.</p>
+      <p>Luau 네이티브 `buffer` 라이브러리를 활용하면 고성능 커스텀 넷코드를 직접 구축할 수 있습니다. 3차원 좌표를 16비트 정수로 양자화(Quantization)하고, 8개의 상태 플래그를 1바이트 비트마스크로 압축하며, 변경된 상태만 전송하는 델타 스냅샷 방식을 도입하면 네트워크 데이터 전송량을 80~90% 절감하여 안정적인 60Hz 틱레이트를 유지할 수 있습니다.</p>
+
+      <h2>1. 네트워크의 벽: 기본 RemoteEvent가 대규모 환경에서 질식하는 이유</h2>
+      <p>표준 로블록스 네트워크 직렬화의 구조적 한계:</p>
+      <ul>
+          <li>테이블 오버헤드와 직렬화 비대화: `{ x = 12.5, y = 4.2, hp = 100 }` 테이블을 전송할 때 키 이름, 데이터 타입 메타데이터, 64비트 부동소수점이 포함되어 엔티티당 50바이트 이상이 낭비됩니다.</li>
+          <li>고빈도 전송에 따른 대역폭 폭발: 50인 서버에서 초당 20회 위치 및 상태를 브로드캐스팅하면 클라이언트당 초당 250KB 이상의 데이터가 쏟아져 패킷 큐가 지연됩니다.</li>
+          <li>버퍼블로트(Bufferbloat)와 판정 랙: 쌓인 네트워크 패킷으로 인해 지연 시간이 인위적으로 늘어나며, 총격전 판정 불일치와 고무줄 현상(Rubberbanding)이 발생합니다.</li>
+          <li>Luau Buffer의 혁신: `buffer.create()`를 사용해 원시 바이트 배열을 할당하면 직렬화 오버헤드 없이 바이트 스트림을 즉각 전송할 수 있습니다.</li>
+      </ul>
+
+      <h2>2. 좌표 양자화(Quantization)와 비트 단위 플래그 패킹</h2>
+      <p>64비트 데이터를 극소 바이트로 압축하는 수학적 기법:</p>
+      <ul>
+          <li>고정소수점 맵 좌표 양자화: 2048x2048 스터드 크기의 맵을 16비트 부호 없는 정수(uint16)로 변환하여 0.03스터드(약 1cm) 단위의 초정밀 압축을 달성합니다: `qX = math.floor((x / MAP_SIZE) * 65535)`.</li>
+          <li>피치 및 요 회전각 양자화: 0~360도의 3D 회전각을 단 1개의 8비트 바이트(uint8)로 압축하여 1.4도 단위 정밀도로 표현합니다: `qAngle = math.floor((angle / (2 * math.pi)) * 255)`.</li>
+          <li>8개 불리언 플래그 비트마스크: 달리기, 앉기, 조준, 재장전, 착지, 보호막, 기절, 사격 등 8개의 참/거짓 상태를 단 1바이트의 비트필드(Bitfield)로 병합합니다.</li>
+          <li>가변 바이트(VarInt) 인코딩: 작은 엔티티 ID나 탄약 수량 등 값의 크기에 따라 가변적으로 1~2바이트를 할당하여 대역폭 낭비를 차단합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau 버퍼 비트패킹 및 3D 좌표 압축 직렬화 엔진</div>
+        <pre><code>--!strict
+local NetcodeCompressor = {}
+
+local WORLD_BOUNDS = 2048
+local MAX_UINT16 = 65535
+local TWO_PI = math.pi * 2
+
+-- 월드 Vector3 좌표를 6바이트(3개의 uint16)로 고정소수점 압축
+function NetcodeCompressor.WritePosition(buf: buffer, offset: number, pos: Vector3): number
+    local normX = math.clamp((pos.X + (WORLD_BOUNDS / 2)) / WORLD_BOUNDS, 0, 1)
+    local normY = math.clamp((pos.Y + 500) / 2000, 0, 1)
+    local normZ = math.clamp((pos.Z + (WORLD_BOUNDS / 2)) / WORLD_BOUNDS, 0, 1)
+    
+    buffer.writeu16(buf, offset, math.floor(normX * MAX_UINT16))
+    buffer.writeu16(buf, offset + 2, math.floor(normY * MAX_UINT16))
+    buffer.writeu16(buf, offset + 4, math.floor(normZ * MAX_UINT16))
+    return offset + 6
+end
+
+-- 6바이트 버퍼를 정밀 Vector3 좌표로 복원(Dequantize)
+function NetcodeCompressor.ReadPosition(buf: buffer, offset: number): (Vector3, number)
+    local qX = buffer.readu16(buf, offset)
+    local qY = buffer.readu16(buf, offset + 2)
+    local qZ = buffer.readu16(buf, offset + 4)
+    
+    local x = (qX / MAX_UINT16) * WORLD_BOUNDS - (WORLD_BOUNDS / 2)
+    local y = (qY / MAX_UINT16) * 2000 - 500
+    local z = (qZ / MAX_UINT16) * WORLD_BOUNDS - (WORLD_BOUNDS / 2)
+    
+    return Vector3.new(x, y, z), offset + 6
+end
+
+-- 8개의 불리언 상태 플래그를 1바이트 비트마스크로 결합
+function NetcodeCompressor.WriteFlags(buf: buffer, offset: number, flags: {boolean}): number
+    local mask = 0
+    for i = 1, 8 do
+        if flags[i] then
+            mask = bit32.bor(mask, bit32.lshift(1, i - 1))
+        end
+    end
+    buffer.writeu8(buf, offset, mask)
+    return offset + 1
+end
+
+return NetcodeCompressor</code></pre>
+      </div>
+
+      <h2>3. 델타 스냅샷(Delta Snapshot)과 더티 비트 추적</h2>
+      <p>이전 틱 대비 변경된 속성만 선별 전송하는 고효율 동기화:</p>
+      <ul>
+          <li>키프레임 vs 델타 스냅샷: 2초에 1회 전체 상태(Keyframe)를 전송하여 누락 패킷을 복구하고, 그 사이 프레임은 오직 변경 사항(Delta)만 전송합니다.</li>
+          <li>더티 비트마스크 헤더(Dirty Bitmask): 엔티티 데이터 선두에 1바이트 플래그를 붙여 위치 변경(Bit 0), 회전 변경(Bit 1), 체력 변경(Bit 2) 여부를 클라이언트에 알립니다.</li>
+          <li>클라이언트 링 버퍼 보간(Hermite Spline): 클라이언트는 최근 수신된 스냅샷 64개를 링 버퍼에 보관하고, 틱 `T-1`과 틱 `T` 사이를 부드러운 스플라인 곡선으로 지연 보간합니다.</li>
+          <li>정지 객체 패킷 제외(Stationary Culling): 정지해 있거나 이동하지 않은 엔티티는 패킷에서 완전히 제외하여 유휴 상태 네트워크 부하를 0으로 만듭니다.</li>
+      </ul>
+
+      <h2>4. 네트워크 관심도 관리(Interest Management)와 동적 주파수</h2>
+      <p>플레이어와의 거리 및 시야각에 따른 적응형 대역폭 분배:</p>
+      <ul>
+          <li>공간 그리드 분할(Grid Bucketing): 월드를 128x128 스터드 단위의 공간 셀로 분할하여 플레이어가 위치한 인접 셀의 엔티티만 고주파로 전송합니다.</li>
+          <li>거리 기반 주파수 LOD: 50스터드 이내는 30Hz, 50~200스터드는 10Hz, 200스터드 이상은 3Hz로 갱신 주기를 차등 적용하고 클라이언트에서 외삽(Extrapolation)합니다.</li>
+          <li>시야각 절두체 컬링(Frustum Culling): 150스터드 밖의 카메라 시야 뒤쪽에 있는 대상은 전송 우선순위를 최하위로 강등합니다.</li>
+          <li>UnreliableRemoteEvent 활용: 패킷 유실이 발생해도 전체 흐름에 지장이 없는 위치 갱신은 비신뢰성 리모트를 사용하여 TCP 스타일의 헤드오브라인 블로킹을 방지합니다.</li>
+      </ul>
+
+      <h2>5. 상용 프로덕션 엔터프라이즈 넷코드 체크리스트</h2>
+      <p>무결점 로블록스 멀티플레이어 환경을 위한 핵심 엔지니어링 지침:</p>
+      <ul>
+          <li>버퍼 재사용 풀(Buffer Pooling): 프레임마다 버퍼를 새로 생성하지 않고 사전 할당된 버퍼를 재사용하여 루아 가비지 컬렉터의 멈춤 현상(GC Spike)을 방지합니다.</li>
+          <li>패킷 스키마 버전 명시: 패킷의 첫 바이트에 스키마 버전을 기록하여 배포 중 버전 불일치 패킷을 안전하게 격리합니다.</li>
+          <li>범위 검증 및 위변조 방지: 클라이언트가 수신한 양자화 값을 복원할 때 월드 경계값 초과 여부를 철저히 검증하여 좌표 텔레포트 핵을 차단합니다.</li>
+          <li>프로파일링 모니터링: `Stats.Network`를 통해 1인당 인바운드 수신 대역폭을 35 KB/s 이하로 유지하도록 지속적으로 튜닝합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>JSON이나 일반 문자열 직렬화 대신 Luau 버퍼를 써야 하는 이유는 무엇인가요?</h3>
+          <p>Luau 버퍼는 문자열 파싱이나 테이블 해싱 오버헤드가 전혀 없는 순수 메모리 바이트 배열입니다. 원격 이벤트를 통과할 때 바이트 그대로 전송되어 테이블 대비 대역폭을 80% 이상 절감합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>UnreliableRemoteEvent는 언제 사용해야 하나요?</h3>
+          <p>플레이어 이동 좌표, 카메라 조준 각도, 일회성 발사체 궤적 등 다음 프레임 패킷으로 즉시 갱신되는 휘발성 고빈도 데이터에 사용해야 합니다. 인벤토리 거래나 게임 승패 결과는 반드시 일반 RemoteEvent를 써야 합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>좌표를 16비트로 양자화하면 인게임 조작감이 어색해지지 않나요?</h3>
+          <p>2048 스터드 맵을 16비트로 나누면 약 0.03 스터드(약 1cm) 단위의 해상도를 갖습니다. 이는 캐릭터의 충돌 히트박스보다 훨씬 미세한 수치이므로 플레이어는 압축 사실을 전혀 인지할 수 없습니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

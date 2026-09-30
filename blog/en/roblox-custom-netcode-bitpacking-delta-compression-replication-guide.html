@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Netcode: Bitpacking & Delta Compression (2026)</title>
+  <meta name="description" content="Scale 50+ player servers in Roblox: Luau buffer bitpacking, quantized coordinate compression, delta snapshot replication, and packet throttling." />
+  <meta name="keywords" content="Roblox custom netcode, Luau buffer bitpacking, Roblox delta compression, network replication Roblox, Roblox multiplayer optimization" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/en/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Netcode: Bitpacking & Delta Compression (2026)" />
+  <meta property="og:description" content="Scale 50+ player servers in Roblox: Luau buffer bitpacking, quantized coordinate compression, delta snapshot replication, and packet throttling." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/en/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Netcode: Bitpacking & Delta Compression (2026)" />
+  <meta name="twitter:description" content="Scale 50+ player servers in Roblox: Luau buffer bitpacking, quantized coordinate compression, delta snapshot replication, and packet throttling." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/en/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/en/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html"
+      },
+      "headline": "Roblox Custom Netcode Architecture: Bitpacking, Buffer Delta Compression & High-Scale Replication",
+      "description": "Scale 50+ player servers in Roblox: Luau buffer bitpacking, quantized coordinate compression, delta snapshot replication, and packet throttling.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/en/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Custom Netcode Architecture: Bitpacking, Buffer Delta Compression & High-Scale Replication",
+          "item": "https://dopabrain.com/portal/blog/en/roblox-custom-netcode-bitpacking-delta-compression-replication-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why use native Luau buffers instead of standard JSON or string serializations?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Native buffers represent raw contiguous memory with zero string parsing or table hashing overhead. Passing a buffer through a RemoteEvent sends raw bytes directly, saving over 80% bandwidth compared to table dictionaries."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When should I use UnreliableRemoteEvent vs regular RemoteEvent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use UnreliableRemoteEvents for high-frequency, ephemeral data where losing a single packet is harmless—such as character positions, camera aiming angles, and cosmetic particle triggers. Use regular RemoteEvents for state-critical transactions like purchases, inventory trades, and match victory events."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does coordinate quantization affect gameplay precision?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Quantizing a 2048-stud map into a 16-bit integer provides a resolution of ~0.03 studs (~1 centimeter). This precision is far smaller than any player character collision hitbox, making the compression completely imperceptible to players."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox Custom Netcode Architecture: Bitpacking, Buffer Delta Compression & High-Scale Replication</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Milestone 200 Engineering: Slashing multiplayer packet sizes by 85% using native Luau buffers, bit-level quantization, and delta snapshot broadcasting.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier200_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Matrix fixed-point quantization & bitwise data compression</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier200_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Sub-50ms network packet tickrate & client interpolation latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier200_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Systems architecture abstraction & data pipeline archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier200_stress_check">
+          <strong>Stress Check</strong>
+          <span>Network rubberbanding jitter & desync frustration mitigation</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>In massive multiplayer experiences—such as 50+ player battle royales, open-world MMOs, and competitive tactical shooters—vanilla Roblox `RemoteEvent` replication quickly encounters network throttling bottlenecks. Sending uncompressed dictionaries, full 64-bit Vector3 coordinates, and frequent string tables saturates player bandwidth, leading to packet loss and high ping spikes.</p>
+      <p>With the introduction of the native Luau `buffer` library, developers can construct custom high-performance netcode. By quantizing world coordinates into 16-bit integers, packing boolean flags into bitmasks, and broadcasting only delta changes (states that changed since the last acknowledged client frame), network data payloads drop by 80–90%, unlocking buttery-smooth 60Hz server tick rates.</p>
+
+      <h2>1. The Network Wall: Why Default RemoteEvents Choke at Scale</h2>
+      <p>Analyzing serialization bottlenecks in standard Roblox networking:</p>
+      <ul>
+          <li>Table Overhead & Serialization Bloat: Sending `{ x = 12.5, y = 4.2, health = 100 }` requires Roblox to serialize string key names, data type metadata, and 64-bit floating point numbers, consuming over 50 bytes per entity.</li>
+          <li>High-Frequency Saturation: When a 50-player server replicates position, health, and animations at 20Hz, bandwidth exceeds 250 KB/s per client, triggering engine packet queues.</li>
+          <li>Buffer Bloat & Latency Spikes: Queued network packets introduce artificial delay, causing rubberbanding and desynchronized hit detection in fast-paced combat.</li>
+          <li>The Luau Buffer Breakthrough: Native `buffer.create()` allocates fixed byte arrays that transfer across remotes with virtually zero serialization overhead.</li>
+      </ul>
+
+      <h2>2. Coordinate Quantization & Bit-Level Flag Packing</h2>
+      <p>Shrinking 64-bit doubles into minimal byte footprints:</p>
+      <ul>
+          <li>Fixed-Point World Quantization: A world bounding box of 2048x2048 studs can be mapped to a 16-bit unsigned integer with 0.03 stud precision: `quantizedX = math.floor((x / WORLD_SIZE) * 65535)`.</li>
+          <li>Pitch & Yaw Angle Quantization: Rotation angles (0–360 degrees) compress into a single 8-bit byte: `quantizedAngle = math.floor((angle / (2 * math.pi)) * 255)`.</li>
+          <li>Bitmask State Flags: Consolidate 8 booleans (`isSprinting`, `isCrouching`, `isAiming`, `isReloading`, `isGrounded`, `hasShield`, `isStunned`, `isFiring`) into a single 1-byte unsigned integer.</li>
+          <li>Variable-Byte VarInt Encoding: Encode small integers (like entity IDs and ammunition counts) using variable-length byte streams, saving bandwidth on common low-value numbers.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau Buffer Bitpacking & Coordinate Serialization Engine</div>
+        <pre><code>--!strict
+local NetcodeCompressor = {}
+
+local WORLD_BOUNDS = 2048
+local MAX_UINT16 = 65535
+local TWO_PI = math.pi * 2
+
+-- Quantizes a world Vector3 position into 6 bytes (3x uint16)
+function NetcodeCompressor.WritePosition(buf: buffer, offset: number, pos: Vector3): number
+    local normX = math.clamp((pos.X + (WORLD_BOUNDS / 2)) / WORLD_BOUNDS, 0, 1)
+    local normY = math.clamp((pos.Y + 500) / 2000, 0, 1)
+    local normZ = math.clamp((pos.Z + (WORLD_BOUNDS / 2)) / WORLD_BOUNDS, 0, 1)
+    
+    buffer.writeu16(buf, offset, math.floor(normX * MAX_UINT16))
+    buffer.writeu16(buf, offset + 2, math.floor(normY * MAX_UINT16))
+    buffer.writeu16(buf, offset + 4, math.floor(normZ * MAX_UINT16))
+    return offset + 6
+end
+
+-- Dequantizes 6 bytes back into a full-precision Vector3
+function NetcodeCompressor.ReadPosition(buf: buffer, offset: number): (Vector3, number)
+    local qX = buffer.readu16(buf, offset)
+    local qY = buffer.readu16(buf, offset + 2)
+    local qZ = buffer.readu16(buf, offset + 4)
+    
+    local x = (qX / MAX_UINT16) * WORLD_BOUNDS - (WORLD_BOUNDS / 2)
+    local y = (qY / MAX_UINT16) * 2000 - 500
+    local z = (qZ / MAX_UINT16) * WORLD_BOUNDS - (WORLD_BOUNDS / 2)
+    
+    return Vector3.new(x, y, z), offset + 6
+end
+
+-- Packs 8 boolean status flags into a single 1-byte bitfield
+function NetcodeCompressor.WriteFlags(buf: buffer, offset: number, flags: {boolean}): number
+    local mask = 0
+    for i = 1, 8 do
+        if flags[i] then
+            mask = bit32.bor(mask, bit32.lshift(1, i - 1))
+        end
+    end
+    buffer.writeu8(buf, offset, mask)
+    return offset + 1
+end
+
+return NetcodeCompressor</code></pre>
+      </div>
+
+      <h2>3. Delta Snapshot Compression & Entity Change Tracking</h2>
+      <p>Replicating only dirty (modified) state attributes across ticks:</p>
+      <ul>
+          <li>Full Keyframe vs. Delta Snapshots: Transmit full world states once every 2 seconds (keyframe) to recover lost packets, while intervening ticks transmit only delta differences.</li>
+          <li>Bitmask Change Headers: Each entity update begins with a 1-byte dirty mask indicating which properties changed (Bit 0: Position, Bit 1: Rotation, Bit 2: Health, Bit 3: Animation).</li>
+          <li>Client Snapshot History Ring Buffer: Clients maintain an internal ring buffer of the last 64 received snapshots, smoothly interpolating between tick `T-1` and tick `T` with Hermite spline math.</li>
+          <li>Stationary Entity Culling: Entities with near-zero velocity are excluded from position delta packets completely, reducing idle server broadcast bandwidth to near zero.</li>
+      </ul>
+
+      <h2>4. Network Interest Management & Distance-Based Throttling</h2>
+      <p>Dynamic bandwidth allocation based on player proximity and visual importance:</p>
+      <ul>
+          <li>Spatial Grid Bucketing: Partition the game world into 128x128 stud spatial cells. Only replicate high-frequency (30Hz) updates for entities within neighboring cells.</li>
+          <li>Distance-Based Frequency LOD: Entities within 50 studs update at 30Hz; entities 50–200 studs away update at 10Hz; entities beyond 200 studs update at 3Hz with client-side extrapolation.</li>
+          <li>Frustum Culling on Server: If an entity is behind a player's camera view frustum beyond 150 studs, demote replication priority to conserve upload bandwidth.</li>
+          <li>Unreliable RemoteEvents: Transmit ephemeral positional and projectile updates over `UnreliableRemoteEvent`, eliminating TCP-like head-of-line blocking.</li>
+      </ul>
+
+      <h2>5. Production Architecture Checklist: Enterprise Roblox Netcode</h2>
+      <p>Key engineering guidelines for zero-lag multiplayer experiences:</p>
+      <ul>
+          <li>Buffer Reuse: Pre-allocate reusable memory buffers on server startup to eliminate Lua garbage collector pauses caused by frequent buffer allocations.</li>
+          <li>Schema Versioning: Embed a 1-byte schema version header in all network packets to reject outdated client packets cleanly during live rolling updates.</li>
+          <li>Packet Validation & Range Checks: Verify that all dequantized values fall strictly within valid world boundaries on the receiving end to prevent client desync exploits.</li>
+          <li>Performance Profiling: Monitor `Stats.Network.ServerJobTimes` and client network receive bandwidth in Roblox Studio Console to ensure total packet payload remains below 35 KB/s.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why use native Luau buffers instead of standard JSON or string serializations?</h3>
+          <p>Native buffers represent raw contiguous memory with zero string parsing or table hashing overhead. Passing a buffer through a RemoteEvent sends raw bytes directly, saving over 80% bandwidth compared to table dictionaries.</p>
+        </div>
+        <div class="faq-item">
+          <h3>When should I use UnreliableRemoteEvent vs regular RemoteEvent?</h3>
+          <p>Use UnreliableRemoteEvents for high-frequency, ephemeral data where losing a single packet is harmless—such as character positions, camera aiming angles, and cosmetic particle triggers. Use regular RemoteEvents for state-critical transactions like purchases, inventory trades, and match victory events.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does coordinate quantization affect gameplay precision?</h3>
+          <p>Quantizing a 2048-stud map into a 16-bit integer provides a resolution of ~0.03 studs (~1 centimeter). This precision is far smaller than any player character collision hitbox, making the compression completely imperceptible to players.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
