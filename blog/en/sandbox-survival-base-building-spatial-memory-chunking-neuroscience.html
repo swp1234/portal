@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Survival Game Architecture & Spatial Memory Neuroscience (2026)</title>
+  <meta name="description" content="Explore the cognitive neuroscience of survival base building: hippocampal grid cells, spatial memory chunking, inventory retrieval ergonomics, and bunker architecture." />
+  <meta name="keywords" content="survival game neuroscience, base building spatial memory, Rust base architecture, Minecraft storage ergonomics, hippocampal grid cells, survival game cognition" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/en/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Survival Game Architecture & Spatial Memory Neuroscience (2026)" />
+  <meta property="og:description" content="Explore the cognitive neuroscience of survival base building: hippocampal grid cells, spatial memory chunking, inventory retrieval ergonomics, and bunker architecture." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/en/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Survival Game Architecture & Spatial Memory Neuroscience (2026)" />
+  <meta name="twitter:description" content="Explore the cognitive neuroscience of survival base building: hippocampal grid cells, spatial memory chunking, inventory retrieval ergonomics, and bunker architecture." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/en/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/en/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html"
+      },
+      "headline": "Sandbox Survival Base Architecture & Spatial Neuroscience: Cognitive Mapping, Hebbian Chunking & Defensive Schemas",
+      "description": "Explore the cognitive neuroscience of survival base building: hippocampal grid cells, spatial memory chunking, inventory retrieval ergonomics, and bunker architecture.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/en/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Cognitive Performance Lab",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Sandbox Survival Base Architecture & Spatial Neuroscience: Cognitive Mapping, Hebbian Chunking & Defensive Schemas",
+          "item": "https://dopabrain.com/portal/blog/en/sandbox-survival-base-building-spatial-memory-chunking-neuroscience.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why do survival players naturally organize chests by category rather than alphabetically?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The human brain associates objects by semantic use and physical motor context (Hebbian networks) rather than abstract lexical strings. Searching for \"Ammunition\" near \"Guns\" is biologically intuitive, whereas scanning alphabetically requires extra linguistic processing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes base honeycombing so psychologically frustrating for raiders?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Honeycombing introduces repeated sensory uncertainty. Every breached wall reveals another identical wall, resetting the raider's dopamine anticipation and amplifying the fear of running out of explosives."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does placing torches on only one side of a cave prevent getting lost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It establishes an immutable spatial parity rule. The brain converts a complex 3D labyrinth into a simple binary decision tree: torches on the right mean moving deeper; torches on the left mean exiting toward the surface."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Sandbox Survival Base Architecture & Spatial Neuroscience: Cognitive Mapping, Hebbian Chunking & Defensive Schemas</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Cognitive Performance Lab</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      The Cognitive Architecture of Survival: How hippocampal place cells, Hebbian memory chunking, and spatial ergonomics dictate survival mega-base designs.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier193_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Geometric spatial packing & modular storage matrix optimization</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier193_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Emergency airlock closure reaction & panic loot retrieval speed</span>
+        </a>
+        <a href="/burnout-test/" class="quick-card" data-track="tier193_burnout_test">
+          <strong>Burnout Test</strong>
+          <span>Long-session wipe marathon exhaustion & cognitive stamina drain</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier193_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Hippocampal cognitive mapping style & bunker architect archetype</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>Across global sandbox survival ecosystems—from Minecraft, Rust, and Ark: Survival Evolved to Valheim and Roblox survival experiences (such as Bedwars and 3008)—players spend hundreds of hours constructing sprawling bases, fortified compounds, and automated sorting vaults.</p>
+      <p>This architectural drive is deeply rooted in human spatial cognition. The brain's hippocampal-entorhinal grid system constructs 3D cognitive maps of virtual environments, while Hebbian chunking dictates how players categorize storage rooms and design defensive airlocks. Understanding these neurological principles allows survival gamers and designers to optimize base layouts for sub-second item retrieval, raid defense under panic, and long-term cognitive stamina.</p>
+
+      <h2>1. The Hippocampal-Entorhinal Grid System: Cognitive Mapping in 3D Sandboxes</h2>
+      <p>How the human brain builds mental blueprints of complex virtual terrain and mega-bases:</p>
+      <ul>
+          <li>Place Cells & Grid Cells: Neurons in the hippocampus fire at specific spatial locations (place cells), while entorhinal cortical grid cells tile virtual 3D space with hexagonal coordinate lattices.</li>
+          <li>Cognitive Map Formation: During initial exploration, the brain constructs a topological graph connecting visual landmarks (mountains, coastlines, high-tier monuments) to anchor spatial orientation.</li>
+          <li>Vestibular-Visual Decoupling: In virtual environments, players navigate without physical vestibular acceleration cues. The brain compensates by weighting optic flow and parallax cues heavily to gauge speed and distance.</li>
+          <li>Boundary Vector Cells: Specialized boundary cells register walls, perimeter fences, and bunker bulkheads, unconsciously influencing where players establish panic safe zones.</li>
+      </ul>
+
+      <h2>2. Hebbian Storage Ergonomics: Taxonomy, Color-Coding & Memory Retrieval Latency</h2>
+      <p>Why unorganized survival chest rooms cause cognitive paralysis during high-stakes raids:</p>
+      <ul>
+          <li>Working Memory Load in Loot Sorting: Searching through unsorted chests demands active visual foveal scanning and semantic evaluation, consuming 400-800ms of cognitive processing per item slot.</li>
+          <li>Hebbian Association Networks: Storing items according to natural functional clusters (e.g., ammunition next to medical syringes, smelting ores next to fuel furnaces) automates motor retrieval via neuro-synaptic Hebbian wiring ("neurons that fire together wire together").</li>
+          <li>Preattentive Visual Anchoring: Using item frames, distinct light colors, or labeled signs triggers preattentive visual cortex processing (<50ms), allowing players to locate gear without reading text.</li>
+          <li>The Ergonomic Golden Ratio: Designing centralized chest hubs within a 3-stud spherical reach minimises character locomotion, eliminating spatial travel friction during base upkeep.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Mathematical Model of Spatial Retrieval Latency vs Storage Organization Hierarchy</div>
+        <pre><code>// Spatial Memory Retrieval Latency Simulation
+// Compares random chest search against Hebbian categorized vaults
+
+interface SearchBenchmark {
+  totalItems: number;
+  averageRetrievalTimeMs: number;
+  cognitiveLoadScore: number; // 0 (effortless) to 100 (exhausting)
+}
+
+function calculateRetrievalMetrics(
+  isOrganized: boolean,
+  hasVisualAnchors: boolean, // Signs, item frames, color coding
+  numberOfChests: number
+): SearchBenchmark {
+  const baseScanningTimePerChest = 450; // ms
+  
+  if (!isOrganized) {
+    // Unsorted chaos: Linear search O(N) with high cognitive friction
+    const averageChestsChecked = numberOfChests / 2;
+    const retrievalTime = averageChestsChecked * baseScanningTimePerChest;
+    return {
+      totalItems: numberOfChests * 27,
+      averageRetrievalTimeMs: Math.round(retrievalTime),
+      cognitiveLoadScore: 88
+    };
+  }
+
+  // Hebbian Organized: Indexed category search O(1) + preattentive anchor
+  const visualAnchorBonusMs = hasVisualAnchors ? 180 : 350;
+  const retrievalTime = visualAnchorBonusMs + 80; // Motor execution delay
+  
+  return {
+    totalItems: numberOfChests * 27,
+    averageRetrievalTimeMs: Math.round(retrievalTime),
+    cognitiveLoadScore: hasVisualAnchors ? 14 : 32
+  };
+}
+
+// Example comparison for a 20-chest base:
+// Unorganized: ~4,500ms retrieval, Load Score: 88
+// Hebbian Anchored: ~260ms retrieval, Load Score: 14</code></pre>
+      </div>
+
+      <h2>3. Defensive Architectural Schemas: Honeycombing, Airlocks & Spatial Defense</h2>
+      <p>How military psychology and spatial cognitive barriers translate into unbreakable survival bunkers:</p>
+      <ul>
+          <li>Honeycombing as Cognitive Friction: Multi-layered triangular or hexagonal walls force raiders to burn explosive resources while generating sensory disorientation in pitch-black blast corridors.</li>
+          <li>Airlock Door Mechanics: A simple two-door airlock acts as a psychological buffer, preventing enemy door-camping ambushes from penetrating the base's cognitive core.</li>
+          <li>Bunker Peeks & Reticles: Elevated shooting floors exploit vertical vantage asymmetries, triggering evolutionary high-ground cognitive dominance over ground-level attackers.</li>
+          <li>Spatial Redundancy: Dispersing critical loot across compartmentalized decoy loot rooms exploits opponent greed heuristics and creates cognitive doubt during raids.</li>
+      </ul>
+
+      <h2>4. The "Lost in Deep Caves" Panic Response: Spatial Disorientation & Wayfinding</h2>
+      <p>The neurological cascade triggered when navigation cues collapse underground or in dense forests:</p>
+      <ul>
+          <li>Grid Cell Alignment Breakdown: In subterranean tunnels lacking natural sunlight or distinctive horizon landmarks, entorhinal grid cell orientation drifts rapidly, causing total mental map degradation.</li>
+          <li>Sympathetic Stress Activation: Low oxygen, scarce food, or looming threats trigger acute cortisol and noradrenaline release, shrinking attention to tunnel vision and degrading working memory.</li>
+          <li>Breadcrumb Navigation Heuristics: Veteran players counter disorientation by establishing systematic heuristics—such as placing torches exclusively on the right wall when exploring inward (follow left to return).</li>
+          <li>Acoustic Dead-Reckoning: Subconscious tracking of water drips, lava bubbles, or enemy growls provides secondary acoustic triangulation to escape cave mazes.</li>
+      </ul>
+
+      <h2>5. Base Design Ergonomics for Long-Term Cognitive Stamina</h2>
+      <p>Designing living spaces that sustain mental clarity during 12+ hour wipe marathons:</p>
+      <ul>
+          <li>Lighting Temperature & Circadian Rhythm: Warm ambient lighting (fireplaces, lanterns) inside sleeping quarters promotes psychological rest, whereas harsh blue light in crafting halls maintains alertness.</li>
+          <li>Acoustic Noise Pollution Reduction: Placing loud automated machinery (quarries, auto-sorters, generators) behind insulated acoustic walls prevents continuous sensory fatigue.</li>
+          <li>Clutter Thresholds: Visual clutter in main walkways activates the prefrontal cortex unnecessarily, depleting decision-making stamina over multi-hour sessions.</li>
+          <li>Exit Route Redundancy: Always construct at least two secret egress routes (roof hatch, underwater tunnel) to eliminate claustrophobic trap anxiety during prolonged sieges.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why do survival players naturally organize chests by category rather than alphabetically?</h3>
+          <p>The human brain associates objects by semantic use and physical motor context (Hebbian networks) rather than abstract lexical strings. Searching for "Ammunition" near "Guns" is biologically intuitive, whereas scanning alphabetically requires extra linguistic processing.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What makes base honeycombing so psychologically frustrating for raiders?</h3>
+          <p>Honeycombing introduces repeated sensory uncertainty. Every breached wall reveals another identical wall, resetting the raider's dopamine anticipation and amplifying the fear of running out of explosives.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does placing torches on only one side of a cave prevent getting lost?</h3>
+          <p>It establishes an immutable spatial parity rule. The brain converts a complex 3D labyrinth into a simple binary decision tree: torches on the right mean moving deeper; torches on the left mean exiting toward the surface.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

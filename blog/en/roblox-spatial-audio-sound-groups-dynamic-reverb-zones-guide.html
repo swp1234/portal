@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Spatial Audio Architecture: SoundGroups, Reverb & Occlusion (2026)</title>
+  <meta name="description" content="Master spatial acoustics in Roblox: hierarchical SoundGroups mixing, RollOff attenuation tuning, dynamic ReverbZones, and real-time LowPassFilter raycast occlusion." />
+  <meta name="keywords" content="Roblox spatial audio, Roblox SoundGroups, Roblox reverb zones, audio occlusion Roblox, RollOffMode Roblox, Roblox sound design" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/en/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Spatial Audio Architecture: SoundGroups, Reverb & Occlusion (2026)" />
+  <meta property="og:description" content="Master spatial acoustics in Roblox: hierarchical SoundGroups mixing, RollOff attenuation tuning, dynamic ReverbZones, and real-time LowPassFilter raycast occlusion." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/en/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Spatial Audio Architecture: SoundGroups, Reverb & Occlusion (2026)" />
+  <meta name="twitter:description" content="Master spatial acoustics in Roblox: hierarchical SoundGroups mixing, RollOff attenuation tuning, dynamic ReverbZones, and real-time LowPassFilter raycast occlusion." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/en/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/en/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html"
+      },
+      "headline": "Roblox Spatial Audio Engineering: SoundGroups Hierarchy, Dynamic Reverb Zones & Raycast Occlusion",
+      "description": "Master spatial acoustics in Roblox: hierarchical SoundGroups mixing, RollOff attenuation tuning, dynamic ReverbZones, and real-time LowPassFilter raycast occlusion.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/en/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Spatial Audio Engineering: SoundGroups Hierarchy, Dynamic Reverb Zones & Raycast Occlusion",
+          "item": "https://dopabrain.com/portal/blog/en/roblox-spatial-audio-sound-groups-dynamic-reverb-zones-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why should I use mono audio files instead of stereo for 3D positional sounds?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Stereo audio contains two separate channels mixed for left and right ears. When placed in a 3D Workspace, the game engine must collapse them into a single point source, wasting memory and often causing phase cancellation. Mono files are lighter and spatialized accurately."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the performance cost of raycast sound occlusion?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When limited to nearby audible sounds (e.g., within 60 studs) and updated at 5-10 Hz, raycast occlusion consumes negligible CPU time (<0.1ms per frame), while providing dramatic AAA acoustic fidelity."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I prevent music from getting muffled when the player enters a cave?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Route your background music through a separate `Music` SoundGroup that bypasses environmental DSP effect chains and LowPass filters applied to the `WorldSFX` bus."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox Spatial Audio Engineering: SoundGroups Hierarchy, Dynamic Reverb Zones & Raycast Occlusion</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Engineering Immersive Acoustics: Hierarchical audio buses, inverse-tapered distance attenuation, dynamic environmental reverb, and real-time raycast occlusion.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier192_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Spatial coordinate acoustics & distance rolloff attenuation math</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier192_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Auditory vs visual cue response latency & footstep detection speed</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier192_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Acoustic spatialization preference & auditory immersion archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier192_stress_check">
+          <strong>Stress Check</strong>
+          <span>Combat audio clutter & sensory overload stress management</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>In modern 3D multiplayer game development, visual fidelity accounts for only half of player immersion. Flat 2D sound effects that play at uniform volume regardless of distance or physical obstruction break world believability and disorient players in competitive environments.</p>
+      <p>Roblox provides powerful native audio primitives within `SoundService` and 3D `Attachment` instances. By architecting hierarchical `SoundGroups`, fine-tuning `RollOffMode` distance curves, deploying volumetric `ReverbZones`, and casting real-time rays to apply dynamic `LowPassSoundEffect` occlusion muffling, developers can achieve AAA acoustic realism across mobile and desktop devices.</p>
+
+      <h2>1. Hierarchical SoundGroups Architecture: Professional Audio Mixing</h2>
+      <p>Structuring engine audio buses to maintain clean mixing, ducking, and user volume customization:</p>
+      <ul>
+          <li>Root Bus Hierarchy: Organize `SoundService` into distinct parent and child SoundGroups: `Master -> (SFX, Ambient, Music, UI, Voice)`. This allows players to adjust music without losing tactical footsteps.</li>
+          <li>Dynamic Sound Ducking: Route high-priority audio (combat voice lines or boss stings) to duck background ambient music by 6-12 dB using tweened `SoundGroup.Volume` multipliers.</li>
+          <li>Shared DSP Effect Chains: Attach `EqualizerSoundEffect`, `CompressorSoundEffect`, and `ReverbSoundEffect` directly to parent SoundGroups rather than duplicating effects on individual sound instances.</li>
+          <li>Memory Footprint Optimization: Sounds attached to parts stream audio buffers only when within auditory range; keep non-spatial UI sounds under `SoundService` for immediate zero-latency playback.</li>
+      </ul>
+
+      <h2>2. 3D Spatial Attenuation: RollOff Curves & Listener Geometry</h2>
+      <p>Tuning physical sound propagation through space to deliver accurate directional cues:</p>
+      <ul>
+          <li>RollOffMode Selection: Avoid `Linear` rolloff because it feels artificial. Use `InverseTapered` for natural drop-off that preserves faint ambient cues at medium distance while rapidly silencing distant noise.</li>
+          <li>Min & Max Distance Calibration: Set `RollOffMinDistance` to the exact physical boundary where sound should begin attenuating (e.g., 5-10 studs for footsteps, 40 studs for gunshots). Set `RollOffMaxDistance` to prevent audio engine thread overload.</li>
+          <li>Listener Placement Strategy: By default, the listener is locked to the player's Camera. In third-person games, set `SoundService:SetListener(Enum.ListenerType.ObjectPosition, character.Head)` to prevent audio panning disconnections when the camera orbits.</li>
+          <li>Sound Playback Parenting: Always parent spatial sounds to an `Attachment` or `BasePart` in Workspace. Placing 3D sounds in `ReplicatedStorage` or `PlayerGui` forces them into flat 2D monaural output.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau Spatial Audio Occlusion & Dynamic Reverb Zone Manager</div>
+        <pre><code>--!strict
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+local SoundService = game:GetService("SoundService")
+local TweenService = game:GetService("TweenService")
+
+local SpatialAudioManager = {}
+
+type OccludedSound = {
+    sound: Sound,
+    emitterPart: BasePart,
+    lowPass: LowPassSoundEffect,
+    originalVolume: number
+}
+
+local trackedSounds: { OccludedSound } = {}
+local RAY_PARAMS = RaycastParams.new()
+RAY_PARAMS.FilterType = RaycastFilterType.Exclude
+
+-- Registers an in-world sound for real-time raycast occlusion muffling
+function SpatialAudioManager.RegisterOccludedSound(sound: Sound, emitter: BasePart)
+    local lpf = sound:FindFirstChildOfClass("LowPassSoundEffect")
+    if not lpf then
+        lpf = Instance.new("LowPassSoundEffect")
+        lpf.CutoffFrequency = 20000
+        lpf.Parent = sound
+    end
+    
+    table.insert(trackedSounds, {
+        sound = sound,
+        emitterPart = emitter,
+        lowPass = lpf,
+        originalVolume = sound.Volume
+    })
+end
+
+-- Evaluates acoustic line-of-sight on Heartbeat
+function SpatialAudioManager.UpdateOcclusion(camera: Camera)
+    local listenerPos = camera.CFrame.Position
+    RAY_PARAMS.FilterDescendantsInstances = { camera }
+
+    for _, item in ipairs(trackedSounds) do
+        if not item.sound.IsPlaying then continue end
+        
+        local emitterPos = item.emitterPart.Position
+        local direction = emitterPos - listenerPos
+        local distance = direction.Magnitude
+        
+        if distance > item.sound.RollOffMaxDistance then continue end
+        
+        local hit = Workspace:Raycast(listenerPos, direction, RAY_PARAMS)
+        local isOccluded = hit and hit.Instance and hit.Instance ~= item.emitterPart and hit.Instance.CanCollide
+        
+        local targetCutoff = isOccluded and 1200 or 20000 -- 1.2 kHz muffle through solid walls
+        local targetVol = isOccluded and (item.originalVolume * 0.45) or item.originalVolume
+        
+        -- Smoothly interpolate acoustic transitions
+        TweenService:Create(item.lowPass, TweenInfo.new(0.25), { CutoffFrequency = targetCutoff }):Play()
+        TweenService:Create(item.sound, TweenInfo.new(0.25), { Volume = targetVol }):Play()
+    end
+end
+
+return SpatialAudioManager</code></pre>
+      </div>
+
+      <h2>3. Real-Time Raycast Occlusion: LowPass Muffling Through Walls</h2>
+      <p>Simulating physical sound obstruction to prevent players from hearing crystal-clear footsteps through concrete bunkers:</p>
+      <ul>
+          <li>Line-of-Sight Raycasting: Cast a ray from the camera/listener position to the sound emitter part. If the ray intersects an intermediate solid wall, the sound is physically occluded.</li>
+          <li>Dynamic LowPass Filtering: When occluded, smoothly tween the `LowPassSoundEffect.CutoffFrequency` down from 20,000 Hz to 1,000-1,500 Hz, stripping high frequencies to simulate acoustic wall damping.</li>
+          <li>Material-Aware Density Absorption: Check the intersected part's `Material`. Wood and glass should allow higher cutoff frequencies (~4,000 Hz), while concrete, metal, and terrain attenuate sound heavily (~800 Hz).</li>
+          <li>Performance Throttling: Do not raycast every sound on every frame. Cache occlusion states and update them every 0.1 to 0.2 seconds across staggered worker loops.</li>
+      </ul>
+
+      <h2>4. Volumetric Dynamic Reverb Zones</h2>
+      <p>Transitioning audio environments smoothly between outdoors, stone cathedrals, and tight corridors:</p>
+      <ul>
+          <li>Native Reverb Presets: `SoundService.AmbientReverb` provides built-in presets (e.g., `Cave`, `ConcertHall`, `StoneCorridor`, `Underwater`, `Forest`).</li>
+          <li>Zone-Triggered Detection: Place non-collidable trigger bounding boxes around architectural areas. When the player enters a zone, lerp environmental reverb parameters over 1.5 seconds.</li>
+          <li>Acoustic Volume Blending: Rather than snapping global reverb presets abruptly, instantiate local `ReverbSoundEffect` objects within specific spatial SoundGroups to localize echoes to individual rooms.</li>
+          <li>Underwater Acoustic Distortion: When a character's head submerges beneath water geometry, activate a heavy `PitchShiftSoundEffect` (0.85x) paired with a 600 Hz LowPass cutoff.</li>
+      </ul>
+
+      <h2>5. Production Optimization & Mobile Audio Budgeting</h2>
+      <p>Delivering rich 3D soundscapes without exceeding memory limits or audio channel starvation:</p>
+      <ul>
+          <li>Sound Channel Saturation Limits: Roblox mobile devices typically allocate between 32 and 64 concurrent hardware audio mixing voices. Exceeding this limit causes silent voice dropping on essential combat cues.</li>
+          <li>Distance-Based Voice Culling: If a sound's emitter is farther than its `RollOffMaxDistance`, pause or stop playback completely rather than letting the engine process silent waveforms.</li>
+          <li>Compressed Asset Loading: Use mono (single-channel) audio files for 3D point-source sounds. Mono files take 50% less RAM and eliminate spatial phase cancellation issues.</li>
+          <li>Preload Priority for Tactical SFX: Utilize `ContentProvider:PreloadAsync` exclusively on critical tactical sound assets (footsteps, weapon reloads, shield breaks) during the loading splash.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why should I use mono audio files instead of stereo for 3D positional sounds?</h3>
+          <p>Stereo audio contains two separate channels mixed for left and right ears. When placed in a 3D Workspace, the game engine must collapse them into a single point source, wasting memory and often causing phase cancellation. Mono files are lighter and spatialized accurately.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What is the performance cost of raycast sound occlusion?</h3>
+          <p>When limited to nearby audible sounds (e.g., within 60 studs) and updated at 5-10 Hz, raycast occlusion consumes negligible CPU time (<0.1ms per frame), while providing dramatic AAA acoustic fidelity.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I prevent music from getting muffled when the player enters a cave?</h3>
+          <p>Route your background music through a separate `Music` SoundGroup that bypasses environmental DSP effect chains and LowPass filters applied to the `WorldSFX` bus.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
