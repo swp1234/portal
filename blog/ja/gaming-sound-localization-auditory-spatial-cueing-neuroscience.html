@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ゲーム音響の空間定位と聴覚神経科学 (2026)</title>
+  <meta name="description" content="競技ゲームにおける空間定位の認知神経科学：上オリーブ複合体の微小時間差計算、耳介周波数ノッチ、接近音バイアスと140ms聴覚反射。" />
+  <meta name="keywords" content="サウンドプレイ 空間定位, ゲーム音響 神経科学, 両耳間時間差 ITD, 足音 反応速度, VALORANT CS2 サウンド" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ja/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="ゲーム音響の空間定位と聴覚神経科学 (2026)" />
+  <meta property="og:description" content="競技ゲームにおける空間定位の認知神経科学：上オリーブ複合体の微小時間差計算、耳介周波数ノッチ、接近音バイアスと140ms聴覚反射。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ja/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ゲーム音響の空間定位と聴覚神経科学 (2026)" />
+  <meta name="twitter:description" content="競技ゲームにおける空間定位の認知神経科学：上オリーブ複合体の微小時間差計算、耳介周波数ノッチ、接近音バイアスと140ms聴覚反射。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ja/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ja/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html"
+      },
+      "headline": "FPSサウンドプレイの神経科学：両耳間時間差(ITD)・強度差(ILD)と聴覚反射メカニズム",
+      "description": "競技ゲームにおける空間定位の認知神経科学：上オリーブ複合体の微小時間差計算、耳介周波数ノッチ、接近音バイアスと140ms聴覚反射。",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ja/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "FPSサウンドプレイの神経科学：両耳間時間差(ITD)・強度差(ILD)と聴覚反射メカニズム",
+          "item": "https://dopabrain.com/portal/blog/ja/gaming-sound-localization-auditory-spatial-cueing-neuroscience.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "なぜ視覚より聴覚の方が反応が速いのですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "音は有毛細胞の物理的振動として10msで脳幹に届きますが、視覚は網膜での化学反応に50ms以上要するためです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ゲーミングヘッドセットのHRTF機能の役割は？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "人間の耳や頭部による音の反射特性を再現し、2chステレオでも上下・前後の立体音響を可能にします。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "足音を聞く時に画面を小刻みに振る理由は？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "頭の向きを変えて時間差と音量差を生み出すことで、前後の音源誤認を瞬時に解消するためです。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">FPSサウンドプレイの神経科学：両耳間時間差(ITD)・強度差(ILD)と聴覚反射メカニズム</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      耳は目より50ms速い：上オリーブ核のマイクロ秒時間差計算と両耳聴覚遅延が形成する360度メンタルレーダー。
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/reaction-test/" class="quick-card" data-track="tier203_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Sub-140ms acoustic brainstem reflex & footstep cue trigger latency</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier203_stress_check">
+          <strong>Stress Check</strong>
+          <span>Approaching footstep auditory looming threat & cortisol surge control</span>
+        </a>
+        <a href="/burnout-test/" class="quick-card" data-track="tier203_burnout_test">
+          <strong>Burnout Test</strong>
+          <span>Chaotic firefight cocktail party filtering & prefrontal auditory fatigue</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier203_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Binaural ITD/ILD spatial radar & cross-modal reflex archetype</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>タクティカルシューターやバトロワにおいて、プロは視覚確認より先に音だけで敵を捕捉し射撃準備に入ります。聴覚の反応速度は約140〜160msであり、視覚の190〜220msより圧倒的に高速です。</p>
+      <p>脳幹の上オリーブ複合体は両耳に届くマイクロ秒単位の時間差（ITD）と強度差（ILD）を検知し、耳介の周波数変調と組み合わせて全方位の正確な音源位置を瞬時に特定します。</p>
+
+      <h2>1. 聴覚の圧倒的な反応速度優位性：耳 vs 目の神経経路</h2>
+      <p>視覚と聴覚の生物学的処理速度の比較：</p>
+      <ul>
+          <li>機械的伝達による10msの脳幹到達：音波は内耳有毛細胞を物理的に振動させ、即座に電気インパルスへ変換。</li>
+          <li>光受容体の化学反応遅延：網膜での視物質分解と神経節細胞の演算に50ms以上のタイムロスが発生。</li>
+          <li>上丘を介した反射的視線移動：突発的な足音は意識の介在なしに視線を音源方向へ強制誘導。</li>
+          <li>接近音の警戒バイアス：増大する足音は扁桃体を直接刺激し、交感神経の防御的覚醒を喚起。</li>
+      </ul>
+
+      <h2>2. 両耳間定位：ITDとILDの神経計算原理</h2>
+      <p>脳幹が水平方向の音響角度を検出する仕組み：</p>
+      <ul>
+          <li>両耳間時間差（ITD）：真横からの音は頭部を迂回するため反対耳へ最大650マイクロ秒遅れて到達。内側上オリーブ核（MSO）が一致検出。</li>
+          <li>両耳間強度差（ILD）：1500Hz以上の高音は頭部により遮られ反対耳の音量が減衰。外側上オリーブ核（LSO）が強度差を計測。</li>
+          <li>頭部伝達関数（HRTF）と耳介効果：耳介の凹凸が生む周波数減衰（ノッチ）により上下・前後の高低差を認識。</li>
+          <li>前後誤認の即時解消：微小な視点回転（マウス首振り）を行うことで、瞬時に時間差変化を生み前後を確定。</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">JavaScript 両耳間時間差(ITD)・強度差(ILD)計算シミュレーター</div>
+        <pre><code>class BinauralSoundLocalizer {
+  constructor(headRadiusMeters = 0.0875, speedOfSound = 343) {
+    this.headRadius = headRadiusMeters;
+    this.speedOfSound = speedOfSound;
+  }
+  calculateBinauralCues(listenerLookVector, listenerPosition, soundSourcePosition) {
+    const toSource = { x: soundSourcePosition.x - listenerPosition.x, z: soundSourcePosition.z - listenerPosition.z };
+    const forwardAngle = Math.atan2(listenerLookVector.x, listenerLookVector.z);
+    const sourceAngle = Math.atan2(toSource.x, toSource.z);
+    let azimuth = sourceAngle - forwardAngle;
+    while (azimuth > Math.PI) azimuth -= 2 * Math.PI;
+    while (azimuth < -Math.PI) azimuth += 2 * Math.PI;
+    const sinAzimuth = Math.sin(Math.abs(azimuth));
+    const absAzimuth = Math.abs(azimuth);
+    const itdMicroseconds = Math.round(((this.headRadius / this.speedOfSound) * (sinAzimuth + absAzimuth)) * 1e6);
+    const ildDecibels = +(Math.sin(azimuth) * 14.5).toFixed(1);
+    return { azimuthDegrees: Math.round((azimuth * 180) / Math.PI), itdMicroseconds, ildDecibels, reactionAdvantageMs: 45 };
+  }
+}</code></pre>
+      </div>
+
+      <h2>3. 周波数マスキングと聴覚過負荷</h2>
+      <p>乱戦時に肝心な足音が聞こえなくなる原因：</p>
+      <ul>
+          <li>低音によるマスキング：爆発音などの重低音は足音（2〜4kHz）の繊細な高域成分を覆い隠す。</li>
+          <li>カクテルパーティー効果の消耗：銃声の中から足音を選別する処理は前頭葉のリソースを激しく消費。</li>
+          <li>聴覚疲労：銃声の連続暴露により聴覚感度が低下し定位精度が鈍化。</li>
+          <li>eスポーツ向けEQ設定：100Hz以下をカットし、足音の帯域である2〜4kHzを増幅。</li>
+      </ul>
+
+      <h2>4. 音響誘導による運動野の先行起動</h2>
+      <p>音が即座の撃破につながる神経メカニズム：</p>
+      <ul>
+          <li>蓋脊髄路反射：中脳下核から首や腕の運動神経へダイレクトに信号が届き、無意識に照準が動く。</li>
+          <li>ドップラー推定：音の変化から敵の速度を割り出し角からの飛び出しタイミングを予測。</li>
+          <li>発砲音への反射トリガー：音を聞いて撃つ反応はマズルフラッシュを見て撃つより40ms速い。</li>
+          <li>多感覚統合：音と光が同時に重なると神経発火の強度が倍増。</li>
+      </ul>
+
+      <h2>5. プロ級サウンドプレイ神経強化トレーニング</h2>
+      <p>聴覚反射を極限まで高める練習法：</p>
+      <ul>
+          <li>画面オフ練習：音だけを頼りにエイムを合わせ、目を開けて精度を確認する反復訓練。</li>
+          <li>Bluetooth遅延の排除：2.4GHzワイヤレスまたは有線を使用して40msの優位性を死守。</li>
+          <li>音量を75dB以下に抑え、長時間の試合での聴覚感度低下を防ぐ。</li>
+          <li>クラッチ時の深呼吸で過度な緊張による「トンネル聴覚」を防止。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>なぜ視覚より聴覚の方が反応が速いのですか？</h3>
+          <p>音は有毛細胞の物理的振動として10msで脳幹に届きますが、視覚は網膜での化学反応に50ms以上要するためです。</p>
+        </div>
+        <div class="faq-item">
+          <h3>ゲーミングヘッドセットのHRTF機能の役割は？</h3>
+          <p>人間の耳や頭部による音の反射特性を再現し、2chステレオでも上下・前後の立体音響を可能にします。</p>
+        </div>
+        <div class="faq-item">
+          <h3>足音を聞く時に画面を小刻みに振る理由は？</h3>
+          <p>頭の向きを変えて時間差と音量差を生み出すことで、前後の音源誤認を瞬時に解消するためです。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
