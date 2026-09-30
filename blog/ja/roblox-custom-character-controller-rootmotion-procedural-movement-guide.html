@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox独自キャラクター物理開発：移動・傾斜投影・ルートモーション (2026)</title>
+  <meta name="description" content="Robloxで極上の操作感を実装：VectorForce浮遊カプセル、レイキャスト傾斜投影、慣性スライディング、アニメーション同期の完全解説。" />
+  <meta name="keywords" content="Roblox カスタムコントローラー, キャラクター物理 Roblox, レイキャスト 接地, VectorForce 移動, スライディング物理" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox独自キャラクター物理開発：移動・傾斜投影・ルートモーション (2026)" />
+  <meta property="og:description" content="Robloxで極上の操作感を実装：VectorForce浮遊カプセル、レイキャスト傾斜投影、慣性スライディング、アニメーション同期の完全解説。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox独自キャラクター物理開発：移動・傾斜投影・ルートモーション (2026)" />
+  <meta name="twitter:description" content="Robloxで極上の操作感を実装：VectorForce浮遊カプセル、レイキャスト傾斜投影、慣性スライディング、アニメーション同期の完全解説。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html"
+      },
+      "headline": "Robloxカスタムキャラクターコントローラー設計：物理挙動、レイキャスト接地およびプロシージャル移動",
+      "description": "Robloxで極上の操作感を実装：VectorForce浮遊カプセル、レイキャスト傾斜投影、慣性スライディング、アニメーション同期の完全解説。",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Robloxカスタムキャラクターコントローラー設計：物理挙動、レイキャスト接地およびプロシージャル移動",
+          "item": "https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "カプセルを床から浮かせるメリットは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "地面に直接触れるとポリゴンの継ぎ目や微細な隙間に引っかかるため、浮遊サスペンションが最も滑らかに動けます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "傾斜面のベクトル投影でなぜ坂道の減速がなくなるのですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "前進エネルギーを坂の斜面に沿ったベクトルへ変換するため、地面にぶつかって力が逃げないからです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "動く床から吹き飛ぶバグは防止できますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。レイキャストで検知した床の移動速度を直接キャラクターに合算できるためです。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Robloxカスタムキャラクターコントローラー設計：物理挙動、レイキャスト接地およびプロシージャル移動</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      次世代キャラクター物理：標準Humanoidの制約を打破し、浮遊カプセルと法線ベクトル投影で滑らかな移動を実現。
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier196_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Vector linear algebra & kinematic ground projection algorithms</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier196_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Sub-second strafe direction shifting & ground dodge latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier196_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spatial kinematics manipulation & motor control archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier196_stress_check">
+          <strong>Stress Check</strong>
+          <span>Physics desynchronization jitter & vestibular motion fatigue</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>Roblox標準のHumanoidは手軽ですが、高精度なアクションゲームやパルクールでは操作遅延や移動床からの吹き飛びなど、致命的な問題に直面します。</p>
+      <p>独自の物理コントローラーを構築すれば、挙動を100%予測可能に制御できます。VectorForceによる仮想サスペンションでカプセルを浮かせ、傾斜面の法線ベクトルに合わせて移動方向を補正することで、極上の操作感が手に入ります。</p>
+
+      <h2>1. 標準Humanoidの限界と自作の必然性</h2>
+      <p>高速アクションゲームで標準システムが抱える課題：</p>
+      <ul>
+          <li>ステートマシンの遅延：固定された状態遷移が機敏な方向転換を阻害。</li>
+          <li>移動床での吹き飛び：動く電車やエレベーターの上で同期ズレによる弾き飛ばしが発生。</li>
+          <li>段差での微小なカクつき：階段を上る際の急激な高度変化が画面揺れを誘発。</li>
+          <li>完全な決定論的制御：Heartbeat内で毎フレーム物理計算を行い、常に安定した挙動を保証。</li>
+      </ul>
+
+      <h2>2. 浮遊カプセルとVectorForceサスペンション</h2>
+      <p>地形の凹凸に引っかからないための非接触移動メカニズム：</p>
+      <ul>
+          <li>仮想スプリング：下向きのレイキャストで高さを測定し、バネの力で空中に浮遊維持。</li>
+          <li>摩擦ゼロのカプセル：外側に滑らかな円筒パーツを配置し、角や隙間への挟まりを防止。</li>
+          <li>AlignOrientationによる直立保持：キャラクターの転倒を防ぎつつ、水平旋回のみを自由に許可。</li>
+          <li>LinearVelocityの即時応答：入力と同時に最高速度へ到達させ、もたつき感を排除。</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luauカスタムキャラクター物理コントローラー</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+
+local CustomController = {}
+local player = Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local hrp = char:WaitForChild("HumanoidRootPart") :: BasePart
+
+local TARGET_HEIGHT = 4.2
+local SPRING_STIFFNESS = 1800
+local SPRING_DAMPING = 160
+local WALK_SPEED = 24
+local RAY_PARAMS = RaycastParams.new()
+RAY_PARAMS.FilterType = RaycastFilterType.Exclude
+
+local linearVelocity = Instance.new("LinearVelocity")
+linearVelocity.MaxForce = 40000
+linearVelocity.VelocityConstraintMode = Enum.VelocityConstraintMode.Vector
+linearVelocity.RelativeTo = Enum.ActuatorRelativeTo.World
+local attachment = Instance.new("Attachment")
+attachment.Parent = hrp
+linearVelocity.Attachment0 = attachment
+linearVelocity.Parent = hrp
+
+function CustomController.Update(dt: number)
+    local moveDir = Vector3.zero
+    local cam = Workspace.CurrentCamera
+    if UserInputService:IsKeyDown(Enum.KeyCode.W) then moveDir += cam.CFrame.LookVector end
+    if UserInputService:IsKeyDown(Enum.KeyCode.S) then moveDir -= cam.CFrame.LookVector end
+    if UserInputService:IsKeyDown(Enum.KeyCode.D) then moveDir += cam.CFrame.RightVector end
+    if UserInputService:IsKeyDown(Enum.KeyCode.A) then moveDir -= cam.CFrame.RightVector end
+    moveDir = Vector3.new(moveDir.X, 0, moveDir.Z)
+    if moveDir.Magnitude > 0.01 then moveDir = moveDir.Unit end
+
+    RAY_PARAMS.FilterDescendantsInstances = { char }
+    local ray = Workspace:Raycast(hrp.Position, Vector3.new(0, -TARGET_HEIGHT * 1.5, 0), RAY_PARAMS)
+    local vForce = 0
+    local targetVel = moveDir * WALK_SPEED
+
+    if ray and ray.Instance and ray.Instance.CanCollide then
+        local dist = (hrp.Position - ray.Position).Magnitude
+        targetVel = moveDir - (ray.Normal * moveDir:Dot(ray.Normal))
+        targetVel = targetVel.Unit * WALK_SPEED
+        local err = TARGET_HEIGHT - dist
+        vForce = (err * SPRING_STIFFNESS) - (hrp.AssemblyLinearVelocity.Y * SPRING_DAMPING)
+    end
+    linearVelocity.VectorVelocity = Vector3.new(targetVel.X, targetVel.Y + (vForce * dt), targetVel.Z)
+end
+
+RunService.Heartbeat:Connect(CustomController.Update)
+return CustomController</code></pre>
+      </div>
+
+      <h2>3. レイキャスト接地判定と傾斜面法線投影</h2>
+      <p>坂道での減速や下り坂での跳ね上がりを防ぐ数学的手法：</p>
+      <ul>
+          <li>法線ベクトル（Normal）取得：RaycastResultから地面の傾きを正確に把握。</li>
+          <li>ベクトル投影：前進ベクトルを斜面に沿うよう再計算し、推進力を無駄なく伝達。</li>
+          <li>登坂限界角：45度を超える急斜面では摩擦を失わせて滑落させる処理。</li>
+          <li>崖際検知：外周への補助レイキャストで落下前の足場消失を検知。</li>
+      </ul>
+
+      <h2>4. 慣性モメンタムとスライディング挙動</h2>
+      <p>スピード感あふれるアクションを実現する移動ギミック：</p>
+      <ul>
+          <li>ダッシュスライディング：しゃがみ入力時に一時的に摩擦を減らし前方へ滑走。</li>
+          <li>坂道での重力加速：下り坂で重力成分を加算して急加速を演出。</li>
+          <li>慣性の維持：スライディング終了時に急停止せず滑らかに通常歩行へ移行。</li>
+          <li>空中制御（Air Control）：ジャンプ中も進行方向の微調整を可能にしつつ無限加速を防止。</li>
+      </ul>
+
+      <h2>5. プロシージャルモーションと足元の接地表現</h2>
+      <p>物理移動速度と3Dモデルアニメーションの完全同期：</p>
+      <ul>
+          <li>足滑りの解消：実際の物理移動速度を計測し、アニメーション再生速度を動的変更。</li>
+          <li>8方向ブレンド：移動方向の内積計算で自然な歩行モーションを合成。</li>
+          <li>IKControlによる足配置：浮遊状態でも足先を階段や岩場に自然に着地。</li>
+          <li>クライアント処理完結：物理演算をローカルで完結させて通信負荷を削減。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>カプセルを床から浮かせるメリットは何ですか？</h3>
+          <p>地面に直接触れるとポリゴンの継ぎ目や微細な隙間に引っかかるため、浮遊サスペンションが最も滑らかに動けます。</p>
+        </div>
+        <div class="faq-item">
+          <h3>傾斜面のベクトル投影でなぜ坂道の減速がなくなるのですか？</h3>
+          <p>前進エネルギーを坂の斜面に沿ったベクトルへ変換するため、地面にぶつかって力が逃げないからです。</p>
+        </div>
+        <div class="faq-item">
+          <h3>動く床から吹き飛ぶバグは防止できますか？</h3>
+          <p>はい。レイキャストで検知した床の移動速度を直接キャラクターに合算できるためです。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

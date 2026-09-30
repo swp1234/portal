@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox 自定义角色控制器架构：物理力学、射线贴地与斜面投影 (2026)</title>
+  <meta name="description" content="掌握 Roblox 自定义物理角色控制器开发：VectorForce 虚拟弹簧悬浮、斜面法线速度投影、惯性滑铲与程序化骨骼动画同步。" />
+  <meta name="keywords" content="Roblox自定义控制器, Roblox物理移动, 射线贴地Roblox, VectorForce角色控制, 惯性滑铲Roblox" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox 自定义角色控制器架构：物理力学、射线贴地与斜面投影 (2026)" />
+  <meta property="og:description" content="掌握 Roblox 自定义物理角色控制器开发：VectorForce 虚拟弹簧悬浮、斜面法线速度投影、惯性滑铲与程序化骨骼动画同步。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox 自定义角色控制器架构：物理力学、射线贴地与斜面投影 (2026)" />
+  <meta name="twitter:description" content="掌握 Roblox 自定义物理角色控制器开发：VectorForce 虚拟弹簧悬浮、斜面法线速度投影、惯性滑铲与程序化骨骼动画同步。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html"
+      },
+      "headline": "Roblox 自定义角色物理控制器：VectorForce 悬浮胶囊、射线法线投影与程序化运动",
+      "description": "掌握 Roblox 自定义物理角色控制器开发：VectorForce 虚拟弹簧悬浮、斜面法线速度投影、惯性滑铲与程序化骨骼动画同步。",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "zh"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox 自定义角色物理控制器：VectorForce 悬浮胶囊、射线法线投影与程序化运动",
+          "item": "https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "为什么必须让胶囊体浮在空中，而不是让部件直接碰地？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "物理接触会导致角色在地形多边形接缝或细小缝隙处被卡住；悬浮弹簧方案能消除所有接缝卡顿，提供极致平滑的通行手感。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "斜面投影算法为什么能解决上坡减速问题？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "因为它将水平推力旋转为沿斜坡向上的推力，动能完全用于沿坡前进，而不是正面撞向斜坡表面被反作用力抵消。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "这种控制器能解决站在移动船只或火车上被弹飞的问题吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "能。因为射线可以直接读取所站立载具的实际速度 `AssemblyLinearVelocity` 并叠加至角色速度上，实现完美的物理惯性同步。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox 自定义角色物理控制器：VectorForce 悬浮胶囊、射线法线投影与程序化运动</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      下一代角色物理工程：打破原生 Humanoid 瓶颈，三维浮空胶囊悬浮、斜面速度无损投影与动力学滑铲。
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier196_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Vector linear algebra & kinematic ground projection algorithms</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier196_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Sub-second strafe direction shifting & ground dodge latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier196_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spatial kinematics manipulation & motor control archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier196_stress_check">
+          <strong>Stress Check</strong>
+          <span>Physics desynchronization jitter & vestibular motion fatigue</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>Roblox 默认的 `Humanoid` 系统对轻度社交体验足够便利，但在追求极致手感的高速动作射击、极限跑酷与硬核动作 RPG 中存在巨大缺陷。原生控制器常年存在状态切换延迟、楼梯卡顿抽搐以及站在移动载具上被莫名弹飞的严重物理 Bug。</p>
+      <p>构建底层物理角色控制器能够赋予开发者 100% 的确定性控制权。通过 `VectorForce` 虚拟弹簧将胶囊体悬浮于地形之上，利用射线实时提取地表法线并执行速度投影，再辅以动态摩擦衰减的惯性滑铲系统，即可实现媲美一线主机动作游戏的极致跟手体验。</p>
+
+      <h2>1. 突破原生 Humanoid 枷锁：为何高品质游戏必须重构控制器</h2>
+      <p>原生 Humanoid 状态机在高强度竞技环境中面临的技术壁垒：</p>
+      <ul>
+          <li>黑盒状态转移延迟：内置状态机（Running, Freefall, Jumping 等）包含硬编码的状态锁死时间，无法实现瞬时方向切变。</li>
+          <li>网络物理归属权甩飞 Bug：当角色站在高速移动的列车或电梯上时，原生物理同步极易引发位置冲突并将玩家甩向太空。</li>
+          <li>台阶上下楼梯生硬跳跃：原生角色通过瞬移方式跨越高度差，导致镜头高频上下抽搐，严重破坏沉浸感。</li>
+          <li>确定性算力闭环：在 `Heartbeat` 循环中完全掌控速度与受力计算，保证不同硬件帧率下的物理表现绝对一致。</li>
+      </ul>
+
+      <h2>2. 浮空胶囊体（Floating Capsule）与 VectorForce 悬浮弹簧</h2>
+      <p>利用非接触式虚拟悬挂消除一切地表微缝卡顿：</p>
+      <ul>
+          <li>虚拟弹簧悬架：不让角色物理部件直接蹭地，而是通过垂直向下射线测量离地间隙，施加 `F = (目标高 - 当前高) * k - (垂直速度 * d)` 弹簧力。</li>
+          <li>零摩擦光滑胶囊外壳：在角色周围包裹一层物理属性摩擦力为 0 的圆柱/球形外壳，彻底杜绝转角卡边。</li>
+          <li>AlignOrientation 陀螺稳定：利用 `AlignOrientation` 约束固定 Pitch（俯仰）与 Roll（横滚），只允许水平偏航旋转，确保角色永不倾覆。</li>
+          <li>LinearVelocity 瞬时推力：采用 `LinearVelocity` 控制水平运动，消除原生引擎慢吞吞的起步加速度爬坡。</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau 自定义物理角色控制器与斜面法线速度投影模块</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+
+local CustomController = {}
+local player = Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local hrp = char:WaitForChild("HumanoidRootPart") :: BasePart
+
+local TARGET_HEIGHT = 4.2
+local SPRING_STIFFNESS = 1800
+local SPRING_DAMPING = 160
+local WALK_SPEED = 24
+local RAY_PARAMS = RaycastParams.new()
+RAY_PARAMS.FilterType = RaycastFilterType.Exclude
+
+-- 创建物理线性速度约束
+local linearVelocity = Instance.new("LinearVelocity")
+linearVelocity.MaxForce = 40000
+linearVelocity.VelocityConstraintMode = Enum.VelocityConstraintMode.Vector
+linearVelocity.RelativeTo = Enum.ActuatorRelativeTo.World
+local attachment = Instance.new("Attachment")
+attachment.Parent = hrp
+linearVelocity.Attachment0 = attachment
+linearVelocity.Parent = hrp
+
+function CustomController.Update(dt: number)
+    local moveDir = Vector3.zero
+    local cam = Workspace.CurrentCamera
+    if UserInputService:IsKeyDown(Enum.KeyCode.W) then moveDir += cam.CFrame.LookVector end
+    if UserInputService:IsKeyDown(Enum.KeyCode.S) then moveDir -= cam.CFrame.LookVector end
+    if UserInputService:IsKeyDown(Enum.KeyCode.D) then moveDir += cam.CFrame.RightVector end
+    if UserInputService:IsKeyDown(Enum.KeyCode.A) then moveDir -= cam.CFrame.RightVector end
+    moveDir = Vector3.new(moveDir.X, 0, moveDir.Z)
+    if moveDir.Magnitude > 0.01 then moveDir = moveDir.Unit end
+
+    RAY_PARAMS.FilterDescendantsInstances = { char }
+    local ray = Workspace:Raycast(hrp.Position, Vector3.new(0, -TARGET_HEIGHT * 1.5, 0), RAY_PARAMS)
+    local vForce = 0
+    local targetVel = moveDir * WALK_SPEED
+
+    if ray and ray.Instance and ray.Instance.CanCollide then
+        local dist = (hrp.Position - ray.Position).Magnitude
+        -- 斜面法线投影算法：重定向运动方向贴合坡度
+        targetVel = moveDir - (ray.Normal * moveDir:Dot(ray.Normal))
+        targetVel = targetVel.Unit * WALK_SPEED
+        local err = TARGET_HEIGHT - dist
+        vForce = (err * SPRING_STIFFNESS) - (hrp.AssemblyLinearVelocity.Y * SPRING_DAMPING)
+    end
+    linearVelocity.VectorVelocity = Vector3.new(targetVel.X, targetVel.Y + (vForce * dt), targetVel.Z)
+end
+
+RunService.Heartbeat:Connect(CustomController.Update)
+return CustomController</code></pre>
+      </div>
+
+      <h2>3. 射线贴地检测与斜面法线向量投影算法</h2>
+      <p>彻底解决上坡减速疲软、下坡突兀离地飞起的高等几何算式：</p>
+      <ul>
+          <li>地表法线提取：从 `RaycastResult.Normal` 读取地面倾斜向量，水平平地为 `(0, 1, 0)`，斜坡则提供倾斜分量。</li>
+          <li>运动向量无损投影：利用公式 `ec{v}_{slope} = ec{v}_{input} - ec{n} cdot (ec{v}_{input} cdot ec{n})`，将前进动力重定向为完全平行于斜坡的推力。</li>
+          <li>极限爬坡角度限制：通过 `math.acos(normal.Y)` 计算倾角，超过 45 度的陡峭崖壁自动剥离摩擦力并启动重力滑坠。</li>
+          <li>边缘悬空探测：在胶囊边缘布置四向辅助探针，先于中心判定探知悬崖与空洞。</li>
+      </ul>
+
+      <h2>4. 惯性动能衰减与动力学滑铲机制</h2>
+      <p>构建兼备速度感与身法深度的现代跑酷移动体系：</p>
+      <ul>
+          <li>下蹲动态滑铲：奔跑状态按下下蹲键时，切断 LinearVelocity 约束，施加沿坡度切向的瞬时推力并调低空气阻尼。</li>
+          <li>下坡重力加速加成：在斜坡上下滑时，实时附加 `math.sin(slopeAngle) * gravity` 的重力加速度分量。</li>
+          <li>动能平滑保全：滑铲结束起身时不突兀急停，经由 1.2 秒的指数衰减曲线回归标准跑步速度。</li>
+          <li>空中精准转向（Air Strafing）：跳跃滞空期间允许在限定角速度内横向微调轨迹，同时锁死总动能防止产生超速 Bug。</li>
+      </ul>
+
+      <h2>5. 程序化根骨骼运动（Root Motion）与步态防滑步</h2>
+      <p>让 3D 角色骨骼动作与实际物理位移严丝合缝：</p>
+      <ul>
+          <li>消除溜冰滑步现象：测量根骨骼实际水平速度，按比例实时调整 `AnimationTrack.Speed`。</li>
+          <li>八向移动混合树：通过计算前后左右分量向量点积，平滑权重插值混合运动动画。</li>
+          <li>IKControl 智能贴足：利用双腿 `IKControl` 约束反向求解，使角色双脚在凹凸不平的石块与台阶上始终踏平。</li>
+          <li>客户端权威计算：物理运算完全收敛于拥有该角色的本地客户端，向服务器仅同步离散校验数据以节约带宽。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>为什么必须让胶囊体浮在空中，而不是让部件直接碰地？</h3>
+          <p>物理接触会导致角色在地形多边形接缝或细小缝隙处被卡住；悬浮弹簧方案能消除所有接缝卡顿，提供极致平滑的通行手感。</p>
+        </div>
+        <div class="faq-item">
+          <h3>斜面投影算法为什么能解决上坡减速问题？</h3>
+          <p>因为它将水平推力旋转为沿斜坡向上的推力，动能完全用于沿坡前进，而不是正面撞向斜坡表面被反作用力抵消。</p>
+        </div>
+        <div class="faq-item">
+          <h3>这种控制器能解决站在移动船只或火车上被弹飞的问题吗？</h3>
+          <p>能。因为射线可以直接读取所站立载具的实际速度 `AssemblyLinearVelocity` 并叠加至角色速度上，实现完美的物理惯性同步。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

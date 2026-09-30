@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 커스텀 캐릭터 컨트롤러: 물리 이동·경사면·루트모션 (2026)</title>
+  <meta name="description" content="로블록스 커스텀 캐릭터 물리 개발 완벽 가이드: VectorForce 가상 스프링 부유, 경사면 노멀 벡터 투영, 관성 슬라이딩 및 절차적 애니메이션 동기화." />
+  <meta name="keywords" content="로블록스 커스텀 컨트롤러, 로블록스 물리 이동, 레이캐스트 바닥 감지, VectorForce 컨트롤러, 로블록스 슬라이딩 물리" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 커스텀 캐릭터 컨트롤러: 물리 이동·경사면·루트모션 (2026)" />
+  <meta property="og:description" content="로블록스 커스텀 캐릭터 물리 개발 완벽 가이드: VectorForce 가상 스프링 부유, 경사면 노멀 벡터 투영, 관성 슬라이딩 및 절차적 애니메이션 동기화." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 커스텀 캐릭터 컨트롤러: 물리 이동·경사면·루트모션 (2026)" />
+  <meta name="twitter:description" content="로블록스 커스텀 캐릭터 물리 개발 완벽 가이드: VectorForce 가상 스프링 부유, 경사면 노멀 벡터 투영, 관성 슬라이딩 및 절차적 애니메이션 동기화." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html"
+      },
+      "headline": "로블록스 커스텀 캐릭터 컨트롤러 아키텍처: 물리 기반 이동, 레이캐스트 지면 감지 및 절차적 모션",
+      "description": "로블록스 커스텀 캐릭터 물리 개발 완벽 가이드: VectorForce 가상 스프링 부유, 경사면 노멀 벡터 투영, 관성 슬라이딩 및 절차적 애니메이션 동기화.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 커스텀 캐릭터 컨트롤러 아키텍처: 물리 기반 이동, 레이캐스트 지면 감지 및 절차적 모션",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "왜 캐릭터가 바닥을 직접 밟지 않고 가상 스프링으로 띄워야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "파츠가 물리적으로 지면에 닿으면 복잡한 지형의 미세한 틈이나 폴리곤 이음매에 걸려 덜컹거림이 발생합니다. 공중에 띄우는 서스펜션 방식이 가장 부드러운 이동을 제공합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "경사면 벡터 투영을 쓰면 오르막길 감속이 왜 해결되나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "수평 방향의 이동 벡터를 바닥과 평행한 경사면 벡터로 재배치해주므로, 이동 에너지가 바닥 파츠에 부딪혀 상쇄되지 않고 언덕 위로 온전히 전달되기 때문입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "움직이는 열차나 배 위에서 캐릭터가 튕겨 나가는 버그는 어떻게 막나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "레이캐스트로 감지된 바닥 파츠의 `AssemblyLinearVelocity`를 읽어와 캐릭터의 이동 벡터에 직접 합산해 주면 관성이 완벽하게 동기화됩니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 커스텀 캐릭터 컨트롤러 아키텍처: 물리 기반 이동, 레이캐스트 지면 감지 및 절차적 모션</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      차세대 캐릭터 물리 엔지니어링: 기본 Humanoid 한계 극복, 부유 캡슐 물리, 경사면 법선 투영 및 모멘텀 슬라이딩 시스템.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier196_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>벡터 선형대수 및 지형 밀착 프로시저럴 역학 알고리즘</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier196_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>초 단위 방향 전환 및 스트레이프 기동 반응 잠복기</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier196_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>공간 운동 역학 조작 스타일 및 인지 제어 아키타입</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier196_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>물리 연산 비동기 지터 및 전정 감각 피로 완화</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>로블록스의 기본 `Humanoid`는 소셜 게임에는 훌륭하지만 정밀한 조작감이 생명인 파쿠르, 하이퍼 슈팅, 액션 RPG에서는 심각한 한계에 부딪힙니다. 기본 컨트롤러는 조작 딜레이가 크고, 계단 이동 시 화면이 덜컹거리며, 움직이는 발판 위에서 캐릭터가 튕겨 나가는 버그가 빈번합니다.</p>
+      <p>기본 메커니즘을 탈피하여 독자적인 물리 기반 캐릭터 컨트롤러를 구축하면 100% 예측 가능한 조작감을 얻을 수 있습니다. `VectorForce` 가상 스프링으로 캡슐을 바닥 위에 부유시키고, 레이캐스트로 경사면 법선(Normal)을 추출하여 이동 벡터를 보정하며, 관성 슬라이딩을 결합하면 AAA급 액션 게임의 쫀득한 손맛을 구현할 수 있습니다.</p>
+
+      <h2>1. 기본 Humanoid의 한계: 왜 커스텀 컨트롤러가 필요한가</h2>
+      <p>로블록스 내장 Humanoid 상태 머신이 고난도 액션 게임에서 겪는 문제점:</p>
+      <ul>
+          <li>블랙박스 상태 머신: 내장 Humanoid는 `Running`, `Climbing`, `Freefall` 등의 고정된 상태 전이 딜레이를 가지고 있어 신속한 반응형 이동을 구현하기 어렵습니다.</li>
+          <li>네트워크 소유권 튕김 버그: 기본 물리 엔진은 네트워크 동기화 과정에서 움직이는 열차나 엘리베이터 발판과 충돌할 때 캐릭터를 튕겨내는 치명적 결함이 있습니다.</li>
+          <li>계단 및 턱 오르기 끊김: 기본 캐릭터는 턱을 오를 때 순간이동하듯 수직 위치가 점프하여 카메라가 덜덜 떨리는 현상을 유발합니다.</li>
+          <li>완전한 결정론적 제어: `Heartbeat` 루프에서 물리 수식을 직접 계산하므로 프레임레이트와 핑에 영향받지 않는 균일한 이동성을 보장합니다.</li>
+      </ul>
+
+      <h2>2. 부유 캡슐(Floating Capsule)과 가상 스프링 서스펜션</h2>
+      <p>바닥에 걸림 없는 매끄러운 주행을 위한 물리 공중 부유 원리:</p>
+      <ul>
+          <li>가상 스프링 서스펜션: 캐릭터 메시가 바닥을 직접 긁지 않고, 바닥을 향해 레이캐스트를 쏘아 `F = (목표높이 - 현재높이) * 강도 - (수직속도 * 감쇠)`의 스프링 힘으로 공중에 띄웁니다.</li>
+          <li>무마찰 충돌 캡슐: 캐릭터 외곽에 마찰력이 0인 매끄러운 원통형 파트를 씌워 벽 모서리나 틈새에 끼이는 현상을 원천 차단합니다.</li>
+          <li>AlignOrientation 자세 유지: 캐릭터가 넘어지지 않도록 `AlignOrientation`을 걸어 피치(Pitch)와 롤(Roll)을 고정하고 요(Yaw) 회전만 자유롭게 허용합니다.</li>
+          <li>LinearVelocity 즉각 반응: 가속도 지연이 없는 `LinearVelocity` 제약 조건을 적용하여 키보드를 누르는 즉시 최고 속도로 전환되는 민첩함을 제공합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau 커스텀 물리 캐릭터 컨트롤러 및 경사면 보정 시스템</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+
+local CustomController = {}
+
+local player = Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local hrp = char:WaitForChild("HumanoidRootPart") :: BasePart
+
+local TARGET_HEIGHT = 4.2
+local SPRING_STIFFNESS = 1800
+local SPRING_DAMPING = 160
+local WALK_SPEED = 24
+
+local RAY_PARAMS = RaycastParams.new()
+RAY_PARAMS.FilterType = RaycastFilterType.Exclude
+
+-- 물리 이동 제약 조건 인스턴스 생성
+local linearVelocity = Instance.new("LinearVelocity")
+linearVelocity.MaxForce = 40000
+linearVelocity.VelocityConstraintMode = Enum.VelocityConstraintMode.Vector
+linearVelocity.RelativeTo = Enum.ActuatorRelativeTo.World
+
+local attachment = Instance.new("Attachment")
+attachment.Parent = hrp
+linearVelocity.Attachment0 = attachment
+linearVelocity.Parent = hrp
+
+function CustomController.Update(dt: number)
+    local moveDirection = Vector3.zero
+    local camera = Workspace.CurrentCamera
+    
+    -- 카메라 방향 기준 WASD 입력 벡터 계산
+    if UserInputService:IsKeyDown(Enum.KeyCode.W) then moveDirection += camera.CFrame.LookVector end
+    if UserInputService:IsKeyDown(Enum.KeyCode.S) then moveDirection -= camera.CFrame.LookVector end
+    if UserInputService:IsKeyDown(Enum.KeyCode.D) then moveDirection += camera.CFrame.RightVector end
+    if UserInputService:IsKeyDown(Enum.KeyCode.A) then moveDirection -= camera.CFrame.RightVector end
+    
+    moveDirection = Vector3.new(moveDirection.X, 0, moveDirection.Z)
+    if moveDirection.Magnitude > 0.01 then
+        moveDirection = moveDirection.Unit
+    end
+    
+    -- 바닥 감지 및 경사면 추출 레이캐스트
+    RAY_PARAMS.FilterDescendantsInstances = { char }
+    local rayResult = Workspace:Raycast(hrp.Position, Vector3.new(0, -TARGET_HEIGHT * 1.5, 0), RAY_PARAMS)
+    
+    local verticalForce = 0
+    local targetVel = moveDirection * WALK_SPEED
+    
+    if rayResult and rayResult.Instance and rayResult.Instance.CanCollide then
+        local currentHeight = (hrp.Position - rayResult.Position).Magnitude
+        local normal = rayResult.Normal
+        
+        -- 경사면 법선 벡터에 수직인 이동 벡터 투영
+        targetVel = moveDirection - (normal * moveDirection:Dot(normal))
+        targetVel = targetVel.Unit * WALK_SPEED
+        
+        -- 서스펜션 스프링 계산
+        local heightError = TARGET_HEIGHT - currentHeight
+        local verticalVelocity = hrp.AssemblyLinearVelocity.Y
+        verticalForce = (heightError * SPRING_STIFFNESS) - (verticalVelocity * SPRING_DAMPING)
+    end
+    
+    linearVelocity.VectorVelocity = Vector3.new(targetVel.X, targetVel.Y + (verticalForce * dt), targetVel.Z)
+end
+
+RunService.Heartbeat:Connect(CustomController.Update)
+
+return CustomController</code></pre>
+      </div>
+
+      <h2>3. 레이캐스트 지면 감지와 경사면 법선 벡터 투영</h2>
+      <p>오르막길에서 속도가 줄어들거나 내리막길에서 허공으로 뜨는 현상을 해결하는 수학:</p>
+      <ul>
+          <li>지면 법선 벡터(Normal) 추출: `RaycastResult.Normal`을 통해 바닥의 기울기 벡터를 획득합니다. 평지는 `(0, 1, 0)`, 경사로는 대각선 값을 반환합니다.</li>
+          <li>이동 벡터 투영 공식: `ec{v}_{slope} = ec{v}_{input} - ec{n} cdot (ec{v}_{input} cdot ec{n})`을 적용하여 플레이어의 전진 방향을 경사면을 따라 미끄러지듯 자연스럽게 굴절시킵니다.</li>
+          <li>등판 한계 각도 제한: `math.acos(normal.Y)`로 경사 각도를 계산하여 45도를 초과하는 절벽에서는 마찰력을 상실하고 아래로 미끄러지도록 제어합니다.</li>
+          <li>낭떠러지 감지: 캡슐 가장자리 4곳에 보조 레이캐스트를 쏘아 바닥이 끊어지는 지형을 미리 감지합니다.</li>
+      </ul>
+
+      <h2>4. 관성 모멘텀과 다이내믹 슬라이딩 메커니즘</h2>
+      <p>질주 중 슬라이딩과 공중 스트레이핑(Air Strafing)을 구현하는 기술:</p>
+      <ul>
+          <li>동적 감쇠 계수 조절: 달리기 중 앉기(Crouch) 키를 누르면 LinearVelocity 제약을 풀고 전방으로 강력한 추진력을 가한 뒤 마찰 감쇠를 일시적으로 낮춥니다.</li>
+          <li>내리막길 가속 보너스: 경사로를 타고 내려갈 때 중력 가속도 성분 `math.sin(경사각) * gravity`를 더해 빠른 속도감을 연출합니다.</li>
+          <li>모멘텀 보존 법칙: 슬라이딩이 끝날 때 급정지하지 않고 점진적인 마찰력 회복을 거치도록 설계하여 파쿠르 연계 조작을 지원합니다.</li>
+          <li>공중 조작(Air Control): 공중에 떠 있을 때 전방 추진력은 유지하되 좌우 방향 전환만 제한적으로 허용하여 퀘이크 스타일의 쾌적한 점프를 구현합니다.</li>
+      </ul>
+
+      <h2>5. 절차적 루트 모션(Root Motion)과 발 미끄러짐 방지</h2>
+      <p>물리 이동 속도와 캐릭터 3D 스켈레톤 애니메이션의 완벽한 일체화:</p>
+      <ul>
+          <li>발 미끄러짐(Foot-Sliding) 박멸: 실제 캐릭터의 수평 이동 속도를 측정하여 `AnimationTrack.Speed`를 이동 속도에 비례하도록 실시간 조절합니다.</li>
+          <li>8방향 블렌드 트리: 전후좌우 이동 벡터의 내적(Dot Product)을 계산하여 걷기/달리기 애니메이션 가중치를 부드럽게 합성합니다.</li>
+          <li>IKControl을 활용한 지면 밀착: 다리에 `IKControl`을 걸어 캡슐이 공중에 떠 있어도 울퉁불퉁한 바닥이나 계단에 발바닥이 평평하게 착지하도록 연출합니다.</li>
+          <li>클라이언트 물리 연산: 물리 연산은 소유권을 가진 로컬 클라이언트에서 전담하고, 서버로는 검증용 좌표만 전송하여 네트워크 렉을 최소화합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>왜 캐릭터가 바닥을 직접 밟지 않고 가상 스프링으로 띄워야 하나요?</h3>
+          <p>파츠가 물리적으로 지면에 닿으면 복잡한 지형의 미세한 틈이나 폴리곤 이음매에 걸려 덜컹거림이 발생합니다. 공중에 띄우는 서스펜션 방식이 가장 부드러운 이동을 제공합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>경사면 벡터 투영을 쓰면 오르막길 감속이 왜 해결되나요?</h3>
+          <p>수평 방향의 이동 벡터를 바닥과 평행한 경사면 벡터로 재배치해주므로, 이동 에너지가 바닥 파츠에 부딪혀 상쇄되지 않고 언덕 위로 온전히 전달되기 때문입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>움직이는 열차나 배 위에서 캐릭터가 튕겨 나가는 버그는 어떻게 막나요?</h3>
+          <p>레이캐스트로 감지된 바닥 파츠의 `AssemblyLinearVelocity`를 읽어와 캐릭터의 이동 벡터에 직접 합산해 주면 관성이 완벽하게 동기화됩니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

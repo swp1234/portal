@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Character Controllers: Physics & Movement (2026)</title>
+  <meta name="description" content="Build responsive custom character controllers in Roblox: VectorForce capsule floating, raycast slope projection, inertial sliding, and procedural root motion." />
+  <meta name="keywords" content="Roblox custom character controller, Roblox physics movement, raycast grounding Roblox, VectorForce movement, procedural root motion Roblox" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Character Controllers: Physics & Movement (2026)" />
+  <meta property="og:description" content="Build responsive custom character controllers in Roblox: VectorForce capsule floating, raycast slope projection, inertial sliding, and procedural root motion." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Character Controllers: Physics & Movement (2026)" />
+  <meta name="twitter:description" content="Build responsive custom character controllers in Roblox: VectorForce capsule floating, raycast slope projection, inertial sliding, and procedural root motion." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html"
+      },
+      "headline": "Roblox Custom Character Controller Architecture: Physics Forces, Raycast Grounding & Procedural Movement",
+      "description": "Build responsive custom character controllers in Roblox: VectorForce capsule floating, raycast slope projection, inertial sliding, and procedural root motion.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Custom Character Controller Architecture: Physics Forces, Raycast Grounding & Procedural Movement",
+          "item": "https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-rootmotion-procedural-movement-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why should I use a floating spring capsule instead of letting the Part physically touch the ground?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When physical Parts touch the ground, micro-edges, voxel seams, and geometry crevices cause friction catches and sudden trajectory halts. Levitation on a virtual spring creates completely smooth traversal across any terrain."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does slope vector projection prevent characters from slowing down on hills?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "By projecting the input velocity onto the plane perpendicular to the ground normal, the character's speed vector is redirected parallel to the incline rather than driving into the hill."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can custom character controllers prevent moving platform flinging bugs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Because you control the raycast grounding logic, you can query the platform's linear velocity and inherit its motion directly onto the character without relying on erratic default weld physics."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox Custom Character Controller Architecture: Physics Forces, Raycast Grounding & Procedural Movement</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio Engineering Team</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Next-Gen Character Physics: Moving beyond vanilla Humanoid limitations, floating capsule physics, slope normal projection, and friction-driven momentum sliding.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier196_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Vector linear algebra & kinematic ground projection algorithms</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier196_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Sub-second strafe direction shifting & ground dodge latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier196_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spatial kinematics manipulation & motor control archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier196_stress_check">
+          <strong>Stress Check</strong>
+          <span>Physics desynchronization jitter & vestibular motion fatigue</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>The default Roblox `Humanoid` is an incredible engine achievement for general social games, but it presents severe roadblocks for high-precision action titles, parkour platformers, and competitive arena shooters. Vanilla Humanoids introduce unpredictable physics replication delay, suffer from rigid step-height snapping, and frequently fling uncontrollably on moving platforms.</p>
+      <p>By replacing or augmenting default character mechanics with a custom physics-driven controller, developers gain deterministic control over locomotion. Using a floating capsule stabilized by `VectorForce` and `AlignOrientation`, projecting velocity across slope surface normals via raycasting, and modulating dynamic friction for momentum sliding, your game achieves crisp, responsive movement comparable to AAA action engines.</p>
+
+      <h2>1. Beyond Vanilla Humanoid: Why Custom Controllers Are Essential</h2>
+      <p>Understanding the technical limitations of Roblox's native Humanoid state machine:</p>
+      <ul>
+          <li>Black-Box State Machine: The default Humanoid enforces rigid states (`Running`, `Climbing`, `Freefall`, `Jumping`) with hardcoded transition latencies that cannot be overridden cleanly.</li>
+          <li>Network Ownership Desynchronization: Physics-calculated Humanoids replicate position updates over network packets, causing rubberbanding when characters collide with moving parts or vehicles.</li>
+          <li>Slope & Staircase Snapping: Vanilla Humanoids climb stairs by instantaneously snapping vertical position, producing camera micro-stutters that break cinematic immersion.</li>
+          <li>Deterministic Control: Custom controllers calculate velocity mathematically on `RunService.Heartbeat`, guaranteeing 100% predictable momentum across varying client framerates.</li>
+      </ul>
+
+      <h2>2. The Floating Capsule & VectorForce Spring Levitation</h2>
+      <p>Suspending the character on a virtual physics cushion for buttery-smooth traversal:</p>
+      <ul>
+          <li>Virtual Spring Cushion: Instead of letting the character's physical mesh scrape the ground, cast a downward raycast and apply a vertical spring force: `F = (restDistance - currentHeight) * k - (verticalVel * d)`.</li>
+          <li>Frictionless Capsule Part: Enclose the character in a smooth spherical collision hull with `CustomPhysicalProperties` set to zero friction, eliminating geometry snagging.</li>
+          <li>AlignOrientation Gyro Stabilization: Enforce upright character posture using an `AlignOrientation` constraint set to `Enum.AlignType.Parallel`, allowing free yaw rotation while locking pitch and roll.</li>
+          <li>LinearVelocity Driving: Apply horizontal locomotion using `LinearVelocity` with `VelocityConstraintMode.Vector`, providing instantaneous direction changes without sluggish acceleration ramps.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau Custom Physics Character Controller with Raycast Slope Alignment</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+
+local CustomController = {}
+
+local player = Players.LocalPlayer
+local char = player.Character or player.CharacterAdded:Wait()
+local hrp = char:WaitForChild("HumanoidRootPart") :: BasePart
+
+local TARGET_HEIGHT = 4.2
+local SPRING_STIFFNESS = 1800
+local SPRING_DAMPING = 160
+local WALK_SPEED = 24
+
+local RAY_PARAMS = RaycastParams.new()
+RAY_PARAMS.FilterType = RaycastFilterType.Exclude
+
+-- Creates and configures modern physics movers
+local linearVelocity = Instance.new("LinearVelocity")
+linearVelocity.MaxForce = 40000
+linearVelocity.VelocityConstraintMode = Enum.VelocityConstraintMode.Vector
+linearVelocity.RelativeTo = Enum.ActuatorRelativeTo.World
+
+local attachment = Instance.new("Attachment")
+attachment.Parent = hrp
+linearVelocity.Attachment0 = attachment
+linearVelocity.Parent = hrp
+
+function CustomController.Update(dt: number)
+    local moveDirection = Vector3.zero
+    local camera = Workspace.CurrentCamera
+    
+    -- Gather WASD keyboard inputs relative to camera orientation
+    if UserInputService:IsKeyDown(Enum.KeyCode.W) then moveDirection += camera.CFrame.LookVector end
+    if UserInputService:IsKeyDown(Enum.KeyCode.S) then moveDirection -= camera.CFrame.LookVector end
+    if UserInputService:IsKeyDown(Enum.KeyCode.D) then moveDirection += camera.CFrame.RightVector end
+    if UserInputService:IsKeyDown(Enum.KeyCode.A) then moveDirection -= camera.CFrame.RightVector end
+    
+    moveDirection = Vector3.new(moveDirection.X, 0, moveDirection.Z)
+    if moveDirection.Magnitude > 0.01 then
+        moveDirection = moveDirection.Unit
+    end
+    
+    -- Downward Raycast for Ground Detection and Slope Projection
+    RAY_PARAMS.FilterDescendantsInstances = { char }
+    local rayResult = Workspace:Raycast(hrp.Position, Vector3.new(0, -TARGET_HEIGHT * 1.5, 0), RAY_PARAMS)
+    
+    local verticalForce = 0
+    local targetVel = moveDirection * WALK_SPEED
+    
+    if rayResult and rayResult.Instance and rayResult.Instance.CanCollide then
+        local currentHeight = (hrp.Position - rayResult.Position).Magnitude
+        local normal = rayResult.Normal
+        
+        -- Project horizontal velocity along slope surface
+        targetVel = moveDirection - (normal * moveDirection:Dot(normal))
+        targetVel = targetVel.Unit * WALK_SPEED
+        
+        -- Floating spring calculation
+        local heightError = TARGET_HEIGHT - currentHeight
+        local verticalVelocity = hrp.AssemblyLinearVelocity.Y
+        verticalForce = (heightError * SPRING_STIFFNESS) - (verticalVelocity * SPRING_DAMPING)
+    end
+    
+    linearVelocity.VectorVelocity = Vector3.new(targetVel.X, targetVel.Y + (verticalForce * dt), targetVel.Z)
+end
+
+RunService.Heartbeat:Connect(CustomController.Update)
+
+return CustomController</code></pre>
+      </div>
+
+      <h2>3. Raycast Grounding & Slope Normal Vector Projection</h2>
+      <p>Projecting horizontal motion vectors across steep terrain to eliminate uphill slowdowns:</p>
+      <ul>
+          <li>Surface Normal Extraction: Extract the surface normal vector (ec{n}) from `RaycastResult.Normal`. A flat plane yields `(0, 1, 0)`; an inclined ramp yields angled components.</li>
+          <li>Wish-Velocity Projection: Use the vector projection formula: `ec{v}_{slope} = ec{v}_{input} - ec{n} cdot (ec{v}_{input} cdot ec{n})`. This reorients the forward velocity flush along the hill without losing kinetic energy.</li>
+          <li>Maximum Slope Angle Clamping: Calculate the angle between the ground normal and the vertical up vector via `math.acos(normal.Y)`. If the slope exceeds 45 degrees, disable traction and initiate sliding down the hill.</li>
+          <li>Ledge Edge Detection: Cast secondary offset rays at the perimeter of the capsule to detect sheer cliffs before the root part walks into empty air.</li>
+      </ul>
+
+      <h2>4. Inertial Momentum & Kinetic Sliding Mechanics</h2>
+      <p>Engineering satisfying parkour mechanics: slides, wall runs, and bunny hopping:</p>
+      <ul>
+          <li>Dynamic Friction Modulation: When the player presses Crouch while sprinting, temporarily decouple `LinearVelocity` and apply a horizontal impulse along the slope vector with reduced damping.</li>
+          <li>Downhill Acceleration Bonus: If sliding down an inclined plane, add gravitational acceleration scaled by the downward slope angle `math.sin(slopeAngle) * gravity`.</li>
+          <li>Momentum Preservation: Exiting a slide or landing from a high-velocity air leap should preserve existing velocity vectors, decaying gradually through friction over 1.2 seconds.</li>
+          <li>Air Strafing Mechanics: In mid-air, allow lateral directional adjustments while clamping maximum speed, preventing players from generating infinite velocity while flying.</li>
+      </ul>
+
+      <h2>5. Procedural Root Motion & Animation Synchronization</h2>
+      <p>Synchronizing character 3D skeletal animations with custom physical velocities:</p>
+      <ul>
+          <li>Foot-Sliding Elimination: Measure the character's actual linear horizontal velocity `hrp.AssemblyLinearVelocity * Vector3.new(1, 0, 1)`. Dynamically scale the `AnimationTrack.Speed` proportional to velocity.</li>
+          <li>Directional Blend Tree: In 8-directional movement systems, blend forward, backward, left, and right animation track weights dynamically using vector dot products.</li>
+          <li>Inverse Kinematics (IK) Foot Placement: Pair custom raycasting with `IKControl` instances on legs to plant feet flat on irregular rocks and stairs regardless of capsule levitation height.</li>
+          <li>Network Bandwidth Conservation: Run physics calculations strictly on the client that owns the character; replicate only coarse position snapshots to the server for spatial validation.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why should I use a floating spring capsule instead of letting the Part physically touch the ground?</h3>
+          <p>When physical Parts touch the ground, micro-edges, voxel seams, and geometry crevices cause friction catches and sudden trajectory halts. Levitation on a virtual spring creates completely smooth traversal across any terrain.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does slope vector projection prevent characters from slowing down on hills?</h3>
+          <p>By projecting the input velocity onto the plane perpendicular to the ground normal, the character's speed vector is redirected parallel to the incline rather than driving into the hill.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can custom character controllers prevent moving platform flinging bugs?</h3>
+          <p>Yes. Because you control the raycast grounding logic, you can query the platform's linear velocity and inherit its motion directly onto the character without relying on erratic default weld physics.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
