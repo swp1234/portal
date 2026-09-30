@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Otobattler Sinerji Sezgileri, Roll-Down ve Bilişsel Sinirbilim (2026)</title>
+  <meta name="description" content="Otobattler oyunlarının (TFT, Auto Chess) bilişsel sinirbilimi: 30 saniyelik roll-down çalışma belleği doygunluğu, bileşik faiz ve Bayesyen olasılıklar." />
+  <meta name="keywords" content="Otobattler sinirbilim, TFT bilişsel yük, roll down çalışma belleği, haz erteleme oyun, pivot direnci psikolojisi" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/tr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Otobattler Sinerji Sezgileri, Roll-Down ve Bilişsel Sinirbilim (2026)" />
+  <meta property="og:description" content="Otobattler oyunlarının (TFT, Auto Chess) bilişsel sinirbilimi: 30 saniyelik roll-down çalışma belleği doygunluğu, bileşik faiz ve Bayesyen olasılıklar." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/tr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Otobattler Sinerji Sezgileri, Roll-Down ve Bilişsel Sinirbilim (2026)" />
+  <meta name="twitter:description" content="Otobattler oyunlarının (TFT, Auto Chess) bilişsel sinirbilimi: 30 saniyelik roll-down çalışma belleği doygunluğu, bileşik faiz ve Bayesyen olasılıklar." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/tr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/tr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html"
+      },
+      "headline": "Otobattler Strateji Sinirbilimi: Sinerjiler, Pivot Direnci ve Roll-Down Bilişsel Yükü",
+      "description": "Otobattler oyunlarının (TFT, Auto Chess) bilişsel sinirbilimi: 30 saniyelik roll-down çalışma belleği doygunluğu, bileşik faiz ve Bayesyen olasılıklar.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/tr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Bilişsel Nörobiyoloji Ekibi",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "tr"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Otobattler Strateji Sinirbilimi: Sinerjiler, Pivot Direnci ve Roll-Down Bilişsel Yükü",
+          "item": "https://dopabrain.com/portal/blog/tr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Roll-down anı zihinsel olarak neden bu kadar yorucudur?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Çünkü 30 saniye içinde görsel kart tanıma, olasılık hesabı ve hızlı konumlandırma çalışma belleğini sonuna kadar tüketir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hazzı erteleme (altın biriktirme) kazanma oranını nasıl etkiler?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Erken harcama dürtüsünü bastırıp 50 altın faizi alan oyuncular hızlıca üst seviyelere ulaşarak güçlü birimleri erkenden toplar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Pivot direncine (kadro değiştirememe) ne sebep olur?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Geliştirilmiş birimlerdeki batık maliyet yanılgısı ve yapılan ilk eşyalara aşırı zihinsel saplanma."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Rakipleri izlemek kendi mağazamdaki şansları gerçekten değiştirir mi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Evet, ortak kart havuzu kullanıldığı için rakiplerin aldığı kartlar, sizin aradığınız boşta kalan kartların çıkma ihtimalini yükseltir."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Otobattler Strateji Sinirbilimi: Sinerjiler, Pivot Direnci ve Roll-Down Bilişsel Yükü</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Bilişsel Nörobiyoloji Ekibi</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Stratejik Karar Alma Sinirbilimi: 30 saniyelik geri sayımda çalışma belleği aşırı yükü, bileşik faiz ve ortak kart havuzu olasılıkları.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier185_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Strategic decision-making & Bayesian calculation cognitive archetype</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier185_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Working memory chunking & compound interest math training</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier185_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>30-second roll-down visual saccade & motor action speed</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier185_stress_check">
+          <strong>Stress Check</strong>
+          <span>Time-pressure executive overload & low-HP panic management</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>TFT, Auto Chess ve Hearthstone Battlegrounds gibi otobattler oyunları, motor reflekslerden ziyade katı zaman sınırları altında soyut karar almayı test eder.</p>
+      <p>30 saniyelik kritik bir geçiş turunda oyuncu ortak havuz olasılıklarını hesaplamalı, faiz gelirini dengelemeli ve tüm tahtasını baştan kurmalıdır.</p>
+
+      <h2>1. Bileşik Faiz ve Hazzı Erteleme: Striatal İndirim</h2>
+      <p>Oyun içi ekonomi sistemi davranışsal iktisat kurallarını birebir yansıtır:</p>
+      <ul>
+          <li>Ventral Striatum vs dlPFC: 50 altın biriktirmek, prefrontal korteksin anlık yenileme (reroll) dürtüsünü bastırmasını gerektirir.</li>
+          <li>Düşük Canda Hiperbolik İndirim: Can 20'nin altına indiğinde gelecekteki faizin değeri düşer ve hayatta kalma harcaması başlar.</li>
+          <li>Beklenti Teorisi: Alt sıralardaki oyuncular geri dönüş yapabilmek için aşırı riskli kararlar almaya yönelir.</li>
+          <li>Yedek Kulübesi Fırsat Maliyeti: Fazla birim tutmak, faiz getirecek nakit parayı kilitler.</li>
+      </ul>
+
+      <h2>2. 30 Saniyelik Roll-Down: Çalışma Belleği Doygunluğu</h2>
+      <p>İnsanın yönetici işlevleri için zorlu bir stres testi:</p>
+      <ul>
+          <li>Miller Yasası (7±2 birim): Mağaza, yedekler ve tahtayı aynı anda değerlendirmek çalışma belleğinin sınırlarını aşar.</li>
+          <li>Görev Değiştirme Maliyeti: Yenileme, satın alma ve yerleştirme arasında geçiş yapmak eylem başına 200–300 ms zihinsel gecikme yaratır.</li>
+          <li>Göz Hareketi (Sakkad) Optimizasyonu: Usta oyuncular hedef birimleri 80 milisaniyenin altında fark eder.</li>
+          <li>Sempatik Uyarılma: Süre daraldıkça nabız yükselir ve motor kontrol hataları (yanlış tıklamalar) artar.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Ortak Kart Havuzu Bayesyen Olasılık Hesaplayıcı</div>
+        <pre><code>// Autobattler Shared Bag Pool Probability Calculator
+function calculateHitProbability(pool) { /* Hypergeometric distribution logic */ }</code></pre>
+      </div>
+
+      <h2>3. Pivot Direnci: Bağlılık Yanlılığı ve Batık Maliyet</h2>
+      <p>Oyun ortasında kadro değiştirirken karşılaşılan psikolojik engeller:</p>
+      <ul>
+          <li>2 Yıldızlı Birimlere Sahiplik Etkisi: Oyun başında geliştirilen birimlere duyulan aşırı bağlılık nedeniyle onları satamama.</li>
+          <li>Mevcut Durum Yanlılığı: Kadro yenilerken geçici zayıflamadan korkarak kötü kadroda ısrar etme.</li>
+          <li>İlk Eşyaların Çapalaması: Yapılan ilk eşyalar zihni sadece tek bir taşıyıcıya kilitler.</li>
+          <li>Felci Aşmak: Profesyonel oyuncular geçmiş yatırımı unutarak sadece anlık en güçlü tahtayı hedefler.</li>
+      </ul>
+
+      <h2>4. Bayesyen Güncelleme ve Kart Havuzunun Tükenmesi</h2>
+      <p>Ortak envanter sisteminde olasılık avantajı yakalama sezgisi:</p>
+      <ul>
+          <li>Ortak Torba Mekaniği: Rakipler birimleri satın aldıkça boşta kalan sinerjilerin gelme olasılığı matematiksel olarak artar.</li>
+          <li>Çakışan Kadro Tuzağı: Rakipleri izlemeden herkesin topladığı birimleri aramak matematiksel iflasa yol açar.</li>
+          <li>Gözetleme Yoluyla Bayesyen Çıkarım: Rakiplerin altınını takip ederek kartların ne zaman tükeneceğini tahmin etme.</li>
+          <li>Kumarbaz Yanılgısı: Üst üste 10 kez çıkmaması, bir sonraki yenilemede kesin çıkacağı anlamına gelmez.</li>
+      </ul>
+
+      <h2>5. Tahta Geometrisi ve Mikro Konumlandırma</h2>
+      <p>Soyut sinerjileri savaş alanında konumsal avantaja dönüştürme:</p>
+      <ul>
+          <li>Ön Hat Yoğunluğu: Ana tankları merkeze koyarak ilk hasarı ve kitle kontrol yeteneklerini soğurma.</li>
+          <li>Köşe Taşıyıcı Koruması: Kırılgan birimleri korumak için destek birimleriyle çapraz savunma hattı kurma.</li>
+          <li>Alan Etkili (AoE) Hasara Karşı Dağılma: Arka hat birimlerini köşelere yayarak toplu ölümleri engelleme.</li>
+          <li>Son Saniye Yer Değişimi: Tur kilitlenmeden 1 saniye önce taşıyıcının yerini değiştirerek rakibi gafil avlama.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Roll-down anı zihinsel olarak neden bu kadar yorucudur?</h3>
+          <p>Çünkü 30 saniye içinde görsel kart tanıma, olasılık hesabı ve hızlı konumlandırma çalışma belleğini sonuna kadar tüketir.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Hazzı erteleme (altın biriktirme) kazanma oranını nasıl etkiler?</h3>
+          <p>Erken harcama dürtüsünü bastırıp 50 altın faizi alan oyuncular hızlıca üst seviyelere ulaşarak güçlü birimleri erkenden toplar.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Pivot direncine (kadro değiştirememe) ne sebep olur?</h3>
+          <p>Geliştirilmiş birimlerdeki batık maliyet yanılgısı ve yapılan ilk eşyalara aşırı zihinsel saplanma.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Rakipleri izlemek kendi mağazamdaki şansları gerçekten değiştirir mi?</h3>
+          <p>Evet, ortak kart havuzu kullanıldığı için rakiplerin aldığı kartlar, sizin aradığınız boşta kalan kartların çıkma ihtimalini yükseltir.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

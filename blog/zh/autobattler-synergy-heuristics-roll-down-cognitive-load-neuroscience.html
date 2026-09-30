@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>自走棋羁绊启发式决策、大搜牌与认知神经科学 (2026)</title>
+  <meta name="description" content="深入剖析自走棋（云顶之弈、多多自走棋）背后的认知神经科学机制：30秒大搜牌（Roll-down）的工作记忆极限、50块复利利息的延迟满足与共享卡池贝叶斯概率。" />
+  <meta name="keywords" content="自走棋神经科学, 云顶之弈认知负荷, 大搜牌工作记忆, 延迟满足游戏心理, 变阵阻抗, 共享卡池贝叶斯概率" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="自走棋羁绊启发式决策、大搜牌与认知神经科学 (2026)" />
+  <meta property="og:description" content="深入剖析自走棋（云顶之弈、多多自走棋）背后的认知神经科学机制：30秒大搜牌（Roll-down）的工作记忆极限、50块复利利息的延迟满足与共享卡池贝叶斯概率。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="自走棋羁绊启发式决策、大搜牌与认知神经科学 (2026)" />
+  <meta name="twitter:description" content="深入剖析自走棋（云顶之弈、多多自走棋）背后的认知神经科学机制：30秒大搜牌（Roll-down）的工作记忆极限、50块复利利息的延迟满足与共享卡池贝叶斯概率。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/zh/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html"
+      },
+      "headline": "自走棋策略神经科学：羁绊启发式、变阵阻抗与 30 秒大搜牌工作记忆负荷",
+      "description": "深入剖析自走棋（云顶之弈、多多自走棋）背后的认知神经科学机制：30秒大搜牌（Roll-down）的工作记忆极限、50块复利利息的延迟满足与共享卡池贝叶斯概率。",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 认知神经生物学研究团队",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "zh"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "自走棋策略神经科学：羁绊启发式、变阵阻抗与 30 秒大搜牌工作记忆负荷",
+          "item": "https://dopabrain.com/portal/blog/zh/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "为什么自走棋大搜牌（Roll-down）回合会让大脑感到极度疲劳？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "因为在短短 30 秒倒计时内，大脑工作记忆必须高频并发处理卡牌识别、概率判断、装备合成、羁绊取舍与棋子拖拽，导致前额叶执行资源迅速耗尽。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "延迟满足（吃利息）能力对自走棋胜率有何决定性影响？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "能够抵制即时搜牌冲动并滚大 50 金币复利的玩家，可以在高等级凭借庞大经济获取高费优质核心，从统计学期望上获得显著更高的前四率与登顶率。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "如何克服变阵阻抗（不敢转型）的心理障碍？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "主动识别打工棋子身上的沉没成本偏误与早期装备的锚定效应，时刻以“剩余血量与对手强度”为客观依据，严格按照预设的转型决策树果断换阵。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "频繁观察对手棋盘真的能提升自己刷出目标卡的概率吗？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "是的。自走棋所有玩家共享同一个卡池。通过侦察了解对手拿走了哪些同费卡，即可根据贝叶斯原理精确计算当前目标卡的实际出现期望。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">自走棋策略神经科学：羁绊启发式、变阵阻抗与 30 秒大搜牌工作记忆负荷</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 认知神经生物学研究团队</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      策略决策脑科学：30秒读秒下工作记忆过载、腹侧纹状体利息复利与共享卡池贝叶斯概率推演。
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier185_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Strategic decision-making & Bayesian calculation cognitive archetype</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier185_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Working memory chunking & compound interest math training</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier185_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>30-second roll-down visual saccade & motor action speed</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier185_stress_check">
+          <strong>Stress Check</strong>
+          <span>Time-pressure executive overload & low-HP panic management</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>以《云顶之弈》（TFT）、《多多自走棋》和《炉石传说：酒馆战棋》为代表的自走棋品类，构成了认知神经科学研究极具价值的天然试验场。与考验肌肉记忆和手速反应的动作游戏截然不同，自走棋要求玩家在极端苛刻的时间限制与不确定信息下进行高速的抽象逻辑决策。</p>
+      <p>在一个至关重要的 30 秒大搜牌变阵回合中，玩家必须瞬时计算共享卡池的剩余期望概率、维持利息复利平衡，并完全推翻重构拥有 9 名英雄与数十件装备的棋盘。本文将深度拆解“大搜牌（Roll-Down）”过程中发生的工作记忆饱和、变阵阻抗（Pivot Resistance）心理偏差以及延迟满足的多巴胺奖赏回路。</p>
+
+      <h2>1. 经济复利与延迟满足：纹状体的时间折扣模型</h2>
+      <p>自走棋独特的金币利息系统与经典行为经济学中的跨期选择（Intertemporal Choice）范式高度契合：</p>
+      <ul>
+          <li>腹侧纹状体 vs 背外侧前额叶 (dlPFC)：积攒 50 金币以获取每回合 +5 金币的稳定利息，需要前额叶皮层强力压制即时搜牌（D 牌）带来的短暂多巴胺冲动。</li>
+          <li>濒死血量下的双曲贴现 (Hyperbolic Discounting)：当玩家生命值跌入暴毙危险区（<20 HP）时，未来利息收益的主观效用断崖式下跌，引发强烈的保命大搜牌消费。</li>
+          <li>前景理论与损失规避：处于后四名淘汰边缘的玩家会显著表现出风险偏好逆转，选择孤注一掷的激进搜牌或赌高费卡阵容。</li>
+          <li>备战席棋子的机会成本：在备战席预留多张棋子虽能保留阵容变阵弹性，但锁死了能够产生利息的流动性资本。</li>
+      </ul>
+
+      <h2>2. 30 秒大搜牌危机：工作记忆容量的极限饱和</h2>
+      <p>30 秒准备阶段内倾泻 50 金币全面变阵，是对人类执行控制功能（Executive Function）的极端压力测试：</p>
+      <ul>
+          <li>米勒定律 (7±2 组块) 与容量瓶颈：工作记忆同一时间仅能维持 5~9 个信息块。同时评估商店 5 张卡、备战席 8 格与场上 9 个棋子的羁绊关系，瞬间突破认知容量。</li>
+          <li>任务切换成本 (Task Switching Cost)：在搜牌、买卡、合装备、拖动布阵之间高频切换，每次转换都会造成 200~300 毫秒的认知延迟惩罚。</li>
+          <li>视觉跳视 (Saccades) 扫描优化：顶尖职业选手能够自动过滤低费卡，在 80 毫秒内通过英雄轮廓和色块精准锁定目标卡牌。</li>
+          <li>读秒倒计时的交感神经应激：最后 5 秒心率急剧上升，外周肌肉微调能力下降，直接诱发致命的“手滑误操作（Misclick）”。</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">共享卡池超几何分布概率计算模型</div>
+        <pre><code>// 自走棋共享卡池命中概率算法
+interface PoolState {
+  totalInPool: number;
+  targetCopiesRemaining: number;
+  shopSlots: number;
+}
+
+function calculateHitProbability(pool: PoolState): number {
+  const { totalInPool, targetCopiesRemaining, shopSlots } = pool;
+  if (totalInPool <= 0 || targetCopiesRemaining <= 0) return 0;
+  
+  // 超几何分布：单回合 5 个商店卡位命中至少 1 张目标卡的概率
+  let probNoHit = 1.0;
+  for (let i = 0; i < shopSlots; i++) {
+    const remainingUnits = totalInPool - i;
+    const nonTargetUnits = remainingUnits - targetCopiesRemaining;
+    if (nonTargetUnits <= 0) {
+      probNoHit = 0;
+      break;
+    }
+    probNoHit *= (nonTargetUnits / remainingUnits);
+  }
+  
+  return 1 - probNoHit;
+}
+
+// 示例：4费卡卡池总量 120 张，目标英雄剩余 9 张
+const oddsPerRoll = calculateHitProbability({
+  totalInPool: 120,
+  targetCopiesRemaining: 9,
+  shopSlots: 5
+});
+console.log(`单次 D 牌命中目标卡概率: ${(oddsPerRoll * 100).toFixed(2)}%`);</code></pre>
+      </div>
+
+      <h2>3. 变阵阻抗：沉没成本谬误与锚定效应</h2>
+      <p>对局中期无法果断转型至高上限阵容，本质上源于深层的认知偏差：</p>
+      <ul>
+          <li>低星合成的禀赋效应 (Endowment Effect)：对前期合成的 2 星打工卡产生主观依恋，即使后期战力严重脱节仍不忍变卖。</li>
+          <li>现状偏差 (Status Quo Bias)：害怕转型期间羁绊暂时残缺带来的失血，从而维持低上限阵容直至被温水煮青蛙般淘汰。</li>
+          <li>成型装备的认知锚定 (Anchoring)：过早合出鬼索的狂暴之刃等特定装备，会令大脑认知被强行锚定在攻速后排阵容上，排斥其他可能。</li>
+          <li>破除转型瘫痪：顶尖玩家完全抛开既有沉没成本，仅以“现有资金与装备下组建的最大战力场面”作为唯一决策标尺。</li>
+      </ul>
+
+      <h2>4. 贝叶斯更新与共享卡池消耗（抽卡袋理论）</h2>
+      <p>在共享卡池法则下建立数学期望优势的高阶心智直觉：</p>
+      <ul>
+          <li>共享卡袋机制：对手购买同费率的其他卡牌会减少总卡池分母，数学上直接提升未被同行争抢的目标卡出现概率。</li>
+          <li>同行撞车陷阱 (Contested Trait)：在缺少侦察的情况下盲目硬冲热门同套阵容，会导致抽卡数学期望大幅劣化。</li>
+          <li>基于全场侦察的贝叶斯推断：监控对手的存款与升本节奏，精准预判关键高费卡被锁入对手阵容的时间窗口。</li>
+          <li>破除赌徒谬误：前 10 次没有搜到目标卡，绝不意味着下一次抽取的概率会提升。</li>
+      </ul>
+
+      <h2>5. 棋盘空间几何与微观站位启发式</h2>
+      <p>将抽象的属性羁绊转化为战场上的空间拓扑防御优势：</p>
+      <ul>
+          <li>前排聚焦抗伤与仇恨吸引：将核心主坦部署在第一排正中央六角格，优先吸引敌方初始集火并聚拢控制技能。</li>
+          <li>对角后排护航体系：利用辅助英雄在角落核心输出位外围筑造斜向防线，封堵刺客与突进英雄的直线路径。</li>
+          <li>分散式站位规避 AOE：在面对大范围群伤终结技时，将后排单位对称分散至棋盘两侧以避免集体暴毙。</li>
+          <li>读秒绝杀站位博弈：利用对手视觉扫描与切屏的反应延迟，在倒计时最后一秒精准调换核心 C 位位置，完成战术突袭。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>为什么自走棋大搜牌（Roll-down）回合会让大脑感到极度疲劳？</h3>
+          <p>因为在短短 30 秒倒计时内，大脑工作记忆必须高频并发处理卡牌识别、概率判断、装备合成、羁绊取舍与棋子拖拽，导致前额叶执行资源迅速耗尽。</p>
+        </div>
+        <div class="faq-item">
+          <h3>延迟满足（吃利息）能力对自走棋胜率有何决定性影响？</h3>
+          <p>能够抵制即时搜牌冲动并滚大 50 金币复利的玩家，可以在高等级凭借庞大经济获取高费优质核心，从统计学期望上获得显著更高的前四率与登顶率。</p>
+        </div>
+        <div class="faq-item">
+          <h3>如何克服变阵阻抗（不敢转型）的心理障碍？</h3>
+          <p>主动识别打工棋子身上的沉没成本偏误与早期装备的锚定效应，时刻以“剩余血量与对手强度”为客观依据，严格按照预设的转型决策树果断换阵。</p>
+        </div>
+        <div class="faq-item">
+          <h3>频繁观察对手棋盘真的能提升自己刷出目标卡的概率吗？</h3>
+          <p>是的。自走棋所有玩家共享同一个卡池。通过侦察了解对手拿走了哪些同费卡，即可根据贝叶斯原理精确计算当前目标卡的实际出现期望。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 파티클 이미터 & 플립북 VFX 최적화 가이드 (2026)</title>
+  <meta name="description" content="로블록스 ParticleEmitter 아키텍처, 플립북 스프라이트 애니메이션, 셰이딩 모델, Luau 거리별 LOD 파티클 풀링 기법을 완벽 정리합니다." />
+  <meta name="keywords" content="로블록스 파티클 이미터, 플립북 텍스처 로블록스, 로블록스 VFX 최적화, 모바일 GPU 오버드로, Luau 파티클 풀링, 로블록스 게임 개발" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 파티클 이미터 & 플립북 VFX 최적화 가이드 (2026)" />
+  <meta property="og:description" content="로블록스 ParticleEmitter 아키텍처, 플립북 스프라이트 애니메이션, 셰이딩 모델, Luau 거리별 LOD 파티클 풀링 기법을 완벽 정리합니다." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 파티클 이미터 & 플립북 VFX 최적화 가이드 (2026)" />
+  <meta name="twitter:description" content="로블록스 ParticleEmitter 아키텍처, 플립북 스프라이트 애니메이션, 셰이딩 모델, Luau 거리별 LOD 파티클 풀링 기법을 완벽 정리합니다." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html"
+      },
+      "headline": "로블록스 파티클 이미터, 플립북 텍스처 및 모바일 GPU VFX 최적화 가이드",
+      "description": "로블록스 ParticleEmitter 아키텍처, 플립북 스프라이트 애니메이션, 셰이딩 모델, Luau 거리별 LOD 파티클 풀링 기법을 완벽 정리합니다.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 스튜디오 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 파티클 이미터, 플립북 텍스처 및 모바일 GPU VFX 최적화 가이드",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "플립북 텍스처를 쓰면 기존 파티클 방식보다 구체적으로 어떤 점이 좋아지나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "소용돌이치는 화염이나 폭발 연기를 표현할 때 기존에는 50~100개의 파티클을 겹쳐야 했으나, 플립북을 쓰면 1~3개의 파티클만으로 64프레임의 풍부한 애니메이션을 구현하여 파티클 개수를 90% 가까이 절감할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "왜 모바일 스마트폰에서 파티클 이펙트 렉이 특히 심한가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "모바일 GPU는 메모리 대역폭이 좁은 타일 기반 렌더링(TBDR) 방식을 사용합니다. 반투명 파티클이 여러 겹 겹쳐지는 오버드로(Overdraw)가 발생하면 픽셀 색상을 수십 번 덧칠해야 하므로 필레이트가 한계에 달해 프레임이 급락합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ParticleEmitter:Emit()과 Enabled = true의 차이는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Emit(n)은 Rate 설정과 무관하게 지정한 개수(n개)의 파티클을 해당 프레임에 즉시 1회 방출합니다. 총구 섬광이나 피격 스파크처럼 순간적인 연출에 백그라운드 연산 낭비 없이 완벽합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "LockedToPart 속성은 언제 꺼야(World 공간) 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "발사체의 꼬리 연기, 달리는 캐릭터 발밑의 흙먼지 등 발생지점에 머물러야 하는 궤적 효과는 LockedToPart = false(World)로 둬야 자연스럽습니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">로블록스 파티클 이미터, 플립북 텍스처 및 모바일 GPU VFX 최적화 가이드</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 스튜디오 엔지니어링 팀</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      고성능 비주얼 이펙트 엔지니어링: 플립북 스프라이트 시트 애니메이션, LightEmission 오버드로 제어 및 모바일 60 FPS 유지를 위한 Luau 동적 LOD 시스템.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier184_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>파티클 예산 배분 및 GPU 필레이트 최적화 연산 훈련</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier184_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>시각 효과 발동 지연율 및 모바일 60 FPS 전투 반응 속도</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier184_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>동적 시각 정보 처리 및 3D 공간 VFX 연출 인지 스타일</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier184_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>모바일 그래픽스 디버깅 및 기기 발열 스로틀링 피로도</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>시각 효과(VFX)는 현대 로블록스 게임에서 타격감, 마법 연출, 환경 몰입도를 좌우하는 핵심 요소입니다. 그러나 최적화되지 않은 파티클 시스템은 모바일 기기(스마트폰 및 태블릿)에서 치명적인 프레임 드랍(렉)을 유발하는 가장 대표적인 원인입니다. 반투명(알파 블렌딩) 파티클 쿼드가 화면 전체에 겹쳐지면 모바일 GPU의 필레이트(Fill-Rate)가 급격히 고갈되어 오버드로(Overdraw) 현상이 발생합니다.</p>
+      <p>최근 도입된 플립북(Flipbook) 텍스처 기술을 사용하면 수백 개의 파티클을 겹쳐 쓰지 않고도 단 하나의 쿼드에서 16~64프레임의 매끄러운 화염, 연기, 폭발 애니메이션을 구현할 수 있습니다. 여기에 Luau 거리 기반 LOD(Level of Detail) 매니저와 파티클 예산 정책을 결합하면 저사양 모바일 기기에서도 60 FPS를 안정적으로 방어할 수 있습니다.</p>
+
+      <h2>1. ParticleEmitter 핵심 아키텍처 및 물리 시뮬레이션</h2>
+      <p>로블록스 렌더링 엔진이 파티클을 시뮬레이션하는 원리를 정확히 파악해야 최적화가 가능합니다:</p>
+      <ul>
+          <li>시뮬레이션 공간 (LockedToPart): World 공간(방출 위치에 잔류)과 Local 공간(부모 파트 이동을 그대로 추적)을 용도에 맞게 분리합니다.</li>
+          <li>방출 방향 및 확산 (EmissionDirection & SpreadAngle): Top, Front 등의 축 방향과 Vector2 각도 분산을 통해 불필요한 전방향 분산을 억제하고 정밀한 원뿔형 이펙트를 설계합니다.</li>
+          <li>감속 및 가속도 (Drag & Acceleration): Drag는 공기 저항에 의한 지수 감속을 제공하고, Acceleration은 중력이나 상승 기류를 CFrame 연산 없이 하드웨어 가속으로 연산합니다.</li>
+          <li>크기 및 투명도 시퀀스 (NumberSequence): NumberSequenceKeypoint를 통해 생애주기 동안 부드럽게 팽창하고 소멸하는 정밀한 곡선을 구현합니다.</li>
+      </ul>
+
+      <h2>2. 플립북 텍스처: 4x4 및 8x8 스프라이트 시트 애니메이션</h2>
+      <p>플립북 텍스처는 단일 텍스처 시트에 애니메이션 프레임을 격자 형태로 패킹하여 활성 파티클 개수를 획기적으로 줄여줍니다:</p>
+      <ul>
+          <li>FlipbookLayout 모드: Grid2x2(4프레임), Grid4x4(16프레임), Grid8x8(64프레임) 스프라이트 그리드를 지원합니다.</li>
+          <li>FlipbookFramerate 및 재생 모드: 1~30 FPS 속도 조절과 Loop(반복), OneShot(1회 재생 후 소멸), PingPong(왕복) 모드를 지원합니다.</li>
+          <li>FlipbookStartRandom: 다수의 파티클이 동시 방출될 때 시작 프레임을 무작위화하여 부자연스러운 인공적 동기화 현상을 방지합니다.</li>
+          <li>VRAM 메모리 대역폭: 8x8 플립북은 고품질 연출을 제공하지만 1024x1024 텍스처 메모리를 점유하므로 텍스처 압축 규격을 준수해야 합니다.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Luau 거리 기반 VFX LOD 관리자 스크립트</div>
+        <pre><code>--!strict
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local LocalPlayer = Players.LocalPlayer
+local Camera = Workspace.CurrentCamera
+
+local VFXManager = {}
+VFXManager.__index = VFXManager
+
+type RegisteredEmitter = {
+    emitter: ParticleEmitter,
+    baseRate: number,
+    maxDistance: number,
+    attachment: Attachment,
+}
+
+local registeredEmitters: { RegisteredEmitter } = {}
+
+function VFXManager.Register(emitter: ParticleEmitter, maxDistance: number?)
+    local entry: RegisteredEmitter = {
+        emitter = emitter,
+        baseRate = emitter.Rate,
+        maxDistance = maxDistance or 120,
+        attachment = emitter.Parent :: Attachment,
+    }
+    table.insert(registeredEmitters, entry)
+end
+
+function VFXManager.InitLODLoop()
+    local frameCount = 0
+    RunService.Heartbeat:Connect(function()
+        frameCount += 1
+        -- 6프레임마다 1회 연산 (~10Hz)으로 CPU 부하 최소화
+        if frameCount % 6 ~= 0 then return end
+        
+        local camPos = Camera.CFrame.Position
+        for _, entry in ipairs(registeredEmitters) do
+            if not entry.emitter or not entry.emitter.Parent then continue end
+            
+            local emitterPos = entry.attachment.WorldPosition
+            local dist = (camPos - emitterPos).Magnitude
+            
+            if dist > entry.maxDistance then
+                -- 최대 시야 거리 초과 시 완전 컬링
+                entry.emitter.Enabled = false
+            elseif dist > (entry.maxDistance * 0.5) then
+                -- 중간 거리에서는 방출률 40%로 축소 (필레이트 절약)
+                entry.emitter.Enabled = true
+                entry.emitter.Rate = entry.baseRate * 0.4
+            else
+                -- 근거리 고품질 렌더링 유지
+                entry.emitter.Enabled = true
+                entry.emitter.Rate = entry.baseRate
+            end
+        end
+    end)
+end
+
+return VFXManager</code></pre>
+      </div>
+
+      <h2>3. 셰이딩 모델: LightEmission 대 LightInfluence</h2>
+      <p>파티클이 씬 조명과 상호작용하는 방식은 연출의 미학뿐 아니라 GPU 렌더링 성능에 직결됩니다:</p>
+      <ul>
+          <li>LightEmission (가산 블렌딩): 0~1 값. 1일 경우 배경 픽셀에 색상이 직접 더해져 그림자를 받지 않는 발광 네온, 플라즈마, 화염 연출을 생성합니다.</li>
+          <li>LightInfluence (확산광 반응): 0~1 값. 1일 경우 포인트 라이트, 스포트라이트, 태양광 및 앰비언트 환경광을 그대로 흡수합니다.</li>
+          <li>가산 블렌딩의 오버드로 위험: 화면 전체를 덮는 높은 LightEmission 파티클이 중첩되면 모바일 GPU에서 극심한 발열과 스로틀링이 일어납니다.</li>
+          <li>자연스러운 환경 이펙트: 흙먼지, 잔해, 짙은 안개는 LightInfluence = 1, LightEmission = 0으로 설정하여 배경과 자연스럽게 동화시켜야 합니다.</li>
+      </ul>
+
+      <h2>4. 모바일 오버드로, 필레이트 고갈 및 파티클 예산</h2>
+      <p>모바일 기기에서 60 FPS 방어를 위한 실전 그래픽스 최적화 원칙입니다:</p>
+      <ul>
+          <li>화면 점유 면적: 크기가 작고 개수가 많은 파티클보다, 화면의 80%를 뒤덮는 거대한 연기 쿼드 1개가 훨씬 많은 GPU 대역폭을 소비합니다.</li>
+          <li>동시 활성 파티클 한도: 씬 전체의 동시 활성 파티클 수를 모바일 기준 400개 미만으로 제한해야 합니다. 1,000개를 초과하면 치명적인 병목이 발생합니다.</li>
+          <li>크기 시퀀스 압축: 초기 방출 크기는 작게 유지하고, 알파 투명도가 1(완전 투명)에 가까워질 때만 팽창하도록 제어합니다.</li>
+          <li>ZOffset 조정: ZOffset 속성을 미세하게 음수/양수로 설정하여 정적 지형 메시와의 Z-파이팅(깜빡임) 아티팩트를 방지합니다.</li>
+      </ul>
+
+      <h2>5. 실무 프로덕션 배포 체크리스트</h2>
+      <p>상용화 로블록스 게임 제작 시 반드시 점검해야 할 VFX 배포 수칙입니다:</p>
+      <ul>
+          <li>MicroProfiler 정밀 검증: Ctrl+F6으로 MicroProfiler를 실행하여 대규모 교전 시 `scene::render` 패스의 필레이트 스파이크를 모니터링합니다.</li>
+          <li>이미터 인스턴스 오브젝트 풀링: 매 타격마다 Instance.new와 Destroy를 반복하지 말고, 사전 생성된 이미터 어태치먼트를 풀링하여 재사용합니다.</li>
+          <li>OneShot Emit() 활용: task.wait()로 Enabled를 껐다 켜지 말고 ParticleEmitter:Emit(개수)를 호출하여 완벽한 수명 제어를 구현합니다.</li>
+          <li>사용자 그래픽 설정 토글: 인게임 설정 UI에 저사양 모바일 유저를 위한 "환경 파티클 끄기" 옵션을 기본 제공합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>플립북 텍스처를 쓰면 기존 파티클 방식보다 구체적으로 어떤 점이 좋아지나요?</h3>
+          <p>소용돌이치는 화염이나 폭발 연기를 표현할 때 기존에는 50~100개의 파티클을 겹쳐야 했으나, 플립북을 쓰면 1~3개의 파티클만으로 64프레임의 풍부한 애니메이션을 구현하여 파티클 개수를 90% 가까이 절감할 수 있습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>왜 모바일 스마트폰에서 파티클 이펙트 렉이 특히 심한가요?</h3>
+          <p>모바일 GPU는 메모리 대역폭이 좁은 타일 기반 렌더링(TBDR) 방식을 사용합니다. 반투명 파티클이 여러 겹 겹쳐지는 오버드로(Overdraw)가 발생하면 픽셀 색상을 수십 번 덧칠해야 하므로 필레이트가 한계에 달해 프레임이 급락합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>ParticleEmitter:Emit()과 Enabled = true의 차이는 무엇인가요?</h3>
+          <p>Emit(n)은 Rate 설정과 무관하게 지정한 개수(n개)의 파티클을 해당 프레임에 즉시 1회 방출합니다. 총구 섬광이나 피격 스파크처럼 순간적인 연출에 백그라운드 연산 낭비 없이 완벽합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>LockedToPart 속성은 언제 꺼야(World 공간) 하나요?</h3>
+          <p>발사체의 꼬리 연기, 달리는 캐릭터 발밑의 흙먼지 등 발생지점에 머물러야 하는 궤적 효과는 LockedToPart = false(World)로 둬야 자연스럽습니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>オートバトラーのシナジーヒューリスティクスとロールダウンの認知神経科学 (2026)</title>
+  <meta name="description" content="TFTやオートチェスにおける認知神経科学：30秒ロールダウン時の作業記憶飽和、50ゴールド複利の報酬遅延、共有プールにおけるベイズ確率計算を徹底解明。" />
+  <meta name="keywords" content="オートバトラー脳科学, TFT認知負荷, ロールダウン作業記憶, 報酬遅延ゲーム, ピボット抵抗心理学, 共有プール確率" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ja/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="オートバトラーのシナジーヒューリスティクスとロールダウンの認知神経科学 (2026)" />
+  <meta property="og:description" content="TFTやオートチェスにおける認知神経科学：30秒ロールダウン時の作業記憶飽和、50ゴールド複利の報酬遅延、共有プールにおけるベイズ確率計算を徹底解明。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ja/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="オートバトラーのシナジーヒューリスティクスとロールダウンの認知神経科学 (2026)" />
+  <meta name="twitter:description" content="TFTやオートチェスにおける認知神経科学：30秒ロールダウン時の作業記憶飽和、50ゴールド複利の報酬遅延、共有プールにおけるベイズ確率計算を徹底解明。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/ja/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ja/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html"
+      },
+      "headline": "オートバトラー戦略の脳科学：シナジー発見法、移行抵抗とロールダウンの認知負荷",
+      "description": "TFTやオートチェスにおける認知神経科学：30秒ロールダウン時の作業記憶飽和、50ゴールド複利の報酬遅延、共有プールにおけるベイズ確率計算を徹底解明。",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ja/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 認知神経生物学研究チーム",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "オートバトラー戦略の脳科学：シナジー発見法、移行抵抗とロールダウンの認知負荷",
+          "item": "https://dopabrain.com/portal/blog/ja/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "ロールダウン時に頭が極端に疲れるのはなぜですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "30秒という極小の時間枠の中で、視覚的カード識別、確率計算、アイテム分配、ユニット配置を連続処理し、前頭葉の作業記憶が限界まで酷使されるためです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "満足遅延（利子を貯める力）は勝率にどう影響しますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "序盤のリロール衝動を抑えて50ゴールドの利子を回し、高レベルに到達したプレイヤーが強力な高コストユニットを独占できるため、統計的勝率が跳ね上がります。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ピボット抵抗（構成移行へのためらい）はどう克服すべきですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "既に完成した星2ユニットや初期アイテムへの愛着（サンクコストの罠）を自覚し、客観的な最終戦力のみを基準に切り替える訓練が必要です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "他人の盤面を偵察することは自分のショップ確率に影響しますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。オートバトラーは単一の駒プールを全員で共有しているため、他人が買った駒の数に応じて、自分が狙う駒の出現率が直接変動します。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">オートバトラー戦略の脳科学：シナジー発見法、移行抵抗とロールダウンの認知負荷</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 認知神経生物学研究チーム</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      戦略的意思決定の脳科学：30秒カウントダウン下の作業記憶過負荷、複利利子による満足遅延、共有駒プールのベイズ確率演算。
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier185_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Strategic decision-making & Bayesian calculation cognitive archetype</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier185_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Working memory chunking & compound interest math training</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier185_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>30-second roll-down visual saccade & motor action speed</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier185_stress_check">
+          <strong>Stress Check</strong>
+          <span>Time-pressure executive overload & low-HP panic management</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>オートチェスやTFT（チームファイト タクティクス）、ハースストーン バトルグラウンドに代表されるオートバトラーは、指先の反射神経ではなく、過酷な制限時間と情報不確実性の下で高速な抽象的意思決定を要求する独自の認知実験場です。</p>
+      <p>勝敗を分ける30秒の移行ターンにおいて、プレイヤーは共有駒プールの残存確率を計算し、複利利子を管理し、盤面全体の9ユニットとアイテムを再構築しなければなりません。本稿では「ロールダウン」に伴う作業記憶の飽和、編成転換におけるピボット抵抗、満足遅延の神経メカニズムを解き明かします。</p>
+
+      <h2>1. 複利経済と満足遅延：線条体による時間割引</h2>
+      <p>オートバトラーの利子システムは行動経済学の時間割引モデルと一致します：</p>
+      <ul>
+          <li>腹側線条体 vs 背外側前頭前野（dlPFC）：50ゴールドを貯めて毎ターン+5の利子を得るには、即座のリロール欲求（ドーパミン衝動）を前頭前野が強く抑制する必要があります。</li>
+          <li>HP低下に伴う双曲割引：プレイヤーの体力が20未満の瀕死圏に入ると、将来の利子の主観的価値が暴落し、生き残るための全額消費（テンポ支出）へ移行します。</li>
+          <li>プロスペクト理論とリスク選好：下位に沈むプレイヤーは確実な利子蓄積を放棄し、一発逆転を狙ったハイリスクなレベリングに打って出る傾向があります。</li>
+          <li>ベンチ保持の機会費用：ベンチ枠に予備ユニットを抱える行為は柔軟性を担保する反面、利子発生の流動性を奪うトレードオフです。</li>
+      </ul>
+
+      <h2>2. 30秒のロールダウン危機：作業記憶の許容量飽和</h2>
+      <p>30秒の準備フェーズで50ゴールドを回し切るロールダウンは、人間の実行機能に対する極限テストです：</p>
+      <ul>
+          <li>ミラーの法則（7±2チャンク）と容量限界：作業記憶が同時に保持できる情報チャンクは限られており、ショップ5枚・ベンチ8枠・盤面9体を同時に評価すると瞬時に飽和します。</li>
+          <li>タスク切り替えコスト：リロール、駒購入、アイテム合成、盤面配置を高速で行き来するたびに、脳は200〜300msの認知切り替え遅延を被ります。</li>
+          <li>衝動性眼球運動（サッカード）の最適化：トップランカーは不要な低コスト駒を無視し、ターゲットユニットを80ミリ秒未満で識別する洗練された視線経路を持ちます。</li>
+          <li>時間切迫による交感神経興奮：残り5秒で心拍数が急増し、指先の微細な操作精度が低下してミスクリックが頻発します。</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">共有駒プール確率計算アルゴリズム（プロトタイプ）</div>
+        <pre><code>// オートバトラー共有プール確率計算
+interface PoolState { totalInPool: number; targetCopiesRemaining: number; shopSlots: number; }
+function calculateHitProbability(pool: PoolState): number { /* 超幾何分布による確率計算 */ }</code></pre>
+      </div>
+
+      <h2>3. ピボット抵抗：サンクコスト効果とアンカリング</h2>
+      <p>試合中盤に強い最終構成へ移行できず脱落する原因は心理的バイアスにあります：</p>
+      <ul>
+          <li>星2ユニットへの保有効果（Endowment Effect）：序盤に重ねた愛着のある星2ユニットを手放せず、終盤のパワー不足に陥る現象。</li>
+          <li>現状維持バイアス：駒を総入れ替えする際の一時的な盤面弱体化への恐怖から、不完全な編成のまま緩やかに敗北していきます。</li>
+          <li>完成アイテムによるアンカリング：最初に作った完成アイテムに思考が束縛され、他の有力な構成選択肢を無意識に除外してしまいます。</li>
+          <li>移行麻痺の克服法：一流プレイヤーは過去の投資を完全に無視し、「現在の残り資金で組める最強の盤面」のみを算出するヒューリスティック思考を持ちます。</li>
+      </ul>
+
+      <h2>4. ベイズ更新と駒プールの枯渇（バッグ理論）</h2>
+      <p>共有プール環境下で統計的優位を築くマスターたちの数学的直感：</p>
+      <ul>
+          <li>共有バッグのメカニズム：対戦相手が他の駒を買えば買うほど全体の母数が減り、誰も買っていない競合なし駒の出現確率が数学的に上昇します。</li>
+          <li>競合構成（Contested Comps）の罠：ロビー偵察を怠り、複数のプレイヤーと駒を取り合うと期待値が暴落して確実に破産します。</li>
+          <li>偵察によるベイズ推論：対戦相手のゴールドとレベル推移を監視し、目的の駒がロックされるタイミングを先回りして予測します。</li>
+          <li>ギャンブラーの誤謬の排除：過去10回リロールで外れ続けたからといって、次の1回で目的の駒が出る確率が高まるわけではありません。</li>
+      </ul>
+
+      <h2>5. 盤面配置の幾何学とマイクロポジショニング</h2>
+      <p>抽象的なシナジー数値を戦場上の空間的アドバンテージへ変換する技術：</p>
+      <ul>
+          <li>前衛ライン密度とタゲ取り管理：メインタンクを中央最前列に配置し、敵の開幕ターゲットとスタン行動を集中吸収させます。</li>
+          <li>隅キャリーの防護配置：サポート駒を対角線上に並べて防壁を作り、アサシンや裏回りユニットの直撃を阻止します。</li>
+          <li>範囲攻撃（AoE）対策の分散：敵主力ユニットの巨大な範囲スキルで部隊が壊滅しないよう、左右両翼へ均等に散開させます。</li>
+          <li>残り1秒の配置スワップ：相手プレイヤーの視線確認のタイムラグを突き、ラウンド開始直前の1秒で主力キャリーの位置を反転させる心理戦。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>ロールダウン時に頭が極端に疲れるのはなぜですか？</h3>
+          <p>30秒という極小の時間枠の中で、視覚的カード識別、確率計算、アイテム分配、ユニット配置を連続処理し、前頭葉の作業記憶が限界まで酷使されるためです。</p>
+        </div>
+        <div class="faq-item">
+          <h3>満足遅延（利子を貯める力）は勝率にどう影響しますか？</h3>
+          <p>序盤のリロール衝動を抑えて50ゴールドの利子を回し、高レベルに到達したプレイヤーが強力な高コストユニットを独占できるため、統計的勝率が跳ね上がります。</p>
+        </div>
+        <div class="faq-item">
+          <h3>ピボット抵抗（構成移行へのためらい）はどう克服すべきですか？</h3>
+          <p>既に完成した星2ユニットや初期アイテムへの愛着（サンクコストの罠）を自覚し、客観的な最終戦力のみを基準に切り替える訓練が必要です。</p>
+        </div>
+        <div class="faq-item">
+          <h3>他人の盤面を偵察することは自分のショップ確率に影響しますか？</h3>
+          <p>はい。オートバトラーは単一の駒プールを全員で共有しているため、他人が買った駒の数に応じて、自分が狙う駒の出現率が直接変動します。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heuristiques d'Autobattler, Roll-Downs & Neurosciences Cognitives (2026)</title>
+  <meta name="description" content="Découvrez les neurosciences des jeux autobattler (TFT, Auto Chess) : saturation de la mémoire de travail lors des roll-downs de 30s, intérêts composés et probabilités bayésiennes." />
+  <meta name="keywords" content="Neurosciences autobattler, charge cognitive TFT, mémoire de travail roll down, gratification différée jeu vidéo, biais d'engagement" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/fr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Heuristiques d'Autobattler, Roll-Downs & Neurosciences Cognitives (2026)" />
+  <meta property="og:description" content="Découvrez les neurosciences des jeux autobattler (TFT, Auto Chess) : saturation de la mémoire de travail lors des roll-downs de 30s, intérêts composés et probabilités bayésiennes." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/fr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Heuristiques d'Autobattler, Roll-Downs & Neurosciences Cognitives (2026)" />
+  <meta name="twitter:description" content="Découvrez les neurosciences des jeux autobattler (TFT, Auto Chess) : saturation de la mémoire de travail lors des roll-downs de 30s, intérêts composés et probabilités bayésiennes." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/fr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/fr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html"
+      },
+      "headline": "Neurosciences de la Stratégie en Autobattler : Heuristiques, Pivot et Charge Mentale",
+      "description": "Découvrez les neurosciences des jeux autobattler (TFT, Auto Chess) : saturation de la mémoire de travail lors des roll-downs de 30s, intérêts composés et probabilités bayésiennes.",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/fr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Équipe de Neurobiologie Cognitive DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "fr"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Neurosciences de la Stratégie en Autobattler : Heuristiques, Pivot et Charge Mentale",
+          "item": "https://dopabrain.com/portal/blog/fr/autobattler-synergy-heuristics-roll-down-cognitive-load-neuroscience.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Pourquoi les roll-downs sont-ils si épuisants mentalement ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Parce qu'ils saturent la mémoire de travail en combinant calcul de probabilité, repérage visuel et réorganisation spatiale en 30 secondes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quel est l'impact de la gratification différée sur la victoire ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Les joueurs qui thésaurisent pour toucher les intérêts atteignent les niveaux élevés avec des ressources supérieures pour s'offrir les meilleures unités."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Qu'est-ce qui provoque la résistance au pivot ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Le piège des coûts irrécupérables lié aux unités déjà améliorées et l'ancrage cognitif aux premiers objets fabriqués."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Observer les autres plateaux change-t-il vraiment les chances de tirage ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui, le pool étant partagé, chaque unité achetée par un rival libère mécaniquement de la place pour les autres cartes."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Neurosciences de la Stratégie en Autobattler : Heuristiques, Pivot et Charge Mentale</h1>
+      <div class="meta-bar">
+        <span>By Équipe de Neurobiologie Cognitive DopaBrain</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Neurosciences des Décisions Stratégiques : Saturation de la mémoire de travail en 30s, intérêts composés et calcul bayésien des tirages.
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/brain-type/" class="quick-card" data-track="tier185_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Strategic decision-making & Bayesian calculation cognitive archetype</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier185_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Working memory chunking & compound interest math training</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier185_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>30-second roll-down visual saccade & motor action speed</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier185_stress_check">
+          <strong>Stress Check</strong>
+          <span>Time-pressure executive overload & low-HP panic management</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>Le genre autobattler (TFT, Auto Chess, Hearthstone Battlegrounds) constitue un formidable laboratoire pour les neurosciences cognitives, exigeant des décisions abstraites ultra-rapides sous haute contrainte.</p>
+      <p>Lors d'un tour de transition de 30 secondes, le joueur doit évaluer les probabilités d'un pool partagé, optimiser ses intérêts économiques et reconstruire entièrement son plateau.</p>
+
+      <h2>1. Intérêts Composés et Gratification Différée</h2>
+      <p>Le modèle économique reflète les paradigmes d'économie comportementale :</p>
+      <ul>
+          <li>Striatum Ventral vs dlPFC : Conserver 50 pièces d'or exige du cortex préfrontal l'inhibition active des impulsions dopaminergiques de relance.</li>
+          <li>Actualisation Hyperbolique : À l'approche du seuil critique (<20 PV), la valeur perçue des intérêts futurs s'effondre, forçant la dépense immédiate.</li>
+          <li>Théorie des Perspectives : Les joueurs en bas de classement adoptent des comportements à fort risque pour espérer remonter.</li>
+          <li>Coût d'Opportunité sur le Banc : Réserver des unités fige des liquidités qui auraient rapporté des intérêts.</li>
+      </ul>
+
+      <h2>2. Le Roll-Down de 30 Secondes : Saturation de la Mémoire de Travail</h2>
+      <p>Un test opérationnel extrême pour les fonctions exécutives humaines :</p>
+      <ul>
+          <li>Loi de Miller (7±2 blocs) : Analyser simultanément la boutique, le banc et le plateau dépasse les limites de la mémoire de travail.</li>
+          <li>Coût du Changement de Tâche : Passer de la relance à l'achat et au placement impose une pénalité cognitive de 200 à 300 ms par action.</li>
+          <li>Saccades Visuelles : Les meilleurs joueurs identifient les unités recherchées en moins de 80 millisecondes.</li>
+          <li>Stress Sympathique : Le compte à rebours final accélère le rythme cardiaque et multiplie les erreurs motrices.</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">Calculateur Bayesien de Tirage de Pool Partagé (Algorithme)</div>
+        <pre><code>// Autobattler Shared Bag Pool Probability Calculator
+function calculateHitProbability(pool) { /* Hypergeometric distribution logic */ }</code></pre>
+      </div>
+
+      <h2>3. Résistance au Pivot : Biais d'Engagement et Coûts Irrécupérables</h2>
+      <p>Les blocages psychologiques lors des changements de composition :</p>
+      <ul>
+          <li>Effet de Dotation sur les Unités 2 Étoiles : Attachement subjectif envers des unités du début qui perdent leur valeur en fin de partie.</li>
+          <li>Biais du Statu Quo : La crainte d'un affaiblissement temporaire pousse à conserver une composition médiocre jusqu'à l'élimination.</li>
+          <li>Ancrage par les Objets : Les premiers objets créés enferment la recherche mentale sur un type unique de carry.</li>
+          <li>Dépassement de la Paralysie : Les experts exploitent des arbres décisionnels préétablis pour pivoter sans hésitation.</li>
+      </ul>
+
+      <h2>4. Actualisation Bayesienne et Épuisement du Pool</h2>
+      <p>L'intuition probabiliste au service de la gestion des ressources communes :</p>
+      <ul>
+          <li>Mécanique de Sac Commun : Les unités acquises par les adversaires augmentent la probabilité mathématique de voir apparaître les autres synergies.</li>
+          <li>Piège des Compositions Contestées : Forcer une synergie déjà très disputée sans scouter mène à la faillite mathématique.</li>
+          <li>Inférence Bayesienne par le Scouting : Prévoir le moment où les concurrents verrouilleront les copies restantes.</li>
+          <li>Sophisme du Joueur : Échouer 10 relances de suite n'augmente en rien les chances d'obtenir l'unité à la suivante.</li>
+      </ul>
+
+      <h2>5. Géométrie du Plateau et Heuristiques de Positionnement</h2>
+      <p>Transformer le calcul théorique en avantage spatial concret :</p>
+      <ul>
+          <li>Densité de Frontline : Placer les tanks principaux au centre pour concentrer le ciblage et absorber les contrôles ennemis.</li>
+          <li>Protection en Coin : Disposer les soutiens en diagonale pour faire rempart contre les assassins infiltrés.</li>
+          <li>Dispersion contre les Dégâts de Zone : Écarter les unités fragiles pour éviter les destructions massives par compétences d'aire.</li>
+          <li>Permutation de Dernière Seconde : Exploiter le temps de réaction visuel de l'adversaire juste avant le verrouillage du round.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Pourquoi les roll-downs sont-ils si épuisants mentalement ?</h3>
+          <p>Parce qu'ils saturent la mémoire de travail en combinant calcul de probabilité, repérage visuel et réorganisation spatiale en 30 secondes.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Quel est l'impact de la gratification différée sur la victoire ?</h3>
+          <p>Les joueurs qui thésaurisent pour toucher les intérêts atteignent les niveaux élevés avec des ressources supérieures pour s'offrir les meilleures unités.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Qu'est-ce qui provoque la résistance au pivot ?</h3>
+          <p>Le piège des coûts irrécupérables lié aux unités déjà améliorées et l'ancrage cognitif aux premiers objets fabriqués.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Observer les autres plateaux change-t-il vraiment les chances de tirage ?</h3>
+          <p>Oui, le pool étant partagé, chaque unité achetée par un rival libère mécaniquement de la place pour les autres cartes.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

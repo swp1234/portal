@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox 粒子发射器与 Flipbook 翻页特效及移动端 GPU 优化指南 (2026)</title>
+  <meta name="description" content="深入掌握 Roblox 粒子系统架构、Flipbook 序列帧动画、光照着色模型以及 Luau 动态 LOD 粒子对象池技术，保障移动端稳定 60 FPS。" />
+  <meta name="keywords" content="Roblox粒子发射器, Flipbook纹理, Roblox特效优化, 移动端GPU Overdraw, Luau粒子对象池, Roblox游戏开发" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox 粒子发射器与 Flipbook 翻页特效及移动端 GPU 优化指南 (2026)" />
+  <meta property="og:description" content="深入掌握 Roblox 粒子系统架构、Flipbook 序列帧动画、光照着色模型以及 Luau 动态 LOD 粒子对象池技术，保障移动端稳定 60 FPS。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox 粒子发射器与 Flipbook 翻页特效及移动端 GPU 优化指南 (2026)" />
+  <meta name="twitter:description" content="深入掌握 Roblox 粒子系统架构、Flipbook 序列帧动画、光照着色模型以及 Luau 动态 LOD 粒子对象池技术，保障移动端稳定 60 FPS。" />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.45rem;
+      margin: 36px 0 16px;
+      color: #e2e8f0;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 1.05rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-rail {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 24px 0 32px;
+    }
+    .quick-rail h2 {
+      font-size: 1.1rem;
+      margin: 0 0 16px;
+      border-left: none;
+      padding-left: 0;
+      color: #e2e8f0;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 48px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: #ffffff;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .quick-card span {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    code {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .code-block {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 20px 0 24px;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      font-family: monospace;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: #e2e8f0;
+      font-family: Consolas, Monaco, "Andale Mono", monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 10px;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .portal-cta h2 {
+      font-size: 1.5rem;
+      color: #ffffff;
+      margin: 0 0 12px;
+      border-left: none;
+      padding-left: 0;
+    }
+    .portal-cta p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 24px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.7rem; }
+      h2 { font-size: 1.3rem; }
+      .container { padding: 16px 14px; }
+      .quick-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html"
+      },
+      "headline": "Roblox ParticleEmitter、Flipbook 纹理与移动端 GPU VFX 优化指南",
+      "description": "深入掌握 Roblox 粒子系统架构、Flipbook 序列帧动画、光照着色模型以及 Luau 动态 LOD 粒子对象池技术，保障移动端稳定 60 FPS。",
+      "datePublished": "2026-09-30T09:00:00+09:00",
+      "dateModified": "2026-09-30T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Studio 架构工程团队",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "inLanguage": "zh"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox ParticleEmitter、Flipbook 纹理与移动端 GPU VFX 优化指南",
+          "item": "https://dopabrain.com/portal/blog/zh/roblox-particle-emitters-flipbook-textures-vfx-optimization-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "相比传统粒子，Flipbook 翻页纹理的最大优势是什么？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "翻页纹理将复杂的烟雾与火焰动态预先烘焙在纹理网格中，使得单个四边形即可呈现极具动感的视觉效果，减少 75% 至 90% 的活跃粒子数量。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "为什么粒子特效在移动手机上特别容易造成卡顿？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "移动端 GPU 普遍采用平铺延迟渲染（TBDR）架构且内存带宽有限。当半透明粒子相互叠盖（Overdraw）时，GPU 必须在单帧内重复计算同一像素的混合颜色，导致填充率过载。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ParticleEmitter:Emit() 与 Enabled = true 有何本质区别？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Emit(n) 会在该帧瞬间一次性生成指定数量（n个）的粒子，之后发射器不再继续发射，非常适合刀光剑影、枪击火花等单次瞬发特效。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "什么时候应该关闭 LockedToPart 选项？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "对于子弹弹道烟雾、奔跑扬起的沙尘等需要停留在世界原地的尾迹效果，必须关闭 LockedToPart（设为 World 空间）。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="/portal/" style="color: var(--accent); text-decoration: none; font-size: 0.95rem; font-weight: 600;">&larr; Back to Portal Hub</a>
+      <h1 style="margin-top: 16px;">Roblox ParticleEmitter、Flipbook 纹理与移动端 GPU VFX 优化指南</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Studio 架构工程团队</span>
+        <span>&bull;</span>
+        <span>2026-09-30</span>
+        <span>&bull;</span>
+        <span>Technical Guide</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      高画质与极致性能兼得：Flipbook 序列帧特效、LightEmission 过度绘制控制与 Luau 动态距离 LOD 裁剪技术。
+    </div>
+
+    <aside class="quick-rail">
+      <h2>Recommended Cognitive Tools & Interactive Guides</h2>
+      <div class="quick-grid">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier184_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Particle budget allocation & fill-rate optimization math</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier184_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Visual effect trigger latency & 60 FPS combat responsiveness</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier184_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Dynamic visual processing & spatial VFX design cognitive archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier184_stress_check">
+          <strong>Stress Check</strong>
+          <span>Mobile graphics performance debugging & thermal throttling fatigue</span>
+        </a>
+      </div>
+    </aside>
+
+    <article>
+      <p>视觉特效（VFX）是 Roblox 游戏呈现爽快打击感与震撼氛围的核心。然而，未加优化的粒子系统是导致移动端（手机与平板）发生严重掉帧与发热卡顿的头号元凶。当大量半透明粒子四边形在屏幕上重叠时，移动端 GPU 的像素填充率（Fill-Rate）会被迅速耗尽，引发严重的过度绘制（Overdraw）。</p>
+      <p>借助 Roblox 引入的 Flipbook（序列帧翻页）纹理技术，开发者只需生成单个四边形即可播放多达 64 帧的高精细度火焰或烟雾动画，无需堆砌数十个粒子。配合 Luau 距离分级 LOD 管理器与粒子发射配额管理，可以在主流智能手机上轻松锁定 60 FPS。</p>
+
+      <h2>1. ParticleEmitter 核心架构与物理模拟</h2>
+      <p>透彻理解 Roblox 引擎对粒子的模拟机制是开展性能优化的基础：</p>
+      <ul>
+          <li>模拟空间控制 (LockedToPart)：区分 World 空间（粒子停留在发射时的世界坐标）与 Local 空间（跟随挂接父级部件一同位移）。</li>
+          <li>发射方向与发散角度 (EmissionDirection & SpreadAngle)：精确限制圆锥体发散角，杜绝无意义的全向随机发射开销。</li>
+          <li>空气阻力与重力加速度 (Drag & Acceleration)：Drag 模拟空气摩擦带来的指数衰减，Acceleration 由引擎原生加速运算，无需脚本逐帧插值。</li>
+          <li>尺寸与透明度曲线 (NumberSequence)：利用 NumberSequenceKeypoint 制定平滑的生命周期体积扩散与淡出渐变。</li>
+      </ul>
+
+      <h2>2. Flipbook 纹理：4x4 与 8x8 序列帧翻页动画</h2>
+      <p>Flipbook 纹理将整组动画帧打包排布在一张纹理图集中，大幅减少屏幕上的活跃粒子数量：</p>
+      <ul>
+          <li>布局模式 (FlipbookLayout)：支持 Grid2x2（4帧）、Grid4x4（16帧）以及 Grid8x8（64帧）序列排布。</li>
+          <li>帧率与播放控制：支持 1~30 FPS 自定义播放速率，涵盖 Loop（循环）、OneShot（单次播放后销毁）与 PingPong（往返往复）模式。</li>
+          <li>起始帧随机化 (FlipbookStartRandom)：打乱多个粒子同时生成时的初始播放帧，避免呆板机械的同步动画假象。</li>
+          <li>显存带宽考量：8x8 纹理通常达到 1024x1024 分辨率，需合理配置贴图压缩格式以减轻移动端显存压力。</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-title">基于距离 LOD 动态裁剪的 Luau VFX 管理器</div>
+        <pre><code>--!strict
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local LocalPlayer = Players.LocalPlayer
+local Camera = Workspace.CurrentCamera
+
+local VFXManager = {}
+VFXManager.__index = VFXManager
+
+type RegisteredEmitter = {
+    emitter: ParticleEmitter,
+    baseRate: number,
+    maxDistance: number,
+    attachment: Attachment,
+}
+
+local registeredEmitters: { RegisteredEmitter } = {}
+
+function VFXManager.Register(emitter: ParticleEmitter, maxDistance: number?)
+    local entry: RegisteredEmitter = {
+        emitter = emitter,
+        baseRate = emitter.Rate,
+        maxDistance = maxDistance or 120,
+        attachment = emitter.Parent :: Attachment,
+    }
+    table.insert(registeredEmitters, entry)
+end
+
+function VFXManager.InitLODLoop()
+    local frameCount = 0
+    RunService.Heartbeat:Connect(function()
+        frameCount += 1
+        -- 每 6 帧检测一次 (~10Hz) 节约 CPU 开销
+        if frameCount % 6 ~= 0 then return end
+        
+        local camPos = Camera.CFrame.Position
+        for _, entry in ipairs(registeredEmitters) do
+            if not entry.emitter or not entry.emitter.Parent then continue end
+            
+            local emitterPos = entry.attachment.WorldPosition
+            local dist = (camPos - emitterPos).Magnitude
+            
+            if dist > entry.maxDistance then
+                -- 超出最大可见视距直接剔除
+                entry.emitter.Enabled = false
+            elseif dist > (entry.maxDistance * 0.5) then
+                -- 中等距离降低 60% 发射率以节省填充率
+                entry.emitter.Enabled = true
+                entry.emitter.Rate = entry.baseRate * 0.4
+            else
+                -- 近距离保持全画质
+                entry.emitter.Enabled = true
+                entry.emitter.Rate = entry.baseRate
+            end
+        end
+    end)
+end
+
+return VFXManager</code></pre>
+      </div>
+
+      <h2>3. 着色模式：LightEmission 与 LightInfluence</h2>
+      <p>粒子与场景光照系统的交互直接决定视觉美感与 GPU 像素着色负荷：</p>
+      <ul>
+          <li>LightEmission (加法混合)：取值 0~1。值为 1 时粒子颜色直接叠加到背景缓冲区，呈现不接受阴影的自发光霓虹或烈焰效果。</li>
+          <li>LightInfluence (漫反射响应)：取值 0~1。值为 1 时粒子完全接收点光源、聚光灯与全局天光的影响。</li>
+          <li>高发光重叠导致的过度绘制：屏幕上大量叠加大面积高 LightEmission 粒子会迫使移动 GPU 重复刷新同一像素，导致降频掉帧。</li>
+          <li>写实环境粒子：尘土、烟幕和碎片应设为 LightInfluence = 1 且 LightEmission = 0，使其自然融入暗处与阴影。</li>
+      </ul>
+
+      <h2>4. 移动端过度绘制、填充率危机与粒子预算</h2>
+      <p>保障低端与中端智能手机稳定运行 60 FPS 的核心准则：</p>
+      <ul>
+          <li>屏幕像素覆盖率：覆盖屏幕 80% 视野的巨大烟雾 quad，其消耗的 GPU 带宽远超数百个屏幕外的小火星。</li>
+          <li>同屏粒子上限控制：在移动端将全场景同时存活的粒子总数严格控制在 400 个以内。</li>
+          <li>尺寸时序控制：让粒子在发射初期保持小尺寸，仅在 Alpha 透明度接近 1（即将消散）时才扩张。</li>
+          <li>ZOffset 深度微调：合理调整 ZOffset 防止粒子与墙壁或地面产生穿模闪烁（Z-fighting）。</li>
+      </ul>
+
+      <h2>5. 生产环境部署清单与最佳实践</h2>
+      <p>商业级 Roblox 经验上线前必须执行的特效检查规范：</p>
+      <ul>
+          <li>MicroProfiler 性能审查：按下 Ctrl+F6 监控团战场景下 `scene::render` 阶段的填充率尖峰。</li>
+          <li>发射器对象池化：避免在每次受击击中时调用 Instance.new 和 Destroy，预建 Attachment 发射器池并循环复用。</li>
+          <li>善用 Emit(n) 单次爆发：使用 ParticleEmitter:Emit(n) 发射瞬态特效（如枪口火焰），避免用 task.wait 频繁启停 Enabled。</li>
+          <li>图形分级设置：在游戏设置面板中为移动端玩家提供“关闭环境粒子特效”的开关选项。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>相比传统粒子，Flipbook 翻页纹理的最大优势是什么？</h3>
+          <p>翻页纹理将复杂的烟雾与火焰动态预先烘焙在纹理网格中，使得单个四边形即可呈现极具动感的视觉效果，减少 75% 至 90% 的活跃粒子数量。</p>
+        </div>
+        <div class="faq-item">
+          <h3>为什么粒子特效在移动手机上特别容易造成卡顿？</h3>
+          <p>移动端 GPU 普遍采用平铺延迟渲染（TBDR）架构且内存带宽有限。当半透明粒子相互叠盖（Overdraw）时，GPU 必须在单帧内重复计算同一像素的混合颜色，导致填充率过载。</p>
+        </div>
+        <div class="faq-item">
+          <h3>ParticleEmitter:Emit() 与 Enabled = true 有何本质区别？</h3>
+          <p>Emit(n) 会在该帧瞬间一次性生成指定数量（n个）的粒子，之后发射器不再继续发射，非常适合刀光剑影、枪击火花等单次瞬发特效。</p>
+        </div>
+        <div class="faq-item">
+          <h3>什么时候应该关闭 LockedToPart 选项？</h3>
+          <p>对于子弹弹道烟雾、奔跑扬起的沙尘等需要停留在世界原地的尾迹效果，必须关闭 LockedToPart（设为 World 空间）。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
