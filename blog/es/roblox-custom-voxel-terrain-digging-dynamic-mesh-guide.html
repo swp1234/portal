@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía de Excavación de Terreno Voxel y Minería en Roblox (2026)</title>
+  <meta name="description" content="Domine la excavación y destrucción de terreno en Roblox Studio: APIs WriteVoxels y FillBall, cuadrícula de vóxeles 4x4x4, detección de colapsos estructurales y física de escombros." />
+  <meta name="keywords" content="roblox excavacion terreno voxel, mineria roblox studio, writevoxels api luau, destruccion voxel roblox 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/es/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Guía de Excavación de Terreno Voxel y Minería en Roblox (2026)" />
+  <meta property="og:description" content="Domine la excavación y destrucción de terreno en Roblox Studio: APIs WriteVoxels y FillBall, cuadrícula de vóxeles 4x4x4, detección de colapsos estructurales y física de escombros." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/es/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Guía de Excavación de Terreno Voxel y Minería en Roblox (2026)" />
+  <meta name="twitter:description" content="Domine la excavación y destrucción de terreno en Roblox Studio: APIs WriteVoxels y FillBall, cuadrícula de vóxeles 4x4x4, detección de colapsos estructurales y física de escombros." />
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/es/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/es/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html"
+      },
+      "headline": "Arquitectura de Terreno Voxel Dinámico: APIs de Smooth Terrain, Operaciones de Densidad y Escombros",
+      "description": "Domine la excavación y destrucción de terreno en Roblox Studio: APIs WriteVoxels y FillBall, cuadrícula de vóxeles 4x4x4, detección de colapsos estructurales y física de escombros.",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/es/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Equipo de Física Espacial y Motores Voxel DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "es"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/es/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Guía de Excavación de Terreno Voxel y Minería en Roblox (2026)",
+          "item": "https://dopabrain.com/portal/blog/es/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/es/roblox-custom-voxel-terrain-digging-dynamic-mesh-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Diferencia entre FillBall y WriteVoxels?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "FillBall es una operación CSG nativa rápida; WriteVoxels manipula matrices 3D directamente."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Por qué los bordes quedan facetados?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Por la cuantización de 4 studs si no se usan densidades intermedias."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo evitar romper roca madre?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Comprobando el material antes de restar volumen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo guardar cambios de terreno?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Guardando coordenadas delta comprimidas en un buffer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Los escombros generan lag?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No si CanCollide, CanTouch y CanQuery están en false."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      overflow-x: hidden;
+      width: 100%;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 18px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 36px;
+      color: #cbd5e1;
+      font-size: 15px;
+      backdrop-filter: blur(8px);
+    }
+    .quick-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 14px;
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    article {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    h2 {
+      font-size: 22px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-top: 12px;
+    }
+    p {
+      color: #cbd5e1;
+      font-size: 15.5px;
+    }
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 4px;
+    }
+    li {
+      position: relative;
+      padding-left: 20px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: #94a3b8;
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    code {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      color: #38bdf8;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      font-size: 16px;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      font-size: 14.5px;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(30, 58, 138, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: #ffffff;
+      font-size: 24px;
+    }
+    .portal-cta p {
+      max-width: 580px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+    @media (max-width: 640px) {
+      body {
+        padding: 0 12px 48px;
+      }
+      header.hero {
+        padding: 32px 0 24px;
+      }
+      .quick-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Master Engineering & Neuroscience</span>
+      <h1>Arquitectura de Terreno Voxel Dinámico: APIs de Smooth Terrain, Operaciones de Densidad y Escombros</h1>
+      <div class="meta">
+        <span>By Equipo de Física Espacial y Motores Voxel DopaBrain</span>
+        <span>•</span>
+        <span>2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Ingeniería de terreno voxel deformable en Roblox Studio: Desde tensores de ocupación 4x4x4 hasta colapsos estructurales y física de escombros.
+    </div>
+
+    <section class="quick-cards" aria-label="Interactive Cognitive Tools">
+      
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier260_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>4x4x4 voxel occupancy tensors, spherical CSG subtraction & BFS collapse algorithms</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier260_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Cave-in debris evasion, collapsing ceiling reflex & emergency tunneling reaction latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier260_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Procedural voxel architect vs rapid explosive excavation cognitive archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier260_stress_check">
+          <strong>Stress Check</strong>
+          <span>Subterranean claustrophobia, cave-in entrapment panic & oxygen crisis composure</span>
+        </a>
+    </section>
+
+    <article>
+      <p>En juegos de minería y supervivencia en Roblox, la excavación en tiempo real es clave para una experiencia fluida y realista.</p>
+      <p>Aprenda a manipular Smooth Terrain en Luau mediante FillBall, control de densidad y desprendimientos físicos optimizados.</p>
+
+      <h2>1. Peligros de rendimiento en llamadas a terreno</h2>
+      <p>Modificar terreno sin control satura el ancho de banda y satura el motor de física.</p>
+      <ul>
+        <li>Colapso de replicación de red.</li>
+        <li>Recálculo continuo de mallas de colisión.</li>
+        <li>Rocas flotando en el aire sin gravedad.</li>
+      </ul>
+
+      <h2>2. Fundamentos Matemáticos: Vóxeles 4x4x4 y Canales de Densidad</h2>
+      <p>El terreno se organiza en bloques de 4 studs con material y valor de ocupación de 0.0 a 1.0.</p>
+      <ul>
+        <li>Cuantización a múltiplos de 4 studs.</li>
+        <li>Canales de Material y Ocupación.</li>
+        <li>BFS para verificar anclaje a lecho de roca.</li>
+      </ul>
+
+      <h2>3. Implementación Completa en Luau</h2>
+      <p>Módulo con limitación de velocidad, corte esférico y expulsión de escombros.</p>
+      <ul>
+        <li>Corte con FillBall.</li>
+        <li>Escombros sin colisión física pesada.</li>
+        <li>Control de enfriamiento (cooldown).</li>
+      </ul>
+
+      
+      <div class="code-container">
+        <div class="code-title">VoxelMiningEngine.luau</div>
+        <pre><code>-- Consultar versión en inglés para el código Luau completo</code></pre>
+      </div>
+
+      <h2>4. Integridad Estructural y Colapso Dinámico</h2>
+      <p>Detección de salientes sin soporte y conversión automática en partes físicas dinámicas.</p>
+      <ul>
+        <li>Rastreo de anclajes estructurales.</li>
+        <li>Reemplazo de vóxeles flotantes por piezas con física.</li>
+      </ul>
+
+      <h2>5. Optimización Móvil y Replicación</h2>
+      <p>Generación de escombros visuales exclusivamente en el cliente para preservar 60 FPS.</p>
+      <ul>
+        <li>Efectos visuales en cliente vía RemoteEvents.</li>
+        <li>CanCollide = false en escombros.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>¿Diferencia entre FillBall y WriteVoxels?</h3>
+          <p>FillBall es una operación CSG nativa rápida; WriteVoxels manipula matrices 3D directamente.</p>
+        </div>
+        <div class="faq-item">
+          <h3>¿Por qué los bordes quedan facetados?</h3>
+          <p>Por la cuantización de 4 studs si no se usan densidades intermedias.</p>
+        </div>
+        <div class="faq-item">
+          <h3>¿Cómo evitar romper roca madre?</h3>
+          <p>Comprobando el material antes de restar volumen.</p>
+        </div>
+        <div class="faq-item">
+          <h3>¿Cómo guardar cambios de terreno?</h3>
+          <p>Guardando coordenadas delta comprimidas en un buffer.</p>
+        </div>
+        <div class="faq-item">
+          <h3>¿Los escombros generan lag?</h3>
+          <p>No si CanCollide, CanTouch y CanQuery están en false.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
