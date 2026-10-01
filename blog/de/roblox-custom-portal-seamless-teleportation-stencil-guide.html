@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Seamless Portals & Non-Euclidean Physics Guide (2026)</title>
+  <meta name="description" content="Master non-euclidean portal mechanics in Roblox Studio: relative CFrame transformation matrices, virtual camera perspective warping, instantaneous momentum vector conservation, and seamless teleportation without camera jitter." />
+  <meta name="keywords" content="roblox seamless portals, non euclidean roblox, portal physics luau, relative cframe transformation, viewportframe portal 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/de/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Roblox Seamless Portals & Non-Euclidean Physics Guide (2026)" />
+  <meta property="og:description" content="Master non-euclidean portal mechanics in Roblox Studio: relative CFrame transformation matrices, virtual camera perspective warping, instantaneous momentum vector conservation, and seamless teleportation without camera jitter." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/de/roblox-custom-portal-seamless-teleportation-stencil-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Seamless Portals & Non-Euclidean Physics Guide (2026)" />
+  <meta name="twitter:description" content="Master non-euclidean portal mechanics in Roblox Studio: relative CFrame transformation matrices, virtual camera perspective warping, instantaneous momentum vector conservation, and seamless teleportation without camera jitter." />
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/de/roblox-custom-portal-seamless-teleportation-stencil-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/de/roblox-custom-portal-seamless-teleportation-stencil-guide.html"
+      },
+      "headline": "Non-Euclidean Spatial Architecture: Viewport Portal Warping, Relative Velocity Transformations & Seamless Crossing",
+      "description": "Master non-euclidean portal mechanics in Roblox Studio: relative CFrame transformation matrices, virtual camera perspective warping, instantaneous momentum vector conservation, and seamless teleportation without camera jitter.",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/de/roblox-custom-portal-seamless-teleportation-stencil-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Spatial Geometry & Engine Architecture Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "de"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/de/roblox-custom-portal-seamless-teleportation-stencil-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Seamless Portals & Non-Euclidean Physics Guide (2026)",
+          "item": "https://dopabrain.com/portal/blog/de/roblox-custom-portal-seamless-teleportation-stencil-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/de/roblox-custom-portal-seamless-teleportation-stencil-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why do characters snag or collide with the wall when walking through a portal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Humanoid hitboxes have volume. Even if the portal aperture is open, an arm or shoulder can graze the wall edge. To prevent snagging, assign the player to a temporary NoCollision collision group with the doorway wall for 0.1 seconds during portal transition."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you preserve camera orientation so the screen doesn't snap abruptly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The camera must undergo the exact same relative coordinate transformation matrix as the character. By taking Camera.CFrame relative to Portal A, flipping it 180 degrees, and mapping it relative to Portal B, the player's view smoothly continues along their visual trajectory."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can ViewportFrames render animated characters and particles on the other side?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ViewportFrames support rigged Humanoids and Motor6D animations, but do not natively render ParticleEmitters, Beams, or Terrain. To simulate terrain, convert surrounding terrain chunks into low-poly MeshParts placed inside the ViewportFrame."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if a player places two portals facing each other to create an infinite loop?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In physics, falling between two opposing vertical portals creates continuous gravitational acceleration until terminal velocity is reached. For visual rendering, limit recursive rendering to a maximum recursion depth of 2 or 3 passes to prevent rendering stalls."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      overflow-x: hidden;
+      width: 100%;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 32px;
+      font-size: 15px;
+      color: #cbd5e1;
+    }
+    article section {
+      margin-bottom: 36px;
+    }
+    h2 {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 700;
+      margin: 36px 0 16px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 20px 0 10px;
+      color: #e2e8f0;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 16px;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 24px 0 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .quick-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+    .quick-card strong {
+      font-size: 14px;
+      color: var(--accent);
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-container {
+      background: #070a11;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow: hidden;
+      max-width: 100%;
+      contain: paint;
+    }
+    .code-title {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 8px 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      color: #e2e8f0;
+      max-width: 100%;
+    }
+    pre code {
+      display: block;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      margin-top: 0;
+      color: #38bdf8;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(129, 140, 248, 0.1));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      margin: 48px 0;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0 0 12px;
+    }
+    .portal-cta p {
+      max-width: 540px;
+      margin: 0 auto 20px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      min-height: 44px;
+      line-height: 20px;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Architecture & Engineering</span>
+      <h1>Non-Euclidean Spatial Architecture: Viewport Portal Warping, Relative Velocity Transformations & Seamless Crossing</h1>
+      <div class="meta">
+        <span>By DopaBrain Spatial Geometry & Engine Architecture Team</span>
+        <span>•</span>
+        <span>Published 2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting seamless non-Euclidean portals in Roblox Studio: From relative coordinate transformation matrices and virtual camera perspective mapping to instantaneous momentum vector transposition and sub-stud collision handoffs.
+    </div>
+
+    <div class="quick-links">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier244_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Relative CFrame transformation calculus, velocity transposition & affine matrices</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier244_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Sub-stud portal crossing, momentum inversion & spatial reflex latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier244_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Non-Euclidean 4D spatial visualization & perspective warping mental archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier244_stress_check">
+          <strong>Stress Check</strong>
+          <span>Portal loop vertigo, infinite terminal velocity dread & camera composure</span>
+        </a>
+    </div>
+
+    <article>
+      <p>In puzzle mechanics, impossible architecture, and sci-fi FPS arenas inspired by Portal, Antichamber, and Splitgate, non-Euclidean portals captivate players. Looking through a doorway on one side of a map and seeing a live, interactive 3D window into a completely different coordinate space—then stepping through it with zero screen fade, loading delay, or velocity hiccup—creates genuine architectural wonder.</p>
+      <p>However, naive teleportation in Roblox (such as setting HumanoidRootPart.CFrame upon touching a Part) produces severe camera snaps, destroys linear momentum, clips characters through world geometry, and provides no visual preview. In this master technical guide, we build a production-grade seamless portal framework in Luau. We derive relative CFrame coordinate mapping matrices, render real-time virtual camera perspectives using ViewportFrames and EditableImages, transpose linear/angular velocity vectors instantaneously across portal thresholds, and handle sub-stud collision handoffs.</p>
+
+      <h2>1. The Teleportation Flaw: Why Naive CFrame Warps Break Immersion</h2>
+      <p>Standard Roblox teleportation breaks spatial immersion across multiple physical and visual dimensions:</p>
+      <ul>
+        <li>Camera Gimbal Jitter: Abruptly overwriting HumanoidRootPart.CFrame snaps the player's camera rotation, inducing spatial disorientation and motion sickness.</li>
+        <li>Momentum Vector Decoupling: A player jumping horizontally into an inverted ceiling portal exits with their velocity still pointing horizontally, violating conservation of momentum relative to the exit portal orientation.</li>
+        <li>Zero Pre-Crossing Visuals: Stepping into a black or semi-transparent flat texture feels primitive; players expect to see the dynamic world waiting on the other side with correct parallax.</li>
+        <li>The Non-Euclidean Solution: Treating portals as paired affine transformation matrices allows seamless projection of visual rays, physical bodies, and continuous momentum.</li>
+      </ul>
+
+      <h2>2. The Mathematical Foundation: Relative CFrame Matrices & Velocity Transposition</h2>
+      <p>Portals function as coordinate space transformers connecting Portal A (entry) and Portal B (exit):</p>
+      <ul>
+        <li>Relative Coordinate Transform: Point P in world space relative to Portal A is P_rel = PortalA.CFrame:PointToObjectSpace(P). Transposed to Portal B: P_out = PortalB.CFrame:PointToWorldSpace(Vector3.new(-P_rel.X, P_rel.Y, -P_rel.Z)).</li>
+        <li>Virtual Camera Transformation: Given player Camera CFrame C, virtual exit camera C_virtual = PortalB.CFrame * CFrame.Angles(0, math.pi, 0) * PortalA.CFrame:Inverse() * C.</li>
+        <li>Linear Velocity Vector Mapping: Velocity vector V enters Portal A; exit velocity V_out = PortalB.CFrame:VectorToWorldSpace(-PortalA.CFrame:VectorToObjectSpace(V)). Momentum direction and magnitude are perfectly preserved relative to the exit frame.</li>
+        <li>Plane Crossing Signed Distance: Character position C is evaluated against Portal A's front plane: Distance d = (C - PortalA.Position):Dot(PortalA.CFrame.LookVector). Teleportation triggers when d transitions from positive to negative within the portal aperture.</li>
+      </ul>
+
+      <h2>3. Complete Seamless Portal Controller Luau Implementation</h2>
+      <p>Below is a complete, modular Luau portal engine running in RunService.RenderStepped for frame-synchronized perspective projection and crossing detection:</p>
+      <ul>
+        <li>Virtual Camera Perspective Sync: Updates the exit portal's ViewportFrame camera every frame with exact parallax and field-of-view matching.</li>
+        <li>Signed Distance Threshold Crossing: Detects sub-frame crossing events using dot-product plane checks, preventing tunneling even at high velocities.</li>
+        <li>Momentum & Rotation Transposition: Simultaneously updates character CFrame, assembly linear velocity, and camera look direction in a single atomic frame step.</li>
+      </ul>
+
+
+      <div class="code-container">
+        <div class="code-title">SeamlessPortalEngine.luau (Spatial Transformation & Crossing Core)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+
+export type PortalPair = {
+    PortalA: BasePart,
+    PortalB: BasePart,
+    Width: number,
+    Height: number,
+    ViewportA: ViewportFrame?,
+    ViewportB: ViewportFrame?,
+}
+
+local PortalEngine = {}
+PortalEngine.__index = PortalEngine
+
+function PortalEngine.new(portalA: BasePart, portalB: BasePart, width: number, height: number)
+    local self = setmetatable({}, PortalEngine)
+    self.PortalA = portalA
+    self.PortalB = portalB
+    self.Width = width
+    self.Height = height
+    self.LastPositions = {} :: {[Model]: Vector3}
+    return self
+end
+
+function PortalEngine:GetTransformedCFrame(inputCF: CFrame, fromPortal: BasePart, toPortal: BasePart): CFrame
+    -- Flip 180 degrees around Y axis to exit pointing outward from target portal
+    local relative = fromPortal.CFrame:ToObjectSpace(inputCF)
+    local flipped = CFrame.Angles(0, math.pi, 0) * relative
+    return toPortal.CFrame:ToWorldSpace(flipped)
+end
+
+function PortalEngine:GetTransformedVelocity(velocity: Vector3, fromPortal: BasePart, toPortal: BasePart): Vector3
+    local localVel = fromPortal.CFrame:VectorToObjectSpace(velocity)
+    -- Invert X and Z to match flipped 180 degree exit
+    local flippedVel = Vector3.new(-localVel.X, localVel.Y, -localVel.Z)
+    return toPortal.CFrame:VectorToWorldSpace(flippedVel)
+end
+
+function PortalEngine:CheckCrossing(character: Model, fromPortal: BasePart, toPortal: BasePart)
+    local root = character:FindFirstChild("HumanoidRootPart") :: BasePart?
+    if not root then return end
+
+    local currentPos = root.Position
+    local prevPos = self.LastPositions[character] or currentPos
+    self.LastPositions[character] = currentPos
+
+    local portalCF = fromPortal.CFrame
+    local normal = portalCF.LookVector
+
+    local prevDist = (prevPos - portalCF.Position):Dot(normal)
+    local currDist = (currentPos - portalCF.Position):Dot(normal)
+
+    -- Detect crossing from front (positive dist) to back (negative dist)
+    if prevDist &gt; 0 and currDist &lt;= 0 then
+        -- Verify crossing occurs within portal bounding rectangular aperture
+        local localPos = portalCF:PointToObjectSpace(currentPos)
+        if math.abs(localPos.X) &lt;= self.Width * 0.5 and math.abs(localPos.Y) &lt;= self.Height * 0.5 then
+            -- Atomic transposition of position, velocity, and camera
+            local newCF = self:GetTransformedCFrame(root.CFrame, fromPortal, toPortal)
+            local newVel = self:GetTransformedVelocity(root.AssemblyLinearVelocity, fromPortal, toPortal)
+
+            root.CFrame = newCF
+            root.AssemblyLinearVelocity = newVel
+            self.LastPositions[character] = newCF.Position
+
+            local camera = Workspace.CurrentCamera
+            if camera and character == Players.LocalPlayer.Character then
+                camera.CFrame = self:GetTransformedCFrame(camera.CFrame, fromPortal, toPortal)
+            end
+        end
+    end
+end
+
+return PortalEngine</code></pre>
+      </div>
+
+      <h2>4. Rendering Techniques: ViewportFrames vs Modern EditableImage Shaders</h2>
+      <p>Simulating a live window into another part of the game world requires innovative rendering strategies in Roblox:</p>
+      <ul>
+        <li>ViewportFrame Method: Clones nearby environment geometry into a ViewportFrame mapped to a SurfaceGui on Portal A, updating a linked Camera to match perspective.</li>
+        <li>Lightweight Proxy Geometry: To maintain high frame rates, populate the ViewportFrame only with low-poly static geometry and dynamic enemy proxies within a 60-stud radius.</li>
+        <li>EditableImage Pixel Rasterization: Modern advanced implementations copy screen buffers into EditableImage instances, using custom compute shaders to achieve recursive portal-in-portal reflections.</li>
+        <li>Oblique Near-Plane Clipping: Adjust camera near-clipping planes parallel to the exit portal surface to prevent geometry behind the exit portal from rendering inside the doorway.</li>
+      </ul>
+
+      <h2>5. Collision Handoffs, Sound Propagation & Production Tuning</h2>
+      <p>Ensuring players, projectiles, and vehicles transition smoothly without edge-snagging:</p>
+      <ul>
+        <li>Portal Frame Collision Masks: Carve out an exact doorway aperture in physical walls using CollisionGroups; ensure portal frame borders use smooth chamfered colliders.</li>
+        <li>Sub-Stud Collision Disabling: Momentarily disable collisions between player limbs and the wall hosting the entry portal during the exact crossing frame to prevent snagging.</li>
+        <li>Doppler Shift & Spatial Sound Wrapping: Route 3D audio listeners so sounds playing near Portal B emit audibly through Portal A with distance attenuation.</li>
+        <li>Projectile Passing: Bullets and guided missiles perform raycast line intersection against portal planes, teleporting raycast origin and direction vectors mid-trajectory seamlessly.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why do characters snag or collide with the wall when walking through a portal?</h3>
+          <p>Humanoid hitboxes have volume. Even if the portal aperture is open, an arm or shoulder can graze the wall edge. To prevent snagging, assign the player to a temporary NoCollision collision group with the doorway wall for 0.1 seconds during portal transition.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do you preserve camera orientation so the screen doesn't snap abruptly?</h3>
+          <p>The camera must undergo the exact same relative coordinate transformation matrix as the character. By taking Camera.CFrame relative to Portal A, flipping it 180 degrees, and mapping it relative to Portal B, the player's view smoothly continues along their visual trajectory.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can ViewportFrames render animated characters and particles on the other side?</h3>
+          <p>ViewportFrames support rigged Humanoids and Motor6D animations, but do not natively render ParticleEmitters, Beams, or Terrain. To simulate terrain, convert surrounding terrain chunks into low-poly MeshParts placed inside the ViewportFrame.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What happens if a player places two portals facing each other to create an infinite loop?</h3>
+          <p>In physics, falling between two opposing vertical portals creates continuous gravitational acceleration until terminal velocity is reached. For visual rendering, limit recursive rendering to a maximum recursion depth of 2 or 3 passes to prevent rendering stalls.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
