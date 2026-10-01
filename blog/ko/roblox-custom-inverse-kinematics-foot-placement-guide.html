@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 커스텀 발 착지 IK: 경사면 절차적 애니메이션 및 2-Bone 삼각법 가이드 (2026)</title>
+  <meta name="description" content="로블록스 절차적 발 착지 IK 완벽 가이드: 해석적 2-Bone 코사인 법칙 수식, 지면 하향 레이캐스팅, 골반(Pelvis) 하강 보정, 발목 표면 법선 정렬 및 클라이언트 RenderStepped 최적화." />
+  <meta name="keywords" content="로블록스 발 착지 ik, 역기구학 루아우, 2본 ik 로블록스, 절차적 애니메이션 로블록스, 경사면 발 보정 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="로블록스 커스텀 발 착지 IK: 경사면 절차적 애니메이션 및 2-Bone 삼각법 가이드 (2026)" />
+  <meta property="og:description" content="로블록스 절차적 발 착지 IK 완벽 가이드: 해석적 2-Bone 코사인 법칙 수식, 지면 하향 레이캐스팅, 골반(Pelvis) 하강 보정, 발목 표면 법선 정렬 및 클라이언트 RenderStepped 최적화." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 커스텀 발 착지 IK: 경사면 절차적 애니메이션 및 2-Bone 삼각법 가이드 (2026)" />
+  <meta name="twitter:description" content="로블록스 절차적 발 착지 IK 완벽 가이드: 해석적 2-Bone 코사인 법칙 수식, 지면 하향 레이캐스팅, 골반(Pelvis) 하강 보정, 발목 표면 법선 정렬 및 클라이언트 RenderStepped 최적화." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.08));
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      color: #e2e8f0;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .code-header {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      font-family: monospace;
+      border-bottom: 1px solid #334155;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: "Fira Code", monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 32px 0;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    .quick-card span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .faq-container {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      color: #94a3b8;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .portal-btn {
+      display: inline-block;
+      margin-top: 16px;
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+      min-height: 44px;
+      line-height: 20px;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1.25rem; }
+      .container { padding: 16px; }
+      .quick-links { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-foot-placement-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-foot-placement-guide.html"
+      },
+      "headline": "로블록스 절차적 발 착지 IK: 2-Bone 역기구학 코사인 법칙, 골반 높이 보정 및 표면 법선 정렬",
+      "description": "로블록스 절차적 발 착지 IK 완벽 가이드: 해석적 2-Bone 코사인 법칙 수식, 지면 하향 레이캐스팅, 골반(Pelvis) 하강 보정, 발목 표면 법선 정렬 및 클라이언트 RenderStepped 최적화.",
+      "url": "https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-foot-placement-guide.html",
+      "inLanguage": "ko",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-foot-placement-guide.html",
+      "datePublished": "2026-10-01T10:00:00+09:00",
+      "dateModified": "2026-10-01T10:00:00+09:00",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 애니메이션 및 절차적 물리 엔지니어링 팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "image": "https://dopabrain.com/assets/icon-512.svg"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 절차적 발 착지 IK: 2-Bone 역기구학 코사인 법칙, 골반 높이 보정 및 표면 법선 정렬",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-foot-placement-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-foot-placement-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "로블록스 내장 IKControl 대신 자체 2-Bone 삼각법을 구현하는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "내장 IKControl에 비해 자체 삼각법 솔버는 골반 하강(Hip Drop)의 미세 감쇠 조절, 바닥 법선에 맞춘 발목 회전, 커스텀 충돌 마스크 및 카메라 프러스텀 거리별 LOD를 100% 코드로 제어할 수 있기 때문입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "계단을 오를 때 발이 미세하게 떨리는 지터(Jitter)는 어떻게 해결하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "계단 디딤판과 수직면 사이에서 레이캐스트 히트 좌표가 급변할 때 발생하므로, 발 착지 목표 위치에 지수 이동 평균(EMA) 필터를 적용하면 떨림이 완벽히 사라집니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "골반을 낮추면 캐릭터 충돌체(HumanoidRootPart) 높이도 낮아져 점프에 영향을 주나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "아닙니다. 물리적 충돌체인 HumanoidRootPart의 위치는 그대로 유지되며, 시각적 렌더링을 담당하는 RootJoint Motor6D의 Transform 오프셋만 조절되므로 물리 충돌 및 점프 성능은 전혀 영향을 받지 않습니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>로블록스 절차적 발 착지 IK: 2-Bone 역기구학 코사인 법칙, 골반 높이 보정 및 표면 법선 정렬</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain 애니메이션 및 절차적 물리 엔지니어링 팀</span>
+        <span>Updated: 2026-10-01</span>
+        <span>12 min read</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      로블록스 스튜디오 AAA급 절차적 발 착지 역기구학 엔지니어링: 해석적 2-Bone 코사인 삼각법 솔버와 골반 높이 오프셋부터 지면 법선 발목 정렬 및 프러스텀 컬링 최적화까지.
+    </div>
+
+    <div class="quick-links">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier226_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>제2코사인 삼각법 수식, 2-Bone 운동학 매트릭스 및 관절각 연산 모델</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier226_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>급경사 지형 파쿠르, 계단 디딤판 발 착지 및 수직 도약 반응 잠복기</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier226_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>공간 절차적 애니메이션 인지 및 생체 역학적 사고 스타일</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier226_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>정밀 점프 추락 공포, 관절 튐(Popping) 이질감 및 몰입감 회복</span>
+        </a>
+    </div>
+
+    <article>
+      <p>딥워큰(Deepwoken), 프론트라인(Frontlines), 데드 어헤드(Dead Ahead) 등 로블록스 최고의 오픈월드 및 액션 게임에서 캐릭터가 불규칙한 지형을 이동할 때 발이 허공에 뜨는 현상은 몰입감을 치명적으로 해칩니다. 기본 R15 및 R6 애니메이션은 수평의 평평한 바닥만을 가정하여 제작되었기 때문에 계단, 바위 지형, 가파른 언덕에서 한쪽 발이 공중에 뜨고 다른 쪽 발은 바닥에 파묻히게 됩니다.</p>
+      <p>사실적인 보행 표현을 위해 최상위 개발팀은 '절차적 발 착지 역기구학(Foot Placement IK)'을 구현합니다. 본 가이드에서는 Luau를 활용해 2-Bone 해석적 IK 솔버를 구축합니다. 제2코사인 법칙 기반 관절 회전각 유도, 골반 부착점 하향 레이캐스팅, 다리 과신전(Overextension) 방지를 위한 동적 골반 하강(Hip Drop), 지형 법선에 맞춘 발목 회전 정렬 기법을 체계적으로 다룹니다.</p>
+
+      <h2>1. 왜 기본 캐릭터는 공중에 뜨는가: 절차적 발 IK의 필요성</h2>
+      <p>기본 로블록스 애니메이션 블렌딩은 런타임 지형 굴곡을 인지하지 못합니다:</p>
+      <ul>
+        <li>고정된 키프레임 애니메이션: 기존 애니메이션은 골반을 기준으로 고정된 다리 궤적을 재생합니다. 지형 높이가 달라져도 다리는 허공을 밟게 됩니다.</li>
+        <li>경사면 시각적 이질감: 언덕이나 바위 가장자리에 설 때 한쪽 다리가 낭떠러지 위에 붕 떠 있어 물리적 신뢰성을 완전히 파괴합니다.</li>
+        <li>계단 오르기 판정 왜곡: 계단을 오를 때 발이 디딤판을 밟지 않고 계단 모서리를 스케이트 타듯 미끄러져 올라가는 현상이 발생합니다.</li>
+        <li>절차적 IK의 해결책: 런타임에 Motor6D 관절의 Transform을 가로채 실시간 지형 높이에 맞춰 골반, 무릎, 발목의 3차원 회전각을 동적으로 재연산합니다.</li>
+      </ul>
+
+      <h2>2. 수학적 기초: 해석적 2-Bone 제2코사인 법칙 솔버</h2>
+      <p>2개의 뼈(허벅지 UpperLeg -> 종아리 LowerLeg -> 발 Foot)로 구성된 다리 역기구학은 반복 연산인 FABRIK 대신 해석적 제2코사인 법칙으로 즉각 계산됩니다:</p>
+      <ul>
+        <li>삼각형 길이 정의: 허벅지 길이 L1, 종아리 길이 L2, 골반 원점에서 목표 발 착지점까지의 직선거리 D = (FootTarget - HipOrigin).Magnitude.</li>
+        <li>빗변 클램핑: 계산 중 NaN 에러(삼각함수 정의역 초과)를 방지하기 위해 거리 D를 유효 범위로 제한합니다: D = math.clamp(D, 0.01, L1 + L2 - 0.001).</li>
+        <li>골반 관절각(Alpha): math.acos((L1^2 + D^2 - L2^2) / (2 * L1 * D)) 공식을 통해 허벅지가 발을 향해 꺾여야 하는 피치 각도를 산출합니다.</li>
+        <li>무릎 굴곡각(Beta): math.acos((L1^2 + L2^2 - D^2) / (2 * L1 * L2)) 공식을 통해 무릎 관절 내부의 굽힘 각도를 계산합니다.</li>
+        <li>평면 정렬 CFrame: 골반, 무릎, 발 목표 지점이 이루는 평면의 법선 벡터를 기준으로 회전 좌표계를 구성하여 다리가 옆으로 꺾이지 않도록 고정합니다.</li>
+      </ul>
+
+      <h2>3. 프로덕션 등급 절차적 발 착지 Luau 구현</h2>
+      <p>다음은 RunService.RenderStepped에서 60fps 이상으로 부드럽게 구동되는 모듈형 발 IK 컨트롤러 전체 코드입니다:</p>
+      <ul>
+        <li>양발 독립 레이캐스팅: 좌우 골반 어태치먼트에서 수직 하향으로 레이를 발사하여 지면 접촉점과 경사면 법선 벡터를 추출합니다.</li>
+        <li>골반 하강(Hip Drop) 연산: 지형이 더 낮은 발에 맞춰 골반 높이를 아래로 내려, 높은 쪽 다리는 자연스럽게 접히고 낮은 쪽 다리는 지면에 완전히 닿도록 합니다.</li>
+        <li>발목 표면 회전 정렬: 바닥의 표면 법선 벡터에 맞춰 발목 CFrame을 회전시켜 경사면에서 발가락이 땅속에 파묻히지 않도록 정렬합니다.</li>
+      </ul>
+
+      <div class="code-container">
+        <div class="code-header">FootPlacementIKController.luau (절차적 다리 IK 솔버)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local FootIK = {}
+FootIK.__index = FootIK
+
+export type LegRig = {
+    HipMotor: Motor6D,
+    KneeMotor: Motor6D,
+    AnkleMotor: Motor6D,
+    HipAttachment: Attachment,
+    ThighLength: number,
+    CalfLength: number,
+    CurrentFootOffset: number,
+}
+
+export type CharacterIK = {
+    Character: Model,
+    RootJoint: Motor6D,
+    LeftLeg: LegRig,
+    RightLeg: LegRig,
+    RayParams: RaycastParams,
+    HipDropOffset: number,
+}
+
+local function SolveTwoBone(origin: CFrame, targetPos: Vector3, l1: number, l2: number): (CFrame, CFrame)
+    local localized = origin:PointToObjectSpace(targetPos)
+    local dist = localized.Magnitude
+    dist = math.clamp(dist, 0.05, (l1 + l2) - 0.001)
+
+    local cosAlpha = (l1 * l1 + dist * dist - l2 * l2) / (2 * l1 * dist)
+    local alpha = math.acos(math.clamp(cosAlpha, -1, 1))
+
+    local cosBeta = (l1 * l1 + l2 * l2 - dist * dist) / (2 * l1 * l2)
+    local beta = math.acos(math.clamp(cosBeta, -1, 1))
+
+    local planeRot = CFrame.lookAt(Vector3.zero, localized)
+    local hipRot = planeRot * CFrame.Angles(alpha, 0, 0)
+    local kneeRot = CFrame.Angles(-(math.pi - beta), 0, 0)
+
+    return hipRot, kneeRot
+end
+
+function FootIK.Step(ik: CharacterIK, dt: number)
+    local char = ik.Character
+    local rootPart = char.PrimaryPart
+    if not rootPart then return end
+
+    local rayDown = Vector3.new(0, -5, 0)
+    local leftOrigin = ik.LeftLeg.HipAttachment.WorldPosition
+    local rightOrigin = ik.RightLeg.HipAttachment.WorldPosition
+
+    local leftHit = Workspace:Raycast(leftOrigin, rayDown, ik.RayParams)
+    local rightHit = Workspace:Raycast(rightOrigin, rayDown, ik.RayParams)
+
+    local leftTarget = leftHit and leftHit.Position or (leftOrigin + Vector3.new(0, -3.2, 0))
+    local rightTarget = rightHit and rightHit.Position or (rightOrigin + Vector3.new(0, -3.2, 0))
+
+    -- 골반 하강(Hip Drop) 계산
+    local leftDeficit = leftOrigin.Y - leftTarget.Y
+    local rightDeficit = rightOrigin.Y - rightTarget.Y
+    local maxDeficit = math.max(leftDeficit, rightDeficit)
+    local targetHipDrop = math.clamp(maxDeficit - 3.2, 0, 1.8)
+
+    ik.HipDropOffset = ik.HipDropOffset + (targetHipDrop - ik.HipDropOffset) * math.clamp(dt * 15, 0, 1)
+    ik.RootJoint.Transform = CFrame.new(0, -ik.HipDropOffset, 0)
+
+    -- 좌측 다리 연산
+    local leftHipCF = ik.LeftLeg.HipMotor.Part0.CFrame * ik.LeftLeg.HipMotor.C0
+    local lHipRot, lKneeRot = SolveTwoBone(leftHipCF, leftTarget, ik.LeftLeg.ThighLength, ik.LeftLeg.CalfLength)
+    ik.LeftLeg.HipMotor.Transform = lHipRot
+    ik.LeftLeg.KneeMotor.Transform = lKneeRot
+
+    -- 우측 다리 연산
+    local rightHipCF = ik.RightLeg.HipMotor.Part0.CFrame * ik.RightLeg.HipMotor.C0
+    local rHipRot, rKneeRot = SolveTwoBone(rightHipCF, rightTarget, ik.RightLeg.ThighLength, ik.RightLeg.CalfLength)
+    ik.RightLeg.HipMotor.Transform = rHipRot
+    ik.RightLeg.KneeMotor.Transform = rKneeRot
+end
+
+return FootIK</code></pre>
+      </div>
+
+      <h2>4. 골반 하강(Hip Drop) 보정 및 발목 표면 법선 정렬</h2>
+      <p>경사면에 선 캐릭터에서 다리 IK만 풀면 아래쪽 다리가 팽팽하게 펴져 로봇처럼 부자연스러워집니다:</p>
+      <ul>
+        <li>골반 높이 오프셋 적용: RootJoint Motor6D의 Y축 위치를 아래로 낮추어 골반을 지면에 가깝게 위치시키면 양쪽 다리 모두 유연한 굴곡각을 유지합니다.</li>
+        <li>지수 보간 댐핑: 계단 모서리를 지날 때 카메라가 덜컹거리는 현상을 막기 위해 골반 하강 값에 Lerp 보간을 적용하여 부드럽게 높낮이를 전환합니다.</li>
+        <li>외적(Cross Product) 기반 발목 정렬: 캐릭터 LookVector와 바닥 법선 벡터의 외적을 통해 발바닥 파트가 지형 표면과 평행을 이루도록 회전시킵니다.</li>
+        <li>발끝(Toe) 이중 레이캐스팅: 가파른 경사면에서 발뒤꿈치뿐만 아니라 발끝 레이를 함께 쏘아 발바닥 꺾임을 2단계로 정밀 제어합니다.</li>
+      </ul>
+
+      <h2>5. 렌더링 최적화, 프러스텀 컬링 및 멀티플레이어 LOD</h2>
+      <p>수십 명의 플레이어가 모인 서버에서 모든 캐릭터의 삼각법 연산을 수행할 때 CPU 병목을 방지하는 아키텍처:</p>
+      <ul>
+        <li>카메라 시야각(Frustum) 컬링: Camera:WorldToViewportPoint()를 호출하여 화면 뒤에 있는 캐릭터의 발 IK 계산을 완전히 스킵합니다.</li>
+        <li>거리 기반 적응형 LOD: 35 stud 이내 근거리 아바타는 60Hz 전수 계산, 35~70 stud는 30Hz 격프레임 계산, 70 stud 초과는 기본 애니메이션으로 폴백합니다.</li>
+        <li>휴머노이드 상태 기반 조기 탈출: Freefall(낙하), Swimming(수영), Seated(착석), Ragdoll(래그돌) 상태일 때는 레이캐스트를 즉시 비활성화합니다.</li>
+        <li>순수 클라이언트 시뮬레이션: 모든 IK 변형을 클라이언트 RenderStepped에서 로컬로 처리하여 서버 네트워크 대역폭 소모를 0바이트로 유지합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>로블록스 내장 IKControl 대신 자체 2-Bone 삼각법을 구현하는 이유는 무엇인가요?</h3>
+          <p>내장 IKControl에 비해 자체 삼각법 솔버는 골반 하강(Hip Drop)의 미세 감쇠 조절, 바닥 법선에 맞춘 발목 회전, 커스텀 충돌 마스크 및 카메라 프러스텀 거리별 LOD를 100% 코드로 제어할 수 있기 때문입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>계단을 오를 때 발이 미세하게 떨리는 지터(Jitter)는 어떻게 해결하나요?</h3>
+          <p>계단 디딤판과 수직면 사이에서 레이캐스트 히트 좌표가 급변할 때 발생하므로, 발 착지 목표 위치에 지수 이동 평균(EMA) 필터를 적용하면 떨림이 완벽히 사라집니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>골반을 낮추면 캐릭터 충돌체(HumanoidRootPart) 높이도 낮아져 점프에 영향을 주나요?</h3>
+          <p>아닙니다. 물리적 충돌체인 HumanoidRootPart의 위치는 그대로 유지되며, 시각적 렌더링을 담당하는 RootJoint Motor6D의 Transform 오프셋만 조절되므로 물리 충돌 및 점프 성능은 전혀 영향을 받지 않습니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

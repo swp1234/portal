@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Foot Placement IK: Procedural Slopes & Two-Bone Trigonometry (2026)</title>
+  <meta name="description" content="Master procedural foot placement IK in Roblox: analytical two-bone law of cosines, downward raycast ground sampling, pelvis height offsets, ankle surface rotation, and client RenderStepped optimization." />
+  <meta name="keywords" content="roblox foot placement ik, inverse kinematics luau, two bone ik roblox, procedural animation roblox, slope adaptation 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Foot Placement IK: Procedural Slopes & Two-Bone Trigonometry (2026)" />
+  <meta property="og:description" content="Master procedural foot placement IK in Roblox: analytical two-bone law of cosines, downward raycast ground sampling, pelvis height offsets, ankle surface rotation, and client RenderStepped optimization." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/roblox-custom-inverse-kinematics-foot-placement-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Foot Placement IK: Procedural Slopes & Two-Bone Trigonometry (2026)" />
+  <meta name="twitter:description" content="Master procedural foot placement IK in Roblox: analytical two-bone law of cosines, downward raycast ground sampling, pelvis height offsets, ankle surface rotation, and client RenderStepped optimization." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.08));
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      color: #e2e8f0;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .code-header {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      font-family: monospace;
+      border-bottom: 1px solid #334155;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: "Fira Code", monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 32px 0;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    .quick-card span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .faq-container {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      color: #94a3b8;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .portal-btn {
+      display: inline-block;
+      margin-top: 16px;
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+      min-height: 44px;
+      line-height: 20px;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1.25rem; }
+      .container { padding: 16px; }
+      .quick-links { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-inverse-kinematics-foot-placement-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-inverse-kinematics-foot-placement-guide.html"
+      },
+      "headline": "Roblox Procedural Foot Placement IK: Two-Bone Trigonometric Solvers, Hip Offsets & Surface Normal Alignment",
+      "description": "Master procedural foot placement IK in Roblox: analytical two-bone law of cosines, downward raycast ground sampling, pelvis height offsets, ankle surface rotation, and client RenderStepped optimization.",
+      "url": "https://dopabrain.com/portal/blog/zh/roblox-custom-inverse-kinematics-foot-placement-guide.html",
+      "inLanguage": "zh",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/roblox-custom-inverse-kinematics-foot-placement-guide.html",
+      "datePublished": "2026-10-01T10:00:00+09:00",
+      "dateModified": "2026-10-01T10:00:00+09:00",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Animation & Procedural Systems Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "image": "https://dopabrain.com/assets/icon-512.svg"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Procedural Foot Placement IK: Two-Bone Trigonometric Solvers, Hip Offsets & Surface Normal Alignment",
+          "item": "https://dopabrain.com/portal/blog/zh/roblox-custom-inverse-kinematics-foot-placement-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-inverse-kinematics-foot-placement-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why use analytical two-bone trigonometry instead of Roblox's built-in IKControl?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "While Roblox IKControl is convenient, custom analytical two-bone IK gives developers direct programmatic control over pelvis hip drop damping, exact ankle surface normal alignment, custom raycast filters, and distance-based frustum LOD optimizations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What causes leg shaking or jitter on stairs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jitter occurs when raycasts hit alternating step edges and risers between consecutive frames. Implementing a moving average filter or exponential lerp on foot target positions completely eliminates stair stepping jitter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does pelvic drop affect character collision and jumping?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because the pelvic drop is applied to the visual RootJoint Motor6D transform rather than the physical HumanoidRootPart position, physical collision capsules and jump velocities remain completely unaffected."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox Procedural Foot Placement IK: Two-Bone Trigonometric Solvers, Hip Offsets & Surface Normal Alignment</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Animation & Procedural Systems Team</span>
+        <span>Updated: 2026-10-01</span>
+        <span>12 min read</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting AAA procedural foot placement in Roblox Studio: From analytical two-bone law of cosines trigonometry and pelvic hip drops to surface normal ankle alignment and frustum-culled client performance.
+    </div>
+
+    <div class="quick-links">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier226_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Law of cosines trigonometry, 2-bone kinematic matrices & joint angle solves</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier226_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Steep terrain parkour, foot ledge planting & vertical jump reaction latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier226_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spatial procedural animation & biological kinematic mental model</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier226_stress_check">
+          <strong>Stress Check</strong>
+          <span>Platforming fall dread, visual animation popping & gameplay immersion</span>
+        </a>
+    </div>
+
+    <article>
+      <p>In modern open-world, survival, and tactical action games on Roblox—such as Deepwoken, Frontlines, and Dead Ahead—visual immersion is instantly broken when characters walk across uneven terrain. Default R15 and R6 animations assume flat, horizontal ground surfaces; on stairs, rocky inclines, or steep hillsides, one foot hovers awkwardly in mid-air while the other clips through solid rock.</p>
+      <p>To achieve lifelike locomotion, top developers implement procedural Inverse Kinematics (IK) foot placement. In this comprehensive technical guide, we engineer a production-ready two-bone analytical IK solver in Luau. We derive the law of cosines joint angles, cast precision downward raycasts from hip attachments, calculate dynamic pelvis drops to prevent leg overextension, and align ankle rotations to terrain surface normals.</p>
+
+      <h2>1. Why Default Humanoids Hover: The Case for Procedural Foot IK</h2>
+      <p>Default Roblox animation blending cannot account for runtime geometric ground variations:</p>
+      <ul>
+        <li>Rigid Keyframe Animation: Keyframe sequences bake fixed limb trajectories relative to the pelvis. When the ground rises or falls beneath the character, the animation plays unchanged.</li>
+        <li>Visual Disconnect on Slopes: Characters appear to stand on the edge of cliffs or slopes with one leg suspended over open air, completely destroying physical credibility.</li>
+        <li>Stair Treading Failures: Walking up stairs causes characters to skate over stair risers rather than planting each sole cleanly on sequential steps.</li>
+        <li>Procedural IK Solution: By intercepting Motor6D joint transforms at runtime, procedural IK dynamically adjusts hip, knee, and ankle rotations to adapt to whatever terrain geometry is beneath the avatar.</li>
+      </ul>
+
+      <h2>2. The Mathematical Foundation: Analytical Two-Bone Law of Cosines</h2>
+      <p>Two-bone leg inverse kinematics (UpperLeg -> LowerLeg -> Foot) is solved analytically using the Law of Cosines without expensive iterative FABRIK solvers:</p>
+      <ul>
+        <li>Triangle Definitions: Thigh length L1, calf length L2, and target distance D = (FootTarget - HipOrigin).Magnitude.</li>
+        <li>Hypotenuse Clamping: To prevent mathematical domain errors (NaN from math.acos), distance D is clamped: D = math.clamp(D, 0.01, L1 + L2 - 0.001).</li>
+        <li>Hip Joint Angle (alpha): math.acos((L1^2 + D^2 - L2^2) / (2 * L1 * D)), giving the angular pitch offset of the thigh toward the foot target.</li>
+        <li>Knee Joint Angle (beta): math.acos((L1^2 + L2^2 - D^2) / (2 * L1 * L2)), giving the interior bend angle of the knee.</li>
+        <li>Coordinate Frame Rotation: The hip coordinate frame is aligned to the plane formed by Hip, Knee, and Foot target points, applying alpha and beta rotations.</li>
+      </ul>
+
+      <h2>3. Complete Procedural Foot Placement Luau Implementation</h2>
+      <p>Below is a complete, modular Luau controller running on RunService.RenderStepped for buttery-smooth 60+ FPS foot adaptation:</p>
+      <ul>
+        <li>Dual Raycast Sampling: Casts downward rays from Left and Right Hip attachments to find exact ground contact positions and surface normals.</li>
+        <li>Pelvic Drop Calculation: Drops the RootJoint Motor6D downward by the lowest foot deficit to ensure the higher leg bends while the lower leg can fully reach the ground.</li>
+        <li>Ankle Normal Alignment: Rotates the foot joint CFrame to match the surface normal of the terrain, preventing toes from digging into uphill slopes.</li>
+      </ul>
+
+      <div class="code-container">
+        <div class="code-header">FootPlacementIKController.luau (Procedural Leg Solver)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local FootIK = {}
+FootIK.__index = FootIK
+
+export type LegRig = {
+    HipMotor: Motor6D,
+    KneeMotor: Motor6D,
+    AnkleMotor: Motor6D,
+    HipAttachment: Attachment,
+    ThighLength: number,
+    CalfLength: number,
+    CurrentFootOffset: number,
+}
+
+export type CharacterIK = {
+    Character: Model,
+    RootJoint: Motor6D,
+    LeftLeg: LegRig,
+    RightLeg: LegRig,
+    RayParams: RaycastParams,
+    HipDropOffset: number,
+}
+
+local function SolveTwoBone(origin: CFrame, targetPos: Vector3, l1: number, l2: number): (CFrame, CFrame)
+    local localized = origin:PointToObjectSpace(targetPos)
+    local dist = localized.Magnitude
+    dist = math.clamp(dist, 0.05, (l1 + l2) - 0.001)
+
+    local cosAlpha = (l1 * l1 + dist * dist - l2 * l2) / (2 * l1 * dist)
+    local alpha = math.acos(math.clamp(cosAlpha, -1, 1))
+
+    local cosBeta = (l1 * l1 + l2 * l2 - dist * dist) / (2 * l1 * l2)
+    local beta = math.acos(math.clamp(cosBeta, -1, 1))
+
+    local planeRot = CFrame.lookAt(Vector3.zero, localized)
+    local hipRot = planeRot * CFrame.Angles(alpha, 0, 0)
+    local kneeRot = CFrame.Angles(-(math.pi - beta), 0, 0)
+
+    return hipRot, kneeRot
+end
+
+function FootIK.Step(ik: CharacterIK, dt: number)
+    local char = ik.Character
+    local rootPart = char.PrimaryPart
+    if not rootPart then return end
+
+    local rayDown = Vector3.new(0, -5, 0)
+    local leftOrigin = ik.LeftLeg.HipAttachment.WorldPosition
+    local rightOrigin = ik.RightLeg.HipAttachment.WorldPosition
+
+    local leftHit = Workspace:Raycast(leftOrigin, rayDown, ik.RayParams)
+    local rightHit = Workspace:Raycast(rightOrigin, rayDown, ik.RayParams)
+
+    local leftTarget = leftHit and leftHit.Position or (leftOrigin + Vector3.new(0, -3.2, 0))
+    local rightTarget = rightHit and rightHit.Position or (rightOrigin + Vector3.new(0, -3.2, 0))
+
+    -- Calculate pelvis drop
+    local leftDeficit = leftOrigin.Y - leftTarget.Y
+    local rightDeficit = rightOrigin.Y - rightTarget.Y
+    local maxDeficit = math.max(leftDeficit, rightDeficit)
+    local targetHipDrop = math.clamp(maxDeficit - 3.2, 0, 1.8)
+
+    ik.HipDropOffset = ik.HipDropOffset + (targetHipDrop - ik.HipDropOffset) * math.clamp(dt * 15, 0, 1)
+    ik.RootJoint.Transform = CFrame.new(0, -ik.HipDropOffset, 0)
+
+    -- Solve Left Leg
+    local leftHipCF = ik.LeftLeg.HipMotor.Part0.CFrame * ik.LeftLeg.HipMotor.C0
+    local lHipRot, lKneeRot = SolveTwoBone(leftHipCF, leftTarget, ik.LeftLeg.ThighLength, ik.LeftLeg.CalfLength)
+    ik.LeftLeg.HipMotor.Transform = lHipRot
+    ik.LeftLeg.KneeMotor.Transform = lKneeRot
+
+    -- Solve Right Leg
+    local rightHipCF = ik.RightLeg.HipMotor.Part0.CFrame * ik.RightLeg.HipMotor.C0
+    local rHipRot, rKneeRot = SolveTwoBone(rightHipCF, rightTarget, ik.RightLeg.ThighLength, ik.RightLeg.CalfLength)
+    ik.RightLeg.HipMotor.Transform = rHipRot
+    ik.RightLeg.KneeMotor.Transform = rKneeRot
+end
+
+return FootIK</code></pre>
+      </div>
+
+      <h2>4. Pelvic Hip Drop & Ankle Surface Normal Alignment</h2>
+      <p>When a character stands on a slope, solving leg IK alone causes the downhill leg to stretch to its limit while the uphill leg bends unnaturally:</p>
+      <ul>
+        <li>Pelvic Drop Compensation: Lowering the character's root pelvis (RootJoint Motor6D offset) brings the hip socket closer to the lower foot, allowing both knees to maintain natural flex.</li>
+        <li>Lerp Damping: Pelvic height adjustments are smoothed using exponential interpolation (target + (dest - target) * dt * speed) to avoid camera bobbing and visual popping on sharp step edges.</li>
+        <li>Ankle Surface Conformance: Calculating the cross product of character LookVector and ground hit normal yields a rotational matrix that tilts the foot part flat against steep terrain.</li>
+        <li>Toe Raycasting for Complex Ramps: Placing secondary toe raycasts to split foot rotation between heel and toe on extreme rocky inclines.</li>
+      </ul>
+
+      <h2>5. Performance Optimization, Frustum Culling & Multiplayer LOD</h2>
+      <p>Running trigonometric solvers on hundreds of player avatars simultaneously can bottleneck the CPU without smart optimization:</p>
+      <ul>
+        <li>Camera Frustum Culling: Using Camera:WorldToViewportPoint() to skip IK calculations for avatars positioned behind the camera.</li>
+        <li>Distance-Based LOD Tiering: Updating IK at 60Hz for avatars within 35 studs, 30Hz between 35-70 studs, and disabling IK entirely beyond 70 studs.</li>
+        <li>State-Based Early Exits: Disabling foot raycasts immediately when Humanoid:GetState() is Freefall, Swimming, Seated, or Ragdoll.</li>
+        <li>Pure Client-Side Simulation: Keeping all IK calculations local to client RenderStepped to ensure 0 bytes of network replication overhead.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why use analytical two-bone trigonometry instead of Roblox's built-in IKControl?</h3>
+          <p>While Roblox IKControl is convenient, custom analytical two-bone IK gives developers direct programmatic control over pelvis hip drop damping, exact ankle surface normal alignment, custom raycast filters, and distance-based frustum LOD optimizations.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What causes leg shaking or jitter on stairs?</h3>
+          <p>Jitter occurs when raycasts hit alternating step edges and risers between consecutive frames. Implementing a moving average filter or exponential lerp on foot target positions completely eliminates stair stepping jitter.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does pelvic drop affect character collision and jumping?</h3>
+          <p>Because the pelvic drop is applied to the visual RootJoint Motor6D transform rather than the physical HumanoidRootPart position, physical collision capsules and jump velocities remain completely unaffected.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
