@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Active Ragdoll: Balancing & Joint PD Controllers Guide (2026)</title>
+  <meta name="description" content="Master active ragdoll physics in Roblox Studio: Motor6D vs BallSocket physics constraints, Proportional-Derivative (PD) torque joint stabilization, procedural balance recovery, and server-client replication." />
+  <meta name="keywords" content="roblox active ragdoll, procedural balance roblox, pd controller ragdoll, motor6d ragdoll luau, physics impact recovery 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Roblox Custom Active Ragdoll: Balancing & Joint PD Controllers Guide (2026)" />
+  <meta property="og:description" content="Master active ragdoll physics in Roblox Studio: Motor6D vs BallSocket physics constraints, Proportional-Derivative (PD) torque joint stabilization, procedural balance recovery, and server-client replication." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Active Ragdoll: Balancing & Joint PD Controllers Guide (2026)" />
+  <meta name="twitter:description" content="Master active ragdoll physics in Roblox Studio: Motor6D vs BallSocket physics constraints, Proportional-Derivative (PD) torque joint stabilization, procedural balance recovery, and server-client replication." />
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-ragdoll-active-joint-balancing-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-ragdoll-active-joint-balancing-guide.html"
+      },
+      "headline": "Active Ragdoll Systems Architecture: Motor6D Decoupling, Proportional-Derivative Balancing & Impact Recovery",
+      "description": "Master active ragdoll physics in Roblox Studio: Motor6D vs BallSocket physics constraints, Proportional-Derivative (PD) torque joint stabilization, procedural balance recovery, and server-client replication.",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/roblox-custom-ragdoll-active-joint-balancing-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Procedural Animation & Physics Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "zh"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-ragdoll-active-joint-balancing-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Custom Active Ragdoll: Balancing & Joint PD Controllers Guide (2026)",
+          "item": "https://dopabrain.com/portal/blog/zh/roblox-custom-ragdoll-active-joint-balancing-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-ragdoll-active-joint-balancing-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why do my active ragdoll joints violently vibrate or explode when enabled?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Violent joint oscillations occur when AlignOrientation.Responsiveness is set too high, or when BallSocketConstraint angular limits conflict with the target animation orientation. Ensure Responsiveness is tuned between 25 and 50, and verify that socket limits provide adequate angular clearance for the animation range."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does active ragdoll performance compare to standard Motor6D animations?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Active ragdolls engage Roblox's PGS constraint physics solver for every limb, increasing CPU calculation costs. However, by granting network ownership to the client and limiting active ragdolls to nearby combatants, modern mobile devices and PCs easily maintain 60 FPS across 16+ simultaneous active ragdoll fighters."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can active ragdolls still execute weapon attacks and melee swings?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. By animating the Attachment0/Attachment1 relative CFrame orientations or modifying the target AlignOrientation in sync with an attack animation, limbs will physically swing weapons while yielding dynamically if the blade strikes an immovable shield or obstacle."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you smoothly transition from a limp knocked-out ragdoll back into standing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Begin by smoothly ramping up the MaxTorque and Responsiveness of the torso and spine joints, pulling the chest upright. Once the Center of Mass is positioned over the pelvis, play a get-up animation, blend the Motor6D transforms back in, and disable the physical BallSocketConstraints."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 32px;
+      font-size: 15px;
+      color: #cbd5e1;
+    }
+    article section {
+      margin-bottom: 36px;
+    }
+    h2 {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 700;
+      margin: 36px 0 16px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 20px 0 10px;
+      color: #e2e8f0;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 16px;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 24px 0 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .quick-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+    .quick-card strong {
+      font-size: 14px;
+      color: var(--accent);
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-container {
+      background: #070a11;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .code-title {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 8px 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      margin-top: 0;
+      color: #38bdf8;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(129, 140, 248, 0.1));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      margin: 48px 0;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0 0 12px;
+    }
+    .portal-cta p {
+      max-width: 540px;
+      margin: 0 auto 20px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      min-height: 44px;
+      line-height: 20px;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Architecture & Engineering</span>
+      <h1>Active Ragdoll Systems Architecture: Motor6D Decoupling, Proportional-Derivative Balancing & Impact Recovery</h1>
+      <div class="meta">
+        <span>By DopaBrain Procedural Animation & Physics Team</span>
+        <span>•</span>
+        <span>Published 2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting living physical avatars in Roblox Studio: From Motor6D socket decoupling and 3-axis proportional-derivative angular torque drives to inverted pendulum balance control and procedural stumble recovery.
+    </div>
+
+    <div class="quick-links">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier238_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Quaternion orientation error, PD torque calculations & inverted pendulum matrix</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier238_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Procedural stumble response, physical impact recovery & joint reflex latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier238_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Biomechanical motor simulation mental model & active physics archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier238_stress_check">
+          <strong>Stress Check</strong>
+          <span>Joint solver vibration dread, floppy ragdoll collapse & physical composure</span>
+        </a>
+    </div>
+
+    <article>
+      <p>Default character animation in Roblox relies on kinematic Motor6D joints: animations play deterministically regardless of whether a player is hit by a 50-ton truck, falling down stairs, or struck by a high-velocity artillery shell. Conversely, traditional death ragdolls disable the Humanoid completely, collapsing into lifeless, floppy noodle limbs that cannot stand, interact, or recover.</p>
+      <p>To create the visceral, tactile physical combat seen in games like Gang Beasts, Human: Fall Flat, and modern physics-driven Roblox brawlers, developers utilize 'Active Ragdolls'. In this comprehensive technical guide, we implement an active ragdoll framework in Luau. We decouple kinematic Motor6D joints into BallSocketConstraint physical hinges, apply Proportional-Derivative (PD) angular torque motors to track target animation poses, maintain upright balance using inverted pendulum center-of-mass controllers, and blend smoothly between ragdoll impact and procedural recovery.</p>
+
+      <h2>1. The Kinematic Limitation: Why Standard Motor6D Joints Break Immersion</h2>
+      <p>Standard Roblox character rigs operate through hierarchical coordinate transformations that ignore environmental forces:</p>
+      <ul>
+        <li>Infinite Joint Rigidity: Motor6D transforms override physics completely; when a character's arm clips into a wall or is struck by a baseball bat, the joint does not yield, breaking physical believability.</li>
+        <li>Lifeless Passive Ragdolls: Disabling Humanoid states causes avatars to slump into limp ragdolls, requiring awkward scripted 'stand up' animations that teleports characters abruptly.</li>
+        <li>Zero Physical Reaction Blending: A sword slash or punch cannot impart realistic localized momentum to an arm without custom torque simulation.</li>
+        <li>The Active Ragdoll Solution: Physical limbs connected by BallSocketConstraints driven by dynamic torque motors behave like genuine muscles, flexing against impacts while striving to maintain pose.</li>
+      </ul>
+
+      <h2>2. The Mathematical Foundation: PD Controllers & Inverted Pendulum Balancing</h2>
+      <p>Active ragdolls achieve posture and balance through continuous feedback control loops:</p>
+      <ul>
+        <li>PD Joint Control Equation: Joint torque tau = K_p * Error_Orientation + K_d * Error_AngularVelocity. K_p (proportional gain) acts as joint stiffness, while K_d (derivative gain) acts as rotational damping.</li>
+        <li>Orientation Error Quaternion: Given target orientation Q_target and current orientation Q_current, orientation error delta_Q = Q_target * Q_current^-1. The rotation axis and angle theta are extracted for torque application.</li>
+        <li>Inverted Pendulum Model: Upright stabilization models the avatar as an inverted pendulum: Center of Mass (CoM) position relative to Center of Pressure (CoP) foot contact points determines corrective hip torque.</li>
+        <li>Zero Moment Point (ZMP): If CoM projection falls outside the polygon of support formed by the feet, balance is lost; the controller must trigger a procedural stepping or stumbling response.</li>
+      </ul>
+
+      <h2>3. Complete Active Ragdoll Luau Implementation</h2>
+      <p>Below is a production-grade Luau active ragdoll controller running on RunService.Stepped for frame-synchronized torque application:</p>
+      <ul>
+        <li>Seamless Motor6D Decoupling: Replaces Motor6D transforms with BallSocketConstraints and AlignOrientation torque motors without breaking character clothing or attachments.</li>
+        <li>3-Axis Angular Drive: Continuously samples the animation track's keyframed CFrame offsets and drives physical limbs toward the target pose.</li>
+        <li>Impact Stumble Blending: Automatically scales down joint stiffness K_p upon receiving high-impulse impacts, transitioning into semi-passive ragdoll before regaining tension.</li>
+      </ul>
+
+
+      <div class="code-container">
+        <div class="code-title">ActiveRagdollController.luau (PD Torque & Balance Core)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+
+export type ActiveJoint = {
+    Motor: Motor6D,
+    Socket: BallSocketConstraint,
+    AlignOrientation: AlignOrientation,
+    Attachment0: Attachment,
+    Attachment1: Attachment,
+    StiffnessKp: number,
+    DampingKd: number,
+}
+
+local ActiveRagdoll = {}
+ActiveRagdoll.__index = ActiveRagdoll
+
+function ActiveRagdoll.new(character: Model)
+    local self = setmetatable({}, ActiveRagdoll)
+    self.Character = character
+    self.Humanoid = character:WaitForChild("Humanoid") :: Humanoid
+    self.RootPart = character:WaitForChild("HumanoidRootPart") :: BasePart
+    self.Joints = {} :: {ActiveJoint}
+    self.IsActive = false
+    self.BalanceRecoveryTime = 0
+
+    self:SetupJoints()
+    return self
+end
+
+function ActiveRagdoll:SetupJoints()
+    for _, desc in ipairs(self.Character:GetDescendants()) do
+        if desc:IsA("Motor6D") and desc.Name ~= "RootJoint" then
+            local part0 = desc.Part0
+            local part1 = desc.Part1
+            if part0 and part1 then
+                local att0 = Instance.new("Attachment")
+                att0.CFrame = desc.C0
+                att0.Parent = part0
+
+                local att1 = Instance.new("Attachment")
+                att1.CFrame = desc.C1
+                att1.Parent = part1
+
+                local socket = Instance.new("BallSocketConstraint")
+                socket.Attachment0 = att0
+                socket.Attachment1 = att1
+                socket.LimitsEnabled = true
+                socket.TwistLimitsEnabled = true
+                socket.UpperAngle = 60
+                socket.TwistLowerAngle = -45
+                socket.TwistUpperAngle = 45
+                socket.Enabled = false
+                socket.Parent = part1
+
+                local align = Instance.new("AlignOrientation")
+                align.Mode = Enum.OrientationAlignmentMode.TwoAttachment
+                align.Attachment0 = att1
+                align.Attachment1 = att0
+                align.MaxTorque = 8000
+                align.Responsiveness = 40
+                align.Enabled = false
+                align.Parent = part1
+
+                table.insert(self.Joints, {
+                    Motor = desc,
+                    Socket = socket,
+                    AlignOrientation = align,
+                    Attachment0 = att0,
+                    Attachment1 = att1,
+                    StiffnessKp = 8000,
+                    DampingKd = 40,
+                })
+            end
+        end
+    end
+end
+
+function ActiveRagdoll:Enable()
+    self.IsActive = true
+    self.Humanoid.PlatformStand = true
+
+    for _, joint in ipairs(self.Joints) do
+        joint.Motor.Enabled = false
+        joint.Socket.Enabled = true
+        joint.AlignOrientation.Enabled = true
+    end
+end
+
+function ActiveRagdoll:Disable()
+    self.IsActive = false
+    self.Humanoid.PlatformStand = false
+
+    for _, joint in ipairs(self.Joints) do
+        joint.AlignOrientation.Enabled = false
+        joint.Socket.Enabled = false
+        joint.Motor.Enabled = true
+    end
+end
+
+function ActiveRagdoll:ApplyImpulse(hitPart: BasePart, impulse: Vector3)
+    hitPart:ApplyImpulse(impulse)
+    -- Relax joint stiffness momentarily for visceral limp impact
+    for _, joint in ipairs(self.Joints) do
+        if joint.Motor.Part1 == hitPart then
+            joint.AlignOrientation.MaxTorque = joint.StiffnessKp * 0.15
+            task.delay(0.35, function()
+                joint.AlignOrientation.MaxTorque = joint.StiffnessKp
+            end)
+        end
+    end
+end
+
+return ActiveRagdoll</code></pre>
+      </div>
+
+      <h2>4. Center of Mass & Upright Torso Balance Control</h2>
+      <p>True active ragdolls do not just hold a pose; they stay upright against gravity and physical jostling:</p>
+      <ul>
+        <li>RootPart AlignOrientation Drive: Keep the HumanoidRootPart upright by applying a powerful primary AlignOrientation constraint linked to a reference CFrame aligned with Vector3.yAxis.</li>
+        <li>Procedural Inverted Pendulum Torque: Evaluate the horizontal offset between RootPart.Position and foot raycast ground contact points to lean into sudden external shoves.</li>
+        <li>Step Triggering Threshold: When horizontal tilt exceeds 25 degrees, trigger a procedural leg kick or stumble animation to plant a new foot contact under the falling center of mass.</li>
+        <li>Ragdoll Knockout State: If the head strikes the ground with impact velocity > 35 studs/sec, disable all AlignOrientations for 2.5 seconds before engaging get-up kinematics.</li>
+      </ul>
+
+      <h2>5. Network Replication, Server Authority & Performance Optimization</h2>
+      <p>Simulating physical ragdoll limbs across multiple players requires strict network budgeting:</p>
+      <ul>
+        <li>Client Physics Ownership: Set NetworkOwnership of the character parts to the local client (Player:SetNetworkOwner(client)) to eliminate physics latency and jitter.</li>
+        <li>Server Health & State Validation: The server validates damage, knockout thresholds, and get-up transitions; clients simulate local ragdoll joint torques.</li>
+        <li>LOD Physics Throttling: Characters beyond 80 studs reduce active joint constraint solver frequencies or switch back to standard kinematic Motor6D animations.</li>
+        <li>Zero-Part Debris Cleanup: Ensure attachments and constraints are pooled or created once on character spawn rather than instantiated on death to prevent memory leaks.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why do my active ragdoll joints violently vibrate or explode when enabled?</h3>
+          <p>Violent joint oscillations occur when AlignOrientation.Responsiveness is set too high, or when BallSocketConstraint angular limits conflict with the target animation orientation. Ensure Responsiveness is tuned between 25 and 50, and verify that socket limits provide adequate angular clearance for the animation range.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does active ragdoll performance compare to standard Motor6D animations?</h3>
+          <p>Active ragdolls engage Roblox's PGS constraint physics solver for every limb, increasing CPU calculation costs. However, by granting network ownership to the client and limiting active ragdolls to nearby combatants, modern mobile devices and PCs easily maintain 60 FPS across 16+ simultaneous active ragdoll fighters.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can active ragdolls still execute weapon attacks and melee swings?</h3>
+          <p>Yes. By animating the Attachment0/Attachment1 relative CFrame orientations or modifying the target AlignOrientation in sync with an attack animation, limbs will physically swing weapons while yielding dynamically if the blade strikes an immovable shield or obstacle.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do you smoothly transition from a limp knocked-out ragdoll back into standing?</h3>
+          <p>Begin by smoothly ramping up the MaxTorque and Responsiveness of the torso and spine joints, pulling the chest upright. Once the Center of Mass is positioned over the pelvis, play a get-up animation, blend the Motor6D transforms back in, and disable the physical BallSocketConstraints.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

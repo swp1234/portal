@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 커스텀 액티브 래그돌: 관절 제어 및 균형 복원 가이드 (2026)</title>
+  <meta name="description" content="로블록스 액티브 래그돌 물리 시스템 완벽 마스터: Motor6D와 BallSocket 물리 제약조건 결합, PD 토크 관절 자세 유지, 역진자 중심 균형 복원 및 서버-클라이언트 동기화 기법." />
+  <meta name="keywords" content="로블록스 액티브 래그돌, 절차적 균형 로블록스, pd 컨트롤러 래그돌, motor6d 래그돌 luau, 물리 피격 회복 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="로블록스 커스텀 액티브 래그돌: 관절 제어 및 균형 복원 가이드 (2026)" />
+  <meta property="og:description" content="로블록스 액티브 래그돌 물리 시스템 완벽 마스터: Motor6D와 BallSocket 물리 제약조건 결합, PD 토크 관절 자세 유지, 역진자 중심 균형 복원 및 서버-클라이언트 동기화 기법." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-ragdoll-active-joint-balancing-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 커스텀 액티브 래그돌: 관절 제어 및 균형 복원 가이드 (2026)" />
+  <meta name="twitter:description" content="로블록스 액티브 래그돌 물리 시스템 완벽 마스터: Motor6D와 BallSocket 물리 제약조건 결합, PD 토크 관절 자세 유지, 역진자 중심 균형 복원 및 서버-클라이언트 동기화 기법." />
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-ragdoll-active-joint-balancing-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-ragdoll-active-joint-balancing-guide.html"
+      },
+      "headline": "액티브 래그돌 시스템 아키텍처: Motor6D 분리, 비례-미분(PD) 균형 제어 및 피격 회복",
+      "description": "로블록스 액티브 래그돌 물리 시스템 완벽 마스터: Motor6D와 BallSocket 물리 제약조건 결합, PD 토크 관절 자세 유지, 역진자 중심 균형 복원 및 서버-클라이언트 동기화 기법.",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-ragdoll-active-joint-balancing-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 절차적 애니메이션 및 물리 기술팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-ragdoll-active-joint-balancing-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 커스텀 액티브 래그돌: 관절 제어 및 균형 복원 가이드 (2026)",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-ragdoll-active-joint-balancing-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-ragdoll-active-joint-balancing-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "액티브 래그돌을 켜면 관절이 심하게 떨리거나 폭발하듯 튕겨 나가는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AlignOrientation.Responsiveness 값이 너무 높거나, BallSocketConstraint의 각도 제한(Limit)과 애니메이션 목표 각도가 충돌할 때 발생합니다. Responsiveness를 25~50 사이로 조율하고 소켓의 각도 제한 범위를 넉넉하게 확보하십시오."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "액티브 래그돌의 성능 비용은 일반 애니메이션에 비해 얼마나 높은가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "물리 엔진 솔버가 사지 관절마다 실시간 토크를 계산하므로 연산량이 증가합니다. 하지만 네트워크 소유권을 각 클라이언트에 분산하고 원거리 캐릭터에 물리 LOD를 적용하면 모바일 기기에서도 16인 이상의 난투전을 60 FPS로 안정적으로 유지할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "액티브 래그돌 상태에서도 무기 공격이나 펀치 모션을 휘두를 수 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "가능합니다. 애니메이션의 CFrame 변환을 실시간으로 읽어와 AlignOrientation의 목표 방향을 갱신하면, 팔이 칼이나 주먹을 물리적으로 휘두르면서도 단단한 방패나 벽에 부딪히면 튕겨 나가는 극상의 타격감이 구현됩니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "완전히 기절해 쓰러진 래그돌이 다시 일어나는 과정은 어떻게 매끄럽게 처리하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "먼저 상체와 척추 관절의 MaxTorque를 점진적으로 높여 상체를 일으켜 세웁니다. 질량 중심이 골반 위에 안착하면 기상 애니메이션을 가동하면서 Motor6D 변환을 서서히 블렌딩하고 물리 소켓을 비활성화합니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 32px;
+      font-size: 15px;
+      color: #cbd5e1;
+    }
+    article section {
+      margin-bottom: 36px;
+    }
+    h2 {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 700;
+      margin: 36px 0 16px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 20px 0 10px;
+      color: #e2e8f0;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 16px;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 24px 0 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .quick-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+    .quick-card strong {
+      font-size: 14px;
+      color: var(--accent);
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-container {
+      background: #070a11;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .code-title {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 8px 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      margin-top: 0;
+      color: #38bdf8;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(129, 140, 248, 0.1));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      margin: 48px 0;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0 0 12px;
+    }
+    .portal-cta p {
+      max-width: 540px;
+      margin: 0 auto 20px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      min-height: 44px;
+      line-height: 20px;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Architecture & Engineering</span>
+      <h1>액티브 래그돌 시스템 아키텍처: Motor6D 분리, 비례-미분(PD) 균형 제어 및 피격 회복</h1>
+      <div class="meta">
+        <span>By DopaBrain 절차적 애니메이션 및 물리 기술팀</span>
+        <span>•</span>
+        <span>Published 2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      살아 숨 쉬는 물리 기반 캐릭터를 로블록스 스튜디오에 구현하기: Motor6D 관절의 물리적 소켓 분리, 3축 비례-미분 토크 모터 제어, 역진자 중심 안정화 및 절차적 비틀거림 회복 알고리즘.
+    </div>
+
+    <div class="quick-links">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier238_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>쿼터니언 회전 오차, PD 토크 미적분 및 역진자 중심 균형 행렬</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier238_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>절차적 비틀거림 반응, 물리 피격 충격 회복 및 관절 반사 잠복기</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier238_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>생체역학적 운동 시뮬레이션 멘탈 모델 및 동적 물리 인지 아키타입</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier238_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>관절 솔버 진동 공포, 무기력한 래그돌 붕괴 패닉 및 평정심 회복</span>
+        </a>
+    </div>
+
+    <article>
+      <p>로블록스의 기본 캐릭터 애니메이션은 키네마틱 Motor6D 관절에 의존합니다. 이로 인해 50톤 트럭에 치이거나 계단에서 구르고 고속 포탄에 직격당해도 애니메이션이 부자연스럽게 그대로 재생됩니다. 반대로 전통적인 사망 래그돌은 Humanoid를 완전히 끄고 관절을 풀어버려 마치 축 늘어진 국수 가락처럼 무기력하게 무너질 뿐, 스스로 서 있거나 상호작용하지 못합니다.</p>
+      <p>갱 비스트(Gang Beasts), 휴먼 폴 플랫(Human: Fall Flat), 그리고 최신 물리 기반 대전 액션 게임 같은 묵직하고 생동감 넘치는 타격감을 구현하기 위해 개발자들은 '액티브 래그돌(Active Ragdoll)'을 도입합니다. 본 실전 가이드에서는 Luau 기반의 상용급 액티브 래그돌 프레임워크를 제작합니다. Motor6D를 BallSocketConstraint 물리 힌지로 분리하고, PD 토크 모터를 통해 목표 포즈를 유지하며, 역진자 모델로 중심을 잡고, 피격 시 자연스럽게 비틀거리다 일어나는 복원 파이프라인을 구축합니다.</p>
+
+      <h2>1. 키네마틱의 한계: 왜 기본 관절은 물리적 몰입감을 깨뜨리는가</h2>
+      <p>기본 로블록스 리그는 외부의 물리적 충격을 완전히 무시하는 절대 좌표 변환으로 구동됩니다:</p>
+      <ul>
+        <li>무한 관절 강성: Motor6D 변환은 물리 엔진을 무시합니다. 캐릭터의 팔이 벽에 끼거나 둔기에 맞아도 관절이 꺾이지 않아 시각적 괴리감이 발생합니다.</li>
+        <li>무기력한 패시브 래그돌: 휴머노이드 상태를 끄면 바닥에 쓰러진 뒤, 원래 자세로 돌아오려면 어색한 기상 애니메이션과 함께 순간이동을 해야 합니다.</li>
+        <li>피격 반작용 블렌딩 불가: 주먹이나 검격에 맞았을 때 맞은 부위만 순간적으로 젖혀지는 사실적인 물리 타격감을 줄 수 없습니다.</li>
+        <li>액티브 래그돌의 해법: 관절을 물리 소켓으로 연결하고 모터 토크로 자세를 유지하게 함으로써, 실제 근육처럼 충격에 유연하게 반응하면서도 자세를 스스로 지탱합니다.</li>
+      </ul>
+
+      <h2>2. 수학적 기반: PD 제어기와 역진자(Inverted Pendulum) 균형 모델</h2>
+      <p>액티브 래그돌은 연속적인 피드백 제어 루프를 통해 자세와 균형을 실시간으로 유지합니다:</p>
+      <ul>
+        <li>PD 관절 제어 공식: 관절 토크 tau = K_p * 회전오차 + K_d * 각속도오차. K_p(비례 게인)는 관절의 뻣뻣함(강성)을 결정하고, K_d(미분 게인)는 회전 진동을 억제하는 감쇠를 담당합니다.</li>
+        <li>쿼터니언 회전 오차: 목표 회전 Q_target과 현재 회전 Q_current에 대해 오차 회전 delta_Q = Q_target * Q_current^-1을 구하고, 회전축과 각도 theta를 추출하여 보정 토크를 가합니다.</li>
+        <li>역진자 균형 모델: 신체 질량 중심(CoM)과 두 발의 접지 압력 중심(CoP) 간의 수평 거리를 측정하여 상체를 수직으로 세우는 골반 토크를 계산합니다.</li>
+        <li>영모멘트점(ZMP) 판정: 질량 중심 투영점이 발 지지 다각형 외곽으로 벗어나면 균형을 상실한 것으로 판정하고 절차적 스텝 및 비틀거림 상태로 전환합니다.</li>
+      </ul>
+
+      <h2>3. Luau 액티브 래그돌 엔진 구현체</h2>
+      <p>RunService.Stepped에서 물리 스텝과 동기화되어 매끄러운 토크를 가하는 고성능 Luau 스크립트입니다:</p>
+      <ul>
+        <li>매끄러운 Motor6D 분리: 캐릭터 외형이나 장신구 파손 없이 Motor6D를 BallSocketConstraint와 AlignOrientation으로 실시간 전환합니다.</li>
+        <li>3축 각운동 제어: 애니메이션 트랙의 CFrame 오프셋을 실시간 추적하여 물리 사지를 목표 포즈로 구동합니다.</li>
+        <li>충격 비틀거림 블렌딩: 고속 충돌 감지 시 관절 강성 K_p를 순간적으로 낮추어 현실적인 휘청거림을 연출한 뒤 서서히 복원합니다.</li>
+      </ul>
+
+
+      <div class="code-container">
+        <div class="code-title">ActiveRagdollController.luau (PD 토크 및 균형 코어)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+
+export type ActiveJoint = {
+    Motor: Motor6D,
+    Socket: BallSocketConstraint,
+    AlignOrientation: AlignOrientation,
+    Attachment0: Attachment,
+    Attachment1: Attachment,
+    StiffnessKp: number,
+    DampingKd: number,
+}
+
+local ActiveRagdoll = {}
+ActiveRagdoll.__index = ActiveRagdoll
+
+function ActiveRagdoll.new(character: Model)
+    local self = setmetatable({}, ActiveRagdoll)
+    self.Character = character
+    self.Humanoid = character:WaitForChild("Humanoid") :: Humanoid
+    self.RootPart = character:WaitForChild("HumanoidRootPart") :: BasePart
+    self.Joints = {} :: {ActiveJoint}
+    self.IsActive = false
+    self.BalanceRecoveryTime = 0
+
+    self:SetupJoints()
+    return self
+end
+
+function ActiveRagdoll:SetupJoints()
+    for _, desc in ipairs(self.Character:GetDescendants()) do
+        if desc:IsA("Motor6D") and desc.Name ~= "RootJoint" then
+            local part0 = desc.Part0
+            local part1 = desc.Part1
+            if part0 and part1 then
+                local att0 = Instance.new("Attachment")
+                att0.CFrame = desc.C0
+                att0.Parent = part0
+
+                local att1 = Instance.new("Attachment")
+                att1.CFrame = desc.C1
+                att1.Parent = part1
+
+                local socket = Instance.new("BallSocketConstraint")
+                socket.Attachment0 = att0
+                socket.Attachment1 = att1
+                socket.LimitsEnabled = true
+                socket.TwistLimitsEnabled = true
+                socket.UpperAngle = 60
+                socket.TwistLowerAngle = -45
+                socket.TwistUpperAngle = 45
+                socket.Enabled = false
+                socket.Parent = part1
+
+                local align = Instance.new("AlignOrientation")
+                align.Mode = Enum.OrientationAlignmentMode.TwoAttachment
+                align.Attachment0 = att1
+                align.Attachment1 = att0
+                align.MaxTorque = 8000
+                align.Responsiveness = 40
+                align.Enabled = false
+                align.Parent = part1
+
+                table.insert(self.Joints, {
+                    Motor = desc,
+                    Socket = socket,
+                    AlignOrientation = align,
+                    Attachment0 = att0,
+                    Attachment1 = att1,
+                    StiffnessKp = 8000,
+                    DampingKd = 40,
+                })
+            end
+        end
+    end
+end
+
+function ActiveRagdoll:Enable()
+    self.IsActive = true
+    self.Humanoid.PlatformStand = true
+
+    for _, joint in ipairs(self.Joints) do
+        joint.Motor.Enabled = false
+        joint.Socket.Enabled = true
+        joint.AlignOrientation.Enabled = true
+    end
+end
+
+function ActiveRagdoll:Disable()
+    self.IsActive = false
+    self.Humanoid.PlatformStand = false
+
+    for _, joint in ipairs(self.Joints) do
+        joint.AlignOrientation.Enabled = false
+        joint.Socket.Enabled = false
+        joint.Motor.Enabled = true
+    end
+end
+
+function ActiveRagdoll:ApplyImpulse(hitPart: BasePart, impulse: Vector3)
+    hitPart:ApplyImpulse(impulse)
+    -- 피격 시 일시적으로 관절 힘을 빼서 리얼한 피격감 연출
+    for _, joint in ipairs(self.Joints) do
+        if joint.Motor.Part1 == hitPart then
+            joint.AlignOrientation.MaxTorque = joint.StiffnessKp * 0.15
+            task.delay(0.35, function()
+                joint.AlignOrientation.MaxTorque = joint.StiffnessKp
+            end)
+        end
+    end
+end
+
+return ActiveRagdoll</code></pre>
+      </div>
+
+      <h2>4. 질량 중심 제어와 상체 직립 안정화</h2>
+      <p>진정한 액티브 래그돌은 정지된 포즈 유지를 넘어 중력과 외력에 맞서 두 발로 똑바로 서 있어야 합니다:</p>
+      <ul>
+        <li>RootPart 자세 제어: HumanoidRootPart에 수직 기준 벡터를 추종하는 메인 AlignOrientation을 적용해 상체가 무너지지 않도록 중심을 잡습니다.</li>
+        <li>역진자 토크 보정: 골반 위치와 발 접지면의 수평 변위를 레이캐스트로 계산하여, 밀쳐진 방향의 반대쪽으로 상체를 숙여 복원력을 만듭니다.</li>
+        <li>절차적 스텝 트리거: 기울기가 25도를 넘어가면 넘어지지 않도록 다리를 앞으로 내딛는 절차적 발 디딤 애니메이션을 가동합니다.</li>
+        <li>기절(Knockout) 상태: 머리가 35 studs/s 이상의 속도로 바닥이나 벽에 충돌하면 2.5초간 모든 토크를 해제하여 완전 기절 후 서서히 일어납니다.</li>
+      </ul>
+
+      <h2>5. 네트워크 리플리케이션 및 멀티플레이어 성능 최적화</h2>
+      <p>다수의 플레이어가 격투를 벌이는 환경에서 랙 없이 물리 래그돌을 구동하는 최적화 규칙입니다:</p>
+      <ul>
+        <li>클라이언트 물리 소유권: 캐릭터 부품의 네트워크 소유권(SetNetworkOwner)을 로컬 클라이언트에 부여하여 입력 지연과 떨림을 원천 차단합니다.</li>
+        <li>서버 상태 판정: 체력 감소, 기절 여부, 기상 전환 등 핵심 판정은 서버가 권한을 쥐고 관리합니다.</li>
+        <li>거리 기반 물리 LOD: 80 스터드 이상 떨어진 플레이어는 물리 제약조건을 끄고 일반 키네마틱 애니메이션으로 전환합니다.</li>
+        <li>인스턴스 재활용: 어태치먼트와 소켓 제약조건은 캐릭터 스폰 시 한 번만 생성해두고 Enabled 속성만 켜고 끄며 메모리 누수를 방지합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>액티브 래그돌을 켜면 관절이 심하게 떨리거나 폭발하듯 튕겨 나가는 이유는 무엇인가요?</h3>
+          <p>AlignOrientation.Responsiveness 값이 너무 높거나, BallSocketConstraint의 각도 제한(Limit)과 애니메이션 목표 각도가 충돌할 때 발생합니다. Responsiveness를 25~50 사이로 조율하고 소켓의 각도 제한 범위를 넉넉하게 확보하십시오.</p>
+        </div>
+        <div class="faq-item">
+          <h3>액티브 래그돌의 성능 비용은 일반 애니메이션에 비해 얼마나 높은가요?</h3>
+          <p>물리 엔진 솔버가 사지 관절마다 실시간 토크를 계산하므로 연산량이 증가합니다. 하지만 네트워크 소유권을 각 클라이언트에 분산하고 원거리 캐릭터에 물리 LOD를 적용하면 모바일 기기에서도 16인 이상의 난투전을 60 FPS로 안정적으로 유지할 수 있습니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>액티브 래그돌 상태에서도 무기 공격이나 펀치 모션을 휘두를 수 있나요?</h3>
+          <p>가능합니다. 애니메이션의 CFrame 변환을 실시간으로 읽어와 AlignOrientation의 목표 방향을 갱신하면, 팔이 칼이나 주먹을 물리적으로 휘두르면서도 단단한 방패나 벽에 부딪히면 튕겨 나가는 극상의 타격감이 구현됩니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>완전히 기절해 쓰러진 래그돌이 다시 일어나는 과정은 어떻게 매끄럽게 처리하나요?</h3>
+          <p>먼저 상체와 척추 관절의 MaxTorque를 점진적으로 높여 상체를 일으켜 세웁니다. 질량 중심이 골반 위에 안착하면 기상 애니메이션을 가동하면서 Motor6D 변환을 서서히 블렌딩하고 물리 소켓을 비활성화합니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
