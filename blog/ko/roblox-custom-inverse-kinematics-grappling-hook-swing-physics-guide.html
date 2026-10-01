@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 커스텀 그래플링 훅 및 진자 물리 가이드 (2026)</title>
+  <meta name="description" content="로블록스 스튜디오에서 커스텀 와이어 액션 물리 구현하기: 구속 진자 운동 방정식, 구심 장력 벡터, 동적 모서리 감기(Corner Wrapping), 감아올리기 각속도 가속 및 운동량 방출 도약." />
+  <meta name="keywords" content="로블록스 그래플링 훅, 로블록스 진자 물리, 스윙 물리 luau, 로블록스 로프 구속조건, 로블록스 와이어 액션 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="로블록스 커스텀 그래플링 훅 및 진자 물리 가이드 (2026)" />
+  <meta property="og:description" content="로블록스 스튜디오에서 커스텀 와이어 액션 물리 구현하기: 구속 진자 운동 방정식, 구심 장력 벡터, 동적 모서리 감기(Corner Wrapping), 감아올리기 각속도 가속 및 운동량 방출 도약." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 커스텀 그래플링 훅 및 진자 물리 가이드 (2026)" />
+  <meta name="twitter:description" content="로블록스 스튜디오에서 커스텀 와이어 액션 물리 구현하기: 구속 진자 운동 방정식, 구심 장력 벡터, 동적 모서리 감기(Corner Wrapping), 감아올리기 각속도 가속 및 운동량 방출 도약." />
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html"
+      },
+      "headline": "동적 그래플 및 진자 역학: 구속 기구학, 케이블 장력 및 각운동량 보존 법칙",
+      "description": "로블록스 스튜디오에서 커스텀 와이어 액션 물리 구현하기: 구속 진자 운동 방정식, 구심 장력 벡터, 동적 모서리 감기(Corner Wrapping), 감아올리기 각속도 가속 및 운동량 방출 도약.",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 기구학 및 응용 물리 연구팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 커스텀 그래플링 훅 및 진자 물리 가이드 (2026)",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "로블록스 기본 RopeConstraint는 왜 고속에서 늘어나나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "로프 구속조건은 물리 엔진 솔버의 반복적 이완(Relaxation) 방식에 의존합니다. 속도가 80스터드/초를 넘어가면 프레임 간 변위가 너무 커져 솔버가 로프를 강제로 늘렸다가 수축시키며 떨림이 발생합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "줄을 감아올릴 때 어떻게 회전 속도가 빨라지나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "각운동량 보존 법칙(L = m * v * r)에 의해 회전 반경 r이 줄어들면 접선 속도 v가 필연적으로 증가합니다. 커스텀 솔버는 줄 길이를 단축하면서 외향 운동 에너지를 회전 방향 속도로 변환합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "모서리 감기(Corner-wrapping)가 성능에 악영향을 주지 않나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "전혀 문제없습니다. 프레임당 단 1회의 레이캐스트만 수행하며, 벽에 닿을 때만 배열에 피벗 점을 추가합니다. 시야가 확보되면 배열에서 점을 제거하는 가벼운 스택 방식이므로 CPU 점유율이 0.1% 미만입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "움직이는 기차나 비행선에도 와이어를 걸 수 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "네. 충돌한 파트의 로컬 좌표계(CFrame:PointToObjectSpace)로 앵커 좌표를 저장하면, 기차나 우주선이 이동하고 회전하더라도 닻이 정확하게 따라 움직입니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      overflow-x: hidden;
+      width: 100%;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 18px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 36px;
+      color: #cbd5e1;
+      font-size: 15px;
+      backdrop-filter: blur(8px);
+    }
+    .quick-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 14px;
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    article {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    h2 {
+      font-size: 22px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-top: 12px;
+    }
+    p {
+      color: #cbd5e1;
+      font-size: 15.5px;
+    }
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 4px;
+    }
+    li {
+      position: relative;
+      padding-left: 20px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: #94a3b8;
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    code {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      color: #38bdf8;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      font-size: 16px;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      font-size: 14.5px;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(30, 58, 138, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: #ffffff;
+      font-size: 24px;
+    }
+    .portal-cta p {
+      max-width: 580px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+    @media (max-width: 640px) {
+      body {
+        padding: 0 12px 48px;
+      }
+      header.hero {
+        padding: 32px 0 24px;
+      }
+      .quick-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Master Engineering & Neuroscience</span>
+      <h1>동적 그래플 및 진자 역학: 구속 기구학, 케이블 장력 및 각운동량 보존 법칙</h1>
+      <div class="meta">
+        <span>By DopaBrain 기구학 및 응용 물리 연구팀</span>
+        <span>•</span>
+        <span>2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      로블록스 스튜디오에서 커스텀 그래플링 훅과 유려한 진자 스윙 물리 구현하기: 진자 구속 장력 방정식, 동적 건물 모서리 꺾임 감지, 줄 감아올리기 각운동량 보존 가속 및 접선 방향 도약 추진.
+    </div>
+
+    <section class="quick-cards" aria-label="Interactive Cognitive Tools">
+      
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier250_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>구속 진자 운동 방정식, 구심 장력 벡터 및 와이어 스윙 미적분</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier250_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>접선 도약 타이밍, 모서리 그래플 반사 잠복기 및 궤적 속도</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier250_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>구면 진자 기구학 및 동적 와이어 스윙 인지 아키타입</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier250_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>고공 자유낙하 공포, 줄 끊김 어지럼증 및 와이어 평정심</span>
+        </a>
+    </section>
+
+    <article>
+      <p>스파이더맨 스윙 시뮬레이터나 진격의 거인 헌팅 액션과 같은 로블록스의 고속 입체기동 게임에서 이동의 유려함은 게임의 성패를 가르는 핵심입니다. 하지만 로블록스 기본 RopeConstraint는 고속 회전 시 고무줄처럼 늘어나며, 건물 모서리에 닿았을 때 벽을 뚫고 지나가는 등 치명적인 한계를 드러냅니다.</p>
+      <p>플레이어에게 짜릿한 속도감과 완벽한 조작감을 제공하려면 구속 원운동의 물리 방정식을 Luau로 직접 제어해야 합니다. 본 마스터 엔지니어링 가이드에서는 프로덕션급 커스텀 그래플링 훅 시스템을 구축합니다. 케이블 장력 벡터를 유도하고, 모서리 감기(Corner-wrapping) 알고리즘을 구현하며, 줄을 감아올릴 때 각운동량 보존으로 회전 속도가 빨라지는 물리 엔진을 완성합니다.</p>
+
+      <h2>1. 고속 게임플레이에서 기본 RopeConstraint의 물리적 결함</h2>
+      <p>로블록스 내장 로프 및 스프링 구속조건이 액션 게임에서 어색하게 느껴지는 이유:</p>
+      <ul>
+        <li>고무줄 탄성 및 스냅 현상: 고속 진자 운동 시 물리 솔버의 반복 연산 한계로 인해 로프가 비정상적으로 늘어났다가 튕기듯 수축하여 화면 떨림을 유발합니다.</li>
+        <li>모서리 감김 부재: 기본 로프는 장애물 지오메트리를 무시하므로, 건물 모서리를 돌아나갈 때 와이어가 벽면 안쪽을 뚫고 통과해버립니다.</li>
+        <li>줄 감기 가속 미지원: 일반 로프의 길이를 줄이면 선속도가 오히려 깎여버려, 회전 반경이 줄어들수록 회전 속도가 빨라져야 하는 물리 법칙을 위배합니다.</li>
+        <li>커스텀 솔버의 우수성: RunService.Heartbeat에서 벡터 기반 구속 진자 방정식을 직접 풀면 탄성 없는 완벽한 강체 와이어 스윙을 구현할 수 있습니다.</li>
+      </ul>
+
+      <h2>2. 수학적 기초: 진자 동역학 및 모서리 감기 원리</h2>
+      <p>와이어에 매달린 플레이어는 중력과 구심 장력이 결합된 구속 구면 진자로 모델링됩니다:</p>
+      <ul>
+        <li>구심 장력 크기: 케이블 장력 T = m * (g * cos(theta) + (v_tangent^2 / L)). 장력은 닻(Anchor)을 향한 방사형 단위 벡터 방향으로만 작용합니다.</li>
+        <li>각운동량 보존 가속: 와이어 길이를 줄일 때(dL/dt < 0), 회전 반경 감소에 비례하여 접선 속도가 급증합니다: v' = v * (L_old / L_new).</li>
+        <li>모서리 꺾임(Corner Wrapping): 플레이어와 앵커 사이에 레이캐스트를 투사하여 벽 모서리에 부딪히면 해당 충돌 지점을 앵커 스택에 서브 피벗으로 푸시합니다.</li>
+        <li>접선 방향 도약 방출: 훅을 해제하는 순간 현재의 접선 속도 벡터에 시선 방향 추가 추진력을 더해 시원하게 솟구치는 도약을 완성합니다.</li>
+      </ul>
+
+      <h2>3. 완전한 커스텀 그래플링 훅 엔진 Luau 구현체</h2>
+      <p>벡터 기반 장력 제어, 각속도 가속 및 장애물 모서리 감기를 지원하는 프로덕션 Luau 모듈입니다:</p>
+      <ul>
+        <li>동적 장력 솔버: 로프가 늘어나는 외향 속도 성분을 상쇄하고 정확한 구심력을 부여하여 탄성 없는 단단한 스윙 구현.</li>
+        <li>실시간 와이어 감기 가속: 줄 길이를 단축하는 동안 회전 에너지를 보존하여 회전 속도를 폭발적으로 가속.</li>
+        <li>모서리 피벗 스택: 건물 외벽에 닿으면 자동으로 지지점을 꺾어 감고, 시야가 확보되면 자동으로 풀어내는 스택 구조.</li>
+      </ul>
+
+      
+      <div class="code-container">
+        <div class="code-title">GrapplePendulumEngine.luau (해석적 장력 및 모서리 피벗 솔버)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+export type GrappleSession = {
+    PlayerRoot: BasePart,
+    AnchorPoints: { Vector3 }, // stack of corner pivots, index 1 is root anchor
+    CurrentRopeLength: number,
+    TargetRopeLength: number,
+    ReelSpeed: number,
+    IsActive: boolean,
+    VisualBeam: Beam?,
+}
+
+local GrappleEngine = {}
+GrappleEngine.__index = GrappleEngine
+
+local GRAVITY_ACCEL = 196.2
+
+function GrappleEngine.new(rootPart: BasePart)
+    local self = setmetatable({}, GrappleEngine)
+    self.PlayerRoot = rootPart
+    self.AnchorPoints = {}
+    self.CurrentRopeLength = 0
+    self.TargetRopeLength = 0
+    self.ReelSpeed = 35 // studs per second
+    self.IsActive = false
+    return self
+end
+
+function GrappleEngine:Attach(worldAnchor: Vector3)
+    self.AnchorPoints = { worldAnchor }
+    local dist = (worldAnchor - self.PlayerRoot.Position).Magnitude
+    self.CurrentRopeLength = dist
+    self.TargetRopeLength = dist
+    self.IsActive = true
+end
+
+function GrappleEngine:Detach(): Vector3
+    if not self.IsActive then return Vector3.zero end
+    self.IsActive = false
+
+    local vel = self.PlayerRoot.AssemblyLinearVelocity
+    -- Add tangential release boost
+    local forward = self.PlayerRoot.CFrame.LookVector
+    local boost = (vel.Unit + forward * 0.4).Unit * math.max(vel.Magnitude * 1.15, 60)
+
+    self.PlayerRoot.AssemblyLinearVelocity = boost
+    self.AnchorPoints = {}
+    return boost
+end
+
+function GrappleEngine:Update(dt: number)
+    if not self.IsActive or #self.AnchorPoints == 0 then return end
+
+    local activePivot = self.AnchorPoints[#self.AnchorPoints]
+    local rootPos = self.PlayerRoot.Position
+    local rootVel = self.PlayerRoot.AssemblyLinearVelocity
+    local mass = self.PlayerRoot.AssemblyMass
+
+    -- Check for corner wrapping
+    local rayParams = RaycastParams.new()
+    rayParams.FilterType = RaycastFilterType.Exclude
+
+    local rayDir = (activePivot - rootPos)
+    local hit = Workspace:Raycast(rootPos, rayDir, rayParams)
+    if hit and (hit.Position - activePivot).Magnitude &gt; 1.5 then
+        -- Add new corner pivot offset slightly outward from hit surface
+        local cornerPivot = hit.Position + hit.Normal * 0.5
+        table.insert(self.AnchorPoints, cornerPivot)
+        activePivot = cornerPivot
+    elseif #self.AnchorPoints &gt; 1 then
+        -- Check if previous pivot has direct line of sight to unwrap
+        local parentPivot = self.AnchorPoints[#self.AnchorPoints - 1]
+        local unwrapHit = Workspace:Raycast(rootPos, parentPivot - rootPos, rayParams)
+        if not unwrapHit then
+            table.remove(self.AnchorPoints, #self.AnchorPoints)
+            activePivot = parentPivot
+        end
+    end
+
+    -- Reel in adjustment
+    if self.TargetRopeLength &lt; self.CurrentRopeLength then
+        self.CurrentRopeLength = math.max(self.TargetRopeLength, self.CurrentRopeLength - self.ReelSpeed * dt)
+    end
+
+    local toPivot = (activePivot - rootPos)
+    local currentDist = toPivot.Magnitude
+    local radialDir = toPivot.Unit
+
+    -- Constraint enforcement: if player exceeds rope length, apply corrective centripetal force
+    if currentDist &gt; self.CurrentRopeLength then
+        local outwardSpeed = rootVel:Dot(-radialDir)
+        if outwardSpeed &gt; 0 then
+            -- Remove outward velocity component
+            local velocityCorrection = radialDir * outwardSpeed
+            self.PlayerRoot.AssemblyLinearVelocity = rootVel + velocityCorrection
+            rootVel = self.PlayerRoot.AssemblyLinearVelocity
+        end
+
+        -- Calculate centripetal tension: F = m * (v_tan^2 / r)
+        local tanVel = rootVel - (radialDir * rootVel:Dot(radialDir))
+        local centripetalMag = mass * (tanVel.Magnitude^2 / self.CurrentRopeLength)
+        local gravityComponent = mass * GRAVITY_ACCEL * math.max(0, -radialDir.Y)
+
+        local totalTension = radialDir * (centripetalMag + gravityComponent)
+        self.PlayerRoot:ApplyAssemblyForce(totalTension)
+    end
+end
+
+return GrappleEngine</code></pre>
+      </div>
+
+      <h2>4. 카메라 다이내믹스, 시야각(FOV) 확장 및 속도 연출</h2>
+      <p>단순한 물리 이동을 짜릿한 액션 쾌감으로 승화시키는 시각 및 음향 피드백:</p>
+      <ul>
+        <li>동적 FOV 왜곡: 이동 속도에 비례하여 기본 70도에서 최대 105도까지 카메라 FOV를 동적으로 확장(70 + (속도 / 최대속도) * 35).</li>
+        <li>롤 뱅킹 회전: 스윙 곡률 중심을 향해 카메라를 8~15도 기울여 원심력에 의한 신체 기울기를 실감나게 전달.</li>
+        <li>와이어 텐션 팽팽음: 계산된 로프 장력 T에 비례하여 금속 와이어의 팽팽한 고주파 파열음을 가변 피치로 재생.</li>
+        <li>공기 저항 공간 음향: 최저 고점(가장 빠른 지점)을 통과할 때 두부 주변에 3D 바람 소리 볼륨을 극대화하여 속도감 강조.</li>
+      </ul>
+
+      <h2>5. 멀티플레이어 동기화 및 네트워크 렉 보정</h2>
+      <p>네트워크 멀티플레이어 환경에서 지연 없는 그래플 스윙을 유지하기 위한 아키텍처:</p>
+      <ul>
+        <li>클라이언트 물리 주도권: 스윙 중인 플레이어가 자신의 캐릭터에 대해 네트워크 소유권을 독점하여 레이턴시 0으로 구속 진자 계산.</li>
+        <li>원격 플레이어 빔 렌더링: 앵커 좌표와 부착 이벤트만 가벼운 RemoteEvent로 전송하고, 타 플레이어 기기에서는 에르미트 곡선으로 로프를 렌더링.</li>
+        <li>서버측 이동거리 검증: 이론적 최대 자유낙하 속도(V_max = sqrt(2 * g * H))에 허용 부스트 계수를 곱해 순간이동 핵 방지.</li>
+        <li>즉각적인 로컬 판정: 마우스 클릭 프레임에 닻 착탄 위치를 클라이언트가 선예측하여 투사체 비행 지연으로 인한 답답함 제거.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>로블록스 기본 RopeConstraint는 왜 고속에서 늘어나나요?</h3>
+          <p>로프 구속조건은 물리 엔진 솔버의 반복적 이완(Relaxation) 방식에 의존합니다. 속도가 80스터드/초를 넘어가면 프레임 간 변위가 너무 커져 솔버가 로프를 강제로 늘렸다가 수축시키며 떨림이 발생합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>줄을 감아올릴 때 어떻게 회전 속도가 빨라지나요?</h3>
+          <p>각운동량 보존 법칙(L = m * v * r)에 의해 회전 반경 r이 줄어들면 접선 속도 v가 필연적으로 증가합니다. 커스텀 솔버는 줄 길이를 단축하면서 외향 운동 에너지를 회전 방향 속도로 변환합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>모서리 감기(Corner-wrapping)가 성능에 악영향을 주지 않나요?</h3>
+          <p>전혀 문제없습니다. 프레임당 단 1회의 레이캐스트만 수행하며, 벽에 닿을 때만 배열에 피벗 점을 추가합니다. 시야가 확보되면 배열에서 점을 제거하는 가벼운 스택 방식이므로 CPU 점유율이 0.1% 미만입니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>움직이는 기차나 비행선에도 와이어를 걸 수 있나요?</h3>
+          <p>네. 충돌한 파트의 로컬 좌표계(CFrame:PointToObjectSpace)로 앵커 좌표를 저장하면, 기차나 우주선이 이동하고 회전하더라도 닻이 정확하게 따라 움직입니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

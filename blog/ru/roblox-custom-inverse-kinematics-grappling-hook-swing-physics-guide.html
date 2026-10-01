@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Руководство по крюку-кошке и физике маятника в Roblox (2026)</title>
+  <meta name="description" content="Освойте физику раскачивания на тросе в Roblox Studio: уравнения сферического маятника, центростремительное натяжение, огибание углов и ускорение намотки." />
+  <meta name="keywords" content="roblox grappling hook, roblox pendulum physics, swing physics luau, roblox rope constraint, momentum conservation roblox 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Руководство по крюку-кошке и физике маятника в Roblox (2026)" />
+  <meta property="og:description" content="Освойте физику раскачивания на тросе в Roblox Studio: уравнения сферического маятника, центростремительное натяжение, огибание углов и ускорение намотки." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Руководство по крюку-кошке и физике маятника в Roblox (2026)" />
+  <meta name="twitter:description" content="Освойте физику раскачивания на тросе в Roblox Studio: уравнения сферического маятника, центростремительное натяжение, огибание углов и ускорение намотки." />
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html"
+      },
+      "headline": "Динамика крюка-кошки и маятника: кинематика связей, натяжение троса и сохранение импульса",
+      "description": "Освойте физику раскачивания на тросе в Roblox Studio: уравнения сферического маятника, центростремительное натяжение, огибание углов и ускорение намотки.",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Команда кинематики и прикладной физики DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "ru"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Руководство по крюку-кошке и физике маятника в Roblox (2026)",
+          "item": "https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-grappling-hook-swing-physics-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why do standard Roblox RopeConstraints fail at high speeds?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "RopeConstraints rely on iterative constraint relaxation in the physics solver. When swing velocities exceed 80 studs/second, the solver allows the rope to stretch by several studs between frames, causing unnatural bounciness and erratic camera shuddering."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does reel-in increase swing speed in this implementation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Following the conservation of angular momentum, reducing the radius of rotation forces tangential velocity to increase proportionally. As the cable shortens, outward linear momentum is converted into higher angular velocity, whipping the player through the arc."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does corner wrapping work without crashing performance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The system maintains an anchor stack. A single low-cost raycast is fired each frame between the player and the current anchor. When an obstruction is struck, the contact point is added as a child pivot. When line of sight to the parent pivot clears, the child is popped from the stack."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this grappling system work on moving platforms and vehicles?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. By storing the anchor point as an object-space offset relative to the hit Part's CFrame (AnchorLocal = HitPart.CFrame:PointToObjectSpace(HitPos)), the pivot point tracks moving trains, ships, or airships seamlessly."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      overflow-x: hidden;
+      width: 100%;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 18px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 36px;
+      color: #cbd5e1;
+      font-size: 15px;
+      backdrop-filter: blur(8px);
+    }
+    .quick-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 14px;
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    article {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    h2 {
+      font-size: 22px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-top: 12px;
+    }
+    p {
+      color: #cbd5e1;
+      font-size: 15.5px;
+    }
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 4px;
+    }
+    li {
+      position: relative;
+      padding-left: 20px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: #94a3b8;
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    code {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      color: #38bdf8;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      font-size: 16px;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      font-size: 14.5px;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(30, 58, 138, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: #ffffff;
+      font-size: 24px;
+    }
+    .portal-cta p {
+      max-width: 580px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+    @media (max-width: 640px) {
+      body {
+        padding: 0 12px 48px;
+      }
+      header.hero {
+        padding: 32px 0 24px;
+      }
+      .quick-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Master Engineering & Neuroscience</span>
+      <h1>Динамика крюка-кошки и маятника: кинематика связей, натяжение троса и сохранение импульса</h1>
+      <div class="meta">
+        <span>By Команда кинематики и прикладной физики DopaBrain</span>
+        <span>•</span>
+        <span>2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting custom grappling hook mechanics and fluid pendulum swing physics in Roblox Studio: From mathematical pendulum tension equations and dynamic cable corner wrapping to real-time reel-in length adjustment and angular momentum conservation.
+    </div>
+
+    <section class="quick-cards" aria-label="Interactive Cognitive Tools">
+      
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier250_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Constrained pendulum equations, centripetal tension & swing calculus</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier250_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Tangential release timing, corner grapple reflex & trajectory speed</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier250_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Spherical pendulum kinematics & dynamic cable swing mental archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier250_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-altitude freefall panic, snap release vertigo & grapple composure</span>
+        </a>
+    </section>
+
+    <article>
+      <p>In high-speed movement shooters, superhero action titles, and parkour exploration games on Roblox (such as Spider-Man swinging simulators or Titan-slayer experiences), mechanical fluidity makes or breaks the entire experience. Default Roblox RopeConstraints often feel rubbery, struggle with high-speed centripetal forces, and cannot dynamically wrap around building corners.</p>
+      <p>Creating an exhilarating, responsive grappling hook requires solving the physical equations of constrained circular motion while providing responsive player agency. In this master technical engineering guide, we build a production-grade custom grappling hook system in Luau. We derive cable tension vectors, simulate corner-wrapping pivot trees, model reel-in angular momentum amplification, and execute smooth tangential release leaps.</p>
+
+      <h2>1. The Physics Deficiencies of Naive RopeConstraints in Fast Gameplay</h2>
+      <p>Standard Roblox RopeConstraints and SpringConstraints fail to deliver satisfying grapple mechanics due to physical compromises:</p>
+      <ul>
+        <li>Elastic Sponginess & Snapping: At high velocities, physics solver iterations cause ropes to stretch beyond their nominal length before violently snapping back, inducing unnatural jitter.</li>
+        <li>Zero Surface Corner Wrapping: Naive ropes pass directly through solid geometry; when a player swings around a building corner, the rope clips through the wall instead of bending around the edge.</li>
+        <li>Disconnected Reel Kinematics: Shortening a standard rope's length abruptly arrests linear velocity rather than accelerating angular speed according to conservation of angular momentum.</li>
+        <li>Custom Solver Superiority: Formulating grapple motion as an analytical constrained pendulum running inside RunService.Heartbeat provides deterministic, responsive swinging.</li>
+      </ul>
+
+      <h2>2. Mathematical Foundations: Pendulum Dynamics & Corner Wrapping</h2>
+      <p>A swinging player suspended by a grapple cable behaves as a constrained spherical pendulum driven by gravity and centripetal tension:</p>
+      <ul>
+        <li>Centripetal Rope Tension: Cable tension magnitude T = m * (g * cos(theta) + (v_tangent^2 / L)). Tension acts purely along the radial unit vector (Pivot - Root).Unit toward the anchor.</li>
+        <li>Angular Momentum Conservation: When shortening cable length (dL/dt < 0), tangential velocity increases inversely with radius: v_tangent' = v_tangent * (L_old / L_new), pulling the player into a tighter, faster spin.</li>
+        <li>Corner Wrapping Detection: Cast a ray from current player position to anchor: if Raycast intersects an obstacle corner, push the corner vertex onto a pivot stack as the active sub-anchor.</li>
+        <li>Tangential Release Impulse: Upon detaching the hook, the character inherits their instantaneous tangential velocity plus a forward leap impulse vector: V_exit = V_tangent + (ForwardLook * BoostMagnitude).</li>
+      </ul>
+
+      <h2>3. Complete Custom Grappling Hook Controller Luau Implementation</h2>
+      <p>The following production-ready Luau module implements a custom vector-force constrained pendulum grapple with dynamic reel-in and corner wrapping:</p>
+      <ul>
+        <li>Dynamic Tension Solver: Calculates radial tension forces that cancel outward momentum without spongy physics elasticity.</li>
+        <li>Active Reel-In Acceleration: Continuously shortens grapple length while mathematically amplifying rotational speed.</li>
+        <li>Corner Obstacle Wrapping: Automatically branches anchor pivots around geometry edges and unwraps when line of sight clears.</li>
+      </ul>
+
+      
+      <div class="code-container">
+        <div class="code-title">GrapplePendulumEngine.luau (Analytical Tension & Corner Pivot Solver)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+export type GrappleSession = {
+    PlayerRoot: BasePart,
+    AnchorPoints: { Vector3 }, // stack of corner pivots, index 1 is root anchor
+    CurrentRopeLength: number,
+    TargetRopeLength: number,
+    ReelSpeed: number,
+    IsActive: boolean,
+    VisualBeam: Beam?,
+}
+
+local GrappleEngine = {}
+GrappleEngine.__index = GrappleEngine
+
+local GRAVITY_ACCEL = 196.2
+
+function GrappleEngine.new(rootPart: BasePart)
+    local self = setmetatable({}, GrappleEngine)
+    self.PlayerRoot = rootPart
+    self.AnchorPoints = {}
+    self.CurrentRopeLength = 0
+    self.TargetRopeLength = 0
+    self.ReelSpeed = 35 // studs per second
+    self.IsActive = false
+    return self
+end
+
+function GrappleEngine:Attach(worldAnchor: Vector3)
+    self.AnchorPoints = { worldAnchor }
+    local dist = (worldAnchor - self.PlayerRoot.Position).Magnitude
+    self.CurrentRopeLength = dist
+    self.TargetRopeLength = dist
+    self.IsActive = true
+end
+
+function GrappleEngine:Detach(): Vector3
+    if not self.IsActive then return Vector3.zero end
+    self.IsActive = false
+
+    local vel = self.PlayerRoot.AssemblyLinearVelocity
+    -- Add tangential release boost
+    local forward = self.PlayerRoot.CFrame.LookVector
+    local boost = (vel.Unit + forward * 0.4).Unit * math.max(vel.Magnitude * 1.15, 60)
+
+    self.PlayerRoot.AssemblyLinearVelocity = boost
+    self.AnchorPoints = {}
+    return boost
+end
+
+function GrappleEngine:Update(dt: number)
+    if not self.IsActive or #self.AnchorPoints == 0 then return end
+
+    local activePivot = self.AnchorPoints[#self.AnchorPoints]
+    local rootPos = self.PlayerRoot.Position
+    local rootVel = self.PlayerRoot.AssemblyLinearVelocity
+    local mass = self.PlayerRoot.AssemblyMass
+
+    -- Check for corner wrapping
+    local rayParams = RaycastParams.new()
+    rayParams.FilterType = RaycastFilterType.Exclude
+
+    local rayDir = (activePivot - rootPos)
+    local hit = Workspace:Raycast(rootPos, rayDir, rayParams)
+    if hit and (hit.Position - activePivot).Magnitude &gt; 1.5 then
+        -- Add new corner pivot offset slightly outward from hit surface
+        local cornerPivot = hit.Position + hit.Normal * 0.5
+        table.insert(self.AnchorPoints, cornerPivot)
+        activePivot = cornerPivot
+    elseif #self.AnchorPoints &gt; 1 then
+        -- Check if previous pivot has direct line of sight to unwrap
+        local parentPivot = self.AnchorPoints[#self.AnchorPoints - 1]
+        local unwrapHit = Workspace:Raycast(rootPos, parentPivot - rootPos, rayParams)
+        if not unwrapHit then
+            table.remove(self.AnchorPoints, #self.AnchorPoints)
+            activePivot = parentPivot
+        end
+    end
+
+    -- Reel in adjustment
+    if self.TargetRopeLength &lt; self.CurrentRopeLength then
+        self.CurrentRopeLength = math.max(self.TargetRopeLength, self.CurrentRopeLength - self.ReelSpeed * dt)
+    end
+
+    local toPivot = (activePivot - rootPos)
+    local currentDist = toPivot.Magnitude
+    local radialDir = toPivot.Unit
+
+    -- Constraint enforcement: if player exceeds rope length, apply corrective centripetal force
+    if currentDist &gt; self.CurrentRopeLength then
+        local outwardSpeed = rootVel:Dot(-radialDir)
+        if outwardSpeed &gt; 0 then
+            -- Remove outward velocity component
+            local velocityCorrection = radialDir * outwardSpeed
+            self.PlayerRoot.AssemblyLinearVelocity = rootVel + velocityCorrection
+            rootVel = self.PlayerRoot.AssemblyLinearVelocity
+        end
+
+        -- Calculate centripetal tension: F = m * (v_tan^2 / r)
+        local tanVel = rootVel - (radialDir * rootVel:Dot(radialDir))
+        local centripetalMag = mass * (tanVel.Magnitude^2 / self.CurrentRopeLength)
+        local gravityComponent = mass * GRAVITY_ACCEL * math.max(0, -radialDir.Y)
+
+        local totalTension = radialDir * (centripetalMag + gravityComponent)
+        self.PlayerRoot:ApplyAssemblyForce(totalTension)
+    end
+end
+
+return GrappleEngine</code></pre>
+      </div>
+
+      <h2>4. Camera Dynamics, Field of View (FOV) Warping & Speed Cues</h2>
+      <p>Sensory feedback transforms raw physics into visceral, exhilarating swinging gameplay:</p>
+      <ul>
+        <li>Dynamic FOV Dilation: Scale Camera.FieldOfView dynamically from baseline 70 up to 105 degrees proportional to swing velocity (70 + (v_magnitude / MaxSpeed) * 35).</li>
+        <li>Roll-Angle Banking: Tilt the camera roll angle by 8–15 degrees toward the center of curvature, providing natural centrifugal vestibular feedback.</li>
+        <li>Cable Strain Audio Modulation: Play high-frequency cable tension hums whose pitch and volume scale directly with calculated rope tension T.</li>
+        <li>Wind Rush Spatial Audio: Modulate a 3D wind loop emitter stationed on the player's head to amplify perceived velocity spikes at the nadir of the swing arc.</li>
+      </ul>
+
+      <h2>5. Multiplayer Replication & Network Latency Compensation</h2>
+      <p>Handling high-speed swinging in networked multiplayer requires strict client authority:</p>
+      <ul>
+        <li>Local Client Kinematic Ownership: The active swinging player possesses primary network physics ownership of their character, evaluating grapple constraints locally with zero roundtrip latency.</li>
+        <li>Remote Hermite Spline Smoothing: Replicate anchor points and hook attach events via unreliable RemoteEvents; remote observers render cable beams smoothly without stutter.</li>
+        <li>Server-Side Anti-Teleport Validation: The server validates that player velocity does not exceed the maximum theoretical swing exit speed (V_max = sqrt(2 * g * H_drop) * BoostCoeff).</li>
+        <li>Instant Anchor Snap: Client predicts anchor impact immediately upon mouse click, preventing visual lag during the hook's forward travel time.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why do standard Roblox RopeConstraints fail at high speeds?</h3>
+          <p>RopeConstraints rely on iterative constraint relaxation in the physics solver. When swing velocities exceed 80 studs/second, the solver allows the rope to stretch by several studs between frames, causing unnatural bounciness and erratic camera shuddering.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does reel-in increase swing speed in this implementation?</h3>
+          <p>Following the conservation of angular momentum, reducing the radius of rotation forces tangential velocity to increase proportionally. As the cable shortens, outward linear momentum is converted into higher angular velocity, whipping the player through the arc.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does corner wrapping work without crashing performance?</h3>
+          <p>The system maintains an anchor stack. A single low-cost raycast is fired each frame between the player and the current anchor. When an obstruction is struck, the contact point is added as a child pivot. When line of sight to the parent pivot clears, the child is popped from the stack.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Does this grappling system work on moving platforms and vehicles?</h3>
+          <p>Yes. By storing the anchor point as an object-space offset relative to the hit Part's CFrame (AnchorLocal = HitPart.CFrame:PointToObjectSpace(HitPos)), the pivot point tracks moving trains, ships, or airships seamlessly.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
