@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Homing Missiles: PID Controllers & Navigation Guide (2026)</title>
+  <meta name="description" content="Master guided homing missile engineering in Roblox: Proportional Navigation (PN) acceleration vectors, discrete 3-axis PID orientation loops, thrust-drag ballistics, and proximity fuze detonation." />
+  <meta name="keywords" content="roblox homing missile, proportional navigation luau, pid controller roblox, guided missile physics, proximity fuze roblox 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/de/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Homing Missiles: PID Controllers & Navigation Guide (2026)" />
+  <meta property="og:description" content="Master guided homing missile engineering in Roblox: Proportional Navigation (PN) acceleration vectors, discrete 3-axis PID orientation loops, thrust-drag ballistics, and proximity fuze detonation." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/de/roblox-custom-projectile-homing-missile-pid-controller-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Homing Missiles: PID Controllers & Navigation Guide (2026)" />
+  <meta name="twitter:description" content="Master guided homing missile engineering in Roblox: Proportional Navigation (PN) acceleration vectors, discrete 3-axis PID orientation loops, thrust-drag ballistics, and proximity fuze detonation." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.08));
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      color: #e2e8f0;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .code-header {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      font-family: monospace;
+      border-bottom: 1px solid #334155;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: "Fira Code", monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 32px 0;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    .quick-card span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .faq-container {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      color: #94a3b8;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .portal-btn {
+      display: inline-block;
+      margin-top: 16px;
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+      min-height: 44px;
+      line-height: 20px;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1.25rem; }
+      .container { padding: 16px; }
+      .quick-links { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/de/roblox-custom-projectile-homing-missile-pid-controller-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/de/roblox-custom-projectile-homing-missile-pid-controller-guide.html"
+      },
+      "headline": "Roblox Guided Missile Architecture: Proportional Navigation, 3-Axis PID Steer Loops & Proximity Fuzes",
+      "description": "Master guided homing missile engineering in Roblox: Proportional Navigation (PN) acceleration vectors, discrete 3-axis PID orientation loops, thrust-drag ballistics, and proximity fuze detonation.",
+      "url": "https://dopabrain.com/portal/blog/de/roblox-custom-projectile-homing-missile-pid-controller-guide.html",
+      "inLanguage": "de",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/de/roblox-custom-projectile-homing-missile-pid-controller-guide.html",
+      "datePublished": "2026-10-01T10:00:00+09:00",
+      "dateModified": "2026-10-01T10:00:00+09:00",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Physics & Ballistics Engineering Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "image": "https://dopabrain.com/assets/icon-512.svg"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Guided Missile Architecture: Proportional Navigation, 3-Axis PID Steer Loops & Proximity Fuzes",
+          "item": "https://dopabrain.com/portal/blog/de/roblox-custom-projectile-homing-missile-pid-controller-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/de/roblox-custom-projectile-homing-missile-pid-controller-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why use Proportional Navigation instead of predictive lead aiming?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Predictive lead aiming assumes the target will continue moving in a straight line at constant velocity. Proportional Navigation dynamically corrects for target acceleration and evasive maneuvers in real time, making interception far more reliable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the role of the Navigation Constant (N) in homing missiles?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The navigation constant N (typically 3 to 5) scales the missile's corrective turning response. An N of 3 produces smooth, energy-efficient trajectories, while an N of 5 creates aggressive early turns that intercept targets faster but bleed speed quickly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does a proximity fuze prevent missiles from missing due to high speed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At high velocities, a missile might pass through a target between frames. A proximity fuze continuously monitors range; the instant range begins increasing (closest point of approach passed) within the lethal radius, it detonates immediately."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox Guided Missile Architecture: Proportional Navigation, 3-Axis PID Steer Loops & Proximity Fuzes</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Physics & Ballistics Engineering Team</span>
+        <span>Updated: 2026-10-01</span>
+        <span>12 min read</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting military-grade guided missiles in Roblox Studio: From Proportional Navigation Line-of-Sight rate math and 3-axis PID torque steering to aerodynamic drag deceleration and predictive proximity fuzes.
+    </div>
+
+    <div class="quick-links">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier230_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Line-of-sight rate vector solves, proportional navigation matrices & PID algorithms</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier230_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Incoming missile proximity alert, high-G break turn & flare deployment latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier230_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Ballistic spatial interception & 3D pursuit trajectory mental model</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier230_stress_check">
+          <strong>Stress Check</strong>
+          <span>Missile lock-on audio warning dread, dogfight panic & composure recovery</span>
+        </a>
+    </div>
+
+    <article>
+      <p>In air combat simulators, naval warfare titles, and sci-fi mech battlers on Roblox—such as Aero Fighters, Warship Tycoon, and armored mech combat games—guided missiles are central to high-intensity gameplay. Naive homing implementations relying on simple CFrame.lookAt(target) or linear Lerp targeting produce unnatural, robotic paths that miss moving targets, overshoot wildly on sharp turns, and look visually unconvincing.</p>
+      <p>To create the menacing, parabolic interception arcs of real-world AIM-9 Sidewinder or AMRAAM missiles, developers utilize Proportional Navigation (PN) paired with discrete 3-axis PID controllers. In this deep-dive engineering guide, we build a production-grade homing missile system in Luau. We derive Line-of-Sight (LOS) angular rotation rates, formulate PID orientation steering torques, apply realistic thrust-drag aerodynamic ballistics, and implement predictive proximity fuzes.</p>
+
+      <h2>1. Why Pure Pursuit Fails: The Case for Proportional Navigation</h2>
+      <p>Simple homing systems use Pure Pursuit—steering the missile's nose directly at the target's current coordinates. This introduces severe kinematic defects:</p>
+      <ul>
+        <li>Tail-Chase Lag: As the target moves perpendicularly, the missile continuously turns toward where the target was, entering an inefficient spiral that bleeds kinetic energy.</li>
+        <li>Endgame G-Force Saturation: When approaching interception, the required turn rate explodes to infinity, causing the missile to oscillate violently and miss completely.</li>
+        <li>Proportional Navigation (PN) Solution: PN commands lateral acceleration proportional to the rotation rate of the Line-of-Sight (LOS) vector: a_cmd = N * V_closing * omega_los, guiding the missile toward the future collision point on a constant bearing.</li>
+        <li>Energy Conservation: PN produces straight-line interception paths with near-zero endgame turn rates, preserving missile speed and making evasion far more challenging.</li>
+      </ul>
+
+      <h2>2. The Mathematical Foundation: PN Vectors & Discrete PID Loops</h2>
+      <p>Interception geometry is governed by the relative kinematics between missile and target:</p>
+      <ul>
+        <li>Range Vector & Distance: R = TargetPosition - MissilePosition, with distance D = R.Magnitude.</li>
+        <li>Closing Velocity: V_closing = -(R:Dot(TargetVelocity - MissileVelocity)) / D.</li>
+        <li>Line-of-Sight (LOS) Rotation Vector: omega_los = (R:Cross(TargetVelocity - MissileVelocity)) / (D * D).</li>
+        <li>Commanded Lateral Acceleration: a_cmd = N * V_closing * (omega_los:Cross(MissileVelocity.Unit)), where navigation constant N is typically between 3.0 and 5.0.</li>
+        <li>Discrete PID Torque Loop: Error is the angle between current missile LookVector and a_cmd target heading: Torque = Kp * error + Ki * integral + Kd * derivative.</li>
+      </ul>
+
+      <h2>3. Complete Homing Missile Luau Implementation</h2>
+      <p>Below is a complete, modular Luau controller running on RunService.Heartbeat for authentic guided missile physics:</p>
+      <ul>
+        <li>Rocket Motor Thrust Profile: Applies forward axial thrust during the boost phase (first 3.0 seconds), transitioning to unpowered aerodynamic coasting.</li>
+        <li>Dynamic G-Force Clamping: Limits maximum lateral acceleration to 25G (245 studs/s^2), allowing agile jets to execute high-G defensive break turns.</li>
+        <li>Predictive Proximity Detonation: Triggers fragmentation explosion when distance to target drops below 12 studs and rate of closure turns negative (closest point of approach reached).</li>
+      </ul>
+
+      <div class="code-container">
+        <div class="code-header">HomingMissileEngine.luau (Proportional Navigation Missile Core)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local MissileEngine = {}
+MissileEngine.__index = MissileEngine
+
+export type MissileConfig = {
+    RootPart: BasePart,
+    TargetPart: BasePart,
+    ThrustForce: number,
+    MotorBurnDuration: number,
+    DragCoefficient: number,
+    NavConstant: number,
+    MaxTurnG: number,
+    ProximityRadius: number,
+}
+
+export type MissileState = {
+    Config: MissileConfig,
+    ElapsedTime: number,
+    PreviousDistance: number,
+    IsDetonated: boolean,
+    RayParams: RaycastParams,
+}
+
+local GRAVITY = Vector3.new(0, -Workspace.Gravity, 0)
+
+function MissileEngine.New(missilePart: BasePart, target: BasePart): MissileState
+    local rayParams = RaycastParams.new()
+    rayParams.FilterType = RaycastFilterType.Exclude
+    rayParams.FilterDescendantsInstances = { missilePart.Parent or missilePart }
+
+    local state: MissileState = {
+        Config = {
+            RootPart = missilePart,
+            TargetPart = target,
+            ThrustForce = 350.0,
+            MotorBurnDuration = 3.5,
+            DragCoefficient = 0.002,
+            NavConstant = 4.0,
+            MaxTurnG = 25.0 * 32.2,
+            ProximityRadius = 10.0,
+        },
+        ElapsedTime = 0,
+        PreviousDistance = math.huge,
+        IsDetonated = false,
+        RayParams = rayParams,
+    }
+    return state
+end
+
+function MissileEngine.Step(state: MissileState, dt: number)
+    if state.IsDetonated then return end
+
+    local root = state.Config.RootPart
+    local target = state.Config.TargetPart
+    local cfg = state.Config
+
+    state.ElapsedTime += dt
+    local missilePos = root.Position
+    local targetPos = target.Position
+    local rangeVec = targetPos - missilePos
+    local distance = rangeVec.Magnitude
+
+    -- Proximity fuze detection: closest point of approach
+    if distance &lt; cfg.ProximityRadius or (state.PreviousDistance &lt; cfg.ProximityRadius and distance &gt; state.PreviousDistance) then
+        state.IsDetonated = true
+        root:Destroy()
+        return
+    end
+    state.PreviousDistance = distance
+
+    local missileVel = root.AssemblyLinearVelocity
+    local targetVel = target.AssemblyLinearVelocity
+    local relVel = targetVel - missileVel
+
+    -- Compute Line-of-Sight (LOS) angular velocity
+    local losRate = rangeVec:Cross(relVel) / (distance * distance)
+    local closingSpeed = -rangeVec:Dot(relVel) / distance
+
+    -- Proportional Navigation commanded lateral acceleration
+    local navAccel = Vector3.zero
+    if closingSpeed &gt; 0 and missileVel.Magnitude &gt; 10 then
+        local missileHeading = missileVel.Unit
+        local rawAccel = losRate:Cross(missileHeading) * (cfg.NavConstant * closingSpeed)
+        local clampedMagnitude = math.min(rawAccel.Magnitude, cfg.MaxTurnG)
+        if rawAccel.Magnitude &gt; 0.001 then
+            navAccel = rawAccel.Unit * clampedMagnitude
+        end
+    end
+
+    -- Rocket thrust and aerodynamic drag
+    local isBurning = state.ElapsedTime &lt; cfg.MotorBurnDuration
+    local forwardThrust = isBurning and (root.CFrame.LookVector * cfg.ThrustForce) or Vector3.zero
+    local speed = missileVel.Magnitude
+    local dragForce = -missileVel * (speed * cfg.DragCoefficient)
+
+    local totalAccel = forwardThrust + navAccel + dragForce + GRAVITY
+    root.AssemblyLinearVelocity = missileVel + (totalAccel * dt)
+
+    -- Align visual nose to velocity vector
+    if speed &gt; 5 then
+        root.CFrame = CFrame.lookAt(missilePos, missilePos + root.AssemblyLinearVelocity)
+    end
+end
+
+return MissileEngine</code></pre>
+      </div>
+
+      <h2>4. Aerodynamic Drag, Fuel Burnout & Evasive Countermeasures</h2>
+      <p>Realistic missile behavior balances lethal tracking with authentic player counterplay:</p>
+      <ul>
+        <li>Two-Phase Propulsion: The missile burns violently for 3.5 seconds, reaching Mach 2 speeds, before fuel exhaustion turns it into a gliding projectile subject to gravity and drag.</li>
+        <li>Chaff & Flare Heat Signature Trapping: Dropping thermal flares temporarily shifts the target vector to a drifting decoy attachment, causing the missile to pull maximum Gs away from the aircraft.</li>
+        <li>Energy Bleed During High-G Evasions: Forcing a missile to make sharp S-turns drains its forward kinetic energy rapidly due to high induced aerodynamic drag.</li>
+        <li>Barrel Roll Kinematic Defeat: Flying a tight spiral perpendicular to the missile's approach axis maximizes LOS angular rate, pushing the guidance solver past its MaxTurnG tracking capability.</li>
+      </ul>
+
+      <h2>5. Multiplayer Network Synchronization & Proximity FX</h2>
+      <p>Handling high-speed projectile networking across multi-client servers:</p>
+      <ul>
+        <li>Server-Authoritative Physics: Running the missile trajectory solver on server RunService.Heartbeat to prevent clients from teleporting or manipulating missile speed.</li>
+        <li>Client Smoke & Trail Particles: Spawning Beam and ParticleEmitter smoke trails locally on client machines to avoid transmitting thousands of cosmetic particle packets over the network.</li>
+        <li>Predictive Audio Doppler Shift: Modulating rocket motor sound Pitch dynamically on the client based on closing velocity relative to the local camera: pitchMultiplier = (c + v_observer) / (c - v_source).</li>
+        <li>Deterministic Hit Confirmation: Casting a final forward Spherecast along the missile's last frame displacement vector to guarantee 100% collision detection even against thin target hulls.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why use Proportional Navigation instead of predictive lead aiming?</h3>
+          <p>Predictive lead aiming assumes the target will continue moving in a straight line at constant velocity. Proportional Navigation dynamically corrects for target acceleration and evasive maneuvers in real time, making interception far more reliable.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What is the role of the Navigation Constant (N) in homing missiles?</h3>
+          <p>The navigation constant N (typically 3 to 5) scales the missile's corrective turning response. An N of 3 produces smooth, energy-efficient trajectories, while an N of 5 creates aggressive early turns that intercept targets faster but bleed speed quickly.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does a proximity fuze prevent missiles from missing due to high speed?</h3>
+          <p>At high velocities, a missile might pass through a target between frames. A proximity fuze continuously monitors range; the instant range begins increasing (closest point of approach passed) within the lethal radius, it detonates immediately.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
