@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 커스텀 중력과 궤도 역학: N-바디 및 구형 행성 가이드 (2026)</title>
+  <meta name="description" content="로블록스 커스텀 임의 중력 시스템 완벽 마스터: 구형 행성 방사형 중력, 룬게-쿠타 4차(RK4) 궤도 적분, 캐릭터 로컬 UpVector 실시간 재정렬 및 다체 중력 시뮬레이션 기법." />
+  <meta name="keywords" content="로블록스 커스텀 중력, 구형 행성 중력 luau, rk4 궤도 물리 로블록스, n-바디 시뮬레이션 로블록스, 행성 보행 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="로블록스 커스텀 중력과 궤도 역학: N-바디 및 구형 행성 가이드 (2026)" />
+  <meta property="og:description" content="로블록스 커스텀 임의 중력 시스템 완벽 마스터: 구형 행성 방사형 중력, 룬게-쿠타 4차(RK4) 궤도 적분, 캐릭터 로컬 UpVector 실시간 재정렬 및 다체 중력 시뮬레이션 기법." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 커스텀 중력과 궤도 역학: N-바디 및 구형 행성 가이드 (2026)" />
+  <meta name="twitter:description" content="로블록스 커스텀 임의 중력 시스템 완벽 마스터: 구형 행성 방사형 중력, 룬게-쿠타 4차(RK4) 궤도 적분, 캐릭터 로컬 UpVector 실시간 재정렬 및 다체 중력 시뮬레이션 기법." />
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html"
+      },
+      "headline": "임의 중력장 아키텍처: N-바디 중력 동역학, RK4 궤도 솔버 및 구형 행성 보행",
+      "description": "로블록스 커스텀 임의 중력 시스템 완벽 마스터: 구형 행성 방사형 중력, 룬게-쿠타 4차(RK4) 궤도 적분, 캐릭터 로컬 UpVector 실시간 재정렬 및 다체 중력 시뮬레이션 기법.",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 천체물리학 및 궤도역학 기술팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 커스텀 중력과 궤도 역학: N-바디 및 구형 행성 가이드 (2026)",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Workspace.Gravity를 0으로 설정하면 다른 기본 물리 오브젝트에는 어떤 영향이 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "기본 하향 중력이 전역적으로 사라지므로 모든 파트와 차량이 무중력 상태로 부유합니다. 행성이나 우주선 내부처럼 중력이 필요한 구역에서는 VectorForce나 LineForce를 통해 맞춤형 중력 벡터를 직접 인가해 주어야 합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "행성의 남극으로 걸어갈 때 기본 카메라가 위아래로 심하게 뒤집히는 문제는 어떻게 해결하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "로블록스 기본 카메라 스크립트가 월드 Y축을 위쪽(Vector3.yAxis)으로 하드코딩하고 있기 때문입니다. 카메라 모듈을 수정하여 월드 Y축 대신 플레이어 발바닥 아래의 행성 표면 법선 벡터를 카메라 기준 UpVector로 사용하도록 교체해야 합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "왜 단순 오일러 적분 대신 RK4(룬게-쿠타 4차) 적분을 사용해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "오일러 적분은 시간 간격 동안 가속도가 일정하다고 가정하므로 매 스텝마다 운동 에너지가 인위적으로 팽창합니다. 몇 분만 지나도 인공위성이 궤도를 이탈해 날아가 버립니다. RK4는 구간 내 4개 지점의 기울기를 가중 평가하여 몇 시간이 지나도 궤도 형태를 완벽히 보존합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "우주선 내부의 인공 중력에서 행성의 자연 중력으로 나갈 때의 전환은 어떻게 처리하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "해치나 에어로크 출구 구역(약 20~50 스터드)에 전환 볼륨을 설정합니다. 선체 바닥 수직 벡터와 행성 중심 인력 벡터를 구역 진입 비율에 따라 Slerp/Lerp 보간하여 캐릭터가 어지러움 없이 부드럽게 새 중력장에 안착하도록 만듭니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 32px;
+      font-size: 15px;
+      color: #cbd5e1;
+    }
+    article section {
+      margin-bottom: 36px;
+    }
+    h2 {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 700;
+      margin: 36px 0 16px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 20px 0 10px;
+      color: #e2e8f0;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 16px;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 24px 0 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .quick-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+    .quick-card strong {
+      font-size: 14px;
+      color: var(--accent);
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-container {
+      background: #070a11;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .code-title {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 8px 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      margin-top: 0;
+      color: #38bdf8;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(129, 140, 248, 0.1));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      margin: 48px 0;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0 0 12px;
+    }
+    .portal-cta p {
+      max-width: 540px;
+      margin: 0 auto 20px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      min-height: 44px;
+      line-height: 20px;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Architecture & Engineering</span>
+      <h1>임의 중력장 아키텍처: N-바디 중력 동역학, RK4 궤도 솔버 및 구형 행성 보행</h1>
+      <div class="meta">
+        <span>By DopaBrain 천체물리학 및 궤도역학 기술팀</span>
+        <span>•</span>
+        <span>Published 2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      로블록스 스튜디오 환경에서 임의 중력장과 천체 궤도 역학 구현하기: 뉴턴 만유인력 법칙, 룬게-쿠타 4차(RK4) 수치 적분, 캐릭터 컨트롤러 로컬 법선 재정렬 및 라그랑주 포인트 궤도 안정화.
+    </div>
+
+    <div class="quick-links">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier242_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>뉴턴 만유인력 미적분, RK4 궤도 적분 행렬 및 천체 역학 연산</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier242_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>대기권 진입 역분사 타이밍, 궤도 도킹 및 무중력 조작 반응 잠복기</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier242_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>천체역학 멘탈 모델 및 비유클리드 공간 추론 인지 아키타입</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier242_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>궤도 붕괴 추락 공포, 중력 새총 비행 패닉 및 우주 평정심 유지</span>
+        </a>
+    </div>
+
+    <article>
+      <p>로블록스의 기본 물리 엔진은 Workspace.Gravity = 196.2 studs/s^2라는 고정된 글로벌 음의 Y축 벡터가 지배하는 완벽한 평면 유클리드 공간을 전제로 작동합니다. 이 평면적 한계로 인해 슈퍼 마리오 갤럭시 같은 구형 행성 탐사, 회전식 우주 정거장의 원심 인공 중력, 다체 중력이 작용하는 행성 궤도 시뮬레이션 제작이 원천적으로 불가능했습니다.</p>
+      <p>진정한 차세대 우주 비행 및 샌드박스 경험을 제공하기 위해 최고 수준의 테크니컬 개발자들은 Luau 기반의 커스텀 임의 중력 엔진을 구축합니다. 본 실전 가이드에서는 완전한 임의 중력 아키텍처를 제작합니다. 만유인력 공식 구현, 에너지 발산 없는 룬게-쿠타 4차(RK4) 궤도 수치 적분, 캐릭터가 행성 남극에서도 뒤집혀 걸을 수 있는 로컬 UpVector 동적 정렬, 그리고 멀티플레이어 물리 권한 분산 기법을 다룹니다.</p>
+
+      <h2>1. 평면의 한계: 왜 기본 중력은 우주 게임에서 실패하는가</h2>
+      <p>Workspace.Gravity의 획일적인 하향 벡터는 비평면 게임 환경에서 치명적인 결함을 드러냅니다:</p>
+      <ul>
+        <li>절대 하향 벡터의 한계: 모든 물체가 (0, -1, 0)으로만 떨어지므로 구형 행성의 적도나 남극에 발을 디디는 순간 우주 공간으로 미끄러져 추락합니다.</li>
+        <li>오일러 적분의 궤도 붕괴: 로블록스 기본 물리는 수치적 에너지 오차가 누적되어 궤도를 도는 인공위성이 서서히 튕겨 나가거나 행성에 충돌해 자멸합니다.</li>
+        <li>카메라 및 조작계 반전: 기본 Humanoid는 월드 Y축을 '위쪽'으로 고정해 두어 캐릭터가 거꾸로 서면 카메라가 180도 뒤집히며 조작키가 반전됩니다.</li>
+        <li>임의 중력의 해법: Workspace.Gravity를 0으로 끄고, VectorForce 및 AlignOrientation을 통해 캐릭터와 오브젝트마다 독립적인 벡터 중력을 부여합니다.</li>
+      </ul>
+
+      <h2>2. 수학적 기반: 만유인력 법칙과 RK4 궤도 수치 적분</h2>
+      <p>천체 간의 인력과 영구적인 안정 궤도를 계산하려면 고차 수치 적분 방정식이 필수적입니다:</p>
+      <ul>
+        <li>뉴턴 만유인력 공식: F = G * (m1 * m2) / r^2 * r_hat. 천체가 받는 총 중력 가속도는 모든 주변 천체 질량의 중력 벡터 합으로 유도됩니다.</li>
+        <li>원궤도 비행 속도: 반지름 R, 중심 질량 M에 대한 원궤도 속도 v_circ = math.sqrt(G * M / R), 탈출 속도는 v_esc = math.sqrt(2 * G * M / R)입니다.</li>
+        <li>룬게-쿠타 4차(RK4) 적분: 시간 스텝 dt 동안 4개의 기울기(k1, k2, k3, k4)를 가중 평균하여 다음 위치와 속도를 도출함으로써 오차 누적을 원천 제거합니다.</li>
+        <li>라그랑주 점(L1~L5): 두 거대 천체의 중력과 원심력이 완벽한 평형을 이루는 5개의 특이점을 활용해 우주 기지의 영구 정지 궤도를 설정합니다.</li>
+      </ul>
+
+      <h2>3. Luau 구형 행성 캐릭터 컨트롤러 구현체</h2>
+      <p>RunService.PreSimulation에서 물리 프레임마다 캐릭터의 로컬 법선 벡터를 재정렬하는 상용급 Luau 스크립트입니다:</p>
+      <ul>
+        <li>동적 로컬 UpVector 산출: 행성 중심 좌표로부터 플레이어 HumanoidRootPart까지의 방사형 표면 법선 벡터를 실시간 연산합니다.</li>
+        <li>VectorForce 중심 인력: 행성 질량과 거리에 비례하는 구심 가속도(F = m*g)를 캐릭터 무게중심에 정확히 가합니다.</li>
+        <li>부드러운 좌표계 정렬: 짐벌락 현상 없이 표면 법선 벡터를 기준으로 CFrame.lookAt을 회전시켜 카메라와 보행 방향을 매끄럽게 정렬합니다.</li>
+      </ul>
+
+
+      <div class="code-container">
+        <div class="code-title">PlanetaryGravityController.luau (구형 행성 보행 및 중력 코어)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+
+export type Planet = {
+    Center: Vector3,
+    Radius: number,
+    Mass: number,
+    SurfaceGravity: number,
+}
+
+local PlanetaryController = {}
+PlanetaryController.__index = PlanetaryController
+
+function PlanetaryController.new(character: Model, planet: Planet)
+    local self = setmetatable({}, PlanetaryController)
+    self.Character = character
+    self.RootPart = character:WaitForChild("HumanoidRootPart") :: BasePart
+    self.Humanoid = character:WaitForChild("Humanoid") :: Humanoid
+    self.Planet = planet
+    self.G = 6.674e-11
+
+    -- 물리 인력 액추에이터 생성
+    local att = Instance.new("Attachment")
+    att.Name = "GravityAttachment"
+    att.Parent = self.RootPart
+
+    local vectorForce = Instance.new("VectorForce")
+    vectorForce.Name = "PlanetaryForce"
+    vectorForce.Attachment0 = att
+    vectorForce.RelativeTo = Enum.ActuatorRelativeTo.World
+    vectorForce.ApplyAtCenterOfMass = true
+    vectorForce.Parent = self.RootPart
+    self.VectorForce = vectorForce
+
+    return self
+end
+
+function PlanetaryController:Start()
+    self.Connection = RunService.PreSimulation:Connect(function(dt: number)
+        self:Update(dt)
+    end)
+end
+
+function PlanetaryController:Update(dt: number)
+    local charPos = self.RootPart.Position
+    local toCenter = self.Planet.Center - charPos
+    local distance = toCenter.Magnitude
+
+    if distance &lt; 1e-4 then return end
+
+    local gravityDir = toCenter.Unit
+    local surfaceUp = -gravityDir
+
+    -- Step 1: 방사형 행성 중력 부여 (F = m * g)
+    local mass = self.RootPart.AssemblyMass
+    local gravityForce = gravityDir * (mass * self.Planet.SurfaceGravity)
+    self.VectorForce.Force = gravityForce
+
+    -- Step 2: 캐릭터 UpVector를 행성 표면 법선 방향으로 실시간 재정렬
+    local currentCF = self.RootPart.CFrame
+    local forward = currentCF.LookVector
+    local projectedForward = (forward - surfaceUp * forward:Dot(surfaceUp)).Unit
+    if projectedForward.Magnitude &lt; 0.01 then
+        projectedForward = currentCF.RightVector:Cross(surfaceUp).Unit
+    end
+
+    local targetCF = CFrame.lookAt(charPos, charPos + projectedForward, surfaceUp)
+    self.RootPart.CFrame = currentCF:Lerp(targetCF, math.clamp(dt * 15, 0, 1))
+end
+
+function PlanetaryController:Destroy()
+    if self.Connection then
+        self.Connection:Disconnect()
+    end
+    if self.VectorForce then
+        self.VectorForce:Destroy()
+    end
+end
+
+return PlanetaryController</code></pre>
+      </div>
+
+      <h2>4. 고정밀 N-바디 RK4 천체 궤도 시뮬레이션</h2>
+      <p>태양계 행성과 달, 인공위성을 에너지 손실 없이 수백 시간 동안 안정 궤도에 유지하는 기법입니다:</p>
+      <ul>
+        <li>상태 벡터 모델링: 각 천체를 위치와 속도로 묶인 6차원 상태 벡터 Y = [x, y, z, vx, vy, vz]로 표현합니다.</li>
+        <li>쌍대 중력 가속도 합산: N개 천체 간의 상호 인력을 a_i = sum_{j != i} G * M_j * (r_j - r_i) / |r_j - r_i|^3 수식으로 집계합니다.</li>
+        <li>소프트닝(Softening) 파라미터: 두 천체가 극도로 근접할 때 가속도가 무한대로 치솟아 우주 밖으로 튕겨 나가는 현상을 분모 완화 상수 epsilon으로 방지합니다.</li>
+        <li>호만 전이 궤도(Hohmann Transfer): 우주선이 최소한의 연료(Delta-V)로 행성 간 궤도를 전이할 수 있는 타원형 기동 경로를 설계합니다.</li>
+      </ul>
+
+      <h2>5. 상용 아키텍처 및 멀티플레이어 동기화 최적화</h2>
+      <p>수십 명의 플레이어가 광활한 우주 공간을 누빌 때 랙 없이 중력을 분산 처리하는 규칙입니다:</p>
+      <ul>
+        <li>클라이언트 로컬 보행 제어: 캐릭터 좌표계 회전과 카메라 스크립트는 로컬 클라이언트에서 60 FPS로 즉각 처리해 조작 지연을 0으로 만듭니다.</li>
+        <li>서버 권한 궤도 연산: 거대 행성과 우주 정거장의 공전 궤도는 서버에서 RK4로 연산한 뒤 압축된 좌표 버퍼로 브로드캐스팅합니다.</li>
+        <li>옥트리 공간 중력 볼륨: 공간을 구형 및 원통형 중력 구역으로 분할하여, 플레이어가 우주선 내부에서 행성 표면으로 나갈 때 중력 방향을 50스터드에 걸쳐 매끄럽게 보간합니다.</li>
+        <li>커스텀 롤/피치 카메라: 월드 Y축 종속성을 제거하고 캐릭터의 발바닥 표면 법선을 기준으로 회전하는 자유도 6축 카메라를 탑재합니다.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Workspace.Gravity를 0으로 설정하면 다른 기본 물리 오브젝트에는 어떤 영향이 있나요?</h3>
+          <p>기본 하향 중력이 전역적으로 사라지므로 모든 파트와 차량이 무중력 상태로 부유합니다. 행성이나 우주선 내부처럼 중력이 필요한 구역에서는 VectorForce나 LineForce를 통해 맞춤형 중력 벡터를 직접 인가해 주어야 합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>행성의 남극으로 걸어갈 때 기본 카메라가 위아래로 심하게 뒤집히는 문제는 어떻게 해결하나요?</h3>
+          <p>로블록스 기본 카메라 스크립트가 월드 Y축을 위쪽(Vector3.yAxis)으로 하드코딩하고 있기 때문입니다. 카메라 모듈을 수정하여 월드 Y축 대신 플레이어 발바닥 아래의 행성 표면 법선 벡터를 카메라 기준 UpVector로 사용하도록 교체해야 합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>왜 단순 오일러 적분 대신 RK4(룬게-쿠타 4차) 적분을 사용해야 하나요?</h3>
+          <p>오일러 적분은 시간 간격 동안 가속도가 일정하다고 가정하므로 매 스텝마다 운동 에너지가 인위적으로 팽창합니다. 몇 분만 지나도 인공위성이 궤도를 이탈해 날아가 버립니다. RK4는 구간 내 4개 지점의 기울기를 가중 평가하여 몇 시간이 지나도 궤도 형태를 완벽히 보존합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>우주선 내부의 인공 중력에서 행성의 자연 중력으로 나갈 때의 전환은 어떻게 처리하나요?</h3>
+          <p>해치나 에어로크 출구 구역(약 20~50 스터드)에 전환 볼륨을 설정합니다. 선체 바닥 수직 벡터와 행성 중심 인력 벡터를 구역 진입 비율에 따라 Slerp/Lerp 보간하여 캐릭터가 어지러움 없이 부드럽게 새 중력장에 안착하도록 만듭니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

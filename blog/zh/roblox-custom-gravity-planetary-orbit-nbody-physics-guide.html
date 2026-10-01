@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Gravity & Orbital Physics: N-Body & Planets Guide (2026)</title>
+  <meta name="description" content="Master custom arbitrary gravity systems in Roblox Studio: spherical planet gravity, Runge-Kutta 4th Order (RK4) orbital integration, player character UpVector reorientation, and multi-body gravitational simulations in Luau." />
+  <meta name="keywords" content="roblox custom gravity, planetary gravity luau, rk4 orbital physics roblox, nbody simulation roblox, spherical planet walk 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Roblox Custom Gravity & Orbital Physics: N-Body & Planets Guide (2026)" />
+  <meta property="og:description" content="Master custom arbitrary gravity systems in Roblox Studio: spherical planet gravity, Runge-Kutta 4th Order (RK4) orbital integration, player character UpVector reorientation, and multi-body gravitational simulations in Luau." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Gravity & Orbital Physics: N-Body & Planets Guide (2026)" />
+  <meta name="twitter:description" content="Master custom arbitrary gravity systems in Roblox Studio: spherical planet gravity, Runge-Kutta 4th Order (RK4) orbital integration, player character UpVector reorientation, and multi-body gravitational simulations in Luau." />
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html"
+      },
+      "headline": "Arbitrary Gravity Field Architecture: N-Body Gravitational Dynamics, RK4 Orbital Solvers & Spherical Walking",
+      "description": "Master custom arbitrary gravity systems in Roblox Studio: spherical planet gravity, Runge-Kutta 4th Order (RK4) orbital integration, player character UpVector reorientation, and multi-body gravitational simulations in Luau.",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Astrophysics & Celestial Mechanics Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "zh"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Custom Gravity & Orbital Physics: N-Body & Planets Guide (2026)",
+          "item": "https://dopabrain.com/portal/blog/zh/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-gravity-planetary-orbit-nbody-physics-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does setting Workspace.Gravity = 0 affect other Roblox physics objects?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When Workspace.Gravity is 0, native downward acceleration ceases globally. All objects, parts, and vehicles require custom VectorForce or LinearVelocity actuators to experience gravity. This provides complete freedom to assign different gravity strengths, directions, or inverse-square radial fields to specific objects."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you prevent the Roblox default camera from flipping upside down when walking on the south pole of a planet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The default Roblox PlayerModule Camera script uses a hardcoded world-up vector (Vector3.yAxis). To allow upside-down navigation, you must fork or replace the camera controller to evaluate Camera.CFrame using the character's local surface UpVector instead of the global Y-axis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is Euler integration inadequate for long-term satellite orbits in games?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Euler integration assumes velocity is constant throughout the time step dt, which introduces systematic energy inflation every step. Over a few minutes, an orbiting body gains artificial kinetic energy and spirals away into deep space. RK4 evaluates acceleration at 4 sub-points across dt, preserving orbital shape and energy over hours."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you transition a player smoothly from a spaceship's artificial gravity to a planet's gravity?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use a weighted linear interpolation (Slerp/Lerp) between the ship's local floor normal and the planet's radial center vector across a designated airlock or atmospheric entry zone (typically 20-50 studs), gradually ramping the planet's gravitational weight from 0 to 1."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 32px;
+      font-size: 15px;
+      color: #cbd5e1;
+    }
+    article section {
+      margin-bottom: 36px;
+    }
+    h2 {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 700;
+      margin: 36px 0 16px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 20px 0 10px;
+      color: #e2e8f0;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 16px;
+    }
+    ul, ol {
+      margin: 0 0 20px 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 24px 0 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .quick-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+    .quick-card strong {
+      font-size: 14px;
+      color: var(--accent);
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .code-container {
+      background: #070a11;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .code-title {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 8px 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      color: #e2e8f0;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      margin-top: 0;
+      color: #38bdf8;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+    }
+    .portal-cta {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(129, 140, 248, 0.1));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+      margin: 48px 0;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0 0 12px;
+    }
+    .portal-cta p {
+      max-width: 540px;
+      margin: 0 auto 20px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      min-height: 44px;
+      line-height: 20px;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Architecture & Engineering</span>
+      <h1>Arbitrary Gravity Field Architecture: N-Body Gravitational Dynamics, RK4 Orbital Solvers & Spherical Walking</h1>
+      <div class="meta">
+        <span>By DopaBrain Astrophysics & Celestial Mechanics Team</span>
+        <span>•</span>
+        <span>Published 2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting arbitrary gravitational fields and orbital physics in Roblox Studio: From Newton's law of universal gravitation and Runge-Kutta 4th Order (RK4) orbital integration to character controller UpVector reorientation and multi-body Lagrangian points.
+    </div>
+
+    <div class="quick-links">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier242_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Newtonian gravity calculus, RK4 integration matrices & orbital mechanics</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier242_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Atmospheric entry burn timing, orbital dock & micro-gravity reflex latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier242_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Celestial mechanics mental model & non-Euclidean spatial reasoning</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier242_stress_check">
+          <strong>Stress Check</strong>
+          <span>Orbital decay dread, gravitational slingshot panic & spatial composure</span>
+        </a>
+    </div>
+
+    <article>
+      <p>Roblox's default physics engine assumes a globally flat, Euclidean world governed by a constant downward vector: Workspace.Gravity = 196.2 studs/s^2 along the negative Y-axis. This planar assumption makes it impossible to build authentic space simulators, spherical planets like Super Mario Galaxy, inverted rotating orbital habitats, or multi-body celestial orbits without custom physics override systems.</p>
+      <p>To create next-generation space exploration experiences, technical developers construct custom arbitrary gravity controllers in Luau. In this comprehensive technical guide, we implement a full arbitrary gravity architecture. We derive Newton's universal law of gravitation, implement high-precision Runge-Kutta 4th Order (RK4) numerical integration for stable closed orbits, reorient player HumanoidRootPart coordinate frames to walk seamlessly across spherical planet surfaces, and handle server-authoritative physics replication.</p>
+
+      <h2>1. The Planar Flaw: Why Default Workspace.Gravity Breaks Space Games</h2>
+      <p>Workspace.Gravity applies a monolithic global vector that fails across non-planar gaming environments:</p>
+      <ul>
+        <li>Planar Monolithic Down: Characters and debris are always accelerated along (0, -1, 0); walking onto the equator or south pole of a spherical planet results in players sliding off into the void.</li>
+        <li>Orbital Decay in Euler Integration: Standard Roblox physics integration suffers from numerical energy drift, causing orbiting satellites and space stations to either spiral inward and crash or escape into deep space.</li>
+        <li>Camera & Coordinate Alignment Lock: Roblox's default Humanoid assumes the world Y-axis is always 'up', causing cameras to flip violently and character controls to invert when walking upside-down.</li>
+        <li>The Custom Gravity Solution: Disabling Workspace.Gravity (setting to 0) and applying continuous VectorForces alongside custom AlignOrientation character reorientation unlocks total gravitational freedom.</li>
+      </ul>
+
+      <h2>2. The Mathematical Foundation: Universal Gravitation & RK4 Integration</h2>
+      <p>Simulating celestial bodies and stable orbits requires high-order numerical integration:</p>
+      <ul>
+        <li>Newtonian Gravitational Force: F = G * (m1 * m2) / r^2 * r_hat. Gravitational acceleration on a body is a = sum(G * M_i / |r_i|^2 * (r_i / |r_i|)).</li>
+        <li>Orbital Velocity Formula: For a circular orbit at radius R around mass M, velocity v_circ = math.sqrt(G * M / R). Escape velocity v_esc = math.sqrt(2 * G * M / R).</li>
+        <li>Runge-Kutta 4th Order (RK4) Integration: Computes four trial acceleration steps (k1, k2, k3, k4) across time step dt: y_{n+1} = y_n + (dt/6) * (k1 + 2*k2 + 2*k3 + k4), eliminating numerical energy decay.</li>
+        <li>Lagrange Points (L1-L5): In three-body orbital systems, equilibrium positions where gravitational pulls balance centrifugal force enable stable parking orbits for deep-space stations.</li>
+      </ul>
+
+      <h2>3. Complete Spherical Planet Character Controller Luau Implementation</h2>
+      <p>Below is a complete, production-grade Luau controller that reorients character UpVector to walk around spherical planets in RunService.PreSimulation:</p>
+      <ul>
+        <li>Dynamic UpVector Calculation: Continuously calculates the surface normal vector from planet center to the player's HumanoidRootPart.</li>
+        <li>VectorForce Counter-Gravity: Applies radial downward attraction toward the planetary core scaled by planetary mass and radius.</li>
+        <li>Smooth Coordinate Frame Reorientation: Reconstructs HumanoidRootPart.CFrame using CFrame.lookAt with custom UpVector to prevent camera gimbal locking.</li>
+      </ul>
+
+
+      <div class="code-container">
+        <div class="code-title">PlanetaryGravityController.luau (Spherical Walking & Gravity Core)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+
+export type Planet = {
+    Center: Vector3,
+    Radius: number,
+    Mass: number,
+    SurfaceGravity: number,
+}
+
+local PlanetaryController = {}
+PlanetaryController.__index = PlanetaryController
+
+function PlanetaryController.new(character: Model, planet: Planet)
+    local self = setmetatable({}, PlanetaryController)
+    self.Character = character
+    self.RootPart = character:WaitForChild("HumanoidRootPart") :: BasePart
+    self.Humanoid = character:WaitForChild("Humanoid") :: Humanoid
+    self.Planet = planet
+    self.G = 6.674e-11
+
+    -- Create physical force actuator
+    local att = Instance.new("Attachment")
+    att.Name = "GravityAttachment"
+    att.Parent = self.RootPart
+
+    local vectorForce = Instance.new("VectorForce")
+    vectorForce.Name = "PlanetaryForce"
+    vectorForce.Attachment0 = att
+    vectorForce.RelativeTo = Enum.ActuatorRelativeTo.World
+    vectorForce.ApplyAtCenterOfMass = true
+    vectorForce.Parent = self.RootPart
+    self.VectorForce = vectorForce
+
+    return self
+end
+
+function PlanetaryController:Start()
+    self.Connection = RunService.PreSimulation:Connect(function(dt: number)
+        self:Update(dt)
+    end)
+end
+
+function PlanetaryController:Update(dt: number)
+    local charPos = self.RootPart.Position
+    local toCenter = self.Planet.Center - charPos
+    local distance = toCenter.Magnitude
+
+    if distance &lt; 1e-4 then return end
+
+    local gravityDir = toCenter.Unit
+    local surfaceUp = -gravityDir
+
+    -- Step 1: Apply radial gravity force (F = m * g)
+    local mass = self.RootPart.AssemblyMass
+    local gravityForce = gravityDir * (mass * self.Planet.SurfaceGravity)
+    self.VectorForce.Force = gravityForce
+
+    -- Step 2: Reorient character UpVector smoothly toward planetary normal
+    local currentCF = self.RootPart.CFrame
+    local forward = currentCF.LookVector
+    -- Project current forward vector onto plane perpendicular to surfaceUp
+    local projectedForward = (forward - surfaceUp * forward:Dot(surfaceUp)).Unit
+    if projectedForward.Magnitude &lt; 0.01 then
+        projectedForward = currentCF.RightVector:Cross(surfaceUp).Unit
+    end
+
+    local targetCF = CFrame.lookAt(charPos, charPos + projectedForward, surfaceUp)
+    self.RootPart.CFrame = currentCF:Lerp(targetCF, math.clamp(dt * 15, 0, 1))
+end
+
+function PlanetaryController:Destroy()
+    if self.Connection then
+        self.Connection:Disconnect()
+    end
+    if self.VectorForce then
+        self.VectorForce:Destroy()
+    end
+end
+
+return PlanetaryController</code></pre>
+      </div>
+
+      <h2>4. High-Precision N-Body RK4 Orbital Simulation</h2>
+      <p>Simulating planetary systems, moons, and satellites with zero energy drift requires 4th-order symplectic or RK4 numerical solvers:</p>
+      <ul>
+        <li>State Vector Formulation: Each celestial body is tracked via state Y = [x, y, z, vx, vy, vz]. Derivative dY/dt = [vx, vy, vz, ax, ay, az].</li>
+        <li>Gravitational Acceleration Summation: For N bodies, compute all pairwise accelerations a_i = sum_{j != i} G * M_j * (r_j - r_i) / |r_j - r_i|^3.</li>
+        <li>Softening Parameter (Epsilon): Introduce softening distance epsilon to prevent infinite acceleration spikes during ultra-close celestial flybys: (|r|^2 + eps^2)^1.5.</li>
+        <li>Lagrangian Point Orbit Insertion: Spacecraft can utilize low-energy ballistic transfer trajectories (Hohmann transfers) to navigate between planetary gravity wells.</li>
+      </ul>
+
+      <h2>5. Production Architecture & Multi-Client Physics Authority</h2>
+      <p>Managing arbitrary gravity across multiplayer servers demands strict authority partitioning:</p>
+      <ul>
+        <li>Client-Side Character Orientation: Reorienting the character CFrame locally guarantees smooth 60 FPS camera and walk controls without network lag.</li>
+        <li>Server-Authoritative Orbital Mechanics: Celestial bodies, planetary orbits, and trajectory paths are integrated on the server and replicated via lightweight property buffers.</li>
+        <li>Gravity Zone Volumes: Define spherical and cylindrical gravity regions using spatial octrees; smooth gravity transitions blend between multiple planetary fields over a 50-stud boundary.</li>
+        <li>Zero-Jitter Camera Scripts: Custom camera scripts decouple the camera coordinate frame from global world Y, aligning roll and pitch relative to the player's local surface normal.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>How does setting Workspace.Gravity = 0 affect other Roblox physics objects?</h3>
+          <p>When Workspace.Gravity is 0, native downward acceleration ceases globally. All objects, parts, and vehicles require custom VectorForce or LinearVelocity actuators to experience gravity. This provides complete freedom to assign different gravity strengths, directions, or inverse-square radial fields to specific objects.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do you prevent the Roblox default camera from flipping upside down when walking on the south pole of a planet?</h3>
+          <p>The default Roblox PlayerModule Camera script uses a hardcoded world-up vector (Vector3.yAxis). To allow upside-down navigation, you must fork or replace the camera controller to evaluate Camera.CFrame using the character's local surface UpVector instead of the global Y-axis.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Why is Euler integration inadequate for long-term satellite orbits in games?</h3>
+          <p>Euler integration assumes velocity is constant throughout the time step dt, which introduces systematic energy inflation every step. Over a few minutes, an orbiting body gains artificial kinetic energy and spirals away into deep space. RK4 evaluates acceleration at 4 sub-points across dt, preserving orbital shape and energy over hours.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do you transition a player smoothly from a spaceship's artificial gravity to a planet's gravity?</h3>
+          <p>Use a weighted linear interpolation (Slerp/Lerp) between the ship's local floor normal and the planet's radial center vector across a designated airlock or atmospheric entry zone (typically 20-50 studs), gradually ramping the planet's gravitational weight from 0 to 1.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
