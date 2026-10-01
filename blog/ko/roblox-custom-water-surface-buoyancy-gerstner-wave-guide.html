@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로블록스 커스텀 워터 서피스 및 부력 물리 엔진 가이드 (2026)</title>
+  <meta name="description" content="로블록스 스튜디오에서 실시간 커스텀 해양 파도와 물리 기반 부력 구현하기: 게르스트너 파동 삼각함수 합산, EditableMesh 실시간 메시 변형, 다중 프로브 아르키메데스 부력 및 메타센터 복원 모멘트." />
+  <meta name="keywords" content="로블록스 물 물리, 게르스트너 파도 로블록스, 로블록스 부력 시뮬레이션, editablemesh 바다, 로블록스 보트 물리 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ko/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="로블록스 커스텀 워터 서피스 및 부력 물리 엔진 가이드 (2026)" />
+  <meta property="og:description" content="로블록스 스튜디오에서 실시간 커스텀 해양 파도와 물리 기반 부력 구현하기: 게르스트너 파동 삼각함수 합산, EditableMesh 실시간 메시 변형, 다중 프로브 아르키메데스 부력 및 메타센터 복원 모멘트." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ko/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="로블록스 커스텀 워터 서피스 및 부력 물리 엔진 가이드 (2026)" />
+  <meta name="twitter:description" content="로블록스 스튜디오에서 실시간 커스텀 해양 파도와 물리 기반 부력 구현하기: 게르스트너 파동 삼각함수 합산, EditableMesh 실시간 메시 변형, 다중 프로브 아르키메데스 부력 및 메타센터 복원 모멘트." />
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html"
+      },
+      "headline": "유체역학 수상 아키텍처: 게르스트너 파도 합산, EditableMesh 정점 변형 및 선체 다점 부력 시뮬레이션",
+      "description": "로블록스 스튜디오에서 실시간 커스텀 해양 파도와 물리 기반 부력 구현하기: 게르스트너 파동 삼각함수 합산, EditableMesh 실시간 메시 변형, 다중 프로브 아르키메데스 부력 및 메타센터 복원 모멘트.",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ko/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 유체역학 및 엔진 물리 연구팀",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "ko"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "로블록스 커스텀 워터 서피스 및 부력 물리 엔진 가이드 (2026)",
+          "item": "https://dopabrain.com/portal/blog/ko/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/ko/roblox-custom-water-surface-buoyancy-gerstner-wave-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "단순 사인파 대신 게르스트너 파도를 사용하는 이유는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "일반 사인파는 마루와 골이 대칭적인 곡선을 이룹니다. 하지만 실제 바다 파도는 마루가 뾰족하고 골이 넓습니다. 게르스트너 파도는 정점을 마루 쪽으로 수평 이동시켜 실제 트로코이드 해양 파도와 보트의 롤링/피칭을 사실적으로 재현합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "EditableMesh는 수천 개의 파트를 움직이는 것과 비교해 얼마나 빠른가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "수천 개의 BasePart를 움직이면 씬 그래프 갱신, 물리 감지, 드로우 콜 병목이 발생합니다. 반면 EditableMesh는 메모리의 단일 정점 버퍼를 직접 수정하므로 수천 개의 정점 변위를 몇 밀리초 내에 처리합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "보트가 전복되거나 뒤집히지 않게 하려면 어떻게 해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "부심(CB)과 무게중심(COM) 사이의 메타센터 높이(GM)를 양수로 유지해야 합니다. 선체 하부의 부력 프로브를 무게중심보다 좌우로 넓게 배치하면 배가 기울어질 때 자동으로 일어서는 복원 모멘트가 발생합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "멀티플레이어에서 모든 플레이어에게 동일한 파도가 보이나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "네. 게르스트너 파도는 파동 공식과 시간에 기반한 결정론적 수식이므로, 서버 동기화 시간(Workspace:GetServerTimeNow())을 공유하면 모든 클라이언트가 완벽히 동일한 파고와 수면을 계산합니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      overflow-x: hidden;
+      width: 100%;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 18px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 36px;
+      color: #cbd5e1;
+      font-size: 15px;
+      backdrop-filter: blur(8px);
+    }
+    .quick-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 14px;
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    article {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    h2 {
+      font-size: 22px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-top: 12px;
+    }
+    p {
+      color: #cbd5e1;
+      font-size: 15.5px;
+    }
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 4px;
+    }
+    li {
+      position: relative;
+      padding-left: 20px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: #94a3b8;
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    code {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      color: #38bdf8;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      font-size: 16px;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      font-size: 14.5px;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(30, 58, 138, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: #ffffff;
+      font-size: 24px;
+    }
+    .portal-cta p {
+      max-width: 580px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+    @media (max-width: 640px) {
+      body {
+        padding: 0 12px 48px;
+      }
+      header.hero {
+        padding: 32px 0 24px;
+      }
+      .quick-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Master Engineering & Neuroscience</span>
+      <h1>유체역학 수상 아키텍처: 게르스트너 파도 합산, EditableMesh 정점 변형 및 선체 다점 부력 시뮬레이션</h1>
+      <div class="meta">
+        <span>By DopaBrain 유체역학 및 엔진 물리 연구팀</span>
+        <span>•</span>
+        <span>2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      로블록스 스튜디오에서 커스텀 동적 해양과 현실적인 보트 부력 물리 구축하기: 게르스트너 파동 수식 도출, EditableMesh 실시간 정점 변위, 다중 프로브 아르키메데스 유체역학 및 메타센터 복원 토크 제어.
+    </div>
+
+    <section class="quick-cards" aria-label="Interactive Cognitive Tools">
+      
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier246_puzzle_2048">
+          <strong>2048 코치</strong>
+          <span>게르스트너 파동 삼각함수 합산, EditableMesh 정점 변위 및 유체 미적분 연산</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier246_reaction_test">
+          <strong>반응속도 테스트</strong>
+          <span>파도 마루 도달 타이밍, 해양 유체역학 및 선박 스로틀 조향 반사 잠복기</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier246_brain_type">
+          <strong>뇌 유형 테스트</strong>
+          <span>공간 유체 시뮬레이션 및 다중 프로브 아르키메데스 인지 아키타입</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier246_stress_check">
+          <strong>스트레스 지수</strong>
+          <span>폭풍우 너울 어지럼증, 롤링/피칭 전복 공포 및 파도 안정 평정심</span>
+        </a>
+    </section>
+
+    <article>
+      <p>로블록스의 현대 오픈월드, 해전, 항해 탐험 게임에서 기본 지형(Smooth Terrain) 워터는 사실적인 해양 게임플레이에 필요한 동적 파고, 커스텀 조류, 정밀한 부력 물리를 온전히 제공하지 못합니다. 폭풍우의 거친 파도나 사실적인 보트 롤링/피칭을 원하는 개발자에게는 커스텀 유체역학 파이프라인이 필수적입니다.</p>
+      <p>Luau에서 사실적인 바다를 구현하려면 수학적 엄밀성과 60fps 실시간 성능 간의 균형을 잡아야 합니다. 본 마스터 가이드에서는 고성능 게르스트너(Gerstner) 파도 엔진을 구축합니다. 파동 해석 수식을 분석하고, 표면 법선 벡터를 도출하며, EditableMesh로 정점을 변형하고, 다중 프로브 아르키메데스 부력과 메타센터 복원 토크를 완성합니다.</p>
+
+      <h2>1. 물리 중심 게임플레이에서 기본 지형 워터의 한계</h2>
+      <p>로블록스 내장 지형 워터는 단순 수영과 부유는 지원하지만, 본격적인 항해 시뮬레이션에서는 심각한 한계에 직면합니다:</p>
+      <ul>
+        <li>고정된 파도 지오메트리: 기본 파도는 순수 그래픽적 노멀 맵 변위일 뿐이며, 강체 파트가 동적 파도의 마루와 골에 물리적으로 반응할 수 없습니다.</li>
+        <li>단순화된 균일 부력: 지형 워터는 선체 형상, 무게 중심, 파도에 의한 회전 모멘트를 무시하고 수직 감쇠력만 단순 적용합니다.</li>
+        <li>조류 벡터 부재: 방향성 해류, 급류, 소용돌이를 생성하려면 시각적 렌더링과 완전히 분리된 수동 BodyMover를 작성해야 합니다.</li>
+        <li>EditableMesh의 혁신: 로블록스의 EditableMesh API는 클라이언트 정점 버퍼에 직접 접근하여, 시각적 파도와 물리 엔진이 100% 동기화되도록 해줍니다.</li>
+      </ul>
+
+      <h2>2. 수학적 기초: 게르스트너 파도 합산 및 법선 벡터 도출</h2>
+      <p>단순 사인파는 둥근 마루와 골을 만들지만, 실제 해양 파도는 날카로운 트로코이드형 마루와 넓은 골을 보입니다. 게르스트너 파도는 정점을 마루 방향으로 수평 이동시켜 이를 완벽히 재현합니다:</p>
+      <ul>
+        <li>트로코이드 수평 변위: 수평 좌표 벡터 x와 진행 방향 k, 파도 가파름 Q에 대해 x' = x - sum(Q_i * A_i * k_hat_i * sin(k_i . x - omega_i * t + phi_i)) 연산 적용.</li>
+        <li>수직 마루 융기: 높이 y' = sum(A_i * cos(k_i . x - omega_i * t + phi_i))를 통해 뾰족한 파도 마루와 평평한 골 형성.</li>
+        <li>루프 방지 제약 조건: 메시가 꼬여 자가 교차하는 현상을 방지하기 위해 가파름 합계 sum(Q_i * A_i * ||k_i||) <= 1 유지 필수.</li>
+        <li>해석적 표면 법선: 비용이 큰 인접 정점 차분법 대신, 편미분 dP/dx와 dP/dz의 외적을 통해 수학적으로 정확한 표면 법선 N을 즉시 계산.</li>
+      </ul>
+
+      <h2>3. 완전한 게르스트너 파도 & 선체 부력 솔버 Luau 구현체</h2>
+      <p>임의의 월드 좌표에서 파고와 법선을 산출하고 선체에 분포된 프로브 부력과 복원 토크를 연산하는 프로덕션 Luau 모듈입니다:</p>
+      <ul>
+        <li>해석적 파고 산출: 월드 좌표 (X, Z)와 타임스탬프 t에 대한 정확한 수면 높이와 표면 법선 벡터 반환.</li>
+        <li>다중 프로브 선체 샘플링: 선체 바닥에 배치된 프로브 배열을 통해 부분 침수 깊이를 측정하고 유체 부력을 자연스럽게 분산.</li>
+        <li>메타센터 복원 토크: 무게 중심(COM)에 대한 부력 모멘트(r x F_b)와 유체 감쇠를 계산하여 보트 전복을 방지하는 자가 복원력 부여.</li>
+      </ul>
+
+      
+      <div class="code-container">
+        <div class="code-title">GerstnerBuoyancySolver.luau (해석적 파동 및 분산 유체역학)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+
+export type WaveDef = {
+    Direction: Vector2,
+    Amplitude: number,
+    Wavelength: number,
+    Speed: number,
+    Steepness: number,
+}
+
+export type WaterHull = {
+    Model: Model,
+    RootPart: BasePart,
+    ProbeOffsets: { Vector3 },
+    SubmergedVolumePerProbe: number,
+    WaterDensity: number,
+    LinearDamping: number,
+    AngularDamping: number,
+}
+
+local GerstnerSolver = {}
+GerstnerSolver.__index = GerstnerSolver
+
+local GRAVITY = 196.2
+
+function GerstnerSolver.new(waves: { WaveDef })
+    local self = setmetatable({}, GerstnerSolver)
+    self.Waves = waves
+    return self
+end
+
+function GerstnerSolver:GetWaveHeightAndNormal(worldPos: Vector3, timeSec: number): (number, Vector3)
+    local x = worldPos.X
+    local z = worldPos.Z
+    local totalY = 0
+    local dDx = 0
+    local dDz = 0
+
+    for _, wave in ipairs(self.Waves) do
+        local dir = wave.Direction.Unit
+        local k = (2 * math.pi) / wave.Wavelength
+        local omega = math.sqrt(GRAVITY * k)
+        local phase = k * (dir.X * x + dir.Y * z) - omega * timeSec
+
+        local cosP = math.cos(phase)
+        local sinP = math.sin(phase)
+
+        totalY += wave.Amplitude * cosP
+        dDx += -dir.X * (k * wave.Amplitude) * sinP
+        dDz += -dir.Y * (k * wave.Amplitude) * sinP
+    end
+
+    local normal = Vector3.new(-dDx, 1, -dDz).Unit
+    return totalY, normal
+end
+
+function GerstnerSolver:ApplyBuoyancy(hull: WaterHull, dt: number, timeSec: number)
+    local root = hull.RootPart
+    local rootCF = root.CFrame
+    local rootVel = root.AssemblyLinearVelocity
+    local rootAngVel = root.AssemblyAngularVelocity
+    local com = root.AssemblyCenterOfMass
+
+    local totalForce = Vector3.zero
+    local totalTorque = Vector3.zero
+
+    for _, offset in ipairs(hull.ProbeOffsets) do
+        local probeWorld = rootCF:PointToWorldSpace(offset)
+        local waveHeight, waveNormal = self:GetWaveHeightAndNormal(probeWorld, timeSec)
+        local depth = waveHeight - probeWorld.Y
+
+        if depth &gt; 0 then
+            local displacedVolume = math.min(depth * 1.5, 1.0) * hull.SubmergedVolumePerProbe
+            local buoyantMagnitude = displacedVolume * hull.WaterDensity * GRAVITY
+            local buoyantForce = Vector3.new(0, buoyantMagnitude, 0)
+
+            local probeVel = rootVel + rootAngVel:Cross(probeWorld - com)
+            local dragForce = -probeVel * (hull.LinearDamping * displacedVolume)
+
+            local netProbeForce = buoyantForce + dragForce
+            totalForce += netProbeForce
+
+            local leverArm = probeWorld - com
+            totalTorque += leverArm:Cross(netProbeForce)
+        end
+    end
+
+    local angDampingTorque = -rootAngVel * hull.AngularDamping
+    totalTorque += angDampingTorque
+
+    root:ApplyAssemblyForce(totalForce)
+    root:ApplyAssemblyTorque(totalTorque)
+end
+
+return GerstnerSolver</code></pre>
+      </div>
+
+      <h2>4. EditableMesh 실시간 파도 정점 변형 기법</h2>
+      <p>물리 부력 시뮬레이션과 100% 일치하는 동적 게르스트너 파도 그래픽 렌더링 파이프라인:</p>
+      <ul>
+        <li>그리드 토폴로지 구성: 카메라 중심의 LOD 동심원 링 그리드를 생성하여 관찰자 주변의 정점 밀도를 극대화.</li>
+        <li>병렬 워커 스레드 동기화: Actor 스레드나 병렬 Luau를 활용해 정점 변위를 분산 연산하여 RenderStepped 프레임 저하 방지.</li>
+        <li>공유 수학 시드: 렌더링 셰이더와 물리 솔버가 동일한 파동 매개변수 테이블과 Workspace:GetServerTimeNow() 동기화 시간을 참조.</li>
+        <li>법선 라이팅 셰이딩: 해석적으로 계산된 표면 법선을 EditableMesh 버텍스 노멀에 적용하여 정교한 태양광 하이라이트 및 거품 렌더링 완성.</li>
+      </ul>
+
+      <h2>5. 프로덕션 최적화 및 멀티플레이어 동기화 아키텍처</h2>
+      <p>멀티플레이어 환경에서 대규모 동적 수면을 최적화하기 위한 엔지니어링 규칙:</p>
+      <ul>
+        <li>클라이언트 자율 시뮬레이션: 서버는 정점 메시를 렌더링하지 않으며, 클라이언트가 로컬에서 EditableMesh를 실행하여 네트워크 대역폭 0 유지.</li>
+        <li>결정론적 물리 소유권: 보트는 로컬 또는 네트워크 오너 머신에서 부력을 계산하고 기본 Part CFrame 및 선형/각속도만 복제.</li>
+        <li>프로브 조기 탈출: 보트의 바운딩 스피어가 파도 최고 높이 위나 해저면 아래에 있을 경우 삼각함수 연산을 완전히 스킵.</li>
+        <li>선체 충격음 오디오: 수직 입수 충돌 속도(침수율)에 비례하여 3D 공간 음향을 제어함으로써 현실적인 파도 충돌감 제공.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>단순 사인파 대신 게르스트너 파도를 사용하는 이유는 무엇인가요?</h3>
+          <p>일반 사인파는 마루와 골이 대칭적인 곡선을 이룹니다. 하지만 실제 바다 파도는 마루가 뾰족하고 골이 넓습니다. 게르스트너 파도는 정점을 마루 쪽으로 수평 이동시켜 실제 트로코이드 해양 파도와 보트의 롤링/피칭을 사실적으로 재현합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>EditableMesh는 수천 개의 파트를 움직이는 것과 비교해 얼마나 빠른가요?</h3>
+          <p>수천 개의 BasePart를 움직이면 씬 그래프 갱신, 물리 감지, 드로우 콜 병목이 발생합니다. 반면 EditableMesh는 메모리의 단일 정점 버퍼를 직접 수정하므로 수천 개의 정점 변위를 몇 밀리초 내에 처리합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>보트가 전복되거나 뒤집히지 않게 하려면 어떻게 해야 하나요?</h3>
+          <p>부심(CB)과 무게중심(COM) 사이의 메타센터 높이(GM)를 양수로 유지해야 합니다. 선체 하부의 부력 프로브를 무게중심보다 좌우로 넓게 배치하면 배가 기울어질 때 자동으로 일어서는 복원 모멘트가 발생합니다.</p>
+        </div>
+        <div class="faq-item">
+          <h3>멀티플레이어에서 모든 플레이어에게 동일한 파도가 보이나요?</h3>
+          <p>네. 게르스트너 파도는 파동 공식과 시간에 기반한 결정론적 수식이므로, 서버 동기화 시간(Workspace:GetServerTimeNow())을 공유하면 모든 클라이언트가 완벽히 동일한 파고와 수면을 계산합니다.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
