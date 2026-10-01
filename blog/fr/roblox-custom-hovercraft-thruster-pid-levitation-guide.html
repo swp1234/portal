@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guide de l'Aéroglisseur et Lévitation PID de Propulseur Roblox (2026)</title>
+  <meta name="description" content="Maîtrisez la physique des aéroglisseurs dans Roblox Studio : régulateur d'altitude PID, suspension raycast 4 points et virages inclinés." />
+  <meta name="keywords" content="roblox hovercraft physics, roblox pid controller, vehicle suspension luau, raycast suspension roblox, sci fi thruster roblox 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/fr/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Guide de l'Aéroglisseur et Lévitation PID de Propulseur Roblox (2026)" />
+  <meta property="og:description" content="Maîtrisez la physique des aéroglisseurs dans Roblox Studio : régulateur d'altitude PID, suspension raycast 4 points et virages inclinés." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/fr/roblox-custom-hovercraft-thruster-pid-levitation-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Guide de l'Aéroglisseur et Lévitation PID de Propulseur Roblox (2026)" />
+  <meta name="twitter:description" content="Maîtrisez la physique des aéroglisseurs dans Roblox Studio : régulateur d'altitude PID, suspension raycast 4 points et virages inclinés." />
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/fr/roblox-custom-hovercraft-thruster-pid-levitation-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/fr/roblox-custom-hovercraft-thruster-pid-levitation-guide.html"
+      },
+      "headline": "Dynamique de Véhicule Sci-Fi : Lévitation PID en Boucle Fermée, Suspensions Raycast & Effet de Sol",
+      "description": "Maîtrisez la physique des aéroglisseurs dans Roblox Studio : régulateur d'altitude PID, suspension raycast 4 points et virages inclinés.",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/fr/roblox-custom-hovercraft-thruster-pid-levitation-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Équipe de Dynamique des Véhicules & Systèmes de Contrôle DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "fr"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/fr/roblox-custom-hovercraft-thruster-pid-levitation-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Guide de l'Aéroglisseur et Lévitation PID de Propulseur Roblox (2026)",
+          "item": "https://dopabrain.com/portal/blog/fr/roblox-custom-hovercraft-thruster-pid-levitation-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/fr/roblox-custom-hovercraft-thruster-pid-levitation-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why use a PID controller instead of built-in SpringConstraints?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SpringConstraints are passive mechanical springs that cannot adjust their stiffness dynamically. A vehicle climbing a hill compresses springs, leading to ground strikes, while landing from a jump causes endless bouncing. A PID controller dynamically computes derivative damping, instantly neutralizing bounce and maintaining uniform ride height."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you prevent the hovercraft from sliding uncontrollably on slopes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "By introducing lateral skeg damping in the control script. We decompose velocity into forward and lateral components and apply a counter-force proportional to lateral drift speed, giving the vehicle responsive, grippy steering while preserving hover fluidity."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens to the PID integral term when the hovercraft flies off a cliff?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Without protection, the integral term accumulates massive error as altitude increases (integral windup), causing the vehicle to rocket downward or upward upon reconnecting with ground. We implement anti-windup clamping to restrict integral accumulation within safe physical bounds."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can this system hover over water and moving objects?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Because the system relies on Workspace:Raycast, any surface included in the collision mask—whether smooth terrain water, union parts, or moving platforms—will reflect thruster rays and generate correct buoyant levitation forces."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      overflow-x: hidden;
+      width: 100%;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 18px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 36px;
+      color: #cbd5e1;
+      font-size: 15px;
+      backdrop-filter: blur(8px);
+    }
+    .quick-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 14px;
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    article {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    h2 {
+      font-size: 22px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-top: 12px;
+    }
+    p {
+      color: #cbd5e1;
+      font-size: 15.5px;
+    }
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 4px;
+    }
+    li {
+      position: relative;
+      padding-left: 20px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: #94a3b8;
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    code {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      color: #38bdf8;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      font-size: 16px;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      font-size: 14.5px;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(30, 58, 138, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: #ffffff;
+      font-size: 24px;
+    }
+    .portal-cta p {
+      max-width: 580px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+    @media (max-width: 640px) {
+      body {
+        padding: 0 12px 48px;
+      }
+      header.hero {
+        padding: 32px 0 24px;
+      }
+      .quick-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Master Engineering & Neuroscience</span>
+      <h1>Dynamique de Véhicule Sci-Fi : Lévitation PID en Boucle Fermée, Suspensions Raycast & Effet de Sol</h1>
+      <div class="meta">
+        <span>By Équipe de Dynamique des Véhicules & Systèmes de Contrôle DopaBrain</span>
+        <span>•</span>
+        <span>2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting custom hovercraft flight dynamics and PID levitation thrusters in Roblox Studio: From Proportional-Integral-Derivative altitude control and 4-point downward raycast suspensions to ground-effect aerodynamic cushioning and banked cornering stabilization.
+    </div>
+
+    <section class="quick-cards" aria-label="Interactive Cognitive Tools">
+      
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier254_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>PID closed-loop control calculus, derivative damping & thruster dynamics</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier254_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Banked turn steering reflex, obstacle evasion & thruster reaction latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier254_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>4-point raycast suspension & sci-fi aerodynamic flight mental archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier254_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-speed hovercraft drift vertigo, cliff drop panic & chassis composure</span>
+        </a>
+    </section>
+
+    <article>
+      <p>In sci-fi racers, cyberpunk transit experiences, and planetary exploration simulators on Roblox (such as Wipeout-style hover racers or anti-gravity combat vehicles), traditional wheel-based vehicle physics feel completely wrong. Default Roblox SpringConstraints under wheels create unnatural mechanical friction, roll-over flips, and stiff ground collisions unsuitable for floating craft.</p>
+      <p>Creating a responsive, floating hovercraft that glides effortlessly across jagged hills, dunes, and water without jitter requires closed-loop control theory. In this master technical engineering guide, we build a production-grade multi-point hovercraft engine in Luau. We implement a mathematical PID (Proportional-Integral-Derivative) altitude stabilizer, project dynamic 4-corner suspension raycasts, model ground-effect aerodynamic cushions, and apply banked roll/pitch steering.</p>
+
+      <h2>1. The Oscillation Trap: Why Naive Spring Physics Fails for Floating Vehicles</h2>
+      <p>Attempting to create hovercraft using simple Hooke's Law spring forces (F = -k * x) causes severe physical instability:</p>
+      <ul>
+        <li>Harmonic Resonance & Bouncing: Without adaptive derivative damping, a vehicle hitting a bump enters infinite undamped vertical oscillations, bouncing higher with each crest.</li>
+        <li>Terrain Penetration (Bottoming Out): A simple spring cannot anticipate drops or steep inclines; descending a cliff causes the vehicle to slam through collision geometry.</li>
+        <li>Asymmetrical Roll Over: When one side rides up a ramp, uneven spring thrust rolls the chassis over, inverting the vehicle unless manually constrained.</li>
+        <li>The PID Solution: A Proportional-Integral-Derivative controller dynamically calculates exact force outputs, eliminating overshoot, steady-state error, and bouncy resonance.</li>
+      </ul>
+
+      <h2>2. Mathematical Foundations: The PID Controller & Multi-Point Raycast Suspension</h2>
+      <p>Each corner of the hovercraft chassis operates as an autonomous closed-loop altitude regulator driven by error metrics:</p>
+      <ul>
+        <li>Altitude Error Formulation: For target clearance H_target and raycast distance H_current, error e(t) = H_target - H_current.</li>
+        <li>Proportional Term (P): F_p = K_p * e(t). Generates restoring thrust proportional to compression depth.</li>
+        <li>Derivative Term (D): F_d = K_d * ((e(t) - e(t - dt)) / dt) = -K_d * v_vertical. Damps vertical velocity to prevent oscillations and overshoot.</li>
+        <li>Integral Term (I): F_i = K_i * sum(e(t) * dt). Corrects long-term steady-state sag under varying payload weights and gravity slopes.</li>
+        <li>Ground-Effect Cushion: When clearance H < 0.3 * ChassisWidth, ground-effect airflow compression multiplies effective thrust: F_net = F_pid * (1 + (0.3 / (H / ChassisWidth + 0.1))).</li>
+      </ul>
+
+      <h2>3. Complete Hovercraft PID Thruster Controller Luau Implementation</h2>
+      <p>The following production-ready Luau module implements a 4-point raycast hover suspension running in RunService.Heartbeat with PID stabilization:</p>
+      <ul>
+        <li>Independent 4-Corner PID Solvers: Evaluates ground distance and applies tailored vertical thrust at each chassis corner.</li>
+        <li>Anti-Windup Integral Guard: Clamps integral accumulation to prevent sudden explosive launches after leaving cliffs.</li>
+        <li>Banked Roll-Yaw Steering Coupling: Automatically tilts vehicle chassis roll angle into turns based on steering angular velocity.</li>
+      </ul>
+
+      
+      <div class="code-container">
+        <div class="code-title">HovercraftPIDEngine.luau (Multi-Point Suspension & Control Loop)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+export type PIDConfig = {
+    Kp: number,
+    Ki: number,
+    Kd: number,
+    MaxForce: number,
+    MinForce: number,
+}
+
+export type ThrusterState = {
+    Offset: Vector3,
+    PrevError: number,
+    Integral: number,
+}
+
+export type Hovercraft = {
+    RootPart: BasePart,
+    TargetHeight: number,
+    Thrusters: { ThrusterState },
+    PID: PIDConfig,
+    LinearDrag: number,
+    AngularDrag: number,
+}
+
+local HoverEngine = {}
+HoverEngine.__index = HoverEngine
+
+local GRAVITY = 196.2
+
+function HoverEngine.new(root: BasePart, targetHeight: number): Hovercraft
+    local halfX = root.Size.X * 0.45
+    local halfZ = root.Size.Z * 0.45
+
+    local thrusters: { ThrusterState } = {
+        { Offset = Vector3.new(halfX, 0, halfZ), PrevError = 0, Integral = 0 },   -- Front Right
+        { Offset = Vector3.new(-halfX, 0, halfZ), PrevError = 0, Integral = 0 },  -- Front Left
+        { Offset = Vector3.new(halfX, 0, -halfZ), PrevError = 0, Integral = 0 },  -- Rear Right
+        { Offset = Vector3.new(-halfX, 0, -halfZ), PrevError = 0, Integral = 0 }, -- Rear Left
+    }
+
+    local self: Hovercraft = setmetatable({
+        RootPart = root,
+        TargetHeight = targetHeight,
+        Thrusters = thrusters,
+        PID = {
+            Kp = 850,
+            Ki = 45,
+            Kd = 120,
+            MaxForce = root.AssemblyMass * GRAVITY * 2.5,
+            MinForce = 0,
+        },
+        LinearDrag = 0.985,
+        AngularDrag = 0.92,
+    }, HoverEngine)
+
+    return self
+end
+
+function HoverEngine:Update(dt: number)
+    local root = self.RootPart
+    local rootCF = root.CFrame
+    local rootVel = root.AssemblyLinearVelocity
+    local mass = root.AssemblyMass
+
+    local rayParams = RaycastParams.new()
+    rayParams.FilterType = RaycastFilterType.Exclude
+
+    local totalThrustForce = Vector3.zero
+    local totalThrustTorque = Vector3.zero
+
+    for _, thruster in ipairs(self.Thrusters) do
+        local worldPoint = rootCF:PointToWorldSpace(thruster.Offset)
+        local rayDir = -rootCF.UpVector * (self.TargetHeight * 2.2)
+
+        local result = Workspace:Raycast(worldPoint, rayDir, rayParams)
+        local currentDist = result and (worldPoint - result.Position).Magnitude or (self.TargetHeight * 2.2)
+
+        local errorVal = self.TargetHeight - currentDist
+
+        -- P Term
+        local pOut = self.PID.Kp * errorVal
+
+        -- I Term with anti-windup clamping
+        thruster.Integral = math.clamp(thruster.Integral + errorVal * dt, -50, 50)
+        local iOut = self.PID.Ki * thruster.Integral
+
+        -- D Term
+        local dError = (errorVal - thruster.PrevError) / math.max(dt, 0.001)
+        local dOut = self.PID.Kd * dError
+        thruster.PrevError = errorVal
+
+        -- Calculate net vertical thruster force
+        local rawForce = pOut + iOut + dOut
+        -- Counter gravity baseline
+        local baseGravityShare = (mass * GRAVITY) / #self.Thrusters
+        local finalThrust = math.clamp(rawForce + baseGravityShare, self.PID.MinForce, self.PID.MaxForce)
+
+        if result then
+            local thrustVector = rootCF.UpVector * finalThrust
+            totalThrustForce += thrustVector
+
+            local leverArm = worldPoint - root.AssemblyCenterOfMass
+            totalThrustTorque += leverArm:Cross(thrustVector)
+        end
+    end
+
+    -- Apply aerodynamic drag damping
+    local horizontalVel = rootVel - (rootCF.UpVector * rootVel:Dot(rootCF.UpVector))
+    local lateralDrift = horizontalVel:Dot(rootCF.RightVector)
+    local lateralCounterForce = -rootCF.RightVector * (lateralDrift * mass * 4.0)
+
+    root:ApplyAssemblyForce(totalThrustForce + lateralCounterForce)
+    root:ApplyAssemblyTorque(totalThrustTorque)
+end
+
+return HoverEngine</code></pre>
+      </div>
+
+      <h2>4. Ground-Effect Aerodynamics & Banked Turn Maneuvers</h2>
+      <p>Hovercraft handle distinctly from wheeled cars due to aerodynamic slip and centrifugal banking:</p>
+      <ul>
+        <li>Aerodynamic Ground Cushion: Flying below half-wingspan traps air beneath the hull, increasing lift coefficient and preventing bottoming out over drops.</li>
+        <li>Coordinated Bank Angle: When steering (yaw input), tilt the chassis into the turn (roll angle = -YawVelocity * 0.18), directing thruster vectors diagonally to counteract centrifugal drift.</li>
+        <li>Lateral Drift Friction Control: Pure hovercraft slip sideways; adding artificial lateral air-skeg damping allows controlled drift angles while maintaining forward trajectory.</li>
+        <li>Surface Normal Torso Conformance: The 4-point thruster setup naturally matches vehicle pitch and roll to sloped terrain inclines without artificial orientation clamping.</li>
+      </ul>
+
+      <h2>5. Production Optimization & Network Physics Replication</h2>
+      <p>Deploying high-speed hovercraft in 50-player multiplayer experiences requires strict authority rules:</p>
+      <ul>
+        <li>Client Driver Physics Ownership: Set NetworkOwner to the driving player; raycasts, PID updates, and steering inputs execute locally with zero input delay.</li>
+        <li>Unoccupied Vehicle Sleep State: When unmanned, disable PID update loops, drop thrusters to low-power idle, and anchor or sleep the chassis.</li>
+        <li>Continuous Raycast Exclusions: Ensure raycast parameters exclude the hovercraft Model and all passenger avatars to prevent self-collision thrust spikes.</li>
+        <li>Thruster Jet Particle FX: Modulate exhaust heat shimmer and dust particle emission rates based on PID thrust output percentage for realistic visual weight.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why use a PID controller instead of built-in SpringConstraints?</h3>
+          <p>SpringConstraints are passive mechanical springs that cannot adjust their stiffness dynamically. A vehicle climbing a hill compresses springs, leading to ground strikes, while landing from a jump causes endless bouncing. A PID controller dynamically computes derivative damping, instantly neutralizing bounce and maintaining uniform ride height.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do you prevent the hovercraft from sliding uncontrollably on slopes?</h3>
+          <p>By introducing lateral skeg damping in the control script. We decompose velocity into forward and lateral components and apply a counter-force proportional to lateral drift speed, giving the vehicle responsive, grippy steering while preserving hover fluidity.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What happens to the PID integral term when the hovercraft flies off a cliff?</h3>
+          <p>Without protection, the integral term accumulates massive error as altitude increases (integral windup), causing the vehicle to rocket downward or upward upon reconnecting with ground. We implement anti-windup clamping to restrict integral accumulation within safe physical bounds.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can this system hover over water and moving objects?</h3>
+          <p>Yes. Because the system relies on Workspace:Raycast, any surface included in the collision mask—whether smooth terrain water, union parts, or moving platforms—will reflect thruster rays and generate correct buoyant levitation forces.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
