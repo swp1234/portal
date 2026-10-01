@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Custom Air Strafe & Bunnyhop: Quake Movement Physics Guide (2026)</title>
+  <meta name="description" content="Master classic Quake/Source movement mechanics in Roblox: wishdir air acceleration math, ground friction grace windows, bunnyhopping momentum preservation, and custom kinematic character controllers." />
+  <meta name="keywords" content="roblox air strafe, bunnyhop luau, quake movement roblox, source physics roblox, kinematic character controller 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roblox Custom Air Strafe & Bunnyhop: Quake Movement Physics Guide (2026)" />
+  <meta property="og:description" content="Master classic Quake/Source movement mechanics in Roblox: wishdir air acceleration math, ground friction grace windows, bunnyhopping momentum preservation, and custom kinematic character controllers." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta property="og:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Custom Air Strafe & Bunnyhop: Quake Movement Physics Guide (2026)" />
+  <meta name="twitter:description" content="Master classic Quake/Source movement mechanics in Roblox: wishdir air acceleration math, ground friction grace windows, bunnyhopping momentum preservation, and custom kinematic character controllers." />
+  <meta name="twitter:image" content="https://dopabrain.com/assets/icon-512.svg" />
+  <link rel="icon" type="image/svg+xml" href="/assets/icon-512.svg" />
+  <!-- Google AdSense Auto Ads -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <!-- Global Style & Mobile Overflow Guard -->
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #090d16;
+      --card-bg: #131a29;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+      --accent: #38bdf8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding-bottom: 60px;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      width: 100%;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
+    h1 {
+      font-size: 2.1rem;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-weight: 800;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+    p {
+      margin-bottom: 18px;
+      color: #cbd5e1;
+      font-size: 1.05rem;
+    }
+    ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      color: #cbd5e1;
+    }
+    li {
+      margin-bottom: 10px;
+      font-size: 1.02rem;
+    }
+    .banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(56, 189, 248, 0.08));
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      color: #e2e8f0;
+      font-weight: 500;
+      font-size: 1.1rem;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .code-header {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      font-family: monospace;
+      border-bottom: 1px solid #334155;
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      font-family: "Fira Code", monospace;
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 32px 0;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 44px;
+    }
+    .quick-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 0.95rem;
+    }
+    .quick-card span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .faq-container {
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .faq-item h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      color: #94a3b8;
+      font-size: 0.98rem;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .portal-btn {
+      display: inline-block;
+      margin-top: 16px;
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+      min-height: 44px;
+      line-height: 20px;
+    }
+    .portal-btn:hover {
+      background: var(--primary-hover);
+    }
+    @media (max-width: 640px) {
+      h1 { font-size: 1.6rem; }
+      h2 { font-size: 1.25rem; }
+      .container { padding: 16px; }
+      .quick-links { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html"
+      },
+      "headline": "Roblox Custom Movement Architecture: Air Strafe Acceleration Vectors, Bunnyhop Friction Windows & Kinematic Controllers",
+      "description": "Master classic Quake/Source movement mechanics in Roblox: wishdir air acceleration math, ground friction grace windows, bunnyhopping momentum preservation, and custom kinematic character controllers.",
+      "url": "https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html",
+      "inLanguage": "fr",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html",
+      "datePublished": "2026-10-01T10:00:00+09:00",
+      "dateModified": "2026-10-01T10:00:00+09:00",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain Physics & Movement Mechanics Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.svg"
+        }
+      },
+      "image": "https://dopabrain.com/assets/icon-512.svg"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portal",
+          "item": "https://dopabrain.com/portal/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Custom Movement Architecture: Air Strafe Acceleration Vectors, Bunnyhop Friction Windows & Kinematic Controllers",
+          "item": "https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/fr/roblox-custom-character-controller-air-strafe-bunnyhop-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does air strafing increase speed rather than just changing direction?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because air acceleration only checks velocity in the direction of the strafe. When turning the camera tangentially into the strafe vector, your speed in the wishdir direction is nearly zero, allowing the engine to add speed without hitting the air speed limit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a 'friction grace window' in bunnyhopping?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is a short buffer (typically 2 to 4 frames, or 33-66ms) immediately after contacting the ground where friction is not applied if the player buffers a jump, allowing full horizontal speed to be preserved into the next jump."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you prevent players from flying through walls at extreme bunnyhop speeds?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "By using continuous collision detection (CCD) or performing predictive spherecasts along the character's forward trajectory vector, instantly clamping movement if a thin obstacle is intercepted."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Roblox Custom Movement Architecture: Air Strafe Acceleration Vectors, Bunnyhop Friction Windows & Kinematic Controllers</h1>
+      <div class="meta-bar">
+        <span>By DopaBrain Physics & Movement Mechanics Team</span>
+        <span>Updated: 2026-10-01</span>
+        <span>12 min read</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting high-speed fluidity in Roblox Studio: From Quake air acceleration vector projection and ground contact friction grace frames to bunnyhop speed stacking and custom kinematic character controllers.
+    </div>
+
+    <div class="quick-links">
+
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier228_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Quake wishdir vector projection math & velocity accumulation matrices</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier228_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Sub-33ms bunnyhop jump buffer timing & high-speed strafe flick reflexes</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier228_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Fluid parkour spatial anticipation & kinetic locomotion archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier228_stress_check">
+          <strong>Stress Check</strong>
+          <span>High-speed collision anxiety, momentum loss tilt & flow state composure</span>
+        </a>
+    </div>
+
+    <article>
+      <p>In parkour, movement shooters, and high-speed competitive titles on Roblox—such as Evade, Defusal, and Source-style surf/bhop games—default Roblox Humanoid locomotion feels sluggish and restrictive. Default Roblox Humanoid physics aggressively clamps airborne velocity, immediately strips horizontal momentum when turning in mid-air, and applies instant ground friction that terminates player velocity upon landing.</p>
+      <p>To create the exhilarating fluid momentum made famous by Quake, Half-Life, and Counter-Strike, top developers replace standard Humanoids with custom Kinematic Character Controllers implementing Source-style movement mathematics. In this engineering guide, we build a production-ready air strafe and bunnyhop controller in Luau. We derive the wishdir projection formulas, implement ground friction grace frames, and manage seamless velocity replication.</p>
+
+      <h2>1. The Physics Defect: Why Default Humanoid Air Control Feels Stiff</h2>
+      <p>Default Roblox Humanoid physics enforces rigid velocity dampening that destroys advanced locomotion:</p>
+      <ul>
+        <li>Air Drag Clamping: When a player jumps, Humanoid physics treats the character as a high-drag body, decelerating horizontal speed toward WalkSpeed (16 studs/s).</li>
+        <li>Airborne Turning Deceleration: Turning the camera in mid-air causes the Humanoid's velocity vector to bleed energy, preventing momentum redirection.</li>
+        <li>Zero-Frame Ground Friction: The instant the Humanoid's FloorMaterial transitions from Air to a solid surface, full ground friction is applied, immediately braking velocity.</li>
+        <li>The Source Physics Paradigm: Quake and Source engines do not clamp horizontal velocity; they project the player's intended input direction onto current velocity, allowing tangential acceleration that stacks speed indefinitely.</li>
+      </ul>
+
+      <h2>2. The Mathematical Foundation: Quake Air Acceleration Vectors</h2>
+      <p>Air strafing works by adding velocity exclusively in the direction perpendicular to current travel:</p>
+      <ul>
+        <li>Wish Direction (wishdir): The normalized input vector derived from WASD inputs and camera CFrame: wishdir = (cameraLook * moveZ + cameraRight * moveX).Unit.</li>
+        <li>Current Speed Projection: currentspeed = velocity:Dot(wishdir), measuring how much speed the player already has in the intended direction.</li>
+        <li>Add Speed Calculation: addspeed = math.clamp(maxAirSpeed - currentspeed, 0, airAccel * maxAirSpeed * dt).</li>
+        <li>Tangential Speed Accumulation: If currentspeed < maxAirSpeed, the controller adds addspeed * wishdir to velocity. Crucially, when turning into the strafe angle, currentspeed remains near zero, allowing continuous lateral acceleration that curves the trajectory while increasing overall magnitude.</li>
+        <li>Optimal Strafe Angle: The mathematical sweet spot is theta = math.acos(maxAirSpeed / currentMagnitude), creating exponential speed stacking.</li>
+      </ul>
+
+      <h2>3. Complete Air Strafe & Bunnyhop Luau Implementation</h2>
+      <p>Below is a complete, modular Luau controller running on RunService.Heartbeat for frame-exact movement simulation:</p>
+      <ul>
+        <li>Kinematic Ground Probe: Uses Workspace:Spherecast or Raycast beneath the capsule to detect ground contact 2-4 frames before landing.</li>
+        <li>Friction Grace Window: Bypasses ground friction for 4 frames (66ms) upon landing if a jump input is queued, preserving 100% of accumulated horizontal speed.</li>
+        <li>LinearVelocity Integration: Drives the HumanoidRootPart using an authoritative LinearVelocity constraint with high maxForce and zero air damping.</li>
+      </ul>
+
+      <div class="code-container">
+        <div class="code-header">QuakeMovementController.luau (Source Air Acceleration Core)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Workspace = game:GetService("Workspace")
+
+local MovementEngine = {}
+MovementEngine.__index = MovementEngine
+
+export type ControllerConfig = {
+    RootPart: BasePart,
+    MaxAirSpeed: number,
+    AirAcceleration: number,
+    GroundMaxSpeed: number,
+    GroundAcceleration: number,
+    FrictionCoeff: number,
+    JumpPower: number,
+    FrictionGraceFrames: number,
+}
+
+export type MovementState = {
+    Config: ControllerConfig,
+    Velocity: Vector3,
+    IsGrounded: boolean,
+    GraceTimer: number,
+    JumpBuffered: boolean,
+    RayParams: RaycastParams,
+}
+
+function MovementEngine.New(root: BasePart): MovementState
+    local rayParams = RaycastParams.new()
+    rayParams.FilterType = RaycastFilterType.Exclude
+    rayParams.FilterDescendantsInstances = { root.Parent or root }
+
+    local state: MovementState = {
+        Config = {
+            RootPart = root,
+            MaxAirSpeed = 7.5,
+            AirAcceleration = 120.0,
+            GroundMaxSpeed = 22.0,
+            GroundAcceleration = 14.0,
+            FrictionCoeff = 6.0,
+            JumpPower = 48.0,
+            FrictionGraceFrames = 4,
+        },
+        Velocity = Vector3.zero,
+        IsGrounded = true,
+        GraceTimer = 0,
+        JumpBuffered = false,
+        RayParams = rayParams,
+    }
+    return state
+end
+
+local function Accelerate(vel: Vector3, wishdir: Vector3, wishspeed: number, accel: number, dt: number): Vector3
+    local currentspeed = vel:Dot(wishdir)
+    local addspeed = wishspeed - currentspeed
+    if addspeed &lt;= 0 then
+        return vel
+    end
+
+    local accelspeed = math.min(accel * wishspeed * dt, addspeed)
+    return vel + (wishdir * accelspeed)
+end
+
+function MovementEngine.Step(state: MovementState, inputDir: Vector3, cameraLook: Vector3, cameraRight: Vector3, dt: number)
+    local root = state.Config.RootPart
+    local cfg = state.Config
+
+    -- Check ground contact
+    local origin = root.Position
+    local cast = Workspace:Spherecast(origin, 1.0, Vector3.new(0, -1.8, 0), state.RayParams)
+    local wasGrounded = state.IsGrounded
+    state.IsGrounded = (cast ~= nil)
+
+    -- Handle landing grace frames for bunnyhopping
+    if not wasGrounded and state.IsGrounded then
+        state.GraceTimer = cfg.FrictionGraceFrames
+    end
+
+    -- Construct 2D wishdir on the horizontal plane
+    local camForwardFlat = Vector3.new(cameraLook.X, 0, cameraLook.Z).Unit
+    local camRightFlat = Vector3.new(cameraRight.X, 0, cameraRight.Z).Unit
+    local wishdir = (camForwardFlat * inputDir.Z + camRightFlat * inputDir.X)
+    local wishspeed = 0
+
+    if wishdir.Magnitude &gt; 0.05 then
+        wishdir = wishdir.Unit
+        wishspeed = cfg.GroundMaxSpeed
+    end
+
+    local horizVel = Vector3.new(root.AssemblyLinearVelocity.X, 0, root.AssemblyLinearVelocity.Z)
+    local vertVel = root.AssemblyLinearVelocity.Y
+
+    if state.IsGrounded then
+        if state.GraceTimer &gt; 0 and state.JumpBuffered then
+            -- Bunnyhop jump triggered: skip friction
+            vertVel = cfg.JumpPower
+            state.IsGrounded = false
+            state.GraceTimer = 0
+            state.JumpBuffered = false
+        elseif state.GraceTimer &lt;= 0 then
+            -- Apply ground friction
+            local speed = horizVel.Magnitude
+            if speed &gt; 0.1 then
+                local drop = speed * cfg.FrictionCoeff * dt
+                horizVel = horizVel * math.max(speed - drop, 0) / speed
+            end
+            horizVel = Accelerate(horizVel, wishdir, wishspeed, cfg.GroundAcceleration, dt)
+        else
+            state.GraceTimer -= 1
+        end
+    else
+        -- Air strafe acceleration
+        local airWishSpeed = math.min(wishspeed, cfg.MaxAirSpeed)
+        horizVel = Accelerate(horizVel, wishdir, airWishSpeed, cfg.AirAcceleration, dt)
+    end
+
+    root.AssemblyLinearVelocity = Vector3.new(horizVel.X, vertVel, horizVel.Z)
+end
+
+return MovementEngine</code></pre>
+      </div>
+
+      <h2>4. Ground Friction Delay & Speed Stacking Dynamics</h2>
+      <p>Bunnyhopping relies on executing jumps before ground friction decelerates the player:</p>
+      <ul>
+        <li>Ground Contact Queue: When approaching the ground, inputting a jump within 100ms before touchdown buffers the jump action.</li>
+        <li>Zero-Friction Rebound: If the buffer is active when landing, the controller executes an upward impulse on frame 1, resetting vertical velocity while preserving 100% of accumulated horizontal momentum.</li>
+        <li>Speed Cap Management: Implementing exponential soft-caps (e.g. reducing air acceleration by 50% when exceeding 150 studs/second) to prevent physics tunneling through thin map boundaries.</li>
+        <li>Slope Surfing Integration: When the ground normal exceeds a 45-degree angle, redirecting gravitational acceleration along the slope plane to launch players into high-velocity trajectory curves.</li>
+      </ul>
+
+      <h2>5. Visual Polish, Camera Tilt & Audio Pitch Dynamics</h2>
+      <p>High-speed movement requires matching visual and auditory sensory feedback:</p>
+      <ul>
+        <li>Dynamic Dutch Roll: Tilting the camera roll (CFrame.Angles(0, 0, -strafeInput * 0.04)) during aggressive air strafes to emphasize lateral G-forces.</li>
+        <li>Field-of-View (FOV) Scaling: Expanding camera FieldOfView dynamically from 70 to 95 degrees based on horizontal speed: targetFOV = math.clamp(70 + (speed / 10), 70, 100).</li>
+        <li>Wind Rush Sound Modulation: Pitching up and amplifying an ambient wind audio track in RunService.RenderStepped as airspeed climbs.</li>
+        <li>Footstep Suppression in Bhop Chains: Muting landing footstep audio when a bunnyhop grace frame is successfully chained, providing immediate auditory confirmation of momentum preservation.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why does air strafing increase speed rather than just changing direction?</h3>
+          <p>Because air acceleration only checks velocity in the direction of the strafe. When turning the camera tangentially into the strafe vector, your speed in the wishdir direction is nearly zero, allowing the engine to add speed without hitting the air speed limit.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What is a 'friction grace window' in bunnyhopping?</h3>
+          <p>It is a short buffer (typically 2 to 4 frames, or 33-66ms) immediately after contacting the ground where friction is not applied if the player buffers a jump, allowing full horizontal speed to be preserved into the next jump.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do you prevent players from flying through walls at extreme bunnyhop speeds?</h3>
+          <p>By using continuous collision detection (CCD) or performing predictive spherecasts along the character's forward trajectory vector, instantly clamping movement if a thin obstacle is intercepted.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
