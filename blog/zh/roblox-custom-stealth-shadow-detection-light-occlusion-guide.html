@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox 潜行视野与光照阴影遮挡系统架构指南 (2026)</title>
+  <meta name="description" content="在 Roblox Studio 中构建专业级潜行侦测系统：内积视锥体 (FOV)、直接光与阴影遮挡判定、地表材质足音传播及四级警戒状态机。" />
+  <meta name="keywords" content="roblox 潜行机制, roblox 视锥体 AI, roblox 阴影检测, 足音传播 roblox, 警戒状态机 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/zh/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Roblox 潜行视野与光照阴影遮挡系统架构指南 (2026)" />
+  <meta property="og:description" content="在 Roblox Studio 中构建专业级潜行侦测系统：内积视锥体 (FOV)、直接光与阴影遮挡判定、地表材质足音传播及四级警戒状态机。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/zh/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox 潜行视野与光照阴影遮挡系统架构指南 (2026)" />
+  <meta name="twitter:description" content="在 Roblox Studio 中构建专业级潜行侦测系统：内积视锥体 (FOV)、直接光与阴影遮挡判定、地表材质足音传播及四级警戒状态机。" />
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html"
+      },
+      "headline": "潜行感知架构：动态射线视锥体、阴影体积采样与声学衰减控制",
+      "description": "在 Roblox Studio 中构建专业级潜行侦测系统：内积视锥体 (FOV)、直接光与阴影遮挡判定、地表材质足音传播及四级警戒状态机。",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/zh/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain 人工智能与空间仿真团队",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "zh"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox 潜行视野与光照阴影遮挡系统架构指南 (2026)",
+          "item": "https://dopabrain.com/portal/blog/zh/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/zh/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "如何处理半透明玻璃与铁丝网？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "检测透明度属性，降低 60% 侦测速率而非直接阻断视线。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "为什么射线前必须先算点积？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "点积仅需 3 次乘法即可剔除 75% 视野外目标，大幅节约物理算力。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "手电筒光束检测原理？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "结合光源聚光锥角与射线碰撞检测。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "多玩家跑动时的声源优先级？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "每帧优先响应听觉半径内分贝最高的单一事件。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "推荐的警戒自然衰减速率？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "每秒 10-15 点，提供 4-6 秒脱战重置窗口。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      overflow-x: hidden;
+      width: 100%;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 18px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 36px;
+      color: #cbd5e1;
+      font-size: 15px;
+      backdrop-filter: blur(8px);
+    }
+    .quick-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 14px;
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    article {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    h2 {
+      font-size: 22px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-top: 12px;
+    }
+    p {
+      color: #cbd5e1;
+      font-size: 15.5px;
+    }
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 4px;
+    }
+    li {
+      position: relative;
+      padding-left: 20px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: #94a3b8;
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    code {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      color: #38bdf8;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      font-size: 16px;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      font-size: 14.5px;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(30, 58, 138, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: #ffffff;
+      font-size: 24px;
+    }
+    .portal-cta p {
+      max-width: 580px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+    @media (max-width: 640px) {
+      body {
+        padding: 0 12px 48px;
+      }
+      header.hero {
+        padding: 32px 0 24px;
+      }
+      .quick-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Master Engineering & Neuroscience</span>
+      <h1>潜行感知架构：动态射线视锥体、阴影体积采样与声学衰减控制</h1>
+      <div class="meta">
+        <span>By DopaBrain 人工智能与空间仿真团队</span>
+        <span>•</span>
+        <span>2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      在 Roblox Studio 中打造工业级潜行感知引擎：从向量点积视锥体、阳光射线阴影遮挡到地表材质足音衰减与四级警觉状态机。
+    </div>
+
+    <section class="quick-cards" aria-label="Interactive Cognitive Tools">
+      
+        <a href="/stress-check/" class="quick-card" data-track="tier258_stress_check">
+          <strong>Stress Check</strong>
+          <span>Guard patrol tension, discovery panic & silent infiltration heart-rate composure</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier258_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Corner peek timing, takedown reflex & shadow-to-shadow sprint reaction latency</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier258_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Field of view dot product calculus, inverse-square illumination & acoustic attenuation</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier258_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Ghost infiltration vs aggressive takedown tactical stealth archetype</span>
+        </a>
+    </section>
+
+    <article>
+      <p>在 Roblox 的战术潜行与恐怖逃生游戏中，守卫 NPC 的真实感感知是决定沉浸感的核心。如果守卫能隔墙透视，或对大灯下的入侵者视而不见，游戏体验将大打折扣。</p>
+      <p>构建具有说服力的潜行系统需要结合视野角度、物理阴影遮挡、环境光照与声学传播。本指南在 Luau 中实现一个完整的生产级感知管道。</p>
+
+      <h2>1. 距离判定的局限性：为什么简单检测必然失败</h2>
+      <p>单纯依赖欧氏距离检测会导致严重的作弊级感知问题：</p>
+      <ul>
+        <li>穿墙透视：隔着混凝土墙体和防盗门也能感知玩家，破坏潜入路线规划。</li>
+        <li>缺乏后方盲区：守卫不转头即可发现正后方的潜行者，杜绝了近战背刺。</li>
+        <li>无视光照与黑暗：潜伏在漆黑通风管与暴露在高照度探照灯下的玩家被同等距离发现。</li>
+        <li>空间遮挡方案：将感知解耦为光学视锥体、光照采样与声学听觉半径。</li>
+      </ul>
+
+      <h2>2. 数学基础：向量点积、光照反平方定律与声学结构衰减</h2>
+      <p>真实的感知模拟建立在向量代数与声光学物理定律之上：</p>
+      <ul>
+        <li>视锥点积 (Dot Product)：视线向量 L 与目标方向向量 D 的点积 cos(theta) >= cos(FOV / 2) 确定视野范围。</li>
+        <li>阴影射线遮挡：自阳光方向反向投射射线至角色身体，检测是否处于几何阴影体积内。</li>
+        <li>声学结构衰减：声音穿透混凝土墙壁时衰减 65%，金属地面脚步声半径 24 螺柱，地毯仅 3 螺柱。</li>
+      </ul>
+
+      <h2>3. 完整的生产级 Luau 潜行感知控制器实现</h2>
+      <p>在 Heartbeat 循环中高效评估视线、阴影与警戒等级的模块化 Luau 代码：</p>
+      <ul>
+        <li>视线射线检测：验证眼睛与玩家骨骼间是否存在实体遮挡。</li>
+        <li>阴影与光照采样：根据阳光直射状态动态调整被发现概率。</li>
+        <li>四级警戒状态机：无警觉 (0%)、起疑 (25%)、警戒 (70%) 与交火 (100%) 平滑转换。</li>
+      </ul>
+
+      
+      <div class="code-container">
+        <div class="code-title">StealthSensoryController.luau</div>
+        <pre><code>-- 完整 Luau 代码请参见英文版规格</code></pre>
+      </div>
+
+      <h2>4. 声学传播与警戒行为阶梯状态机</h2>
+      <p>声音在潜行中营造猫鼠博弈的紧张感：</p>
+      <ul>
+        <li>材质足音：铁丝网产生 24 螺柱声脉冲，石地 14 螺柱，地毯潜行仅 3 螺柱。</li>
+        <li>起疑状态排查：警戒度达到 25% 时停止巡逻，转头面向声源并开启手电。</li>
+        <li>交火呼叫支援：警戒度达到 100% 时向 60 螺柱内队友发送无线电警报。</li>
+      </ul>
+
+      <h2>5. 移动端性能优化与射线预算管理</h2>
+      <p>确保数十名守卫在低配移动设备上以 60 FPS 流畅运行的优化手段：</p>
+      <ul>
+        <li>时间片分帧：将守卫分为 4 组交替处理，每 4 帧更新一次 (15 Hz)。</li>
+        <li>空间哈希初筛：在向量点积前剔除超出最大感应半径的目标。</li>
+        <li>复用 RaycastParams：避免高频 GC 内存抖动。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>如何处理半透明玻璃与铁丝网？</h3>
+          <p>检测透明度属性，降低 60% 侦测速率而非直接阻断视线。</p>
+        </div>
+        <div class="faq-item">
+          <h3>为什么射线前必须先算点积？</h3>
+          <p>点积仅需 3 次乘法即可剔除 75% 视野外目标，大幅节约物理算力。</p>
+        </div>
+        <div class="faq-item">
+          <h3>手电筒光束检测原理？</h3>
+          <p>结合光源聚光锥角与射线碰撞检测。</p>
+        </div>
+        <div class="faq-item">
+          <h3>多玩家跑动时的声源优先级？</h3>
+          <p>每帧优先响应听觉半径内分贝最高的单一事件。</p>
+        </div>
+        <div class="faq-item">
+          <h3>推荐的警戒自然衰减速率？</h3>
+          <p>每秒 10-15 点，提供 4-6 秒脱战重置窗口。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

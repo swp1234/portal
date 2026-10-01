@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox स्टील्थ विज़न और लाइट ऑक्लूज़न गाइड (2026)</title>
+  <meta name="description" content="Roblox Studio में प्रो-लेवल स्टील्थ सिस्टम बनाएं: विज़न कोन, शैडो लाइट डिटेक्शन, फुटस्टेप साउंड प्रोपेगेशन और गार्ड अलर्ट स्टेट मशीन।" />
+  <meta name="keywords" content="roblox stealth mechanics, roblox vision cone ai, roblox shadow light detection 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/hi/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Roblox स्टील्थ विज़न और लाइट ऑक्लूज़न गाइड (2026)" />
+  <meta property="og:description" content="Roblox Studio में प्रो-लेवल स्टील्थ सिस्टम बनाएं: विज़न कोन, शैडो लाइट डिटेक्शन, फुटस्टेप साउंड प्रोपेगेशन और गार्ड अलर्ट स्टेट मशीन।" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/hi/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox स्टील्थ विज़न और लाइट ऑक्लूज़न गाइड (2026)" />
+  <meta name="twitter:description" content="Roblox Studio में प्रो-लेवल स्टील्थ सिस्टम बनाएं: विज़न कोन, शैडो लाइट डिटेक्शन, फुटस्टेप साउंड प्रोपेगेशन और गार्ड अलर्ट स्टेट मशीन।" />
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/hi/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/hi/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html"
+      },
+      "headline": "स्टील्थ विज़न आर्किटेक्चर: डायनेमिक रेकास्ट कोन, शैडो लाइट सैंपलिंग और एकूस्टिक डिटेक्शन",
+      "description": "Roblox Studio में प्रो-लेवल स्टील्थ सिस्टम बनाएं: विज़न कोन, शैडो लाइट डिटेक्शन, फुटस्टेप साउंड प्रोपेगेशन और गार्ड अलर्ट स्टेट मशीन।",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/hi/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain AI & Spatial Simulation Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "hi"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/hi/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox स्टील्थ विज़न और लाइट ऑक्लूज़न गाइड (2026)",
+          "item": "https://dopabrain.com/portal/blog/hi/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/hi/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "कांच के आर-पार दृष्टि?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "पहचान गति कम करें पूरी तरह ब्लॉक करने के बजाय।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "डॉट प्रोडक्ट पहले क्यों?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "75% अनुपयोगी रेकास्ट को तुरंत समाप्त करता है।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "टॉर्च लाइट डिटेक्शन?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "दूरी और कोण की जांच करके।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "शोर की प्राथमिकता?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "सबसे तेज आवाज पर पहले प्रतिक्रिया।"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "अलर्ट कूलडाउन दर?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "10-15 अंक प्रति सेकंड।"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      overflow-x: hidden;
+      width: 100%;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 18px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 36px;
+      color: #cbd5e1;
+      font-size: 15px;
+      backdrop-filter: blur(8px);
+    }
+    .quick-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 14px;
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    article {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    h2 {
+      font-size: 22px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-top: 12px;
+    }
+    p {
+      color: #cbd5e1;
+      font-size: 15.5px;
+    }
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 4px;
+    }
+    li {
+      position: relative;
+      padding-left: 20px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: #94a3b8;
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    code {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      color: #38bdf8;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      font-size: 16px;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      font-size: 14.5px;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(30, 58, 138, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: #ffffff;
+      font-size: 24px;
+    }
+    .portal-cta p {
+      max-width: 580px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+    @media (max-width: 640px) {
+      body {
+        padding: 0 12px 48px;
+      }
+      header.hero {
+        padding: 32px 0 24px;
+      }
+      .quick-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Master Engineering & Neuroscience</span>
+      <h1>स्टील्थ विज़न आर्किटेक्चर: डायनेमिक रेकास्ट कोन, शैडो लाइट सैंपलिंग और एकूस्टिक डिटेक्शन</h1>
+      <div class="meta">
+        <span>By DopaBrain AI & Spatial Simulation Team</span>
+        <span>•</span>
+        <span>2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Roblox Studio में उन्नत स्टील्थ डिटेक्शन सिस्टम तैयार करें: विज़न कोन, शैडो ऑक्लूज़न और एकूस्टिक प्रोपेगेशन।
+    </div>
+
+    <section class="quick-cards" aria-label="Interactive Cognitive Tools">
+      
+        <a href="/stress-check/" class="quick-card" data-track="tier258_stress_check">
+          <strong>Stress Check</strong>
+          <span>Guard patrol tension, discovery panic & silent infiltration heart-rate composure</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier258_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Corner peek timing, takedown reflex & shadow-to-shadow sprint reaction latency</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier258_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Field of view dot product calculus, inverse-square illumination & acoustic attenuation</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier258_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Ghost infiltration vs aggressive takedown tactical stealth archetype</span>
+        </a>
+    </section>
+
+    <article>
+      <p>Roblox के स्टील्थ और हॉरर गेम्स में गार्ड्स की प्राकृतिक दृष्टि और श्रवण क्षमता गेमप्ले की जान होती है।</p>
+      <p>इस गाइड में Luau का उपयोग करके विज़न कोन, शैडो ऑक्लूज़न और अलर्ट स्टेट मशीन का निर्माण करें।</p>
+
+      <h2>1. दूरी जांच की कमियां</h2>
+      <p>साधारण दूरी जांच दीवारों के आर-पार देख लेती है और अंधेरे को नजरअंदाज करती है।</p>
+      <ul>
+        <li>दीवारों के पार एक्स-रे दृष्टि।</li>
+        <li>पीछे के ब्लाइंड-स्पॉट का अभाव।</li>
+        <li>अंधेरे की उपेक्षा।</li>
+      </ul>
+
+      <h2>2. गणितीय सिद्धांत: डॉट प्रोडक्ट और एकूस्टिक क्षीणन</h2>
+      <p>डॉट प्रोडक्ट द्वारा विज़न कोन और रेकास्ट द्वारा शैडो वॉल्यूम का निर्धारण।</p>
+      <ul>
+        <li>FOV के लिए डॉट प्रोडक्ट।</li>
+        <li>शैडो वॉल्यूम रेकास्ट।</li>
+        <li>ध्वनि क्षीणन।</li>
+      </ul>
+
+      <h2>3. पूर्ण Luau कार्यान्वयन</h2>
+      <p>गार्ड्स के लिए मॉड्यूलर स्टील्थ कंट्रोलर।</p>
+      <ul>
+        <li>रेकास्ट विज़न लाइन।</li>
+        <li>शैडो लाइट फैक्टर।</li>
+        <li>4-स्तरीय अलर्ट स्टेट मशीन।</li>
+      </ul>
+
+      
+      <div class="code-container">
+        <div class="code-title">StealthSensoryController.luau</div>
+        <pre><code>-- कोड के लिए अंग्रेजी संस्करण देखें</code></pre>
+      </div>
+
+      <h2>4. ध्वनि संचरण और अलर्ट स्टेट्स</h2>
+      <p>विभिन्न सतहों पर कदमों की आहट और दीवारों द्वारा ध्वनि रुकावट।</p>
+      <ul>
+        <li>धातु पर 24 स्टड्स, कालीन पर 3 स्टड्स।</li>
+        <li>दीवारों द्वारा 65% ध्वनि क्षीणन।</li>
+      </ul>
+
+      <h2>5. मोबाइल ऑप्टिमाइज़ेशन</h2>
+      <p>कमजोर डिवाइसों पर स्मूथ 60 FPS के लिए रेकास्ट शेड्यूलिंग।</p>
+      <ul>
+        <li>गार्ड्स को 4 फ्रेम्स में बांटना।</li>
+        <li>मेमोरी उपयोग को सीमित करना।</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>कांच के आर-पार दृष्टि?</h3>
+          <p>पहचान गति कम करें पूरी तरह ब्लॉक करने के बजाय।</p>
+        </div>
+        <div class="faq-item">
+          <h3>डॉट प्रोडक्ट पहले क्यों?</h3>
+          <p>75% अनुपयोगी रेकास्ट को तुरंत समाप्त करता है।</p>
+        </div>
+        <div class="faq-item">
+          <h3>टॉर्च लाइट डिटेक्शन?</h3>
+          <p>दूरी और कोण की जांच करके।</p>
+        </div>
+        <div class="faq-item">
+          <h3>शोर की प्राथमिकता?</h3>
+          <p>सबसे तेज आवाज पर पहले प्रतिक्रिया।</p>
+        </div>
+        <div class="faq-item">
+          <h3>अलर्ट कूलडाउन दर?</h3>
+          <p>10-15 अंक प्रति सेकंड।</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

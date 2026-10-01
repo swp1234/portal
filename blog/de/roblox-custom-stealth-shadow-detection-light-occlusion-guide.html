@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Stealth-Sichtfeld & Licht-Okklusions-Guide (2026)</title>
+  <meta name="description" content="Meistern Sie Stealth-Systeme in Roblox Studio: Dynamische Sichtkegel, Raycast-Lichtverdeckung, akustische Schrittausbreitung und NPC-Zustandsautomaten." />
+  <meta name="keywords" content="roblox stealth system, roblox sichtkegel ai, roblox schattenerkennung, akustische ausbreitung roblox 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/de/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Roblox Stealth-Sichtfeld & Licht-Okklusions-Guide (2026)" />
+  <meta property="og:description" content="Meistern Sie Stealth-Systeme in Roblox Studio: Dynamische Sichtkegel, Raycast-Lichtverdeckung, akustische Schrittausbreitung und NPC-Zustandsautomaten." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/de/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox Stealth-Sichtfeld & Licht-Okklusions-Guide (2026)" />
+  <meta name="twitter:description" content="Meistern Sie Stealth-Systeme in Roblox Studio: Dynamische Sichtkegel, Raycast-Lichtverdeckung, akustische Schrittausbreitung und NPC-Zustandsautomaten." />
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/de/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/de/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html"
+      },
+      "headline": "Stealth-Architektur: Dynamische Raycast-Sichtkegel, Schattenvolumen & akustische Dämpfung",
+      "description": "Meistern Sie Stealth-Systeme in Roblox Studio: Dynamische Sichtkegel, Raycast-Lichtverdeckung, akustische Schrittausbreitung und NPC-Zustandsautomaten.",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/de/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain AI & Spatial Simulation Team",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "de"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/de/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox Stealth-Sichtfeld & Licht-Okklusions-Guide (2026)",
+          "item": "https://dopabrain.com/portal/blog/de/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/de/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Wie behandelt man transparentes Glas?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Transparenz prüfen und Erkennungsgeschwindigkeit reduzieren statt Sichtlinie komplett zu blockieren."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Warum Skalarprodukt vor Raycast?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Weil Vektorberechnungen 75% der Ziele ohne teure Kollisionsprüfungen eliminieren."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie funktionieren Scheinwerfer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Durch Punkt-zu-Punkt-Raycasts innerhalb des Lichtkegels."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie priorisieren Wachen Geräusche?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Über eine priorisierte akustische Ereignis-Warteschlange."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Empfohlene Alarm-Abklingzeit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "10-15 Punkte pro Sekunde für 4-6 Sekunden Erholungszeit."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      overflow-x: hidden;
+      width: 100%;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 18px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 36px;
+      color: #cbd5e1;
+      font-size: 15px;
+      backdrop-filter: blur(8px);
+    }
+    .quick-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 14px;
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    article {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    h2 {
+      font-size: 22px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-top: 12px;
+    }
+    p {
+      color: #cbd5e1;
+      font-size: 15.5px;
+    }
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 4px;
+    }
+    li {
+      position: relative;
+      padding-left: 20px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: #94a3b8;
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    code {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      color: #38bdf8;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      font-size: 16px;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      font-size: 14.5px;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(30, 58, 138, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: #ffffff;
+      font-size: 24px;
+    }
+    .portal-cta p {
+      max-width: 580px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+    @media (max-width: 640px) {
+      body {
+        padding: 0 12px 48px;
+      }
+      header.hero {
+        padding: 32px 0 24px;
+      }
+      .quick-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Master Engineering & Neuroscience</span>
+      <h1>Stealth-Architektur: Dynamische Raycast-Sichtkegel, Schattenvolumen & akustische Dämpfung</h1>
+      <div class="meta">
+        <span>By DopaBrain AI & Spatial Simulation Team</span>
+        <span>•</span>
+        <span>2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Entwicklung hochpräziser Stealth-Erkennung in Roblox Studio: Von Sichtkegeln über Schatten-Okklusion bis hin zu akustischer Schrittdämpfung und 4-Stufen-Alarmzuständen.
+    </div>
+
+    <section class="quick-cards" aria-label="Interactive Cognitive Tools">
+      
+        <a href="/stress-check/" class="quick-card" data-track="tier258_stress_check">
+          <strong>Stress Check</strong>
+          <span>Guard patrol tension, discovery panic & silent infiltration heart-rate composure</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier258_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Corner peek timing, takedown reflex & shadow-to-shadow sprint reaction latency</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier258_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Field of view dot product calculus, inverse-square illumination & acoustic attenuation</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier258_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Ghost infiltration vs aggressive takedown tactical stealth archetype</span>
+        </a>
+    </section>
+
+    <article>
+      <p>In taktischen Stealth-Spielen auf Roblox ist eine realistische KI-Wahrnehmung unerlässlich. Wenn Wachen durch Betonwände sehen oder Spieler im hellen Lichtschein ignorieren, bricht die Immersion zusammen.</p>
+      <p>Ein überzeugendes Stealth-Erlebnis erfordert optische Sichtkegel, geometrische Schattenverdeckung und akustische Dämpfung. Dieser Guide führt Sie durch die Implementierung eines produktionsreifen Sensory-Controllers in Luau.</p>
+
+      <h2>1. Das Omnipräsenz-Problem: Warum reine Distanzprüfungen versagen</h2>
+      <p>Reine Abstandsberechnungen führen zu gravierenden Spielfehlern:</p>
+      <ul>
+        <li>Röntgenblick durch Wände und Türen.</li>
+        <li>Fehlende tote Winkel im Rücken der Wachen.</li>
+        <li>Keine Unterscheidung zwischen grellem Flutlicht und tiefstem Schatten.</li>
+        <li>Die Lösung: Kombination aus Sichtkegel-Vektoren, Raycasts und akustischen Schwellenwerten.</li>
+      </ul>
+
+      <h2>2. Mathematische Grundlagen: Skalarprodukt & inverse quadratische Dämpfung</h2>
+      <p>Sicht- und Schallsysteme basieren auf Vektorgeometrie und physikalischen Ausbreitungsgesetzen:</p>
+      <ul>
+        <li>Skalarprodukt (Dot Product): Bestimmt, ob sich das Ziel im Sichtfeld befindet.</li>
+        <li>Schatten-Raycast: Prüft Verdeckung gegenüber Sonnen- und Punktlichtquellen.</li>
+        <li>Akustische Dämpfung: Schalldruck fällt mit der Distanz ab und wird durch Wände massiv reduziert.</li>
+      </ul>
+
+      <h2>3. Vollständige Luau-Implementierung des Stealth-Controllers</h2>
+      <p>Modulares Luau-Skript zur Auswertung von Sichtlinie, Lichtexposition und Alarmstufen:</p>
+      <ul>
+        <li>Sichtkegel-Raycasting zur Zielverifikation.</li>
+        <li>Schatten- und Lichtstärkebewertung.</li>
+        <li>Zustandsautomat mit 4 Alarmstufen (Unaware, Suspicious, Alerted, Combat).</li>
+      </ul>
+
+      
+      <div class="code-container">
+        <div class="code-title">StealthSensoryController.luau</div>
+        <pre><code>-- Siehe englische Spezifikation für den vollständigen Luau-Code</code></pre>
+      </div>
+
+      <h2>4. Akustische Ausbreitung & Eskalationsstufen</h2>
+      <p>Schallausbreitung variiert je nach Bodenmaterial (Metall, Stein, Teppich) und Wanddämpfung.</p>
+      <ul>
+        <li>Metall erzeugt 24 Studs Radius, Teppich nur 3 Studs.</li>
+        <li>Betonwände dämpfen Schallwellen um 65%.</li>
+        <li>Wachen untersuchen Geräuschquellen im Verdachtsmodus.</li>
+      </ul>
+
+      <h2>5. Performance-Optimierung auf Mobilgeräten</h2>
+      <p>Raycasts müssen auf Mobilgeräten zeitlich gestaffelt (Interleaving) und durch räumliche Gitter vorab gefiltert werden.</p>
+      <ul>
+        <li>Berechnung auf 4 Frames verteilen (15 Hz).</li>
+        <li>Wiederverwendung von RaycastParams zur Reduzierung von GC-Spikes.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Wie behandelt man transparentes Glas?</h3>
+          <p>Transparenz prüfen und Erkennungsgeschwindigkeit reduzieren statt Sichtlinie komplett zu blockieren.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Warum Skalarprodukt vor Raycast?</h3>
+          <p>Weil Vektorberechnungen 75% der Ziele ohne teure Kollisionsprüfungen eliminieren.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Wie funktionieren Scheinwerfer?</h3>
+          <p>Durch Punkt-zu-Punkt-Raycasts innerhalb des Lichtkegels.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Wie priorisieren Wachen Geräusche?</h3>
+          <p>Über eine priorisierte akustische Ereignis-Warteschlange.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Empfohlene Alarm-Abklingzeit?</h3>
+          <p>10-15 Punkte pro Sekunde für 4-6 Sekunden Erholungszeit.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>

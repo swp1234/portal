@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox ステルス視覚＆光量遮蔽検知システム完全ガイド (2026)</title>
+  <meta name="description" content="Roblox Studioで構築する高精度ステルスシステム: 内積FOV視覚コーン、直射日光・影遮蔽判定、床材別足音伝播、4段階警戒度ステートマシン。" />
+  <meta name="keywords" content="roblox ステルス AI, roblox 視界コーン, roblox 影検知, 足音伝播 roblox 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ja/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Roblox ステルス視覚＆光量遮蔽検知システム完全ガイド (2026)" />
+  <meta property="og:description" content="Roblox Studioで構築する高精度ステルスシステム: 内積FOV視覚コーン、直射日光・影遮蔽判定、床材別足音伝播、4段階警戒度ステートマシン。" />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ja/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Roblox ステルス視覚＆光量遮蔽検知システム完全ガイド (2026)" />
+  <meta name="twitter:description" content="Roblox Studioで構築する高精度ステルスシステム: 内積FOV視覚コーン、直射日光・影遮蔽判定、床材別足音伝播、4段階警戒度ステートマシン。" />
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/ja/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ja/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html"
+      },
+      "headline": "ステルス知覚アーキテクチャ: 動的レイスラッシュ視錐台、影ボリュームサンプリング及び音響減衰制御",
+      "description": "Roblox Studioで構築する高精度ステルスシステム: 内積FOV視覚コーン、直射日光・影遮蔽判定、床材別足音伝播、4段階警戒度ステートマシン。",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ja/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "DopaBrain AI・空間シミュレーション工学チーム",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "ja"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/ja/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Roblox ステルス視覚＆光量遮蔽検知システム完全ガイド (2026)",
+          "item": "https://dopabrain.com/portal/blog/ja/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/ja/roblox-custom-stealth-shadow-detection-light-occlusion-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "半透明ガラスの処理方法は？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "完全遮断ではなく検知速度を0.4倍に減衰させます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "なぜレイスラッシュの前に内積を計算するのか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "視界外の75%の対象を極めて軽量な演算で除外できるためです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "懐中電灯の光はどう検知する？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "スポットライトの角度と距離判定で照度を算出します。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "複数音源の優先度は？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "毎フレーム最大音圧の音源を優先処理します。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "警戒度の自然減少レートは？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "毎秒10〜15ポイントが適正です。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      overflow-x: hidden;
+      width: 100%;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 18px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 36px;
+      color: #cbd5e1;
+      font-size: 15px;
+      backdrop-filter: blur(8px);
+    }
+    .quick-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 14px;
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    article {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    h2 {
+      font-size: 22px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-top: 12px;
+    }
+    p {
+      color: #cbd5e1;
+      font-size: 15.5px;
+    }
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 4px;
+    }
+    li {
+      position: relative;
+      padding-left: 20px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: #94a3b8;
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    code {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      color: #38bdf8;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      font-size: 16px;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      font-size: 14.5px;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(30, 58, 138, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: #ffffff;
+      font-size: 24px;
+    }
+    .portal-cta p {
+      max-width: 580px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+    @media (max-width: 640px) {
+      body {
+        padding: 0 12px 48px;
+      }
+      header.hero {
+        padding: 32px 0 24px;
+      }
+      .quick-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Master Engineering & Neuroscience</span>
+      <h1>ステルス知覚アーキテクチャ: 動的レイスラッシュ視錐台、影ボリュームサンプリング及び音響減衰制御</h1>
+      <div class="meta">
+        <span>By DopaBrain AI・空間シミュレーション工学チーム</span>
+        <span>•</span>
+        <span>2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Roblox Studioで極めるプロダクションレベルのステルス知覚エンジン: ベクトル内積による視界判定、影遮蔽レイスラッシュ、音響減衰、警戒度FSMの完全統合。
+    </div>
+
+    <section class="quick-cards" aria-label="Interactive Cognitive Tools">
+      
+        <a href="/stress-check/" class="quick-card" data-track="tier258_stress_check">
+          <strong>Stress Check</strong>
+          <span>Guard patrol tension, discovery panic & silent infiltration heart-rate composure</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier258_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Corner peek timing, takedown reflex & shadow-to-shadow sprint reaction latency</span>
+        </a>
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier258_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>Field of view dot product calculus, inverse-square illumination & acoustic attenuation</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier258_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Ghost infiltration vs aggressive takedown tactical stealth archetype</span>
+        </a>
+    </section>
+
+    <article>
+      <p>Robloxのタクティカル潜入ゲームやホラーゲームにおいて、敵NPCの視覚と聴覚のリアリズムは没入感を左右する決定的な要素です。</p>
+      <p>本ガイドではLuauを用い、視界コーン計算、影ボリューム遮蔽判定、マテリアル別足音伝播、4段階の警戒ステートマシンを実装します。</p>
+
+      <h2>1. 単純な距離判定が破綻する理由</h2>
+      <p>距離判定のみに依存すると、壁の向こうのプレイヤーを検知する透視バグが発生します:</p>
+      <ul>
+        <li>コンクリート壁や密閉扉を透過する透視検知。</li>
+        <li>背後の死角が存在しない不条理。</li>
+        <li>暗闇と照明下の区別不能。</li>
+      </ul>
+
+      <h2>2. 数学的基礎: ベクトル内積と音響・光量減衰</h2>
+      <p>視線ベクトルとの内積によるFOV判定と、太陽光線レイスラッシュによる影判定:</p>
+      <ul>
+        <li>視界コーンの内積計算。</li>
+        <li>直射日光遮蔽レイスラッシュ。</li>
+        <li>構造物による音響減衰。</li>
+      </ul>
+
+      <h2>3. 完全なLuauステルスコントローラー実装</h2>
+      <p>視線遮蔽、影隠蔽度、警戒度上昇をHeartbeat上で効率的に評価するモジュール:</p>
+      <ul>
+        <li>レイスラッシュ視線チェック。</li>
+        <li>影・光量露出サンプリング。</li>
+        <li>4段階の警戒度FSM。</li>
+      </ul>
+
+      
+      <div class="code-container">
+        <div class="code-title">StealthSensoryController.luau</div>
+        <pre><code>-- 完全なLuauコードは英語版をご参照ください</code></pre>
+      </div>
+
+      <h2>4. 音響伝播と警戒レベル遷移</h2>
+      <p>足音の伝播距離は地面の材質（金属、石、絨毯）によって変化し、壁により65%減衰します。</p>
+      <ul>
+        <li>金属24スタッド、絨毯3スタッド。</li>
+        <li>疑惑状態での音源索敵行動。</li>
+      </ul>
+
+      <h2>5. モバイル向け負荷分散最適化</h2>
+      <p>全ガードを4フレームに分散処理（15Hz更新）し、低スペック端末でも60FPSを維持します。</p>
+      <ul>
+        <li>タイムスライシングによる負荷軽減。</li>
+        <li>RaycastParamsの再利用。</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>半透明ガラスの処理方法は？</h3>
+          <p>完全遮断ではなく検知速度を0.4倍に減衰させます。</p>
+        </div>
+        <div class="faq-item">
+          <h3>なぜレイスラッシュの前に内積を計算するのか？</h3>
+          <p>視界外の75%の対象を極めて軽量な演算で除外できるためです。</p>
+        </div>
+        <div class="faq-item">
+          <h3>懐中電灯の光はどう検知する？</h3>
+          <p>スポットライトの角度と距離判定で照度を算出します。</p>
+        </div>
+        <div class="faq-item">
+          <h3>複数音源の優先度は？</h3>
+          <p>毎フレーム最大音圧の音源を優先処理します。</p>
+        </div>
+        <div class="faq-item">
+          <h3>警戒度の自然減少レートは？</h3>
+          <p>毎秒10〜15ポイントが適正です。</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
