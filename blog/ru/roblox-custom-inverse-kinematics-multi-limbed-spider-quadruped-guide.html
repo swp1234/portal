@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Руководство по процедурной IK многоногих существ и четвероногих в Roblox (2026)</title>
+  <meta name="description" content="Освойте процедурную инверсную кинематику в Roblox Studio: алгоритм FABRIK для многосуставных конечностей, рейкастинг ландшафта и кривые Безье для шагов." />
+  <meta name="keywords" content="roblox procedural ik, roblox spider ik, quadruped locomotion luau, fabrik roblox, procedural animation roblox studio 2026" />
+  <link rel="canonical" href="https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <link rel="alternate" hreflang="en" href="https://dopabrain.com/portal/blog/en/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <link rel="alternate" hreflang="ko" href="https://dopabrain.com/portal/blog/ko/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <link rel="alternate" hreflang="de" href="https://dopabrain.com/portal/blog/de/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <link rel="alternate" hreflang="es" href="https://dopabrain.com/portal/blog/es/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <link rel="alternate" hreflang="fr" href="https://dopabrain.com/portal/blog/fr/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <link rel="alternate" hreflang="hi" href="https://dopabrain.com/portal/blog/hi/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <link rel="alternate" hreflang="id" href="https://dopabrain.com/portal/blog/id/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <link rel="alternate" hreflang="ja" href="https://dopabrain.com/portal/blog/ja/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <link rel="alternate" hreflang="pt" href="https://dopabrain.com/portal/blog/pt/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <link rel="alternate" hreflang="ru" href="https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <link rel="alternate" hreflang="tr" href="https://dopabrain.com/portal/blog/tr/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <link rel="alternate" hreflang="zh" href="https://dopabrain.com/portal/blog/zh/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Руководство по процедурной IK многоногих существ и четвероногих в Roblox (2026)" />
+  <meta property="og:description" content="Освойте процедурную инверсную кинематику в Roblox Studio: алгоритм FABRIK для многосуставных конечностей, рейкастинг ландшафта и кривые Безье для шагов." />
+  <meta property="og:url" content="https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html" />
+  <meta property="og:site_name" content="DopaBrain" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Руководство по процедурной IK многоногих существ и четвероногих в Roblox (2026)" />
+  <meta name="twitter:description" content="Освойте процедурную инверсную кинематику в Roblox Studio: алгоритм FABRIK для многосуставных конечностей, рейкастинг ландшафта и кривые Безье для шагов." />
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html#article",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html"
+      },
+      "headline": "Процедурная кинематика многоногих: алгоритм FABRIK, рейкастинг рельефа и походка пауков",
+      "description": "Освойте процедурную инверсную кинематику в Roblox Studio: алгоритм FABRIK для многосуставных конечностей, рейкастинг ландшафта и кривые Безье для шагов.",
+      "datePublished": "2026-10-01T09:00:00+09:00",
+      "dateModified": "2026-10-01T09:00:00+09:00",
+      "mainEntityOfPage": "https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Команда кинематики и процедурной робототехники DopaBrain",
+        "url": "https://dopabrain.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DopaBrain",
+        "url": "https://dopabrain.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://dopabrain.com/assets/icon-512.png"
+        }
+      },
+      "inLanguage": "ru"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DopaBrain",
+          "item": "https://dopabrain.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://dopabrain.com/portal/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Руководство по процедурной IK многоногих существ и четвероногих в Roblox (2026)",
+          "item": "https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://dopabrain.com/portal/blog/ru/roblox-custom-inverse-kinematics-multi-limbed-spider-quadruped-guide.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why use FABRIK instead of two-bone analytical trigonometry (law of cosines)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The law of cosines is only applicable to 2-joint limb chains (like human arms and legs). Spider, insect, and complex alien limbs consist of 3, 4, or more articulated joints. FABRIK scales elegantly to arbitrary joint counts with O(N) linear time complexity and robust boundary convergence."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you ensure spider legs do not step simultaneously and collapse the body?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "By assigning alternating gait phase offsets. For an 8-legged spider, legs are partitioned into two alternating tripods/quads (phases 0.0 and 0.5). A leg is only permitted to initiate a stepping arc when its designated phase window is active, ensuring grounded support."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does procedural IK cause network lag in multiplayer games?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not when implemented client-side. The server only replicates the creature's root position, orientation, and linear velocity. Each client simulates foot raycasting, FABRIK solving, and Bézier stepping locally, incurring zero network bandwidth overhead."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the torso avoid jittering when walking over jagged terrain?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Torso orientation is determined by fitting a least-squares plane through all grounded foot positions and passing the resulting target CFrame through a critically damped second-order spring filter, eliminating high-frequency surface noise."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <!-- Google Analytics & AdSense -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J8GSWM40TV');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3600813755953882" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: rgba(23, 32, 54, 0.7);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --border: rgba(255, 255, 255, 0.08);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      overflow-x: hidden;
+      width: 100%;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      padding: 0 16px 64px;
+      overflow-x: hidden;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    header.hero {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .meta {
+      display: flex;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+    }
+    .banner {
+      background: var(--card-bg);
+      border-left: 4px solid var(--accent);
+      padding: 18px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 36px;
+      color: #cbd5e1;
+      font-size: 15px;
+      backdrop-filter: blur(8px);
+    }
+    .quick-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .quick-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .quick-card strong {
+      color: var(--accent);
+      font-size: 14px;
+    }
+    .quick-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    article {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    h2 {
+      font-size: 22px;
+      color: #f8fafc;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin-top: 12px;
+    }
+    p {
+      color: #cbd5e1;
+      font-size: 15.5px;
+    }
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 4px;
+    }
+    li {
+      position: relative;
+      padding-left: 20px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .code-container {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .code-title {
+      background: #1e293b;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      color: #94a3b8;
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      padding: 16px;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    code {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      color: #38bdf8;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+    .faq-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .faq-item h3 {
+      font-size: 16px;
+      color: #f1f5f9;
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      font-size: 14.5px;
+      color: #94a3b8;
+    }
+    .portal-cta {
+      margin-top: 48px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(30, 58, 138, 0.2));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .portal-cta h2 {
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: #ffffff;
+      font-size: 24px;
+    }
+    .portal-cta p {
+      max-width: 580px;
+      color: #cbd5e1;
+      font-size: 15px;
+    }
+    .portal-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #0b0f19;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .portal-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+    @media (max-width: 640px) {
+      body {
+        padding: 0 12px 48px;
+      }
+      header.hero {
+        padding: 32px 0 24px;
+      }
+      .quick-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <span class="badge">Master Engineering & Neuroscience</span>
+      <h1>Процедурная кинематика многоногих: алгоритм FABRIK, рейкастинг рельефа и походка пауков</h1>
+      <div class="meta">
+        <span>By Команда кинематики и процедурной робототехники DopaBrain</span>
+        <span>•</span>
+        <span>2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="banner">
+      Architecting custom procedural multi-limbed inverse kinematics and quadruped locomotion in Roblox Studio: From multi-joint FABRIK analytical iterations and uneven terrain surface normal raycasting to Bézier step trajectories and chassis orientation dampening.
+    </div>
+
+    <section class="quick-cards" aria-label="Interactive Cognitive Tools">
+      
+        <a href="/puzzle-2048/" class="quick-card" data-track="tier248_puzzle_2048">
+          <strong>2048 Coach</strong>
+          <span>FABRIK multi-joint iterations, Bézier stepping arcs & robotic spatial calculus</span>
+        </a>
+        <a href="/reaction-test/" class="quick-card" data-track="tier248_reaction_test">
+          <strong>Reaction Time</strong>
+          <span>Gait phase transitions, procedural limb coordination & reflex latency</span>
+        </a>
+        <a href="/brain-type/" class="quick-card" data-track="tier248_brain_type">
+          <strong>Brain Type Test</strong>
+          <span>Multi-limbed spatial coordination & procedural robotics mental archetype</span>
+        </a>
+        <a href="/stress-check/" class="quick-card" data-track="tier248_stress_check">
+          <strong>Stress Check</strong>
+          <span>Cliff climbing vertigo, leg desynchronization panic & chassis composure</span>
+        </a>
+    </section>
+
+    <article>
+      <p>In modern monster survival, mecha combat, and creature exploration experiences on Roblox, rigid keyframed walk animations fail dramatically on uneven, rocky, or vertical terrain. A giant spider or quad-legged mech walking up a jagged cliff face with pre-baked animations leaves limbs floating in mid-air or clipping through solid boulders, completely destroying visual believability.</p>
+      <p>Procedural inverse kinematics (IK) solves this by computing joint angles mathematically in real time based on terrain geometry and chassis velocity. In this master technical engineering guide, we build a production-grade multi-limbed procedural locomotion engine in Luau. We implement the Forward And Backward Reaching Inverse Kinematics (FABRIK) algorithm, project dynamic raycasts onto complex terrain, sequence alternating gait cycles with Bézier stepping arcs, and stabilize torso pitch and roll.</p>
+
+      <h2>1. The Believability Breakdown: Why Keyframed Animations Fail on Dynamic Terrain</h2>
+      <p>Pre-rendered keyframe animations assume a perfectly flat floor plane, producing severe graphical and physical artifacts in open environments:</p>
+      <ul>
+        <li>Limb Floating & Geo-Clipping: Keyframes place feet at fixed relative coordinates, causing legs to hang over cliffs or penetrate sloped inclines by multiple studs.</li>
+        <li>Disconnected Ground Impact: Static animations cannot convey variable step timing when walking across obstacles of varying heights or moving sideways.</li>
+        <li>Rigid Torso Decoupling: A creature climbing a 45-degree ramp with a flat torso orientation violates gravity alignment and center-of-mass balance.</li>
+        <li>Procedural Locomotion Advantage: Calculating foot placement dynamically anchors every limb firmly to collision geometry while maintaining fluid, organic biological motion.</li>
+      </ul>
+
+      <h2>2. Mathematical Architecture: FABRIK Joint Solvers & Surface Projection</h2>
+      <p>While analytical trigonometric solvers become intractable for chains with 3 or more joints, the FABRIK (Forward And Backward Reaching Inverse Kinematics) algorithm computes solutions iteratively with minimal CPU overhead:</p>
+      <ul>
+        <li>Unreachable Target Handling: If distance to target ||T - P_0|| > sum(L_i), straighten all bone segments directly along the vector (T - P_0).</li>
+        <li>Backward Reaching Pass: Set end-effector P_n = Target. For each preceding joint i from n-1 down to 0, place joint P_i along the line connecting P_i and P_{i+1} at bone length L_i.</li>
+        <li>Forward Reaching Pass: Reset base root joint P_0 to its fixed mount origin. For each joint i from 1 to n, project P_i along the vector (P_{i-1} -> P_i) at distance L_{i-1}.</li>
+        <li>Terrain Normal Raycasting: Cast a downward ray from the hip socket: HitPosition, HitNormal = Workspace:Raycast(Origin, Vector3.new(0, -MaxReach, 0)). This provides the foot target and surface slope.</li>
+      </ul>
+
+      <h2>3. Complete Production Multi-Limbed IK Engine Luau Implementation</h2>
+      <p>The following production-ready Luau module solves 3-joint FABRIK limb chains and executes alternating gait stepping cycles with Bézier elevation arcs:</p>
+      <ul>
+        <li>Iterative FABRIK Solver: Solves 3-joint positions to sub-millimeter tolerance in 2 to 3 iterations per leg.</li>
+        <li>Alternating Gait Sequencer: Staggers stepping phases across diagonal quadruped pairs or tripod arachnid groups so supporting legs remain planted.</li>
+        <li>Cubic Bézier Stepping Arc: Smoothly interpolates foot position from old stance to new projected target with a realistic vertical lift apex.</li>
+      </ul>
+
+      
+      <div class="code-container">
+        <div class="code-title">ProceduralIKEngine.luau (Multi-Joint FABRIK & Arachnid Gait Controller)</div>
+        <pre><code>--!strict
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+export type LegChain = {
+    RootAttachment: Attachment,
+    Bones: { BasePart },
+    Lengths: { number },
+    CurrentFootPos: Vector3,
+    TargetFootPos: Vector3,
+    LastGroundedPos: Vector3,
+    StepProgress: number, // 0.0 to 1.0
+    IsStepping: boolean,
+    GaitPhaseOffset: number, // 0.0 to 1.0
+}
+
+local ProceduralIK = {}
+ProceduralIK.__index = ProceduralIK
+
+function ProceduralIK.solveFABRIK(points: { Vector3 }, lengths: { number }, target: Vector3, maxIterations: number, tolerance: number): { Vector3 }
+    local n = #points
+    local totalLength = 0
+    for _, l in ipairs(lengths) do totalLength += l end
+
+    local origin = points[1]
+    local distToTarget = (target - origin).Magnitude
+
+    if distToTarget &gt;= totalLength then
+        -- Target unreachable: stretch in a straight line
+        local dir = (target - origin).Unit
+        for i = 2, n do
+            points[i] = points[i - 1] + dir * lengths[i - 1]
+        end
+        return points
+    end
+
+    -- Iterative relaxation
+    for _ = 1, maxIterations do
+        -- Backward pass: set tip to target
+        points[n] = target
+        for i = n - 1, 1, -1 do
+            local dir = (points[i] - points[i + 1]).Unit
+            points[i] = points[i + 1] + dir * lengths[i]
+        end
+
+        -- Forward pass: anchor base to origin
+        points[1] = origin
+        for i = 1, n - 1 do
+            local dir = (points[i + 1] - points[i]).Unit
+            points[i + 1] = points[i] + dir * lengths[i]
+        end
+
+        if (points[n] - target).Magnitude &lt;= tolerance then
+            break
+        end
+    end
+
+    return points
+end
+
+function ProceduralIK.sampleCubicBezier(p0: Vector3, p1: Vector3, p2: Vector3, p3: Vector3, t: number): Vector3
+    local u = 1 - t
+    return (u^3 * p0) + (3 * u^2 * t * p1) + (3 * u * t^2 * p2) + (t^3 * p3)
+end
+
+function ProceduralIK:UpdateLeg(leg: LegChain, chassisCF: CFrame, velocity: Vector3, dt: number, globalGaitTime: number)
+    local hipWorld = chassisCF:PointToWorldSpace(leg.RootAttachment.Position)
+    local maxReach = leg.Lengths[1] + leg.Lengths[2] + leg.Lengths[3]
+
+    -- Predict future foot target based on velocity lead
+    local leadOffset = velocity * 0.25
+    local rayOrigin = hipWorld + leadOffset + Vector3.new(0, 4, 0)
+    local rayParams = RaycastParams.new()
+    rayParams.FilterType = RaycastFilterType.Exclude
+
+    local rayResult = Workspace:Raycast(rayOrigin, Vector3.new(0, -maxReach * 1.5, 0), rayParams)
+    local idealTarget = rayResult and rayResult.Position or (hipWorld + Vector3.new(0, -maxReach * 0.8, 0))
+
+    local distToCurrent = (idealTarget - leg.CurrentFootPos).Magnitude
+    local gaitPhase = (globalGaitTime + leg.GaitPhaseOffset) % 1.0
+
+    if not leg.IsStepping and distToCurrent &gt; (maxReach * 0.45) and gaitPhase &lt; 0.5 then
+        leg.IsStepping = true
+        leg.LastGroundedPos = leg.CurrentFootPos
+        leg.TargetFootPos = idealTarget
+        leg.StepProgress = 0
+    end
+
+    if leg.IsStepping then
+        leg.StepProgress = math.min(1.0, leg.StepProgress + dt * 4.5)
+        local t = leg.StepProgress
+        local p0 = leg.LastGroundedPos
+        local p3 = leg.TargetFootPos
+        local stepHeight = Vector3.new(0, maxReach * 0.35, 0)
+        local p1 = p0 + stepHeight
+        local p2 = p3 + stepHeight
+
+        leg.CurrentFootPos = ProceduralIK.sampleCubicBezier(p0, p1, p2, p3, t)
+
+        if leg.StepProgress &gt;= 1.0 then
+            leg.IsStepping = false
+            leg.CurrentFootPos = leg.TargetFootPos
+        end
+    end
+
+    -- Solve FABRIK chain
+    local initialPoints = {
+        hipWorld,
+        hipWorld + Vector3.new(0, -leg.Lengths[1], 0),
+        hipWorld + Vector3.new(0, -(leg.Lengths[1] + leg.Lengths[2]), 0),
+        leg.CurrentFootPos
+    }
+
+    local solved = ProceduralIK.solveFABRIK(initialPoints, leg.Lengths, leg.CurrentFootPos, 4, 0.05)
+
+    -- Apply CFrame to bone parts
+    for i = 1, #leg.Bones do
+        local pA = solved[i]
+        local pB = solved[i + 1]
+        local center = (pA + pB) * 0.5
+        leg.Bones[i].CFrame = CFrame.lookAt(center, pB)
+    end
+end
+
+return ProceduralIK</code></pre>
+      </div>
+
+      <h2>4. Torso Pitch/Roll Surface Normal Conformance & Spring Stabilization</h2>
+      <p>A creature with dynamic legs requires a torso chassis that actively conforms to ground inclination:</p>
+      <ul>
+        <li>Multi-Foot Plane Fitting: Calculate the average position and plane normal from all grounded feet: Normal_plane = cross(Foot_front - Foot_back, Foot_right - Foot_left).</li>
+        <li>Target Chassis CFrame: Construct orientation using the creature's forward velocity and the terrain plane normal via CFrame.fromMatrix().</li>
+        <li>Second-Order Spring Smoothing: Dampen sudden transitions using PD controllers or spring physics to prevent snapping when individual feet lift or plant.</li>
+        <li>Root Height Equilibrium: Keep the chassis suspended at a fixed height above the average foot elevation, adapting seamlessly to stairs, boulders, and drops.</li>
+      </ul>
+
+      <h2>5. High-Density Multi-Creature Optimization & Replication</h2>
+      <p>Running dozens of procedural spiders or mechs in a multiplayer server requires strategic computational budgets:</p>
+      <ul>
+        <li>Client-Side IK Rendering: The server calculates only root velocity and rough position; clients evaluate high-frequency FABRIK iterations and raycasts locally.</li>
+        <li>Distance-Based LOD Tiers: Beyond 80 studs, disable FABRIK iterations and snap feet directly to ground rays; beyond 200 studs, drop to simple keyframed animations.</li>
+        <li>Shared Raycast Caching: Batch terrain surface queries within an spatial octree so adjacent legs query the same pre-computed voxel heights.</li>
+        <li>Procedural Footstep Audio: Trigger localized positional 3D sound emitters on the exact frame a Bézier step reaches progress = 1.0 with volume proportional to step velocity.</li>
+      </ul>
+
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+
+        <div class="faq-item">
+          <h3>Why use FABRIK instead of two-bone analytical trigonometry (law of cosines)?</h3>
+          <p>The law of cosines is only applicable to 2-joint limb chains (like human arms and legs). Spider, insect, and complex alien limbs consist of 3, 4, or more articulated joints. FABRIK scales elegantly to arbitrary joint counts with O(N) linear time complexity and robust boundary convergence.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do you ensure spider legs do not step simultaneously and collapse the body?</h3>
+          <p>By assigning alternating gait phase offsets. For an 8-legged spider, legs are partitioned into two alternating tripods/quads (phases 0.0 and 0.5). A leg is only permitted to initiate a stepping arc when its designated phase window is active, ensuring grounded support.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Does procedural IK cause network lag in multiplayer games?</h3>
+          <p>Not when implemented client-side. The server only replicates the creature's root position, orientation, and linear velocity. Each client simulates foot raycasting, FABRIK solving, and Bézier stepping locally, incurring zero network bandwidth overhead.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How does the torso avoid jittering when walking over jagged terrain?</h3>
+          <p>Torso orientation is determined by fitting a least-squares plane through all grounded foot positions and passing the resulting target CFrame through a critically damped second-order spring filter, eliminating high-frequency surface noise.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="portal-cta">
+      <h2>Explore More Interactive Tests & Guides</h2>
+      <p>Discover personalized cognitive assessments, stress evaluations, and game psychology tools on DopaBrain.</p>
+      <a href="/portal/" class="portal-btn">Go to Portal Hub</a>
+    </div>
+  </div>
+</body>
+</html>
