@@ -451,7 +451,7 @@ RAY_PARAMS.IgnoreWater = true
 function AntiCheatService.InitPlayer(player: Player)
     local char = player.Character or player.CharacterAdded:Wait()
     local hrp = char:WaitForChild("HumanoidRootPart") :: BasePart
-    
+
     trackedPlayers[player] = {
         lastPosition = hrp.Position,
         lastTick = os.clock(),
@@ -462,22 +462,22 @@ end
 
 function AntiCheatService.OnHeartbeat(dt: number)
     local now = os.clock()
-    
+
     for player, record in pairs(trackedPlayers) do
         local char = player.Character
         if not char then continue end
-        
+
         local hrp = char:FindFirstChild("HumanoidRootPart") :: BasePart?
         local humanoid = char:FindFirstChildOfClass("Humanoid")
         if not hrp or not humanoid or humanoid.Health <= 0 then continue end
-        
+
         local currentPos = hrp.Position
         local displacement = (currentPos - record.lastPosition).Magnitude
-        
+
         -- Calculate allowed displacement with latency cushion
         local baseSpeed = humanoid.WalkSpeed
         local maxAllowedDistance = (baseSpeed * dt * 1.35) + 0.5
-        
+
         -- 1. Speed & Teleport Check
         if displacement > maxAllowedDistance and not record.isFalling then
             record.anomalyBuffer += (displacement - maxAllowedDistance)
@@ -492,7 +492,7 @@ function AntiCheatService.OnHeartbeat(dt: number)
             -- Slowly bleed down anomaly buffer on legitimate movement
             record.anomalyBuffer = math.max(0, record.anomalyBuffer - (dt * 5))
         end
-        
+
         -- 2. Spatial Raycast Noclip Validation
         RAY_PARAMS.FilterDescendantsInstances = { char }
         local rayDirection = currentPos - record.lastPosition
@@ -505,7 +505,7 @@ function AntiCheatService.OnHeartbeat(dt: number)
                 continue
             end
         end
-        
+
         record.lastPosition = currentPos
         record.lastTick = now
     end

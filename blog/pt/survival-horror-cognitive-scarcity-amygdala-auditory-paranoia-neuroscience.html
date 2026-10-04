@@ -460,10 +460,10 @@ function PlayerCognitiveState:CalculateParanoiaIndex()
     local scarcityFactor = math.clamp((10 - self.Ammunition) / 10, 0.1, 1.0)
     -- Sensory deprivation factor
     local darknessFactor = (1.0 - self.LightLevel)
-    
+
     local threatMultiplier = (scarcityFactor * 0.6) + (darknessFactor * 0.4)
     self.SympatheticArousal = math.clamp(self.SympatheticArousal + (threatMultiplier * 0.05), 0, 1)
-    
+
     return {
         Arousal = self.SympatheticArousal,
         ParanoiaIndex = threatMultiplier * 100,

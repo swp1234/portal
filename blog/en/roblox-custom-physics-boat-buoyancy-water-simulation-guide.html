@@ -463,19 +463,19 @@ end
 -- Updates buoyant forces on all hull attachments
 function BoatPhysics.UpdateBuoyancy(hullRoot: BasePart, sampleAttachments: {Attachment}, vectorForces: {VectorForce})
     local t = Workspace:GetServerTimeNow()
-    
+
     for i, attach in ipairs(sampleAttachments) do
         local worldPos = attach.WorldPosition
         local waterY = BoatPhysics.GetWaveHeight(worldPos.X, worldPos.Z, t)
         local depth = waterY - worldPos.Y
-        
+
         local vf = vectorForces[i]
         if depth > 0 then
             -- Attachment is submerged: apply buoyant force + velocity damping
             local pointVelocity = hullRoot:GetVelocityAtPosition(worldPos)
             local upwardForce = (depth * POINT_SUBMERGED_VOLUME * GRAVITY * WATER_DENSITY) - (pointVelocity.Y * DAMPING)
             upwardForce = math.clamp(upwardForce, 0, 80000)
-            
+
             -- Apply lateral water drag opposing horizontal motion
             local horizontalDrag = -Vector3.new(pointVelocity.X, 0, pointVelocity.Z) * 45
             vf.Force = Vector3.new(horizontalDrag.X, upwardForce, horizontalDrag.Z)

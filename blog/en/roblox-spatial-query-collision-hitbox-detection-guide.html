@@ -480,10 +480,10 @@ local function PerformMeleeCheck(attacker, weaponHitboxPart, maxTargets)
         if model and model ~= attacker.Character then
             local targetHumanoid = model:FindFirstChildOfClass("Humanoid")
             local targetRoot = model:FindFirstChild("HumanoidRootPart")
-            
+
             if targetHumanoid and targetHumanoid.Health > 0 and not hitHumanoids[targetHumanoid] then
                 hitHumanoids[targetHumanoid] = true
-                
+
                 -- Server validation: Validate distance from attacker
                 local attackerRoot = attacker.Character:FindFirstChild("HumanoidRootPart")
                 if attackerRoot and targetRoot then

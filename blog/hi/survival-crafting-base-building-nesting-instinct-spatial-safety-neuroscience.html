@@ -461,10 +461,10 @@ function NestingCognitiveModel:EvaluateHearthReturn(hasReturnedToBase)
         local securityIndex = (self.FortificationLevel * 0.6) + (self.LightLevel * 0.4)
         local cortisolReduction = securityIndex * 0.45
         self.CortisolStressLevel = math.max(0.1, self.CortisolStressLevel - cortisolReduction)
-        
+
         -- Dopamine relief catharsis proportional to secured loot
         local dopamineCatharsis = math.clamp(self.StoredResourceValue / 5000, 0.5, 3.0)
-        
+
         return {
             State = "Sanctuary",
             Cortisol = self.CortisolStressLevel,

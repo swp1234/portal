@@ -442,14 +442,14 @@ class GuardPerception {
         this.hearingRadius = hearingRadius;
         this.suspicion = 0; // 0 to 100
     }
-    
+
     // Calculates visual detection rate based on angle and occlusion
     evaluateVision(guardPos, guardForward, playerPos, isObstructed) {
         const toPlayer = playerPos.subtract(guardPos);
         const distance = toPlayer.magnitude;
-        
+
         if (distance > this.sightRange || isObstructed) return 0;
-        
+
         const angle = Math.acos(guardForward.dot(toPlayer.normalize()));
         if (angle < this.fovRad / 2) {
             // Central vision detects 3x faster than peripheral vision

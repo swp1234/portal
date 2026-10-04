@@ -440,15 +440,15 @@ local frameCounter = 0
 RunService.Heartbeat:Connect(function()
     frameCounter += 1
     if frameCounter % 6 ~= 0 then return end -- Run every 6 frames (~10Hz) to save CPU
-    
+
     local camera = Workspace.CurrentCamera
     if not camera then return end
     local camPos = camera.CFrame.Position
-    
+
     for _, lod in ipairs(registeredLODs) do
         local distSq = (lod.Position - camPos).Dot(lod.Position - camPos)
         local newTier = 1
-        
+
         if distSq > (DIST_CULL * DIST_CULL) then
             newTier = 4 -- Completely Culled
         elseif distSq > (DIST_LOW_TO_IMPOSTOR * DIST_LOW_TO_IMPOSTOR) then
@@ -458,7 +458,7 @@ RunService.Heartbeat:Connect(function()
         else
             newTier = 1 -- Full High-detail Model
         end
-        
+
         if newTier ~= lod.CurrentTier then
             lod.CurrentTier = newTier
             lod.HighDetail.Parent = (newTier == 1) and Workspace or nil

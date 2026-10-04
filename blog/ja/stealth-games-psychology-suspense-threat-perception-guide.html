@@ -442,14 +442,14 @@ class GuardPerception {
         this.hearingRadius = hearingRadius;
         this.suspicion = 0; // 0〜100
     }
-    
+
     // 角度と障害物に応じた視覚検知速度の計算
     evaluateVision(guardPos, guardForward, playerPos, isObstructed) {
         const toPlayer = playerPos.subtract(guardPos);
         const distance = toPlayer.magnitude;
-        
+
         if (distance > this.sightRange || isObstructed) return 0;
-        
+
         const angle = Math.acos(guardForward.dot(toPlayer.normalize()));
         if (angle < this.fovRad / 2) {
             // 中心視野は周辺視野の3倍の速度で検知

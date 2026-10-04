@@ -459,32 +459,32 @@ function CameraController.Update(dt: number)
     if not char then return end
     local head = char:FindFirstChild("Head") :: BasePart?
     if not head then return end
-    
+
     RAY_PARAMS.FilterDescendantsInstances = { char }
-    
+
     -- 1. 目标基准坐标系与右肩偏移
     local focusCFrame = CFrame.new(head.Position) * CFrame.Angles(0, yaw, 0) * CFrame.Angles(pitch, 0, 0)
     local desiredOffset = Vector3.new(2.2, 1.0, 0) -- 右肩偏移
-    
+
     -- 2. 二阶弹簧物理平滑计算
     local force = (desiredOffset - springPos) * SPRING_STIFFNESS - (springVel * SPRING_DAMPING)
     springVel += force * dt
     springPos += springVel * dt
-    
+
     -- 3. 体积 Spherecast 预测性防穿墙碰撞检测
     local rayOrigin = head.Position
     local targetCamPos = (focusCFrame * CFrame.new(springPos)).Position - (focusCFrame.LookVector * targetDistance)
     local castDirection = targetCamPos - rayOrigin
-    
+
     local hit = Workspace:Spherecast(rayOrigin, SPHERE_RADIUS, castDirection, RAY_PARAMS)
     local adjustedDistance = targetDistance
     if hit and hit.Instance and hit.Instance.CanCollide then
         adjustedDistance = math.max(1.5, (hit.Position - rayOrigin).Magnitude - SPHERE_RADIUS)
     end
-    
+
     -- 距离平滑渐变防止突兀抽搐
     currentDistance += (adjustedDistance - currentDistance) * math.min(1, dt * 25)
-    
+
     -- 4. 应用最终 CFrame 变换矩阵
     camera.CFrame = focusCFrame * CFrame.new(springPos) * CFrame.new(0, 0, currentDistance)
 end

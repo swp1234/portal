@@ -441,12 +441,12 @@ class BinauralSoundLocalizer {
       x: soundSourcePosition.x - listenerPosition.x,
       z: soundSourcePosition.z - listenerPosition.z
     };
-    
+
     // Calculate azimuth angle theta relative to player's front facing vector (-pi to pi)
     const forwardAngle = Math.atan2(listenerLookVector.x, listenerLookVector.z);
     const sourceAngle = Math.atan2(toSource.x, toSource.z);
     let azimuth = sourceAngle - forwardAngle;
-    
+
     // Normalize to -PI to +PI
     while (azimuth > Math.PI) azimuth -= 2 * Math.PI;
     while (azimuth < -Math.PI) azimuth += 2 * Math.PI;

@@ -463,7 +463,7 @@ end
 function InventoryService.SerializeToBuffer(player: Player): buffer?
     local data = playerInventories[player]
     if not data then return nil end
-    
+
     local buf = buffer.create(160) -- 40슬롯 * 4바이트
     for i = 1, 40 do
         local slot = data.slots[i]
@@ -479,20 +479,20 @@ end
 function InventoryService.MoveItem(player: Player, fromSlot: number, toSlot: number): boolean
     local data = playerInventories[player]
     if not data or data.isLocked then return false end
-    
+
     if fromSlot < 1 or fromSlot > 40 or toSlot < 1 or toSlot > 40 then return false end
     if fromSlot == toSlot then return false end
-    
+
     -- 트랜잭션 락 획득 (경쟁 상태 차단)
     data.isLocked = true
-    
+
     local source = data.slots[fromSlot]
     local target = data.slots[toSlot]
-    
+
     -- 원자적 교환 수행
     data.slots[fromSlot] = target
     data.slots[toSlot] = source
-    
+
     -- 트랜잭션 락 해제
     data.isLocked = false
     return true

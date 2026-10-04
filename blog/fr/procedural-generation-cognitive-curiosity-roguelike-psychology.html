@@ -441,17 +441,17 @@ class DungeonGraph {
         this.depth = depth;
         this.nodes = [];
     }
-    
+
     // Aléatoire cohérent: Divisions soumises à une connectivité stricte
     partition(node, currentDepth) {
         if (currentDepth >= this.depth) {
             return this.carveRoom(node); // Création de salle
         }
-        
+
         // Découpage équilibré pour éviter les couloirs impraticables
         const splitDirection = Math.random() > 0.5 ? 'VERTICAL' : 'HORIZONTAL';
         const [childA, childB] = this.splitWithMargin(node, splitDirection, 0.4, 0.6);
-        
+
         this.partition(childA, currentDepth + 1);
         this.partition(childB, currentDepth + 1);
         this.connectNodesWithCorridor(childA, childB); // Garantit la navigabilité

@@ -444,20 +444,20 @@ function FootIK.new(character)
     self.Char = character
     self.Humanoid = character:WaitForChild("Humanoid")
     self.RootPart = character:WaitForChild("HumanoidRootPart")
-    
+
     -- 왼발 IKControl 인스턴스 생성
     local leftIK = Instance.new("IKControl")
     leftIK.Name = "LeftFootIK"
     leftIK.Type = Enum.IKControlType.Transform
     leftIK.EndEffector = character:WaitForChild("LeftFoot")
     leftIK.ChainRoot = character:WaitForChild("LeftUpperLeg")
-    
+
     local leftTarget = Instance.new("Attachment")
     leftTarget.Name = "LeftIKTarget"
     leftTarget.Parent = workspace.Terrain
     leftIK.Target = leftTarget
     leftIK.Parent = self.Humanoid
-    
+
     self.LeftIK = leftIK
     self.LeftTarget = leftTarget
     return self
@@ -468,14 +468,14 @@ function FootIK:Update(dt)
         self.LeftIK.Weight = 0
         return
     end
-    
+
     -- 왼쪽 골반에서 바닥으로 하향 레이캐스트
     local rayOrigin = self.Char.LeftUpperLeg.Position
     local rayDirection = Vector3.new(0, -3.5, 0)
     local rayParams = RaycastParams.new()
     rayParams.FilterDescendantsInstances = {self.Char}
     rayParams.FilterType = Enum.RaycastFilterType.Exclude
-    
+
     local result = workspace:Raycast(rayOrigin, rayDirection, rayParams)
     if result then
         self.LeftTarget.WorldPosition = result.Position + Vector3.new(0, 0.4, 0)

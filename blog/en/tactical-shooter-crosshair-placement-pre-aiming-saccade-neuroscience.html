@@ -441,9 +441,9 @@ class PeekerAdvantageSimulator {
   simulateDuel(peekerVelocity, crosshairOffsetDistanceStuds) {
     // One-way networking latency + interpolation delay
     const networkAdvantageMs = (this.clientPingMs * 2) + this.tickIntervalMs;
-    
+
     // Total reaction time of the stationary holder
-    const holderReactionTime = this.humanReactionTimeMs + 
+    const holderReactionTime = this.humanReactionTimeMs +
       (crosshairOffsetDistanceStuds > 0.5 ? this.fovealSearchPenaltyMs : 0);
 
     // Time for peeker to swing, counter-strafe, and fire

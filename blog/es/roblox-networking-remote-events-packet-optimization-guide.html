@@ -434,7 +434,7 @@ function PacketCompressor.serialize(posX, posY, posZ, flags)
     buffer.writei16(buf, 0, math.clamp(math.round(posX * 10), -32768, 32767))
     buffer.writei16(buf, 2, math.clamp(math.round(posY * 10), -32768, 32767))
     buffer.writei16(buf, 4, math.clamp(math.round(posZ * 10), -32768, 32767))
-    
+
     local mask = 0
     if flags.isSprinting then mask = bit32.bor(mask, 1) end
     if flags.isCrouching then mask = bit32.bor(mask, 2) end

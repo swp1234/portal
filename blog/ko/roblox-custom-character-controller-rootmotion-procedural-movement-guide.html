@@ -462,39 +462,39 @@ linearVelocity.Parent = hrp
 function CustomController.Update(dt: number)
     local moveDirection = Vector3.zero
     local camera = Workspace.CurrentCamera
-    
+
     -- 카메라 방향 기준 WASD 입력 벡터 계산
     if UserInputService:IsKeyDown(Enum.KeyCode.W) then moveDirection += camera.CFrame.LookVector end
     if UserInputService:IsKeyDown(Enum.KeyCode.S) then moveDirection -= camera.CFrame.LookVector end
     if UserInputService:IsKeyDown(Enum.KeyCode.D) then moveDirection += camera.CFrame.RightVector end
     if UserInputService:IsKeyDown(Enum.KeyCode.A) then moveDirection -= camera.CFrame.RightVector end
-    
+
     moveDirection = Vector3.new(moveDirection.X, 0, moveDirection.Z)
     if moveDirection.Magnitude > 0.01 then
         moveDirection = moveDirection.Unit
     end
-    
+
     -- 바닥 감지 및 경사면 추출 레이캐스트
     RAY_PARAMS.FilterDescendantsInstances = { char }
     local rayResult = Workspace:Raycast(hrp.Position, Vector3.new(0, -TARGET_HEIGHT * 1.5, 0), RAY_PARAMS)
-    
+
     local verticalForce = 0
     local targetVel = moveDirection * WALK_SPEED
-    
+
     if rayResult and rayResult.Instance and rayResult.Instance.CanCollide then
         local currentHeight = (hrp.Position - rayResult.Position).Magnitude
         local normal = rayResult.Normal
-        
+
         -- 경사면 법선 벡터에 수직인 이동 벡터 투영
         targetVel = moveDirection - (normal * moveDirection:Dot(normal))
         targetVel = targetVel.Unit * WALK_SPEED
-        
+
         -- 서스펜션 스프링 계산
         local heightError = TARGET_HEIGHT - currentHeight
         local verticalVelocity = hrp.AssemblyLinearVelocity.Y
         verticalForce = (heightError * SPRING_STIFFNESS) - (verticalVelocity * SPRING_DAMPING)
     end
-    
+
     linearVelocity.VectorVelocity = Vector3.new(targetVel.X, targetVel.Y + (verticalForce * dt), targetVel.Z)
 end
 

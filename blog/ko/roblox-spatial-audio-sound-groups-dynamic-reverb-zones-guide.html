@@ -455,7 +455,7 @@ function SpatialAudioManager.RegisterOccludedSound(sound: Sound, emitter: BasePa
         lpf.CutoffFrequency = 20000
         lpf.Parent = sound
     end
-    
+
     table.insert(trackedSounds, {
         sound = sound,
         emitterPart = emitter,
@@ -471,20 +471,20 @@ function SpatialAudioManager.UpdateOcclusion(camera: Camera)
 
     for _, item in ipairs(trackedSounds) do
         if not item.sound.IsPlaying then continue end
-        
+
         local emitterPos = item.emitterPart.Position
         local direction = emitterPos - listenerPos
         local distance = direction.Magnitude
-        
+
         if distance > item.sound.RollOffMaxDistance then continue end
-        
+
         local hit = Workspace:Raycast(listenerPos, direction, RAY_PARAMS)
         local isOccluded = hit and hit.Instance and hit.Instance ~= item.emitterPart and hit.Instance.CanCollide
-        
+
         -- 벽에 막히면 1.2 kHz 먹먹한 소리로 감쇠, 시야 확보 시 20 kHz 원음 복원
         local targetCutoff = isOccluded and 1200 or 20000
         local targetVol = isOccluded and (item.originalVolume * 0.45) or item.originalVolume
-        
+
         TweenService:Create(item.lowPass, TweenInfo.new(0.25), { CutoffFrequency = targetCutoff }):Play()
         TweenService:Create(item.sound, TweenInfo.new(0.25), { Volume = targetVol }):Play()
     end

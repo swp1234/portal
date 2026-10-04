@@ -454,12 +454,12 @@ function StreamHelper.WaitForChildAsync(parent, childName, timeout)
 
     local thread = coroutine.running()
     local conn
-    
+
     local timer = task.delay(targetTimeout, function()
         if conn then conn:Disconnect() end
         task.spawn(thread, nil)
     end)
-    
+
     conn = parent.ChildAdded:Connect(function(newChild)
         if newChild.Name == childName then
             conn:Disconnect()
@@ -467,7 +467,7 @@ function StreamHelper.WaitForChildAsync(parent, childName, timeout)
             task.spawn(thread, newChild)
         end
     end)
-    
+
     local result = coroutine.yield()
     if not result then
         warn(string.format("[StreamHelper] Timed out waiting for '%s' in %s", childName, parent:GetFullName()))

@@ -443,11 +443,11 @@ function calculateGlitchSuccessRate(attempt: SpeedrunAttempt): {
   consistencyRating: 'World Record Tier' | 'Top Runner' | 'Inconsistent';
 } {
   const windowDurationMs = (1000 / attempt.frameRate) * attempt.targetFrameWindow;
-  
+
   // Normal CDF approximation for interval [-W/2, +W/2]
   // P(-W/2 <= X <= W/2) where X ~ N(0, sigma^2)
   const z = (windowDurationMs / 2) / attempt.playerMotorStdDevMs;
-  
+
   // Error function approximation
   const erf = (x: number) => {
     const a1 = 0.254829592, a2 = -0.284496736, a3 = 1.421413741;
@@ -458,10 +458,10 @@ function calculateGlitchSuccessRate(attempt: SpeedrunAttempt): {
     const y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
     return sign * y;
   };
-  
+
   const successProbability = erf(z / Math.SQRT2);
   const successRatePercentage = Math.round(successProbability * 1000) / 10;
-  
+
   let consistencyRating: 'World Record Tier' | 'Top Runner' | 'Inconsistent';
   if (successRatePercentage >= 80) consistencyRating = 'World Record Tier';
   else if (successRatePercentage >= 50) consistencyRating = 'Top Runner';

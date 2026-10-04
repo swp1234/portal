@@ -436,7 +436,7 @@ function WallRun.new(character)
     self.Char = character
     self.RootPart = character:WaitForChild("HumanoidRootPart")
     self.Humanoid = character:WaitForChild("Humanoid")
-    
+
     -- LinearVelocity 제약 인스턴스 생성
     local att = Instance.new("Attachment", self.RootPart)
     local lv = Instance.new("LinearVelocity")
@@ -445,7 +445,7 @@ function WallRun.new(character)
     lv.RelativeTo = Enum.ActuatorRelativeTo.World
     lv.Enabled = false
     lv.Parent = self.RootPart
-    
+
     self.Attachment = att
     self.LinearVelocity = lv
     self.IsRunning = false
@@ -458,7 +458,7 @@ function WallRun:CheckWall(side)
     local params = RaycastParams.new()
     params.FilterDescendantsInstances = {self.Char}
     params.FilterType = Enum.RaycastFilterType.Exclude
-    
+
     return workspace:Raycast(self.RootPart.Position, rayDir, params)
 end
 

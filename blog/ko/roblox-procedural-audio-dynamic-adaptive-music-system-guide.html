@@ -470,14 +470,14 @@ end
 function AdaptiveAudioManager.SetIntensity(targetIntensity: number, fadeDuration: number)
     currentIntensity = math.clamp(targetIntensity, 0, 1)
     local tweenInfo = TweenInfo.new(fadeDuration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-    
+
     for _, stem in ipairs(stems) do
         local targetVol = 0
         if currentIntensity >= stem.MinIntensity then
             local factor = (currentIntensity - stem.MinIntensity) / (1.0 - stem.MinIntensity + 0.001)
             targetVol = stem.BaseVolume * math.clamp(factor, 0.2, 1.0)
         end
-        
+
         local tween = TweenService:Create(stem.Sound, tweenInfo, { Volume = targetVol })
         tween:Play()
     end
@@ -489,7 +489,7 @@ function AdaptiveAudioManager.SetMuffled(muffled: boolean, duration: number)
     local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
     local targetHighGain = muffled and -40 or 0
     local targetMidGain = muffled and -12 or 0
-    
+
     local tween = TweenService:Create(lowPassFilter, tweenInfo, {
         HighGain = targetHighGain,
         MidGain = targetMidGain

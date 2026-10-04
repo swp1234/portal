@@ -429,11 +429,11 @@ local TAG_NAME = "InteractiveNPC"
 
 local function onObjectStreamedIn(instance)
     if not instance:IsA("Model") then return end
-    
+
     -- Ensure primary part exists before attaching UI
     local primaryPart = instance.PrimaryPart or instance:WaitForChild("HumanoidRootPart", 5)
     if not primaryPart then return end
-    
+
     print("[Streaming] Interactive object loaded: " .. instance.Name)
     -- Attach billboard prompt or local animation controller
 end

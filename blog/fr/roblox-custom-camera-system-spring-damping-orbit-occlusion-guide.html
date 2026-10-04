@@ -455,12 +455,12 @@ function CameraController.Update(dt: number)
     if not char or not char:FindFirstChild("Head") then return end
     local head = char.Head :: BasePart
     RAY_PARAMS.FilterDescendantsInstances = { char }
-    
+
     local focus = CFrame.new(head.Position) * CFrame.Angles(0, yaw, 0) * CFrame.Angles(pitch, 0, 0)
     local force = (Vector3.new(2.2, 1.0, 0) - springPos) * 140 - (springVel * 22)
     springVel += force * dt
     springPos += springVel * dt
-    
+
     local targetPos = (focus * CFrame.new(springPos)).Position - (focus.LookVector * targetDistance)
     local hit = Workspace:Spherecast(head.Position, SPHERE_RADIUS, targetPos - head.Position, RAY_PARAMS)
     local adjDist = targetDistance

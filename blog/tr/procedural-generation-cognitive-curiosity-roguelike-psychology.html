@@ -441,17 +441,17 @@ class DungeonGraph {
         this.depth = depth;
         this.nodes = [];
     }
-    
+
     // Tutarlı rastgelelik: Sıkı bağlantı kurallarına bağlı dallanmalar
     partition(node, currentDepth) {
         if (currentDepth >= this.depth) {
             return this.carveRoom(node); // Oda yerleşimi
         }
-        
+
         // Geçilemez dar koridorları engellemek için dengeli kesme
         const splitDirection = Math.random() > 0.5 ? 'VERTICAL' : 'HORIZONTAL';
         const [childA, childB] = this.splitWithMargin(node, splitDirection, 0.4, 0.6);
-        
+
         this.partition(childA, currentDepth + 1);
         this.partition(childB, currentDepth + 1);
         this.connectNodesWithCorridor(childA, childB); // Kesintisiz geçiş garantisi

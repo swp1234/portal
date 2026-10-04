@@ -452,7 +452,7 @@ function QuestManager:CanStartQuest(questId)
     local data = QuestDatabase[questId]
     if not data then return false end
     if self.CompletedQuests[questId] or self.ActiveQuests[questId] then return false end
-    
+
     -- DAG 선행 조건 검증
     for _, prereqId in ipairs(data.Prerequisites) do
         if not self.CompletedQuests[prereqId] then

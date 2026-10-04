@@ -441,17 +441,17 @@ class DungeonGraph {
         this.depth = depth;
         this.nodes = [];
     }
-    
+
     // 조화로운 무작위성: 엄격한 연결성 문법에 구속된 랜덤 분기 생성
     partition(node, currentDepth) {
         if (currentDepth >= this.depth) {
             return this.carveRoom(node); // 의미 있는 방 배치
         }
-        
+
         // 날카롭고 좁은 복도를 방지하기 위한 조화로운 비율 분할
         const splitDirection = Math.random() > 0.5 ? 'VERTICAL' : 'HORIZONTAL';
         const [childA, childB] = this.splitWithMargin(node, splitDirection, 0.4, 0.6);
-        
+
         this.partition(childA, currentDepth + 1);
         this.partition(childB, currentDepth + 1);
         this.connectNodesWithCorridor(childA, childB); // 이동 가능성 100% 보장

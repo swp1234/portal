@@ -446,7 +446,7 @@ interface PoolState {
 function calculateHitProbability(pool: PoolState): number {
   const { totalInPool, targetCopiesRemaining, shopSlots } = pool;
   if (totalInPool <= 0 || targetCopiesRemaining <= 0) return 0;
-  
+
   // 초기하분포: 1회 상점(5슬롯)에서 목표 기물이 1개 이상 등장할 확률
   let probNoHit = 1.0;
   for (let i = 0; i < shopSlots; i++) {
@@ -458,7 +458,7 @@ function calculateHitProbability(pool: PoolState): number {
     }
     probNoHit *= (nonTargetUnits / remainingUnits);
   }
-  
+
   return 1 - probNoHit;
 }
 

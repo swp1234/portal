@@ -442,14 +442,14 @@ class GuardPerception {
         this.hearingRadius = hearingRadius;
         this.suspicion = 0; // 0 to 100
     }
-    
+
     // 시야각 각도와 장애물 차폐 여부에 따른 감지 속도 계산
     evaluateVision(guardPos, guardForward, playerPos, isObstructed) {
         const toPlayer = playerPos.subtract(guardPos);
         const distance = toPlayer.magnitude;
-        
+
         if (distance > this.sightRange || isObstructed) return 0;
-        
+
         const angle = Math.acos(guardForward.dot(toPlayer.normalize()));
         if (angle < this.fovRad / 2) {
             // 중심 시야는 주변부 시야보다 3배 빠르게 게이지 축적

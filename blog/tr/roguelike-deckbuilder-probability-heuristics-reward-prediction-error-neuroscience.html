@@ -465,7 +465,7 @@ function DeckEngine:EvaluateHand(actualScore)
     -- Dopamine Reward Prediction Error (RPE)
     local rpe = actualScore - self.ExpectedScore
     local dopamineSpike = math.clamp(rpe / 2000, -1.0, 3.0)
-    
+
     return {
         RPE = rpe,
         DopamineSurge = dopamineSpike,

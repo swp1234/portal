@@ -406,10 +406,10 @@ local function OptimizeVisualSettings()
     if isMobile or (savedLevel &gt; 0 and savedLevel &lt;= 3) then
         Lighting.GlobalShadows = false
         Lighting.Technology = Enum.Technology.ShadowMap
-        
+
         local bloom = Lighting:FindFirstChildOfClass("BloomEffect")
         if bloom then bloom.Enabled = false end
-        
+
         local sunRays = Lighting:FindFirstChildOfClass("SunRaysEffect")
         if sunRays then sunRays.Enabled = false end
     else

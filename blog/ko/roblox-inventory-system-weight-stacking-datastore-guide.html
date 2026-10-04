@@ -447,12 +447,12 @@ function InventoryManager:AddItem(itemId, amount)
     if self.IsLocked then return false, "INVENTORY_LOCKED" end
     local itemData = ItemDatabase[itemId]
     if not itemData then return false, "INVALID_ITEM" end
-    
+
     local addedWeight = itemData.Weight * amount
     if self.CurrentWeight + addedWeight > self.MaxWeight then
         return false, "OVER_ENCUMBERED"
     end
-    
+
     -- 1. 기존 스택 병합 시도
     for slotIndex = 1, self.MaxSlots do
         local slot = self.Slots[slotIndex]
@@ -465,7 +465,7 @@ function InventoryManager:AddItem(itemId, amount)
             if amount <= 0 then return true end
         end
     end
-    
+
     -- 2. 빈 슬롯에 신규 배치
     for slotIndex = 1, self.MaxSlots do
         if not self.Slots[slotIndex] then

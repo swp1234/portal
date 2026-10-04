@@ -451,21 +451,21 @@ SpatialAudioRig.__index = SpatialAudioRig
 function SpatialAudioRig.new(sourcePart)
     local self = setmetatable({}, SpatialAudioRig)
     self.Source = sourcePart
-    
+
     -- 이미터 및 저주파 필터 생성
     self.Emitter = Instance.new("AudioEmitter")
     self.Emitter.Parent = sourcePart
-    
+
     self.Filter = Instance.new("AudioFilter")
     self.Filter.FilterType = Enum.AudioFilterType.Lowpass
     self.Filter.CutoffFrequency = 20000
     self.Filter.Parent = sourcePart
-    
+
     self.Wire = Instance.new("Wire")
     self.Wire.SourceInstance = self.Filter
     self.Wire.TargetInstance = self.Emitter
     self.Wire.Parent = sourcePart
-    
+
     self.RayParams = RaycastParams.new()
     self.RayParams.FilterType = RaycastParamsType.Exclude
     return self
@@ -475,7 +475,7 @@ function SpatialAudioRig:UpdateOcclusion(listenerPosition)
     local sourcePos = self.Source.Position
     local dir = listenerPosition - sourcePos
     local hit = Workspace:Raycast(sourcePos, dir, self.RayParams)
-    
+
     if hit and (hit.Position - listenerPosition).Magnitude > 2 then
         -- 벽 뒤에 가려졌을 때 저주파만 통과 (먹먹한 소리)
         self.Filter.CutoffFrequency = 900

@@ -437,7 +437,7 @@
   }
   simulateDuel(peekerVelocity, crosshairOffsetDistanceStuds) {
     const networkAdvantageMs = (this.clientPingMs * 2) + this.tickIntervalMs;
-    const holderReactionTime = this.humanReactionTimeMs + 
+    const holderReactionTime = this.humanReactionTimeMs +
       (crosshairOffsetDistanceStuds > 0.5 ? this.fovealSearchPenaltyMs : 0);
     const peekerExecutionTime = networkAdvantageMs + (this.humanReactionTimeMs * 0.75);
     const netAdvantageMs = holderReactionTime - peekerExecutionTime;

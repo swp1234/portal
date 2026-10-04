@@ -441,17 +441,17 @@ class DungeonGraph {
         this.depth = depth;
         this.nodes = [];
     }
-    
+
     // 整合性のあるランダム性: 厳格な接続規則に縛られた分岐生成
     partition(node, currentDepth) {
         if (currentDepth >= this.depth) {
             return this.carveRoom(node); // 部屋の配置
         }
-        
+
         // 通行不能な狭小通路を防ぐ調和のとれた空間分割
         const splitDirection = Math.random() > 0.5 ? 'VERTICAL' : 'HORIZONTAL';
         const [childA, childB] = this.splitWithMargin(node, splitDirection, 0.4, 0.6);
-        
+
         this.partition(childA, currentDepth + 1);
         this.partition(childB, currentDepth + 1);
         this.connectNodesWithCorridor(childA, childB); // 走破可能性の保証

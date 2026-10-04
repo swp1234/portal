@@ -442,17 +442,17 @@ end
 
 function BSPNode:Split(minSize)
     if self.LeftChild or self.RightChild then return false end
-    
+
     local splitHorizontal = math.random() > 0.5
     if self.Width > self.Depth and (self.Width / self.Depth) >= 1.25 then
         splitHorizontal = false
     elseif self.Depth > self.Width and (self.Depth / self.Width) >= 1.25 then
         splitHorizontal = true
     end
-    
+
     local maxDimension = (splitHorizontal and self.Depth or self.Width) - minSize
     if maxDimension <= minSize then return false end
-    
+
     local splitPos = math.random(minSize, maxDimension)
     if splitHorizontal then
         self.LeftChild = BSPNode.new(self.X, self.Z, self.Width, splitPos)

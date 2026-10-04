@@ -441,17 +441,17 @@ class DungeonGraph {
         this.depth = depth;
         this.nodes = [];
     }
-    
+
     // सुसंगत यादृच्छिकता: सख्त कनेक्टिविटी नियमों के तहत यादृच्छिक विभाजन
     partition(node, currentDepth) {
         if (currentDepth >= this.depth) {
             return this.carveRoom(node); // सार्थक कमरा बनाना
         }
-        
+
         // दुर्गम संकरे रास्तों से बचने के लिए संतुलित विभाजन
         const splitDirection = Math.random() > 0.5 ? 'VERTICAL' : 'HORIZONTAL';
         const [childA, childB] = this.splitWithMargin(node, splitDirection, 0.4, 0.6);
-        
+
         this.partition(childA, currentDepth + 1);
         this.partition(childB, currentDepth + 1);
         this.connectNodesWithCorridor(childA, childB); // चलने योग्य मार्ग की गारंटी

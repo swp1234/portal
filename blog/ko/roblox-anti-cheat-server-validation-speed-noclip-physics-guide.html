@@ -451,7 +451,7 @@ RAY_PARAMS.IgnoreWater = true
 function AntiCheatService.InitPlayer(player: Player)
     local char = player.Character or player.CharacterAdded:Wait()
     local hrp = char:WaitForChild("HumanoidRootPart") :: BasePart
-    
+
     trackedPlayers[player] = {
         lastPosition = hrp.Position,
         lastTick = os.clock(),
@@ -462,22 +462,22 @@ end
 
 function AntiCheatService.OnHeartbeat(dt: number)
     local now = os.clock()
-    
+
     for player, record in pairs(trackedPlayers) do
         local char = player.Character
         if not char then continue end
-        
+
         local hrp = char:FindFirstChild("HumanoidRootPart") :: BasePart?
         local humanoid = char:FindFirstChildOfClass("Humanoid")
         if not hrp or not humanoid or humanoid.Health <= 0 then continue end
-        
+
         local currentPos = hrp.Position
         local displacement = (currentPos - record.lastPosition).Magnitude
-        
+
         -- 허용 이동 거리 계산 (속도 * 시간 + 지연 완충값)
         local baseSpeed = humanoid.WalkSpeed
         local maxAllowedDistance = (baseSpeed * dt * 1.35) + 0.5
-        
+
         -- 1. 속도 및 순간이동 판정
         if displacement > maxAllowedDistance and not record.isFalling then
             record.anomalyBuffer += (displacement - maxAllowedDistance)
@@ -492,7 +492,7 @@ function AntiCheatService.OnHeartbeat(dt: number)
             -- 정상 이동 시 이상 버퍼 점진적 감소
             record.anomalyBuffer = math.max(0, record.anomalyBuffer - (dt * 5))
         end
-        
+
         -- 2. 레이캐스트 기반 공간 노클립 검증
         RAY_PARAMS.FilterDescendantsInstances = { char }
         local rayDirection = currentPos - record.lastPosition
@@ -505,7 +505,7 @@ function AntiCheatService.OnHeartbeat(dt: number)
                 continue
             end
         end
-        
+
         record.lastPosition = currentPos
         record.lastTick = now
     end

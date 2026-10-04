@@ -472,14 +472,14 @@ function VFXManager.InitLODLoop()
         frameCount += 1
         -- Throttle distance check to every 6 frames (~10Hz) to save CPU cycles
         if frameCount % 6 ~= 0 then return end
-        
+
         local camPos = Camera.CFrame.Position
         for _, entry in ipairs(registeredEmitters) do
             if not entry.emitter or not entry.emitter.Parent then continue end
-            
+
             local emitterPos = entry.attachment.WorldPosition
             local dist = (camPos - emitterPos).Magnitude
-            
+
             if dist > entry.maxDistance then
                 -- Cull completely beyond max visual range
                 entry.emitter.Enabled = false

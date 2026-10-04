@@ -442,14 +442,14 @@ class GuardPerception {
         this.hearingRadius = hearingRadius;
         this.suspicion = 0; // 0 ila 100
     }
-    
+
     // Açı ve engele göre görsel tespit hızını hesaplama
     evaluateVision(guardPos, guardForward, playerPos, isObstructed) {
         const toPlayer = playerPos.subtract(guardPos);
         const distance = toPlayer.magnitude;
-        
+
         if (distance > this.sightRange || isObstructed) return 0;
-        
+
         const angle = Math.acos(guardForward.dot(toPlayer.normalize()));
         if (angle < this.fovRad / 2) {
             // Merkezi görüş çevresel görüşe göre 3 kat hızlı tespit eder

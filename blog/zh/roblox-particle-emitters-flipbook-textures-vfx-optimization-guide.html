@@ -472,14 +472,14 @@ function VFXManager.InitLODLoop()
         frameCount += 1
         -- 每 6 帧检测一次 (~10Hz) 节约 CPU 开销
         if frameCount % 6 ~= 0 then return end
-        
+
         local camPos = Camera.CFrame.Position
         for _, entry in ipairs(registeredEmitters) do
             if not entry.emitter or not entry.emitter.Parent then continue end
-            
+
             local emitterPos = entry.attachment.WorldPosition
             local dist = (camPos - emitterPos).Magnitude
-            
+
             if dist > entry.maxDistance then
                 -- 超出最大可见视距直接剔除
                 entry.emitter.Enabled = false

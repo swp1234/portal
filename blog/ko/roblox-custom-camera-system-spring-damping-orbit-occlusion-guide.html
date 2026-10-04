@@ -457,7 +457,7 @@ RAY_PARAMS.FilterType = RaycastFilterType.Exclude
 function CameraController.Init()
     camera.CameraType = Enum.CameraType.Scriptable
     UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
-    
+
     UserInputService.InputChanged:Connect(function(input, processed)
         if processed then return end
         if input.UserInputType == Enum.UserInputType.MouseMovement then
@@ -466,7 +466,7 @@ function CameraController.Init()
             pitch = math.clamp(pitch - (input.Delta.Y * sensitivity), -1.2, 1.2)
         end
     end)
-    
+
     RunService.RenderStepped:Connect(CameraController.Update)
 end
 
@@ -475,32 +475,32 @@ function CameraController.Update(dt: number)
     if not char then return end
     local head = char:FindFirstChild("Head") :: BasePart?
     if not head then return end
-    
+
     RAY_PARAMS.FilterDescendantsInstances = { char }
-    
+
     -- 1. 기준 초점 CFrame 및 우측 숄더 오프셋 설정
     local focusCFrame = CFrame.new(head.Position) * CFrame.Angles(0, yaw, 0) * CFrame.Angles(pitch, 0, 0)
     local desiredOffset = Vector3.new(2.2, 1.0, 0) -- 우측 어깨 오프셋
-    
+
     -- 2. 2차 스프링 적분 계산
     local force = (desiredOffset - springPos) * SPRING_STIFFNESS - (springVel * SPRING_DAMPING)
     springVel += force * dt
     springPos += springVel * dt
-    
+
     -- 3. 스피어캐스트를 통한 3D 벽 충돌 사전 예측
     local rayOrigin = head.Position
     local targetCamPos = (focusCFrame * CFrame.new(springPos)).Position - (focusCFrame.LookVector * targetDistance)
     local castDirection = targetCamPos - rayOrigin
-    
+
     local hit = Workspace:Spherecast(rayOrigin, SPHERE_RADIUS, castDirection, RAY_PARAMS)
     local adjustedDistance = targetDistance
     if hit and hit.Instance and hit.Instance.CanCollide then
         adjustedDistance = math.max(1.5, (hit.Position - rayOrigin).Magnitude - SPHERE_RADIUS)
     end
-    
+
     -- 거리 보간으로 부드러운 카메라 줌인/줌아웃
     currentDistance += (adjustedDistance - currentDistance) * math.min(1, dt * 25)
-    
+
     -- 4. 최종 카메라 CFrame 적용
     local finalCFrame = focusCFrame * CFrame.new(springPos) * CFrame.new(0, 0, currentDistance)
     camera.CFrame = finalCFrame

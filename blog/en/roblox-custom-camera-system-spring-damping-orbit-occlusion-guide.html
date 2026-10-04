@@ -457,7 +457,7 @@ RAY_PARAMS.FilterType = RaycastFilterType.Exclude
 function CameraController.Init()
     camera.CameraType = Enum.CameraType.Scriptable
     UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
-    
+
     UserInputService.InputChanged:Connect(function(input, processed)
         if processed then return end
         if input.UserInputType == Enum.UserInputType.MouseMovement then
@@ -466,7 +466,7 @@ function CameraController.Init()
             pitch = math.clamp(pitch - (input.Delta.Y * sensitivity), -1.2, 1.2)
         end
     end)
-    
+
     RunService.RenderStepped:Connect(CameraController.Update)
 end
 
@@ -475,32 +475,32 @@ function CameraController.Update(dt: number)
     if not char then return end
     local head = char:FindFirstChild("Head") :: BasePart?
     if not head then return end
-    
+
     RAY_PARAMS.FilterDescendantsInstances = { char }
-    
+
     -- 1. Base Focus Point and Shoulder Offset
     local focusCFrame = CFrame.new(head.Position) * CFrame.Angles(0, yaw, 0) * CFrame.Angles(pitch, 0, 0)
     local desiredOffset = Vector3.new(2.2, 1.0, 0) -- Right shoulder offset
-    
+
     -- 2. Spring Integration for Smooth Movement
     local force = (desiredOffset - springPos) * SPRING_STIFFNESS - (springVel * SPRING_DAMPING)
     springVel += force * dt
     springPos += springVel * dt
-    
+
     -- 3. Predictive Spherecast Wall Occlusion
     local rayOrigin = head.Position
     local targetCamPos = (focusCFrame * CFrame.new(springPos)).Position - (focusCFrame.LookVector * targetDistance)
     local castDirection = targetCamPos - rayOrigin
-    
+
     local hit = Workspace:Spherecast(rayOrigin, SPHERE_RADIUS, castDirection, RAY_PARAMS)
     local adjustedDistance = targetDistance
     if hit and hit.Instance and hit.Instance.CanCollide then
         adjustedDistance = math.max(1.5, (hit.Position - rayOrigin).Magnitude - SPHERE_RADIUS)
     end
-    
+
     -- Smoothly interpolate camera collision zoom
     currentDistance += (adjustedDistance - currentDistance) * math.min(1, dt * 25)
-    
+
     -- 4. Apply Final Camera Transform
     local finalCFrame = focusCFrame * CFrame.new(springPos) * CFrame.new(0, 0, currentDistance)
     camera.CFrame = finalCFrame

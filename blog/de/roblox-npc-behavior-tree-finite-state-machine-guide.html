@@ -434,7 +434,7 @@ function StateMachine.new(npcInstance, states, initialState)
         Health = 100,
         PatrolPoints = {}
     }
-    
+
     self:ChangeState(initialState)
     return self
 end
@@ -443,7 +443,7 @@ function StateMachine:ChangeState(newStateName)
     if self.CurrentState and self.States[self.CurrentState].Exit then
         self.States[self.CurrentState]:Exit(self.NPC, self.Blackboard)
     end
-    
+
     self.CurrentState = newStateName
     if self.States[newStateName] and self.States[newStateName].Enter then
         self.States[newStateName]:Enter(self.NPC, self.Blackboard)

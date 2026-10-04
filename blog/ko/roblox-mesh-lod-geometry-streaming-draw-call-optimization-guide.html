@@ -439,16 +439,16 @@ local frameCounter = 0
 RunService.Heartbeat:Connect(function()
     frameCounter += 1
     if frameCounter % 6 ~= 0 then return end -- 6프레임마다 1회 실행 (~10Hz) CPU 절약
-    
+
     local camera = Workspace.CurrentCamera
     if not camera then return end
     local camPos = camera.CFrame.Position
-    
+
     for _, lod in ipairs(registeredLODs) do
         local offset = lod.Position - camPos
         local distSq = offset.X * offset.X + offset.Y * offset.Y + offset.Z * offset.Z
         local newTier = 1
-        
+
         if distSq > (DIST_CULL * DIST_CULL) then
             newTier = 4 -- 완전 컬링 (렌더링 제외)
         elseif distSq > (DIST_LOW_TO_IMPOSTOR * DIST_LOW_TO_IMPOSTOR) then
@@ -458,7 +458,7 @@ RunService.Heartbeat:Connect(function()
         else
             newTier = 1 -- 고화질 원본 모델
         end
-        
+
         if newTier ~= lod.CurrentTier then
             lod.CurrentTier = newTier
             lod.HighDetail.Parent = (newTier == 1) and Workspace or nil

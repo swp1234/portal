@@ -457,19 +457,19 @@ end
 
 function RaidTeamCognitiveModel:EvaluateCallout(syllableCount, leadTimeSeconds)
     self.CurrentChannelLoad = self.CurrentChannelLoad + syllableCount
-    
+
     -- Channel saturation check
     local isChannelClogged = self.CurrentChannelLoad > self.AuditoryChannelCapacity
     -- Latency buffer check: optimal callouts occur 2.5s before mechanic
     local latencyPenalty = math.abs(leadTimeSeconds - 2.5) * 0.15
-    
-    local executionSuccessProbability = (self.TransactiveMemoryIndex * 0.7) 
+
+    local executionSuccessProbability = (self.TransactiveMemoryIndex * 0.7)
         + ((1 - latencyPenalty) * 0.3)
-    
+
     if isChannelClogged then
         executionSuccessProbability = executionSuccessProbability * 0.5
     end
-    
+
     return {
         SuccessRate = math.clamp(executionSuccessProbability, 0.05, 0.99),
         ChannelOverloaded = isChannelClogged

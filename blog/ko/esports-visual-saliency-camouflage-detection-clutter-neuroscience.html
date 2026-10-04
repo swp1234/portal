@@ -414,12 +414,12 @@ class VisualSaliencyEngine {
   calculateTargetAcquisition(targetLuminance, bgLuminance, targetMotionSpeed, clutterDensity) {
     // 베버 명암 대비 공식 (Weber Contrast)
     const luminanceContrast = Math.abs(targetLuminance - bgLuminance) / Math.max(bgLuminance, 0.01);
-    
+
     // 배측 경로 대세포(Magnocellular) 활성화 모션 보너스
     const motionBonus = Math.min(targetMotionSpeed * 0.15, 0.5);
-    
+
     const saliencyIndex = Math.min(luminanceContrast * 0.6 + motionBonus, 1.0);
-    
+
     let detectionLatencyMs = this.baseReactionMs;
     let detectionMode = "POPOUT_PARALLEL";
 

@@ -434,23 +434,23 @@ local function safeUpdateAsync(key, transformFunc)
     if budget &lt; 5 then
         warn("[DataStore] Throttling warning: Low budget for UpdateAsync (" .. tostring(budget) .. ")")
     end
-    
+
     local success, result
     local attempts = 0
-    
+
     repeat
         attempts = attempts + 1
         success, result = pcall(function()
             return PlayerDataStore:UpdateAsync(key, transformFunc)
         end)
-        
+
         if not success then
             local delayTime = BASE_DELAY * (2 ^ (attempts - 1)) + math.random() * 0.5
             warn("[DataStore] Attempt " .. attempts .. " failed: " .. tostring(result) .. ". Retrying in " .. string.format("%.2f", delayTime) .. "s")
             task.wait(delayTime)
         end
     until success or attempts &gt;= MAX_RETRIES
-    
+
     return success, result
 end</code></pre>
     </div>

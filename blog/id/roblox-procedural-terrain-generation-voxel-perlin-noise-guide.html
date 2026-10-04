@@ -451,11 +451,11 @@ local function GenerateChunk(chunkX, chunkZ, seed)
     local minBound = Vector3.new(chunkX * CHUNK_SIZE * VOXEL_RESOLUTION, -64, chunkZ * CHUNK_SIZE * VOXEL_RESOLUTION)
     local maxBound = minBound + Vector3.new(CHUNK_SIZE * VOXEL_RESOLUTION, 128, CHUNK_SIZE * VOXEL_RESOLUTION)
     local region = Region3.new(minBound, maxBound):ExpandToGrid(VOXEL_RESOLUTION)
-    
+
     local size = (maxBound - minBound) / VOXEL_RESOLUTION
     local materials = {}
     local occupancies = {}
-    
+
     for x = 1, size.X do
         materials[x] = {}
         occupancies[x] = {}
@@ -466,12 +466,12 @@ local function GenerateChunk(chunkX, chunkZ, seed)
                 local worldX = minBound.X + (x - 1) * VOXEL_RESOLUTION
                 local worldY = minBound.Y + (y - 1) * VOXEL_RESOLUTION
                 local worldZ = minBound.Z + (z - 1) * VOXEL_RESOLUTION
-                
+
                 -- Multi-octave 2D heightmap
                 local height = math.noise(worldX * 0.005, worldZ * 0.005, seed) * 40 + 20
                 -- 3D cave noise
                 local cave = math.noise(worldX * 0.02, worldY * 0.02, worldZ * 0.02 + seed)
-                
+
                 if worldY <= height and cave < 0.4 then
                     materials[x][y][z] = (worldY >= height - 4) and Enum.Material.Grass or Enum.Material.Rock
                     occupancies[x][y][z] = math.clamp((height - worldY) / VOXEL_RESOLUTION, 0.1, 1.0)
@@ -482,7 +482,7 @@ local function GenerateChunk(chunkX, chunkZ, seed)
             end
         end
     end
-    
+
     Terrain:WriteVoxels(region, VOXEL_RESOLUTION, materials, occupancies)
 end</code></pre>
       </div>

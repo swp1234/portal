@@ -464,11 +464,11 @@ function SquadCognitiveState:ProcessVoiceCue(isBrevityCodeUsed, vocalPitchSpike)
         local contagionMultiplier = vocalPitchSpike and 0.35 or 0.15
         self.SquadPanicLevel = math.min(1.0, self.SquadPanicLevel + contagionMultiplier)
     end
-    
+
     -- 패닉 상태에 비례하는 조작 및 판단 오류율
     local executionErrorProbability = self.SquadPanicLevel * 0.75
     local shouldExtractImmediately = (self.ExtractionTimeRemaining < 300) and (self.BackpackLootValue > 200000)
-    
+
     return {
         SquadPanic = self.SquadPanicLevel,
         ErrorProbability = executionErrorProbability,

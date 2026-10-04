@@ -441,12 +441,12 @@ class BinauralSoundLocalizer {
       x: soundSourcePosition.x - listenerPosition.x,
       z: soundSourcePosition.z - listenerPosition.z
     };
-    
+
     // 플레이어 정면 기준 방위각 theta 계산 (-pi ~ pi)
     const forwardAngle = Math.atan2(listenerLookVector.x, listenerLookVector.z);
     const sourceAngle = Math.atan2(toSource.x, toSource.z);
     let azimuth = sourceAngle - forwardAngle;
-    
+
     while (azimuth > Math.PI) azimuth -= 2 * Math.PI;
     while (azimuth < -Math.PI) azimuth += 2 * Math.PI;
 

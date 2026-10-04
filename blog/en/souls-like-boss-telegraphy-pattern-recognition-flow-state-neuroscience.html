@@ -453,10 +453,10 @@ function evaluateRollCatch(boss: AttackProfile, player: PlayerProfile): string {
   const totalReaction = player.visualReactionMs + player.inputDelayMs;
   const dodgeStart = totalReaction;
   const dodgeEnd = dodgeStart + player.dodgeIFrameMs;
-  
+
   const hitboxStart = boss.telegraphHoldMs + boss.visualTellMs;
   const hitboxEnd = hitboxStart + boss.swingActiveMs;
-  
+
   if (dodgeEnd < hitboxStart) {
     return `ROLL-CAUGHT: Dodged too early! i-Frames ended at ${dodgeEnd}ms, hitbox landed at ${hitboxStart}ms.`;
   } else if (dodgeStart > hitboxEnd) {

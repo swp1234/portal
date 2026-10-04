@@ -441,7 +441,7 @@ ResponsiveContainer.__index = ResponsiveContainer
 
 function ResponsiveContainer.new(parentScreenGui, config)
     local self = setmetatable({}, ResponsiveContainer)
-    
+
     local rootFrame = Instance.new("Frame")
     rootFrame.Name = config.Name or "ResponsiveRoot"
     rootFrame.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -449,7 +449,7 @@ function ResponsiveContainer.new(parentScreenGui, config)
     rootFrame.Size = config.Size or UDim2.new(0.8, 0, 0.8, 0)
     rootFrame.BackgroundTransparency = 1
     rootFrame.Parent = parentScreenGui
-    
+
     if config.AspectRatio then
         local ratioConstraint = Instance.new("UIAspectRatioConstraint")
         ratioConstraint.AspectRatio = config.AspectRatio
@@ -457,12 +457,12 @@ function ResponsiveContainer.new(parentScreenGui, config)
         ratioConstraint.DominantAxis = config.DominantAxis or Enum.DominantAxis.Width
         ratioConstraint.Parent = rootFrame
     end
-    
+
     local sizeConstraint = Instance.new("UISizeConstraint")
     sizeConstraint.MinSize = config.MinSize or Vector2.new(300, 200)
     sizeConstraint.MaxSize = config.MaxSize or Vector2.new(1920, 1080)
     sizeConstraint.Parent = rootFrame
-    
+
     self.Frame = rootFrame
     return self
 end

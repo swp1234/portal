@@ -414,13 +414,13 @@ class VisualSaliencyEngine {
   calculateTargetAcquisition(targetLuminance, bgLuminance, targetMotionSpeed, clutterDensity) {
     // Luminance contrast ratio (Weber contrast)
     const luminanceContrast = Math.abs(targetLuminance - bgLuminance) / Math.max(bgLuminance, 0.01);
-    
+
     // Motion contrast bonus (dorsal stream magnocellular activation)
     const motionBonus = Math.min(targetMotionSpeed * 0.15, 0.5);
-    
+
     // Saliency index combining luminance and motion
     const saliencyIndex = Math.min(luminanceContrast * 0.6 + motionBonus, 1.0);
-    
+
     let detectionLatencyMs = this.baseReactionMs;
     let detectionMode = "POPOUT_PARALLEL";
 

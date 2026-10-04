@@ -453,10 +453,10 @@ function evaluateRollCatch(boss: AttackProfile, player: PlayerProfile): string {
   const totalReaction = player.visualReactionMs + player.inputDelayMs;
   const dodgeStart = totalReaction;
   const dodgeEnd = dodgeStart + player.dodgeIFrameMs;
-  
+
   const hitboxStart = boss.telegraphHoldMs + boss.visualTellMs;
   const hitboxEnd = hitboxStart + boss.swingActiveMs;
-  
+
   if (dodgeEnd < hitboxStart) {
     return `구르기 캐치 피격: 너무 일찍 굴렀습니다! 무적 시간 종료: ${dodgeEnd}ms, 타격 발생: ${hitboxStart}ms`;
   } else if (dodgeStart > hitboxEnd) {

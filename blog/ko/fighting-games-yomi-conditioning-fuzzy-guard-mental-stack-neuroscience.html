@@ -459,10 +459,10 @@ function MentalStackModel:CalculateReactionLatency(numberOfThreats)
     -- 힉의 법칙(Hick's Law): 반응 시간 = b * log2(n + 1)
     self.TrackedOptions = math.max(1, numberOfThreats)
     local cognitiveLoadMultiplier = math.log(self.TrackedOptions + 1, 2)
-    
+
     local effectiveFrames = BASE_REACTION_FRAMES * cognitiveLoadMultiplier
     effectiveFrames = effectiveFrames + (self.FatigueLevel * 6) -- 피로도에 따른 최대 6프레임 지연
-    
+
     return {
         ReactionFrames = math.floor(effectiveFrames),
         CanReactToDriveImpact = (effectiveFrames < 26), -- 드라이브 임팩트 발동은 26프레임

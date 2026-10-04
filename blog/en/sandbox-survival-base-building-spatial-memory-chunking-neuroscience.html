@@ -443,7 +443,7 @@ function calculateRetrievalMetrics(
   numberOfChests: number
 ): SearchBenchmark {
   const baseScanningTimePerChest = 450; // ms
-  
+
   if (!isOrganized) {
     // Unsorted chaos: Linear search O(N) with high cognitive friction
     const averageChestsChecked = numberOfChests / 2;
@@ -458,7 +458,7 @@ function calculateRetrievalMetrics(
   // Hebbian Organized: Indexed category search O(1) + preattentive anchor
   const visualAnchorBonusMs = hasVisualAnchors ? 180 : 350;
   const retrievalTime = visualAnchorBonusMs + 80; // Motor execution delay
-  
+
   return {
     totalItems: numberOfChests * 27,
     averageRetrievalTimeMs: Math.round(retrievalTime),

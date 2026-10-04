@@ -431,27 +431,27 @@
 local function CalculateWheelForce(wheelAttachment, restLength, stiffness, damping, wheelRadius)
     local origin = wheelAttachment.WorldPosition
     local direction = -wheelAttachment.WorldCFrame.UpVector * (restLength + wheelRadius)
-    
+
     local raycastParams = RaycastParams.new()
     raycastParams.FilterType = RaycastFilterType.Exclude
     raycastParams.FilterDescendantsInstances = {wheelAttachment.Parent}
-    
+
     local result = workspace:Raycast(origin, direction, raycastParams)
     if not result then return Vector3.zero end
-    
+
     local hitDistance = result.Distance - wheelRadius
     local compression = restLength - hitDistance
     if compression <= 0 then return Vector3.zero end
-    
+
     -- 수직 방향 상대 속도 계산
     local pointVelocity = wheelAttachment.Parent.AssemblyLinearVelocity
     local suspensionVelocity = wheelAttachment.WorldCFrame.UpVector:Dot(pointVelocity)
-    
+
     -- 훅의 법칙 + 감쇠력 공식: F = (k * x) - (c * v)
     local springForce = stiffness * compression
     local dampingForce = damping * suspensionVelocity
     local totalForceMagnitude = math.max(0, springForce - dampingForce)
-    
+
     return result.Normal * totalForceMagnitude
 end</code></pre>
       </div>

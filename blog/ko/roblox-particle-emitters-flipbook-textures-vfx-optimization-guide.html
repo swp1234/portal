@@ -472,14 +472,14 @@ function VFXManager.InitLODLoop()
         frameCount += 1
         -- 6프레임마다 1회 연산 (~10Hz)으로 CPU 부하 최소화
         if frameCount % 6 ~= 0 then return end
-        
+
         local camPos = Camera.CFrame.Position
         for _, entry in ipairs(registeredEmitters) do
             if not entry.emitter or not entry.emitter.Parent then continue end
-            
+
             local emitterPos = entry.attachment.WorldPosition
             local dist = (camPos - emitterPos).Magnitude
-            
+
             if dist > entry.maxDistance then
                 -- 최대 시야 거리 초과 시 완전 컬링
                 entry.emitter.Enabled = false

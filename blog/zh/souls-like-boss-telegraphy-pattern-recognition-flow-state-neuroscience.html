@@ -453,10 +453,10 @@ function evaluateRollCatch(boss: AttackProfile, player: PlayerProfile): string {
   const totalReaction = player.visualReactionMs + player.inputDelayMs;
   const dodgeStart = totalReaction;
   const dodgeEnd = dodgeStart + player.dodgeIFrameMs;
-  
+
   const hitboxStart = boss.telegraphHoldMs + boss.visualTellMs;
   const hitboxEnd = hitboxStart + boss.swingActiveMs;
-  
+
   if (dodgeEnd < hitboxStart) {
     return `被滚抓斩杀：翻滚过早！无敌帧在 ${dodgeEnd}ms 结束，打击判定在 ${hitboxStart}ms 命中。`;
   } else if (dodgeStart > hitboxEnd) {

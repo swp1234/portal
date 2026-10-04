@@ -463,19 +463,19 @@ end
 -- 선체 Attachment들의 부력 및 유체 저항 실시간 업데이트
 function BoatPhysics.UpdateBuoyancy(hullRoot: BasePart, sampleAttachments: {Attachment}, vectorForces: {VectorForce})
     local t = Workspace:GetServerTimeNow()
-    
+
     for i, attach in ipairs(sampleAttachments) do
         local worldPos = attach.WorldPosition
         local waterY = BoatPhysics.GetWaveHeight(worldPos.X, worldPos.Z, t)
         local depth = waterY - worldPos.Y
-        
+
         local vf = vectorForces[i]
         if depth > 0 then
             -- 수면 아래 침수: 부력 및 수직 감쇠력 적용
             local pointVelocity = hullRoot:GetVelocityAtPosition(worldPos)
             local upwardForce = (depth * POINT_SUBMERGED_VOLUME * GRAVITY * WATER_DENSITY) - (pointVelocity.Y * DAMPING)
             upwardForce = math.clamp(upwardForce, 0, 80000)
-            
+
             -- 수평 방향 물 저항(횡미끄러짐 억제)
             local horizontalDrag = -Vector3.new(pointVelocity.X, 0, pointVelocity.Z) * 45
             vf.Force = Vector3.new(horizontalDrag.X, upwardForce, horizontalDrag.Z)

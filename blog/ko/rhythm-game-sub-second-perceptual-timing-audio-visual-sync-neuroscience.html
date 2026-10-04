@@ -462,13 +462,13 @@ function evaluateTapTiming(
 // Simulates player cognitive tap variance over a stream of 100 notes
 function simulateRhythmPerformance(stdDevMs: number): Record<string, number> {
   const counts: Record<string, number> = { Marvelous: 0, Perfect: 0, Great: 0, Good: 0, Miss: 0 };
-  
+
   for (let i = 0; i < 100; i++) {
     // Box-Muller transform for normal distribution
     const u1 = Math.random();
     const u2 = Math.random();
     const normalOffset = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2) * stdDevMs;
-    
+
     const result = evaluateTapTiming(normalOffset, 0);
     counts[result.judgment]++;
   }

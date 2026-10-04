@@ -456,11 +456,11 @@ function RagdollManager.SetupRig(character: Model): RagdollRig
     local rootPart = character:WaitForChild("HumanoidRootPart") :: BasePart
     local motors: { Motor6D } = {}
     local constraints: { BallSocketConstraint } = {}
-    
+
     for _, desc in ipairs(character:GetDescendants()) do
         if desc:IsA("Motor6D") and desc.Name ~= "Root" then
             table.insert(motors, desc)
-            
+
             local part0 = desc.Part0
             local part1 = desc.Part1
             if part0 and part1 then
@@ -469,12 +469,12 @@ function RagdollManager.SetupRig(character: Model): RagdollRig
                 att0.CFrame = desc.C0
                 att0.Name = "RagdollAtt_" .. desc.Name
                 att0.Parent = part0
-                
+
                 local att1 = Instance.new("Attachment")
                 att1.CFrame = desc.C1
                 att1.Name = "RagdollAtt_" .. desc.Name
                 att1.Parent = part1
-                
+
                 -- BallSocketConstraint
                 local bsc = Instance.new("BallSocketConstraint")
                 bsc.Attachment0 = att0
@@ -487,7 +487,7 @@ function RagdollManager.SetupRig(character: Model): RagdollRig
                 bsc.Enabled = false
                 bsc.Parent = part0
                 table.insert(constraints, bsc)
-                
+
                 -- Prevent adjacent self-collision
                 local ncc = Instance.new("NoCollisionConstraint")
                 ncc.Part0 = part0
@@ -496,7 +496,7 @@ function RagdollManager.SetupRig(character: Model): RagdollRig
             end
         end
     end
-    
+
     return {
         character = character,
         humanoid = humanoid,
@@ -509,7 +509,7 @@ end
 function RagdollManager.EnableRagdoll(rig: RagdollRig)
     rig.humanoid:ChangeState(Enum.HumanoidStateType.Physics)
     rig.rootPart.CanCollide = false
-    
+
     for _, motor in ipairs(rig.motors) do
         motor.Enabled = false
     end
@@ -525,7 +525,7 @@ function RagdollManager.DisableRagdoll(rig: RagdollRig)
     for _, motor in ipairs(rig.motors) do
         motor.Enabled = true
     end
-    
+
     rig.rootPart.CanCollide = true
     rig.humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
 end

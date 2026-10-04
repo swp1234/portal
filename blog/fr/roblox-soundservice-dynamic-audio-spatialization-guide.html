@@ -434,9 +434,9 @@ local defaultBGMVolume = 0.65
 function AudioController.DuckAudio(duckVolume, duration)
     activeDucks = activeDucks + 1
     local targetVolume = duckVolume or 0.15
-    
+
     TweenService:Create(BGMGroup, DUCK_TWEEN_INFO, { Volume = targetVolume }):Play()
-    
+
     task.delay(duration, function()
         activeDucks = math.max(0, activeDucks - 1)
         if activeDucks == 0 then

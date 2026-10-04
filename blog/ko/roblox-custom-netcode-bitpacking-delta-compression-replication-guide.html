@@ -440,7 +440,7 @@ function NetcodeCompressor.WritePosition(buf: buffer, offset: number, pos: Vecto
     local normX = math.clamp((pos.X + (WORLD_BOUNDS / 2)) / WORLD_BOUNDS, 0, 1)
     local normY = math.clamp((pos.Y + 500) / 2000, 0, 1)
     local normZ = math.clamp((pos.Z + (WORLD_BOUNDS / 2)) / WORLD_BOUNDS, 0, 1)
-    
+
     buffer.writeu16(buf, offset, math.floor(normX * MAX_UINT16))
     buffer.writeu16(buf, offset + 2, math.floor(normY * MAX_UINT16))
     buffer.writeu16(buf, offset + 4, math.floor(normZ * MAX_UINT16))
@@ -452,11 +452,11 @@ function NetcodeCompressor.ReadPosition(buf: buffer, offset: number): (Vector3, 
     local qX = buffer.readu16(buf, offset)
     local qY = buffer.readu16(buf, offset + 2)
     local qZ = buffer.readu16(buf, offset + 4)
-    
+
     local x = (qX / MAX_UINT16) * WORLD_BOUNDS - (WORLD_BOUNDS / 2)
     local y = (qY / MAX_UINT16) * 2000 - 500
     local z = (qZ / MAX_UINT16) * WORLD_BOUNDS - (WORLD_BOUNDS / 2)
-    
+
     return Vector3.new(x, y, z), offset + 6
 end
 

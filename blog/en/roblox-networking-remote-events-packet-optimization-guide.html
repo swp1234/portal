@@ -432,12 +432,12 @@ local PacketCompressor = {}
 -- Compress Position & 4 Booleans into 7 Bytes
 function PacketCompressor.serialize(posX, posY, posZ, flags)
     local buf = buffer.create(7)
-    
+
     -- Quantize 3D coordinates (divide by precision scale, write as i16)
     buffer.writei16(buf, 0, math.clamp(math.round(posX * 10), -32768, 32767))
     buffer.writei16(buf, 2, math.clamp(math.round(posY * 10), -32768, 32767))
     buffer.writei16(buf, 4, math.clamp(math.round(posZ * 10), -32768, 32767))
-    
+
     -- Pack 4 booleans into 1 bitmask byte
     local mask = 0
     if flags.isSprinting then mask = bit32.bor(mask, 1) end
@@ -445,7 +445,7 @@ function PacketCompressor.serialize(posX, posY, posZ, flags)
     if flags.isAiming    then mask = bit32.bor(mask, 4) end
     if flags.isGrounded  then mask = bit32.bor(mask, 8) end
     buffer.writeu8(buf, 6, mask)
-    
+
     return buf
 end
 
@@ -454,7 +454,7 @@ function PacketCompressor.deserialize(buf)
     local posX = buffer.readi16(buf, 0) / 10
     local posY = buffer.readi16(buf, 2) / 10
     local posZ = buffer.readi16(buf, 4) / 10
-    
+
     local mask = buffer.readu8(buf, 6)
     local flags = {
         isSprinting = bit32.band(mask, 1) ~= 0,
@@ -462,7 +462,7 @@ function PacketCompressor.deserialize(buf)
         isAiming    = bit32.band(mask, 4) ~= 0,
         isGrounded  = bit32.band(mask, 8) ~= 0,
     }
-    
+
     return posX, posY, posZ, flags
 end
 

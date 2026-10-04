@@ -449,7 +449,7 @@ function estimateUltReadyTime(hero: HeroState, elapsedFightSec: number): { perce
   const passiveGain = hero.passiveChargePerSec * elapsedFightSec;
   const combatGain = hero.damagePerSecAverage * elapsedFightSec;
   const totalEstimated = hero.currentCharge + passiveGain + combatGain;
-  
+
   const percent = Math.min(100, Math.floor((totalEstimated / hero.ultCost) * 100));
   return {
     percent,

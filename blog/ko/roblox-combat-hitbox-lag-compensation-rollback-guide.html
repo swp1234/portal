@@ -473,7 +473,7 @@ function RollbackValidator:GetHistoricalPosition(player, targetTime)
 
     -- 최대 롤백 시간 제한
     local clampedTime = math.max(targetTime, os.clock() - MAX_REWIND_SECONDS)
-    
+
     for i = #buffer, 2, -1 do
         local pCurrent = buffer[i]
         local pPrev = buffer[i - 1]

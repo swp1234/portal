@@ -465,11 +465,11 @@ function AntiCheatService.OnHeartbeat(dt: number)
         local hrp = char:FindFirstChild("HumanoidRootPart") :: BasePart?
         local humanoid = char:FindFirstChildOfClass("Humanoid")
         if not hrp or not humanoid or humanoid.Health <= 0 then continue end
-        
+
         local currentPos = hrp.Position
         local displacement = (currentPos - record.lastPosition).Magnitude
         local maxAllowed = (humanoid.WalkSpeed * dt * 1.35) + 0.5
-        
+
         if displacement > maxAllowed and not record.isFalling then
             record.anomalyBuffer += (displacement - maxAllowed)
             if record.anomalyBuffer > 15 then
@@ -481,7 +481,7 @@ function AntiCheatService.OnHeartbeat(dt: number)
         else
             record.anomalyBuffer = math.max(0, record.anomalyBuffer - (dt * 5))
         end
-        
+
         RAY_PARAMS.FilterDescendantsInstances = { char }
         local dir = currentPos - record.lastPosition
         if dir.Magnitude > 0.1 then

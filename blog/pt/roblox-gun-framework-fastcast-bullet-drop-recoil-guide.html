@@ -450,7 +450,7 @@ function RecoilSpring:Update(dt)
     local springForce = -self.Stiffness * displacement
     local dampingForce = -self.Damping * self.Velocity
     local acceleration = (springForce + dampingForce) / self.Mass
-    
+
     self.Velocity = self.Velocity + acceleration * dt
     self.Position = self.Position + self.Velocity * dt
     return self.Position
