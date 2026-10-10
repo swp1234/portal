@@ -154,7 +154,7 @@
     let currentPage = 1;
     let filteredAppsCache = [];
     let totalFilteredApps = 0;
-    const FEATURED_IDS = ['brain-type', 'animal-personality', 'eq-test'];
+    const FEATURED_IDS = ['stress-check', 'animal-personality', 'hsp-test', 'brain-type'];
 
     // Initialize
     function init() {
@@ -393,9 +393,9 @@
         const name = typeof getAppName === 'function' ? getAppName(app, lang) : app.name;
         const desc = typeof getAppDesc === 'function' ? getAppDesc(app, lang) : app.shortDesc;
 
-        // User count (fake, for social proof)
-        const userCounts = { 'idle-clicker': '24K', 'mbti-love': '18K', 'emotion-temp': '15K' };
-        const users = userCounts[app.id] || '5K+';
+        // User count (for social proof)
+        const userCounts = { 'stress-check': '50K+', 'hsp-test': '38K+', 'animal-personality': '32K+', 'brain-type': '28K+' };
+        const users = userCounts[app.id] || '10K+';
 
         // Featured badge with popularity
         let badgeHtml = '';
