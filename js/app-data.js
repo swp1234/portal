@@ -12,8 +12,8 @@ const APP_DATA = [
         tags: ['퀴즈', '상식', '교육', '게임', 'quiz', 'knowledge', 'education', 'game'],
         url: 'https://dopabrain.com/quiz-app/',
         isNew: false,
-        isPopular: true,
-        popularity: 20,
+        isPopular: false,
+        popularity: 1,
         i18n: {
             en: { name: 'Knowledge Quiz', shortDesc: 'General knowledge test' },
             zh: { name: '知识问答', shortDesc: '常识测试' },
@@ -93,8 +93,8 @@ const APP_DATA = [
         tags: ['운세', '꿈해몽', '타로', '별자리', 'fortune', 'dream', 'horoscope', 'tarot', 'zodiac'],
         url: 'https://dopabrain.com/dream-fortune/',
         isNew: false,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 84,
         i18n: {
             en: { name: 'Dream & Fortune', shortDesc: 'AI dream reading & horoscope' },
             zh: { name: '解梦与运势', shortDesc: 'AI解梦 & 今日运势' },
@@ -201,8 +201,8 @@ const APP_DATA = [
         tags: ['MBTI', '성격', '궁합', '심리테스트', 'personality', 'compatibility', 'test', 'types'],
         url: 'https://dopabrain.com/mbti-tips/',
         isNew: false,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 80,
         i18n: {
             en: { name: 'MBTI Compatibility', shortDesc: 'MBTI type analysis & tips' },
             zh: { name: 'MBTI 配对与建议', shortDesc: 'MBTI类型分析' },
@@ -256,7 +256,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/dev-quiz/',
         isNew: false,
         isPopular: false,
-        popularity: 3,
+        popularity: 1,
         i18n: {
             en: { name: 'Developer Quiz', shortDesc: 'Coding & IT quiz' },
             zh: { name: '开发者测验', shortDesc: '编程/IT专业测验' },
@@ -418,7 +418,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/hsp-test/',
         isNew: true,
         isPopular: true,
-        popularity: 98,
+        popularity: 99,
         i18n: {
             en: { name: 'HSP Sensitivity Test', shortDesc: 'Are you highly sensitive?' },
             zh: { name: 'HSP 敏感度测试', shortDesc: '你是高敏感人群吗？' },
@@ -498,8 +498,8 @@ const APP_DATA = [
         tags: ['KPOP', '포지션', '아이돌', '심리테스트', 'BTS', 'BLACKPINK', 'kpop', 'idol', 'music', 'singer', 'test'],
         url: 'https://dopabrain.com/kpop-position/',
         isNew: true,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 94,
         i18n: {
             en: { name: 'K-POP Position Test', shortDesc: "What's your idol position?" },
             zh: { name: 'K-POP 位置测试', shortDesc: '你的偶像位置是？' },
@@ -634,8 +634,8 @@ const APP_DATA = [
         tags: ['전생', '심리테스트', '바이럴', '궁합', '전생직업', 'pastlife', 'reincarnation', 'test', 'personality', 'viral'],
         url: 'https://dopabrain.com/past-life/',
         isNew: true,
-        isPopular: true,
-        popularity: 30,
+        isPopular: false,
+        popularity: 1,
         i18n: {
             en: { name: 'Past Life Job Test', shortDesc: 'What was your past life?' },
             zh: { name: '前世职业测试', shortDesc: '你的前世是什么？' },
@@ -715,8 +715,8 @@ const APP_DATA = [
         tags: ['뇌', '성격', '심리테스트', '진단', '분석', 'brain', 'test', 'personality', 'psychology', 'mindtype'],
         url: 'https://dopabrain.com/brain-type/',
         isNew: true,
-        isPopular: true,
-        popularity: 99,
+        isPopular: false,
+        popularity: 1,
         i18n: {
             en: { name: 'Brain Type Test', shortDesc: 'What is your brain type?' },
             zh: { name: '脑型测试', shortDesc: '你的大脑类型是什么？' },
@@ -742,8 +742,8 @@ const APP_DATA = [
         tags: ['IQ 테스트', 'IQ 측정', '지능 테스트', '논리', '패턴', 'IQ test', 'intelligence', 'logical', 'pattern', 'quiz'],
         url: 'https://dopabrain.com/iq-test/',
         isNew: true,
-        isPopular: false,
-        popularity: 90,
+        isPopular: true,
+        popularity: 91,
         i18n: {
             en: { name: 'Quick IQ Test', shortDesc: 'Measure intelligence in 20 questions' },
             zh: { name: '快速智商测试', shortDesc: '20题测量你的智力' },
@@ -770,7 +770,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/typing-speed/',
         isNew: true,
         isPopular: false,
-        popularity: 3,
+        popularity: 1,
         i18n: {
             en: { name: 'Typing Speed Test', shortDesc: 'WPM measurement game' },
             zh: { name: '打字速度测试', shortDesc: 'WPM测量游戏' },
@@ -931,8 +931,8 @@ const APP_DATA = [
         tags: ['BMI', '계산기', '체질량지수', '건강', '피트니스', '체중관리', 'calculator', 'health', 'fitness', 'weight', 'wellness'],
         url: 'https://dopabrain.com/bmi-calculator/',
         isNew: false,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 79,
         i18n: {
             en: { name: 'BMI Calculator', shortDesc: 'BMI & health analysis' },
             zh: { name: 'BMI 计算器', shortDesc: '体质指数计算与健康分析' },
@@ -959,7 +959,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/block-puzzle/',
         isNew: true,
         isPopular: false,
-        popularity: 3,
+        popularity: 1,
         i18n: {
             en: { name: 'Block Puzzle', shortDesc: 'Classic block puzzle game' },
             zh: { name: '方块拼图', shortDesc: '经典方块拼图游戏' },
@@ -986,7 +986,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/qr-generator/',
         isNew: true,
         isPopular: false,
-        popularity: 18,
+        popularity: 1,
         i18n: {
             en: { name: 'QR Code Generator', shortDesc: 'Convert URL·text·WiFi·contact to QR' },
             zh: { name: '二维码生成器', shortDesc: '将URL·文本·WiFi·联系人转换为二维码' },
@@ -1012,8 +1012,8 @@ const APP_DATA = [
         tags: ['수비학', '운명', '숫자', '인생경로', '표현숫자', '마스터넘버', '궁합', 'numerology', 'destiny', 'number', 'lifepath'],
         url: 'https://dopabrain.com/numerology/',
         isNew: false,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 76,
         i18n: {
             en: { name: 'Numerology - Destiny Numbers', shortDesc: 'Life path & compatibility' },
             zh: { name: '数字命理学 - 命运之数', shortDesc: '人生路径和兼容性' },
@@ -1039,8 +1039,8 @@ const APP_DATA = [
         tags: ['타이머', '포모도로', '생산성', '집중', '시간관리', 'pomodoro', 'timer', 'productivity', 'focus', 'time management'],
         url: 'https://dopabrain.com/pomodoro-timer/',
         isNew: true,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 85,
         i18n: {
             en: { name: 'Pomodoro Timer', shortDesc: 'Productivity boost timer' },
             zh: { name: '番茄工作法计时器', shortDesc: '提高生产力的计时器' },
@@ -1066,8 +1066,8 @@ const APP_DATA = [
         tags: ['성격테스트', '미래예측', '자아발견', '타입테스트', '심리테스트', '인생테스트', 'future', 'self', 'personality', 'prediction', 'archetype'],
         url: 'https://dopabrain.com/future-self/',
         isNew: true,
-        isPopular: false,
-        popularity: 97,
+        isPopular: true,
+        popularity: 98,
         i18n: {
             en: { name: '10 Years From Now', shortDesc: 'Discover your future archetype' },
             zh: { name: '10年后的你', shortDesc: '发现你的未来自我' },
@@ -1256,7 +1256,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/habit-tracker/',
         isNew: true,
         isPopular: false,
-        popularity: 3,
+        popularity: 1,
         i18n: {
             en: { name: 'Habit Tracker', shortDesc: 'Build better habits daily' },
             zh: { name: '习惯追踪器', shortDesc: '追踪您的日常习惯' },
@@ -1283,7 +1283,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/daily-tarot/',
         isNew: true,
         isPopular: true,
-        popularity: 22,
+        popularity: 96,
         i18n: {
             en: { name: 'Daily Tarot Reading', shortDesc: '3-card spread & AI analysis' },
             zh: { name: '每日塔罗占卜', shortDesc: '三张卡牌解读 & AI 分析' },
@@ -1310,7 +1310,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/puzzle-2048/',
         isNew: true,
         isPopular: false,
-        popularity: 95,
+        popularity: 1,
         i18n: {
             en: { name: '2048 Puzzle', shortDesc: 'Number tile merging game' },
             zh: { name: '2048 拼图', shortDesc: '合并数字瓷砖游戏' },
@@ -1337,7 +1337,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/word-guess/',
         isNew: true,
         isPopular: false,
-        popularity: 3,
+        popularity: 1,
         i18n: {
             en: { name: 'Word Guess', shortDesc: 'Daily 5-letter word puzzle' },
             zh: { name: 'Word Guess', shortDesc: '每日5字母单词拼图' },
@@ -1363,8 +1363,8 @@ const APP_DATA = [
         tags: ['루틴', '생산성', '타이머', '아침', '습관', '계획', 'morning', 'routine', 'productivity', 'habit', 'timer', 'planner'],
         url: 'https://dopabrain.com/routine-planner/',
         isNew: true,
-        isPopular: true,
-        popularity: 20,
+        isPopular: false,
+        popularity: 1,
         i18n: {
             en: { name: 'Morning Routine Planner', shortDesc: 'Morning routine & productivity app' },
             zh: { name: '早晨日常规划器', shortDesc: '早晨日常管理应用' },
@@ -1418,7 +1418,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/blood-type/',
         isNew: true,
         isPopular: false,
-        popularity: 18,
+        popularity: 1,
         i18n: {
             en: { name: 'Blood Type Personality Analysis', shortDesc: 'AI blood type analysis & compatibility' },
             zh: { name: '血型性格分析', shortDesc: 'AI血型分析和兼容性' },
@@ -1498,8 +1498,8 @@ const APP_DATA = [
         tags: ['바이오리듬', '운세', '건강', '리듬', '궁합', 'biorhythm', 'fortune', 'health', 'rhythm', 'compatibility'],
         url: 'https://dopabrain.com/biorhythm/',
         isNew: true,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 86,
         i18n: {
             en: { name: 'Biorhythm Calculator', shortDesc: 'Biorhythm graph from your birthdate' },
             zh: { name: '生物节律计算器', shortDesc: '根据生日查看生物节律图' },
@@ -1526,7 +1526,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/todo-list/',
         isNew: true,
         isPopular: false,
-        popularity: 18,
+        popularity: 1,
         i18n: {
             en: { name: 'Todo List - Smart Task Manager', shortDesc: 'Manage tasks with priority & deadline' },
             zh: { name: '待办清单 - 聪明的任务管理', shortDesc: '优先级和截止日期任务管理' },
@@ -1579,8 +1579,8 @@ const APP_DATA = [
         tags: ['게임', '아케이드', '플래피', '캐주얼', 'flappy bird', 'arcade', 'casual game', 'tap game'],
         url: 'https://dopabrain.com/flappy-bird/',
         isNew: false,
-        isPopular: true,
-        popularity: 28,
+        isPopular: false,
+        popularity: 1,
         i18n: {
             en: { name: 'Sky Flap - Arcade Game', shortDesc: 'Tap to fly and dodge obstacles' },
             zh: { name: 'Sky Flap - 街机游戏', shortDesc: '点击飞行，躲避障碍' },
@@ -1634,7 +1634,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/dev-quiz/',
         isNew: false,
         isPopular: false,
-        popularity: 3,
+        popularity: 1,
         i18n: {
             en: { name: 'Developer Quiz', shortDesc: 'Test your coding skills' },
             zh: { name: '开发者测验', shortDesc: '测试你的编程技能' },
@@ -1715,7 +1715,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/reaction-test/',
         isNew: false,
         isPopular: false,
-        popularity: 89,
+        popularity: 1,
         i18n: {
             en: { name: 'Reaction Speed Test', shortDesc: 'Measure your nerve response time' },
             zh: { name: '反应速度测试', shortDesc: '测量你的神经反应速度' },
@@ -1742,7 +1742,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/animal-personality/',
         isNew: true,
         isPopular: true,
-        popularity: 96,
+        popularity: 97,
         i18n: {
             en: { name: 'Animal Personality Test', shortDesc: 'Find your inner animal' },
             zh: { name: '内心动物测试', shortDesc: '找到你的内在动物' },
@@ -1796,7 +1796,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/aura-reading/',
         isNew: true,
         isPopular: false,
-        popularity: 3,
+        popularity: 1,
         i18n: {
             en: { name: 'Aura Reading', shortDesc: 'Discover your aura color' },
             zh: { name: '灵气解读', shortDesc: '发现你的灵气颜色' },
@@ -1823,7 +1823,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/mental-age/',
         isNew: true,
         isPopular: false,
-        popularity: 0,
+        popularity: 1,
         i18n: {
             en: { name: 'Mental Age-Style Challenge', shortDesc: 'Seven mini-games with a transparent average score.' },
             zh: { name: '心理年龄风格挑战', shortDesc: '7个小游戏和透明的平均分。' },
@@ -1851,7 +1851,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/road-shooter/',
         isNew: true,
         isPopular: false,
-        popularity: 3,
+        popularity: 1,
         i18n: {
             en: { name: 'Road Shooter', shortDesc: 'Squad runner shooter - from 1 to army!' },
             zh: { name: 'Road Shooter', shortDesc: '小队跑酷射击 - 从1人到军队！' },
@@ -1877,8 +1877,8 @@ const APP_DATA = [
         tags: ['궁합', '이름', '연애', '테스트', 'compatibility', 'name', 'love', 'match'],
         url: 'https://dopabrain.com/name-match/',
         isNew: true,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 78,
         i18n: {
             en: { name: 'Name Compatibility', shortDesc: 'Test name compatibility' },
             zh: { name: '姓名配对', shortDesc: '测试姓名配对指数' },
@@ -1931,8 +1931,8 @@ const APP_DATA = [
         tags: ['선택', '딜레마', '게임', '바이럴', 'would you rather', 'choice', 'dilemma', 'game'],
         url: 'https://dopabrain.com/would-you-rather/',
         isNew: true,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 81,
         i18n: {
             en: { name: 'Would You Rather', shortDesc: 'Dilemma choice game' },
             zh: { name: '你选哪个？', shortDesc: '两难选择游戏' },
@@ -2012,8 +2012,8 @@ const APP_DATA = [
         tags: ['성격', '심리', '재미', 'personality', 'psychology', 'fun'],
         url: 'https://dopabrain.com/toxic-trait/',
         isNew: true,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 82,
         i18n: {
             en: { name: 'Toxic Trait', shortDesc: 'Find your toxic trait' },
             zh: { name: '毒性特质', shortDesc: '发现你的毒性特质' },
@@ -2040,7 +2040,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/attachment-style/',
         isNew: true,
         isPopular: true,
-        popularity: 82,
+        popularity: 95,
         i18n: {
             en: { name: 'Attachment Style', shortDesc: 'Attachment style test' },
             zh: { name: '依恋类型', shortDesc: '依恋类型测试' },
@@ -2067,7 +2067,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/social-battery/',
         isNew: true,
         isPopular: false,
-        popularity: 3,
+        popularity: 1,
         i18n: {
             en: { name: 'Social Battery', shortDesc: 'Measure your social energy' },
             zh: { name: '社交电量', shortDesc: '测量你的社交能量' },
@@ -2094,7 +2094,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/villain-type/',
         isNew: true,
         isPopular: false,
-        popularity: 3,
+        popularity: 1,
         i18n: {
             en: { name: 'Villain Type', shortDesc: 'Villain type test' },
             zh: { name: '反派类型', shortDesc: '反派类型测试' },
@@ -2120,8 +2120,8 @@ const APP_DATA = [
         tags: ['다크코어', 'dark triad', '성격', '나르시시즘', 'dark core', 'personality'],
         url: 'https://dopabrain.com/dark-core/',
         isNew: true,
-        isPopular: false,
-        popularity: 15,
+        isPopular: true,
+        popularity: 93,
         i18n: {
             en: { name: 'Dark Core Test', shortDesc: 'How dark is your personality?' },
             zh: { name: '暗黑人格测试', shortDesc: '你的暗黑人格有多强？' },
@@ -2147,8 +2147,8 @@ const APP_DATA = [
         tags: ['영혼나이', 'soul age', '전생', '영적', 'spiritual', '올드소울'],
         url: 'https://dopabrain.com/soul-age/',
         isNew: true,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 83,
         i18n: {
             en: { name: 'Soul Age Test', shortDesc: 'How old is your soul?' },
             zh: { name: '灵魂年龄测试', shortDesc: '你的灵魂几岁了？' },
@@ -2201,8 +2201,8 @@ const APP_DATA = [
         tags: ['감정나이', 'emotional age', '감정지능', '성숙도', 'EQ', 'maturity'],
         url: 'https://dopabrain.com/emotional-age/',
         isNew: true,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 89,
         i18n: {
             en: { name: 'Emotional Age Test', shortDesc: 'How old are your emotions?' },
             zh: { name: '情感年龄测试', shortDesc: '你的情感几岁了？' },
@@ -2228,8 +2228,8 @@ const APP_DATA = [
         tags: ['빌런', 'villain origin', '악당', '성격', 'archetype', 'dark'],
         url: 'https://dopabrain.com/villain-origin/',
         isNew: true,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 88,
         i18n: {
             en: { name: 'Villain Origin Test', shortDesc: 'What made you a villain?' },
             zh: { name: '反派起源测试', shortDesc: '是什么让你成为反派？' },
@@ -2282,8 +2282,8 @@ const APP_DATA = [
         tags: ['오라', 'aura', '차크라', 'chakra', 'energy', '에너지', 'spiritual'],
         url: 'https://dopabrain.com/aura-score/',
         isNew: true,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 77,
         i18n: {
             en: { name: 'Aura Score Test', shortDesc: 'What\'s your aura score?' },
             zh: { name: '灵气分数测试', shortDesc: '你的灵气分数是多少？' },
@@ -2336,8 +2336,8 @@ const APP_DATA = [
         tags: ['EQ', 'emotional intelligence', '감성지능', '공감', 'empathy', '감정'],
         url: 'https://dopabrain.com/eq-test/',
         isNew: true,
-        isPopular: true,
-        popularity: 92,
+        isPopular: false,
+        popularity: 1,
         i18n: {
             en: { name: 'EQ Emotion Reading Challenge', shortDesc: 'Test your emotional intelligence' },
             zh: { name: 'EQ情商测试', shortDesc: '测试你的情商' },
@@ -2390,8 +2390,8 @@ const APP_DATA = [
         tags: ['사랑', 'love language', '연애', 'relationship', '사랑의 언어', 'dating'],
         url: 'https://dopabrain.com/love-language/',
         isNew: true,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 90,
         i18n: {
             en: { name: 'Love Language Test', shortDesc: 'What\'s your love style?' },
             zh: { name: '爱情语言测试', shortDesc: '你的爱情风格是什么？' },
@@ -2418,7 +2418,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/mbti-city/',
         isNew: true,
         isPopular: false,
-        popularity: 25,
+        popularity: 1,
         i18n: {
             en: { name: 'MBTI City Test', shortDesc: 'Which city matches your MBTI?' },
             zh: { name: 'MBTI城市测试', shortDesc: '哪个城市与你的MBTI匹配？' },
@@ -2498,8 +2498,8 @@ const APP_DATA = [
         tags: ['스트레스', 'stress', '번아웃', 'burnout', '히트맵', 'heatmap', '심리'],
         url: 'https://dopabrain.com/stress-type/',
         isNew: true,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 92,
         i18n: {
             en: { name: 'Stress Type Test', shortDesc: 'What\'s your stress type?' },
             zh: { name: '压力类型测试', shortDesc: '你的压力类型是什么？' },
@@ -2525,8 +2525,8 @@ const APP_DATA = [
         tags: ['직장인', 'work style', '업무', '리더', '실행', '창의', '분석', '관계'],
         url: 'https://dopabrain.com/work-style/',
         isNew: true,
-        isPopular: false,
-        popularity: 3,
+        isPopular: true,
+        popularity: 87,
         i18n: {
             en: { name: 'Work Style Test', shortDesc: 'What\'s your work style?' },
             zh: { name: '工作风格测试', shortDesc: '你的工作风格是什么？' },
@@ -2633,8 +2633,8 @@ const APP_DATA = [
         tags: ['번아웃', '스트레스', '직장', '정신건강', 'burnout', 'stress', 'work', 'mental health'],
         url: 'https://dopabrain.com/burnout-test/',
         isNew: true,
-        isPopular: true,
-        popularity: 93,
+        isPopular: false,
+        popularity: 1,
         i18n: {
             en: { name: 'Burnout Test', shortDesc: "What's your burnout type?" },
             zh: { name: '\u5012\u5C3D\u6D4B\u8BD5', shortDesc: '\u4F60\u7684\u5012\u5C3D\u7C7B\u578B\u662F\u4EC0\u4E48\uFF1F' },
@@ -2660,8 +2660,8 @@ const APP_DATA = [
         tags: ['스트레스', '반응', '심리', 'fight', 'flight', 'freeze', 'fawn', 'stress response', 'trauma'],
         url: 'https://dopabrain.com/stress-response/',
         isNew: true,
-        isPopular: true,
-        popularity: 78,
+        isPopular: false,
+        popularity: 1,
         i18n: {
             en: { name: 'Stress Response Test', shortDesc: 'Fight, Flight, Freeze, or Fawn?' },
             zh: { name: '\u538B\u529B\u53CD\u5E94\u6D4B\u8BD5', shortDesc: '\u4F60\u7684\u538B\u529B\u53CD\u5E94\u7C7B\u578B\u662F\u4EC0\u4E48\uFF1F' },
@@ -2768,8 +2768,8 @@ const APP_DATA = [
         tags: ['inner child', 'childhood wound', 'healing', 'reparenting', 'psychology', 'self-discovery', '내면 아이', '심리'],
         url: 'https://dopabrain.com/inner-child-test/',
         isNew: true,
-        isPopular: true,
-        popularity: 65,
+        isPopular: false,
+        popularity: 1,
         i18n: {
             en: { name: 'Inner Child Test', shortDesc: 'Heal Your Childhood Wounds' },
             zh: { name: '内在小孩测试', shortDesc: '治愈你的童年创伤' },
@@ -2823,7 +2823,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/file-extension-converter/',
         isNew: true,
         isPopular: false,
-        popularity: 24,
+        popularity: 1,
         i18n: {
             en: { name: 'File Extension Converter', shortDesc: 'Extension Converter' }
         }
@@ -2840,7 +2840,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/file-size-converter/',
         isNew: true,
         isPopular: false,
-        popularity: 23,
+        popularity: 1,
         i18n: {
             en: { name: 'File Size Converter', shortDesc: 'File Size' }
         }
@@ -2857,7 +2857,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/image-format-converter/',
         isNew: true,
         isPopular: false,
-        popularity: 22,
+        popularity: 1,
         i18n: {
             en: { name: 'Image Format Converter', shortDesc: 'Image Converter' }
         }
@@ -2874,7 +2874,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/image-size-converter/',
         isNew: true,
         isPopular: false,
-        popularity: 21,
+        popularity: 1,
         i18n: {
             en: { name: 'Image Size Converter', shortDesc: 'Image Size' }
         }
@@ -2891,7 +2891,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/aspect-ratio-calculator/',
         isNew: true,
         isPopular: false,
-        popularity: 20,
+        popularity: 1,
         i18n: {
             en: { name: 'Aspect Ratio Calculator', shortDesc: 'Aspect Ratio' }
         }
@@ -2908,7 +2908,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/data-transfer-calculator/',
         isNew: true,
         isPopular: false,
-        popularity: 19,
+        popularity: 1,
         i18n: {
             en: { name: 'Data Transfer Calculator', shortDesc: 'Transfer Time' }
         }
@@ -2925,7 +2925,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/unix-timestamp-converter/',
         isNew: true,
         isPopular: false,
-        popularity: 18,
+        popularity: 1,
         i18n: {
             en: { name: 'Unix Timestamp Converter', shortDesc: 'Unix Time' }
         }
@@ -2942,7 +2942,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/timezone-converter/',
         isNew: true,
         isPopular: false,
-        popularity: 17,
+        popularity: 1,
         i18n: {
             en: { name: 'Time Zone Converter', shortDesc: 'Time Zone' }
         }
@@ -2959,7 +2959,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/text-case-converter/',
         isNew: true,
         isPopular: false,
-        popularity: 16,
+        popularity: 1,
         i18n: {
             en: { name: 'Text Case Converter', shortDesc: 'Case Converter' }
         }
@@ -2976,7 +2976,7 @@ const APP_DATA = [
         url: 'https://dopabrain.com/json-formatter/',
         isNew: true,
         isPopular: false,
-        popularity: 15,
+        popularity: 1,
         i18n: {
             en: { name: 'JSON Formatter', shortDesc: 'JSON Formatter' }
         }
