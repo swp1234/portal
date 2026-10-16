@@ -8,55 +8,52 @@
     var STORAGE_KEY = 'dopabrain_personalize';
     var MAX_HISTORY = 50;
     var SCAN_GUARD_DELAY_MS = 8000;
-    var BLOG_BRIDGE_IDS = ['hsp-test', 'animal-personality', 'eq-test', 'attachment-style'];
+    var BLOG_BRIDGE_IDS = ['stress-check', 'hsp-test', 'future-self', 'attachment-style'];
     var EN_TOOL_BLOG_PATTERN = /\/portal\/blog\/en\/(?:qr-generator-guide|unit-converter-guide|password-generator-guide|typing-speed-test-guide|habit-tracker-guide|pomodoro-timer-guide|todo-list-guide|json-formatter-guide|free-games)\.html$/;
     var EN_TOOL_BRIDGE_IDS = ['qr-generator', 'unit-converter', 'password-generator', 'typing-speed'];
     var BLOG_TOPIC_STRATEGIES = [
-        { key: 'self_check', pattern: /(?:hsp|sensory|highly-sensitive|emotional-regulation|emotion-management|cognitive-distortions|rumination|people-pleasing|trauma-response|attachment|avoidant|anxious|inner-child|shadow-work)/, ids: ['hsp-test', 'brain-type', 'dopamine-type', 'eq-test'], title: 'Try a matching self-check' },
-        { key: 'fortune', pattern: /(?:tarot|past-life|dream|zodiac|fortune|numerology)/, ids: ['daily-tarot', 'past-life', 'dream-fortune', 'numerology'], title: 'Open a quick reading' },
-        { key: 'productivity', pattern: /(?:habit|routine|pomodoro|todo|detox|focus|dopamine)/, ids: ['habit-tracker', 'pomodoro-timer', 'detox-timer', 'routine-planner'], title: 'Turn this into a quick tool' },
-        { key: 'game', pattern: /(?:2048|brick|reaction|typing|free-games|browser-games|game-guide|casual-games|puzzle)/, ids: ['puzzle-2048', 'reaction-test', 'typing-speed', 'brick-breaker'], title: 'Play the related game now' },
-        { key: 'kpop', pattern: /(?:kpop|k-pop)/, ids: ['kpop-position', 'aura-score', 'color-personality', 'animal-personality'], title: 'Try the related viral test' },
-        { key: 'personality', pattern: /(?:mbti|personality-tests|personality-test|color-personality)/, ids: ['hsp-test', 'color-personality', 'animal-personality', 'eq-test'], title: 'Continue with a result test' }
+        { key: 'self_check', pattern: /(?:hsp|sensory|highly-sensitive|emotional-regulation|emotion-management|cognitive-distortions|rumination|people-pleasing|trauma-response|attachment|avoidant|anxious|inner-child|shadow-work)/, ids: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'], title: 'Try a matching self-check' },
+        { key: 'fortune', pattern: /(?:tarot|past-life|dream|zodiac|fortune|numerology)/, ids: ['daily-tarot', 'dream-fortune', 'numerology', 'zodiac-match'], title: 'Open a quick reading' },
+        { key: 'productivity', pattern: /(?:habit|routine|pomodoro|todo|detox|focus|dopamine)/, ids: ['pomodoro-timer', 'detox-timer', 'routine-planner', 'todo-list'], title: 'Turn this into a quick tool' },
+        { key: 'game', pattern: /(?:2048|brick|reaction|typing|free-games|browser-games|game-guide|casual-games|puzzle)/, ids: ['puzzle-2048', 'reaction-test', 'color-blindness', 'brick-breaker'], title: 'Play the related game now' },
+        { key: 'kpop', pattern: /(?:kpop|k-pop)/, ids: ['kpop-position', 'aura-score', 'color-blindness', 'animal-personality'], title: 'Try the related viral test' },
+        { key: 'personality', pattern: /(?:mbti|personality-tests|personality-test|color-personality)/, ids: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'], title: 'Continue with a result test' }
     ];
     var BLOG_BRIDGE_BY_MARKET = {
-        mx: ['animal-personality', 'brain-type', 'eq-test', 'attachment-style'],
-        zh: ['mental-age', 'hsp-test', 'brain-type', 'dopamine-type', 'eq-test'],
-        ja: ['brain-type', 'mbti-city', 'mental-age', 'hsp-test'],
-        fr: ['brain-type', 'hsp-test', 'eq-test', 'animal-personality'],
-        id: ['eq-test', 'hsp-test', 'attachment-style', 'brain-type'],
-        de: ['brain-type', 'hsp-test', 'eq-test', 'mbti-city'],
-        my: ['brain-type', 'iq-test', 'mental-age', 'animal-personality'],
-        pt: ['mental-age', 'brain-type', 'animal-personality', 'eq-test'],
-        ru: ['stress-check', 'animal-personality', 'brain-type', 'puzzle-2048'],
-        hi: ['brain-type', 'iq-test', 'eq-test', 'anxiety-type'],
-        tr: ['attachment-style', 'anxiety-type', 'social-battery', 'detox-timer'],
-        sg: ['past-life', 'animal-personality', 'eq-test', 'attachment-style'],
-        en: ['brain-type', 'hsp-test', 'animal-personality', 'eq-test'],
-        ko: ['hsp-test', 'brain-type', 'dopamine-type', 'mbti-love']
+        mx: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'],
+        zh: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'],
+        ja: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'],
+        fr: ['stress-check', 'hsp-test', 'future-self', 'animal-personality'],
+        id: ['stress-check', 'hsp-test', 'attachment-style', 'future-self'],
+        de: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'],
+        my: ['stress-check', 'iq-test', 'hsp-test', 'animal-personality'],
+        pt: ['stress-check', 'hsp-test', 'animal-personality', 'attachment-style'],
+        ru: ['stress-check', 'animal-personality', 'hsp-test', 'attachment-style'],
+        hi: ['stress-check', 'iq-test', 'hsp-test', 'attachment-style'],
+        tr: ['stress-check', 'hsp-test', 'attachment-style', 'future-self'],
+        sg: ['stress-check', 'hsp-test', 'animal-personality', 'attachment-style'],
+        en: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'],
+        ko: ['stress-check', 'hsp-test', 'future-self', 'attachment-style']
     };
     var REVENUE_SPRINT_BY_MARKET = {
-        en: ['brain-type', 'hsp-test', 'animal-personality', 'eq-test'],
-        ko: ['hsp-test', 'brain-type', 'dopamine-type', 'mbti-love'],
-        ja: ['brain-type', 'mbti-city', 'hsp-test', 'mental-age'],
-        fr: ['brain-type', 'hsp-test', 'eq-test', 'animal-personality'],
-        de: ['brain-type', 'hsp-test', 'eq-test', 'dopamine-type'],
-        pt: ['mental-age', 'brain-type', 'animal-personality', 'eq-test'],
-        mx: ['animal-personality', 'brain-type', 'eq-test', 'hsp-test'],
-        id: ['eq-test', 'hsp-test', 'brain-type', 'dopamine-type'],
-        zh: ['mental-age', 'hsp-test', 'brain-type', 'dopamine-type', 'eq-test'],
-        global: ['hsp-test', 'brain-type', 'animal-personality', 'eq-test']
+        en: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'],
+        ko: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'],
+        ja: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'],
+        fr: ['stress-check', 'hsp-test', 'future-self', 'animal-personality'],
+        de: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'],
+        pt: ['stress-check', 'hsp-test', 'animal-personality', 'attachment-style'],
+        mx: ['stress-check', 'hsp-test', 'future-self', 'animal-personality'],
+        id: ['stress-check', 'hsp-test', 'attachment-style', 'future-self'],
+        zh: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'],
+        global: ['stress-check', 'hsp-test', 'future-self', 'attachment-style']
     };
     var APP_LABEL_OVERRIDES = {
         zh: {
             'hsp-test': { name: 'HSP 高敏感测试', shortDesc: '了解你的敏感度' },
-            'brain-type': { name: '大脑类型测试', shortDesc: '发现你的思维模式' },
-            'dopamine-type': { name: '多巴胺类型测试', shortDesc: '分析你的奖励系统' },
+            'stress-check': { name: '压力水平测试', shortDesc: '评估当前压力状态' },
+            'future-self': { name: '未来自我探索', shortDesc: '发现人生路径主题' },
             'animal-personality': { name: '动物人格测试', shortDesc: '找到你的内在动物' },
-            'eq-test': { name: 'EQ 情商测试', shortDesc: '测试你的情绪理解力' },
-            'mbti-love': { name: 'MBTI 恋爱匹配', shortDesc: '看看你的恋爱风格' },
-            'attachment-style': { name: '依恋类型测试', shortDesc: '确认你的关系模式' },
-            'mental-age': { name: '心理年龄测试', shortDesc: '看看你的内在年龄' }
+            'attachment-style': { name: '依恋类型测试', shortDesc: '确认你的关系模式' }
         }
     };
     var BLOG_BRIDGE_TITLES = {
@@ -728,7 +725,7 @@
     }
 
     function shouldAutoStartFromSticky(appId) {
-        return appId === 'hsp-test' || appId === 'brain-type' || appId === 'mental-age';
+        return appId === 'hsp-test';
     }
 
     function withStickyAutoStart(url, appId, surfaceName) {
@@ -1160,7 +1157,7 @@
         function getStickyPrimaryApp(itemList, revenueSprint) {
             if (bridge.market === 'zh' && revenueSprint && /^revenue_sprint_/.test(revenueSprint.topicKey || '')) {
                 return itemList.find(function(candidate) {
-                    return candidate && candidate.id === 'mental-age';
+                    return candidate && candidate.id === 'stress-check';
                 }) || itemList[0];
             }
             return itemList[0];
@@ -1169,14 +1166,16 @@
         function getStickyAlternateApp(primaryApp, itemList, revenueSprint) {
             if (bridge.market !== 'zh' || !revenueSprint || !itemList || !itemList.length) return null;
             if (!/^revenue_sprint_/.test(revenueSprint.topicKey || '')) return null;
-            var preferredId = primaryApp.id === 'mental-age' ? 'hsp-test' : 'mental-age';
+            var preferredId = primaryApp.id === 'stress-check' ? 'hsp-test' : 'stress-check';
             return itemList.find(function(candidate) {
                 return candidate && candidate.id === preferredId && candidate.id !== primaryApp.id;
+            }) || itemList.find(function(candidate) {
+                return candidate && candidate.id !== primaryApp.id;
             }) || null;
         }
 
         function getStickyAlternatePrefix(locale, appId) {
-            if (locale === 'zh' && appId === 'mental-age') return '高互动';
+            if (locale === 'zh' && appId === 'hsp-test') return '高敏感';
             if (locale === 'zh') return '相关';
             if (locale === 'ko') return '추천';
             return 'Trending';
