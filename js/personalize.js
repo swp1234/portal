@@ -95,26 +95,29 @@
         else if (hour >= 18 && hour < 22) context.period = 'evening';
         else context.period = 'night';
 
+        // Always seed top active monetized apps first
+        context.boostIds.push('stress-check', 'hsp-test', 'future-self', 'attachment-style', 'animal-personality');
+
         // Night: boost relaxation / sleep apps
         if (context.period === 'night') {
-            context.boostIds.push('white-noise', 'detox-timer', 'emotion-temp');
+            context.boostIds.push('white-noise', 'detox-timer');
             context.boostCats.push('life');
         }
 
         // Morning: boost fortune / motivation
         if (context.period === 'morning') {
-            context.boostIds.push('dream-fortune', 'affirmation');
+            context.boostIds.push('affirmation', 'daily-tarot');
             context.boostCats.push('fortune');
         }
 
-        // Monday morning: extra boost for fortune / tests
+        // Monday morning: extra boost for self-reflection tests
         if (dow === 1 && context.period === 'morning') {
-            context.boostIds.push('hsp-test', 'mbti-love');
+            context.boostIds.push('hsp-test', 'stress-check');
         }
 
         // Friday evening / weekend: games & fun
         if ((dow === 5 && hour >= 17) || dow === 0 || dow === 6) {
-            context.boostIds.push('stack-tower', 'zigzag-runner', 'love-frequency', 'emoji-merge');
+            context.boostIds.push('puzzle-2048', 'reaction-test', 'animal-personality');
             context.boostCats.push('quiz');
         }
 
@@ -128,23 +131,23 @@
         // Valentine's (Feb 1-14)
         if (month === 2 && day <= 14) {
             context.season = 'valentine';
-            context.boostIds.push('love-frequency', 'valentine', 'mbti-love', 'mbti-tips');
+            context.boostIds.push('attachment-style', 'valentine', 'mbti-tips');
         }
 
         // Lunar New Year (late Jan ~ early Feb, approximate)
         if ((month === 1 && day >= 20) || (month === 2 && day <= 10)) {
-            context.boostIds.push('dream-fortune', 'lottery', 'past-life');
+            context.boostIds.push('daily-tarot', 'lottery');
         }
 
         // Summer (Jul-Aug): light/fun content
         if (month === 7 || month === 8) {
             context.boostCats.push('quiz');
-            context.boostIds.push('sky-runner', 'idle-clicker');
+            context.boostIds.push('puzzle-2048', 'reaction-test');
         }
 
         // Chuseok / Thanksgiving area (Sep)
         if (month === 9) {
-            context.boostIds.push('dream-fortune', 'past-life');
+            context.boostIds.push('daily-tarot', 'future-self');
         }
 
         return context;

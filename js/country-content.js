@@ -38,59 +38,59 @@
         mx: {
             label: 'Mexico',
             title: 'Popular in Mexico',
-            desc: 'Recent Mexico sessions stay longest on shareable personality paths, with Animal Personality leading the group.',
+            desc: 'Recent Mexico sessions stay longest on shareable personality paths, with Animal Personality and Stress Check leading the group.',
             preferences: ['Shareable result quizzes', 'Animal identity', 'Spanish-first copy', 'Fast completion'],
             items: [
                 { key: 'mx-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=es', icon: '🦁', badge: 'MX #1', title: 'Test de Personalidad Animal', desc: 'La ruta con mejor retencion reciente en Mexico.', accent: '#22c55e' },
-                { key: 'mx-city', type: 'app', appId: 'mbti-city', href: '/mbti-city/?lang=es', icon: '🏙️', badge: 'City', title: 'Test de Ciudad MBTI', desc: 'Una segunda prueba visual para seguir explorando.', accent: '#1A535C' },
+                { key: 'mx-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=es', icon: '⚡', badge: 'Stress', title: 'Test de Nivel de Estres', desc: 'Evalua tu patron de estres actual en 3 minutos.', accent: '#ef4444' },
                 { key: 'mx-attachment', type: 'app', appId: 'attachment-style', href: '/attachment-style/?lang=es', icon: '💔', badge: 'Deep', title: 'Estilo de Apego', desc: 'Convierte curiosidad de personalidad en una lectura relacional.', accent: '#ec4899' },
-                { key: 'mx-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=es', icon: '🎭', badge: 'EQ', title: 'Test de Inteligencia Emocional', desc: 'Cierre emocional rapido despues de una prueba viral.', accent: '#00bcd4' }
+                { key: 'mx-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=es', icon: '🌿', badge: 'HSP', title: 'Test de Alta Sensibilidad', desc: 'Descubre tu sensibilidad sensorial y emocional.', accent: '#7c3aed' }
             ]
         },
         zh: {
             label: 'Chinese',
             title: '中文热门内容',
-            desc: '中文读者最近在颜色性格、阴影工作、回避型依恋和 HSP 自测路径上停留更久。',
-            preferences: ['颜色性格', '阴影工作', '依恋模式', 'HSP 自测'],
+            desc: '中文读者最近在压力自测、HSP 高敏感测试、未来自我探索和回避型依恋路径上停留更久。',
+            preferences: ['压力自测', 'HSP 高敏感', '依恋模式', '未来自我'],
             items: [
-                { key: 'zh-color', type: 'app', appId: 'color-personality', href: '/color-personality/?lang=zh', icon: '🎨', badge: '颜色', title: '颜色性格测试', desc: '承接近期最高互动的颜色偏好阅读路径。', accent: '#9b59b6' },
-                { key: 'zh-shadow', type: 'app', appId: 'shadow-work', href: '/shadow-work/?lang=zh', icon: '🌓', badge: '阴影', title: '阴影工作测试', desc: '把高互动阴影工作文章转成个人原型结果。', accent: '#7c3aed' },
+                { key: 'zh-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=zh', icon: '⚡', badge: '热门', title: '压力水平测试', desc: '快速评估当前的压力模式与恢复节奏。', accent: '#ef4444' },
+                { key: 'zh-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=zh', icon: 'HSP', badge: '自测', title: 'HSP 高敏感测试', desc: '承接高敏感与自我理解的后续测试。', accent: '#7c3aed' },
                 { key: 'zh-avoidant', type: 'blog', href: '/portal/blog/zh/avoidant-attachment-dating-guide.html', icon: '💞', badge: '关系', title: '回避型依恋指南', desc: '近期移动端互动最强的亲密关系阅读路径。', accent: '#ec4899' },
-                { key: 'zh-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=zh', icon: 'HSP', badge: '自测', title: 'HSP 高敏感测试', desc: '承接高敏感与自我理解的后续测试。', accent: '#7c3aed' }
+                { key: 'zh-future', type: 'app', appId: 'future-self', href: '/future-self/?lang=zh', icon: '🔮', badge: '探索', title: '未来自我探索', desc: '发现长期路径与个人精力分配。', accent: '#00bcd4' }
             ]
         },
         ja: {
             label: 'Japan',
             title: '日本で人気の導線',
-            desc: 'Japan traffic is strongest on MBTI City and self-discovery follow-ups.',
-            preferences: ['MBTI identity', 'Attachment & anxiety', 'Long result sessions', 'Self-discovery tests'],
+            desc: 'Japan traffic is strongest on stress check, HSP sensitivity, and self-discovery follow-ups.',
+            preferences: ['Stress & recovery', 'HSP sensitivity', 'Long result sessions', 'Self-discovery tests'],
             items: [
-                { key: 'ja-city', type: 'app', appId: 'mbti-city', href: '/mbti-city/?lang=ja', icon: '🏙️', badge: 'JP #1', title: 'MBTI都市診断', desc: '最近の日本セッションで最も長く読まれた入口。', accent: '#1A535C' },
-                { key: 'ja-city-guide', type: 'blog', href: '/portal/blog/ja/mbti-city-seikaku-toshi.html', icon: '🗺️', badge: 'Guide', title: 'MBTI都市ガイド', desc: '診断前後に読みやすい関連ガイド。', accent: '#3b82f6' },
-                { key: 'ja-mental-age', type: 'app', appId: 'mental-age', href: '/mental-age/?lang=ja', icon: '🧠', badge: 'Test', title: '精神年齢診断', desc: '都市診断の次に試しやすい自己理解テスト。', accent: '#6366f1' },
-                { key: 'ja-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=ja', icon: '🧠', badge: 'Brain', title: '脳型診断テスト', desc: '長めの滞在につなげる認知タイプ診断。', accent: '#8b5cf6' }
+                { key: 'ja-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=ja', icon: '⚡', badge: 'JP #1', title: 'ストレスチェック', desc: '現在のストレスパターンと回復のヒントを確認。', accent: '#ef4444' },
+                { key: 'ja-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=ja', icon: '🌿', badge: 'HSP', title: 'HSP 繊細さん診断', desc: '感覚の敏感さと休息の取り方をセルフチェック。', accent: '#7c3aed' },
+                { key: 'ja-future', type: 'app', appId: 'future-self', href: '/future-self/?lang=ja', icon: '🔮', badge: 'Test', title: '未来の自分診断', desc: '価値観とこれからの方向性を整理する診断。', accent: '#6366f1' },
+                { key: 'ja-attachment', type: 'app', appId: 'attachment-style', href: '/attachment-style/?lang=ja', icon: '💞', badge: 'Deep', title: '愛着スタイル診断', desc: '人間関係や恋愛の距離感を振り返るテスト。', accent: '#ec4899' }
             ]
         },
         fr: {
             label: 'France',
             title: 'Populaire en France',
-            desc: 'French readers are clustering around brain-type and self-knowledge content.',
-            preferences: ['Profil cognitif', 'Tests courts', 'HSP / EQ follow-up', 'Guides de connaissance de soi'],
+            desc: 'French readers are clustering around stress check, HSP sensitivity, and self-knowledge content.',
+            preferences: ['Stress & equilibre', 'Tests courts', 'HSP / sensibilite', 'Guides de connaissance de soi'],
             items: [
-                { key: 'fr-brain-guide', type: 'blog', href: '/portal/blog/fr/test-type-cerveau.html', icon: '🧠', badge: 'FR #1', title: 'Test de Type de Cerveau', desc: 'La page francaise avec le meilleur engagement recent.', accent: '#6366f1' },
-                { key: 'fr-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=fr', icon: '🧠', badge: 'Test', title: 'Test de Type de Cerveau', desc: 'Passez directement du guide au test.', accent: '#8b5cf6' },
-                { key: 'fr-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=fr', icon: '🎭', badge: 'EQ', title: 'Test EQ', desc: 'Une suite courte sur l intelligence emotionnelle.', accent: '#00bcd4' },
-                { key: 'fr-city', type: 'app', appId: 'mbti-city', href: '/mbti-city/?lang=fr', icon: '🏙️', badge: 'MBTI', title: 'Test Ville MBTI', desc: 'Un test plus visuel pour prolonger la session.', accent: '#1A535C' }
+                { key: 'fr-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=fr', icon: '⚡', badge: 'FR #1', title: 'Test de Niveau de Stress', desc: 'Evaluez votre niveau de stress en 3 minutes.', accent: '#ef4444' },
+                { key: 'fr-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=fr', icon: '🌿', badge: 'HSP', title: 'Test d Hypersensibilite', desc: 'Explorez votre sensibilite sensorielle et emotionnelle.', accent: '#7c3aed' },
+                { key: 'fr-future', type: 'app', appId: 'future-self', href: '/future-self/?lang=fr', icon: '🔮', badge: 'Futur', title: 'Test du Futur Soi', desc: 'Une suite claire sur vos priorites et votre trajectoire.', accent: '#00bcd4' },
+                { key: 'fr-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=fr', icon: '🦁', badge: 'Partage', title: 'Personalite Animale', desc: 'Un test visuel pour prolonger la session.', accent: '#22c55e' }
             ]
         },
         id: {
             label: 'Indonesia',
             title: 'Populer di Indonesia',
             desc: 'Indonesia traffic is responding to emotional regulation and practical self-check paths.',
-            preferences: ['Regulasi emosi', 'EQ practical check', 'Relationship follow-up', 'MBTI curiosity'],
+            preferences: ['Regulasi emosi', 'Cek stres praktis', 'Relationship follow-up', 'Sensitivitas HSP'],
             items: [
                 { key: 'id-emotion', type: 'blog', href: '/portal/blog/id/emotional-regulation-techniques.html', icon: '🧘', badge: 'ID #1', title: 'Teknik Regulasi Emosi', desc: 'Artikel dengan waktu baca kuat untuk pengunjung Indonesia.', accent: '#10b981' },
-                { key: 'id-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=id', icon: '🎭', badge: 'EQ', title: 'Tes EQ', desc: 'Lanjutkan dari regulasi emosi ke tes singkat.', accent: '#00bcd4' },
+                { key: 'id-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=id', icon: '⚡', badge: 'Stres', title: 'Tes Tingkat Stres', desc: 'Lanjutkan dari regulasi emosi ke tes singkat.', accent: '#ef4444' },
                 { key: 'id-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=id', icon: '🧠', badge: 'HSP', title: 'Tes HSP', desc: 'Untuk pembaca yang tertarik pada sensitivitas diri.', accent: '#7c3aed' },
                 { key: 'id-attachment', type: 'app', appId: 'attachment-style', href: '/attachment-style/?lang=id', icon: '💔', badge: 'Relasi', title: 'Tes Gaya Keterikatan', desc: 'Jalur hubungan setelah konten emosi.', accent: '#ec4899' }
             ]
@@ -98,121 +98,120 @@
         de: {
             label: 'Germany',
             title: 'Beliebt in Deutschland',
-            desc: 'German organic sessions are strongest on personality-test discovery and brain-style follow-ups.',
+            desc: 'German organic sessions are strongest on personality-test discovery, stress check, and HSP follow-ups.',
             preferences: ['Personality discovery', 'HSP sensitivity', 'Emotional regulation', 'Stress response'],
             items: [
                 { key: 'de-tests-guide', type: 'blog', href: '/portal/blog/de/personality-tests.html', icon: '🧪', badge: 'DE #1', title: 'Beste Persönlichkeitstests', desc: 'Der beste Einstieg fur deutsche Suchbesuche.', accent: '#8b5cf6' },
-                { key: 'de-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=de', icon: '🧠', badge: 'Test', title: 'Gehirn-Typ-Test', desc: 'Vom Ratgeber direkt in den Test.', accent: '#6366f1' },
+                { key: 'de-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=de', icon: '⚡', badge: 'Test', title: 'Stresslevel-Test', desc: 'Vom Ratgeber direkt in den praktischen Selbsttest.', accent: '#ef4444' },
                 { key: 'de-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=de', icon: '🧠', badge: 'HSP', title: 'HSP-Test', desc: 'Ein ruhiger Folgepfad fur Selbstverstandnis.', accent: '#7c3aed' },
-                { key: 'de-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=de', icon: '🎭', badge: 'EQ', title: 'EQ-Test', desc: 'Kurz, klar und gut als zweiter Klick.', accent: '#00bcd4' }
+                { key: 'de-future', type: 'app', appId: 'future-self', href: '/future-self/?lang=de', icon: '🔮', badge: 'Fokus', title: 'Zukunfts-Ich-Test', desc: 'Kurz, klar und gut als zweiter Klick.', accent: '#00bcd4' }
             ]
         },
         en: {
             label: 'English markets',
             title: 'Fast result tests for English markets',
-            desc: 'Recent US traffic has the strongest revenue per page view, so route English visitors into short result flows first.',
+            desc: 'Recent US traffic has the strongest revenue per page view, so route English visitors into high-retention result flows first.',
             preferences: ['Fast result screens', 'Self-discovery tests', 'Shareable identity', 'Mobile-friendly flow'],
             items: [
-                { key: 'en-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=en', icon: 'BT', badge: 'Fast', title: 'Brain Type Test', desc: 'A compact cognitive result flow for high-value English sessions.', accent: '#6366f1' },
+                { key: 'en-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=en', icon: 'SC', badge: 'Fast', title: 'Stress Level Check', desc: 'A 15-question stress reflection with an instant 7-day reset plan.', accent: '#22c55e' },
                 { key: 'en-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=en', icon: 'HSP', badge: 'HSP', title: 'HSP Test', desc: 'The strongest recent result-test path for deeper mobile sessions.', accent: '#7c3aed' },
-                { key: 'en-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=en', icon: 'AP', badge: 'Share', title: 'Animal Personality', desc: 'A shareable identity result that keeps visitors moving.', accent: '#22c55e' },
-                { key: 'en-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=en', icon: 'EQ', badge: 'EQ', title: 'EQ Test', desc: 'A short emotional-intelligence quiz with result-screen follow-up.', accent: '#00bcd4' }
+                { key: 'en-future', type: 'app', appId: 'future-self', href: '/future-self/?lang=en', icon: 'FS', badge: 'Path', title: 'Future Self Archetype', desc: 'Explore long-term priorities and energy themes in 8 questions.', accent: '#00bcd4' },
+                { key: 'en-attachment', type: 'app', appId: 'attachment-style', href: '/attachment-style/?lang=en', icon: 'AS', badge: 'Deep', title: 'Attachment Style', desc: 'A relationship reflection flow with high completion rate.', accent: '#ec4899' }
             ]
         },
         sg: {
             label: 'Singapore',
             title: 'Quick picks for Singapore',
-            desc: 'Recent Singapore desktop traffic is high-volume but shallow, so route it straight into short result flows.',
+            desc: 'Recent Singapore desktop traffic is high-volume, so route it straight into high-retention result flows.',
             preferences: ['Fast result tests', 'English-first paths', 'Shareable identity', 'Low-friction follow-up'],
             items: [
-                { key: 'sg-past-life', type: 'app', appId: 'past-life', href: '/past-life/?lang=en', icon: 'PL', badge: 'Fast', title: 'Past Life Test', desc: 'A quick curiosity result for English visitors.', accent: '#a855f7' },
+                { key: 'sg-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=en', icon: 'SC', badge: 'Fast', title: 'Stress Level Check', desc: 'A quick stress reflection with an actionable reset plan.', accent: '#22c55e' },
                 { key: 'sg-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=en', icon: 'AP', badge: 'Share', title: 'Animal Personality', desc: 'A shareable identity quiz with proven retention.', accent: '#22c55e' },
-                { key: 'sg-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=en', icon: 'EQ', badge: 'EQ', title: 'EQ Test', desc: 'Short emotional-intelligence flow for second clicks.', accent: '#00bcd4' },
+                { key: 'sg-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=en', icon: 'HSP', badge: 'HSP', title: 'HSP Test', desc: 'Short sensory-sensitivity flow for second clicks.', accent: '#7c3aed' },
                 { key: 'sg-attachment', type: 'app', appId: 'attachment-style', href: '/attachment-style/?lang=en', icon: 'AS', badge: 'Deep', title: 'Attachment Style', desc: 'A relationship self-check after a quick result.', accent: '#ec4899' }
             ]
         },
         ko: {
             label: 'Korea',
             title: '한국 인기 추천',
-            desc: '한국어 방문자는 MBTI, 성격 테스트, 감정형 테스트로 바로 이동할 때 흐름이 좋습니다.',
-            preferences: ['실용 도구', 'MBTI/성격', '감정형 테스트', '빠른 결과'],
+            desc: '한국어 방문자는 스트레스 체크, HSP 민감도 테스트, MBTI 궁합 허브로 바로 이동할 때 체류 흐름이 좋습니다.',
+            preferences: ['스트레스 진단', 'MBTI/성격', 'HSP 민감도', '빠른 결과'],
             items: [
+                { key: 'ko-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=ko', icon: '⚡', badge: '인기', title: '스트레스 자가진단', desc: '15문항으로 현재 스트레스 패턴과 7일 리셋 플랜을 확인합니다.', accent: '#22c55e' },
+                { key: 'ko-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=ko', icon: '🌿', badge: 'HSP', title: 'HSP 예민성 테스트', desc: '감각 과부하와 회복 루틴을 점검하는 자기이해 테스트입니다.', accent: '#7c3aed' },
                 { key: 'ko-mbti', type: 'hub', href: '/portal/mbti/?lang=ko', icon: '💞', badge: 'MBTI', title: 'MBTI 궁합 허브', desc: '256가지 궁합표와 후속 테스트로 이어집니다.', accent: '#ff2d78' },
-                { key: 'ko-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=ko', icon: '🦁', badge: 'Hot', title: '동물 성격 테스트', desc: '공유하기 쉬운 결과형 성격 테스트입니다.', accent: '#22c55e' },
-                { key: 'ko-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=ko', icon: '🧠', badge: 'Brain', title: '뇌 타입 테스트', desc: '자기이해형 체류를 만들기 좋은 테스트입니다.', accent: '#6366f1' },
-                { key: 'ko-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=ko', icon: '🎭', badge: 'EQ', title: 'EQ 감성지능 테스트', desc: '감정/관계 관심을 짧은 테스트로 연결합니다.', accent: '#00bcd4' }
+                { key: 'ko-attachment', type: 'app', appId: 'attachment-style', href: '/attachment-style/?lang=ko', icon: '💬', badge: '관계', title: '애착유형 테스트', desc: '관계 속 소통 방식과 거리감을 빠르게 확인합니다.', accent: '#ec4899' }
             ]
         },
         my: {
             label: 'Malaysia',
             title: 'Popular in Malaysia',
-            desc: 'Malaysia is showing an emerging preference for deep test exploration across brain, IQ, mental-age, and identity quizzes.',
-            preferences: ['Deep test hopping', 'IQ / brain checks', 'Mental age', 'Identity quizzes'],
+            desc: 'Malaysia is showing a strong preference for deep test exploration across stress, IQ, HSP, and identity quizzes.',
+            preferences: ['Deep test hopping', 'IQ / stress checks', 'HSP sensitivity', 'Identity quizzes'],
             items: [
-                { key: 'my-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=en', icon: '🧠', badge: 'Brain', title: 'Brain Type Test', desc: 'A strong next stop for exploratory test sessions.', accent: '#6366f1' },
+                { key: 'my-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=en', icon: '⚡', badge: 'Stress', title: 'Stress Level Check', desc: 'A strong first stop for exploratory test sessions.', accent: '#22c55e' },
                 { key: 'my-iq', type: 'app', appId: 'iq-test', href: '/iq-test/?lang=en', icon: '🧩', badge: 'IQ', title: 'Quick IQ Test', desc: 'For visitors who move between cognitive tests.', accent: '#3498db' },
-                { key: 'my-mental-age', type: 'app', appId: 'mental-age', href: '/mental-age/?lang=en', icon: '🧠', badge: 'Age', title: 'Mental Age Test', desc: 'A lighter self-discovery follow-up.', accent: '#6366f1' },
+                { key: 'my-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=en', icon: '🌿', badge: 'HSP', title: 'HSP Test', desc: 'A thoughtful self-discovery follow-up.', accent: '#7c3aed' },
                 { key: 'my-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=en', icon: '🐾', badge: 'Fun', title: 'Animal Personality', desc: 'A maintained identity quiz after serious tests.', accent: '#ff8c42' }
             ]
         },
         pt: {
             label: 'Portuguese markets',
             title: 'Popular in Portuguese markets',
-            desc: 'Portuguese-language traffic is small but the latest Brazil organic sessions are staying longest on mental-age and brain-quiz intent.',
-            preferences: ['Mental age', 'Brain quizzes', 'Animal identity', 'Personality tests'],
+            desc: 'Portuguese-language visitors stay longest on stress check, animal identity, and relationship self-reflection.',
+            preferences: ['Stress check', 'HSP sensitivity', 'Animal identity', 'Personality tests'],
             items: [
-                { key: 'pt-mental-age', type: 'app', appId: 'mental-age', href: '/mental-age/?lang=pt', icon: 'AGE', badge: 'BR #1', title: 'Teste de Idade Mental', desc: 'Route high-engagement Brazil search visits into a quick brain-age result.', accent: '#6366f1' },
-                { key: 'pt-mental-guide', type: 'blog', href: '/portal/blog/pt/mental-age-test-brain-quiz-guide.html', icon: 'BR', badge: 'Guide', title: 'Guia do Teste de Idade Mental', desc: 'The recent Portuguese organic page with the strongest dwell signal.', accent: '#8b5cf6' },
-                { key: 'pt-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=pt', icon: 'AN', badge: 'Animal', title: 'Teste de Personalidade Animal', desc: 'A shareable identity path after the cognitive check.', accent: '#22c55e' },
-                { key: 'pt-tests', type: 'blog', href: '/portal/blog/pt/personality-tests.html', icon: '🧪', badge: 'Tests', title: 'Melhores testes de personalidade', desc: 'A broad discovery page for test-curious visitors.', accent: '#8b5cf6' },
-                { key: 'pt-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=pt', icon: 'EQ', badge: 'EQ', title: 'Teste de EQ', desc: 'A short emotional-intelligence follow-up.', accent: '#00bcd4' }
+                { key: 'pt-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=pt', icon: '⚡', badge: 'BR #1', title: 'Teste de Nivel de Estresse', desc: 'Avalie seu padrao de estresse atual com um plano pratico.', accent: '#22c55e' },
+                { key: 'pt-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=pt', icon: '🌿', badge: 'HSP', title: 'Teste de Alta Sensibilidade', desc: 'Descubra como voce processa estimulos e recupera energia.', accent: '#7c3aed' },
+                { key: 'pt-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=pt', icon: 'AN', badge: 'Animal', title: 'Teste de Personalidade Animal', desc: 'A shareable identity path after the self-check.', accent: '#22c55e' },
+                { key: 'pt-attachment', type: 'app', appId: 'attachment-style', href: '/attachment-style/?lang=pt', icon: '💞', badge: 'Relacao', title: 'Teste de Estilo de Apego', desc: 'Entenda seus padroes de conexao nos relacionamentos.', accent: '#ec4899' }
             ]
         },
         ru: {
             label: 'Russia',
             title: 'Популярно для русскоязычных',
-            desc: 'Russian-language signals are still early, with browser games and lightweight self-tests as the safest route.',
-            preferences: ['Browser games', 'Quick tests', 'Stress checks', 'Light discovery'],
+            desc: 'Russian-language signals are strongest on stress checks, HSP reflection, and lightweight self-tests.',
+            preferences: ['Stress checks', 'Quick tests', 'HSP reflection', 'Light discovery'],
             items: [
-                { key: 'ru-games', type: 'blog', href: '/portal/blog/ru/besplatnye-brauzernye-igry-2026.html', icon: '🎮', badge: 'Games', title: 'Браузерные игры', desc: 'A practical entry for Russian game traffic.', accent: '#3b82f6' },
-                { key: 'ru-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=ru', icon: '⚡', badge: 'Stress', title: 'Тест стресса', desc: 'A short self-check with low friction.', accent: '#6366f1' },
+                { key: 'ru-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=ru', icon: '⚡', badge: 'Stress', title: 'Тест стресса', desc: 'A short self-check with low friction.', accent: '#22c55e' },
+                { key: 'ru-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=ru', icon: '🌿', badge: 'HSP', title: 'Тест высокой чувствительности', desc: 'A calm reflection on sensory overload and recovery.', accent: '#7c3aed' },
                 { key: 'ru-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/?lang=ru', icon: '🦁', badge: 'Animal', title: 'Тест: какое вы животное?', desc: 'A shareable identity result path.', accent: '#22c55e' },
-                { key: 'ru-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=ru', icon: '🧠', badge: 'Brain', title: 'Тест типа мозга', desc: 'A deeper follow-up for self-knowledge.', accent: '#6366f1' }
+                { key: 'ru-attachment', type: 'app', appId: 'attachment-style', href: '/attachment-style/?lang=ru', icon: '💞', badge: 'Deep', title: 'Тип привязанности', desc: 'A deeper follow-up for relationship self-knowledge.', accent: '#ec4899' }
             ]
         },
         hi: {
             label: 'India',
             title: 'भारत के लिए लोकप्रिय',
-            desc: 'भारत के लिए तेज़ mobile-first self-discovery रास्ते: brain, IQ, EQ और anxiety checks.',
-            preferences: ['AI self-discovery', 'IQ / brain checks', 'EQ and anxiety', 'Mobile-first quick tests'],
+            desc: 'भारत के लिए तेज़ mobile-first self-discovery रास्ते: stress, IQ, HSP और future-self checks.',
+            preferences: ['Stress self-check', 'IQ / pattern checks', 'HSP sensitivity', 'Mobile-first quick tests'],
             items: [
-                { key: 'hi-brain', type: 'app', appId: 'brain-type', href: '/brain-type/?lang=hi', icon: '🧠', badge: 'Brain', title: 'ब्रेन टाइप टेस्ट', desc: 'सोचने के तरीके को तेज़ result flow में समझें.', accent: '#6366f1' },
+                { key: 'hi-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=hi', icon: '⚡', badge: 'Stress', title: 'तनाव स्तर टेस्ट', desc: 'अपने वर्तमान तनाव पैटर्न को तेज़ result flow में समझें.', accent: '#22c55e' },
                 { key: 'hi-iq', type: 'app', appId: 'iq-test', href: '/iq-test/?lang=hi', icon: '🧩', badge: 'IQ', title: 'तेज़ IQ टेस्ट', desc: 'Pattern और logic curiosity के लिए छोटा cognitive check.', accent: '#3498db' },
-                { key: 'hi-eq', type: 'app', appId: 'eq-test', href: '/eq-test/?lang=hi', icon: '🎭', badge: 'EQ', title: 'EQ भावनात्मक बुद्धि टेस्ट', desc: 'Self-awareness को emotional intelligence से जोड़ें.', accent: '#00bcd4' },
-                { key: 'hi-anxiety', type: 'app', appId: 'anxiety-type', href: '/anxiety-type/?lang=hi', icon: '🌀', badge: 'Calm', title: 'चिंता प्रकार टेस्ट', desc: 'Mental-health intent को हल्के self-check में बदलें.', accent: '#10b981' }
+                { key: 'hi-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=hi', icon: '🌿', badge: 'HSP', title: 'HSP संवेदनशीलता टेस्ट', desc: 'Self-awareness को sensory reset से जोड़ें.', accent: '#7c3aed' },
+                { key: 'hi-future', type: 'app', appId: 'future-self', href: '/future-self/?lang=hi', icon: '🔮', badge: 'Future', title: 'भविष्य का स्वयं टेस्ट', desc: 'अपने दीर्घकालिक लक्ष्यों को हल्के self-check में बदलें.', accent: '#00bcd4' }
             ]
         },
         tr: {
             label: 'Turkey',
             title: 'Türkiye için popüler',
             desc: 'Türkiye için kısa, sosyal ve kendini tanıma odaklı testler öne çıkarılıyor.',
-            preferences: ['İlişki farkındalığı', 'Stres / kaygı', 'Sosyal enerji', 'Kısa viral testler'],
+            preferences: ['İlişki farkındalığı', 'Stres / 회복', 'HSP duyarlılık', 'Kısa viral testler'],
             items: [
                 { key: 'tr-attachment', type: 'app', appId: 'attachment-style', href: '/attachment-style/?lang=tr&source=red_flag_retirement', icon: '💬', badge: 'İlişki', title: 'Bağlanma Stili', desc: 'On ilişki senaryosu üzerinden açık yöntemli bir düşünme aracı.', accent: '#ec4899' },
-                { key: 'tr-anxiety', type: 'app', appId: 'anxiety-type', href: '/anxiety-type/?lang=tr', icon: '🌀', badge: 'Kaygı', title: 'Kaygı Tipi Testi', desc: 'Kısa ve güvenli bir duygusal self-check.', accent: '#10b981' },
-                { key: 'tr-social', type: 'app', appId: 'social-battery', href: '/social-battery/?lang=tr', icon: '🔋', badge: 'Sosyal', title: 'Sosyal Batarya', desc: 'Enerji ve içe dönüklük merakını hızlı sonuca çevirir.', accent: '#f59e0b' },
+                { key: 'tr-stress', type: 'app', appId: 'stress-check', href: '/stress-check/?lang=tr', icon: '⚡', badge: 'Stres', title: 'Stres Seviyesi Testi', desc: 'Kısa ve güvenli bir stres öz değerlendirme aracı.', accent: '#22c55e' },
+                { key: 'tr-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/?lang=tr', icon: '🌿', badge: 'HSP', title: 'HSP Duyarlılık Testi', desc: 'Duyusal yüklenmeyi ve dinlenme ihtiyacını hızlı sonuca çevirir.', accent: '#7c3aed' }
             ]
         },
         global: {
             label: 'Global',
             title: 'Popular around the world',
             desc: 'Start with the highest-retention paths before browsing the full library.',
-            preferences: ['Shareable results', 'MBTI identity', 'Emotion checks', 'Relationship insight'],
+            preferences: ['Stress & recovery', 'HSP sensitivity', 'Shareable results', 'Relationship insight'],
             items: [
-                { key: 'global-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/', icon: '🦁', badge: 'Hot', title: 'Animal Personality', desc: 'A shareable personality result that keeps users moving.', accent: '#22c55e' },
-                { key: 'global-city', type: 'app', appId: 'mbti-city', href: '/mbti-city/', icon: '🏙️', badge: 'Stay', title: 'MBTI City Test', desc: 'A visual MBTI follow-up with strong session depth.', accent: '#1A535C' },
+                { key: 'global-stress', type: 'app', appId: 'stress-check', href: '/stress-check/', icon: '⚡', badge: 'Top', title: 'Stress Level Check', desc: 'A 15-question reflection with a practical 7-day reset plan.', accent: '#22c55e' },
+                { key: 'global-hsp', type: 'app', appId: 'hsp-test', href: '/hsp-test/', icon: '🌿', badge: 'HSP', title: 'HSP Test', desc: 'Explore sensory sensitivity and overload recovery.', accent: '#7c3aed' },
                 { key: 'global-attachment', type: 'app', appId: 'attachment-style', href: '/attachment-style/', icon: '💔', badge: 'Deep', title: 'Attachment Style', desc: 'Relationship self-check for high-intent readers.', accent: '#ec4899' },
-                { key: 'global-eq', type: 'app', appId: 'eq-test', href: '/eq-test/', icon: '🎭', badge: 'EQ', title: 'EQ Test', desc: 'A short emotional-intelligence flow.', accent: '#00bcd4' }
+                { key: 'global-animal', type: 'app', appId: 'animal-personality', href: '/animal-personality/', icon: '🦁', badge: 'Hot', title: 'Animal Personality', desc: 'A shareable personality result that keeps users moving.', accent: '#22c55e' }
             ]
         }
     };

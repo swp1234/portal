@@ -20,8 +20,8 @@
   heroStrip.className = 'type-hero-strip';
   heroStrip.setAttribute('aria-label', mbtiType + ' fast actions');
   heroStrip.innerHTML = [
-    '<a href="/mbti-love/" data-hero-action="love_match">Love match</a>',
-    '<a href="/mbti-career/" data-hero-action="career_fit">Career fit</a>',
+    '<a href="/attachment-style/" data-hero-action="love_match">Attachment style</a>',
+    '<a href="/future-self/" data-hero-action="career_fit">Future path</a>',
     '<a href="/portal/mbti/" data-hero-action="all_types">All 16 types</a>'
   ].join('');
   heroTags.insertAdjacentElement('afterend', heroStrip);
@@ -33,12 +33,12 @@
     '<div class="type-action-kicker">Next step for ' + mbtiType + '</div>',
     '<h2 class="type-action-title">Turn this type profile into a real answer</h2>',
     '<div class="type-action-grid">',
-    '<a class="type-action-link primary" href="/mbti-love/" data-type-action="love_match">',
-    '<span class="type-action-label">Check love match</span>',
+    '<a class="type-action-link primary" href="/attachment-style/" data-type-action="love_match">',
+    '<span class="type-action-label">Check attachment style</span>',
     '<span class="type-action-copy">See how your type connects, clashes, and communicates in relationships.</span>',
     '</a>',
-    '<a class="type-action-link" href="/mbti-career/" data-type-action="career_fit">',
-    '<span class="type-action-label">Find career fit</span>',
+    '<a class="type-action-link" href="/future-self/" data-type-action="career_fit">',
+    '<span class="type-action-label">Explore future path</span>',
     '<span class="type-action-copy">Map your strengths to roles, work style, and better daily energy.</span>',
     '</a>',
     '<a class="type-action-link" href="/portal/mbti/" data-type-action="compatibility_chart">',
