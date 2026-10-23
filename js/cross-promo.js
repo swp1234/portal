@@ -4,7 +4,7 @@
     'use strict';
 
     // Detect current app from URL
-    var path = window.location.pathname.replace(/\/$/, '').split('/').pop();
+    var path = window.location.pathname.replace(/\/$/, '').split('/').pop().replace(/\.html$/, '');
     var STORAGE_KEY = 'dopabrain_personalize';
     var MAX_HISTORY = 50;
     var SCAN_GUARD_DELAY_MS = 8000;
@@ -859,7 +859,7 @@
             '.cp-section{max-width:600px;margin:24px auto 0;padding:20px 16px;border-top:1px solid rgba(255,255,255,0.08)}',
             '.cp-title{font-size:14px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;text-align:center}',
             '.cp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}',
-            '.cp-card{display:flex;align-items:center;gap:10px;padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;text-decoration:none;color:inherit;transition:all 0.2s ease}',
+            '.cp-card{display:flex;align-items:center;gap:10px;padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;text-decoration:none;color:inherit;transition:all 0.2s ease;min-height:48px;box-sizing:border-box;touch-action:manipulation}',
             '.cp-card:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.12);transform:translateY(-1px)}',
             '.cp-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}',
             '.cp-name{font-size:13px;font-weight:600;color:rgba(255,255,255,0.9);line-height:1.3}',
