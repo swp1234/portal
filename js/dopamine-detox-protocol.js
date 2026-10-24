@@ -499,6 +499,13 @@
 
     resultCard.hidden = false;
     resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (typeof gtag === 'function') {
+      gtag('event', 'tool_calculate', {
+        tool_name: 'dopamine_detox_protocol',
+        cheap_ratio: ratio,
+        verdict: verdict.key
+      });
+    }
   }
 
   function resetAssessment() {

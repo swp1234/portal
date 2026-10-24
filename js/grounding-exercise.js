@@ -411,6 +411,12 @@
         el.classList.remove('active');
         el.classList.add('completed');
       });
+      if (typeof gtag === 'function') {
+        gtag('event', 'grounding_session_complete', {
+          tool_name: '54321_grounding',
+          duration_seconds: Math.round((Date.now() - startTime) / 1000)
+        });
+      }
       return;
     }
 
