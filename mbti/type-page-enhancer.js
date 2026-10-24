@@ -7,6 +7,9 @@
   var heroTags = document.querySelector('.hero-tags');
   if (!hero || !heroTags || document.querySelector('.type-action-rail')) return;
 
+  var currentLang = new URLSearchParams(location.search).get('lang') || 'en';
+  var safeLang = /^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(currentLang) ? currentLang : 'en';
+
   function track(name, params) {
     if (typeof gtag !== 'function') return;
     gtag('event', name, Object.assign({
@@ -20,8 +23,8 @@
   heroStrip.className = 'type-hero-strip';
   heroStrip.setAttribute('aria-label', mbtiType + ' fast actions');
   heroStrip.innerHTML = [
-    '<a href="/attachment-style/" data-hero-action="love_match">Attachment style</a>',
-    '<a href="/future-self/" data-hero-action="career_fit">Future path</a>',
+    '<a href="/attachment-style/?lang=' + safeLang + '&start=1&source=mbti_hero_strip" data-hero-action="love_match">Attachment style</a>',
+    '<a href="/future-self/?lang=' + safeLang + '&start=1&source=mbti_hero_strip" data-hero-action="career_fit">Future path</a>',
     '<a href="/portal/mbti/" data-hero-action="all_types">All 16 types</a>'
   ].join('');
   heroTags.insertAdjacentElement('afterend', heroStrip);
@@ -33,11 +36,11 @@
     '<div class="type-action-kicker">Next step for ' + mbtiType + '</div>',
     '<h2 class="type-action-title">Turn this type profile into a real answer</h2>',
     '<div class="type-action-grid">',
-    '<a class="type-action-link primary" href="/attachment-style/" data-type-action="love_match">',
+    '<a class="type-action-link primary" href="/attachment-style/?lang=' + safeLang + '&start=1&source=mbti_action_rail" data-type-action="love_match">',
     '<span class="type-action-label">Check attachment style</span>',
     '<span class="type-action-copy">See how your type connects, clashes, and communicates in relationships.</span>',
     '</a>',
-    '<a class="type-action-link" href="/future-self/" data-type-action="career_fit">',
+    '<a class="type-action-link" href="/future-self/?lang=' + safeLang + '&start=1&source=mbti_action_rail" data-type-action="career_fit">',
     '<span class="type-action-label">Explore future path</span>',
     '<span class="type-action-copy">Map your strengths to roles, work style, and better daily energy.</span>',
     '</a>',
@@ -91,6 +94,12 @@
   });
 
   document.querySelectorAll('.cta-section .cta-btn').forEach(function (link, index) {
+    var rawHref = link.getAttribute('href') || '';
+    if (rawHref === '/attachment-style/') {
+      link.setAttribute('href', '/attachment-style/?lang=' + safeLang + '&start=1&source=mbti_bottom_cta');
+    } else if (rawHref === '/animal-personality/') {
+      link.setAttribute('href', '/animal-personality/?lang=' + safeLang + '&start=1&source=mbti_bottom_cta');
+    }
     link.dataset.typeAction = link.dataset.typeAction || 'bottom_cta_' + (index + 1);
     link.addEventListener('click', function () {
       track('mbti_type_cta_click', {
