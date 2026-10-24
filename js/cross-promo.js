@@ -10,12 +10,12 @@
     var SCAN_GUARD_DELAY_MS = 8000;
     var BLOG_BRIDGE_IDS = ['stress-check', 'hsp-test', 'future-self', 'attachment-style'];
     var EN_TOOL_BLOG_PATTERN = /\/portal\/blog\/en\/(?:qr-generator-guide|unit-converter-guide|password-generator-guide|typing-speed-test-guide|habit-tracker-guide|pomodoro-timer-guide|todo-list-guide|json-formatter-guide|free-games)\.html$/;
-    var EN_TOOL_BRIDGE_IDS = ['qr-generator', 'unit-converter', 'password-generator', 'typing-speed'];
+    var EN_TOOL_BRIDGE_IDS = ['unit-converter', 'password-generator', 'pomodoro-timer', 'bmi-calculator'];
     var BLOG_TOPIC_STRATEGIES = [
         { key: 'self_check', pattern: /(?:hsp|sensory|highly-sensitive|emotional-regulation|emotion-management|cognitive-distortions|rumination|people-pleasing|trauma-response|attachment|avoidant|anxious|inner-child|shadow-work)/, ids: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'], title: 'Try a matching self-check' },
         { key: 'fortune', pattern: /(?:tarot|past-life|dream|zodiac|fortune|numerology)/, ids: ['daily-tarot', 'dream-fortune', 'numerology', 'zodiac-match'], title: 'Open a quick reading' },
-        { key: 'productivity', pattern: /(?:habit|routine|pomodoro|todo|detox|focus|dopamine)/, ids: ['pomodoro-timer', 'detox-timer', 'routine-planner', 'todo-list'], title: 'Turn this into a quick tool' },
-        { key: 'game', pattern: /(?:2048|brick|reaction|typing|free-games|browser-games|game-guide|casual-games|puzzle)/, ids: ['puzzle-2048', 'reaction-test', 'color-blindness', 'brick-breaker'], title: 'Play the related game now' },
+        { key: 'productivity', pattern: /(?:habit|routine|pomodoro|todo|detox|focus|dopamine)/, ids: ['pomodoro-timer', 'detox-timer', 'future-self', 'stress-check'], title: 'Turn this into a quick tool' },
+        { key: 'game', pattern: /(?:2048|brick|reaction|typing|free-games|browser-games|game-guide|casual-games|puzzle)/, ids: ['iq-test', 'color-blindness', 'animal-personality', 'kpop-position'], title: 'Play the related game now' },
         { key: 'kpop', pattern: /(?:kpop|k-pop)/, ids: ['kpop-position', 'aura-score', 'color-blindness', 'animal-personality'], title: 'Try the related viral test' },
         { key: 'personality', pattern: /(?:mbti|personality-tests|personality-test|color-personality)/, ids: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'], title: 'Continue with a result test' }
     ];
