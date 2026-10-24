@@ -29,6 +29,7 @@
       balanced: "Close Match — Examine Core Differentiators",
       diffLabel: "Score Differential:",
       copyBtn: "Copy Decision Report",
+      shareBtn: "Share Verdict",
       copied: "Report copied to clipboard!",
       methodKicker: "HOW IT WORKS",
       methodTitle: "The Science of Weighted Decision Matrices",
@@ -76,6 +77,7 @@
       balanced: "호각세(접전) — 핵심 변수 집중 재평가 권장",
       diffLabel: "점수 격차:",
       copyBtn: "결정 보고서 복사",
+      shareBtn: "결과 공유하기",
       copied: "결정 보고서가 클립보드에 복사되었습니다!",
       methodKicker: "의사결정 매트릭스 원리",
       methodTitle: "감정을 배제하고 최적의 결정을 내리는 과학적 원리",
@@ -123,6 +125,7 @@
       balanced: "僅差（接戦） — 重要項目の再確認を推奨",
       diffLabel: "スコア差:",
       copyBtn: "レポートをコピー",
+      shareBtn: "結果を共有",
       copied: "レポートをコピーしました！",
       methodKicker: "仕組みと科学",
       methodTitle: "感情に流されず最適な決断を下す科学",
@@ -170,6 +173,7 @@
       balanced: "难分伯仲 — 建议聚焦最核心差异项深入评估",
       diffLabel: "得分差距：",
       copyBtn: "复制决策分析报告",
+      shareBtn: "分享结论",
       copied: "报告已成功复制到剪贴板！",
       methodKicker: "科学决策原理",
       methodTitle: "如何排除情绪干扰，做出无悔抉择",
@@ -217,6 +221,7 @@
       balanced: "Empate técnico — Reevaluar factor crítico",
       diffLabel: "Diferencia de puntos:",
       copyBtn: "Copiar Informe",
+      shareBtn: "Compartir Veredicto",
       copied: "¡Informe copiado al portapapeles!",
       methodKicker: "CÓMO FUNCIONA",
       methodTitle: "Ciencia de la toma de decisiones objetiva",
@@ -264,6 +269,7 @@
       balanced: "Sehr ausgeglichen — Schlüsselkriterien prüfen",
       diffLabel: "Punktedifferenz:",
       copyBtn: "Bericht kopieren",
+      shareBtn: "Ergebnis teilen",
       copied: "Bericht in Zwischenablage kopiert!",
       methodKicker: "METHODIK",
       methodTitle: "Entscheidungsfindung ohne emotionale Verzerrung",
@@ -311,6 +317,7 @@
       balanced: "Égalité serrée — Examiner les critères clés",
       diffLabel: "Écart de points :",
       copyBtn: "Copier le rapport",
+      shareBtn: "Partager le verdict",
       copied: "Rapport copié dans le presse-papiers !",
       methodKicker: "MÉTHODOLOGIE",
       methodTitle: "Décider avec clarté sans biais émotionnel",
@@ -358,6 +365,7 @@
       balanced: "Empate técnico — Reavalie os pontos críticos",
       diffLabel: "Diferença de pontos:",
       copyBtn: "Copiar Relatório",
+      shareBtn: "Compartilhar Veredito",
       copied: "Relatório copiado para a área de transferência!",
       methodKicker: "METODOLOGIA",
       methodTitle: "A ciência da decisão sem vieses emocionais",
@@ -405,6 +413,7 @@
       balanced: "Равные позиции — оцените ключевые различия",
       diffLabel: "Разница баллов:",
       copyBtn: "Копировать отчет",
+      shareBtn: "Поделиться вердиктом",
       copied: "Отчет скопирован в буфер обмена!",
       methodKicker: "МЕТОДОЛОГИЯ",
       methodTitle: "Как принимать решения без эмоций",
@@ -452,6 +461,7 @@
       balanced: "कड़ा मुकाबला — मुख्य अंतर का पुनर्मूल्यांकन करें",
       diffLabel: "स्कोर अंतर:",
       copyBtn: "रिपोर्ट कॉपी करें",
+      shareBtn: "निर्णय साझा करें",
       copied: "रिपोर्ट क्लिपबोर्ड पर कॉपी हो गई!",
       methodKicker: "कार्यप्रणाली",
       methodTitle: "तार्किक निर्णय लेने का वैज्ञानिक तरीका",
@@ -499,6 +509,7 @@
       balanced: "Hasil Seimbang — Evaluasi faktor paling krusial",
       diffLabel: "Selisih Skor:",
       copyBtn: "Salin Laporan",
+      shareBtn: "Bagikan Hasil",
       copied: "Laporan disalin ke papan klip!",
       methodKicker: "METODOLOGI",
       methodTitle: "Sains di Balik Pengambilan Keputusan Objektif",
@@ -546,6 +557,7 @@
       balanced: "Çok Yakın — En kritik kriteri tekrar değerlendirin",
       diffLabel: "Puan Farkı:",
       copyBtn: "Raporu Kopyala",
+      shareBtn: "Kararı Paylaş",
       copied: "Rapor panoya kopyalandı!",
       methodKicker: "YÖNTEM",
       methodTitle: "Duygulardan Bağımsız Karar Alma Bilimi",
@@ -809,7 +821,34 @@
 
     document.getElementById('calcBtn')?.addEventListener('click', calculateVerdict);
     document.getElementById('resetBtn')?.addEventListener('click', resetInputs);
+
+  function shareVerdict() {
+    const optAName = (document.getElementById('optAName')?.value || '').trim() || t('tableOptA');
+    const optBName = (document.getElementById('optBName')?.value || '').trim() || t('tableOptB');
+    const scoreValA = document.getElementById('scoreValA')?.textContent || '0';
+    const scoreValB = document.getElementById('scoreValB')?.textContent || '0';
+    const headline = document.getElementById('verdictHeadline')?.textContent || '';
+
+    const text = [
+      '📊 [' + t('title') + ']',
+      '• Option A: ' + optAName + ' (' + scoreValA + ' pts)',
+      '• Option B: ' + optBName + ' (' + scoreValB + ' pts)',
+      '• Verdict: ' + headline,
+      '🔗 https://dopabrain.com/portal/tools/decision-matrix.html?lang=' + currentLang
+    ].join('\n');
+
+    if (navigator.share) {
+      navigator.share({
+        title: t('title'),
+        text: text,
+        url: 'https://dopabrain.com/portal/tools/decision-matrix.html?lang=' + currentLang
+      }).catch(() => {});
+    } else {
+      copyReport();
+    }
+  }
     document.getElementById('copyBtn')?.addEventListener('click', copyReport);
+    document.getElementById('shareBtn')?.addEventListener('click', shareVerdict);
   });
 
 })();
