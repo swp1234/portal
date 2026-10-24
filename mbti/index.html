@@ -64,7 +64,7 @@ a{color:var(--cyan);text-decoration:none}
 
 .hero{position:relative;padding:48px 20px 32px;text-align:center;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 40% 0%,rgba(168,85,247,0.12) 0%,transparent 60%),radial-gradient(ellipse at 60% 100%,rgba(0,229,255,0.08) 0%,transparent 60%);pointer-events:none}
-.hero-back{display:inline-block;margin-bottom:16px;font-size:13px;color:var(--text3)}
+.hero-back{display:inline-flex;align-items:center;min-height:44px;margin-bottom:12px;font-size:13px;color:var(--text3);padding:4px 0}
 .hero h1{font-family:var(--heading);font-size:clamp(26px,6vw,40px);font-weight:800;background:linear-gradient(135deg,var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
 .hero-sub{font-size:clamp(14px,3vw,17px);color:var(--text2);max-width:520px;margin:0 auto 16px}
 .hero-stats{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
@@ -114,7 +114,7 @@ a{color:var(--cyan);text-decoration:none}
 .modal-overlay.active{display:flex}
 .modal{background:var(--bg2);border:1px solid var(--border);border-radius:20px;max-width:480px;width:100%;padding:28px 24px;position:relative;max-height:80vh;overflow-y:auto;animation:modalIn 0.3s ease}
 @keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(10px)}to{opacity:1;transform:none}}
-.modal-close{position:absolute;top:12px;right:12px;width:36px;height:36px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-close{position:absolute;top:12px;right:12px;width:44px;height:44px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .modal-types{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:16px}
 .modal-type{padding:6px 14px;border-radius:10px;font-family:var(--heading);font-size:16px;font-weight:700;background:var(--surface);border:1px solid var(--border)}
 .modal-vs{color:var(--text3);font-size:14px}
@@ -573,7 +573,7 @@ function getAppMeta(appId){
     icon:app.icon||'&#129504;',
     name:typeof getAppName==='function'?getAppName(app,lang):app.name,
     desc:typeof getAppDesc==='function'?getAppDesc(app,lang):app.shortDesc,
-    url:app.url
+    url:app.url + (lang ? '?lang=' + encodeURIComponent(lang) : '')
   };
 }
 function getScoreLabel(score){
@@ -728,6 +728,7 @@ try {
         if (nameEl) nameEl.textContent = getAppName(app, lang);
         var descEl = el.querySelector('.starter-desc');
         if (descEl && typeof getAppDesc === 'function') descEl.textContent = getAppDesc(app, lang);
+        if (el.tagName === 'A' && app.url) el.setAttribute('href', app.url + (lang ? '?lang=' + encodeURIComponent(lang) : ''));
       });
       document.querySelectorAll('.cta-stack .cta-btn[data-app], .cta-stack .cta-chip[data-app], #next-tests .next-test-pill[data-app], #modal-secondary-cta[data-app]').forEach(function(el) {
         var appId = el.dataset.app;
