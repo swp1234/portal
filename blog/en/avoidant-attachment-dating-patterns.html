@@ -74,6 +74,101 @@
         .related-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
         .related-links a { padding: 10px 18px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 10px; color: var(--primary-light); text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.2s; }
         .related-links a:hover { background: rgba(231,76,60,0.18); border-color: var(--primary); }
+        /* Interactive Avoidant Quick Checklist */
+        .avoidant-interactive-widget {
+            background: linear-gradient(135deg, rgba(231,76,60,0.18), rgba(255,107,107,0.1));
+            border: 1.5px solid rgba(231,76,60,0.35);
+            border-radius: 16px;
+            padding: 24px;
+            margin: 32px 0;
+        }
+        .avoidant-widget-head {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .avoidant-widget-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(231,76,60,0.25);
+            border: 1px solid rgba(255,107,107,0.3);
+            color: #fecdd3;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+        .avoidant-widget-head h3 {
+            font-size: 20px;
+            color: var(--primary-light);
+            margin: 0 0 6px;
+        }
+        .avoidant-widget-head p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+        .avoidant-checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .avoidant-check-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(15,12,31,0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            min-height: 48px;
+            touch-action: manipulation;
+            transition: all 0.2s;
+        }
+        .avoidant-check-item:hover {
+            border-color: var(--primary-light);
+            background: rgba(231,76,60,0.12);
+        }
+        .avoidant-check-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #e74c3c;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .avoidant-check-item .chk-text {
+            font-size: 14.5px;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+        .avoidant-check-item.is-checked {
+            border-color: #ff6b6b;
+            background: rgba(231,76,60,0.2);
+        }
+        .avoidant-widget-feedback {
+            text-align: center;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-color);
+        }
+        .avoidant-feedback-score {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ff8787;
+            margin-bottom: 6px;
+        }
+        .avoidant-widget-feedback p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            min-height: 22px;
+        }
+        .avoidant-widget-cta {
+            width: 100%;
+            max-width: 380px;
+        }
+
         footer { text-align: center; padding: 32px 0; border-top: 1px solid var(--border-color); margin-top: 40px; }
         footer a { color: var(--primary-light); text-decoration: none; }
         blockquote { border-left: 3px solid var(--primary); padding-left: 16px; margin: 20px 0; font-style: italic; color: var(--text-secondary); }
@@ -366,11 +461,40 @@
                 <li><strong>Infidelity or non-monogamy:</strong> In extreme cases, avoiding commitment through multiple relationships</li>
             </ul>
 
-            <div class="cta-box">
-                <h3>Identify Your Attachment Patterns</h3>
-                <p>Understand the unconscious patterns driving your relationship behaviors</p>
-                <a href="/attachment-style/?lang=en" class="cta-btn">Free Attachment Style Assessment &rarr;</a>
-            </div>
+            <section class="avoidant-interactive-widget" id="avoidantQuickCheck" aria-label="Quick Avoidant Deactivation Self-Check">
+                <div class="avoidant-widget-head">
+                    <span class="avoidant-widget-badge">30-SECOND QUICK CHECK</span>
+                    <h3>Do You Show Avoidant Relationship Patterns?</h3>
+                    <p>Check the statements that describe your dating and relationship habits:</p>
+                </div>
+                <div class="avoidant-checklist" role="group" aria-label="Avoidant checklist">
+                    <label class="avoidant-check-item">
+                        <input type="checkbox" class="avoid-chk" value="1">
+                        <span class="chk-text">When someone gets emotionally close, my automatic instinct is to pull back or feel trapped.</span>
+                    </label>
+                    <label class="avoidant-check-item">
+                        <input type="checkbox" class="avoid-chk" value="1">
+                        <span class="chk-text">I take intense pride in solving all personal crises alone and rarely ask for help.</span>
+                    </label>
+                    <label class="avoidant-check-item">
+                        <input type="checkbox" class="avoid-chk" value="1">
+                        <span class="chk-text">During relationship conflict, my default defense is shutting down, leaving, or silence.</span>
+                    </label>
+                    <label class="avoidant-check-item">
+                        <input type="checkbox" class="avoid-chk" value="1">
+                        <span class="chk-text">I often fixate on minor partner flaws as a subconscious reason to maintain emotional distance.</span>
+                    </label>
+                </div>
+                <div class="avoidant-widget-feedback">
+                    <div class="avoidant-feedback-score">
+                        <span id="avoidCount">0</span> of 4 signs selected
+                    </div>
+                    <p id="avoidVerdictText">Select the items above that resonate with you to preview your attachment indication.</p>
+                    <a href="/attachment-style/?lang=en&start=1&source=avoidant_interactive_checklist" class="cta-btn avoidant-widget-cta" data-content-surface="intro_attachment_test" data-target-slug="attachment-style">
+                        Map Your 4-Quadrant Attachment Style &rarr;
+                    </a>
+                </div>
+            </section>
 
             <h2 id="section3">The Psychology of Intimacy Fear</h2>
             <p>Understanding <em>why</em> avoidants fear closeness requires examining the psychological mechanisms beneath the surface behaviors.</p>
@@ -740,5 +864,47 @@
     </script>
 
     <script src="/portal/js/cross-promo.js" defer></script>
+    <script>
+        (function() {
+            var chks = document.querySelectorAll('.avoid-chk');
+            var countEl = document.getElementById('avoidCount');
+            var verdictEl = document.getElementById('avoidVerdictText');
+            var tracked = false;
+            if (!chks.length || !countEl || !verdictEl) return;
+
+            function update() {
+                var checked = 0;
+                chks.forEach(function(c) {
+                    var parent = c.closest('.avoidant-check-item');
+                    if (c.checked) {
+                        checked++;
+                        if (parent) parent.classList.add('is-checked');
+                    } else {
+                        if (parent) parent.classList.remove('is-checked');
+                    }
+                });
+                countEl.textContent = String(checked);
+                if (checked === 0) {
+                    verdictEl.textContent = 'Select the items above that resonate with you to preview your attachment indication.';
+                } else if (checked === 1) {
+                    verdictEl.textContent = '🌱 Situational Guard: You show healthy autonomous boundaries with minimal intimacy fear.';
+                } else if (checked <= 3) {
+                    verdictEl.textContent = '⚡ Avoidant Deactivation Present: You show clear self-protective distance mechanisms when emotional closeness increases.';
+                } else {
+                    verdictEl.textContent = '🛡️ Core Dismissive-Avoidant Pattern: High attachment avoidance and strong defensive self-reliance detected.';
+                }
+                if (!tracked && checked > 0 && typeof window.gtag === 'function') {
+                    tracked = true;
+                    window.gtag('event', 'avoidant_checklist_interact', {
+                        event_category: 'engagement',
+                        checked_count: checked
+                    });
+                }
+            }
+            chks.forEach(function(c) {
+                c.addEventListener('change', update);
+            });
+        })();
+    </script>
 </body>
 </html>
