@@ -33,7 +33,7 @@
     <!-- Schema.org Article JSON-LD -->
 <!-- Schema.org FAQPage JSON-LD -->
 
-    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Blood Type Personality: A, B, AB, O Traits & Compatibility","description":"Take the free blood type personality test! Discover A, B, AB, O traits, hidden strengths & love compatibility. 10M+ fans in Japan & Korea — try it now.","image":"https://dopabrain.com/portal/img/og/blood-type.png","datePublished":"2026-02-14","dateModified":"2026-09-21","inLanguage":"en","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/en/blood-type-personality-guide.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog EN","item":"https://dopabrain.com/portal/blog/en/"},{"@type":"ListItem","position":3,"name":"Blood Type Personality: A, B, AB, O Traits & Compatibility","item":"https://dopabrain.com/portal/blog/en/blood-type-personality-guide.html"}]}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Blood Type Personality: A, B, AB, O Traits & Compatibility","description":"Take the free blood type personality test! Discover A, B, AB, O traits, hidden strengths & love compatibility. 10M+ fans in Japan & Korea — try it now.","image":"https://dopabrain.com/portal/img/og/blood-type.png","datePublished":"2026-02-14","dateModified":"2026-10-29","inLanguage":"en","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/en/blood-type-personality-guide.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog EN","item":"https://dopabrain.com/portal/blog/en/"},{"@type":"ListItem","position":3,"name":"Blood Type Personality: A, B, AB, O Traits & Compatibility","item":"https://dopabrain.com/portal/blog/en/blood-type-personality-guide.html"}]}]}</script>
 
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
@@ -744,6 +744,229 @@
             }
         }
 
+    
+        /* Interactive Blood Screener */
+        .blood-screener {
+            background: linear-gradient(145deg, rgba(231, 76, 60, 0.08) 0%, rgba(192, 57, 43, 0.04) 100%);
+            border: 1px solid rgba(231, 76, 60, 0.25);
+            border-radius: 16px;
+            padding: 28px 24px;
+            margin: 32px 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+        .screener-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .screener-badge {
+            display: inline-block;
+            background: rgba(231, 76, 60, 0.18);
+            color: var(--primary-light, #ec7063);
+            font-size: 0.85em;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+        }
+        .screener-header h3 {
+            font-size: 1.6em;
+            color: var(--text-primary, #f8f9fa);
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+        .screener-header p {
+            font-size: 0.95em;
+            color: var(--text-secondary, #b8bcc4);
+            margin: 0 auto;
+            max-width: 680px;
+        }
+        .screener-selector-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        .selector-col {
+            background: var(--card-bg, rgba(231, 76, 60, 0.06));
+            border: 1px solid var(--border-color, rgba(231, 76, 60, 0.12));
+            padding: 16px;
+            border-radius: 12px;
+        }
+        .selector-label {
+            display: block;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: var(--text-secondary, #b8bcc4);
+            margin-bottom: 10px;
+        }
+        .blood-btn-group {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        .blood-btn {
+            min-height: 44px;
+            min-width: 44px;
+            padding: 8px 4px;
+            border-radius: 8px;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-primary, #f8f9fa);
+            font-weight: 600;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
+        }
+        .blood-btn:hover {
+            background: rgba(231, 76, 60, 0.15);
+            border-color: var(--primary, #e74c3c);
+        }
+        .blood-btn.active {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: #ffffff;
+            border-color: #e74c3c;
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.35);
+        }
+        .screener-result-card {
+            background: var(--bg-light, #1a1a2e);
+            border: 1px solid var(--border-color, rgba(231, 76, 60, 0.2));
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+        .result-score-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(231, 76, 60, 0.15);
+            margin-bottom: 18px;
+        }
+        .pair-badge {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary-light, #ec7063);
+        }
+        .pair-rating {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(231, 76, 60, 0.12);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(231, 76, 60, 0.25);
+        }
+        .rating-percent {
+            font-size: 1.15em;
+            font-weight: 800;
+            color: #ff7675;
+        }
+        .rating-tag {
+            font-size: 0.85em;
+            font-weight: 600;
+            color: var(--text-secondary, #b8bcc4);
+        }
+        .result-headline {
+            font-size: 1.25em;
+            font-weight: 700;
+            color: var(--text-primary, #f8f9fa);
+            margin-bottom: 10px;
+        }
+        .result-desc {
+            font-size: 0.95em;
+            line-height: 1.7;
+            color: var(--text-secondary, #b8bcc4);
+            margin-bottom: 18px;
+        }
+        .result-breakdown-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .breakdown-box {
+            background: rgba(231, 76, 60, 0.04);
+            border: 1px solid rgba(231, 76, 60, 0.12);
+            border-radius: 10px;
+            padding: 14px;
+        }
+        .breakdown-box h4 {
+            font-size: 0.95em;
+            color: var(--primary-light, #ec7063);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .breakdown-box p {
+            font-size: 0.88em;
+            line-height: 1.6;
+            margin: 0;
+            color: var(--text-secondary, #b8bcc4);
+        }
+        .screener-cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(231, 76, 60, 0.15);
+        }
+        .screener-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.92em;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+        .screener-action-btn.primary {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(231, 76, 60, 0.3);
+        }
+        .screener-action-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(231, 76, 60, 0.4);
+            text-decoration: none;
+        }
+        .screener-action-btn.secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary, #f8f9fa);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .screener-action-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+        }
+        @media (max-width: 680px) {
+            .screener-selector-group {
+                grid-template-columns: 1fr;
+            }
+            .result-breakdown-grid {
+                grid-template-columns: 1fr;
+            }
+            .screener-action-btn {
+                width: 100%;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -765,7 +988,7 @@
       <strong>Future Self Test</strong>
       <span>Reframe life goals & balance</span>
     </a>
-    <a href="/future-self/?lang=en" class="quick-card" data-content-surface="quick_brain_type" data-target-slug="brain-type">
+    <a href="/brain-type/?lang=en" class="quick-card" data-content-surface="quick_brain_type" data-target-slug="brain-type">
       <strong>Brain Type Test</strong>
       <span>Explore cognitive rhythm & style</span>
     </a>
@@ -802,6 +1025,40 @@
             <div class="intro-box">
                 <strong>How it works:</strong> Blood type personality theory assigns each ABO group a distinct set of character traits. Type A individuals tend to be organized and cautious. Type B people are creative and independent. Type O is confident and social. Type AB combines analytical thinking with emotional complexity. While not scientifically proven as a hard predictor, millions of people in Japan, Korea, and worldwide find these profiles surprisingly accurate and useful for self-reflection.
             </div>
+
+            <!-- 30-Second Interactive Blood Type & Chemistry Screener -->
+            <section class="blood-screener" id="blood-interactive-screener" aria-labelledby="screener-heading">
+                <div class="screener-header">
+                    <div class="screener-badge">⚡ 30-Second Interactive Screener</div>
+                    <h3 id="screener-heading">Instant Blood Type & Romantic Chemistry Profiler</h3>
+                    <p>Select your blood type and a partner/friend's blood type to reveal real-time personality archetypes, interpersonal friction points, and relationship chemistry.</p>
+                </div>
+                <div class="screener-selector-group">
+                    <div class="selector-col">
+                        <label class="selector-label" id="label-user-type">Your Blood Type:</label>
+                        <div class="blood-btn-group" role="radiogroup" aria-labelledby="label-user-type" id="user-type-group">
+                            <button type="button" class="blood-btn active" data-type="A" aria-checked="true" role="radio">Type A</button>
+                            <button type="button" class="blood-btn" data-type="B" aria-checked="false" role="radio">Type B</button>
+                            <button type="button" class="blood-btn" data-type="O" aria-checked="false" role="radio">Type O</button>
+                            <button type="button" class="blood-btn" data-type="AB" aria-checked="false" role="radio">Type AB</button>
+                        </div>
+                    </div>
+                    <div class="selector-col">
+                        <label class="selector-label" id="label-partner-type">Partner / Friend's Blood Type:</label>
+                        <div class="blood-btn-group" role="radiogroup" aria-labelledby="label-partner-type" id="partner-type-group">
+                            <button type="button" class="blood-btn" data-type="A" aria-checked="false" role="radio">Type A</button>
+                            <button type="button" class="blood-btn" data-type="B" aria-checked="false" role="radio">Type B</button>
+                            <button type="button" class="blood-btn active" data-type="O" aria-checked="true" role="radio">Type O</button>
+                            <button type="button" class="blood-btn" data-type="AB" aria-checked="false" role="radio">Type AB</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="screener-result-card" id="screener-result-card">
+                    <!-- Populated dynamically by JS -->
+                </div>
+            </section>
+
 
             <h2>The Four Blood Types</h2>
 
@@ -1195,5 +1452,97 @@
     </script>
 
     <script src="/portal/js/cross-promo.js" defer></script>
+
+    <!-- Interactive Blood Screener Logic -->
+    <script>
+    (function initBloodScreener() {
+        var PAIR_DATA = {
+            'A-O': { score: 95, tag: 'Harmonious Balance (Golden Match)', headline: 'Type A & Type O: The Classic Complementary Bond', desc: 'Type O provides steady confidence and warmth that grounds Type A\'s conscientious overthinking. Type A offers deep attentiveness and loyalty that anchors Type O\'s adventurous drive.', strength: 'Type O eases A\'s inner tension; A appreciates O\'s decisive leadership.', friction: 'O can occasionally seem too blunt or careless, while A can seem overly cautious or rigid.', ctaPrimary: 'Explore Love Language Compatibility', ctaPrimaryUrl: '/love-language/?lang=en', ctaSecondary: 'HSP Sensitivity Assessment', ctaSecondaryUrl: '/hsp-test/?lang=en' },
+            'B-O': { score: 92, tag: 'Dynamic Fire & Optimism', headline: 'Type B & Type O: High Energy & Creative Spark', desc: 'Both types are outgoing, passionate, and open-minded. Type O\'s natural protective instinct creates a safe playground for Type B\'s spontaneous creativity.', strength: 'Unmatched fun, shared social energy, and minimal passive-aggressive hesitation.', friction: 'Both can be headstrong or stubborn during disagreements; neither likes being micromanaged.', ctaPrimary: 'Explore Love Language Compatibility', ctaPrimaryUrl: '/love-language/?lang=en', ctaSecondary: 'Brain Type & Cognitive Style', ctaSecondaryUrl: '/brain-type/?lang=en' },
+            'A-A': { score: 88, tag: 'Quiet Understanding', headline: 'Type A & Type A: Empathic Stability & Shared Values', desc: 'Mutual respect, shared etiquette, and intuitive emotional awareness. Both partners take relationships seriously and value consistent reliability.', strength: 'Tremendous loyalty, high mutual trust, and shared dedication to home and relationship harmony.', friction: 'Risk of unexpressed grievances; both may bottle up tension to avoid rock-the-boat confrontation.', ctaPrimary: 'Take the HSP Sensitivity Test', ctaPrimaryUrl: '/hsp-test/?lang=en', ctaSecondary: 'Stress Level Check', ctaSecondaryUrl: '/stress-check/?lang=en' },
+            'A-AB': { score: 86, tag: 'Intellectual Synergy', headline: 'Type A & Type AB: Thoughtful Respect & Deep Conversation', desc: 'AB\'s analytical and calm perspective fascinates A, while A\'s structured loyalty reassures AB\'s emotional reserve.', strength: 'Great intellectual partnership; deep mutual appreciation for personal space and calm environments.', friction: 'AB can sometimes appear emotionally aloof, leaving A wondering about their true emotional stance.', ctaPrimary: 'Love Language Assessment', ctaPrimaryUrl: '/love-language/?lang=en', ctaSecondary: 'Future Self Trajectory', ctaSecondaryUrl: '/future-self/?lang=en' },
+            'B-AB': { score: 84, tag: 'Creative Freedom Duo', headline: 'Type B & Type AB: Unconventional Minds & Zero Pressure', desc: 'Both celebrate individuality and march to their own beat. AB finds B\'s candor refreshing, while B admires AB\'s sharp intellect.', strength: 'No rigid social masks; total freedom to be eccentric, creative, and authentic.', friction: 'Can suffer from emotional detachment or erratic communication if neither takes the lead in relationship maintenance.', ctaPrimary: 'Brain Type Test', ctaPrimaryUrl: '/brain-type/?lang=en', ctaSecondary: 'Sensory Reset Room', ctaSecondaryUrl: '/hsp-test/reset.html?lang=en' },
+            'O-O': { score: 81, tag: 'Powerhouse Partnership', headline: 'Type O & Type O: Direct Passion & Collaborative Power', desc: 'Two natural leaders who respect each other\'s strength and drive. Honesty and clarity are high from day one.', strength: 'Tremendous combined momentum, shared ambition, and straightforward conflict resolution.', friction: 'Ego collisions when both want control; requires clear domain separation and active compromise.', ctaPrimary: 'Stress Level Check', ctaPrimaryUrl: '/stress-check/?lang=en', ctaSecondary: 'Love Language Test', ctaSecondaryUrl: '/love-language/?lang=en' },
+            'AB-AB': { score: 79, tag: 'Nuanced Soul Connection', headline: 'Type AB & Type AB: Analytical Depth & Quiet Space', desc: 'A rare pairing where both share complex inner lives. They respect boundaries intuitively and never suffocate each other.', strength: 'Zero need to explain complex emotions; profound intellectual and creative resonance.', friction: 'Both may wait for the other to make the first emotional move, resulting in accidental emotional distancing.', ctaPrimary: 'HSP Sensitivity Test', ctaPrimaryUrl: '/hsp-test/?lang=en', ctaSecondary: 'Tactical Coach Heuristics', ctaSecondaryUrl: '/puzzle-2048/coach.html?lang=en' },
+            'O-AB': { score: 78, tag: 'Pragmatic & Complex', headline: 'Type O & Type AB: Grounded Force Meets Analytical Nuance', desc: 'Type O\'s directness helps pull Type AB out of cerebral paralysis, while AB provides deep tactical insights that O admires.', strength: 'Well-rounded problem-solving duo; O drives execution while AB refines the strategy.', friction: 'O\'s straightforward manner can feel intrusive to AB\'s privacy; AB\'s shifting moods can confuse O.', ctaPrimary: 'Love Language Assessment', ctaPrimaryUrl: '/love-language/?lang=en', ctaSecondary: 'Stress Resilience Check', ctaSecondaryUrl: '/stress-check/?lang=en' },
+            'B-B': { score: 76, tag: 'Whirlwind Spontaneity', headline: 'Type B & Type B: Limitless Playfulness & Adventure', desc: 'Every day is a new adventure. Neither holds grudges, and both prioritize laughter, curiosity, and living in the moment.', strength: 'Instant fun, zero boring routines, and continuous mutual inspiration.', friction: 'Who will remember the deadlines? Logistics and emotional grounding require deliberate effort.', ctaPrimary: 'Brain Type Test', ctaPrimaryUrl: '/brain-type/?lang=en', ctaSecondary: 'Reaction Reflex Test', ctaSecondaryUrl: '/reaction-test/?lang=en' },
+            'A-B': { score: 74, tag: 'Magnetic Contrasts', headline: 'Type A & Type B: Opposites Attract & Transform', desc: 'A brings stability, conscientiousness, and warmth; B brings spontaneity, novelty, and lightness. A teaches B focus; B teaches A to loosen up.', strength: 'Massive personal growth potential; each provides the exact dimension the other lacks.', friction: 'A\'s need for planning clashes with B\'s dislike of rigid rules; requires patience and mutual tolerance.', ctaPrimary: 'Love Language Communication', ctaPrimaryUrl: '/love-language/?lang=en', ctaSecondary: 'Stress Management Check', ctaSecondaryUrl: '/stress-check/?lang=en' }
+        };
+
+        var userType = 'A';
+        var partnerType = 'O';
+
+        function getPairData(t1, t2) {
+            var key1 = t1 + '-' + t2;
+            var key2 = t2 + '-' + t1;
+            return PAIR_DATA[key1] || PAIR_DATA[key2] || PAIR_DATA['A-O'];
+        }
+
+        function renderResult() {
+            var card = document.getElementById('screener-result-card');
+            if (!card) return;
+            var data = getPairData(userType, partnerType);
+
+            card.innerHTML = 
+                '<div class="result-score-banner">' +
+                    '<div class="pair-badge">Type ' + userType + ' + Type ' + partnerType + '</div>' +
+                    '<div class="pair-rating">' +
+                        '<span class="rating-percent">' + data.score + '%</span>' +
+                        '<span class="rating-tag">' + data.tag + '</span>' +
+                    '</div>' +
+                '</div>' +
+                '<h4 class="result-headline">' + data.headline + '</h4>' +
+                '<p class="result-desc">' + data.desc + '</p>' +
+                '<div class="result-breakdown-grid">' +
+                    '<div class="breakdown-box">' +
+                        '<h4>✨ Core Chemistry Strength</h4>' +
+                        '<p>' + data.strength + '</p>' +
+                    '</div>' +
+                    '<div class="breakdown-box">' +
+                        '<h4>⚠️ Communication Blindspot</h4>' +
+                        '<p>' + data.friction + '</p>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="screener-cta-row">' +
+                    '<a href="' + data.ctaPrimaryUrl + '" class="screener-action-btn primary" data-content-surface="screener_primary">' + data.ctaPrimary + ' →</a>' +
+                    '<a href="' + data.ctaSecondaryUrl + '" class="screener-action-btn secondary" data-content-surface="screener_secondary">' + data.ctaSecondary + ' →</a>' +
+                '</div>';
+        }
+
+        function bindGroup(groupId, isUser) {
+            var group = document.getElementById(groupId);
+            if (!group) return;
+            var buttons = group.querySelectorAll('.blood-btn');
+            buttons.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    buttons.forEach(function(b) { 
+                        b.classList.remove('active');
+                        b.setAttribute('aria-checked', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-checked', 'true');
+                    var selected = this.getAttribute('data-type');
+                    if (isUser) {
+                        userType = selected;
+                    } else {
+                        partnerType = selected;
+                    }
+                    if (typeof trackContentEvent === 'function') {
+                        trackContentEvent('content_interaction', {
+                            target_type: isUser ? 'user_blood_type' : 'partner_blood_type',
+                            action: 'select_blood_type'
+                        });
+                    }
+                    renderResult();
+                });
+            });
+        }
+
+        bindGroup('user-type-group', true);
+        bindGroup('partner-type-group', false);
+        renderResult();
+    })();
+    </script>
+
 </body>
 </html>

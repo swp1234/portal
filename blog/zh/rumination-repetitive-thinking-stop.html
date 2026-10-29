@@ -49,7 +49,7 @@
         "description": "反刍思维让你陷入重复性过度思考的循环中。了解大脑为何反刍，以及10种循证策略，帮助你在2026年彻底打破这一循环。",
         "image": "https://dopabrain.com/portal/img/og/overthinker-test.png",
         "datePublished": "2026-06-11",
-        "dateModified": "2026-10-25",
+        "dateModified": "2026-10-29",
         "inLanguage": "zh",
         "author": {
           "@type": "Organization",
@@ -83,7 +83,7 @@
           {
             "@type": "ListItem",
             "position": 2,
-            "name": "??",
+            "name": "博客",
             "item": "https://dopabrain.com/portal/blog/zh/"
           },
           {
@@ -209,6 +209,206 @@
         .quick-card span { display: block; color: var(--text-secondary); font-size: 13px; line-height: 1.45; }
         .data-table, table { max-width: 100%; overflow-x: auto; }
         @media (max-width: 560px) { .quick-grid { grid-template-columns: 1fr; } .quick-card { min-height: 84px; } }
+    
+        /* 30-Second Interactive Rumination Screener */
+        .rumination-screener {
+            background: linear-gradient(145deg, rgba(99, 102, 241, 0.12) 0%, rgba(129, 140, 248, 0.05) 100%);
+            border: 1.5px solid rgba(99, 102, 241, 0.35);
+            border-radius: 16px;
+            padding: 28px 22px;
+            margin: 32px 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+        .rumination-screener-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .r-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary-light, #818cf8);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(99, 102, 241, 0.35);
+        }
+        .rumination-screener-header h3 {
+            font-size: 22px;
+            color: var(--text-primary, #f8f8f8);
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+        .rumination-screener-header p {
+            font-size: 14.5px;
+            color: var(--text-secondary, #a8a8a0);
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .r-step-group {
+            margin-bottom: 20px;
+        }
+        .r-step-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-light, #818cf8);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .r-pill-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .r-pill-btn {
+            min-height: 48px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-primary, #f8f8f8);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            text-align: left;
+            line-height: 1.4;
+            outline: none;
+        }
+        .r-pill-btn:hover {
+            background: rgba(99, 102, 241, 0.15);
+            border-color: var(--primary-light, #818cf8);
+        }
+        .r-pill-btn.active {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: #ffffff;
+            border-color: #818cf8;
+            font-weight: 600;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+        }
+        .r-result-box {
+            background: var(--bg-light, #1a1a1a);
+            border: 1px solid var(--border-color, rgba(99, 102, 241, 0.25));
+            border-radius: 14px;
+            padding: 22px;
+            margin-top: 22px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .r-result-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.18);
+            margin-bottom: 16px;
+        }
+        .r-result-tag {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--primary-light, #818cf8);
+        }
+        .r-result-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(99, 102, 241, 0.15);
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #c7d2fe;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+        .r-mechanism {
+            font-size: 14.5px;
+            line-height: 1.7;
+            color: var(--text-secondary, #a8a8a0);
+            margin-bottom: 18px;
+        }
+        .r-breakout-card {
+            background: rgba(99, 102, 241, 0.06);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        .r-breakout-card h4 {
+            color: var(--primary-light, #818cf8);
+            font-size: 15px;
+            margin: 0 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .r-breakout-card ol {
+            margin: 0 0 0 20px;
+            color: var(--text-secondary, #a8a8a0);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .r-breakout-card li {
+            margin-bottom: 6px;
+        }
+        .r-action-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(99, 102, 241, 0.18);
+        }
+        .r-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+        .r-action-btn.primary {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+        }
+        .r-action-btn.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+            text-decoration: none;
+        }
+        .r-action-btn.secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary, #f8f8f8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .r-action-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(99, 102, 241, 0.4);
+            text-decoration: none;
+        }
+        @media (max-width: 580px) {
+            .r-pill-grid {
+                grid-template-columns: 1fr;
+            }
+            .r-action-btn {
+                width: 100%;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -258,11 +458,56 @@
         </a>
                 </div>
             </section>
-<div class="cta-box">
-                <h3>你是否陷入了过度思考的循环？</h3>
-                <p>20道情景问题，揭示你的过度思考模式和严重程度</p>
-                <a href="/stress-check/?lang=zh" class="cta-btn" data-content-surface="cta">参加过度思考者测试 &rarr;</a>
-            </div>
+
+            <!-- 30-Second Interactive Rumination Screener -->
+            <section class="rumination-screener" id="rumination-interactive-screener" aria-labelledby="r-screener-heading">
+                <div class="rumination-screener-header">
+                    <div class="r-badge">⚡ 30秒认知自测与即时阻断</div>
+                    <h3 id="r-screener-heading">反刍思维模式识别与个性化打破方案</h3>
+                    <p>选择你的主要反刍触发情境与当前的循环模式，获取针对性的神经学机制解析与即时阻断指南。</p>
+                </div>
+
+                <div class="r-step-group">
+                    <div class="r-step-title" id="label-r-trigger">第一步：选择你的主要反刍触发源</div>
+                    <div class="r-pill-grid" role="radiogroup" aria-labelledby="label-r-trigger" id="r-trigger-group">
+                        <button type="button" class="r-pill-btn active" data-trigger="social" aria-checked="true" role="radio">
+                            💬 社交复盘：反复推敲某句话或表现
+                        </button>
+                        <button type="button" class="r-pill-btn" data-trigger="blame" aria-checked="false" role="radio">
+                            🌧️ 遗憾自责：对过去失误深感自责内疚
+                        </button>
+                        <button type="button" class="r-pill-btn" data-trigger="future" aria-checked="false" role="radio">
+                            ⚡ 灾难预演：对未决事件过度担忧推演
+                        </button>
+                        <button type="button" class="r-pill-btn" data-trigger="exhaustion" aria-checked="false" role="radio">
+                            🔋 精神耗竭：无明确原因但大脑停不下来
+                        </button>
+                    </div>
+                </div>
+
+                <div class="r-step-group">
+                    <div class="r-step-title" id="label-r-pattern">第二步：选择当前最典型的循环状态</div>
+                    <div class="r-pill-grid" role="radiogroup" aria-labelledby="label-r-pattern" id="r-pattern-group">
+                        <button type="button" class="r-pill-btn active" data-pattern="night" aria-checked="true" role="radio">
+                            🌙 深夜失眠：闭上眼睛大脑极度清醒回放
+                        </button>
+                        <button type="button" class="r-pill-btn" data-pattern="day" aria-checked="false" role="radio">
+                            🧭 白天走神：工作/学习中反复陷入死胡同
+                        </button>
+                        <button type="button" class="r-pill-btn" data-pattern="somatic" aria-checked="false" role="radio">
+                            🫀 躯体紧绷：胸口发闷、浅呼吸或下颌紧咬
+                        </button>
+                        <button type="button" class="r-pill-btn" data-pattern="meta" aria-checked="false" role="radio">
+                            🔄 元反刍循环：因"自己在反刍"而更加焦虑
+                        </button>
+                    </div>
+                </div>
+
+                <div class="r-result-box" id="r-result-box">
+                    <!-- Populated dynamically by JS -->
+                </div>
+            </section>
+
 
             <nav class="toc">
                 <h3>目录</h3>
@@ -642,5 +887,141 @@
 
     <div style="max-width:760px;margin:20px auto;padding:0 20px">
         </div>
+
+    <!-- Interactive Rumination Screener Logic -->
+    <script>
+    (function initRuminationScreener() {
+        var RUMINATION_DATA = {
+            'social': {
+                tag: '社交评价型反刍 (Social Evaluative Loop)',
+                level: '杏仁核警报 + 负面注意力偏倚',
+                mechanism: '大脑在回放社交细节时，默认模式网络（DMN）将他人的微表情或迟疑误判为对你的拒绝威胁。这种反刍本质上是大脑在试图"修正"过去的互动以消除被孤立的恐惧。',
+                steps: [
+                    '<strong>具身中断：</strong>站立并用冷水冲洗手腕或轻拍面颊，打破低刺激下的社交回想回路。',
+                    '<strong>认知解离：</strong>默念："我注意到我的大脑正在编造『所有人都在评判我』的故事，这是想法，不是客观事实。"',
+                    '<strong>落地实践：</strong>使用 5-4-3-2-1 感官着陆技术将注意力从头脑拉回物理环境。'
+                ],
+                primaryCta: '立即练习 5-4-3-2-1 感官着陆法',
+                primaryUrl: '/portal/tools/grounding-exercise.html?lang=zh&source=zh_rumination_screener',
+                secondaryCta: '自测压力与耗竭负荷',
+                secondaryUrl: '/stress-check/?lang=zh&source=zh_rumination_screener'
+            },
+            'blame': {
+                tag: '完美内疚型反刍 (Self-Critical Guilt Loop)',
+                level: '严苛自我审判 + 蔡加尼克未决效应',
+                mechanism: '大脑将未达标准的失误视为未闭合的认知循环（蔡加尼克效应），强迫你一次次重新审视。然而心理回放无法逆转时间，反而不断强化自责神经回路。',
+                steps: [
+                    '<strong>自我同情提问：</strong>"如果我最好的朋友犯了完全相同的错误，我会用如此苛刻的话责备他们吗？"',
+                    '<strong>行动转换：</strong>列出一件今天能做的微小弥补动作（或明确接受现实），为未闭合的循环画上句号。',
+                    '<strong>神经舒缓：</strong>进行 4-7-8 深度横膈膜呼吸，激活迷走神经副交感分支。'
+                ],
+                primaryCta: '自测压力与情绪倦怠程度',
+                primaryUrl: '/stress-check/?lang=zh&source=zh_rumination_screener',
+                secondaryCta: '测算工作记忆与认知负荷',
+                secondaryUrl: '/portal/tools/cognitive-load-calculator.html?lang=zh&source=zh_rumination_screener'
+            },
+            'future': {
+                tag: '灾难控制型反刍 (Catastrophic Future Looping)',
+                level: '不确定性不耐受 + 虚假控制幻觉',
+                mechanism: '对未来的不可预测性产生巨大焦虑，大脑试图通过"在脑海中演练所有糟糕可能"来获得微弱的掌控感。这种反刍不仅无法预防风险，反而持续削弱执行功能。',
+                steps: [
+                    '<strong>现实检验：</strong>问自己："过去20分钟的推演，是否产生了任何新的事实或可行计划？"',
+                    '<strong>使用决策矩阵：</strong>将纠结的选项写在纸上或使用决策工具，用结构化权重代替无限内耗。',
+                    '<strong>忧虑推迟窗口：</strong>在手机备忘录写下："在下午5点再思考此问题20分钟"，即刻重定向当前注意力。'
+                ],
+                primaryCta: '打开 4维决策矩阵工具',
+                primaryUrl: '/portal/tools/decision-matrix.html?lang=zh&source=zh_rumination_screener',
+                secondaryCta: '全面评估神经应激水平',
+                secondaryUrl: '/stress-check/?lang=zh&source=zh_rumination_screener'
+            },
+            'exhaustion': {
+                tag: '超载神经倦怠型反刍 (Exhaustion & Cognitive Fatigue)',
+                level: '交感神经过载 + 恢复系统缺失',
+                mechanism: '当身心长期处于高负荷状态，前额叶皮层对思维的抑制能力显著下降，导致默认模式网络失控游荡。此时的过度思考不是问题本身，而是大脑极度疲劳的警报。',
+                steps: [
+                    '<strong>立即物理脱离：</strong>离开当前房间或工位，禁止被动刷手机，仰望远方开阔视野。',
+                    '<strong>感官感应锚定：</strong>找到5种颜色、4种质感，迫使感觉运动皮层重新接管认知带宽。',
+                    '<strong>睡眠卫生保护：</strong>绝对禁止在床上进行反刍思考，建立床铺与深度休眠的唯一连接。'
+                ],
+                primaryCta: '测算认知负荷与摩擦指数',
+                primaryUrl: '/portal/tools/cognitive-load-calculator.html?lang=zh&source=zh_rumination_screener',
+                secondaryCta: '查看压力与身心过载指数',
+                secondaryUrl: '/stress-check/?lang=zh&source=zh_rumination_screener'
+            }
+        };
+
+        var PATTERN_MODIFIERS = {
+            'night': '【夜间失眠叠加】夜间缺乏外部刺激，前额叶控制力最弱。建议立即起身离开卧室，直到产生困意。',
+            'day': '【日间工作走神】注意力碎片化加剧反刍。建议采用25分钟番茄时段配合行为激活。',
+            'somatic': '【躯体化紧绷】压力已沉淀至迷走神经系统。需优先通过深长呼气与肌肉渐进放松化解身体防御。',
+            'meta': '【元反刍升级】停止指责自己在反刍。承认"反刍是正常的人类防御习惯"，直接跳出评判层。'
+        };
+
+        var currentTrigger = 'social';
+        var currentPattern = 'night';
+
+        function renderRuminationResult() {
+            var box = document.getElementById('r-result-box');
+            if (!box) return;
+            var data = RUMINATION_DATA[currentTrigger] || RUMINATION_DATA['social'];
+            var patternNote = PATTERN_MODIFIERS[currentPattern] || PATTERN_MODIFIERS['night'];
+
+            box.innerHTML = 
+                '<div class="r-result-header">' +
+                    '<div class="r-result-tag">' + data.tag + '</div>' +
+                    '<div class="r-result-indicator">⚡ ' + data.level + '</div>' +
+                '</div>' +
+                '<p class="r-mechanism">' + data.mechanism + '</p>' +
+                '<div class="r-breakout-card">' +
+                    '<h4>🎯 针对性即时阻断三步法</h4>' +
+                    '<ol>' +
+                        '<li>' + data.steps[0] + '</li>' +
+                        '<li>' + data.steps[1] + '</li>' +
+                        '<li>' + data.steps[2] + '</li>' +
+                    '</ol>' +
+                    '<div style="margin-top:12px;font-size:13.5px;color:var(--primary-light,#818cf8);line-height:1.6;border-top:1px dashed rgba(99,102,241,0.25);padding-top:10px;">' +
+                        patternNote +
+                    '</div>' +
+                '</div>' +
+                '<div class="r-action-group">' +
+                    '<a href="' + data.primaryUrl + '" class="r-action-btn primary" data-content-surface="screener_primary">' + data.primaryCta + ' &rarr;</a>' +
+                    '<a href="' + data.secondaryUrl + '" class="r-action-btn secondary" data-content-surface="screener_secondary">' + data.secondaryCta + ' &rarr;</a>' +
+                '</div>';
+        }
+
+        function bindGroup(groupId, isTrigger) {
+            var group = document.getElementById(groupId);
+            if (!group) return;
+            var buttons = group.querySelectorAll('.r-pill-btn');
+            buttons.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    buttons.forEach(function(b) {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-checked', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-checked', 'true');
+                    if (isTrigger) {
+                        currentTrigger = this.getAttribute('data-trigger');
+                    } else {
+                        currentPattern = this.getAttribute('data-pattern');
+                    }
+                    if (typeof sendContentEvent === 'function') {
+                        sendContentEvent('screener_option_select', {
+                            selector_type: isTrigger ? 'trigger' : 'pattern',
+                            target_key: isTrigger ? currentTrigger : currentPattern
+                        });
+                    }
+                    renderRuminationResult();
+                });
+            });
+        }
+
+        bindGroup('r-trigger-group', true);
+        bindGroup('r-pattern-group', false);
+        renderRuminationResult();
+    })();
+    </script>
+
 </body>
 </html>
