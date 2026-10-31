@@ -76,6 +76,28 @@
             .cta-actions { align-items: stretch; flex-direction: column; }
             .cta-btn { width: 100%; }
         }
+    
+        /* 30-Second Interactive CRO Screener */
+        .screener-box { background: linear-gradient(145deg, rgba(124,58,237,0.12), rgba(15,23,42,0.95)); border: 1.5px solid var(--border-color, rgba(167,139,250,0.35)); border-radius: 18px; padding: 26px 22px; margin: 32px 0; }
+        .screener-head { text-align: center; margin-bottom: 18px; }
+        .screener-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; background: rgba(255,255,255,0.1); border: 1px solid var(--border-color, rgba(255,255,255,0.25)); color: var(--accent, #e2e8f0); font-size: 11px; font-weight: 800; letter-spacing: .08em; margin-bottom: 8px; }
+        .screener-head h3 { margin: 6px 0 8px; color: var(--primary-light, #a78bfa); font-size: 1.25rem; font-weight: 700; }
+        .screener-head p { margin: 0; color: var(--text-secondary, #94a3b8); font-size: 0.92rem; }
+        .screener-list { display: flex; flex-direction: column; gap: 10px; margin: 18px 0; }
+        .screener-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: rgba(30,41,59,0.7); border: 1px solid var(--border-color, rgba(255,255,255,0.18)); border-radius: 12px; cursor: pointer; min-height: 48px; touch-action: manipulation; transition: all .2s; }
+        .screener-item:hover { border-color: var(--primary-light, #a78bfa); background: rgba(255,255,255,0.08); }
+        .screener-item.is-checked { border-color: var(--primary-light, #a78bfa); background: rgba(124,58,237,0.22); }
+        .screener-item input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--primary, #7c3aed); cursor: pointer; flex-shrink: 0; }
+        .screener-item .screener-text { font-size: 14.5px; color: var(--text-primary, #f0f0f8); line-height: 1.4; text-align: left; }
+        .screener-feedback { text-align: center; padding-top: 16px; border-top: 1px solid var(--border-color, rgba(255,255,255,0.18)); }
+        .screener-score { font-size: 15px; font-weight: 700; color: var(--secondary, #c4b5fd); margin-bottom: 6px; }
+        .screener-feedback p { font-size: 14px; color: var(--text-secondary, #94a3b8); margin-bottom: 16px; min-height: 20px; }
+        .screener-actions { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .screener-btn { display: inline-flex; align-items: center; justify-content: center; width: 100%; max-width: 380px; min-height: 48px; padding: 12px 24px; background: linear-gradient(135deg, var(--primary, #7c3aed), var(--primary-light, #8b5cf6)); color: #fff; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 15px; box-shadow: 0 4px 14px rgba(0,0,0,0.3); transition: all 0.25s; }
+        .screener-btn:hover { transform: translateY(-1px); opacity: 0.95; color: #fff; }
+        .screener-sub-btn { display: inline-block; padding: 10px 16px; color: var(--primary-light, #a78bfa); text-decoration: none; font-size: 13.5px; font-weight: 600; min-height: 44px; line-height: 24px; }
+        .screener-sub-btn:hover { text-decoration: underline; }
+
     </style>
 
     <script type="application/ld+json">
@@ -88,7 +110,7 @@
           "description": "A careful guide to common K-Pop role labels, how their use varies by group, and how to verify group-specific claims.",
           "image": "https://dopabrain.com/portal/icon-512.svg",
           "datePublished": "2026-02-10",
-          "dateModified": "2026-08-29",
+          "dateModified": "2026-10-31",
           "inLanguage": "en",
           "author": { "@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com" },
           "publisher": { "@type": "Organization", "name": "DopaBrain", "url": "https://dopabrain.com", "logo": { "@type": "ImageObject", "url": "https://dopabrain.com/portal/icon-512.svg" } },
@@ -144,6 +166,42 @@
                 <div class="note">
                     <p><strong>Official-profile check, 2026-08-29:</strong> the current official profile pages for BTS, BLACKPINK, TWICE, and Stray Kids list members but do not display fixed main/lead position labels. That limited snapshot shows why a current source matters; it does not mean no K-Pop group uses formal positions.</p>
                 </div>
+
+                <div class="screener-box" id="kpopRoleScreener">
+      <div class="screener-head">
+        <span class="screener-badge">30-SECOND K-POP POSITION MATCHER</span>
+        <h3>Which K-Pop Group Role Matches Your Stage Energy?</h3>
+        <p>Check the performance and team strengths that fit you best:</p>
+      </div>
+      <div class="screener-list" role="group" aria-label="30-SECOND K-POP POSITION MATCHER">
+        <label class="screener-item">
+          <input type="checkbox" class="kpop-screener-chk" value="1">
+          <span class="screener-text"><strong>High-Note &amp; Chorus Anchor (Vocal):</strong> You gravitate toward emotional melodies, ad-libs, and carrying the sonic core of a track.</span>
+        </label>
+        <label class="screener-item">
+          <input type="checkbox" class="kpop-screener-chk" value="1">
+          <span class="screener-text"><strong>Choreography &amp; Formation Precision (Dance):</strong> You notice rhythm breaks immediately and love leading high-impact movement transitions.</span>
+        </label>
+        <label class="screener-item">
+          <input type="checkbox" class="kpop-screener-chk" value="1">
+          <span class="screener-text"><strong>Flow, Verse Writing &amp; Charisma (Rap):</strong> You bring rhythmic punch, lyrical attitude, and contrast that shifts the energy of a song.</span>
+        </label>
+        <label class="screener-item">
+          <input type="checkbox" class="kpop-screener-chk" value="1">
+          <span class="screener-text"><strong>Team Glue &amp; Spotlight Magnet (Leader / Center):</strong> You naturally organize group dynamics or command visual attention during key killing parts.</span>
+        </label>
+      </div>
+      <div class="screener-feedback">
+        <div class="screener-score">
+          <span id="kpopRoleScreenerCount">0</span> of 4 idol dimensions selected
+        </div>
+        <p id="kpopRoleScreenerVerdict">Select your strengths above to preview your group role profile.</p>
+        <div class="screener-actions">
+          <a class="screener-btn cta-btn" href="/kpop-position/?lang=en&start=1&surface=en_kpop_screener" data-content-surface="cta" data-target-slug="kpop-position">Take the Full K-Pop Position Test &rarr;</a>
+          <a class="screener-sub-btn" href="/portal/tools/kpop-role-roster.html?lang=en&source=en_kpop_screener">Build a Custom Group Lineup in the Roster Planner &rarr;</a>
+        </div>
+      </div>
+    </div>
 
                 <h2>Main, lead, and sub: useful labels, not a universal ranking</h2>
                 <p>In groups that officially use these labels, <strong>main</strong> often points to a member with prominent or technically demanding responsibilities in one area. <strong>Lead</strong> often describes another member with substantial responsibility, and <strong>sub</strong> can describe a supporting contribution. Actual usage varies by agency, translation, era, song, and source.</p>
@@ -241,5 +299,32 @@
         })();
     </script>
     <script src="/portal/js/cross-promo.js" defer></script>
+<script>
+(function init_kpopRoleScreener() {
+  var box = document.getElementById('kpopRoleScreener');
+  if (!box) return;
+  var chks = box.querySelectorAll('.kpop-screener-chk');
+  var countEl = document.getElementById('kpopRoleScreenerCount');
+  var verdictEl = document.getElementById('kpopRoleScreenerVerdict');
+  if (!chks.length || !countEl || !verdictEl) return;
+  var verdicts = ["Select your strengths above to preview your group role profile.","Focused Specialist (1/4). You shine brightest with a clear Main or Lead position responsibility.","Dual-Position Unit Threat (2/4). Like many 4th/5th-gen idols, you bridge two core positions seamlessly.","Multi-Role Ace (3/4). You can cover chorus vocals, dance breaks, and concept transitions across comebacks.","Full All-Rounder / Golden Maknae Profile (4/4). You have the versatility to anchor any 3–12 member debut lineup."];
+  function update() {
+    var checked = 0;
+    chks.forEach(function(c) {
+      var parent = c.closest('.screener-item');
+      if (c.checked) {
+        checked++;
+        if (parent) parent.classList.add('is-checked');
+      } else {
+        if (parent) parent.classList.remove('is-checked');
+      }
+    });
+    countEl.textContent = checked;
+    verdictEl.textContent = verdicts[checked] || verdicts[0];
+  }
+  chks.forEach(function(c) { c.addEventListener('change', update); });
+})();
+</script>
+
 </body>
 </html>
