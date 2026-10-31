@@ -1095,9 +1095,9 @@
     const bridgeDopamine = document.getElementById('bridgeDopamine');
     const bridgeStress = document.getElementById('bridgeStress');
 
-    if (bridgeGrounding) bridgeGrounding.href = `/portal/tools/grounding-exercise.html?lang=${encodeURIComponent(lang)}`;
-    if (bridgeDopamine) bridgeDopamine.href = `/portal/tools/dopamine-detox-protocol.html?lang=${encodeURIComponent(lang)}`;
-    if (bridgeStress) bridgeStress.href = `/stress-check/?lang=${encodeURIComponent(lang)}`;
+    if (bridgeGrounding) bridgeGrounding.href = `/portal/tools/grounding-exercise.html?lang=${encodeURIComponent(lang)}&source=cognitive_load`;
+    if (bridgeDopamine) bridgeDopamine.href = `/portal/tools/dopamine-detox-protocol.html?lang=${encodeURIComponent(lang)}&source=cognitive_load`;
+    if (bridgeStress) bridgeStress.href = `/stress-check/?lang=${encodeURIComponent(lang)}&source=cognitive_load`;
 
     // Recalculate if result card is already visible
     const resCard = document.getElementById('resultCard');
@@ -1222,6 +1222,19 @@
   }
 
   function initActions() {
+    document.querySelectorAll('.bridge-card').forEach(card => {
+      card.addEventListener('click', () => {
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'content_cta_click', {
+            event_category: 'engagement',
+            page_path: location.pathname,
+            target_url: card.href,
+            link_id: card.id || 'bridge_card'
+          });
+        }
+      });
+    });
+
     const copyBtn = document.getElementById('copyBtn');
     if (copyBtn) {
       copyBtn.addEventListener('click', () => {

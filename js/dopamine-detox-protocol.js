@@ -427,11 +427,11 @@
 
     // Update cross-funnel links
     var bridgeStress = document.getElementById('bridgeStress');
-    if (bridgeStress) bridgeStress.href = '/stress-check/?lang=' + lang;
+    if (bridgeStress) bridgeStress.href = '/stress-check/?lang=' + encodeURIComponent(lang) + '&source=dopamine_detox';
     var bridgeFuture = document.getElementById('bridgeFuture');
-    if (bridgeFuture) bridgeFuture.href = '/future-self/?lang=' + lang;
+    if (bridgeFuture) bridgeFuture.href = '/future-self/?lang=' + encodeURIComponent(lang) + '&start=1&source=dopamine_detox';
     var bridgeBurnout = document.getElementById('bridgeBurnout');
-    if (bridgeBurnout) bridgeBurnout.href = '/portal/tools/burnout-stress-differential.html?lang=' + lang;
+    if (bridgeBurnout) bridgeBurnout.href = '/portal/tools/burnout-stress-differential.html?lang=' + encodeURIComponent(lang) + '&source=dopamine_detox';
 
     if (!document.getElementById('resultCard').hidden) {
       calculateProtocol();
