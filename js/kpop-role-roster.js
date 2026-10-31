@@ -94,7 +94,7 @@
         state.members.forEach(function (member, index) { var card = document.createElement('article'); card.className = 'roster-card'; var name = document.createElement('h3'); name.textContent = member.name || t('member', { n: index + 1 }); var tags = document.createElement('div'); tags.className = 'role-tags'; result.roles[index].forEach(function (role) { var tag = document.createElement('span'); tag.textContent = t(role); tags.append(tag); }); card.append(name, tags); roster.append(card); });
     }
     function applyLanguage() {
-        var quizLang = lang === 'ko' ? 'ko' : 'en';
+        var quizLang = ['ko','en','zh','hi','ru','ja','es','pt','id','tr','de','fr'].indexOf(lang) !== -1 ? lang : 'en';
         document.documentElement.lang = lang; document.title = t('pageTitle'); document.querySelectorAll('[data-i18n]').forEach(function (element) { element.textContent = t(element.dataset.i18n); }); document.getElementById('language').value = lang; document.querySelector('link[rel="canonical"]').href = 'https://dopabrain.com/portal/tools/kpop-role-roster.html' + (lang === 'en' ? '' : '?lang=' + lang); document.getElementById('related-position-test').href = '/kpop-position/?lang=' + quizLang + '&start=1&surface=kpop_roster_related'; renderMembers(); if (state.generated) { result = null; renderResult(); }
     }
     function applyPreset(name) {

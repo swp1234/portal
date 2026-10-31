@@ -50,7 +50,7 @@
         "description": "了解混乱型（恐惧-回避型）依恋风格：成人关系中的表现、童年成因、推拉循环以及基于证据的疗愈策略。",
         "image": "https://dopabrain.com/portal/img/og/attachment-style.png",
         "datePublished": "2026-06-11",
-        "dateModified": "2026-10-25",
+        "dateModified": "2026-10-31",
         "inLanguage": "zh",
         "author": {
           "@type": "Organization",
@@ -202,6 +202,28 @@
         .quick-card span { display: block; color: var(--text-secondary); font-size: 13px; line-height: 1.45; }
         .data-table, table { max-width: 100%; overflow-x: auto; }
         @media (max-width: 560px) { .quick-grid { grid-template-columns: 1fr; } .quick-card { min-height: 84px; } }
+    
+        /* 30-Second Interactive CRO Screener */
+        .screener-box { background: linear-gradient(145deg, rgba(124,58,237,0.12), rgba(15,23,42,0.95)); border: 1.5px solid var(--border-color, rgba(167,139,250,0.35)); border-radius: 18px; padding: 26px 22px; margin: 32px 0; }
+        .screener-head { text-align: center; margin-bottom: 18px; }
+        .screener-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; background: rgba(255,255,255,0.1); border: 1px solid var(--border-color, rgba(255,255,255,0.25)); color: var(--accent, #e2e8f0); font-size: 11px; font-weight: 800; letter-spacing: .08em; margin-bottom: 8px; }
+        .screener-head h3 { margin: 6px 0 8px; color: var(--primary-light, #a78bfa); font-size: 1.25rem; font-weight: 700; }
+        .screener-head p { margin: 0; color: var(--text-secondary, #94a3b8); font-size: 0.92rem; }
+        .screener-list { display: flex; flex-direction: column; gap: 10px; margin: 18px 0; }
+        .screener-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: rgba(30,41,59,0.7); border: 1px solid var(--border-color, rgba(255,255,255,0.18)); border-radius: 12px; cursor: pointer; min-height: 48px; touch-action: manipulation; transition: all .2s; }
+        .screener-item:hover { border-color: var(--primary-light, #a78bfa); background: rgba(255,255,255,0.08); }
+        .screener-item.is-checked { border-color: var(--primary-light, #a78bfa); background: rgba(124,58,237,0.22); }
+        .screener-item input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--primary, #7c3aed); cursor: pointer; flex-shrink: 0; }
+        .screener-item .screener-text { font-size: 14.5px; color: var(--text-primary, #f0f0f8); line-height: 1.4; text-align: left; }
+        .screener-feedback { text-align: center; padding-top: 16px; border-top: 1px solid var(--border-color, rgba(255,255,255,0.18)); }
+        .screener-score { font-size: 15px; font-weight: 700; color: var(--secondary, #c4b5fd); margin-bottom: 6px; }
+        .screener-feedback p { font-size: 14px; color: var(--text-secondary, #94a3b8); margin-bottom: 16px; min-height: 20px; }
+        .screener-actions { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .screener-btn, .screener-btn.cta-btn { display: inline-flex; align-items: center; justify-content: center; width: 100%; max-width: 380px; min-height: 48px; padding: 12px 24px; background: linear-gradient(135deg, var(--primary, #7c3aed), var(--primary-light, #8b5cf6)); color: #fff !important; text-shadow: 0 1px 2px rgba(0,0,0,0.35); text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 15px; box-shadow: 0 4px 14px rgba(0,0,0,0.3); transition: all 0.25s; }
+        .screener-btn:hover { transform: translateY(-1px); opacity: 0.95; color: #fff !important; }
+        .screener-sub-btn { display: inline-block; padding: 10px 16px; color: var(--primary-light, #a78bfa); text-decoration: none; font-size: 13.5px; font-weight: 600; min-height: 44px; line-height: 24px; }
+        .screener-sub-btn:hover { text-decoration: underline; }
+
     </style>
 </head>
 <body>
@@ -252,11 +274,41 @@
         </a>
                 </div>
             </section>
-<div class="cta-box">
-                <h3>你的依恋风格是什么？</h3>
-                <p>参加我们的免费依恋风格测试，发现你的关系模式</p>
-                <a href="/portal/tools/grounding-exercise.html?lang=zh&source=disorg_fallback" class="cta-btn" data-content-surface="cta">参加依恋风格测试 &rarr;</a>
-            </div>
+<div class="screener-box" id="disorganizedAttachScreener">
+      <div class="screener-head">
+        <span class="screener-badge">30秒混乱型（恐惧-回避型）依恋筛查</span>
+        <h3>你是否困在“渴望靠近又拼命推开”的依恋悖论中？</h3>
+        <p>勾选你在亲密关系深入时同时出现的渴望与恐惧反应：</p>
+      </div>
+      <div class="screener-list" role="group" aria-label="30秒混乱型（恐惧-回避型）依恋筛查">
+        <label class="screener-item">
+          <input type="checkbox" class="disatt-screener-chk" value="1">
+          <span class="screener-text"><strong>渴望与恐惧同时爆发：</strong> 内心极度渴望深刻联结，但一旦有人真正走近，身体每一寸都在发出危险警报。</span>
+        </label>
+        <label class="screener-item">
+          <input type="checkbox" class="disatt-screener-chk" value="1">
+          <span class="screener-text"><strong>推拉摆荡循环（Push-Pull）：</strong> 对方靠近时你感到窒息想逃，可对方一旦后退，你又瞬间陷入被抛弃的恐慌。</span>
+        </label>
+        <label class="screener-item">
+          <input type="checkbox" class="disatt-screener-chk" value="1">
+          <span class="screener-text"><strong>安全感下的自我破坏：</strong> 当关系平稳温和时反而觉得“不真实”或不安，忍不住挑起争端或想要逃离。</span>
+        </label>
+        <label class="screener-item">
+          <input type="checkbox" class="disatt-screener-chk" value="1">
+          <span class="screener-text"><strong>对微小信号过度警觉：</strong> 时刻扫描伴侣的眼神、叹气或停顿，提防随时可能降临的背叛或突然离开。</span>
+        </label>
+      </div>
+      <div class="screener-feedback">
+        <div class="screener-score">
+          <span id="disorganizedAttachScreenerCount">0</span> / 4 项混乱型（恐惧-回避）依恋信号激活
+        </div>
+        <p id="disorganizedAttachScreenerVerdict">勾选上方信号，评估你是否存在混乱型（恐惧-回避型）依恋模式。</p>
+        <div class="screener-actions">
+          <a class="screener-btn cta-btn" href="/attachment-style/?lang=zh&source=disorganized_attach_screener" data-content-surface="cta" data-target-slug="attachment-style">开始免费依恋风格完整测试 &rarr;</a>
+          <a class="screener-sub-btn" href="/portal/tools/grounding-exercise.html?lang=zh&source=disorganized_attach_screener">使用 5-4-3-2-1 感官着陆平复推拉恐慌 &rarr;</a>
+        </div>
+      </div>
+    </div>
 
             <nav class="toc">
                 <h3>目录</h3>
@@ -566,5 +618,32 @@
             <li><a class="related-link" href="/portal/tools/cognitive-load-calculator.html?lang=zh&source=disorg_followup" data-content-surface="related" data-target-slug="cognitive-load-calculator">认知负荷计算器</a></li>
         </ul>
     </section>
+<script>
+(function init_disorganizedAttachScreener() {
+  var box = document.getElementById('disorganizedAttachScreener');
+  if (!box) return;
+  var chks = box.querySelectorAll('.disatt-screener-chk');
+  var countEl = document.getElementById('disorganizedAttachScreenerCount');
+  var verdictEl = document.getElementById('disorganizedAttachScreenerVerdict');
+  if (!chks.length || !countEl || !verdictEl) return;
+  var verdicts = ["勾选上方信号，评估你是否存在混乱型（恐惧-回避型）依恋模式。","轻度矛盾心理 (1/4)。仅在高压或特定情境下会触发防御机制。","中度推拉内耗模式 (2/4)。焦虑与回避两套防御回路正在你的神经系统中拉锯。","高度恐惧-回避激活 (3/4)。你的依恋系统在渴望爱的同时不断拉响生存警报。","深层混乱型依恋模式 (4/4)。油门与刹车同时踩到底正在耗尽你的精力，建议立即完成依恋风格测评并进行感官着陆。"];
+  function update() {
+    var checked = 0;
+    chks.forEach(function(c) {
+      var parent = c.closest('.screener-item');
+      if (c.checked) {
+        checked++;
+        if (parent) parent.classList.add('is-checked');
+      } else {
+        if (parent) parent.classList.remove('is-checked');
+      }
+    });
+    countEl.textContent = checked;
+    verdictEl.textContent = verdicts[checked] || verdicts[0];
+  }
+  chks.forEach(function(c) { c.addEventListener('change', update); });
+})();
+</script>
+
 </body>
 </html>
