@@ -879,7 +879,7 @@
     const bridgeGrounding = document.getElementById('bridgeGrounding');
     const bridgeMatrix = document.getElementById('bridgeMatrix');
 
-    if (bridgeStress) bridgeStress.href = `/stress-check/${lang !== 'ko' ? '?lang=' + lang : ''}`;
+    if (bridgeStress) bridgeStress.href = `/stress-check/?lang=${encodeURIComponent(lang)}`;
     if (bridgeGrounding) bridgeGrounding.href = `/portal/tools/grounding-exercise.html?lang=${encodeURIComponent(lang)}`;
     if (bridgeMatrix) bridgeMatrix.href = `/portal/tools/decision-matrix.html?lang=${lang}`;
 

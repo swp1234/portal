@@ -1097,7 +1097,7 @@
 
     if (bridgeGrounding) bridgeGrounding.href = `/portal/tools/grounding-exercise.html?lang=${encodeURIComponent(lang)}`;
     if (bridgeDopamine) bridgeDopamine.href = `/portal/tools/dopamine-detox-protocol.html?lang=${encodeURIComponent(lang)}`;
-    if (bridgeStress) bridgeStress.href = `/stress-check/${lang !== 'ko' ? '?lang=' + encodeURIComponent(lang) : ''}`;
+    if (bridgeStress) bridgeStress.href = `/stress-check/?lang=${encodeURIComponent(lang)}`;
 
     // Recalculate if result card is already visible
     const resCard = document.getElementById('resultCard');
