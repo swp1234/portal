@@ -879,9 +879,9 @@
     const bridgeGrounding = document.getElementById('bridgeGrounding');
     const bridgeMatrix = document.getElementById('bridgeMatrix');
 
-    if (bridgeStress) bridgeStress.href = `/stress-check/?lang=${encodeURIComponent(lang)}`;
-    if (bridgeGrounding) bridgeGrounding.href = `/portal/tools/grounding-exercise.html?lang=${encodeURIComponent(lang)}`;
-    if (bridgeMatrix) bridgeMatrix.href = `/portal/tools/decision-matrix.html?lang=${lang}`;
+    if (bridgeStress) bridgeStress.href = `/stress-check/?lang=${encodeURIComponent(lang)}&source=burnout_differential`;
+    if (bridgeGrounding) bridgeGrounding.href = `/portal/tools/grounding-exercise.html?lang=${encodeURIComponent(lang)}&source=burnout_differential`;
+    if (bridgeMatrix) bridgeMatrix.href = `/portal/tools/decision-matrix.html?lang=${encodeURIComponent(lang)}&source=burnout_differential`;
 
     // If result is already showing, re-render verdict copy
     const resCard = document.getElementById('resultCard');
@@ -1103,5 +1103,17 @@
     document.getElementById('resetBtn')?.addEventListener('click', resetForm);
     document.getElementById('copyBtn')?.addEventListener('click', copyReport);
     document.getElementById('shareBtn')?.addEventListener('click', shareVerdict);
+    document.querySelectorAll('.bridge-card').forEach(card => {
+      card.addEventListener('click', () => {
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'content_cta_click', {
+            event_category: 'engagement',
+            page_path: location.pathname,
+            target_url: card.href,
+            link_id: card.id || 'bridge_card'
+          });
+        }
+      });
+    });
   });
 })();

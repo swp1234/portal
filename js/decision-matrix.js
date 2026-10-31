@@ -849,6 +849,17 @@
   }
     document.getElementById('copyBtn')?.addEventListener('click', copyReport);
     document.getElementById('shareBtn')?.addEventListener('click', shareVerdict);
+    document.querySelector('.related')?.addEventListener('click', (e) => {
+      const a = e.target.closest('a');
+      if (a && typeof window.gtag === 'function') {
+        window.gtag('event', 'content_cta_click', {
+          event_category: 'engagement',
+          page_path: location.pathname,
+          target_url: a.href,
+          link_id: a.getAttribute('data-related') || a.id || 'related_tool'
+        });
+      }
+    });
   });
 
 })();

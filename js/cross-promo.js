@@ -312,20 +312,20 @@
         var locale = getBlogLocale();
         var supportedLocale = /^(ko|en|zh|hi|ru|ja|es|pt|id|tr|de|fr)$/.test(locale) ? locale : 'en';
         var copyByLocale = {
-            ko: { kicker: '계산 결과를 한 편의 이야기로', title: '전생 이야기 스튜디오', desc: '시대·장소·역할·분위기·상징을 조합해 다섯 장면의 허구 카드를 만들고 브라우저 서가에 보관하세요.', studio: '이야기 만들기', test: '전생 직업 모험' },
-            en: { kicker: 'TURN THE IDEA INTO A FICTIONAL TALE', title: 'Build a past-life-inspired story card', desc: 'Mix an era, place, role, tone and motif into five fictional scenes, then remix or keep the cards you like.', studio: 'Open the story studio', test: 'Try the era adventure' },
-            zh: { kicker: '把灵感变成虚构故事', title: '创作前世灵感故事卡', desc: '组合时代、地点、角色、基调和意象，生成五幕虚构故事并收藏喜欢的版本。', studio: '打开故事工作室', test: '体验时代冒险' },
-            hi: { kicker: 'विचार को काल्पनिक कहानी बनाएँ', title: 'पिछले जीवन से प्रेरित कहानी कार्ड बनाएँ', desc: 'युग, स्थान, भूमिका, भाव और प्रतीक को पाँच काल्पनिक दृश्यों में मिलाएँ।', studio: 'कहानी स्टूडियो खोलें', test: 'युग यात्रा आज़माएँ' },
-            ru: { kicker: 'ПРЕВРАТИТЕ ИДЕЮ В ВЫМЫШЛЕННЫЙ РАССКАЗ', title: 'Создайте карточку истории о прошлой жизни', desc: 'Соедините эпоху, место, роль, настроение и символ в пяти вымышленных сценах.', studio: 'Открыть студию', test: 'Начать путешествие' },
-            ja: { kicker: 'アイデアを架空の物語に', title: '前世風ストーリーカードを作る', desc: '時代、場所、役割、雰囲気、象徴を組み合わせて五場面の架空物語を作ります。', studio: '物語スタジオを開く', test: '時代の旅を試す' },
-            es: { kicker: 'CONVIERTE LA IDEA EN FICCIÓN', title: 'Crea una historia inspirada en vidas pasadas', desc: 'Combina época, lugar, papel, tono y símbolo en cinco escenas ficticias.', studio: 'Abrir el estudio', test: 'Probar la aventura' },
-            pt: { kicker: 'TRANSFORME A IDEIA EM FICÇÃO', title: 'Crie uma história inspirada em vidas passadas', desc: 'Combine época, lugar, papel, tom e símbolo em cinco cenas fictícias.', studio: 'Abrir o estúdio', test: 'Experimentar a aventura' },
-            id: { kicker: 'UBAH IDE MENJADI KISAH FIKSI', title: 'Buat kartu cerita kehidupan lampau', desc: 'Gabungkan era, tempat, peran, suasana, dan simbol menjadi lima adegan fiksi.', studio: 'Buka studio cerita', test: 'Coba petualangan era' },
-            tr: { kicker: 'FİKRİ KURGUYA DÖNÜŞTÜR', title: 'Geçmiş yaşam esintili hikâye kartı oluştur', desc: 'Çağ, mekân, rol, ton ve simgeyi beş kurgu sahnede birleştirin.', studio: 'Hikâye stüdyosunu aç', test: 'Çağ macerasını dene' },
-            de: { kicker: 'MACH AUS DER IDEE EINE FIKTION', title: 'Erstelle eine inspirierte Geschichtenkarte', desc: 'Kombiniere Epoche, Ort, Rolle, Stimmung und Symbol zu fünf fiktiven Szenen.', studio: 'Geschichtenstudio öffnen', test: 'Epochenabenteuer starten' },
-            fr: { kicker: 'TRANSFORMEZ L’IDÉE EN FICTION', title: 'Créez une histoire inspirée d’une vie antérieure', desc: 'Mélangez époque, lieu, rôle, ton et symbole en cinq scènes fictives.', studio: 'Ouvrir le studio', test: 'Essayer l’aventure' }
+            ko: { kicker: '계산 결과를 한 편의 이야기로', title: '전생 이야기 스튜디오', desc: '시대·장소·역할·분위기·상징을 조합해 다섯 장면의 허구 카드를 만들고 브라우저 서가에 보관하세요.', studio: '이야기 만들기', test: '미래의 나 10년 시뮬레이터' },
+            en: { kicker: 'TURN THE IDEA INTO A FICTIONAL TALE', title: 'Build a past-life-inspired story card', desc: 'Mix an era, place, role, tone and motif into five fictional scenes, then remix or keep the cards you like.', studio: 'Open the story studio', test: '10-Year Future Self' },
+            zh: { kicker: '把灵感变成虚构故事', title: '创作前世灵感故事卡', desc: '组合时代、地点、角色、基调和意象，生成五幕虚构故事并收藏喜欢的版本。', studio: '打开故事工作室', test: '十年后的自己模拟器' },
+            hi: { kicker: 'विचार को काल्पनिक कहानी बनाएँ', title: 'पिछले जीवन से प्रेरित कहानी कार्ड बनाएँ', desc: 'युग, स्थान, भूमिका, भाव और प्रतीक को पाँच काल्पनिक दृश्यों में मिलाएँ।', studio: 'कहानी स्टूडियो खोलें', test: '10-वर्षीय भविष्य सिम्युलेटर' },
+            ru: { kicker: 'ПРЕВРАТИТЕ ИДЕЮ В ВЫМЫШЛЕННЫЙ РАССКАЗ', title: 'Создайте карточку истории о прошлой жизни', desc: 'Соедините эпоху, место, роль, настроение и символ в пяти вымышленных сценах.', studio: 'Открыть студию', test: 'Симулятор Будущего Я' },
+            ja: { kicker: 'アイデアを架空の物語に', title: '前世風ストーリーカードを作る', desc: '時代、場所、役割、雰囲気、象徴を組み合わせて五場面の架空物語を作ります。', studio: '物語スタジオを開く', test: '10年後の自分診断' },
+            es: { kicker: 'CONVIERTE LA IDEA EN FICCIÓN', title: 'Crea una historia inspirada en vidas pasadas', desc: 'Combina época, lugar, papel, tono y símbolo en cinco escenas ficticias.', studio: 'Abrir el estudio', test: 'Simulador del Yo Futuro' },
+            pt: { kicker: 'TRANSFORME A IDEIA EM FICÇÃO', title: 'Crie uma história inspirada em vidas passadas', desc: 'Combine época, lugar, papel, tom e símbolo em cinco cenas fictícias.', studio: 'Abrir o estúdio', test: 'Simulador do Eu Futuro' },
+            id: { kicker: 'UBAH IDE MENJADI KISAH FIKSI', title: 'Buat kartu cerita kehidupan lampau', desc: 'Gabungkan era, tempat, peran, suasana, dan simbol menjadi lima adegan fiksi.', studio: 'Buka studio cerita', test: 'Simulator Diri Masa Depan' },
+            tr: { kicker: 'FİKRİ KURGUYA DÖNÜŞTÜR', title: 'Geçmiş yaşam esintili hikâye kartı oluştur', desc: 'Çağ, mekân, rol, ton ve simgeyi beş kurgu sahnede birleştirin.', studio: 'Hikâye stüdyosunu aç', test: 'Gelecekteki Ben Simülatörü' },
+            de: { kicker: 'MACH AUS DER IDEE EINE FIKTION', title: 'Erstelle eine inspirierte Geschichtenkarte', desc: 'Kombiniere Epoche, Ort, Rolle, Stimmung und Symbol zu fünf fiktiven Szenen.', studio: 'Geschichtenstudio öffnen', test: 'Zukunfts-Ich Simulator' },
+            fr: { kicker: 'TRANSFORMEZ L’IDÉE EN FICTION', title: 'Créez une histoire inspirée d’une vie antérieure', desc: 'Mélangez époque, lieu, rôle, ton et symbole en cinq scènes fictives.', studio: 'Ouvrir le studio', test: 'Simulateur du Moi Futur' }
         };
-        return { locale: supportedLocale, copy: copyByLocale[supportedLocale], studioUrl: '/portal/tools/past-life-story-studio.html?lang=' + encodeURIComponent(supportedLocale) + '&source=blog_past_life_story_bridge', testUrl: '/past-life/?lang=' + encodeURIComponent(supportedLocale) + '&source=blog_past_life_story_bridge' };
+        return { locale: supportedLocale, copy: copyByLocale[supportedLocale], studioUrl: '/portal/tools/past-life-story-studio.html?lang=' + encodeURIComponent(supportedLocale) + '&source=blog_past_life_story_bridge', testUrl: '/future-self/?lang=' + encodeURIComponent(supportedLocale) + '&start=1&source=blog_past_life_story_bridge' };
     }
 
     function get2048CoachBridgeConfig() {
@@ -1566,7 +1566,7 @@
             var storyViewed = false;
             var trackStoryView = function() { if (storyViewed || typeof gtag !== 'function') return; storyViewed = true; gtag('event', 'past_life_story_bridge_view', { event_category: 'engagement', source_app: 'blog', surface_name: 'blog_past_life_story', content_locale: pastLifeStory.locale, revenue_goal: 'daily_0_10' }); };
             if (storyElement && 'IntersectionObserver' in window) { var storyObserver = new IntersectionObserver(function(entries) { if (entries.some(function(entry) { return entry.isIntersecting; })) { trackStoryView(); storyObserver.disconnect(); } }, { threshold: 0.35 }); storyObserver.observe(storyElement); } else trackStoryView();
-            if (storyElement) storyElement.addEventListener('click', function(event) { var link = event.target.closest('.cp-past-life-story-link'); if (!link || typeof gtag !== 'function') return; gtag('event', 'past_life_story_bridge_click', { event_category: 'engagement', source_app: 'blog', surface_name: 'blog_past_life_story', content_locale: pastLifeStory.locale, destination_id: link.getAttribute('data-destination') || '', destination_path: link.getAttribute('href') || '', revenue_goal: 'daily_0_10' }); });
+            if (storyElement) storyElement.addEventListener('click', function(event) { var link = event.target.closest('.cp-past-life-story-link'); if (!link || typeof gtag !== 'function') return; gtag('event', 'past_life_story_bridge_click', { event_category: 'engagement', source_app: 'blog', surface_name: 'blog_past_life_story', content_locale: pastLifeStory.locale, destination_id: link.getAttribute('data-destination') || '', destination_path: link.getAttribute('href') || '', revenue_goal: 'daily_0_10' }); gtag('event', 'content_cta_click', { event_category: 'engagement', page_path: location.pathname, target_url: link.getAttribute('href') || '', link_id: 'past_life_bridge_' + (link.getAttribute('data-destination') || '') }); });
         }
 
         if (coach2048) {

@@ -387,11 +387,11 @@
 
     // Cross-funnel links
     var bridgeStress = document.getElementById('bridgeStress');
-    if (bridgeStress) bridgeStress.href = '/stress-check/?lang=' + lang;
+    if (bridgeStress) bridgeStress.href = '/stress-check/?lang=' + encodeURIComponent(lang) + '&source=grounding_tool';
     var bridgeReset = document.getElementById('bridgeReset');
-    if (bridgeReset) bridgeReset.href = '/hsp-test/reset.html?lang=' + lang;
+    if (bridgeReset) bridgeReset.href = '/hsp-test/reset.html?lang=' + encodeURIComponent(lang) + '&source=grounding_tool';
     var bridgeDiff = document.getElementById('bridgeDiff');
-    if (bridgeDiff) bridgeDiff.href = '/portal/tools/burnout-stress-differential.html?lang=' + lang;
+    if (bridgeDiff) bridgeDiff.href = '/portal/tools/burnout-stress-differential.html?lang=' + encodeURIComponent(lang) + '&source=grounding_tool';
 
     renderStage();
   }
@@ -613,6 +613,18 @@
       document.getElementById('resetBtn').addEventListener('click', resetSession);
       document.getElementById('copyBtn').addEventListener('click', copyLog);
       document.getElementById('shareBtn').addEventListener('click', shareLog);
+      document.querySelectorAll('.bridge-card').forEach(function (card) {
+        card.addEventListener('click', function () {
+          if (typeof gtag === 'function') {
+            gtag('event', 'content_cta_click', {
+              event_category: 'engagement',
+              page_path: location.pathname,
+              target_url: card.href,
+              link_id: card.id || 'bridge_card'
+            });
+          }
+        });
+      });
     } catch (err) {
       console.error('Grounding tool init error:', err);
     }
