@@ -54,7 +54,7 @@
         "description": "了解15个明显的煤气灯操纵迹象，为何它会扭曲你的现实感，以及7种基于证据的恢复策略，助你重拾思维清晰与自信。",
         "image": "https://dopabrain.com/portal/img/og/red-flag-test.png",
         "datePublished": "2026-03-27",
-        "dateModified": "2026-10-25",
+        "dateModified": "2026-10-31",
         "inLanguage": "zh",
         "author": {
           "@type": "Organization",
@@ -1031,6 +1031,28 @@
         .quick-card span { display: block; color: var(--text-secondary); font-size: 13px; line-height: 1.45; }
         .data-table, table { max-width: 100%; overflow-x: auto; }
         @media (max-width: 560px) { .quick-grid { grid-template-columns: 1fr; } .quick-card { min-height: 84px; } }
+    
+        /* 30-Second Interactive CRO Screener */
+        .screener-box { background: linear-gradient(145deg, rgba(124,58,237,0.12), rgba(15,23,42,0.95)); border: 1.5px solid var(--border-color, rgba(167,139,250,0.35)); border-radius: 18px; padding: 26px 22px; margin: 32px 0; }
+        .screener-head { text-align: center; margin-bottom: 18px; }
+        .screener-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; background: rgba(255,255,255,0.1); border: 1px solid var(--border-color, rgba(255,255,255,0.25)); color: var(--accent, #e2e8f0); font-size: 11px; font-weight: 800; letter-spacing: .08em; margin-bottom: 8px; }
+        .screener-head h3 { margin: 6px 0 8px; color: var(--primary-light, #a78bfa); font-size: 1.25rem; font-weight: 700; }
+        .screener-head p { margin: 0; color: var(--text-secondary, #94a3b8); font-size: 0.92rem; }
+        .screener-list { display: flex; flex-direction: column; gap: 10px; margin: 18px 0; }
+        .screener-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: rgba(30,41,59,0.7); border: 1px solid var(--border-color, rgba(255,255,255,0.18)); border-radius: 12px; cursor: pointer; min-height: 48px; touch-action: manipulation; transition: all .2s; }
+        .screener-item:hover { border-color: var(--primary-light, #a78bfa); background: rgba(255,255,255,0.08); }
+        .screener-item.is-checked { border-color: var(--primary-light, #a78bfa); background: rgba(124,58,237,0.22); }
+        .screener-item input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--primary, #7c3aed); cursor: pointer; flex-shrink: 0; }
+        .screener-item .screener-text { font-size: 14.5px; color: var(--text-primary, #f0f0f8); line-height: 1.4; text-align: left; }
+        .screener-feedback { text-align: center; padding-top: 16px; border-top: 1px solid var(--border-color, rgba(255,255,255,0.18)); }
+        .screener-score { font-size: 15px; font-weight: 700; color: var(--secondary, #c4b5fd); margin-bottom: 6px; }
+        .screener-feedback p { font-size: 14px; color: var(--text-secondary, #94a3b8); margin-bottom: 16px; min-height: 20px; }
+        .screener-actions { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .screener-btn, .screener-btn.cta-btn { display: inline-flex; align-items: center; justify-content: center; width: 100%; max-width: 380px; min-height: 48px; padding: 12px 24px; background: linear-gradient(135deg, var(--primary, #7c3aed), var(--primary-light, #8b5cf6)); color: #fff !important; text-shadow: 0 1px 2px rgba(0,0,0,0.35); text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 15px; box-shadow: 0 4px 14px rgba(0,0,0,0.3); transition: all 0.25s; }
+        .screener-btn:hover { transform: translateY(-1px); opacity: 0.95; color: #fff !important; }
+        .screener-sub-btn { display: inline-block; padding: 10px 16px; color: var(--primary-light, #a78bfa); text-decoration: none; font-size: 13.5px; font-weight: 600; min-height: 44px; line-height: 24px; }
+        .screener-sub-btn:hover { text-decoration: underline; }
+
     </style>
 </head>
 <body>
@@ -1127,14 +1149,41 @@
         <a class="quick-card" href="/stress-check/?lang=zh" data-content-surface="quick_rail" data-target-slug="stress-check"><strong>压力指数测试</strong><span>90秒快速评估自主神经状态</span></a>
                 </div>
             </section>
-<div class="cta-box">
-        <h3>你是否处于一段有毒的关系中？</h3>
-        <p>参加我们免费的、基于科学的评估，深入了解你的关系模式和情绪健康状况。</p>
-        <div class="cta-buttons">
-          <a href="/red-green-flag/?lang=zh" class="btn-primary" data-content-surface="cta">红旗测试</a>
-          <a href="/toxic-trait/?lang=zh" class="btn-secondary" data-content-surface="cta">有毒特质测试</a>
+<div class="screener-box" id="gaslightingRealityScreener">
+      <div class="screener-head">
+        <span class="screener-badge">30秒 煤气灯效应（Gaslighting）与现实感侵蚀筛查</span>
+        <h3>你是否已经开始怀疑自己的记忆、直觉与清醒度？</h3>
+        <p>勾选在长期煤气灯操控下出现的认知与情绪侵蚀信号：</p>
+      </div>
+      <div class="screener-list" role="group" aria-label="30秒 煤气灯效应（Gaslighting）与现实感侵蚀筛查">
+        <label class="screener-item">
+          <input type="checkbox" class="gaslight-screener-chk" value="1">
+          <span class="screener-text"><strong>强迫性留存证据：</strong> 总想截图聊天记录或记下对话细节，只为了向自己证明“我没记错、那件事真的发生过”。</span>
+        </label>
+        <label class="screener-item">
+          <input type="checkbox" class="gaslight-screener-chk" value="1">
+          <span class="screener-text"><strong>沟通后的角色倒置（DARVO）：</strong> 明明是你受了委屈去温和沟通，聊到最后却变成你在道歉、反过来安抚对方。</span>
+        </label>
+        <label class="screener-item">
+          <input type="checkbox" class="gaslight-screener-chk" value="1">
+          <span class="screener-text"><strong>习惯性怀疑自己“太敏感”：</strong> 每次感到不舒服时，第一反应是怀疑自己：“是不是我太矫情、太玻璃心、想多了？”。</span>
+        </label>
+        <label class="screener-item">
+          <input type="checkbox" class="gaslight-screener-chk" value="1">
+          <span class="screener-text"><strong>失去直觉与决策瘫痪：</strong> 对自身判断力的信任被严重削弱，哪怕做小决定也需要别人确认才安心。</span>
+        </label>
+      </div>
+      <div class="screener-feedback">
+        <div class="screener-score">
+          <span id="gaslightingRealityScreenerCount">0</span> / 4 个煤气灯效应侵蚀信号已激活
+        </div>
+        <p id="gaslightingRealityScreenerVerdict">勾选上方信号，评估煤气灯效应是否正在侵蚀你的自我信任与神经系统。</p>
+        <div class="screener-actions">
+          <a class="screener-btn cta-btn" href="/stress-check/?lang=zh&source=gaslighting_recovery_screener" data-content-surface="cta" data-target-slug="stress-check">开始 3 分钟神经系统压力与内耗测试 &rarr;</a>
+          <a class="screener-sub-btn" href="/stress-check/script.html?lang=zh&source=gaslighting_recovery_screener">打开反煤气灯边界与拒绝话术生成器 &rarr;</a>
         </div>
       </div>
+    </div>
 
       <!-- TOC -->
       <nav class="toc-box" aria-label="目录">
@@ -1735,5 +1784,32 @@
             <a href="/portal/tools/burnout-stress-differential.html?lang=zh">职业倦怠 vs 情绪衰竭鉴别测评</a>
         </div>
     </section>
+<script>
+(function init_gaslightingRealityScreener() {
+  var box = document.getElementById('gaslightingRealityScreener');
+  if (!box) return;
+  var chks = box.querySelectorAll('.gaslight-screener-chk');
+  var countEl = document.getElementById('gaslightingRealityScreenerCount');
+  var verdictEl = document.getElementById('gaslightingRealityScreenerVerdict');
+  if (!chks.length || !countEl || !verdictEl) return;
+  var verdicts = ["勾选上方信号，评估煤气灯效应是否正在侵蚀你的自我信任与神经系统。","现实锚点稳固（1/4）。你依然对自己的记忆与情绪感知保持清晰信任。","中度自我怀疑侵蚀（2/4）。反复的推卸责任与否定正在干扰你的内心指南针。","高度煤气灯内耗（3/4）。为了自证基本事实与感受，你的神经系统已处于透支状态。","重度现实感侵蚀循环（4/4）。请立即检测你的神经系统压力负荷，并生成坚定的反操控边界话术。"];
+  function update() {
+    var checked = 0;
+    chks.forEach(function(c) {
+      var parent = c.closest('.screener-item');
+      if (c.checked) {
+        checked++;
+        if (parent) parent.classList.add('is-checked');
+      } else {
+        if (parent) parent.classList.remove('is-checked');
+      }
+    });
+    countEl.textContent = checked;
+    verdictEl.textContent = verdicts[checked] || verdicts[0];
+  }
+  chks.forEach(function(c) { c.addEventListener('change', update); });
+})();
+</script>
+
 </body>
 </html>
