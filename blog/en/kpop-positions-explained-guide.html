@@ -198,7 +198,7 @@
         <p id="kpopRoleScreenerVerdict">Select your strengths above to preview your group role profile.</p>
         <div class="screener-actions">
           <a class="screener-btn cta-btn" href="/kpop-position/?lang=en&start=1&surface=en_kpop_screener" data-content-surface="cta" data-target-slug="kpop-position">Take the Full K-Pop Position Test &rarr;</a>
-          <a class="screener-sub-btn" href="/portal/tools/kpop-role-roster.html?lang=en&source=en_kpop_screener">Build a Custom Group Lineup in the Roster Planner &rarr;</a>
+          <a class="screener-sub-btn cta-btn" data-content-surface="cta" data-target-slug="kpop-role-roster" href="/portal/tools/kpop-role-roster.html?lang=en&source=en_kpop_screener">Build a Custom Group Lineup in the Roster Planner &rarr;</a>
         </div>
       </div>
     </div>
@@ -292,7 +292,7 @@
                 };
                 if (target.classList.contains('quick-card')) {
                     track('content_test_click', telemetry);
-                } else if (target.classList.contains('cta-btn')) {
+                } else if (target.classList.contains('cta-btn') || target.classList.contains('screener-sub-btn') || target.getAttribute('data-content-surface') === 'cta') {
                     track('content_cta_click', telemetry);
                 }
             }, true);
