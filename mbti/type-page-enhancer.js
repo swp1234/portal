@@ -62,6 +62,14 @@
         target_slug: link.dataset.heroAction || '',
         link_url: link.getAttribute('href') || ''
       });
+      if (typeof gtag === 'function') {
+        gtag('event', 'content_cta_click', {
+          event_category: 'engagement',
+          page_path: location.pathname,
+          target_url: link.getAttribute('href') || '',
+          link_id: 'mbti_hero_' + (link.dataset.heroAction || 'link')
+        });
+      }
     });
   });
 
@@ -90,6 +98,14 @@
         target_slug: link.dataset.typeAction || '',
         link_url: link.getAttribute('href') || ''
       });
+      if (typeof gtag === 'function') {
+        gtag('event', 'content_cta_click', {
+          event_category: 'engagement',
+          page_path: location.pathname,
+          target_url: link.getAttribute('href') || '',
+          link_id: 'mbti_rail_' + (link.dataset.typeAction || 'link')
+        });
+      }
     });
   });
 
@@ -107,6 +123,14 @@
         target_slug: link.dataset.typeAction,
         link_url: link.getAttribute('href') || ''
       });
+      if (typeof gtag === 'function') {
+        gtag('event', 'content_cta_click', {
+          event_category: 'engagement',
+          page_path: location.pathname,
+          target_url: link.getAttribute('href') || '',
+          link_id: 'mbti_bottom_' + (link.dataset.typeAction || 'cta')
+        });
+      }
     });
   });
 
