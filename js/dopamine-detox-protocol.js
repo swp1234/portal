@@ -576,6 +576,18 @@
       document.getElementById('resetBtn').addEventListener('click', resetAssessment);
       document.getElementById('copyBtn').addEventListener('click', copySummary);
       document.getElementById('shareBtn').addEventListener('click', shareResult);
+      document.querySelectorAll('.bridge-card').forEach(function (card) {
+        card.addEventListener('click', function () {
+          if (typeof gtag === 'function') {
+            gtag('event', 'content_cta_click', {
+              event_category: 'engagement',
+              page_path: location.pathname,
+              target_url: card.href,
+              link_id: card.id || 'dopamine_detox_bridge'
+            });
+          }
+        });
+      });
     } catch (err) {
       console.error('Dopamine detox tool init error:', err);
     }

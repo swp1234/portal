@@ -108,6 +108,18 @@
     document.getElementById('members').addEventListener('change', function () { readMembers(); state.generated = false; saveState(); document.getElementById('result').hidden = true; });
     document.querySelector('.presets').addEventListener('click', function (event) { var button = event.target.closest('[data-preset]'); if (button) applyPreset(button.dataset.preset); });
     document.getElementById('generate').addEventListener('click', buildRoster);
+    document.querySelectorAll('.related a').forEach(function (link) {
+        link.addEventListener('click', function () {
+            if (typeof gtag === 'function') {
+                gtag('event', 'content_cta_click', {
+                    event_category: 'engagement',
+                    page_path: location.pathname,
+                    target_url: link.href,
+                    link_id: link.id || 'kpop_roster_related'
+                });
+            }
+        });
+    });
     document.getElementById('related-position-test').addEventListener('click', function () { track('kpop_roster_related_click', { destination_id: 'position_test', destination_path: '/kpop-position/' }); });
     document.getElementById('reset').addEventListener('click', function () { state = normalizeState({}); result = null; localStorage.removeItem(KEY); document.getElementById('size').value = '5'; document.getElementById('concept').value = 'balanced'; document.getElementById('leadership').value = 'single'; renderMembers(); document.getElementById('result').hidden = true; track('kpop_roster_reset'); toast(t('resetDone')); });
     document.getElementById('finalize').addEventListener('click', function () { state.final = !state.final; saveState(); renderResult(); track(state.final ? 'kpop_roster_finalize' : 'kpop_roster_reopen', { member_count: state.size, concept: state.concept }); toast(t(state.final ? 'saved' : 'reopened')); });
