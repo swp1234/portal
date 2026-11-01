@@ -92,7 +92,7 @@
           <a class="cta primary-reset triage-btn" href="/hsp-test/reset.html?lang=en&amp;source=blog_sensory_triage" data-target-slug="sensory-reset">
             Open 60-Second Sensory Reset Room →
           </a>
-          <a class="triage-sub-btn" href="/hsp-test/?lang=en&amp;source=blog_sensory_triage" data-target-slug="hsp-test">
+          <a class="triage-sub-btn" data-content-surface="cta" href="/hsp-test/?lang=en&amp;source=blog_sensory_triage" data-target-slug="hsp-test">
             Explore Full HSP Sensitivity Profile →
           </a>
         </div>
@@ -109,7 +109,7 @@
   </main>
   <footer><div class="wrap">Educational information, not diagnosis or treatment · <a href="/portal/privacy-policy.html">Privacy</a> · <a href="/portal/tools/">More tools</a></div></footer>
   <script>
-  (()=>{const sent=new Set();const track=(name,params={})=>{const key=name+':'+(params.target_slug||'');if(sent.has(key))return;sent.add(key);gtag('event',name,{content_language:'en',content_slug:'hsp-coping-strategies-highly-sensitive',...params})};track('content_view');document.querySelectorAll('.primary-reset').forEach(link=>link.addEventListener('click',()=>track('content_cta_click',{target_slug:'sensory-reset'})));document.querySelectorAll('.related-link').forEach(link=>link.addEventListener('click',()=>track('content_related_click',{target_slug:link.dataset.targetSlug})));const panel=document.querySelector('.qualified-hsp-plan');let timer=0,done=false;const observer=new IntersectionObserver(entries=>{const visible=entries.some(entry=>entry.isIntersecting&&entry.intersectionRatio>=.5);clearTimeout(timer);if(visible&&!done)timer=setTimeout(()=>{done=true;track('content_en_hsp_coping_plan_view');observer.disconnect()},500)},{threshold:[.5]});observer.observe(panel)})();
+  (()=>{const sent=new Set();const track=(name,params={})=>{const key=name+':'+(params.target_slug||'');if(sent.has(key))return;sent.add(key);gtag('event',name,{content_language:'en',content_slug:'hsp-coping-strategies-highly-sensitive',...params})};track('content_view');document.querySelectorAll('.primary-reset').forEach(link=>link.addEventListener('click',()=>track('content_cta_click',{target_slug:'sensory-reset'})));document.querySelectorAll('.triage-sub-btn').forEach(link=>link.addEventListener('click',()=>track('content_cta_click',{target_slug:link.dataset.targetSlug||'hsp-test'})));document.querySelectorAll('.related-link').forEach(link=>link.addEventListener('click',()=>track('content_related_click',{target_slug:link.dataset.targetSlug})));const panel=document.querySelector('.qualified-hsp-plan');let timer=0,done=false;const observer=new IntersectionObserver(entries=>{const visible=entries.some(entry=>entry.isIntersecting&&entry.intersectionRatio>=.5);clearTimeout(timer);if(visible&&!done)timer=setTimeout(()=>{done=true;track('content_en_hsp_coping_plan_view');observer.disconnect()},500)},{threshold:[.5]});observer.observe(panel)})();
   </script>
   <script>
     (function() {
