@@ -63,13 +63,13 @@
     var select=document.getElementById('language');if(select)select.value=lang;
     var canonical=document.querySelector('link[rel=canonical]');if(canonical)canonical.href='https://dopabrain.com/portal/tools/brain-game-workout.html'+(lang==='en'?'':'?lang='+lang);
     var og=document.querySelector('meta[property="og:url"]');if(og)og.content=canonical.href;
-    document.querySelectorAll('a[data-related],footer a,nav a').forEach(function(a){var url=new URL(a.getAttribute('href'),location.origin);if(url.origin===location.origin){if(lang!=='en')url.searchParams.set('lang',lang);else url.searchParams.delete('lang');a.href=url.pathname+(url.search?url.search:'')}});
+    document.querySelectorAll('a[data-related],footer a,nav a').forEach(function(a){var url=new URL(a.getAttribute('href'),location.origin);if(url.origin===location.origin){url.searchParams.set('lang',lang);a.href=url.pathname+(url.search?url.search:'')}});
     render();
   }
   function setSelected(group,value){selected[group]=String(value);var box=document.getElementById(group+'Choices');if(box)box.querySelectorAll('button').forEach(function(button){button.setAttribute('aria-pressed',button.dataset.value===selected[group]?'true':'false')})}
   function syncSelected(){if(state.plan&&state.plan.date===today()){selected.focus=state.plan.focus;selected.time=state.plan.time;selected.energy=state.plan.energy}setSelected('focus',selected.focus);setSelected('time',selected.time);setSelected('energy',selected.energy)}
   function roleLabel(role){return t(role==='warm'?'roleWarm':role==='finish'?'roleFinish':'roleFocus')}
-  function gameUrl(stage,index){var url=new URL(GAMES[stage.id].url,location.origin);if(lang!=='en')url.searchParams.set('lang',lang);url.searchParams.set('source','brain_game_workout');url.searchParams.set('stage',String(index+1));return url.pathname+url.search}
+  function gameUrl(stage,index){var url=new URL(GAMES[stage.id].url,location.origin);url.searchParams.set('lang',lang);url.searchParams.set('source','brain_game_workout');url.searchParams.set('stage',String(index+1));return url.pathname+url.search}
   function render(){
     var plan=state.plan&&state.plan.date===today()?state.plan:null;var streak=consecutiveStreak();
     document.getElementById('streak').textContent=streak;document.getElementById('completedSessions').textContent=state.history.length;document.getElementById('planStreak').textContent=streak;
