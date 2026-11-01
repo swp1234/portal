@@ -138,13 +138,13 @@ html{scroll-behavior:smooth}
 body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
 a{color:var(--primary);text-decoration:none;transition:color var(--transition)}
 a:hover{color:var(--accent)}
-.skip-link{position:absolute;top:-100%;left:16px;padding:8px 16px;background:var(--primary);color:#000;border-radius:8px;z-index:10001;font-weight:600}
+.skip-link{position:absolute;top:-100%;left:16px;padding:8px 16px;min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;background:var(--primary);color:#000;border-radius:8px;z-index:10001;font-weight:600}
 .skip-link:focus{top:16px}
 
 /* Header */
 .hero{position:relative;padding:48px 20px 32px;text-align:center;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 0%,rgba(16,185,129,0.12) 0%,transparent 60%),radial-gradient(ellipse at 70% 100%,rgba(168,85,247,0.1) 0%,transparent 60%);pointer-events:none}
-.hero-back{display:inline-block;margin-bottom:16px;font-size:13px;color:var(--text3);transition:color var(--transition)}
+.hero-back{display:inline-flex;align-items:center;min-height:44px;margin-bottom:12px;font-size:13px;color:var(--text3);padding:4px 0;transition:color var(--transition)}
 .hero-back:hover{color:var(--primary)}
 .hero h1{font-family:var(--heading);font-size:clamp(28px,6vw,42px);font-weight:800;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
 .hero-sub{font-size:clamp(14px,3vw,18px);color:var(--text2);margin-bottom:16px}
@@ -254,14 +254,14 @@ a:hover{color:var(--accent)}
 .cta-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:99px;font:600 15px var(--font);color:#000;background:linear-gradient(135deg,var(--primary),#34d399);transition:all var(--transition);text-decoration:none}
 .cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(16,185,129,0.3);color:#000}
 .cta-stack{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:18px}
-.cta-chip{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text);font-weight:700;transition:all var(--transition)}
+.cta-chip{display:inline-flex;align-items:center;justify-content:center;min-height:44px;gap:10px;padding:10px 16px;border-radius:999px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text);font-weight:700;transition:all var(--transition)}
 .cta-chip:hover{transform:translateY(-2px);border-color:rgba(16,185,129,0.32);background:rgba(16,185,129,0.08);color:var(--text)}
 .cta-chip-badge{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;padding:0 8px;border-radius:999px;background:rgba(16,185,129,0.14);color:var(--primary);font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase}
 .cta-chip-name{font-family:var(--heading);font-size:14px}
 
 /* Footer */
 footer{text-align:center;padding:24px;color:var(--text3);font-size:12px;border-top:1px solid var(--border);margin-top:32px}
-footer a{color:var(--text2)}
+footer a{color:var(--text2);min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center;padding:6px 10px}
 
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
@@ -617,6 +617,14 @@ document.addEventListener('DOMContentLoaded',()=>{
           destination:card.href,
           revenue_goal:'daily_0_10'
         });
+        if(typeof gtag==='function'){
+          gtag('event','content_cta_click',{
+            event_category:'engagement',
+            page_path:location.pathname,
+            target_url:card.href,
+            link_id:'tool_plan_'+(card.dataset.planSurface||'card')
+          });
+        }
       });
     });
   }
@@ -636,6 +644,14 @@ document.addEventListener('DOMContentLoaded',()=>{
           destination:card.href,
           revenue_goal:'daily_0_10'
         });
+        if(typeof gtag==='function'){
+          gtag('event','content_cta_click',{
+            event_category:'engagement',
+            page_path:location.pathname,
+            target_url:card.href,
+            link_id:'tool_library_'+(card.dataset.librarySurface||'card')
+          });
+        }
       });
     });
   }
@@ -655,6 +671,14 @@ document.addEventListener('DOMContentLoaded',()=>{
           destination:card.href,
           revenue_goal:'daily_0_10'
         });
+        if(typeof gtag==='function'){
+          gtag('event','content_cta_click',{
+            event_category:'engagement',
+            page_path:location.pathname,
+            target_url:card.href,
+            link_id:'tool_reset_'+(card.dataset.sensoryResetSurface||'card')
+          });
+        }
       });
     });
   }
@@ -674,6 +698,14 @@ document.addEventListener('DOMContentLoaded',()=>{
           destination:card.href,
           revenue_goal:'daily_0_10'
         });
+        if(typeof gtag==='function'){
+          gtag('event','content_cta_click',{
+            event_category:'engagement',
+            page_path:location.pathname,
+            target_url:card.href,
+            link_id:'tool_deck_'+(card.dataset.coupleDeckSurface||'card')
+          });
+        }
       });
     });
   }
@@ -688,6 +720,14 @@ document.addEventListener('DOMContentLoaded',()=>{
         destination:card.href,
         target_label:card.dataset.app || ''
       });
+      if(typeof gtag==='function'){
+        gtag('event','content_cta_click',{
+          event_category:'engagement',
+          page_path:location.pathname,
+          target_url:card.href,
+          link_id:'tool_featured_'+(card.dataset.app||'card')
+        });
+      }
     });
   });
 
@@ -701,6 +741,14 @@ document.addEventListener('DOMContentLoaded',()=>{
         destination:card.href,
         target_label:card.dataset.app || ''
       });
+      if(typeof gtag==='function'){
+        gtag('event','content_cta_click',{
+          event_category:'engagement',
+          page_path:location.pathname,
+          target_url:card.href,
+          link_id:'tool_routine_'+(card.dataset.app||'card')
+        });
+      }
     });
   });
 
@@ -714,6 +762,14 @@ document.addEventListener('DOMContentLoaded',()=>{
         destination:card.href,
         target_label:card.dataset.app || ''
       });
+      if(typeof gtag==='function'){
+        gtag('event','content_cta_click',{
+          event_category:'engagement',
+          page_path:location.pathname,
+          target_url:card.href,
+          link_id:'tool_grid_'+(card.dataset.app||card.dataset.cat||'card')
+        });
+      }
     });
   });
 
@@ -727,6 +783,14 @@ document.addEventListener('DOMContentLoaded',()=>{
         destination:link.href,
         target_label:link.dataset.app || ''
       });
+      if(typeof gtag==='function'){
+        gtag('event','content_cta_click',{
+          event_category:'engagement',
+          page_path:location.pathname,
+          target_url:link.href,
+          link_id:'tool_cta_'+(link.dataset.ctaSurface||'link')
+        });
+      }
     });
   });
 
@@ -746,6 +810,11 @@ document.addEventListener('DOMContentLoaded',()=>{
            var descEl = el.querySelector('.fc-desc,.tc-desc,.routine-desc,.quick-start-desc');
            if (nameEl) nameEl.textContent = getAppName(app, lang);
            if (descEl && typeof getAppDesc === 'function') descEl.textContent = getAppDesc(app, lang);
+           if (el.tagName === 'A' && app.url) {
+             var sep = app.url.indexOf('?') >= 0 ? '&' : '?';
+             var query = (lang ? 'lang=' + encodeURIComponent(lang) + '&' : '') + 'source=portal_tools';
+             el.setAttribute('href', app.url + sep + query);
+           }
          });
        }
        syncCatalogSchema();
