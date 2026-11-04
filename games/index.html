@@ -437,8 +437,27 @@ document.addEventListener('DOMContentLoaded',()=>{
           else el.textContent = getAppName(app, lang);
           if (descEl && typeof getAppDesc === 'function') descEl.textContent = getAppDesc(app, lang);
           if (tagEl && gameCategoryLabels[el.dataset.cat]) tagEl.textContent = gameCategoryLabels[el.dataset.cat];
+          if (el.tagName === 'A' && app.url) {
+            var sep = app.url.indexOf('?') >= 0 ? '&' : '?';
+            var query = (lang ? 'lang=' + encodeURIComponent(lang) + '&' : '') + 'source=portal_games';
+            el.setAttribute('href', app.url + sep + query);
+          }
         });
       }
+      var currentHubLang = (typeof i18n !== 'undefined' && typeof i18n.getCurrentLanguage === 'function')
+        ? i18n.getCurrentLanguage() : 'en';
+      document.querySelectorAll('.featured-card, .game-card, .practice-rails a, .palworld-rail-card, section a[data-app]').forEach(function(card) {
+        var href = card.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || card.dataset.app) return;
+        try {
+          var u = new URL(href, location.origin);
+          if (u.origin === location.origin && u.pathname.indexOf('/portal/blog/') !== 0) {
+            u.searchParams.set('lang', currentHubLang);
+            if (!u.searchParams.has('source')) u.searchParams.set('source', 'portal_games');
+            card.setAttribute('href', u.pathname + u.search + u.hash);
+          }
+        } catch(e) {}
+      });
     });
   } catch(e) { console.error('i18n:', e); }
 });
