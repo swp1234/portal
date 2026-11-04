@@ -38,6 +38,8 @@
   var target = document.querySelector('link[rel="alternate"][hreflang="' + lang + '"]');
   if (!target) return;
   var targetHref = target.href;
+  var canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.href = targetHref;
   var ogUrl = document.querySelector('meta[property="og:url"]');
   if (ogUrl) ogUrl.content = targetHref;
   var languageMeta = document.querySelector('meta[name="language"]');
@@ -60,7 +62,7 @@
   "publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},
   "mainEntity":{
     "@type":"ItemList",
-    "numberOfItems":44,
+    "numberOfItems":48,
     "itemListElement":[
       {"@type":"ListItem","position":1,"url":"https://dopabrain.com/stress-check/plan.html","name":"7-Day Stress Reset Plan"},
       {"@type":"ListItem","position":2,"url":"https://dopabrain.com/stress-check/script.html","name":"Boundary & Request Script Builder"},
@@ -81,35 +83,35 @@
       {"@type":"ListItem","position":17,"url":"https://dopabrain.com/portal/tools/decision-matrix.html","name":"Dilemma Decision Matrix"},
       {"@type":"ListItem","position":18,"url":"https://dopabrain.com/portal/tools/burnout-stress-differential.html","name":"Burnout vs Stress Matrix"},
       {"@type":"ListItem","position":19,"url":"https://dopabrain.com/portal/tools/dopamine-detox-protocol.html","name":"Dopamine Detox & Reset Protocol"},
-      {"@type":"ListItem","position":20,"url":"https://dopabrain.com/portal/tools/grounding-exercise.html","name":"5-4-3-2-1 Grounding Tool"},
-      {"@type":"ListItem","position":21,"url":"https://dopabrain.com/portal/tools/cognitive-load-calculator.html","name":"Cognitive Load & Brain Fog Calculator"},
-      {"@type":"ListItem","position":17,"url":"https://dopabrain.com/shopping-calc/","name":"Shopping Calc"},
-      {"@type":"ListItem","position":18,"url":"https://dopabrain.com/bmi-calculator/","name":"BMI Calculator"},
-      {"@type":"ListItem","position":19,"url":"https://dopabrain.com/tax-refund-preview/","name":"Tax Refund"},
-      {"@type":"ListItem","position":20,"url":"https://dopabrain.com/unit-converter/","name":"Unit Converter"},
-      {"@type":"ListItem","position":21,"url":"https://dopabrain.com/pomodoro-timer/","name":"Pomodoro Timer"},
-      {"@type":"ListItem","position":22,"url":"https://dopabrain.com/dday-counter/","name":"D-Day Counter"},
-      {"@type":"ListItem","position":23,"url":"https://dopabrain.com/reaction-test/","name":"Reaction Test"},
-      {"@type":"ListItem","position":24,"url":"https://dopabrain.com/typing-speed/","name":"Typing Speed"},
-      {"@type":"ListItem","position":25,"url":"https://dopabrain.com/qr-generator/","name":"QR Generator"},
-      {"@type":"ListItem","position":26,"url":"https://dopabrain.com/color-palette/","name":"Color Palette"},
-      {"@type":"ListItem","position":27,"url":"https://dopabrain.com/password-generator/","name":"Password Gen"},
-      {"@type":"ListItem","position":28,"url":"https://dopabrain.com/detox-timer/","name":"Detox Timer"},
-      {"@type":"ListItem","position":29,"url":"https://dopabrain.com/white-noise/","name":"White Noise"},
-      {"@type":"ListItem","position":30,"url":"https://dopabrain.com/affirmation/","name":"Affirmation"},
-      {"@type":"ListItem","position":31,"url":"https://dopabrain.com/habit-tracker/","name":"Habit Tracker"},
-      {"@type":"ListItem","position":32,"url":"https://dopabrain.com/todo-list/","name":"Todo List"},
-      {"@type":"ListItem","position":33,"url":"https://dopabrain.com/routine-planner/","name":"Routine Planner"},
-      {"@type":"ListItem","position":34,"url":"https://dopabrain.com/file-extension-converter/","name":"Extension Converter"},
-      {"@type":"ListItem","position":35,"url":"https://dopabrain.com/file-size-converter/","name":"File Size"},
-      {"@type":"ListItem","position":36,"url":"https://dopabrain.com/image-format-converter/","name":"Image Converter"},
-      {"@type":"ListItem","position":37,"url":"https://dopabrain.com/image-size-converter/","name":"Image Size"},
-      {"@type":"ListItem","position":38,"url":"https://dopabrain.com/aspect-ratio-calculator/","name":"Aspect Ratio"},
-      {"@type":"ListItem","position":39,"url":"https://dopabrain.com/data-transfer-calculator/","name":"Transfer Time"},
-      {"@type":"ListItem","position":40,"url":"https://dopabrain.com/unix-timestamp-converter/","name":"Unix Time"},
-      {"@type":"ListItem","position":41,"url":"https://dopabrain.com/timezone-converter/","name":"Time Zone"},
-      {"@type":"ListItem","position":42,"url":"https://dopabrain.com/text-case-converter/","name":"Case Converter"},
-      {"@type":"ListItem","position":43,"url":"https://dopabrain.com/json-formatter/","name":"JSON Formatter"}
+      {"@type":"ListItem","position":20,"url":"https://dopabrain.com/portal/tools/grounding-exercise.html","name":"5-4-3-2-1 Sensory Grounding Tool"},
+      {"@type":"ListItem","position":21,"url":"https://dopabrain.com/portal/tools/cognitive-load-calculator.html","name":"Cognitive Load Calculator"},
+      {"@type":"ListItem","position":22,"url":"https://dopabrain.com/shopping-calc/","name":"Shopping Calc"},
+      {"@type":"ListItem","position":23,"url":"https://dopabrain.com/bmi-calculator/","name":"BMI Calculator"},
+      {"@type":"ListItem","position":24,"url":"https://dopabrain.com/tax-refund-preview/","name":"Tax Refund"},
+      {"@type":"ListItem","position":25,"url":"https://dopabrain.com/unit-converter/","name":"Unit Converter"},
+      {"@type":"ListItem","position":26,"url":"https://dopabrain.com/pomodoro-timer/","name":"Pomodoro Timer"},
+      {"@type":"ListItem","position":27,"url":"https://dopabrain.com/dday-counter/","name":"D-Day Counter"},
+      {"@type":"ListItem","position":28,"url":"https://dopabrain.com/reaction-test/","name":"Reaction Test"},
+      {"@type":"ListItem","position":29,"url":"https://dopabrain.com/typing-speed/","name":"Typing Speed"},
+      {"@type":"ListItem","position":30,"url":"https://dopabrain.com/qr-generator/","name":"QR Generator"},
+      {"@type":"ListItem","position":31,"url":"https://dopabrain.com/color-palette/","name":"Color Palette"},
+      {"@type":"ListItem","position":32,"url":"https://dopabrain.com/password-generator/","name":"Password Gen"},
+      {"@type":"ListItem","position":33,"url":"https://dopabrain.com/detox-timer/","name":"Detox Timer"},
+      {"@type":"ListItem","position":34,"url":"https://dopabrain.com/white-noise/","name":"White Noise"},
+      {"@type":"ListItem","position":35,"url":"https://dopabrain.com/affirmation/","name":"Affirmation"},
+      {"@type":"ListItem","position":36,"url":"https://dopabrain.com/habit-tracker/","name":"Habit Tracker"},
+      {"@type":"ListItem","position":37,"url":"https://dopabrain.com/todo-list/","name":"Todo List"},
+      {"@type":"ListItem","position":38,"url":"https://dopabrain.com/routine-planner/","name":"Routine Planner"},
+      {"@type":"ListItem","position":39,"url":"https://dopabrain.com/file-extension-converter/","name":"Extension Converter"},
+      {"@type":"ListItem","position":40,"url":"https://dopabrain.com/file-size-converter/","name":"File Size"},
+      {"@type":"ListItem","position":41,"url":"https://dopabrain.com/image-format-converter/","name":"Image Converter"},
+      {"@type":"ListItem","position":42,"url":"https://dopabrain.com/image-size-converter/","name":"Image Size"},
+      {"@type":"ListItem","position":43,"url":"https://dopabrain.com/aspect-ratio-calculator/","name":"Aspect Ratio"},
+      {"@type":"ListItem","position":44,"url":"https://dopabrain.com/data-transfer-calculator/","name":"Transfer Time"},
+      {"@type":"ListItem","position":45,"url":"https://dopabrain.com/unix-timestamp-converter/","name":"Unix Time"},
+      {"@type":"ListItem","position":46,"url":"https://dopabrain.com/timezone-converter/","name":"Time Zone"},
+      {"@type":"ListItem","position":47,"url":"https://dopabrain.com/text-case-converter/","name":"Case Converter"},
+      {"@type":"ListItem","position":48,"url":"https://dopabrain.com/json-formatter/","name":"JSON Formatter"}
     ]
   }
 }
