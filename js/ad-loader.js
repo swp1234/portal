@@ -58,7 +58,9 @@
     }
 
     function isScanRisk() {
-        return window.location.pathname.indexOf('/portal/blog/') === 0 &&
+        var path = window.location.pathname;
+        var isTargetSection = path.indexOf('/portal/blog/') === 0 || path.indexOf('/portal/tools/') === 0;
+        return isTargetSection &&
             detectMarket() === 'sg' &&
             getDeviceType() === 'desktop' &&
             !document.referrer;
