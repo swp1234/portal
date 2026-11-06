@@ -814,7 +814,8 @@ document.addEventListener('DOMContentLoaded',()=>{
            if (descEl && typeof getAppDesc === 'function') descEl.textContent = getAppDesc(app, lang);
            if (el.tagName === 'A' && app.url) {
              var sep = app.url.indexOf('?') >= 0 ? '&' : '?';
-             var source = el.dataset.planSurface ? 'portal_tools_' + el.dataset.planSurface : 'portal_tools';
+             var surface = el.dataset.planSurface || el.dataset.sensoryResetSurface || el.dataset.sensoryMapSurface || el.dataset.librarySurface || el.dataset.coupleDeckSurface || (el.classList.contains('tool-card') ? 'catalog' : el.classList.contains('featured-card') ? 'featured' : '');
+             var source = surface ? 'portal_tools_' + surface : 'portal_tools';
              var query = (lang ? 'lang=' + encodeURIComponent(lang) + '&' : '') + 'source=' + source;
              el.setAttribute('href', app.url + sep + query);
            }

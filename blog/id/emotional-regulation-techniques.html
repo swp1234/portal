@@ -147,7 +147,6 @@
     </article></main>
     <footer class="footer">DopaBrain · Halaman ini tidak mengumpulkan pilihan emosi, situasi, atau tindakan.</footer>
   </div>
-  <script src="/portal/js/cross-promo.js" defer></script>
   <script>
   (()=>{const track=(name,params={})=>{if(typeof window.gtag==='function')window.gtag('event',name,{event_category:'content',content_id:'id_emotion_regulation_action',content_language:'id',...params})};track('content_view');let sent=false;const action=document.querySelector('[data-qualified-action]');const qualify=()=>{if(sent)return;sent=true;track('content_id_emotion_action_view',{interaction_surface:'now_next_later'})};if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting&&entry.intersectionRatio>=.35)){setTimeout(()=>{if(action.getBoundingClientRect().top<innerHeight&&action.getBoundingClientRect().bottom>0)qualify()},500);observer.disconnect()}},{threshold:[.35]});observer.observe(action)}document.querySelectorAll('[data-cta-position]').forEach(link=>link.addEventListener('click',()=>track('content_cta_click',{target_slug:'emotion_regulation_planner',cta_position:link.dataset.ctaPosition})));document.querySelectorAll('[data-related]').forEach(link=>link.addEventListener('click',()=>track('content_related_click',{destination_slug:link.dataset.related})));})();
   </script>
