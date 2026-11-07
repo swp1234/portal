@@ -11,9 +11,22 @@
     var BLOG_BRIDGE_IDS = ['stress-check', 'hsp-test', 'future-self', 'attachment-style'];
     var EN_TOOL_BLOG_PATTERN = /\/portal\/blog\/en\/(?:qr-generator-guide|unit-converter-guide|password-generator-guide|typing-speed-test-guide|habit-tracker-guide|pomodoro-timer-guide|todo-list-guide|json-formatter-guide|free-games)\.html$/;
     var EN_TOOL_BRIDGE_IDS = ['unit-converter', 'password-generator', 'pomodoro-timer', 'bmi-calculator'];
+    var SUSPENDED_IDS = [
+        'dark-core', 'daily-tarot', 'numerology', 'flappy-bird',
+        'brick-breaker', 'snake-game', 'maze-runner', 'zigzag-runner',
+        'stack-tower', 'number-puzzle', 'word-guess', 'emoji-merge',
+        'sky-runner', 'pong-game', 'idle-clicker', 'color-memory',
+        'road-shooter', 'zodiac-match', 'mbti-coffee', 'mbti-career',
+        'word-scramble', 'red-flag', 'luck-meter', 'sleep-animal',
+        'rizz-score', 'delulu-test', 'brainrot-quiz', 'shadow-work',
+        'past-life'
+    ];
+    function isSuspendedApp(id) {
+        return SUSPENDED_IDS.indexOf(id) !== -1;
+    }
     var BLOG_TOPIC_STRATEGIES = [
         { key: 'self_check', pattern: /(?:hsp|sensory|highly-sensitive|emotional-regulation|emotion-management|cognitive-distortions|rumination|people-pleasing|trauma-response|attachment|avoidant|anxious|inner-child|shadow-work)/, ids: ['stress-check', 'hsp-test', 'future-self', 'attachment-style'], title: 'Try a matching self-check' },
-        { key: 'fortune', pattern: /(?:tarot|past-life|dream|zodiac|fortune|numerology)/, ids: ['daily-tarot', 'dream-fortune', 'numerology', 'zodiac-match'], title: 'Open a quick reading' },
+        { key: 'fortune', pattern: /(?:tarot|past-life|dream|zodiac|fortune|numerology)/, ids: ['future-self', 'stress-check', 'hsp-test', 'attachment-style'], title: 'Explore your inner self' },
         { key: 'productivity', pattern: /(?:habit|routine|pomodoro|todo|detox|focus|dopamine)/, ids: ['pomodoro-timer', 'detox-timer', 'future-self', 'stress-check'], title: 'Turn this into a quick tool' },
         { key: 'game', pattern: /(?:2048|brick|reaction|typing|free-games|browser-games|game-guide|casual-games|puzzle)/, ids: ['iq-test', 'color-blindness', 'animal-personality', 'kpop-position'], title: 'Play the related game now' },
         { key: 'kpop', pattern: /(?:kpop|k-pop)/, ids: ['kpop-position', 'aura-score', 'color-blindness', 'animal-personality'], title: 'Try the related viral test' },
@@ -826,11 +839,14 @@
             recommendationStrategy = 'app_revenue_sprint';
             revenueGoal = 'daily_0_20';
         } else {
-            // Get related apps: same category first, then popular
-            var sameCategory = apps.filter(function(a) {
+            // Get related apps: same category first, then popular (filter out suspended apps)
+            var activeApps = (apps || []).filter(function(a) {
+                return a && a.id && !isSuspendedApp(a.id);
+            });
+            var sameCategory = activeApps.filter(function(a) {
                 return a.id !== path && a.category === current.category;
             });
-            var otherPopular = apps.filter(function(a) {
+            var otherPopular = activeApps.filter(function(a) {
                 return a.id !== path && a.category !== current.category && a.isPopular;
             });
 
@@ -843,7 +859,7 @@
             picks = picks.concat(sameCategory.slice(0, 2));
             picks = picks.concat(otherPopular.slice(0, 4 - picks.length));
             if (picks.length < 4) {
-                var remaining = apps.filter(function(a) {
+                var remaining = activeApps.filter(function(a) {
                     return a.id !== path && picks.indexOf(a) === -1;
                 });
                 shuffle(remaining);
