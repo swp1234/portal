@@ -494,6 +494,14 @@
       navigator.vibrate(20);
     }
 
+    if (typeof gtag === 'function' && checkedState[currentStage][idx]) {
+      gtag('event', 'grounding_item_checked', {
+        event_category: 'grounding_exercise',
+        stage: currentStage,
+        item_index: idx
+      });
+    }
+
     renderStage();
   }
 
@@ -503,12 +511,31 @@
       checkedState[currentStage][i] = true;
     }
 
+    var fromStage = currentStage;
     if (currentStage > 1) {
       currentStage--;
     } else {
       currentStage = 0; // complete
     }
     renderStage();
+
+    if (typeof gtag === 'function') {
+      if (currentStage === 0) {
+        var durationSec = Math.round((Date.now() - startTime) / 1000);
+        gtag('event', 'grounding_complete', {
+          event_category: 'grounding_exercise',
+          duration_seconds: durationSec,
+          language: currentLang
+        });
+      } else {
+        gtag('event', 'grounding_step_next', {
+          event_category: 'grounding_exercise',
+          from_step: fromStage,
+          to_step: currentStage,
+          language: currentLang
+        });
+      }
+    }
   }
 
   function goPrev() {
@@ -519,6 +546,12 @@
   }
 
   function runCyclicSigh() {
+    if (typeof gtag === 'function') {
+      gtag('event', 'grounding_sigh_start', {
+        event_category: 'grounding_exercise',
+        language: currentLang
+      });
+    }
     var dict = I18N[currentLang] || I18N.en;
     var instr = document.getElementById('sighInstruction');
     var fill = document.getElementById('sighTimerFill');
@@ -572,6 +605,12 @@
   function copyLog() {
     var text = getShareText();
     var dict = I18N[currentLang] || I18N.en;
+    if (typeof gtag === 'function') {
+      gtag('event', 'grounding_share', {
+        event_category: 'grounding_exercise',
+        method: 'copy'
+      });
+    }
     navigator.clipboard.writeText(text).then(function () {
       var copyBtn = document.getElementById('copyBtn');
       var orig = copyBtn.textContent;
@@ -586,6 +625,12 @@
 
   function shareLog() {
     var text = getShareText();
+    if (typeof gtag === 'function') {
+      gtag('event', 'grounding_share', {
+        event_category: 'grounding_exercise',
+        method: 'native_share'
+      });
+    }
     if (navigator.share) {
       navigator.share({
         title: "DopaBrain 5-4-3-2-1 Grounding Session",
