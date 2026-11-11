@@ -34,7 +34,7 @@
 
     <!-- Schema.org Article JSON-LD -->
 
-    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"MBTI Compatibility Chart — All 256 Pairings Explained","description":"Which MBTI types are most compatible? Full compatibility chart for all 16 types — best romantic matches, friendship pairings, worst combinations, and communication tips.","image":"https://dopabrain.com/portal/icon-512.svg","datePublished":"2026-02-09","dateModified":"2026-10-29","inLanguage":"en","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/en/mbti-compatibility-guide.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog EN","item":"https://dopabrain.com/portal/blog/en/"},{"@type":"ListItem","position":3,"name":"MBTI Compatibility Chart — All 256 Pairings Explained","item":"https://dopabrain.com/portal/blog/en/mbti-compatibility-guide.html"}]}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"MBTI Compatibility Chart — All 256 Pairings Explained","description":"Which MBTI types are most compatible? Full compatibility chart for all 16 types — best romantic matches, friendship pairings, worst combinations, and communication tips.","image":"https://dopabrain.com/portal/icon-512.svg","datePublished":"2026-02-09","dateModified":"2026-11-12","inLanguage":"en","author":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com"},"publisher":{"@type":"Organization","name":"DopaBrain","url":"https://dopabrain.com","logo":{"@type":"ImageObject","url":"https://dopabrain.com/portal/icon-512.svg"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://dopabrain.com/portal/blog/en/mbti-compatibility-guide.html"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"DopaBrain","item":"https://dopabrain.com/"},{"@type":"ListItem","position":2,"name":"Blog EN","item":"https://dopabrain.com/portal/blog/en/"},{"@type":"ListItem","position":3,"name":"MBTI Compatibility Chart — All 256 Pairings Explained","item":"https://dopabrain.com/portal/blog/en/mbti-compatibility-guide.html"}]}]}</script>
 
     <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8GSWM40TV"></script>
@@ -1240,11 +1240,11 @@
                     </div>
 
                     <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
-                        <a id="mbti-deepdive-btn" href="/mbti-love/?lang=en&source=compat_screener" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; min-height: 44px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 0.95rem; box-shadow: 0 6px 16px rgba(236, 72, 153, 0.3);">
-                            <span>Take Full 12-Question Couple Test →</span>
+                        <a id="mbti-deepdive-btn" href="/portal/mbti/enfp.html?partner=INFJ&amp;source=compat_screener" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; min-height: 44px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: white; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 0.95rem; box-shadow: 0 6px 16px rgba(236, 72, 153, 0.3);">
+                            <span id="mbti-deepdive-label">Explore ENFP Deep Dive &amp; Matches &rarr;</span>
                         </a>
-                        <a href="/portal/mbti/?lang=en" style="display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 18px; background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600;">
-                            <span>Explore 16×16 Matrix</span>
+                        <a href="/attachment-style/?lang=en&amp;source=compat_screener" style="display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 18px; background: rgba(255,255,255,0.06); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600;">
+                            <span>Attachment Style Quiz &rarr;</span>
                         </a>
                     </div>
                 </section>
@@ -1739,7 +1739,9 @@
             tierEl.textContent = tier;
             descEl.textContent = desc;
             if (deepBtn) {
-                deepBtn.setAttribute('href', '/mbti-love/?lang=en&type1=' + u + '&type2=' + p + '&source=compat_screener');
+                deepBtn.setAttribute('href', '/portal/mbti/' + u.toLowerCase() + '.html?partner=' + encodeURIComponent(p) + '&source=compat_screener');
+                var label = document.getElementById('mbti-deepdive-label');
+                if (label) label.textContent = 'Explore ' + u + ' Deep Dive & Matches →';
             }
         }
 
