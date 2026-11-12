@@ -217,6 +217,27 @@
             }
         }
 
+
+        /* 30-Second Interactive Trajectory Screener */
+        .screener-box { background: linear-gradient(145deg, rgba(0,206,201,0.12), rgba(26,26,46,0.95)); border: 1.5px solid rgba(0,206,201,0.35); border-radius: 18px; padding: 26px 22px; margin: 32px 0; }
+        .screener-head { text-align: center; margin-bottom: 18px; }
+        .screener-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: var(--primary-light); font-size: 11px; font-weight: 800; letter-spacing: .08em; margin-bottom: 8px; }
+        .screener-head h3 { margin: 6px 0 8px; color: var(--primary-light); font-size: 1.25rem; font-weight: 700; }
+        .screener-head p { margin: 0; color: #b8bcc4; font-size: 0.92rem; }
+        .screener-list { display: flex; flex-direction: column; gap: 10px; margin: 18px 0; }
+        .screener-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: rgba(30,41,59,0.7); border: 1px solid rgba(255,255,255,0.18); border-radius: 12px; cursor: pointer; min-height: 48px; touch-action: manipulation; transition: all .2s; }
+        .screener-item:hover { border-color: var(--primary-light); background: rgba(255,255,255,0.08); }
+        .screener-item.is-checked { border-color: var(--primary-light); background: rgba(0,206,201,0.22); }
+        .screener-item input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
+        .screener-item .screener-text { font-size: 14.5px; color: #f8f9fa; line-height: 1.4; text-align: left; }
+        .screener-feedback { text-align: center; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.18); }
+        .screener-score { font-size: 15px; font-weight: 700; color: var(--primary-light); margin-bottom: 6px; }
+        .screener-feedback p { font-size: 14px; color: #b8bcc4; margin-bottom: 16px; min-height: 20px; }
+        .screener-actions { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .screener-btn { display: inline-flex; align-items: center; justify-content: center; width: 100%; max-width: 420px; min-height: 48px; padding: 12px 24px; background: linear-gradient(135deg, #00cec9, #00b5ad); color: #fff; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 15px; box-shadow: 0 4px 14px rgba(0,0,0,0.3); transition: all 0.25s; }
+        .screener-btn:hover { transform: translateY(-1px); opacity: 0.95; color: #fff; }
+        .screener-sub-btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; color: var(--primary-light); text-decoration: none; font-size: 13.5px; font-weight: 600; min-height: 44px; line-height: 24px; }
+        .screener-sub-btn:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -277,6 +298,43 @@
 
             <!-- Top Ad Slot -->
 
+
+            
+            <div class="screener-box" id="futureSelfScreener" aria-labelledby="futureSelfHead">
+                <div class="screener-head">
+                    <span class="screener-badge">30-SECOND TRAJECTORY CHECK</span>
+                    <h3 id="futureSelfHead">What Dominates Your 10-Year Life Trajectory?</h3>
+                    <p>Select the drivers that best represent your core daily motivations:</p>
+                </div>
+                <div class="screener-list" role="group" aria-label="30-Second Trajectory Check">
+                    <label class="screener-item">
+                        <input type="checkbox" class="fs-chk" value="1">
+                        <span class="screener-text"><strong>Strategic Vision &amp; Scale:</strong> Driven by building systems, scaling ventures, and leading teams toward tangible milestones.</span>
+                    </label>
+                    <label class="screener-item">
+                        <input type="checkbox" class="fs-chk" value="1">
+                        <span class="screener-text"><strong>Creative Mastery &amp; Craft:</strong> Prioritizing authentic self-expression, storytelling, aesthetic perfection, or unconventional innovation.</span>
+                    </label>
+                    <label class="screener-item">
+                        <input type="checkbox" class="fs-chk" value="1">
+                        <span class="screener-text"><strong>Autonomy &amp; Global Exploration:</strong> Valuing location independence, lifestyle freedom, and rapid adaptation over rigid corporate ladders.</span>
+                    </label>
+                    <label class="screener-item">
+                        <input type="checkbox" class="fs-chk" value="1">
+                        <span class="screener-text"><strong>Wisdom, Mentorship &amp; Empathy:</strong> Focused on deep psychological insight, helping others overcome adversity, or intellectual research.</span>
+                    </label>
+                </div>
+                <div class="screener-feedback">
+                    <div class="screener-score">
+                        <span id="fsCount">0</span> / 4 Trajectory Drivers Active
+                    </div>
+                    <p id="fsVerdict">Check one or more drivers to forecast your projected future archetype cluster.</p>
+                    <div class="screener-actions">
+                        <a class="screener-btn" href="/future-self/?lang=en&amp;source=blog_en_future_self_screener" data-content-surface="cta" data-target-slug="future-self">Explore Your Complete 10-Year Trajectory &rarr;</a>
+                        <a class="screener-sub-btn" href="/brain-type/?lang=en&amp;source=blog_en_future_self_screener" data-content-surface="cta" data-target-slug="brain-type">Analyze Cognitive Thinking Style &rarr;</a>
+                    </div>
+                </div>
+            </div>
 
             <h2 id="how-it-works">How It Works</h2>
 
@@ -596,6 +654,39 @@
                 }
             }, true);
         })();
+    </script>
+
+
+    <script>
+    (function initFutureSelfScreener() {
+        var box = document.getElementById('futureSelfScreener');
+        if (!box) return;
+        var chks = box.querySelectorAll('.fs-chk');
+        var countEl = document.getElementById('fsCount');
+        var verdictEl = document.getElementById('fsVerdict');
+        var verdicts = [
+            "Check one or more drivers to forecast your projected future archetype cluster.",
+            "Single-Focus Driver: You possess clear primary momentum. Complete the 12-question simulation to identify secondary balancing traits.",
+            "Dual-Vector Strategist: High balance between vision and execution. Strong affinity for Leader or Innovator archetypes.",
+            "Multidimensional Pathfinder: Versatile potential spanning creative mastery, leadership, and autonomy. Ready for executive evolution.",
+            "Polymath Synthesizer: Rare convergence of strategy, craft, autonomy, and purpose. Map your full 8-archetype breakdown."
+        ];
+        function update() {
+            var checked = 0;
+            chks.forEach(function(c) {
+                var parent = c.closest('.screener-item');
+                if (c.checked) {
+                    checked++;
+                    if (parent) parent.classList.add('is-checked');
+                } else {
+                    if (parent) parent.classList.remove('is-checked');
+                }
+            });
+            if (countEl) countEl.textContent = checked;
+            if (verdictEl) verdictEl.textContent = verdicts[checked] || verdicts[0];
+        }
+        chks.forEach(function(c) { c.addEventListener('change', update); });
+    })();
     </script>
 
 </body>
