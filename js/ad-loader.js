@@ -57,6 +57,19 @@
         return !!document.querySelector('script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]');
     }
 
+    function isLocalOrPreviewHost() {
+        var protocol = String((window.location && window.location.protocol) || '').toLowerCase();
+        var host = String((window.location && window.location.hostname) || '').toLowerCase();
+        if (protocol === 'file:') return true;
+        if (!host) return true;
+        return host === 'localhost' ||
+            host === '127.0.0.1' ||
+            host === '0.0.0.0' ||
+            host === '::1' ||
+            host === '[::1]' ||
+            host.slice(-6) === '.local';
+    }
+
     function isScanRisk() {
         var path = window.location.pathname;
         var isTargetSection = path.indexOf('/portal/blog/') === 0 || path.indexOf('/portal/tools/') === 0;
@@ -107,6 +120,12 @@
             document.removeEventListener('visibilitychange', onVisible);
             requestAdsense(reason + '_after_visible');
         });
+    }
+
+    if (isLocalOrPreviewHost()) {
+        window.__dopabrainAdsenseLoadState.delayed = true;
+        window.__dopabrainAdsenseLoadState.delayReason = 'local_preview_host';
+        return;
     }
 
     if (!isScanRisk()) {
