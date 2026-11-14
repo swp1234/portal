@@ -50,6 +50,9 @@
         try {
             await i18n.loadTranslations(i18n.getCurrentLanguage());
             i18n.updateUI();
+            if (typeof i18n.syncSeoState === 'function') {
+                i18n.syncSeoState(i18n.getCurrentLanguage(), false);
+            }
         } catch (e) {
             console.warn('i18n load failed:', e.message);
         }
