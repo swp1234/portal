@@ -35,8 +35,60 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebApplication","name":"Palworld Server Settings Generator","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","url":"https://dopabrain.com/portal/tools/palworld-server-settings.html","softwareVersion":"1.0.3 docs contract","dateModified":"2026-10-31","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Generate a PalWorldSettings.ini starter block and browse Palworld dedicated server settings, commands, backups, mods and troubleshooting information."}
   </script>
+    <style>
+        body.has-revenue-sticky-cta { padding-bottom: 112px; }
+        .revenue-sticky-cta {
+            position: fixed;
+            left: 50%;
+            bottom: calc(16px + env(safe-area-inset-bottom));
+            transform: translateX(-50%);
+            width: min(720px, calc(100vw - 24px));
+            min-height: 54px;
+            z-index: 2147483200;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #fff;
+            text-decoration: none;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 14px;
+            box-shadow: 0 18px 38px rgba(0, 0, 0, 0.38), 0 10px 30px rgba(124, 58, 237, 0.28);
+            box-sizing: border-box;
+        }
+        .revenue-sticky-cta strong { display: block; color: #fff; font-size: 14.5px; line-height: 1.25; }
+        .revenue-sticky-cta span { display: block; color: rgba(255, 255, 255, 0.88); font-size: 12px; line-height: 1.35; }
+        .revenue-sticky-cta .sticky-cta-action {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            min-height: 40px;
+            padding: 8px 13px;
+            color: #7c3aed;
+            background: #fff;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        .revenue-sticky-cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+        @media (max-width: 480px) {
+            body.has-revenue-sticky-cta { padding-bottom: 152px; }
+            .revenue-sticky-cta { bottom: calc(74px + env(safe-area-inset-bottom)); padding: 11px 13px; gap: 10px; }
+            .revenue-sticky-cta strong { font-size: 13.5px; }
+            .revenue-sticky-cta span { font-size: 11px; }
+        }
+</style>
+  <style>
+        .sizing-wrap { overflow-x: auto; max-width: 100%; margin-top: 12px; }
+        .sizing-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        .sizing-table th, .sizing-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.12); text-align: left; }
+        .sizing-table th { color: var(--cyan, #22d3ee); font-weight: 700; }
+    </style>
 </head>
-<body data-palworld-contract="2026-08-30">
+<body data-palworld-contract="2026-08-30" class="has-revenue-sticky-cta">
   <a class="skip" href="#generator" data-i18n="skip">Skip to generator</a>
   <header class="hero">
     <nav>
@@ -160,6 +212,25 @@
       </div>
     </section>
 
+    
+    <section id="sizing-matrix" class="panel">
+      <p class="kicker">CAPACITY GUIDE</p>
+      <h2>Recommended Server RAM, CPU &amp; Base-Cap Pairing</h2>
+      <p class="section-lead">Pair your generated INI limits with realistic hardware headroom so mid-game breeding bases do not stall server tick rates.</p>
+      <div class="sizing-wrap">
+        <table class="sizing-table">
+          <thead>
+            <tr><th>Group Size</th><th>Recommended RAM</th><th>Suggested BaseCampMaxWorkers</th><th>Drop &amp; Raid Hygiene</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>2–4 Co-op Friends</td><td>16 GB+</td><td>15–20 workers</td><td>Daily restart + keep <code>MaxItemNum</code> &le; 3000</td></tr>
+            <tr><td>5–12 Squad Server</td><td>24–32 GB</td><td>15 workers (strict cap)</td><td>Enable rotating backups + limit <code>BaseCampMaxNum</code></td></tr>
+            <tr><td>13–32 Public / PvP</td><td>32–64 GB NVMe</td><td>12–15 workers</td><td>Pair with <a href="palworld-server-troubleshooter.html?source=server_matrix">Lag &amp; Save Troubleshooter</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <section class="panel sources">
       <h2 data-i18n="sourcesTitle">Official sources and scope</h2>
       <p data-i18n="sourcesBody">Setting names and operational notes are based on Pocketpair's official Palworld Server Guide version 1.0.3. This independent tool is not affiliated with Pocketpair. Game updates may change defaults or behavior.</p>
@@ -175,5 +246,36 @@
   <div id="toast" role="status" aria-live="polite"></div>
   <script src="../js/palworld-server-settings.js?v=20260830a" defer></script>
   <script src="../js/cross-promo.js" defer></script>
+
+    <a class="revenue-sticky-cta" href="/portal/tools/palworld-base-planner.html?source=palworld_server_sticky" data-content-surface="cta" data-target-slug="palworld-base-planner" aria-label="Open Palworld Base Workforce Planner">
+        <div>
+            <strong>Next: optimize your Palworld base layout</strong>
+            <span>Assign worker skills & production zones before launching</span>
+        </div>
+        <span class="sticky-cta-action">Base Planner →</span>
+    </a>
+    <script>
+      (function () {
+        var el = document.querySelector('.revenue-sticky-cta');
+        if (!el || typeof gtag !== 'function') return;
+        gtag('event', 'content_sticky_cta_view', {
+          event_category: 'content',
+          page_path: location.pathname,
+          content_locale: 'en',
+          cta_surface: 'sticky_revenue_cta',
+          target_slug: 'palworld-base-planner'
+        });
+        el.addEventListener('click', function () {
+          gtag('event', 'content_cta_click', {
+            event_category: 'content',
+            page_path: location.pathname,
+            content_locale: 'en',
+            cta_surface: 'sticky_revenue_cta',
+            target_slug: 'palworld-base-planner',
+            link_url: el.href
+          });
+        });
+      })();
+    </script>
 </body>
 </html>
