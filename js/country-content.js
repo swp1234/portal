@@ -323,11 +323,8 @@
     }
 
     function withTracking(href, market, surface, item) {
-        var glue = href.indexOf('?') === -1 ? '?' : '&';
-        return href + glue
-            + 'utm_source=country_slot'
-            + '&utm_medium=' + encodeURIComponent(surface || 'hub')
-            + '&utm_campaign=' + encodeURIComponent(market + '_' + item.key);
+        // Internal links rely on the country_content_click GA4 event so UTM params do not split sessions.
+        return href;
     }
 
     function getMarketConfig(market) {
