@@ -123,7 +123,7 @@
     document.documentElement.lang=lang;$('language').value=lang;
     document.querySelectorAll('[data-i18n]').forEach(el=>el.textContent=t(el.dataset.i18n));
     document.querySelectorAll('[data-preserve-lang]').forEach(a=>{const u=new URL(a.href,location.href);u.searchParams.set('lang',lang);a.href=u.href});
-    const u=new URL(location.href);u.searchParams.set('lang',lang);document.querySelector('link[rel=canonical]').href=u.href;document.querySelector('meta[property="og:url"]').content=u.href;
+    const u=new URL(location.pathname,location.origin);if(lang!=='en'||new URLSearchParams(location.search).has('lang'))u.searchParams.set('lang',lang);document.querySelector('link[rel=canonical]').href=u.href;document.querySelector('meta[property="og:url"]').content=u.href;
     document.title=`${t('title')} · DopaBrain`;
   }
   function renderQuestion(){
