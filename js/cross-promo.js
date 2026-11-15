@@ -1161,13 +1161,21 @@
         }
 
         function getStickySprintCopy(locale) {
-            if (locale === 'zh') {
-                return { kicker: '60 秒快速测试', action: '开始', close: '关闭' };
-            }
-            if (locale === 'ko') {
-                return { kicker: '60초 빠른 테스트', action: '시작', close: '닫기' };
-            }
-            return { kicker: '60-second test', action: 'Start', close: 'Dismiss' };
+            var copyByLocale = {
+                zh: { kicker: '60 秒快速测试', action: '开始', close: '关闭' },
+                ko: { kicker: '60초 빠른 테스트', action: '시작', close: '닫기' },
+                ja: { kicker: '60秒クイック診断', action: '始める', close: '閉じる' },
+                fr: { kicker: 'Test 60 s', action: 'Lancer', close: 'Fermer' },
+                de: { kicker: '60-Sek.-Test', action: 'Starten', close: 'Schließen' },
+                es: { kicker: 'Test de 60 s', action: 'Empezar', close: 'Cerrar' },
+                pt: { kicker: 'Teste de 60 s', action: 'Iniciar', close: 'Fechar' },
+                id: { kicker: 'Tes 60 detik', action: 'Mulai', close: 'Tutup' },
+                tr: { kicker: '60 sn test', action: 'Başlat', close: 'Kapat' },
+                ru: { kicker: 'Тест за 60 с', action: 'Начать', close: 'Закрыть' },
+                hi: { kicker: '60-सेकंड टेस्ट', action: 'शुरू करें', close: 'बंद करें' },
+                en: { kicker: '60-second test', action: 'Start', close: 'Dismiss' }
+            };
+            return copyByLocale[locale] || copyByLocale.en;
         }
 
         function getStickyPrimaryApp(itemList, revenueSprint) {
@@ -1192,9 +1200,21 @@
 
         function getStickyAlternatePrefix(locale, appId) {
             if (locale === 'zh' && appId === 'hsp-test') return '高敏感';
-            if (locale === 'zh') return '相关';
-            if (locale === 'ko') return '추천';
-            return 'Trending';
+            var prefixByLocale = {
+                zh: '相关',
+                ko: '추천',
+                ja: '関連',
+                fr: 'À essayer',
+                de: 'Empfohlen',
+                es: 'Recomendado',
+                pt: 'Sugestão',
+                id: 'Rekomendasi',
+                tr: 'Önerilen',
+                ru: 'Похожее',
+                hi: 'सुझाव',
+                en: 'Trending'
+            };
+            return prefixByLocale[locale] || prefixByLocale.en;
         }
 
         function getStickyDelayMs(revenueSprint) {
@@ -1207,7 +1227,7 @@
         function mountStickySprint(revenueSprint, itemList) {
             if (!revenueSprint || !itemList || !itemList.length) return;
             if (isScanRiskVisit(bridge.market) || getDeviceType() === 'desktop') return;
-            if (document.querySelector('.cp-sticky-sprint')) return;
+            if (document.querySelector('.cp-sticky-sprint, .revenue-sticky-cta')) return;
             try {
                 if (sessionStorage.getItem('dopabrain_sticky_sprint_dismissed') === '1') return;
             } catch(e) {}
@@ -1226,7 +1246,7 @@
                 + '</aside>';
 
             window.setTimeout(function() {
-                if (document.hidden || document.querySelector('.cp-sticky-sprint')) return;
+                if (document.hidden || document.querySelector('.cp-sticky-sprint, .revenue-sticky-cta')) return;
                 document.body.insertAdjacentHTML('beforeend', html);
                 var sticky = document.querySelector('.cp-sticky-sprint');
                 if (!sticky) return;

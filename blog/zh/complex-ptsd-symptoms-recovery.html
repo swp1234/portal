@@ -42,6 +42,7 @@
     <link rel="alternate" hreflang="x-default" href="https://dopabrain.com/portal/blog/en/complex-ptsd-symptoms-recovery.html">
 
     <title>复杂性PTSD（C-PTSD）：症状、成因与康复指南 2026</title>
+    <meta name="dateModified" content="2026-11-15">
 
     <!-- JSON-LD Article Schema -->
     <!-- JSON-LD FAQPage Schema -->
@@ -57,7 +58,7 @@
         "description": "复杂性PTSD（C-PTSD）：了解情绪闪回、毒性羞耻感等症状，长期创伤的成因，以及包括EMDR和IFS疗法在内的有效康复方法。",
         "image": "https://dopabrain.com/portal/img/og/trauma-response.png",
         "datePublished": "2026-03-26",
-        "dateModified": "2026-10-25",
+        "dateModified": "2026-11-15",
         "inLanguage": "zh",
         "author": {
           "@type": "Organization",
@@ -539,9 +540,57 @@
         .cta-btn.secondary { background: transparent; color: var(--primary-light, var(--accent, #8ab4ff)); border: 1px solid var(--primary, var(--accent, #8ab4ff)); }
         .cta-btn:hover { text-decoration: none; transform: translateY(-1px); }
         @media (max-width: 560px) { .cta-actions { flex-direction: column; } .cta-btn { width: 100%; } }
-    </style>
+    
+        body.has-revenue-sticky-cta { padding-bottom: 112px; }
+        .revenue-sticky-cta {
+            position: fixed;
+            left: 50%;
+            bottom: calc(16px + env(safe-area-inset-bottom));
+            transform: translateX(-50%);
+            width: min(720px, calc(100% - 24px));
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            min-height: 56px;
+            padding: 12px 16px;
+            background: linear-gradient(135deg, rgba(109, 40, 217, 0.96), rgba(37, 99, 235, 0.96));
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 16px;
+            box-shadow: 0 14px 36px rgba(2, 6, 23, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: #fff;
+            text-decoration: none;
+            z-index: 950;
+            box-sizing: border-box;
+            touch-action: manipulation;
+        }
+        .revenue-sticky-cta strong { display: block; color: #fff; font-size: 14.5px; line-height: 1.25; }
+        .revenue-sticky-cta span { display: block; color: rgba(255, 255, 255, 0.88); font-size: 12px; line-height: 1.35; }
+        .revenue-sticky-cta .sticky-cta-action {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+            padding: 8px 13px;
+            color: #6d28d9;
+            background: #fff;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        .revenue-sticky-cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+        @media (max-width: 600px) {
+            body.has-revenue-sticky-cta { padding-bottom: 156px; }
+            .revenue-sticky-cta { bottom: calc(74px + env(safe-area-inset-bottom)); padding: 11px 13px; gap: 10px; }
+            .revenue-sticky-cta strong { font-size: 13.5px; }
+            .revenue-sticky-cta span { font-size: 11px; }
+        }
+</style>
 </head>
-<body>
+<body class="has-revenue-sticky-cta">
     <div class="container">
         <!-- Breadcrumb -->
         <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -1033,5 +1082,39 @@
             <li><a class="related-link" href="/portal/tools/cognitive-load-calculator.html?lang=zh&source=cptsd_followup" data-content-surface="related" data-target-slug="cognitive-load-calculator">认知负荷计算器</a></li>
         </ul>
     </section>
+
+    <a class="revenue-sticky-cta" href="/hsp-test/?lang=zh&source=zh_cptsd_sticky" data-content-surface="sticky_revenue_cta" data-target-slug="hsp-test" aria-label="开始高敏感神经负荷自测">
+        <div>
+            <strong>免费高敏感神经负荷自测</strong>
+            <span>2 分钟了解感官过载阈值与安抚策略</span>
+        </div>
+        <span class="sticky-cta-action">立即测评 →</span>
+    </a>
+    <script>
+      (function () {
+        var el = document.querySelector('.revenue-sticky-cta');
+        if (!el || el.dataset.stickyBound) return;
+        el.dataset.stickyBound = '1';
+        if (typeof gtag === 'function') {
+          gtag('event', 'content_sticky_cta_view', {
+            event_category: 'content',
+            page_path: location.pathname,
+            content_locale: 'zh',
+            cta_surface: 'sticky_revenue_cta',
+            target_slug: 'hsp-test'
+          });
+          el.addEventListener('click', function () {
+            gtag('event', 'content_cta_click', {
+              event_category: 'content',
+              page_path: location.pathname,
+              content_locale: 'zh',
+              cta_surface: 'sticky_revenue_cta',
+              target_slug: 'hsp-test',
+              link_url: el.href
+            });
+          });
+        }
+      })();
+    </script>
 </body>
 </html>
