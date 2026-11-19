@@ -159,9 +159,68 @@
         }
     }
 
+    function initQuickCheck() {
+        var widgets = document.querySelectorAll('.bm-quick-check[data-bm-check="1"]');
+        if (!widgets.length) return;
+
+        for (var w = 0; w < widgets.length; w++) {
+            (function(widget) {
+                var topic = widget.getAttribute('data-bm-topic') || 'general';
+                var items = widget.querySelectorAll('button.bm-qc-item[role="checkbox"]');
+                var countEl = widget.querySelector('.bm-qc-count');
+                var verdictEl = widget.querySelector('.bm-qc-verdict');
+                if (!items.length || !countEl || !verdictEl) return;
+
+                var interacted = false;
+                var msg0 = widget.getAttribute('data-msg-0') || verdictEl.textContent || '';
+                var msgLow = widget.getAttribute('data-msg-low') || msg0;
+                var msgMid = widget.getAttribute('data-msg-mid') || msgLow;
+                var msgHigh = widget.getAttribute('data-msg-high') || msgMid;
+
+                function update() {
+                    var checked = 0;
+                    for (var i = 0; i < items.length; i++) {
+                        var isOn = items[i].getAttribute('aria-checked') === 'true';
+                        if (isOn) {
+                            checked++;
+                            items[i].classList.add('is-checked');
+                        } else {
+                            items[i].classList.remove('is-checked');
+                        }
+                    }
+                    countEl.textContent = checked + ' / ' + items.length;
+                    if (checked === 0) verdictEl.textContent = msg0;
+                    else if (checked === 1) verdictEl.textContent = msgLow;
+                    else if (checked <= 2) verdictEl.textContent = msgMid;
+                    else verdictEl.textContent = msgHigh;
+
+                    if (!interacted && checked > 0) {
+                        interacted = true;
+                        sendEvent('blog_quick_check_interact', {
+                            event_category: 'engagement',
+                            check_topic: topic,
+                            surface: 'blog_quick_check'
+                        });
+                    }
+                }
+
+                for (var i = 0; i < items.length; i++) {
+                    (function(btn) {
+                        btn.addEventListener('click', function() {
+                            var next = btn.getAttribute('aria-checked') !== 'true';
+                            btn.setAttribute('aria-checked', next ? 'true' : 'false');
+                            update();
+                        });
+                    })(items[i]);
+                }
+            })(widgets[w]);
+        }
+    }
+
     function boot() {
         initCuratedCard();
         initStickyCta();
+        initQuickCheck();
     }
 
     if (document.readyState === 'loading') {
