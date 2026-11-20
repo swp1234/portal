@@ -217,10 +217,37 @@
         }
     }
 
+    function initToolBridge() {
+        var bridge = document.querySelector('.bm-tool-bridge[data-bm-tool-bridge="1"]');
+        if (!bridge) return;
+        var kind = bridge.getAttribute('data-bm-bridge-kind') || 'wellness';
+        var cta = bridge.querySelector('a.bm-tool-bridge-cta');
+
+        observeHalfVisible(bridge, function() {
+            sendEvent('blog_tool_bridge_view', {
+                event_category: 'engagement',
+                bridge_kind: kind,
+                surface: 'blog_tool_bridge'
+            });
+        });
+
+        if (cta) {
+            cta.addEventListener('click', function() {
+                sendEvent('blog_tool_bridge_click', {
+                    event_category: 'engagement',
+                    bridge_kind: kind,
+                    surface: 'blog_tool_bridge',
+                    link_url: cta.getAttribute('href') || ''
+                });
+            });
+        }
+    }
+
     function boot() {
         initCuratedCard();
         initStickyCta();
         initQuickCheck();
+        initToolBridge();
     }
 
     if (document.readyState === 'loading') {

@@ -167,4 +167,94 @@
       }
     });
   });
+
+  // Curated MBTI & Relationship Reading + Interactive Tool Bridge (affiliate compliant, >=44px touch)
+  var ctaSection = document.querySelector('.cta-section');
+  if (ctaSection && !document.querySelector('.mbti-curated-card')) {
+    var styleEl = document.createElement('style');
+    styleEl.textContent = [
+      '.mbti-curated-card{max-width:860px;margin:28px auto;padding:22px 20px;border-radius:18px;border:1px solid rgba(255,255,255,0.12);background:rgba(15,23,42,0.72);color:#f1f5f9}',
+      '.mbti-curated-kicker{font-size:11px;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#38bdf8;margin-bottom:6px}',
+      '.mbti-curated-title{font-size:1.15rem;font-weight:800;margin-bottom:14px}',
+      '.mbti-curated-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}',
+      '.mbti-curated-item{display:flex;flex-direction:column;justify-content:space-between;gap:8px;min-height:84px;min-width:0;padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04);color:#f8fafc;text-decoration:none;word-break:break-word;transition:border-color 0.2s,transform 0.15s}',
+      '.mbti-curated-item:hover{border-color:#38bdf8;transform:translateY(-2px)}',
+      '.mbti-curated-item strong{font-size:0.95rem;line-height:1.35}',
+      '.mbti-curated-item span{font-size:0.82rem;color:#94a3b8;line-height:1.45}',
+      '.mbti-curated-pill{display:inline-flex;align-items:center;min-height:44px;font-size:0.84rem;font-weight:700;color:#38bdf8}',
+      '.mbti-curated-tools{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}',
+      '.mbti-tool-chip{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding:10px 16px;border-radius:10px;border:1px solid rgba(56,189,248,0.35);background:rgba(56,189,248,0.1);color:#e0f2fe;font-size:0.86rem;font-weight:700;text-decoration:none}',
+      '.mbti-curated-note{font-size:0.78rem;color:#94a3b8;margin-top:12px}',
+      '@media(max-width:640px){.mbti-curated-grid{grid-template-columns:minmax(0,1fr)}}'
+    ].join('');
+    document.head.appendChild(styleEl);
+
+    var isIntrovert = mbtiType.charAt(0) === 'I';
+    var primaryBook = isIntrovert
+      ? { id: '0307352153', title: 'Quiet: The Power of Introverts', desc: 'Susan Cain • Thriving with deep focus, recharge rituals, and calm leadership for ' + mbtiType + ' minds.' }
+      : { id: '1250179947', title: 'Surrounded by Idiots', desc: 'Thomas Erikson • Decoding behavioral communication styles for expressive ' + mbtiType + ' personalities.' };
+
+    var card = document.createElement('section');
+    card.className = 'mbti-curated-card';
+    card.setAttribute('data-bm-curated', '1');
+    card.setAttribute('data-bm-topic', 'mbti_personality');
+    card.setAttribute('aria-label', mbtiType + ' curated books and tools');
+    card.innerHTML = [
+      '<div class="mbti-curated-kicker">CURATED READING FOR ' + mbtiType + '</div>',
+      '<h2 class="mbti-curated-title">Evidence-Based Books &amp; Interactive Tools</h2>',
+      '<div class="mbti-curated-grid">',
+      '<a class="mbti-curated-item" href="https://www.amazon.com/dp/' + primaryBook.id + '?tag=dopabrain-20" target="_blank" rel="noopener noreferrer nofollow sponsored" data-resource-id="' + primaryBook.id + '">',
+      '<strong>' + primaryBook.title + '</strong>',
+      '<span>' + primaryBook.desc + '</span>',
+      '<span class="mbti-curated-pill">View on Amazon ↗</span>',
+      '</a>',
+      '<a class="mbti-curated-item" href="https://www.amazon.com/dp/1585429139?tag=dopabrain-20" target="_blank" rel="noopener noreferrer nofollow sponsored" data-resource-id="1585429139">',
+      '<strong>Attached: The New Science of Adult Attachment</strong>',
+      '<span>Amir Levine &amp; Rachel Heller • Turn ' + mbtiType + ' relationship patterns into secure communication.</span>',
+      '<span class="mbti-curated-pill">View on Amazon ↗</span>',
+      '</a>',
+      '</div>',
+      '<div class="mbti-curated-tools">',
+      '<a class="mbti-tool-chip" href="/portal/tools/attachment-trigger-decoder.html?lang=' + safeLang + '&source=mbti_curated_tool">Attachment Script Builder →</a>',
+      '<a class="mbti-tool-chip" href="/portal/tools/decision-matrix.html?lang=' + safeLang + '&source=mbti_curated_tool">Dilemma Decision Matrix →</a>',
+      '<a class="mbti-tool-chip" href="/portal/tools/cognitive-distortion-reframer.html?lang=' + safeLang + '&source=mbti_curated_tool">CBT Distortion Reframer →</a>',
+      '</div>',
+      '<p class="mbti-curated-note">Editorial note: Hand-picked books relevant to ' + mbtiType + ' profiles. Amazon links use affiliate tag dopabrain-20 at no extra cost.</p>'
+    ].join('');
+    ctaSection.insertAdjacentElement('beforebegin', card);
+
+    var curatedViewed = false;
+    function sendCuratedView() {
+      if (curatedViewed) return;
+      curatedViewed = true;
+      track('curated_resource_view', {
+        event_category: 'monetization',
+        resource_topic: 'mbti_personality',
+        surface: 'mbti_type_curated'
+      });
+    }
+    if ('IntersectionObserver' in window) {
+      var curObs = new IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting && e.intersectionRatio >= 0.5; })) {
+          curObs.disconnect();
+          sendCuratedView();
+        }
+      }, { threshold: 0.5 });
+      curObs.observe(card);
+    } else {
+      sendCuratedView();
+    }
+
+    card.querySelectorAll('a.mbti-curated-item').forEach(function (link, idx) {
+      link.addEventListener('click', function () {
+        track('curated_resource_click', {
+          event_category: 'monetization',
+          resource_topic: 'mbti_personality',
+          resource_id: link.getAttribute('data-resource-id') || '',
+          resource_position: idx + 1,
+          surface: 'mbti_type_curated'
+        });
+      });
+    });
+  }
 })();
