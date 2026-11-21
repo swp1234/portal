@@ -50,10 +50,59 @@
         observer.observe(el);
     }
 
+    var CURATED_I18N = {
+        en: { badge: 'RECOMMENDED READING', title: 'Curated Evidence-Based Books', pill: 'View on Amazon ↗', disc: 'Editorial note: Hand-picked resources relevant to this topic. Amazon links use affiliate tag dopabrain-20 and support free tools at no extra cost.' },
+        ko: { badge: '추천 심리 도서', title: '검증된 심리·회복 추천 도서', pill: 'Amazon에서 보기 ↗', disc: '안내: 주제와 관련된 엄선된 참고 도서입니다. Amazon 제휴 링크(dopabrain-20)를 포함하며 추가 비용 없이 무료 도구 운영에 도움이 됩니다.' },
+        zh: { badge: '循证推荐书单', title: '精选心理学与自我成长书籍', pill: '在亚马逊查看 ↗', disc: '说明：本页精选相关主题参考书籍，包含 Amazon 联盟标签（dopabrain-20），不影响您的购买价格。' },
+        ja: { badge: 'おすすめの心理学書籍', title: '厳選・根拠に基づく関連書籍', pill: 'Amazonで見る ↗', disc: '注記：テーマに関連する厳選書籍です。Amazonアソシエイト（dopabrain-20）を含み、追加費用なしで無料ツールの運営を支えます。' },
+        es: { badge: 'LECTURA RECOMENDADA', title: 'Libros Seleccionados Basados en Evidencia', pill: 'Ver en Amazon ↗', disc: 'Nota editorial: Libros seleccionados sobre este tema. Los enlaces de Amazon usan la etiqueta de afiliado dopabrain-20 sin coste extra.' },
+        pt: { badge: 'LEITURA RECOMENDADA', title: 'Livros Selecionados Baseados em Evidências', pill: 'Ver na Amazon ↗', disc: 'Nota editorial: Livros selecionados sobre este tema. Links da Amazon usam a tag de afiliado dopabrain-20 sem custo extra.' },
+        de: { badge: 'BUCHEMPFEHLUNGEN', title: 'Kuratierte evidenzbasierte Fachbücher', pill: 'Auf Amazon ansehen ↗', disc: 'Hinweis: Handverlesene Literatur zum Thema. Amazon-Links nutzen den Partner-Tag dopabrain-20 ohne Mehrkosten für dich.' },
+        fr: { badge: 'LECTURES RECOMMANDÉES', title: 'Livres Sélectionnés Fondés sur les Preuves', pill: 'Voir sur Amazon ↗', disc: 'Note éditoriale : Ouvrages sélectionnés sur ce thème. Les liens Amazon utilisent le tag affilié dopabrain-20 sans frais supplémentaires.' },
+        id: { badge: 'BACAAN REKOMENDASI', title: 'Buku Psikologi Pilihan Berbasis Bukti', pill: 'Lihat di Amazon ↗', disc: 'Catatan editorial: Buku pilihan yang relevan dengan topik ini. Tautan Amazon memakai tag afiliasi dopabrain-20 tanpa biaya tambahan.' },
+        tr: { badge: 'ÖNERİLEN KİTAPLAR', title: 'Kanıta Dayalı Seçkin Psikoloji Kitapları', pill: 'Amazon’da İncele ↗', disc: 'Editör notu: Konuyla ilgili seçkin kaynaklar. Amazon bağlantıları ek ücret olmadan dopabrain-20 satış ortaklığı etiketini kullanır.' },
+        hi: { badge: 'अनुशंसित पुस्तकें', title: 'चुनी हुई प्रमाण-आधारित मनोविज्ञान पुस्तकें', pill: 'Amazon पर देखें ↗', disc: 'संपादकीय नोट: इस विषय से जुड़ी चुनिंदा पुस्तकें। Amazon लिंक बिना अतिरिक्त शुल्क के dopabrain-20 एफिलिएट टैग का उपयोग करते हैं।' },
+        ru: { badge: 'РЕКОМЕНДУЕМЫЕ КНИГИ', title: 'Подборка научно обоснованных книг', pill: 'Смотреть на Amazon ↗', disc: 'Примечание: отобранная литература по теме. Ссылки Amazon содержат партнёрский тег dopabrain-20 без доплаты для вас.' }
+    };
+
+    function localizeCuratedCard(card) {
+        if (!card) return;
+        var loc = getLocale();
+        var copy = CURATED_I18N[loc];
+        if (!copy) return;
+        var badge = card.querySelector('.curated-badge');
+        if (badge && !badge.hasAttribute('data-i18n')) badge.textContent = copy.badge;
+        var title = card.querySelector('.curated-title');
+        if (title && !title.hasAttribute('data-i18n')) {
+            var origTitle = title.getAttribute('data-bm-orig-title');
+            if (origTitle === null) {
+                origTitle = (title.textContent || '').trim();
+                title.setAttribute('data-bm-orig-title', origTitle);
+            }
+            if (/^Curated Evidence-Based Books$/i.test(origTitle)) {
+                title.textContent = copy.title;
+            }
+        }
+        var pills = card.querySelectorAll('.curated-ext-pill');
+        for (var p = 0; p < pills.length; p++) {
+            pills[p].textContent = copy.pill;
+        }
+        var disc = card.querySelector('.curated-disclosure');
+        if (disc && !disc.hasAttribute('data-i18n')) disc.textContent = copy.disc;
+    }
+
     function initCuratedCard() {
         var card = document.querySelector('.curated-resources-card[data-bm-curated="1"]');
         if (!card) return;
         var topic = card.getAttribute('data-bm-topic') || 'general';
+        localizeCuratedCard(card);
+
+        if (typeof window.MutationObserver === 'function') {
+            var langObs = new window.MutationObserver(function() {
+                localizeCuratedCard(card);
+            });
+            langObs.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+        }
 
         observeHalfVisible(card, function() {
             sendEvent('curated_resource_view', {
@@ -220,7 +269,7 @@
     function initToolBridge() {
         var bridge = document.querySelector('.bm-tool-bridge[data-bm-tool-bridge="1"]');
         if (!bridge) return;
-        var kind = bridge.getAttribute('data-bm-bridge-kind') || 'wellness';
+        var kind = bridge.getAttribute('data-tool-slug') || bridge.getAttribute('data-bm-bridge-kind') || 'wellness';
         var cta = bridge.querySelector('a.bm-tool-bridge-cta');
 
         observeHalfVisible(bridge, function() {
