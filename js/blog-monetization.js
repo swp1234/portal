@@ -512,11 +512,114 @@
         document.body.appendChild(sc);
     }
 
+    var MID_JUMP_I18N = {
+        en: { kicker: 'FREE INTERACTIVE COMPANION', lab: '50 Free Labs →' },
+        ko: { kicker: '무료 인터랙티브 실습 도구', lab: '50개 무료 랩 →' },
+        zh: { kicker: '免费互动配套工具', lab: '50个免费工具 →' },
+        ja: { kicker: '無料インタラクティブツール', lab: '無料50ラボ →' },
+        es: { kicker: 'HERRAMIENTA INTERACTIVA GRATIS', lab: '50 Labos Gratis →' },
+        pt: { kicker: 'FERRAMENTA INTERATIVA GRÁTIS', lab: '50 Labos Grátis →' },
+        de: { kicker: 'KOSTENLOSES INTERAKTIVES TOOL', lab: '50 Gratis-Labs →' },
+        fr: { kicker: 'OUTIL INTERACTIF GRATUIT', lab: '50 Labos Gratuits →' },
+        id: { kicker: 'ALAT INTERAKTIF GRATIS', lab: '50 Lab Gratis →' },
+        tr: { kicker: 'ÜCRETSİZ ETKİLEŞİMLİ ARAÇ', lab: '50 Ücretsiz Lab →' },
+        hi: { kicker: 'मुफ़्त इंटरैक्टिव टूल', lab: '50 मुफ़्त लैब →' },
+        ru: { kicker: 'БЕСПЛАТНЫЙ ИНТЕРАКТИВНЫЙ ИНСТРУМЕНТ', lab: '50 практик →' }
+    };
+
+    function initMidArticleToolJump() {
+        if (!/^\/portal\/blog\//i.test(window.location.pathname || '')) return;
+        if (document.querySelector('[data-bm-mid-jump="1"]')) return;
+        var bridge = document.querySelector('.bm-tool-bridge[data-bm-tool-bridge="1"]');
+        if (!bridge) return;
+        var cta = bridge.querySelector('a.bm-tool-bridge-cta');
+        var h3 = bridge.querySelector('h3');
+        if (!cta || !h3) return;
+        var href = cta.getAttribute('href') || '';
+        if (!href) return;
+
+        var container = document.querySelector('article') || document.querySelector('main') || bridge.parentNode;
+        if (!container) return;
+        var headings = container.querySelectorAll('h2');
+        if (!headings || headings.length < 3) return;
+        var anchorH2 = headings[1];
+        if (!anchorH2 || !anchorH2.parentNode) return;
+        // Skip if the bottom bridge is already above anchorH2
+        if (!(anchorH2.compareDocumentPosition(bridge) & 4)) return;
+
+        var loc = getLocale();
+        var pack = MID_JUMP_I18N[loc] || MID_JUMP_I18N.en;
+        var kind = bridge.getAttribute('data-tool-slug') || bridge.getAttribute('data-bm-bridge-kind') || 'wellness';
+        var labHref = loc === 'en' ? '/portal/tools/wellness-lab.html' : ('/portal/tools/wellness-lab.html?lang=' + loc);
+
+        var bar = document.createElement('aside');
+        bar.id = 'bmMidJump';
+        bar.className = 'bm-mid-jump';
+        bar.setAttribute('data-bm-mid-jump', '1');
+        bar.setAttribute('data-tool-slug', kind);
+        bar.setAttribute('aria-label', (h3.textContent || '').trim());
+
+        var copy = document.createElement('div');
+        copy.className = 'bm-mid-jump-copy';
+        var kicker = document.createElement('span');
+        kicker.className = 'bm-mid-jump-kicker';
+        kicker.textContent = pack.kicker;
+        var title = document.createElement('strong');
+        title.className = 'bm-mid-jump-title';
+        title.textContent = (h3.textContent || '').trim();
+        copy.appendChild(kicker);
+        copy.appendChild(title);
+
+        var actions = document.createElement('div');
+        actions.className = 'bm-mid-jump-actions';
+        var primary = document.createElement('a');
+        primary.className = 'bm-mid-jump-cta';
+        primary.href = href;
+        primary.textContent = (cta.textContent || '').trim() || 'Open Tool →';
+        primary.addEventListener('click', function() {
+            sendEvent('blog_mid_tool_cta_click', {
+                event_category: 'engagement',
+                bridge_kind: kind,
+                surface: 'blog_mid_jump',
+                link_url: href
+            });
+        });
+
+        var secondary = document.createElement('a');
+        secondary.className = 'bm-mid-jump-lab';
+        secondary.href = labHref;
+        secondary.textContent = pack.lab;
+        secondary.addEventListener('click', function() {
+            sendEvent('blog_mid_tool_cta_click', {
+                event_category: 'engagement',
+                bridge_kind: 'wellness-lab',
+                surface: 'blog_mid_jump',
+                link_url: labHref
+            });
+        });
+
+        actions.appendChild(primary);
+        actions.appendChild(secondary);
+        bar.appendChild(copy);
+        bar.appendChild(actions);
+
+        anchorH2.parentNode.insertBefore(bar, anchorH2);
+
+        observeHalfVisible(bar, function() {
+            sendEvent('blog_mid_tool_cta_view', {
+                event_category: 'engagement',
+                bridge_kind: kind,
+                surface: 'blog_mid_jump'
+            });
+        });
+    }
+
     function boot() {
         initCuratedCard();
         initStickyCta();
         initQuickCheck();
         initToolBridge();
+        initMidArticleToolJump();
         initToolChromeI18n();
         initToolCalmPacer();
     }
