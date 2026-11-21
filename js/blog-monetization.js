@@ -292,11 +292,92 @@
         }
     }
 
+    var TOOL_CHROME_I18N = {
+        zh: { skip: '跳至工具', back: '← 心理健康实验室', langLabel: '语言：', chip3: '100% 本地隐私', resetBtn: '重置', storyBtn: '保存 1080×1920 总结卡 (PNG)', copyBtn: '复制内容', shareBtn: '分享工具', faqTitle: '常见问题', refTitle: '心理学框架与参考文献', discTitle: '自我觉察说明：', discText: '本互动工具仅供日常自我觉察与科普参考，不构成临床诊断或医疗建议。', privacy: '隐私政策', terms: '使用条款' },
+        ja: { skip: 'ツールへ移動', back: '← ウェルネスラボ', langLabel: '言語：', chip3: '100% ローカル完結', resetBtn: 'リセット', storyBtn: '1080×1920 要約カードを保存 (PNG)', copyBtn: 'コピー', shareBtn: 'ツールを共有', faqTitle: 'よくある質問', refTitle: '心理学的フレームワークと参考文献', discTitle: 'セルフケアに関するご案内：', discText: '本ツールは日常のセルフチェック用であり、医学的診断や治療に代わるものではありません。', privacy: 'プライバシーポリシー', terms: '利用規約' },
+        es: { skip: 'Ir a la herramienta', back: '← Laboratorio de Bienestar', langLabel: 'Idioma:', chip3: '100% Privado (Local)', resetBtn: 'Reiniciar', storyBtn: 'Guardar tarjeta 1080×1920 (PNG)', copyBtn: 'Copiar texto', shareBtn: 'Compartir', faqTitle: 'Preguntas Frecuentes', refTitle: 'Marcos Psicológicos y Referencias', discTitle: 'Aviso de autorreflexión:', discText: 'Esta herramienta interactiva es un recurso educativo de autorreflexión, no un diagnóstico clínico ni tratamiento médico.', privacy: 'Política de Privacidad', terms: 'Términos' },
+        pt: { skip: 'Ir para a ferramenta', back: '← Laboratório de Bem-Estar', langLabel: 'Idioma:', chip3: '100% Privado (Local)', resetBtn: 'Redefinir', storyBtn: 'Salvar cartão 1080×1920 (PNG)', copyBtn: 'Copiar texto', shareBtn: 'Compartilhar', faqTitle: 'Perguntas Frequentes', refTitle: 'Referências Psicológicas', discTitle: 'Aviso de autorreflexão:', discText: 'Esta ferramenta interativa é um recurso educativo de autorreflexão, não diagnóstico clínico nem tratamento médico.', privacy: 'Privacidade', terms: 'Termos' },
+        de: { skip: 'Zum Tool springen', back: '← Mental-Wellness-Labor', langLabel: 'Sprache:', chip3: '100% Privat (Lokal)', resetBtn: 'Zurücksetzen', storyBtn: '1080×1920 Karte speichern (PNG)', copyBtn: 'Kopieren', shareBtn: 'Tool teilen', faqTitle: 'Häufig gestellte Fragen', refTitle: 'Psychologische Grundlagen & Quellen', discTitle: 'Hinweis zur Selbstreflexion:', discText: 'Dieses interaktive Tool dient der eigenen Reflexion im Alltag und ersetzt keine klinische Diagnose oder Therapie.', privacy: 'Datenschutz', terms: 'Nutzungsbedingungen' },
+        fr: { skip: 'Aller à l’outil', back: '← Labo Bien-Être Mental', langLabel: 'Langue :', chip3: '100% Privé (Local)', resetBtn: 'Réinitialiser', storyBtn: 'Enregistrer la carte 1080×1920 (PNG)', copyBtn: 'Copier', shareBtn: 'Partager', faqTitle: 'Questions Fréquentes', refTitle: 'Cadres Psychologiques et Références', discTitle: 'Note d’auto-réflexion :', discText: 'Cet espace interactif est un outil éducatif de réflexion personnelle, et non un diagnostic clinique ou traitement médical.', privacy: 'Confidentialité', terms: 'Conditions' },
+        id: { skip: 'Lompat ke Alat', back: '← Lab Kesehatan Mental', langLabel: 'Bahasa:', chip3: '100% Privat (Lokal)', resetBtn: 'Atur Ulang', storyBtn: 'Simpan Kartu 1080×1920 (PNG)', copyBtn: 'Salin Teks', shareBtn: 'Bagikan', faqTitle: 'Pertanyaan Umum', refTitle: 'Kerangka Psikologi & Referensi', discTitle: 'Catatan refleksi diri:', discText: 'Alat interaktif ini adalah sarana refleksi diri edukatif, bukan diagnosis klinis atau perawatan medis.', privacy: 'Kebijakan Privasi', terms: 'Ketentuan' },
+        tr: { skip: 'Araca Geç', back: '← Zihinsel Sağlık Labı', langLabel: 'Dil:', chip3: '%100 Gizli (Yerel)', resetBtn: 'Sıfırla', storyBtn: '1080×1920 Özet Kartını Kaydet (PNG)', copyBtn: 'Kopyala', shareBtn: 'Paylaş', faqTitle: 'Sık Sorulan Sorular', refTitle: 'Psikolojik Çerçeveler ve Kaynaklar', discTitle: 'Öz-yansıtma uyarısı:', discText: 'Bu etkileşimli alan günlük farkındalık içindir; klinik tanı veya tıbbi tedavi yerine geçmez.', privacy: 'Gizlilik Politikası', terms: 'Koşullar' },
+        hi: { skip: 'टूल पर जाएँ', back: '← मेंटल वेलनेस लैब', langLabel: 'भाषा:', chip3: '100% निजी (लोकल)', resetBtn: 'रीसेट करें', storyBtn: '1080×1920 कार्ड सेव करें (PNG)', copyBtn: 'कॉपी करें', shareBtn: 'शेयर करें', faqTitle: 'अक्सर पूछे जाने वाले प्रश्न', refTitle: 'मनोवैज्ञानिक संदर्भ', discTitle: 'आत्म-चिंतन सूचना:', discText: 'यह इंटरैक्टिव टूल केवल शैक्षिक आत्म-चिंतन के लिए है, यह चिकित्सीय निदान या उपचार नहीं है।', privacy: 'गोपनीयता नीति', terms: 'शर्तें' },
+        ru: { skip: 'Перейти к инструменту', back: '← Лаборатория здоровья', langLabel: 'Язык:', chip3: '100% Приватно (Локально)', resetBtn: 'Сбросить', storyBtn: 'Сохранить карточку 1080×1920 (PNG)', copyBtn: 'Копировать', shareBtn: 'Поделиться', faqTitle: 'Частые вопросы', refTitle: 'Психологические основы и источники', discTitle: 'Примечание о самопомощи:', discText: 'Этот интерактивный инструмент предназначен для личной рефлексии и не заменяет клиническую диагностику или терапию.', privacy: 'Конфиденциальность', terms: 'Условия' }
+    };
+
+    var EN_CHROME_RE = /^(?:Skip to|←\s*(?:Mental Wellness Lab|Wellness Lab|Tools Catalog|All \d+ Tools)|Language:|100% Private|Reset|Clear All|Save 1080|Copy |Share |Frequently Asked Questions|Psychological Frameworks|Editorial Self-Reflection|This interactive workspace|Privacy Policy|Terms)/i;
+    var EN_LEAD_RE = /\b(?:your|locally|browser|private|seconds|minutes|generate|check|rate|identify|calm|build|spot|stop|track|feeling|tired|stuck|find|turn|decode|audit|separate|measure|distinguish|free|anxiety|burnout|stress|boundaries)\b/i;
+    var leadsCache = null;
+    var leadsPromise = null;
+
+    function getToolSlug() {
+        var m = /^\/portal\/tools\/([a-z0-9-]+)\.html$/i.exec(window.location.pathname || '');
+        if (!m || m[1] === 'index' || m[1] === 'wellness-lab') return '';
+        return m[1].toLowerCase();
+    }
+
+    function applyToolLeads(slug, loc) {
+        if (!slug || !TOOL_CHROME_I18N[loc]) return;
+        function apply(data) {
+            if (!data || !data[slug] || !data[slug][loc]) return;
+            if (getLocale() !== loc) return;
+            var leadText = data[slug][loc];
+            var leadEl = document.querySelector('[data-i18n="heroLead"]');
+            if (leadEl && EN_LEAD_RE.test((leadEl.textContent || '').trim())) {
+                leadEl.textContent = leadText;
+            }
+            var metaEl = document.querySelector('meta[name="description"]');
+            if (metaEl && EN_LEAD_RE.test((metaEl.getAttribute('content') || '').trim())) {
+                metaEl.setAttribute('content', leadText);
+            }
+        }
+        if (leadsCache) {
+            apply(leadsCache);
+            return;
+        }
+        if (!leadsPromise && typeof window.fetch === 'function') {
+            leadsPromise = window.fetch('/portal/js/wellness-lab-leads.json')
+                .then(function(r) { return r.ok ? r.json() : null; })
+                .then(function(d) { leadsCache = d; return d; })
+                .catch(function() { return null; });
+        }
+        if (leadsPromise) leadsPromise.then(apply);
+    }
+
+    function initToolChromeI18n() {
+        var slug = getToolSlug();
+        if (!slug) return;
+        function applyChrome() {
+            var loc = getLocale();
+            var pack = TOOL_CHROME_I18N[loc];
+            if (!pack) return;
+            var els = document.querySelectorAll('[data-i18n]');
+            for (var i = 0; i < els.length; i++) {
+                var el = els[i];
+                var key = el.getAttribute('data-i18n');
+                if (!pack[key] || el.tagName === 'META') continue;
+                var cur = (el.textContent || '').trim();
+                if (EN_CHROME_RE.test(cur)) {
+                    el.textContent = pack[key];
+                }
+            }
+            applyToolLeads(slug, loc);
+        }
+        applyChrome();
+        if (typeof window.MutationObserver === 'function') {
+            var obs = new window.MutationObserver(function() {
+                window.setTimeout(applyChrome, 0);
+            });
+            obs.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+        }
+    }
+
     function boot() {
         initCuratedCard();
         initStickyCta();
         initQuickCheck();
         initToolBridge();
+        initToolChromeI18n();
     }
 
     if (document.readyState === 'loading') {
