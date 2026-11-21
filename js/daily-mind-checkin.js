@@ -255,7 +255,7 @@
     var labSt = document.createElement('strong');
     labSt.textContent = currentLang === 'ko' ? '🧠 전체 30개 멘탈 웰니스 랩 둘러보기 →' : '🧠 Browse All 30 Mental Wellness Labs →';
     var labSp = document.createElement('span');
-    labSp.textContent = currentLang === 'ko' ? '불안·번아웃·경계·집중·수면 맞춤 도구를 한눈에 필터링하세요.' : 'Filter all 30 private CBT, somatic, boundary & focus tools by mood.';
+    labSp.textContent = currentLang === 'ko' ? '불안·번아웃·경계·집중·수면 맞춤 도구를 한눈에 필터링하세요.' : 'Filter all 40 private CBT, somatic, boundary & focus tools by mood.';
     labCard.appendChild(labSt);
     labCard.appendChild(labSp);
     rxGrid.appendChild(labCard);
