@@ -11,34 +11,34 @@
 
   var ROUTES = {
     overthinking: [
+      { url: '/portal/tools/overthinking-rumination-breaker.html', icon: '🌀', en: ['Overthinking Circuit Breaker', 'Sort worries with the Worry Tree + 90s Cognitive Shuffle.'], ko: ['과잉사고·반추 차단기', 'CBT 걱정 나무와 90초 인지 셔플로 사고 루프를 멈추세요.'] },
       { url: '/portal/tools/cognitive-distortion-reframer.html', icon: '💡', en: ['CBT Distortion Reframer', 'Catch automatic loops & build Socratic reframes.'], ko: ['CBT 인지 왜곡 리프레이머', '자동적 사고 함정을 60초 만에 재구성하세요.'] },
-      { url: '/portal/tools/grounding-exercise.html', icon: '🌊', en: ['5-4-3-2-1 Grounding', 'Interrupt racing thoughts with cyclic sigh breathing.'], ko: ['5-4-3-2-1 그라운딩', '생리적 한숨 호흡으로 생각 폭주를 멈추세요.'] },
-      { url: '/stress-check/', icon: '📊', en: ['Full Stress Check', 'Measure cognitive & emotional tension load.'], ko: ['스트레스 정밀 체크', '인지·감정 긴장도를 5개 축으로 측정하세요.'] }
+      { url: '/portal/tools/somatic-tension-body-map.html', icon: '🧘', en: ['Somatic Tension Body Map', 'Release jaw, shoulder, and chest bracing with 60s PMR.'], ko: ['신체 긴장 지도 & 60초 PMR', '턱·어깨·가슴에 쌓인 스트레스 긴장을 즉시 풀어주세요.'] }
     ],
     burnout: [
+      { url: '/portal/tools/emotional-energy-audit.html', icon: '⚖️', en: ['Emotional Energy Leak Audit', 'Spot 6 invisible burnout leaks & pick 1 Stop-Doing boundary.'], ko: ['감정 에너지 누수 감사', '6가지 보이지 않는 누수를 찾고 1가지 중단 목록을 정하세요.'] },
       { url: '/portal/tools/burnout-stress-differential.html', icon: '🔥', en: ['Burnout vs Stress Matrix', 'Separate acute tension from chronic exhaustion.'], ko: ['번아웃 vs 스트레스 매트릭스', '일시적 스트레스와 만성 탈진을 구분하세요.'] },
-      { url: '/portal/tools/cognitive-load-calculator.html', icon: '🧠', en: ['Cognitive Load Calculator', 'Audit mental RAM saturation & open loops.'], ko: ['인지 부하 계산기', '열린 할 일과 두뇌 RAM 과부하를 측정하세요.'] },
-      { url: '/hsp-test/', icon: '🌿', en: ['HSP Sensitivity Test', 'Check if sensory overstimulation is draining energy.'], ko: ['HSP 민감성 테스트', '감각 과부하가 에너지 고갈의 원인인지 점검하세요.'] }
+      { url: '/portal/tools/window-of-tolerance-check.html', icon: '🌊', en: ['Window of Tolerance Check', 'Map Hyperarousal vs Freeze with a 60s vagal reset.'], ko: ['인내의 창 신경계 체크', '과각성·기능적 동결 상태를 점검하고 60초 리셋을 시작하세요.'] }
     ],
     social_hurt: [
-      { url: '/portal/tools/rsd-coping-audit.html', icon: '🫧', en: ['RSD Sensitivity Audit', 'Run the 90-second somatic cool-down protocol.'], ko: ['거절 민감성(RSD) 점검', '90초 신경계 쿨다운 타이머와 답장 스크립트.'] },
-      { url: '/portal/tools/imposter-syndrome-audit.html', icon: '🛡️', en: ['Imposter Syndrome Audit', 'Log concrete self-worth proof & spot archetypes.'], ko: ['가면 증후군 자가점검', '5가지 유형을 분석하고 객관적 성과 증거를 기록하세요.'] },
-      { url: '/portal/tools/emotion-regulation-planner.html', icon: '🧭', en: ['Emotion Regulation Planner', 'Build a 5-stage Gross process calm plan.'], ko: ['감정 조절 플래너', '그로스 5단계 모델 기반 실행 스크립트를 만드세요.'] }
+      { url: '/portal/tools/social-battery-recharge-planner.html', icon: '🔋', en: ['Social Battery Calculator', 'Measure remaining social energy & get a polite exit script.'], ko: ['사회적 배터리 충전 계산기', '남은 사회적 에너지와 혼자만의 회복 시간·귀가 멘트를 확인하세요.'] },
+      { url: '/portal/tools/inner-critic-compassion-lab.html', icon: '💗', en: ['Inner Critic Compassion Lab', 'Transform harsh self-talk into a 3-pillar ally voice.'], ko: ['내면 비판가 & 자기연민 랩', '가혹한 자기비판을 따뜻한 3단계 자기연민 응답으로 바꾸세요.'] },
+      { url: '/portal/tools/rsd-coping-audit.html', icon: '🫧', en: ['RSD Sensitivity Audit', 'Run the 90-second somatic cool-down protocol.'], ko: ['거절 민감성(RSD) 점검', '90초 신경계 쿨다운 타이머와 답장 스크립트.'] }
     ],
     task_freeze: [
+      { url: '/portal/tools/adhd-focus-friction-audit.html', icon: '⚡', en: ['ADHD Focus Friction Audit', 'Pinpoint task paralysis & start a 10-min body-doubling sprint.'], ko: ['ADHD·실행기능 마찰 점검', '과제 시작 마비 병목을 찾고 10분 바디더블링 시동을 거세요.'] },
       { url: '/portal/tools/procrastination-root-decoder.html', icon: '🚀', en: ['Procrastination 5-Min Sprint', 'Decode the emotional block & start a 5-min timer.'], ko: ['미루기 디코더 & 5분 스프린트', '감정 마찰 원인을 풀고 5분 착수 타이머 시작.'] },
-      { url: '/portal/tools/dopamine-detox-protocol.html', icon: '⚡', en: ['Dopamine Reset Protocol', 'Replace passive scrolling with compound focus.'], ko: ['도파민 리셋 프로토콜', '저자극 집중 메뉴와 24시간 리셋 계획을 받으세요.'] },
-      { url: '/pomodoro-timer/', icon: '🍅', en: ['Pomodoro Focus Timer', 'Lock in a clean 25-minute deep work sprint.'], ko: ['포모도로 집중 타이머', '방해 없는 25분 몰입 타이머를 바로 시작하세요.'] }
+      { url: '/portal/tools/dopamine-detox-protocol.html', icon: '🎯', en: ['Dopamine Reset Protocol', 'Replace passive scrolling with compound focus.'], ko: ['도파민 리셋 프로토콜', '저자극 집중 메뉴와 24시간 리셋 계획을 받으세요.'] }
     ],
     sleepless: [
       { url: '/portal/tools/sleep-chronotype-reset.html', icon: '🌙', en: ['Sleep Cycle & Circadian Reset', 'Calculate 90-min bedtimes & caffeine cutoff.'], ko: ['수면 사이클 리셋 계산기', '90분 최적 취침 시각과 카페인 마감을 계산하세요.'] },
-      { url: '/white-noise/', icon: '🌧️', en: ['White Noise Player', 'Mask night noise with brown noise & rain.'], ko: ['백색소음 플레이어', '브라운 노이즈와 빗소리로 깊은 입면을 돕습니다.'] },
-      { url: '/portal/tools/grounding-exercise.html', icon: '🌊', en: ['5-4-3-2-1 Grounding', 'Calm nighttime sympathetic arousal before bed.'], ko: ['5-4-3-2-1 그라운딩', '취침 전 교감신경 과각성을 부드럽게 낮추세요.'] }
+      { url: '/portal/tools/overthinking-rumination-breaker.html', icon: '🌀', en: ['3 AM Cognitive Shuffle', 'Interrupt nighttime racing thoughts with neutral imagery.'], ko: ['새벽 3시 인지 셔플', '90초 중립 이미지 셔플로 밤샘 사고 과열을 식히세요.'] },
+      { url: '/portal/tools/somatic-tension-body-map.html', icon: '🧘', en: ['60s Bedtime PMR Release', 'Drop physical jaw & shoulder tension before sleep.'], ko: ['취침 전 60초 PMR 근육이완', '몸에 남은 긴장을 풀고 편안한 수면 준비를 돕습니다.'] }
     ],
     relationship: [
+      { url: '/portal/tools/boundary-script-builder.html', icon: '🚧', en: ['Boundary Script Generator', 'Say no clearly without guilt or long excuses.'], ko: ['거절·경계선 스크립트 빌더', '죄책감 없이 단호하고 부드럽게 거절하는 실전 문장.'] },
       { url: '/portal/tools/attachment-trigger-decoder.html', icon: '🤝', en: ['Attachment Script Builder', 'Turn anxious or avoidant triggers into calm boundaries.'], ko: ['애착 트리거 안전 스크립트', '불안·회피 충동을 비난 없는 대화 문장으로 변환.'] },
-      { url: '/attachment-style/', icon: '💛', en: ['Attachment Reflection', 'Explore your 10-scenario attachment tendencies.'], ko: ['애착 반응 성찰 테스트', '10가지 관계 시나리오로 애착 패턴을 확인하세요.'] },
-      { url: '/portal/tools/decision-matrix.html', icon: '⚖️', en: ['Dilemma Decision Matrix', 'Weigh relationship or life choices objectively.'], ko: ['딜레마 의사결정 매트릭스', '중요한 선택지를 가중치 기준으로 객관 비교하세요.'] }
+      { url: '/portal/tools/imposter-syndrome-audit.html', icon: '🛡️', en: ['Imposter Proof Vault', 'Counter self-doubt with objective evidence locally.'], ko: ['가면 증후군 성과 증거 금고', '객관적 성취 기록으로 자기 의심을 차분히 반박하세요.'] }
     ]
   };
 
