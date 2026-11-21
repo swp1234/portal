@@ -12,33 +12,33 @@
   var ROUTES = {
     overthinking: [
       { url: '/portal/tools/overthinking-rumination-breaker.html', icon: '🌀', en: ['Overthinking Circuit Breaker', 'Sort worries with the Worry Tree + 90s Cognitive Shuffle.'], ko: ['과잉사고·반추 차단기', 'CBT 걱정 나무와 90초 인지 셔플로 사고 루프를 멈추세요.'] },
-      { url: '/portal/tools/cognitive-distortion-reframer.html', icon: '💡', en: ['CBT Distortion Reframer', 'Catch automatic loops & build Socratic reframes.'], ko: ['CBT 인지 왜곡 리프레이머', '자동적 사고 함정을 60초 만에 재구성하세요.'] },
-      { url: '/portal/tools/somatic-tension-body-map.html', icon: '🧘', en: ['Somatic Tension Body Map', 'Release jaw, shoulder, and chest bracing with 60s PMR.'], ko: ['신체 긴장 지도 & 60초 PMR', '턱·어깨·가슴에 쌓인 스트레스 긴장을 즉시 풀어주세요.'] }
+      { url: '/portal/tools/vagal-nervous-system-reset.html', icon: '🌊', en: ['Vagal 60s Sigh Reset', 'Match your nervous state & slow heart rate in 60 seconds.'], ko: ['미주신경 60초 한숨 리셋', '자율신경 상태에 맞는 3분 리셋과 60초 생리적 한숨을 시작하세요.'] },
+      { url: '/portal/tools/cognitive-distortion-reframer.html', icon: '💡', en: ['CBT Distortion Reframer', 'Catch automatic loops & build Socratic reframes.'], ko: ['CBT 인지 왜곡 리프레이머', '자동적 사고 함정을 60초 만에 재구성하세요.'] }
     ],
     burnout: [
       { url: '/portal/tools/emotional-energy-audit.html', icon: '⚖️', en: ['Emotional Energy Leak Audit', 'Spot 6 invisible burnout leaks & pick 1 Stop-Doing boundary.'], ko: ['감정 에너지 누수 감사', '6가지 보이지 않는 누수를 찾고 1가지 중단 목록을 정하세요.'] },
-      { url: '/portal/tools/burnout-stress-differential.html', icon: '🔥', en: ['Burnout vs Stress Matrix', 'Separate acute tension from chronic exhaustion.'], ko: ['번아웃 vs 스트레스 매트릭스', '일시적 스트레스와 만성 탈진을 구분하세요.'] },
-      { url: '/portal/tools/window-of-tolerance-check.html', icon: '🌊', en: ['Window of Tolerance Check', 'Map Hyperarousal vs Freeze with a 60s vagal reset.'], ko: ['인내의 창 신경계 체크', '과각성·기능적 동결 상태를 점검하고 60초 리셋을 시작하세요.'] }
+      { url: '/portal/tools/decision-fatigue-declutter.html', icon: '🧹', en: ['Decision Fatigue Filter', 'Replace daily choice drains with 3 automated Default Rules.'], ko: ['결정 피로·정신 정리 필터', '반복 미세 결정을 3가지 기본값 규칙으로 자동화하세요.'] },
+      { url: '/portal/tools/burnout-stress-differential.html', icon: '🔥', en: ['Burnout vs Stress Matrix', 'Separate acute tension from chronic exhaustion.'], ko: ['번아웃 vs 스트레스 매트릭스', '일시적 스트레스와 만성 탈진을 구분하세요.'] }
     ],
     social_hurt: [
+      { url: '/portal/tools/social-anxiety-exposure-ladder.html', icon: '🪜', en: ['Social Confidence Ladder', 'Auto-sort 6 social scenarios (SUDS 0-100) into gentle steps.'], ko: ['사회불안 CBT 노출 사다리', '가장 부담 적은 1단계부터 자신감 사다리를 자동 정렬하세요.'] },
       { url: '/portal/tools/social-battery-recharge-planner.html', icon: '🔋', en: ['Social Battery Calculator', 'Measure remaining social energy & get a polite exit script.'], ko: ['사회적 배터리 충전 계산기', '남은 사회적 에너지와 혼자만의 회복 시간·귀가 멘트를 확인하세요.'] },
-      { url: '/portal/tools/inner-critic-compassion-lab.html', icon: '💗', en: ['Inner Critic Compassion Lab', 'Transform harsh self-talk into a 3-pillar ally voice.'], ko: ['내면 비판가 & 자기연민 랩', '가혹한 자기비판을 따뜻한 3단계 자기연민 응답으로 바꾸세요.'] },
-      { url: '/portal/tools/rsd-coping-audit.html', icon: '🫧', en: ['RSD Sensitivity Audit', 'Run the 90-second somatic cool-down protocol.'], ko: ['거절 민감성(RSD) 점검', '90초 신경계 쿨다운 타이머와 답장 스크립트.'] }
+      { url: '/portal/tools/emotional-flashback-grounding.html', icon: '🧭', en: ['6-Step Flashback Grounding', 'Return gently to present-time safety when old hurt surges.'], ko: ['감정 플래시백 6단계 그라운딩', '오래된 압도감이 밀려올 때 현재 시점의 안전함으로 돌아오세요.'] }
     ],
     task_freeze: [
+      { url: '/portal/tools/perfectionism-loop-decoder.html', icon: '✨', en: ['Perfectionism 80% Decoder', 'Break endless polishing with an 80% Ship Contract & 5m timer.'], ko: ['완벽주의·자기방해 디코더', '80% 완료 계약과 5분 못생긴 초안 타이머로 실행력을 깨우세요.'] },
       { url: '/portal/tools/adhd-focus-friction-audit.html', icon: '⚡', en: ['ADHD Focus Friction Audit', 'Pinpoint task paralysis & start a 10-min body-doubling sprint.'], ko: ['ADHD·실행기능 마찰 점검', '과제 시작 마비 병목을 찾고 10분 바디더블링 시동을 거세요.'] },
-      { url: '/portal/tools/procrastination-root-decoder.html', icon: '🚀', en: ['Procrastination 5-Min Sprint', 'Decode the emotional block & start a 5-min timer.'], ko: ['미루기 디코더 & 5분 스프린트', '감정 마찰 원인을 풀고 5분 착수 타이머 시작.'] },
-      { url: '/portal/tools/dopamine-detox-protocol.html', icon: '🎯', en: ['Dopamine Reset Protocol', 'Replace passive scrolling with compound focus.'], ko: ['도파민 리셋 프로토콜', '저자극 집중 메뉴와 24시간 리셋 계획을 받으세요.'] }
+      { url: '/portal/tools/procrastination-root-decoder.html', icon: '🚀', en: ['Procrastination 5-Min Sprint', 'Decode the emotional block & start a 5-min timer.'], ko: ['미루기 디코더 & 5분 스프린트', '감정 마찰 원인을 풀고 5분 착수 타이머 시작.'] }
     ],
     sleepless: [
+      { url: '/portal/tools/doomscrolling-circuit-breaker.html', icon: '📵', en: ['Doomscrolling Circuit Breaker', 'Calculate waking days reclaimed & stack 4 bedtime friction locks.'], ko: ['둠스크롤링·야간 폰 차단기', '연간 회수 일수를 계산하고 4가지 물리 마찰 잠금을 설정하세요.'] },
       { url: '/portal/tools/sleep-chronotype-reset.html', icon: '🌙', en: ['Sleep Cycle & Circadian Reset', 'Calculate 90-min bedtimes & caffeine cutoff.'], ko: ['수면 사이클 리셋 계산기', '90분 최적 취침 시각과 카페인 마감을 계산하세요.'] },
-      { url: '/portal/tools/overthinking-rumination-breaker.html', icon: '🌀', en: ['3 AM Cognitive Shuffle', 'Interrupt nighttime racing thoughts with neutral imagery.'], ko: ['새벽 3시 인지 셔플', '90초 중립 이미지 셔플로 밤샘 사고 과열을 식히세요.'] },
       { url: '/portal/tools/somatic-tension-body-map.html', icon: '🧘', en: ['60s Bedtime PMR Release', 'Drop physical jaw & shoulder tension before sleep.'], ko: ['취침 전 60초 PMR 근육이완', '몸에 남은 긴장을 풀고 편안한 수면 준비를 돕습니다.'] }
     ],
     relationship: [
-      { url: '/portal/tools/boundary-script-builder.html', icon: '🚧', en: ['Boundary Script Generator', 'Say no clearly without guilt or long excuses.'], ko: ['거절·경계선 스크립트 빌더', '죄책감 없이 단호하고 부드럽게 거절하는 실전 문장.'] },
-      { url: '/portal/tools/attachment-trigger-decoder.html', icon: '🤝', en: ['Attachment Script Builder', 'Turn anxious or avoidant triggers into calm boundaries.'], ko: ['애착 트리거 안전 스크립트', '불안·회피 충동을 비난 없는 대화 문장으로 변환.'] },
-      { url: '/portal/tools/imposter-syndrome-audit.html', icon: '🛡️', en: ['Imposter Proof Vault', 'Counter self-doubt with objective evidence locally.'], ko: ['가면 증후군 성과 증거 금고', '객관적 성취 기록으로 자기 의심을 차분히 반박하세요.'] }
+      { url: '/portal/tools/gaslighting-reality-check.html', icon: '🔎', en: ['Gaslighting Reality-Check', 'Spot 8 distortion patterns locally & generate Grey-Rock scripts.'], ko: ['가스라이팅 현실 점검 로그', '8가지 현실 왜곡 패턴을 점검하고 차분한 그레이락 문장을 만드세요.'] },
+      { url: '/portal/tools/codependency-reset-audit.html', icon: '🧩', en: ['Codependency Reset Audit', 'Rate 6 rescuing habits & practice Detach-With-Love boundaries.'], ko: ['공동의존·상호독립 리셋 감사', '과잉배려 습관을 점검하고 건강한 거리 두기 문장을 받으세요.'] },
+      { url: '/portal/tools/inner-child-need-decoder.html', icon: '💛', en: ['Inner Child Need Decoder', 'Uncover unmet emotional needs & build a reparenting anchor.'], ko: ['내면아이 핵심 욕구 디코더', '숨은 핵심 감정 욕구를 해독하고 따뜻한 리페어런팅 문장을 만드세요.'] }
     ]
   };
 
@@ -249,6 +249,16 @@
       a.appendChild(sp);
       rxGrid.appendChild(a);
     });
+    var labCard = document.createElement('a');
+    labCard.className = 'bridge-card';
+    labCard.setAttribute('href', '/portal/tools/wellness-lab.html?lang=' + currentLang + '&source=daily_mind_checkin');
+    var labSt = document.createElement('strong');
+    labSt.textContent = currentLang === 'ko' ? '🧠 전체 30개 멘탈 웰니스 랩 둘러보기 →' : '🧠 Browse All 30 Mental Wellness Labs →';
+    var labSp = document.createElement('span');
+    labSp.textContent = currentLang === 'ko' ? '불안·번아웃·경계·집중·수면 맞춤 도구를 한눈에 필터링하세요.' : 'Filter all 30 private CBT, somatic, boundary & focus tools by mood.';
+    labCard.appendChild(labSt);
+    labCard.appendChild(labSp);
+    rxGrid.appendChild(labCard);
 
     var card = document.getElementById('resultCard');
     card.hidden = false;
