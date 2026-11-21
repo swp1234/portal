@@ -253,18 +253,18 @@
     labCard.className = 'bridge-card';
     labCard.setAttribute('href', '/portal/tools/wellness-lab.html?lang=' + currentLang + '&source=daily_mind_checkin');
     var LAB_COPY = {
-      en: ['🧠 Browse All 46 Mental Wellness Labs →', 'Filter all 46 private CBT, somatic, boundary & focus tools by mood.'],
-      ko: ['🧠 전체 46개 멘탈 웰니스 랩 둘러보기 →', '불안·번아웃·경계·집중·수면 맞춤 도구 46종을 한눈에 필터링하세요.'],
-      ja: ['🧠 全46種類のメンタルウェルネスラボを見る →', '不安・疲労・境界線・集中・睡眠の46ツールを気分別に絞り込めます。'],
+      en: ['🧠 Browse All 50 Mental Wellness Labs →', 'Filter all 50 private CBT, somatic, boundary & focus tools by mood.'],
+      ko: ['🧠 전체 50개 멘탈 웰니스 랩 둘러보기 →', '불안·번아웃·경계·집중·수면 맞춤 도구 50종을 한눈에 필터링하세요.'],
+      ja: ['🧠 全50種類のメンタルウェルネスラボを見る →', '不安・疲労・境界線・集中・睡眠の50ツールを気分別に絞り込めます。'],
       zh: ['🧠 浏览全部 40 款互动心理健康工具 →', '按焦虑、倦怠、边界、专注与睡眠筛选 40 款本地隐私工具。'],
-      es: ['🧠 Explorar las 46 Herramientas de Bienestar →', 'Filtra 46 herramientas privadas de TCC, calma, límites y enfoque.'],
-      pt: ['🧠 Explorar todas as 46 Ferramentas de Bem-Estar →', 'Filtre 46 ferramentas privadas de TCC, calma, limites e foco.'],
-      de: ['🧠 Alle 46 Mental-Wellness-Labs entdecken →', 'Filtere 46 private CBT-, Somatik-, Grenz- & Fokus-Tools nach Stimmung.'],
-      fr: ['🧠 Explorer les 46 Outils Bien-Être Mental →', 'Filtrez 46 outils privés TCC, somatiques, limites et focus selon votre état.'],
-      id: ['🧠 Jelajahi Semua 46 Lab Kesehatan Mental →', 'Filter 46 alat privat CBT, somatik, batasan & fokus sesuai kondisimu.'],
-      tr: ['🧠 Tüm 46 Zihinsel Sağlık Aracını Keşfet →', '46 gizli BDT, bedensel, sınır ve odak aracını ruh haline göre filtrele.'],
-      hi: ['🧠 सभी 46 मेंटल वेलनेस लैब देखें →', 'अपनी स्थिति के अनुसार 46 निजी CBT, सोमैटिक व फोकस टूल चुनें।'],
-      ru: ['🧠 Открыть все 46 инструментов лаборатории →', 'Отфильтруйте 46 приватных инструментов КПТ, телесной разгрузки и фокуса.']
+      es: ['🧠 Explorar las 50 Herramientas de Bienestar →', 'Filtra 50 herramientas privadas de TCC, calma, límites y enfoque.'],
+      pt: ['🧠 Explorar todas as 50 Ferramentas de Bem-Estar →', 'Filtre 50 ferramentas privadas de TCC, calma, limites e foco.'],
+      de: ['🧠 Alle 50 Mental-Wellness-Labs entdecken →', 'Filtere 50 private CBT-, Somatik-, Grenz- & Fokus-Tools nach Stimmung.'],
+      fr: ['🧠 Explorer les 50 Outils Bien-Être Mental →', 'Filtrez 50 outils privés TCC, somatiques, limites et focus selon votre état.'],
+      id: ['🧠 Jelajahi Semua 50 Lab Kesehatan Mental →', 'Filter 50 alat privat CBT, somatik, batasan & fokus sesuai kondisimu.'],
+      tr: ['🧠 Tüm 50 Zihinsel Sağlık Aracını Keşfet →', '50 gizli BDT, bedensel, sınır ve odak aracını ruh haline göre filtrele.'],
+      hi: ['🧠 सभी 50 मेंटल वेलनेस लैब देखें →', 'अपनी स्थिति के अनुसार 50 निजी CBT, सोमैटिक व फोकस टूल चुनें।'],
+      ru: ['🧠 Открыть все 50 инструментов лаборатории →', 'Отфильтруйте 50 приватных инструментов КПТ, телесной разгрузки и фокуса.']
     };
     var lc = LAB_COPY[currentLang] || LAB_COPY.en;
     var labSt = document.createElement('strong');

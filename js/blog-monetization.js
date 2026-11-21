@@ -293,20 +293,22 @@
     }
 
     var TOOL_CHROME_I18N = {
-        zh: { skip: '跳至工具', back: '← 心理健康实验室', langLabel: '语言：', chip3: '100% 本地隐私', resetBtn: '重置', storyBtn: '保存 1080×1920 总结卡 (PNG)', copyBtn: '复制内容', shareBtn: '分享工具', faqTitle: '常见问题', refTitle: '心理学框架与参考文献', discTitle: '自我觉察说明：', discText: '本互动工具仅供日常自我觉察与科普参考，不构成临床诊断或医疗建议。', privacy: '隐私政策', terms: '使用条款' },
-        ja: { skip: 'ツールへ移動', back: '← ウェルネスラボ', langLabel: '言語：', chip3: '100% ローカル完結', resetBtn: 'リセット', storyBtn: '1080×1920 要約カードを保存 (PNG)', copyBtn: 'コピー', shareBtn: 'ツールを共有', faqTitle: 'よくある質問', refTitle: '心理学的フレームワークと参考文献', discTitle: 'セルフケアに関するご案内：', discText: '本ツールは日常のセルフチェック用であり、医学的診断や治療に代わるものではありません。', privacy: 'プライバシーポリシー', terms: '利用規約' },
-        es: { skip: 'Ir a la herramienta', back: '← Laboratorio de Bienestar', langLabel: 'Idioma:', chip3: '100% Privado (Local)', resetBtn: 'Reiniciar', storyBtn: 'Guardar tarjeta 1080×1920 (PNG)', copyBtn: 'Copiar texto', shareBtn: 'Compartir', faqTitle: 'Preguntas Frecuentes', refTitle: 'Marcos Psicológicos y Referencias', discTitle: 'Aviso de autorreflexión:', discText: 'Esta herramienta interactiva es un recurso educativo de autorreflexión, no un diagnóstico clínico ni tratamiento médico.', privacy: 'Política de Privacidad', terms: 'Términos' },
-        pt: { skip: 'Ir para a ferramenta', back: '← Laboratório de Bem-Estar', langLabel: 'Idioma:', chip3: '100% Privado (Local)', resetBtn: 'Redefinir', storyBtn: 'Salvar cartão 1080×1920 (PNG)', copyBtn: 'Copiar texto', shareBtn: 'Compartilhar', faqTitle: 'Perguntas Frequentes', refTitle: 'Referências Psicológicas', discTitle: 'Aviso de autorreflexão:', discText: 'Esta ferramenta interativa é um recurso educativo de autorreflexão, não diagnóstico clínico nem tratamento médico.', privacy: 'Privacidade', terms: 'Termos' },
-        de: { skip: 'Zum Tool springen', back: '← Mental-Wellness-Labor', langLabel: 'Sprache:', chip3: '100% Privat (Lokal)', resetBtn: 'Zurücksetzen', storyBtn: '1080×1920 Karte speichern (PNG)', copyBtn: 'Kopieren', shareBtn: 'Tool teilen', faqTitle: 'Häufig gestellte Fragen', refTitle: 'Psychologische Grundlagen & Quellen', discTitle: 'Hinweis zur Selbstreflexion:', discText: 'Dieses interaktive Tool dient der eigenen Reflexion im Alltag und ersetzt keine klinische Diagnose oder Therapie.', privacy: 'Datenschutz', terms: 'Nutzungsbedingungen' },
-        fr: { skip: 'Aller à l’outil', back: '← Labo Bien-Être Mental', langLabel: 'Langue :', chip3: '100% Privé (Local)', resetBtn: 'Réinitialiser', storyBtn: 'Enregistrer la carte 1080×1920 (PNG)', copyBtn: 'Copier', shareBtn: 'Partager', faqTitle: 'Questions Fréquentes', refTitle: 'Cadres Psychologiques et Références', discTitle: 'Note d’auto-réflexion :', discText: 'Cet espace interactif est un outil éducatif de réflexion personnelle, et non un diagnostic clinique ou traitement médical.', privacy: 'Confidentialité', terms: 'Conditions' },
-        id: { skip: 'Lompat ke Alat', back: '← Lab Kesehatan Mental', langLabel: 'Bahasa:', chip3: '100% Privat (Lokal)', resetBtn: 'Atur Ulang', storyBtn: 'Simpan Kartu 1080×1920 (PNG)', copyBtn: 'Salin Teks', shareBtn: 'Bagikan', faqTitle: 'Pertanyaan Umum', refTitle: 'Kerangka Psikologi & Referensi', discTitle: 'Catatan refleksi diri:', discText: 'Alat interaktif ini adalah sarana refleksi diri edukatif, bukan diagnosis klinis atau perawatan medis.', privacy: 'Kebijakan Privasi', terms: 'Ketentuan' },
-        tr: { skip: 'Araca Geç', back: '← Zihinsel Sağlık Labı', langLabel: 'Dil:', chip3: '%100 Gizli (Yerel)', resetBtn: 'Sıfırla', storyBtn: '1080×1920 Özet Kartını Kaydet (PNG)', copyBtn: 'Kopyala', shareBtn: 'Paylaş', faqTitle: 'Sık Sorulan Sorular', refTitle: 'Psikolojik Çerçeveler ve Kaynaklar', discTitle: 'Öz-yansıtma uyarısı:', discText: 'Bu etkileşimli alan günlük farkındalık içindir; klinik tanı veya tıbbi tedavi yerine geçmez.', privacy: 'Gizlilik Politikası', terms: 'Koşullar' },
-        hi: { skip: 'टूल पर जाएँ', back: '← मेंटल वेलनेस लैब', langLabel: 'भाषा:', chip3: '100% निजी (लोकल)', resetBtn: 'रीसेट करें', storyBtn: '1080×1920 कार्ड सेव करें (PNG)', copyBtn: 'कॉपी करें', shareBtn: 'शेयर करें', faqTitle: 'अक्सर पूछे जाने वाले प्रश्न', refTitle: 'मनोवैज्ञानिक संदर्भ', discTitle: 'आत्म-चिंतन सूचना:', discText: 'यह इंटरैक्टिव टूल केवल शैक्षिक आत्म-चिंतन के लिए है, यह चिकित्सीय निदान या उपचार नहीं है।', privacy: 'गोपनीयता नीति', terms: 'शर्तें' },
-        ru: { skip: 'Перейти к инструменту', back: '← Лаборатория здоровья', langLabel: 'Язык:', chip3: '100% Приватно (Локально)', resetBtn: 'Сбросить', storyBtn: 'Сохранить карточку 1080×1920 (PNG)', copyBtn: 'Копировать', shareBtn: 'Поделиться', faqTitle: 'Частые вопросы', refTitle: 'Психологические основы и источники', discTitle: 'Примечание о самопомощи:', discText: 'Этот интерактивный инструмент предназначен для личной рефлексии и не заменяет клиническую диагностику или терапию.', privacy: 'Конфиденциальность', terms: 'Условия' }
+        zh: { skip: '跳至工具', back: '← 心理健康实验室', langLabel: '语言：', chip3: '100% 本地隐私', step1Sub: '所有输入与评分 100% 仅保存在本地浏览器中。', ctaBtn: '生成我的专属缓解方案', buildBtn: '生成我的专属回应脚本与方案', resetBtn: '重置', resultBadge: '第 2 步 • 你的专属行动方案', meterLabel: '当前身心平衡指数', stepsTitle: '3 个立即可行的舒缓步骤', scriptTitle: '可直接使用的温和回应脚本', noteTitle: '我的私人锚点笔记', storyBtn: '保存 1080×1920 总结卡 (PNG)', copyBtn: '复制内容', shareBtn: '分享工具', faqTitle: '常见问题', refTitle: '心理学框架与参考文献', discTitle: '自我觉察说明：', discText: '本互动工具仅供日常自我觉察与科普参考，不构成临床诊断或医疗建议。', privacy: '隐私政策', terms: '使用条款' },
+        ja: { skip: 'ツールへ移動', back: '← ウェルネスラボ', langLabel: '言語：', chip3: '100% ローカル完結', step1Sub: '入力内容と評価は 100% ブラウザ内にのみ保存されます。', ctaBtn: 'あなた専用のリセットプランを作成', buildBtn: '専用スクリプトと行動プランを作成', resetBtn: 'リセット', resultBadge: 'ステップ 2 • あなた専用のアクションプラン', meterLabel: '現在のバランス指標', stepsTitle: '今すぐ試せる 3 つの実践ステップ', scriptTitle: 'そのまま使える落ち着いたフレーズ', noteTitle: 'マイ・プライベートメモ', storyBtn: '1080×1920 要約カードを保存 (PNG)', copyBtn: 'コピー', shareBtn: 'ツールを共有', faqTitle: 'よくある質問', refTitle: '心理学的フレームワークと参考文献', discTitle: 'セルフケアに関するご案内：', discText: '本ツールは日常のセルフチェック用であり、医学的診断や治療に代わるものではありません。', privacy: 'プライバシーポリシー', terms: '利用規約' },
+        es: { skip: 'Ir a la herramienta', back: '← Laboratorio de Bienestar', langLabel: 'Idioma:', chip3: '100% Privado (Local)', step1Sub: 'Tus respuestas permanecen 100% privadas en tu navegador.', ctaBtn: 'Generar mi plan personalizado', buildBtn: 'Generar mi guion y plan', resetBtn: 'Reiniciar', resultBadge: 'PASO 2 • TU PLAN DE ACCIÓN PERSONALIZADO', meterLabel: 'Índice actual de equilibrio', stepsTitle: '3 pasos prácticos inmediatos', scriptTitle: 'Guion sereno listo para usar', noteTitle: 'Mi nota personal de anclaje', storyBtn: 'Guardar tarjeta 1080×1920 (PNG)', copyBtn: 'Copiar texto', shareBtn: 'Compartir', faqTitle: 'Preguntas Frecuentes', refTitle: 'Marcos Psicológicos y Referencias', discTitle: 'Aviso de autorreflexión:', discText: 'Esta herramienta interactiva es un recurso educativo de autorreflexión, no un diagnóstico clínico ni tratamiento médico.', privacy: 'Política de Privacidad', terms: 'Términos' },
+        pt: { skip: 'Ir para a ferramenta', back: '← Laboratório de Bem-Estar', langLabel: 'Idioma:', chip3: '100% Privado (Local)', step1Sub: 'Suas respostas permanecem 100% locais no seu navegador.', ctaBtn: 'Gerar meu plano personalizado', buildBtn: 'Gerar meu roteiro e plano', resetBtn: 'Redefinir', resultBadge: 'PASSO 2 • SEU PLANO DE AÇÃO PERSONALIZADO', meterLabel: 'Índice atual de equilíbrio', stepsTitle: '3 passos práticos imediatos', scriptTitle: 'Roteiro calmo pronto para usar', noteTitle: 'Minha nota pessoal de apoio', storyBtn: 'Salvar cartão 1080×1920 (PNG)', copyBtn: 'Copiar texto', shareBtn: 'Compartilhar', faqTitle: 'Perguntas Frequentes', refTitle: 'Referências Psicológicas', discTitle: 'Aviso de autorreflexão:', discText: 'Esta ferramenta interativa é um recurso educativo de autorreflexão, não diagnóstico clínico nem tratamento médico.', privacy: 'Privacidade', terms: 'Termos' },
+        de: { skip: 'Zum Tool springen', back: '← Mental-Wellness-Labor', langLabel: 'Sprache:', chip3: '100% Privat (Lokal)', step1Sub: 'Deine Angaben bleiben zu 100% lokal in deinem Browser.', ctaBtn: 'Meinen persönlichen Reset-Plan erstellen', buildBtn: 'Persönliches Skript & Plan erstellen', resetBtn: 'Zurücksetzen', resultBadge: 'SCHRITT 2 • DEIN PERSÖNLICHER AKTIONSPLAN', meterLabel: 'Aktueller Stabilitäts-Index', stepsTitle: '3 sofort umsetzbare Schritte', scriptTitle: 'Ruhiges Gesprächsskript zum Kopieren', noteTitle: 'Meine persönliche Anker-Notiz', storyBtn: '1080×1920 Karte speichern (PNG)', copyBtn: 'Kopieren', shareBtn: 'Tool teilen', faqTitle: 'Häufig gestellte Fragen', refTitle: 'Psychologische Grundlagen & Quellen', discTitle: 'Hinweis zur Selbstreflexion:', discText: 'Dieses interaktive Tool dient der eigenen Reflexion im Alltag und ersetzt keine klinische Diagnose oder Therapie.', privacy: 'Datenschutz', terms: 'Nutzungsbedingungen' },
+        fr: { skip: 'Aller à l’outil', back: '← Labo Bien-Être Mental', langLabel: 'Langue :', chip3: '100% Privé (Local)', step1Sub: 'Vos réponses restent 100% locales dans votre navigateur.', ctaBtn: 'Générer mon plan personnalisé', buildBtn: 'Générer mon script et mon plan', resetBtn: 'Réinitialiser', resultBadge: 'ÉTAPE 2 • VOTRE PLAN D’ACTION PERSONNALISÉ', meterLabel: 'Indice actuel d’équilibre', stepsTitle: '3 gestes pratiques immédiats', scriptTitle: 'Script apaisé prêt à l’emploi', noteTitle: 'Ma note d’ancrage privée', storyBtn: 'Enregistrer la carte 1080×1920 (PNG)', copyBtn: 'Copier', shareBtn: 'Partager', faqTitle: 'Questions Fréquentes', refTitle: 'Cadres Psychologiques et Références', discTitle: 'Note d’auto-réflexion :', discText: 'Cet espace interactif est un outil éducatif de réflexion personnelle, et non un diagnostic clinique ou traitement médical.', privacy: 'Confidentialité', terms: 'Conditions' },
+        id: { skip: 'Lompat ke Alat', back: '← Lab Kesehatan Mental', langLabel: 'Bahasa:', chip3: '100% Privat (Lokal)', step1Sub: 'Jawaban Anda tetap 100% privat di browser Anda.', ctaBtn: 'Buat Rencana Pemulihan Saya', buildBtn: 'Buat Skrip & Rencana Saya', resetBtn: 'Atur Ulang', resultBadge: 'LANGKAH 2 • RENCANA AKSI PRIBADI ANDA', meterLabel: 'Indeks Keseimbangan Saat Ini', stepsTitle: '3 Langkah Praktis Segera', scriptTitle: 'Skrip Komunikasi Tenang Siap Pakai', noteTitle: 'Catatan Pribadi Saya', storyBtn: 'Simpan Kartu 1080×1920 (PNG)', copyBtn: 'Salin Teks', shareBtn: 'Bagikan', faqTitle: 'Pertanyaan Umum', refTitle: 'Kerangka Psikologi & Referensi', discTitle: 'Catatan refleksi diri:', discText: 'Alat interaktif ini adalah sarana refleksi diri edukatif, bukan diagnosis klinis atau perawatan medis.', privacy: 'Kebijakan Privasi', terms: 'Ketentuan' },
+        tr: { skip: 'Araca Geç', back: '← Zihinsel Sağlık Labı', langLabel: 'Dil:', chip3: '%100 Gizli (Yerel)', step1Sub: 'Yanıtlarınız %100 tarayıcınızda yerel olarak kalır.', ctaBtn: 'Kişisel Sıfırlama Planımı Oluştur', buildBtn: 'Kişisel Metin ve Planımı Oluştur', resetBtn: 'Sıfırla', resultBadge: 'ADIM 2 • KİŞİSEL EYLEM PLANINIZ', meterLabel: 'Güncel Denge İndeksi', stepsTitle: 'Hemen Uygulanabilir 3 Adım', scriptTitle: 'Kullanıma Hazır Sakin İfade', noteTitle: 'Kişisel Çapa Notum', storyBtn: '1080×1920 Özet Kartını Kaydet (PNG)', copyBtn: 'Kopyala', shareBtn: 'Paylaş', faqTitle: 'Sık Sorulan Sorular', refTitle: 'Psikolojik Çerçeveler ve Kaynaklar', discTitle: 'Öz-yansıtma uyarısı:', discText: 'Bu etkileşimli alan günlük farkındalık içindir; klinik tanı veya tıbbi tedavi yerine geçmez.', privacy: 'Gizlilik Politikası', terms: 'Koşullar' },
+        hi: { skip: 'टूल पर जाएँ', back: '← मेंटल वेलनेस लैब', langLabel: 'भाषा:', chip3: '100% निजी (लोकल)', step1Sub: 'आपके उत्तर 100% आपके ब्राउज़र में निजी रहते हैं।', ctaBtn: 'मेरा पर्सनल रीसेट प्लान बनाएं', buildBtn: 'मेरा स्क्रिप्ट और प्लान बनाएं', resetBtn: 'रीसेट करें', resultBadge: 'चरण 2 • आपका पर्सनल एक्शन प्लान', meterLabel: 'वर्तमान संतुलन सूचकांक', stepsTitle: 'तुरंत करने योग्य 3 व्यावहारिक कदम', scriptTitle: 'उपयोग के लिए तैयार शांत संवाद', noteTitle: 'मेरा निजी नोट', storyBtn: '1080×1920 कार्ड सेव करें (PNG)', copyBtn: 'कॉपी करें', shareBtn: 'शेयर करें', faqTitle: 'अक्सर पूछे जाने वाले प्रश्न', refTitle: 'मनोवैज्ञानिक संदर्भ', discTitle: 'आत्म-चिंतन सूचना:', discText: 'यह इंटरैक्टिव टूल केवल शैक्षिक आत्म-चिंतन के लिए है, यह चिकित्सीय निदान या उपचार नहीं है।', privacy: 'गोपनीयता नीति', terms: 'शर्तें' },
+        ru: { skip: 'Перейти к инструменту', back: '← Лаборатория здоровья', langLabel: 'Язык:', chip3: '100% Приватно (Локально)', step1Sub: 'Все ваши ответы остаются на 100% локально в браузере.', ctaBtn: 'Создать персональный план', buildBtn: 'Создать фразу и план действий', resetBtn: 'Сбросить', resultBadge: 'ШАГ 2 • ВАШ ПЕРСОНАЛЬНЫЙ ПЛАН ДЕЙСТВИЙ', meterLabel: 'Текущий индекс баланса', stepsTitle: '3 практических шага прямо сейчас', scriptTitle: 'Готовая спокойная фраза', noteTitle: 'Моя личная заметка', storyBtn: 'Сохранить карточку 1080×1920 (PNG)', copyBtn: 'Копировать', shareBtn: 'Поделиться', faqTitle: 'Частые вопросы', refTitle: 'Психологические основы и источники', discTitle: 'Примечание о самопомощи:', discText: 'Этот интерактивный инструмент предназначен для личной рефлексии и не заменяет клиническую диагностику или терапию.', privacy: 'Конфиденциальность', terms: 'Условия' }
     };
 
     var EN_CHROME_RE = /^(?:Skip to|←\s*(?:Mental Wellness Lab|Wellness Lab|Tools Catalog|All \d+ Tools)|Language:|100% Private|Reset|Clear All|Save 1080|Copy |Share |Frequently Asked Questions|Psychological Frameworks|Editorial Self-Reflection|This interactive workspace|Privacy Policy|Terms)/i;
-    var EN_LEAD_RE = /\b(?:your|locally|browser|private|seconds|minutes|generate|check|rate|identify|calm|build|spot|stop|track|feeling|tired|stuck|find|turn|decode|audit|separate|measure|distinguish|free|anxiety|burnout|stress|boundaries)\b/i;
+    var EN_WORK_RE = /\b(?:your|my|the|stays?|browser|device|uploaded|tracked|step\s*[123]|moves|steps|build|generate|calculate|decode|filter|cool\s+down|run\s+safety|rate\s+each|slide\s+|tap\s+every|choose\s+the|pick\s+a|select\s+the|today['’]?s?|grounded|permission|reframe|anchor|protecting|margin|reserve|capacity|freedom|stability|statement|boundary|guilt-free|self-soothing|ready-to-send|zero-pressure|gentle|unfair|honest|present-time|present-room|prefrontal|autonomy|reconnection|emotional|nervous\s+system|friction|blueprint|toolkit)\b/i;
+    var WORK_KEYS = { step1Sub: 1, resultBadge: 1, stepsTitle: 1, scriptTitle: 1, noteTitle: 1, meterLabel: 1, ctaBtn: 1, buildBtn: 1 };
+    var EN_LEAD_RE = /\b(?:your|locally|browser|private|seconds|minutes|generate|check|rate|identify|calm|build|spot|stop|track|feeling|tired|stuck|find|turn|decode|audit|separate|measure|distinguish|free|anxiety|burnout|stress|boundaries|anger|guilt|loneliness|sunday|monday|pause|reset|plan|script|overwhelm|nervous|emotion|energy|sleep|focus|trigger)\b/i;
     var leadsCache = null;
     var leadsPromise = null;
 
@@ -316,20 +318,146 @@
         return m[1].toLowerCase();
     }
 
+    var NEXT_CHAIN_I18N = {
+        en: { kicker: 'CONTINUE YOUR RESET', title: 'Recommended Next 2-Min Labs', open: 'Open Lab →' },
+        ko: { kicker: '다음 2분 회복 루틴', title: '이어서 해보면 좋은 맞춤 웰니스 랩', open: '열기 →' },
+        zh: { kicker: '继续你的 2 分钟修复', title: '推荐下一步互动心理实验室', open: '打开工具 →' },
+        ja: { kicker: '次の2分セルフケア', title: '続けて試したいおすすめラボ', open: '開く →' },
+        es: { kicker: 'CONTINÚA TU RESET', title: 'Siguientes Laboratorios Recomendados', open: 'Abrir →' },
+        pt: { kicker: 'CONTINUE SEU RESET', title: 'Próximos Laboratórios Recomendados', open: 'Abrir →' },
+        de: { kicker: 'WEITERMACHEN (2 MIN.)', title: 'Empfohlene nächste Wellness-Labs', open: 'Öffnen →' },
+        fr: { kicker: 'CONTINUER VOTRE RESET', title: 'Prochains Labos Recommandés', open: 'Ouvrir →' },
+        id: { kicker: 'LANJUTKAN PEMULIHAN', title: 'Lab Rekomendasi Berikutnya', open: 'Buka →' },
+        tr: { kicker: 'SIFIRLAMAYA DEVAM ET', title: 'Önerilen Sonraki 2 Dk Lablar', open: 'Aç →' },
+        hi: { kicker: 'अगला 2-मिनट कदम', title: 'अनुशंसित अगले वेलनेस लैब', open: 'खोलें →' },
+        ru: { kicker: 'ПРОДОЛЖИТЬ ПРАКТИКУ', title: 'Рекомендуемые следующие практики', open: 'Открыть →' }
+    };
+
+    function injectNextChainStyles() {
+        if (document.getElementById('dbNextChainStyles')) return;
+        var st = document.createElement('style');
+        st.id = 'dbNextChainStyles';
+        st.textContent = [
+            '.db-next-chain{margin:18px 0 0;padding:16px;border-radius:16px;border:1px solid rgba(129,140,248,0.28);background:rgba(15,23,42,0.58);box-sizing:border-box;max-width:100%;overflow:hidden}',
+            '.db-next-kicker{font-size:0.72rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#a5b4fc;margin:0 0 4px}',
+            '.db-next-title{font-size:0.98rem;font-weight:800;color:#f8fafc;margin:0 0 12px;line-height:1.35}',
+            '.db-next-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}',
+            '.db-next-card{display:flex;flex-direction:column;justify-content:space-between;gap:6px;min-height:44px;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.035);color:#f8fafc;text-decoration:none;box-sizing:border-box;transition:border-color 0.16s ease,background 0.16s ease}',
+            '.db-next-card:hover{border-color:rgba(45,212,191,0.55);background:rgba(20,184,166,0.09)}',
+            '.db-next-card strong{font-size:0.88rem;line-height:1.35;color:#f8fafc}',
+            '.db-next-card span{font-size:0.78rem;line-height:1.4;color:#94a3b8}',
+            '.db-next-cta{font-size:0.78rem;font-weight:700;color:#2dd4bf;margin-top:2px}'
+        ].join('');
+        document.head.appendChild(st);
+    }
+
+    function renderNextLabChain(data, slug, loc) {
+        var resultCard = document.getElementById('resultCard');
+        if (!resultCard || !data || !data[slug]) return;
+        var curCat = data[slug].cat;
+        if (!curCat) return;
+        var siblings = [];
+        var keys = Object.keys(data);
+        for (var i = 0; i < keys.length; i++) {
+            var k = keys[i];
+            if (data[k] && data[k].cat === curCat) siblings.push(k);
+        }
+        var idx = siblings.indexOf(slug);
+        if (idx === -1 || siblings.length < 2) return;
+        var picks = [];
+        for (var step = 1; step <= Math.min(3, siblings.length - 1); step++) {
+            picks.push(siblings[(idx + step) % siblings.length]);
+        }
+
+        injectNextChainStyles();
+        var wrap = document.getElementById('nextLabChain');
+        if (!wrap) {
+            wrap = document.createElement('section');
+            wrap.id = 'nextLabChain';
+            wrap.className = 'db-next-chain';
+            wrap.setAttribute('data-bm-next-chain', '1');
+            resultCard.appendChild(wrap);
+        }
+        var hdr = NEXT_CHAIN_I18N[loc] || NEXT_CHAIN_I18N.en;
+        wrap.setAttribute('aria-label', hdr.title);
+        wrap.textContent = '';
+
+        var kEl = document.createElement('p');
+        kEl.className = 'db-next-kicker';
+        kEl.textContent = hdr.kicker;
+        var tEl = document.createElement('h3');
+        tEl.className = 'db-next-title';
+        tEl.textContent = hdr.title;
+        var grid = document.createElement('div');
+        grid.className = 'db-next-grid';
+
+        for (var p = 0; p < picks.length; p++) {
+            var toSlug = picks[p];
+            var entry = data[toSlug];
+            var pair = Array.isArray(entry[loc]) ? entry[loc] : (Array.isArray(entry.en) ? entry.en : [toSlug, '']);
+            var a = document.createElement('a');
+            a.className = 'db-next-card';
+            a.href = loc === 'en' ? ('/portal/tools/' + toSlug + '.html') : ('/portal/tools/' + toSlug + '.html?lang=' + loc);
+            a.setAttribute('data-chain-slug', toSlug);
+            var stEl = document.createElement('strong');
+            stEl.textContent = (entry.emoji ? entry.emoji + ' ' : '') + pair[0];
+            var spEl = document.createElement('span');
+            spEl.textContent = pair[1] || '';
+            var ctaEl = document.createElement('div');
+            ctaEl.className = 'db-next-cta';
+            ctaEl.textContent = hdr.open;
+            a.appendChild(stEl);
+            a.appendChild(spEl);
+            a.appendChild(ctaEl);
+            (function(targetSlug) {
+                a.addEventListener('click', function() {
+                    sendEvent('wellness_tool_chain_click', {
+                        event_category: 'engagement',
+                        from_slug: slug,
+                        to_slug: targetSlug,
+                        category: curCat
+                    });
+                });
+            })(toSlug);
+            grid.appendChild(a);
+        }
+
+        wrap.appendChild(kEl);
+        wrap.appendChild(tEl);
+        wrap.appendChild(grid);
+    }
+
     function applyToolLeads(slug, loc) {
-        if (!slug || !TOOL_CHROME_I18N[loc]) return;
+        if (!slug) return;
         function apply(data) {
-            if (!data || !data[slug] || !data[slug][loc]) return;
+            if (!data || !data[slug]) return;
             if (getLocale() !== loc) return;
-            var leadText = data[slug][loc];
-            var leadEl = document.querySelector('[data-i18n="heroLead"]');
-            if (leadEl && EN_LEAD_RE.test((leadEl.textContent || '').trim())) {
-                leadEl.textContent = leadText;
+            var raw = data[slug][loc];
+            var titleText = Array.isArray(raw) ? raw[0] : '';
+            var leadText = Array.isArray(raw) ? raw[1] : (typeof raw === 'string' ? raw : '');
+
+            if (TOOL_CHROME_I18N[loc]) {
+                if (titleText) {
+                    var h1El = document.querySelector('[data-i18n="heroTitle"]');
+                    if (h1El && /^[A-Za-z0-9\s&().,:'’–—/-]+$/.test((h1El.textContent || '').trim())) {
+                        h1El.textContent = titleText;
+                    }
+                    if (/^[A-Za-z0-9\s&().,:'’–—|/+-]+$/.test((document.title || '').trim())) {
+                        document.title = titleText + ' | DopaBrain';
+                    }
+                }
+                if (leadText) {
+                    var leadEl = document.querySelector('[data-i18n="heroLead"]');
+                    if (leadEl && EN_LEAD_RE.test((leadEl.textContent || '').trim())) {
+                        leadEl.textContent = leadText;
+                    }
+                    var metaEl = document.querySelector('meta[name="description"]');
+                    if (metaEl && EN_LEAD_RE.test((metaEl.getAttribute('content') || '').trim())) {
+                        metaEl.setAttribute('content', leadText);
+                    }
+                }
             }
-            var metaEl = document.querySelector('meta[name="description"]');
-            if (metaEl && EN_LEAD_RE.test((metaEl.getAttribute('content') || '').trim())) {
-                metaEl.setAttribute('content', leadText);
-            }
+            renderNextLabChain(data, slug, loc);
         }
         if (leadsCache) {
             apply(leadsCache);
@@ -350,20 +478,22 @@
         function applyChrome() {
             var loc = getLocale();
             var pack = TOOL_CHROME_I18N[loc];
-            if (!pack) return;
-            var els = document.querySelectorAll('[data-i18n]');
-            for (var i = 0; i < els.length; i++) {
-                var el = els[i];
-                var key = el.getAttribute('data-i18n');
-                if (!pack[key] || el.tagName === 'META') continue;
-                var cur = (el.textContent || '').trim();
-                if (EN_CHROME_RE.test(cur)) {
-                    el.textContent = pack[key];
+            if (pack) {
+                var els = document.querySelectorAll('[data-i18n]');
+                for (var i = 0; i < els.length; i++) {
+                    var el = els[i];
+                    var key = el.getAttribute('data-i18n');
+                    if (!pack[key] || el.tagName === 'META') continue;
+                    var cur = (el.textContent || '').trim();
+                    if (EN_CHROME_RE.test(cur) || (WORK_KEYS[key] && EN_WORK_RE.test(cur))) {
+                        el.textContent = pack[key];
+                    }
                 }
             }
             applyToolLeads(slug, loc);
         }
         applyChrome();
+        window.setTimeout(applyChrome, 50);
         if (typeof window.MutationObserver === 'function') {
             var obs = new window.MutationObserver(function() {
                 window.setTimeout(applyChrome, 0);
@@ -372,12 +502,23 @@
         }
     }
 
+    function initToolCalmPacer() {
+        var slug = getToolSlug();
+        if (!slug || !document.getElementById('resultCard')) return;
+        if (document.querySelector('script[src*="/portal/js/tool-calm-pacer.js"]')) return;
+        var sc = document.createElement('script');
+        sc.src = '/portal/js/tool-calm-pacer.js';
+        sc.defer = true;
+        document.body.appendChild(sc);
+    }
+
     function boot() {
         initCuratedCard();
         initStickyCta();
         initQuickCheck();
         initToolBridge();
         initToolChromeI18n();
+        initToolCalmPacer();
     }
 
     if (document.readyState === 'loading') {

@@ -77,7 +77,8 @@
 
     var accent = opts.accent || '#6366f1';
     var accent2 = opts.accent2 || '#10b981';
-    var fontStack = '"Outfit", "Noto Sans KR", "Noto Sans JP", "Noto Sans SC", system-ui, -apple-system, sans-serif';
+    var lang = (document.documentElement.getAttribute('lang') || 'en').slice(0, 2).toLowerCase();
+    var fontStack = '"Outfit", "Noto Sans KR", "Noto Sans JP", "Noto Sans SC", "Noto Sans TC", "Noto Sans Devanagari", system-ui, -apple-system, sans-serif';
 
     // 1. Background base + atmospheric radial glows
     var bgGrad = ctx.createLinearGradient(0, 0, width, height);
@@ -238,7 +239,11 @@
         ctx.textAlign = 'left';
         ctx.fillStyle = '#f8fafc';
         ctx.font = '700 26px ' + fontStack;
-        ctx.fillText(String(opts.takeawayLabel || 'KEY TAKEAWAY').toUpperCase(), boxX + 36, cursorY + 46);
+        var defaultTakeawayLabel = TAKEAWAY_LABELS[lang] || TAKEAWAY_LABELS.en;
+        var rawTakeawayLabel = (!opts.takeawayLabel || /^KEY TAKEAWAY$/i.test(String(opts.takeawayLabel).trim()))
+          ? defaultTakeawayLabel
+          : String(opts.takeawayLabel);
+        ctx.fillText(rawTakeawayLabel.toUpperCase(), boxX + 36, cursorY + 46);
 
         ctx.fillStyle = '#e2e8f0';
         ctx.font = '500 31px ' + fontStack;
@@ -251,23 +256,28 @@
       }
     }
 
-    // 9. Footer watermark
-    var footerY = cardY + cardH - 120;
+    // 9. Footer watermark + 12-language viral discovery tagline
+    var footerY = cardY + cardH - 134;
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
-    ctx.moveTo(padX + 56, footerY - 36);
-    ctx.lineTo(padX + cardW - 56, footerY - 36);
+    ctx.moveTo(padX + 56, footerY - 34);
+    ctx.lineTo(padX + cardW - 56, footerY - 34);
     ctx.stroke();
 
     ctx.textAlign = 'center';
     ctx.fillStyle = '#ffffff';
     ctx.font = '800 34px ' + fontStack;
-    ctx.fillText('DopaBrain', width / 2, footerY + 12);
+    ctx.fillText('DopaBrain', width / 2, footerY + 6);
+
+    var footerTagline = FOOTER_TAGLINES[lang] || FOOTER_TAGLINES.en;
+    ctx.fillStyle = accent2;
+    ctx.font = '600 24px ' + fontStack;
+    ctx.fillText(footerTagline, width / 2, footerY + 48);
 
     ctx.fillStyle = '#94a3b8';
-    ctx.font = '500 26px ' + fontStack;
-    ctx.fillText(String(opts.footerUrl || 'dopabrain.com/portal/tools/'), width / 2, footerY + 56);
+    ctx.font = '500 24px ' + fontStack;
+    ctx.fillText(String(opts.footerUrl || 'dopabrain.com/portal/tools/wellness-lab.html'), width / 2, footerY + 86);
 
     return canvas;
   }
@@ -313,6 +323,36 @@
     hi: '1080×1920 स्टोरी कार्ड सेव करें (PNG)',
     id: 'Simpan Kartu 1080×1920 (PNG)',
     tr: '1080×1920 Hikaye Kartı Kaydet (PNG)'
+  };
+
+  var TAKEAWAY_LABELS = {
+    en: 'KEY TAKEAWAY',
+    ko: '핵심 요약',
+    zh: '核心要点',
+    ja: '重要ポイント',
+    es: 'CLAVE PRINCIPAL',
+    pt: 'PONTO-CHAVE',
+    de: 'WICHTIGSTE ERKENNTNIS',
+    fr: 'POINT CLÉ',
+    ru: 'ГЛАВНЫЙ ВЫВОД',
+    hi: 'मुख्य निष्कर्ष',
+    id: 'POIN UTAMA',
+    tr: 'TEMEL ÇIKARIM'
+  };
+
+  var FOOTER_TAGLINES = {
+    en: '50 Free Interactive Wellness Labs · 100% Private',
+    ko: '50개 무료 심리 웰니스 랩 · 100% 로컬 비공개',
+    zh: '50个免费心理互动实验室 · 100% 本地隐私',
+    ja: '50種類の無料メンタルウェルネスラボ・完全プライベート',
+    es: '50 Laboratorios Gratuitos de Bienestar · 100% Privado',
+    pt: '50 Laboratórios Gratuitos de Bem-Estar · 100% Privado',
+    de: '50 kostenlose Mental-Wellness-Labs · 100% Privat',
+    fr: '50 Labos Bien-Être Gratuits · 100% Privé',
+    ru: '50 бесплатных практик самопомощи · 100% приватно',
+    hi: '50 मुफ़्त मेंटल वेलनेस लैब · 100% निजी',
+    id: '50 Lab Kesehatan Mental Gratis · 100% Privat',
+    tr: '50 Ücretsiz Psikoloji & Wellness Lab · %100 Gizli'
   };
 
   function getText(id) {
@@ -420,6 +460,22 @@
         takeaway: 'Two slow inhales + one long cyclic sigh lowers acute heart rate in under 60 seconds.'
       });
     }
+    if (slug === 'brain-game-workout') {
+      var planTitle = getText('planHeadline') || getText('resultTitle') || h1;
+      var planSub = getText('planSummary') || getText('resultSummary') || 'Daily short-session cognitive warm-up plan built locally.';
+      return Object.assign(base, {
+        emoji: '🧩',
+        accent: '#6366f1',
+        accent2: '#22d3ee',
+        headline: planTitle,
+        subtitle: planSub,
+        metrics: [
+          { label: 'Focus Warm-Up', pct: 85, valueText: '5 min', color: '#818cf8' },
+          { label: 'Mental Flexibility', pct: 90, valueText: 'Active', color: '#22d3ee' }
+        ],
+        takeaway: planSub
+      });
+    }
     return Object.assign(base, {
       emoji: '✨',
       headline: getText('verdictTitle') || h1,
@@ -456,7 +512,7 @@
   }
 
   global.DopaBrainStoryCard = {
-    version: '2026-11-20',
+    version: '2026-11-21',
     renderStoryCanvas: renderStoryCanvas,
     downloadStoryCard: downloadStoryCard,
     autoBind: autoBind

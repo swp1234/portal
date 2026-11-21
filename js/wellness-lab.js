@@ -602,21 +602,73 @@
       id: ["Lab Pemulihan Attachment Menghindar","Kenali 5 refleks menjauh saat dekat & buat kalimat minta ruang tenang dengan waktu kembali jelas."],
       tr: ["Kaçıngan Bağlanma ve Güvenli Alan Labı","Yakınlıkta kapanma reflekslerini ölçün ve dönüş saati belli sakin bir alan isteme metni yazın."],
       hi: ["अवॉइडेंट अटैचमेंट थॉ व स्पेस लैब","नज़दीकी से पीछे हटने के 5 संकेत पहचानें और शांत वापसी-समय वाली स्क्रिप्ट बनाएं।"],
-      ru: ["Лаборатория избегающей привязанности","Разберите 5 рефлексов отстранения при близости и создайте спокойную фразу паузы со сроком возврата."] }
+      ru: ["Лаборатория избегающей привязанности","Разберите 5 рефлексов отстранения при близости и создайте спокойную фразу паузы со сроком возврата."] },
+    { slug: 'anger-cooldown-deescalator', cat: 'anxiety', emoji: '🌋', tag: '90s Cool',
+      en: ["Anger Cooldown De-escalator","Decode 5 anger fuels underneath frustration & turn heat into a calm, firm boundary script."],
+      ko: ["분노·짜증 90초 쿨다운 번역기","폭발 직전의 짜증과 분노 아래 숨은 5가지 원인을 해독하고 후회 없는 단호한 문장으로 바꿉니다."],
+      ja: ["怒り・イライラ90秒クールダウン","怒りの奥にある5つの要因を整理し、後悔しない落ち着いた境界フレーズに変換します。"],
+      zh: ["愤怒与烦躁90秒降温转化器","拆解爆发背后被越界或耗竭等5大诱因，把冲动怒火转化为坚定冷静的表达。"],
+      es: ["Desescalador de Ira y Frustración (90s)","Identifica 5 detonantes ocultos de la ira y transforma el enojo en un límite firme y sereno."],
+      pt: ["Desescalador de Raiva e Frustração (90s)","Decodifique 5 gatilhos por trás da irritação e transforme calor em um limite firme e calmo."],
+      de: ["Wut- & Frust-Cooldown-Deeskalator (90s)","Entschlüssle 5 verborgene Wut-Auslöser und formuliere eine klare, ruhige Grenze ohne Reue."],
+      fr: ["Désamorceur Colère & Frustration (90s)","Identifiez 5 moteurs cachés de la colère pour poser une limite ferme, calme et sans regret."],
+      id: ["Pereda Amarah & Frustrasi (90 Detik)","Kenali 5 pemicu di balik rasa kesal & ubah emosi panas menjadi batas tegas yang tenang."],
+      tr: ["Öfke ve Sinir 90 Saniye Soğutucu","Öfkenin altındaki 5 temel yakıtı çözün ve pişmanlık yaratmayan net bir sınır cümlesi kurun."],
+      hi: ["गुस्सा व चिड़चिड़ाहट 90-सेकंड कूलडाउन","गुस्से के पीछे के 5 कारण पहचानें और शांत, स्पष्ट सीमा वाक्य तैयार करें।"],
+      ru: ["Охладитель гнева и раздражения (90с)","Разберите 5 скрытых причин злости и переведите накал в твёрдую спокойную границу."] },
+    { slug: 'guilt-vs-responsibility-filter', cat: 'relationships', emoji: '⚖️', tag: 'Clarity',
+      en: ["Guilt vs. Responsibility Filter","Separate genuine repair from 5 false-guilt traps (resting, saying no, others’ moods) locally."],
+      ko: ["거짓 죄책감 vs 진짜 책임 분리 필터","휴식·거절·타인의 기분 때문에 생기는 거짓 죄책감 5가지를 걸러내고 가벼운 해소 문장을 받으세요."],
+      ja: ["偽りの罪悪感 vs 本来の責任フィルター","休む・断る・他人の機嫌で生じる不要な罪悪感を整理し、健全な線引きを作ります。"],
+      zh: ["虚假内疚与真实责任分离过滤器","区分需修复的真实责任与因拒绝、休息产生的5类虚假内疚，卸下多余心理负担。"],
+      es: ["Filtro de Culpa Falsa vs. Responsabilidad","Separa la reparación real de 5 trampas de culpa injusta (descansar, decir no, humor ajeno)."],
+      pt: ["Filtro de Culpa Falsa vs. Responsabilidade","Separe reparação real de 5 armadilhas de culpa injusta (descansar, dizer não, humor alheio)."],
+      de: ["Falsche Schuld vs. Verantwortung-Filter","Trenne echte Wiedergutmachung von 5 falschen Schuldgefühlen (Nein sagen, Ausruhen, Stimmung anderer)."],
+      fr: ["Filtre Fausse Culpabilité vs Responsabilité","Distinguez vraie réparation et 5 pièges de fausse culpabilité (repos, dire non, humeur d’autrui)."],
+      id: ["Filter Rasa Bersalah Semu vs. Tanggung Jawab","Pisahkan tanggung jawab nyata dari 5 jebakan rasa bersalah palsu (istirahat, menolak, emosi orang)."],
+      tr: ["Sahte Suçluluk vs. Gerçek Sorumluluk Filtresi","Gerçek telafiyi dinlenme, hayır deme ve başkalarının ruh halinden doğan sahte suçluluktan ayırın."],
+      hi: ["झूठा अपराधबोध बनाम असली जिम्मेदारी फ़िल्टर","आराम करने या ना कहने पर होने वाले 5 झूठे अपराधबोध जाल को असली जिम्मेदारी से अलग करें।"],
+      ru: ["Фильтр ложной вины и ответственности","Отделите реальное исправление от 5 ловушек ложной вины (отдых, отказ, чужое настроение)."] },
+    { slug: 'loneliness-micro-connection-plan', cat: 'relationships', emoji: '☕', tag: '5m Reach',
+      en: ["Loneliness Micro-Connection Plan","Lower the friction of feeling disconnected with a zero-awkwardness 5-minute reach-out script."],
+      ko: ["외로움 5분 마이크로 연결 플래너","연락하기 어색하고 기운 없을 때 부담 없이 마음을 잇는 5분 저에너지 연결 문장을 만드세요."],
+      ja: ["孤独感 5分マイクロつながり設計","連絡のハードルや気疲れを下げ、無理なく安心のつながりを取り戻す5分メッセージを作成。"],
+      zh: ["孤独感5分钟轻量微连接计划","拆解怕打扰与社交疲惫5大障碍，生成零尴尬、低能耗的5分钟温暖问候话术。"],
+      es: ["Plan de Micro-Conexión contra la Soledad (5m)","Reduce la fricción del aislamiento con un mensaje cálido de 5 minutos sin incomodidad."],
+      pt: ["Plano de Micro-Conexão contra Solidão (5m)","Diminua o peso do isolamento com uma mensagem leve de 5 minutos sem constrangimento."],
+      de: ["Einsamkeit: 5-Min-Mikro-Verbindungs-Plan","Senke die Hürde bei Rückzug mit einer lockeren 5-Minuten-Nachricht ohne Druck."],
+      fr: ["Plan Micro-Connexion contre la Solitude (5m)","Allégez l’isolement grâce à un message chaleureux de 5 minutes sans pression ni gêne."],
+      id: ["Rencana Mikro-Koneksi Atasi Kesepian (5m)","Turunkan rasa canggung saat merasa sendiri dengan pesan sapaan hangat 5 menit tanpa tekanan."],
+      tr: ["Yalnızlık İçin 5 Dk Mikro Bağlantı Planı","Uzaklaşma hissini baskısız ve samimi 5 dakikalık bir mesajla nazikçe hafifletin."],
+      hi: ["अकेलेपन के लिए 5-मिनट माइक्रो-कनेक्शन प्लान","संकोच कम करें और बिना किसी दबाव के 5-मिनट का आत्मीय संदेश बनाएं।"],
+      ru: ["План микро-связи при одиночестве (5 мин)","Снимите барьер неловкости и отправьте тёплое сообщение без давления за 5 минут."] },
+    { slug: 'sunday-scaries-week-reset', cat: 'burnout', emoji: '🌇', tag: '15m Reset',
+      en: ["Sunday Scaries Week Reset","Quiet anticipatory Monday dread across 5 triggers with a 15-minute Sunday evening reset plan."],
+      ko: ["월요병·일요일 저녁 불안 15분 리셋","열린 업무·미완 휴식·월요일 회의 압박을 점검하고 15분 브레인덤프로 일요일 밤을 되찾으세요."],
+      ja: ["サザエさん症候群・日曜夜15分リセット","月曜前のモヤモヤ5要因を整理し、15分の頭出しで穏やかな日曜夜を取り戻します。"],
+      zh: ["周日焦虑与周一恐惧15分钟重置","排查5大周日晚间焦虑源，用15分钟大脑清空与周一首件事锚定安心入睡。"],
+      es: ["Reinicio de Ansiedad del Domingo (15m)","Calma el agobio anticipado del lunes en 5 ejes con un plan de descarga mental de 15 minutos."],
+      pt: ["Reset da Ansiedade de Domingo (15m)","Acalme o peso da segunda-feira em 5 gatilhos com um ritual de descarga mental de 15 minutos."],
+      de: ["Sonntags-Blues & Montag-Angst Reset (15m)","Prüfe 5 Sonntags-Stress-Auslöser und sichere dir einen ruhigen Abend mit dem 15-Min-Reset."],
+      fr: ["Reset « Sunday Scaries » & Lundi (15m)","Apaisez l’angoisse du dimanche soir sur 5 axes avec un sas de décharge mentale de 15 min."],
+      id: ["Reset Kecemasan Minggu Malam (15m)","Redakan rasa berat menjelang Senin lewat 5 cek pemicu & rencana brain-dump 15 menit."],
+      tr: ["Pazar Sendromu 15 Dakika Sıfırlama","Pazartesi kaygısının 5 tetikleyicisini ölçün ve 15 dakikalık akşam zihin boşaltma planı kurun."],
+      hi: ["संडे स्केरीज़ व मंडे चिंता 15-मिनट रीसेट","सोमवार की चिंता के 5 कारण जाँचें और 15-मिनट शांतिपूर्ण रविवार प्लान बनाएं।"],
+      ru: ["Сброс «воскресной тревоги» за 15 мин","Проверьте 5 триггеров страха перед понедельником и освободите вечер за 15 минут."] }
   ];
 
   var UI = {
     en: {
-      title: 'Interactive Mental Wellness Lab — 46 Free CBT, Somatic & Self-Regulation Tools | DopaBrain',
-      metaDesc: 'Explore 46 free, 100% private interactive psychology tools for anxiety, overthinking, burnout, gaslighting clarity, codependency, perfectionism, ADHD focus, boundaries, and sleep reset in 12 languages.',
-      skip: 'Skip to Mental Wellness Lab', back: '← All 88 Tools', langLabel: 'Language:',
-      pill: '🧠 46 FREE INTERACTIVE LABS · 100% PRIVATE',
+      title: 'Interactive Mental Wellness Lab — 50 Free CBT, Somatic & Self-Regulation Tools | DopaBrain',
+      metaDesc: 'Explore 50 free, 100% private interactive psychology tools for anxiety, overthinking, burnout, gaslighting clarity, codependency, perfectionism, ADHD focus, boundaries, and sleep reset in 12 languages.',
+      skip: 'Skip to Mental Wellness Lab', back: '← All 92 Tools', langLabel: 'Language:',
+      pill: '🧠 50 FREE INTERACTIVE LABS · 100% PRIVATE',
       heroTitle: 'Interactive Mental Wellness Lab',
       heroSub: 'Evidence-informed CBT reframing, somatic unwinding, burnout audits, boundary scripts, ADHD focus tools, and sleep reset planners—100% private in your browser, with downloadable 1080×1920 summary cards.',
       triageTitle: 'Not sure which tool fits right now?',
-      triageDesc: 'Rate your energy, physical tension, and mental fog in 60 seconds and get an instant personalized prescription from all 46 labs.',
+      triageDesc: 'Rate your energy, physical tension, and mental fog in 60 seconds and get an instant personalized prescription from all 50 labs.',
       triageCta: 'Start 60-Second Check-In →',
-      catAll: '✨ All (46)', catAnxiety: '🌊 Anxiety & Overthinking', catBurnout: '🔋 Burnout & Energy',
+      catAll: '✨ All (50)', catAnxiety: '🌊 Anxiety & Overthinking', catBurnout: '🔋 Burnout & Energy',
       catRel: '🛡️ Boundaries & Self', catFocus: '🎯 ADHD & Focus', catSleep: '🌙 Sleep & Confidence',
       showing: 'Showing {n} interactive mental wellness tools', openTool: 'Open Free Tool →',
       trust1T: '🔒 100% Browser-Local', trust1D: 'Your reflections, scores, and check-ins stay strictly on your device—zero account required.',
@@ -632,7 +684,7 @@
       faq2A: 'Yes. Every tool in the DopaBrain Mental Wellness Lab runs 100% locally inside your browser. Zero personal reflections, ratings, or story cards are ever transmitted to external servers.',
       faq3Q: 'Are these interactive tools a replacement for clinical therapy?',
       faq3A: 'No. These tools translate well-known CBT, somatic grounding, and self-regulation frameworks into free self-guided exercises for daily reflection, not medical diagnosis or crisis care.',
-      faq4Q: 'Do all 46 tools support my language and mobile devices?',
+      faq4Q: 'Do all 50 tools support my language and mobile devices?',
       faq4A: 'Yes. The hub and flagship tools support 12 languages, preserve your ?lang= setting across every link, work on 390px mobile screens with zero horizontal scrolling, and let you export crisp 1080×1920 PNG summary cards.',
       moreTitle: 'Explore More DopaBrain Hubs',
       hubTestsT: '🧪 Interactive Psychology Tests', hubTestsD: 'Burnout, HSP, EQ, Attachment, Stress & Trauma assessments',
@@ -641,16 +693,16 @@
       stickyCta: '🧠 Need a 60s prescription? Open Daily Mind Check-In →'
     },
     ko: {
-      title: '인터랙티브 멘탈 웰니스 랩 — 무료 CBT·신체이완·자기조절 도구 46선 | DopaBrain',
-      metaDesc: '불안, 생각 과부하, 번아웃, 가스라이팅 점검, 공동의존, 완벽주의, ADHD 집중, 경계선 대화, 수면 리셋까지 브라우저에서 100% 비공개로 사용하는 46가지 무료 심리 도구를 만나보세요.',
-      skip: '멘탈 웰니스 랩 바로가기', back: '← 전체 88개 도구', langLabel: '언어:',
-      pill: '🧠 무료 인터랙티브 심리 랩 46선 · 100% 비공개',
+      title: '인터랙티브 멘탈 웰니스 랩 — 무료 CBT·신체이완·자기조절 도구 50선 | DopaBrain',
+      metaDesc: '불안, 생각 과부하, 번아웃, 가스라이팅 점검, 공동의존, 완벽주의, ADHD 집중, 경계선 대화, 수면 리셋까지 브라우저에서 100% 비공개로 사용하는 50가지 무료 심리 도구를 만나보세요.',
+      skip: '멘탈 웰니스 랩 바로가기', back: '← 전체 92개 도구', langLabel: '언어:',
+      pill: '🧠 무료 인터랙티브 심리 랩 50선 · 100% 비공개',
       heroTitle: '인터랙티브 멘탈 웰니스 랩',
       heroSub: 'CBT 인지 재구성, 신체 긴장 이완, 번아웃 감별, 경계선 스크립트, ADHD 집중 도구, 수면 리셋까지—회원가입 없이 브라우저에서 100% 비공개로 바로 실행하고 1080×1920 요약 카드를 저장하세요.',
       triageTitle: '지금 어떤 도구부터 시작할지 모르겠다면?',
-      triageDesc: '60초 동안 에너지·신체 긴장·브레인포그를 체크하면 46개 랩 중 지금 딱 맞는 도구를 바로 처방해 드립니다.',
+      triageDesc: '60초 동안 에너지·신체 긴장·브레인포그를 체크하면 50개 랩 중 지금 딱 맞는 도구를 바로 처방해 드립니다.',
       triageCta: '60초 마음 체크인 시작 →',
-      catAll: '✨ 전체 (46)', catAnxiety: '🌊 불안 · 생각 과부하', catBurnout: '🔋 번아웃 · 에너지',
+      catAll: '✨ 전체 (50)', catAnxiety: '🌊 불안 · 생각 과부하', catBurnout: '🔋 번아웃 · 에너지',
       catRel: '🛡️ 경계선 · 인간관계', catFocus: '🎯 ADHD · 집중력', catSleep: '🌙 수면 · 자신감',
       showing: '총 {n}개의 인터랙티브 멘탈 웰니스 도구 표시 중', openTool: '무료 도구 열기 →',
       trust1T: '🔒 100% 로컬 비공개', trust1D: '작성한 고민과 점수는 내 기기 안에서만 처리되며 서버로 전송되지 않습니다.',
@@ -660,7 +712,7 @@
       booksDesc: 'CBT, 신경계 회복, 경계선 설정, 습관 설계의 대표 참고 도서입니다.',
       booksDisclosure: '이 링크는 Amazon 제휴 링크를 포함하며, 구매 시 추가 비용 없이 DopaBrain 운영에 도움이 됩니다.',
       faqTitle: '자주 묻는 질문',
-      faq1Q: '46개 도구 중 무엇부터 해보는 게 좋을까요?',
+      faq1Q: '50개 도구 중 무엇부터 해보는 게 좋을까요?',
       faq1A: '고민된다면 60초 데일리 마음 체크인부터 시작하세요. 에너지·긴장·집중 상태를 1분 만에 평가하면 지금 상태에 가장 잘 맞는 도구를 자동으로 연결해 드립니다.',
       faq2Q: '내가 입력한 내용이나 점수가 저장되나요?',
       faq2A: '모든 도구는 브라우저 로컬에서만 작동합니다. 개인 응답, 메모, 요약 카드는 외부 서버로 일절 전송되지 않습니다.',
@@ -675,111 +727,111 @@
       stickyCta: '🧠 지금 60초 맞춤 처방 받기 →'
     },
     ja: {
-      title: 'インタラクティブ・メンタルウェルネスラボ — 無料CBT・身体緩和ツール46選 | DopaBrain',
-      metaDesc: '不安・考えすぎ・燃え尽き・境界線・ADHD集中・睡眠リセットをブラウザ完結・完全プライベートで整える46の無料心理ツール。',
-      back: '← 全88ツール', langLabel: '言語:', pill: '🧠 無料インタラクティブツール46選 · 完全プライベート',
+      title: 'インタラクティブ・メンタルウェルネスラボ — 無料CBT・身体緩和ツール50選 | DopaBrain',
+      metaDesc: '不安・考えすぎ・燃え尽き・境界線・ADHD集中・睡眠リセットをブラウザ完結・完全プライベートで整える50の無料心理ツール。',
+      back: '← 全92ツール', langLabel: '言語:', pill: '🧠 無料インタラクティブツール50選 · 完全プライベート',
       heroTitle: 'インタラクティブ・メンタルウェルネスラボ',
       heroSub: 'CBTリフレーミング、身体緊張の緩和、バーンアウト診断、境界線スクリプト、集中・睡眠リセットまで登録不要で今すぐ使えます。',
       triageTitle: 'どのツールから始めるか迷ったら？', triageDesc: '60秒のチェックインで今の状態に最適なツールを自動提案します。',
       triageCta: '60秒チェックインを開始 →',
-      catAll: '✨ すべて (46)', catAnxiety: '🌊 不安・考えすぎ', catBurnout: '🔋 疲労・エネルギー',
+      catAll: '✨ すべて (50)', catAnxiety: '🌊 不安・考えすぎ', catBurnout: '🔋 疲労・エネルギー',
       catRel: '🛡️ 境界線・対人関係', catFocus: '🎯 ADHD・集中', catSleep: '🌙 睡眠・自信',
       showing: '{n}個のインタラクティブ・ウェルネスツールを表示中', openTool: '無料ツールを開く →',
       booksTitle: '📚 関連する信頼の心理学書籍', stickyCta: '🧠 60秒マインドチェックインを開く →'
     },
     zh: {
-      title: '互动心理健康实验室 — 46款免费CBT、躯体放松与自我调节工具 | DopaBrain',
-      metaDesc: '46款100%浏览器本地隐私的免费心理工具，覆盖焦虑反刍、职业倦怠、社交电量、健康边界、ADHD专注力与睡眠节律重置。',
-      back: '← 全部88款工具', langLabel: '语言:', pill: '🧠 46款免费互动工具 · 100%本地隐私',
+      title: '互动心理健康实验室 — 50款免费CBT、躯体放松与自我调节工具 | DopaBrain',
+      metaDesc: '50款100%浏览器本地隐私的免费心理工具，覆盖焦虑反刍、职业倦怠、社交电量、健康边界、ADHD专注力与睡眠节律重置。',
+      back: '← 全部92款工具', langLabel: '语言:', pill: '🧠 50款免费互动工具 · 100%本地隐私',
       heroTitle: '互动心理健康实验室',
       heroSub: '涵盖CBT认知重构、躯体放松、倦怠自查、边界话术、ADHD专注与睡眠重置——无需注册，数据不离设备，支持导出1080×1920总结卡。',
-      triageTitle: '不确定先用哪一款工具？', triageDesc: '花60秒评估精力、紧张感与脑雾，即刻获得46款工具中的专属匹配推荐。',
+      triageTitle: '不确定先用哪一款工具？', triageDesc: '花60秒评估精力、紧张感与脑雾，即刻获得50款工具中的专属匹配推荐。',
       triageCta: '开始60秒情绪自检 →',
-      catAll: '✨ 全部 (46)', catAnxiety: '🌊 焦虑与过度思考', catBurnout: '🔋 倦怠与能量',
+      catAll: '✨ 全部 (50)', catAnxiety: '🌊 焦虑与过度思考', catBurnout: '🔋 倦怠与能量',
       catRel: '🛡️ 边界与人际', catFocus: '🎯 ADHD与专注', catSleep: '🌙 睡眠与自信',
       showing: '正在显示 {n} 款互动心理健康工具', openTool: '打开免费工具 →',
       booksTitle: '📚 实验室背后的循证心理学书籍', stickyCta: '🧠 开启60秒每日情绪自检 →'
     },
     es: {
-      back: '← Todas las 88 herramientas', title: 'Laboratorio Interactivo de Bienestar Mental — 46 Herramientas Gratuitas CBT y Somáticas | DopaBrain',
-      pill: '🧠 46 HERRAMIENTAS INTERACTIVAS · 100% PRIVADO',
+      back: '← Todas las 92 herramientas', title: 'Laboratorio Interactivo de Bienestar Mental — 50 Herramientas Gratuitas CBT y Somáticas | DopaBrain',
+      pill: '🧠 50 HERRAMIENTAS INTERACTIVAS · 100% PRIVADO',
       heroTitle: 'Laboratorio Interactivo de Bienestar Mental',
       heroSub: 'Herramientas gratuitas de TCC, calma somática, límites sanos, enfoque TDAH y sueño—100% privadas en tu navegador con tarjetas 1080×1920.',
-      triageDesc: 'Evalúa tu energía, tensión y claridad en 60 segundos para recibir una recomendación exacta entre las 46 herramientas.',
+      triageDesc: 'Evalúa tu energía, tensión y claridad en 60 segundos para recibir una recomendación exacta entre las 50 herramientas.',
       booksTitle: '📚 Libros Basados en Evidencia Detrás de Estas Herramientas',
       triageTitle: '¿No sabes por cuál empezar?', triageCta: 'Iniciar check-in de 60s →',
-      catAll: '✨ Todas (46)', catAnxiety: '🌊 Ansiedad y Pensamientos', catBurnout: '🔋 Agotamiento y Energía',
+      catAll: '✨ Todas (50)', catAnxiety: '🌊 Ansiedad y Pensamientos', catBurnout: '🔋 Agotamiento y Energía',
       catRel: '🛡️ Límites y Relaciones', catFocus: '🎯 TDAH y Enfoque', catSleep: '🌙 Sueño y Confianza',
       showing: 'Mostrando {n} herramientas interactivas de bienestar', openTool: 'Abrir herramienta →',
       stickyCta: '🧠 ¿Receta en 60s? Abrir Check-In Diario →'
     },
     pt: {
-      back: '← Todas as 88 ferramentas', title: 'Laboratório Interativo de Bem-Estar Mental — 46 Ferramentas Gratuitas TCC e Somáticas | DopaBrain',
-      pill: '🧠 46 FERRAMENTAS INTERATIVAS · 100% PRIVADO',
+      back: '← Todas as 92 ferramentas', title: 'Laboratório Interativo de Bem-Estar Mental — 50 Ferramentas Gratuitas TCC e Somáticas | DopaBrain',
+      pill: '🧠 50 FERRAMENTAS INTERATIVAS · 100% PRIVADO',
       heroTitle: 'Laboratório Interativo de Bem-Estar Mental',
       heroSub: 'Ferramentas gratuitas de TCC, alívio somático, limites, foco TDAH e sono—100% privadas no navegador com cartões 1080×1920.',
-      triageDesc: 'Avalie energia, tensão e clareza em 60 segundos para receber uma recomendação personalizada entre as 46 ferramentas.',
+      triageDesc: 'Avalie energia, tensão e clareza em 60 segundos para receber uma recomendação personalizada entre as 50 ferramentas.',
       booksTitle: '📚 Livros Baseados em Evidências Por Trás Destas Ferramentas',
       triageTitle: 'Não sabe por onde começar?', triageCta: 'Iniciar check-in de 60s →',
-      catAll: '✨ Todas (46)', catAnxiety: '🌊 Ansiedade e Mente Cheia', catBurnout: '🔋 Burnout e Energia',
+      catAll: '✨ Todas (50)', catAnxiety: '🌊 Ansiedade e Mente Cheia', catBurnout: '🔋 Burnout e Energia',
       catRel: '🛡️ Limites e Relações', catFocus: '🎯 TDAH e Foco', catSleep: '🌙 Sono e Confiança',
       showing: 'Mostrando {n} ferramentas interativas de bem-estar', openTool: 'Abrir ferramenta →',
       stickyCta: '🧠 Check-in de 60s para recomendação →'
     },
     de: {
-      back: '← Alle 88 Tools', title: 'Interaktives Mental-Wellness-Labor — 46 Kostenlose CBT- & Somatik-Tools | DopaBrain',
-      pill: '🧠 46 KOSTENLOSE INTERAKTIVE LABS · 100% PRIVAT',
+      back: '← Alle 92 Tools', title: 'Interaktives Mental-Wellness-Labor — 50 Kostenlose CBT- & Somatik-Tools | DopaBrain',
+      pill: '🧠 50 KOSTENLOSE INTERAKTIVE LABS · 100% PRIVAT',
       heroTitle: 'Interaktives Mental-Wellness-Labor',
       heroSub: 'Evidenzbasierte CBT-Übungen, somatisches Grounding, Burnout-Checks, Grenz-Skripte & Schlaf-Planer—100% lokal im Browser mit 1080×1920 Karten.',
-      triageDesc: 'Bewerte Energie, Anspannung und Brain Fog in 60 Sekunden für deine perfekte Auswahl aus allen 46 Labs.',
+      triageDesc: 'Bewerte Energie, Anspannung und Brain Fog in 60 Sekunden für deine perfekte Auswahl aus allen 50 Labs.',
       booksTitle: '📚 Evidenzbasierte Bücher hinter diesen Labs',
       triageTitle: 'Unsicher, welches Tool jetzt passt?', triageCta: '60-Sekunden-Check-in starten →',
-      catAll: '✨ Alle (46)', catAnxiety: '🌊 Angst & Grübeln', catBurnout: '🔋 Burnout & Energie',
+      catAll: '✨ Alle (50)', catAnxiety: '🌊 Angst & Grübeln', catBurnout: '🔋 Burnout & Energie',
       catRel: '🛡️ Grenzen & Beziehungen', catFocus: '🎯 ADHS & Fokus', catSleep: '🌙 Schlaf & Selbstvertrauen',
       showing: '{n} interaktive Mental-Wellness-Tools angezeigt', openTool: 'Tool öffnen →',
       stickyCta: '🧠 60-Sekunden-Check-in öffnen →'
     },
     fr: {
-      back: '← Tous les 88 outils', title: 'Laboratoire Interactif de Bien-Être Mental — 46 Outils Gratuits TCC & Somatiques | DopaBrain',
-      pill: '🧠 46 OUTILS INTERACTIFS GRATUITS · 100% PRIVÉ',
+      back: '← Tous les 92 outils', title: 'Laboratoire Interactif de Bien-Être Mental — 50 Outils Gratuits TCC & Somatiques | DopaBrain',
+      pill: '🧠 50 OUTILS INTERACTIFS GRATUITS · 100% PRIVÉ',
       heroTitle: 'Laboratoire Interactif de Bien-Être Mental',
       heroSub: 'Outils gratuits de TCC, apaisement somatique, limites saines, focus TDAH et sommeil—100% privés dans votre navigateur avec cartes 1080×1920.',
-      triageDesc: 'Évaluez votre énergie, tension et clarté en 60 secondes pour obtenir votre sélection idéale parmi nos 46 outils.',
+      triageDesc: 'Évaluez votre énergie, tension et clarté en 60 secondes pour obtenir votre sélection idéale parmi nos 50 outils.',
       booksTitle: '📚 Livres Fondés sur les Preuves Derrière Ces Outils',
       triageTitle: 'Vous ne savez pas par où commencer ?', triageCta: 'Lancer le bilan de 60s →',
-      catAll: '✨ Tous (46)', catAnxiety: '🌊 Anxiété & Rumination', catBurnout: '🔋 Burn-out & Énergie',
+      catAll: '✨ Tous (50)', catAnxiety: '🌊 Anxiété & Rumination', catBurnout: '🔋 Burn-out & Énergie',
       catRel: '🛡️ Limites & Relations', catFocus: '🎯 TDAH & Focus', catSleep: '🌙 Sommeil & Confiance',
       showing: 'Affichage de {n} outils interactifs de bien-être', openTool: 'Ouvrir l’outil →',
       stickyCta: '🧠 Bilan rapide en 60s →'
     },
     id: {
-      back: '← Semua 88 Alat', heroTitle: 'Lab Kesehatan Mental Interaktif',
+      back: '← Semua 92 Alat', heroTitle: 'Lab Kesehatan Mental Interaktif',
       triageTitle: 'Bingung mulai dari alat yang mana?', triageCta: 'Mulai Check-In 60 Detik →',
-      catAll: '✨ Semua (46)', catAnxiety: '🌊 Cemas & Overthinking', catBurnout: '🔋 Burnout & Energi',
+      catAll: '✨ Semua (50)', catAnxiety: '🌊 Cemas & Overthinking', catBurnout: '🔋 Burnout & Energi',
       catRel: '🛡️ Batasan & Relasi', catFocus: '🎯 ADHD & Fokus', catSleep: '🌙 Tidur & Percaya Diri',
       showing: 'Menampilkan {n} alat kesehatan mental interaktif', openTool: 'Buka Alat Gratis →',
       stickyCta: '🧠 Buka Check-In 60 Detik →'
     },
     tr: {
-      back: '← Tüm 88 Araç', heroTitle: 'Etkileşimli Zihinsel Sağlık Laboratuvarı',
+      back: '← Tüm 92 Araç', heroTitle: 'Etkileşimli Zihinsel Sağlık Laboratuvarı',
       triageTitle: 'Hangisinden başlayacağınızdan emin değil misiniz?', triageCta: '60 Saniyelik Kontrolü Başlat →',
-      catAll: '✨ Tümü (46)', catAnxiety: '🌊 Kaygı ve Aşırı Düşünme', catBurnout: '🔋 Tükenmişlik ve Enerji',
+      catAll: '✨ Tümü (50)', catAnxiety: '🌊 Kaygı ve Aşırı Düşünme', catBurnout: '🔋 Tükenmişlik ve Enerji',
       catRel: '🛡️ Sınırlar ve İlişkiler', catFocus: '🎯 DEHB ve Odak', catSleep: '🌙 Uyku ve Özgüven',
       showing: '{n} etkileşimli zihinsel sağlık aracı gösteriliyor', openTool: 'Aracı Aç →',
       stickyCta: '🧠 60 Saniyelik Kontrolü Aç →'
     },
     hi: {
-      back: '← सभी 88 टूल', heroTitle: 'इंटरैक्टिव मेंटल वेलनेस लैब',
+      back: '← सभी 92 टूल', heroTitle: 'इंटरैक्टिव मेंटल वेलनेस लैब',
       triageTitle: 'समझ नहीं आ रहा कहाँ से शुरू करें?', triageCta: '60-सेकंड चेक-इन शुरू करें →',
-      catAll: '✨ सभी (46)', catAnxiety: '🌊 चिंता व ओवरथिंकिंग', catBurnout: '🔋 बर्नआउट व ऊर्जा',
+      catAll: '✨ सभी (50)', catAnxiety: '🌊 चिंता व ओवरथिंकिंग', catBurnout: '🔋 बर्नआउट व ऊर्जा',
       catRel: '🛡️ सीमाएँ व रिश्ते', catFocus: '🎯 ADHD व फोकस', catSleep: '🌙 नींद व आत्मविश्वास',
       showing: '{n} इंटरैक्टिव मेंटल वेलनेस टूल दिखाए जा रहे हैं', openTool: 'टूल खोलें →',
       stickyCta: '🧠 60-सेकंड माइंड चेक-इन खोलें →'
     },
     ru: {
-      back: '← Все 88 инструментов', heroTitle: 'Интерактивная лаборатория ментального здоровья',
+      back: '← Все 92 инструмента', heroTitle: 'Интерактивная лаборатория ментального здоровья',
       triageTitle: 'Не знаете, с какого инструмента начать?', triageCta: 'Начать 60-секундный чек-ин →',
-      catAll: '✨ Все (46)', catAnxiety: '🌊 Тревога и накручивание', catBurnout: '🔋 Выгорание и энергия',
+      catAll: '✨ Все (50)', catAnxiety: '🌊 Тревога и накручивание', catBurnout: '🔋 Выгорание и энергия',
       catRel: '🛡️ Границы и отношения', catFocus: '🎯 СДВГ и фокус', catSleep: '🌙 Сон и уверенность',
       showing: 'Показано {n} интерактивных инструментов', openTool: 'Открыть инструмент →',
       stickyCta: '🧠 Открыть 60-секундный чек-ин →'
@@ -788,6 +840,106 @@
 
   var currentLang = 'en';
   var currentCat = 'all';
+  var currentQuery = '';
+  var currentMood = '';
+  var RECENT_KEY = 'db_wl_recent';
+
+  var MOOD_PRESETS = [
+    { id: 'panic', slugs: ['anxiety-vs-panic-reset', 'grounding-exercise', 'vagal-nervous-system-reset', 'somatic-tension-body-map', 'hypervigilance-safety-reset', 'emotional-flashback-grounding', 'sensory-overload-calm-kit'],
+      labels: { en: '😰 Panic & Calm', ko: '😰 공황·불안 진정', zh: '😰 惊恐与冷静', ja: '😰 パニック・鎮静', es: '😰 Pánico y Calma', pt: '😰 Pânico e Calma', de: '😰 Panik & Ruhe', fr: '😰 Panique & Calme', id: '😰 Panik & Tenang', tr: '😰 Panik & Sakinlik', hi: '😰 घबराहट व शांति', ru: '😰 Паника и покой' } },
+    { id: 'burnout', slugs: ['burnout-stress-differential', 'emotional-exhaustion-recovery', 'emotional-energy-audit', 'workplace-stress-triage', 'sunday-scaries-week-reset', 'functional-freeze-thaw-planner', 'social-battery-recharge-planner'],
+      labels: { en: '🔥 Burnout & Reset', ko: '🔥 번아웃·회복', zh: '🔥 倦怠与恢复', ja: '🔥 燃え尽き回復', es: '🔥 Burnout y Reset', pt: '🔥 Burnout e Reset', de: '🔥 Burnout & Reset', fr: '🔥 Burn-out & Reset', id: '🔥 Burnout & Pulih', tr: '🔥 Tükenmişlik', hi: '🔥 बर्नआउट व रीसेट', ru: '🔥 Выгорание' } },
+    { id: 'boundaries', slugs: ['boundary-script-builder', 'people-pleasing-fawn-decoder', 'guilt-vs-responsibility-filter', 'codependency-reset-audit', 'gaslighting-reality-check', 'nvc-conflict-script-builder', 'anger-cooldown-deescalator'],
+      labels: { en: '🛡️ Boundaries & Anger', ko: '🛡️ 경계선·분노·죄책감', zh: '🛡️ 边界与情绪降温', ja: '🛡️ 境界線・怒りケア', es: '🛡️ Límites e Ira', pt: '🛡️ Limites e Raiva', de: '🛡️ Grenzen & Wut', fr: '🛡️ Limites & Colère', id: '🛡️ Batasan & Amarah', tr: '🛡️ Sınırlar & Öfke', hi: '🛡️ सीमाएँ व गुस्सा', ru: '🛡️ Границы и гнев' } },
+    { id: 'attachment', slugs: ['attachment-trigger-decoder', 'abandonment-anxiety-soother', 'avoidant-attachment-thaw-lab', 'rsd-coping-audit', 'relationship-green-flag-audit', 'loneliness-micro-connection-plan', 'inner-child-need-decoder'],
+      labels: { en: '💔 Attachment & Loneliness', ko: '💔 애착·외로움·RSD', zh: '💔 依恋与孤独修复', ja: '💔 愛着・孤独ケア', es: '💔 Apego y Soledad', pt: '💔 Apego e Solidão', de: '💔 Bindung & Einsamkeit', fr: '💔 Attachement & Solitude', id: '💔 Kelekatan & Sepi', tr: '💔 Bağlanma & Yalnızlık', hi: '💔 लगाव व अकेलापन', ru: '💔 Привязанность' } },
+    { id: 'focus', slugs: ['overthinking-rumination-breaker', 'adhd-focus-friction-audit', 'procrastination-root-decoder', 'perfectionism-loop-decoder', 'decision-fatigue-declutter', 'doomscrolling-circuit-breaker', 'cognitive-load-calculator'],
+      labels: { en: '🌀 Overthinking & ADHD', ko: '🌀 과사고·ADHD·미루기', zh: '🌀 过度思考与专注', ja: '🌀 考えすぎ・集中', es: '🌀 Rumiación y TDAH', pt: '🌀 Foco e TDAH', de: '🌀 Grübeln & ADHS', fr: '🌀 Rumination & TDAH', id: '🌀 Overthinking & Fokus', tr: '🌀 Odak & Aşırı Düşünme', hi: '🌀 ओवरथिंकिंग व फोकस', ru: '🌀 Фокус и накручивание' } },
+    { id: 'sleep', slugs: ['sleep-chronotype-reset', 'morning-energy-architect', 'inner-critic-compassion-lab', 'self-worth-evidence-builder', 'imposter-syndrome-audit', 'emotional-validation-reframer', 'grief-loss-wave-companion'],
+      labels: { en: '🌙 Sleep & Self-Worth', ko: '🌙 수면·자존감·치유', zh: '🌙 睡眠与自我价值', ja: '🌙 睡眠・自己肯定', es: '🌙 Sueño y Autoestima', pt: '🌙 Sono e Autoestima', de: '🌙 Schlaf & Selbstwert', fr: '🌙 Sommeil & Estime', id: '🌙 Tidur & Harga Diri', tr: '🌙 Uyku & Özdeğer', hi: '🌙 नींद व आत्म-सम्मान', ru: '🌙 Сон и самооценка' } }
+  ];
+
+  var EXTRA_UI = {
+    en: { moodLabel: 'Quick Pick:', recentTitle: 'Continue Where You Left Off', emptyMsg: 'No labs matched that filter.', resetFilter: 'Show All 50 Labs' },
+    ko: { moodLabel: '지금 기분:', recentTitle: '최근 열어본 웰니스 랩', emptyMsg: '조건에 맞는 도구가 없습니다.', resetFilter: '50개 도구 모두 보기' },
+    zh: { moodLabel: '快速直达：', recentTitle: '继续上次使用的工具', emptyMsg: '未找到匹配的工具。', resetFilter: '查看全部 50 个工具' },
+    ja: { moodLabel: '今の気分：', recentTitle: '最近開いたラボを続ける', emptyMsg: '該当するツールが見つかりません。', resetFilter: '50ツールをすべて表示' },
+    es: { moodLabel: 'Acceso rápido:', recentTitle: 'Continuar donde lo dejaste', emptyMsg: 'No se encontraron herramientas.', resetFilter: 'Ver los 50 laboratorios' },
+    pt: { moodLabel: 'Acesso rápido:', recentTitle: 'Continuar de onde parou', emptyMsg: 'Nenhuma ferramenta encontrada.', resetFilter: 'Ver todos os 50 laboratórios' },
+    de: { moodLabel: 'Schnellwahl:', recentTitle: 'Zuletzt geöffnete Labs', emptyMsg: 'Keine passenden Tools gefunden.', resetFilter: 'Alle 50 Labs anzeigen' },
+    fr: { moodLabel: 'Accès rapide :', recentTitle: 'Reprendre vos derniers labos', emptyMsg: 'Aucun outil trouvé.', resetFilter: 'Afficher les 50 labos' },
+    id: { moodLabel: 'Pilih cepat:', recentTitle: 'Lanjutkan Lab Terakhir', emptyMsg: 'Tidak ada alat yang cocok.', resetFilter: 'Tampilkan Semua 50 Lab' },
+    tr: { moodLabel: 'Hızlı seçim:', recentTitle: 'Son Açtığınız Lablar', emptyMsg: 'Eşleşen araç bulunamadı.', resetFilter: 'Tüm 50 Labı Göster' },
+    hi: { moodLabel: 'त्वरित चुनें:', recentTitle: 'हाल ही में खोले गए लैब', emptyMsg: 'कोई मेल खाने वाला टूल नहीं मिला।', resetFilter: 'सभी 50 लैब दिखाएँ' },
+    ru: { moodLabel: 'Быстрый выбор:', recentTitle: 'Недавно открытые практики', emptyMsg: 'Ничего не найдено.', resetFilter: 'Показать все 50 практик' }
+  };
+
+  function extraT(k) { return (EXTRA_UI[currentLang] && EXTRA_UI[currentLang][k]) || EXTRA_UI.en[k] || ''; }
+
+  function saveRecent(slug) {
+    try {
+      var list = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
+      if (!Array.isArray(list)) list = [];
+      list = [slug].concat(list.filter(function (s) { return s !== slug; })).slice(0, 3);
+      localStorage.setItem(RECENT_KEY, JSON.stringify(list));
+    } catch (_) {}
+  }
+
+  function renderRecent() {
+    var wrap = document.getElementById('recentWrap');
+    var listEl = document.getElementById('recentList');
+    var titleEl = document.getElementById('recentTitle');
+    if (!wrap || !listEl) return;
+    var saved = [];
+    try { saved = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch (_) {}
+    if (!Array.isArray(saved) || saved.length === 0) { wrap.hidden = true; return; }
+    var matched = saved.map(function (s) { return TOOLS.find(function (x) { return x.slug === s; }); }).filter(Boolean);
+    if (!matched.length) { wrap.hidden = true; return; }
+    if (titleEl) titleEl.textContent = extraT('recentTitle');
+    listEl.textContent = '';
+    matched.forEach(function (item) {
+      var a = document.createElement('a');
+      a.className = 'recent-link';
+      a.href = withLang('/portal/tools/' + item.slug + '.html');
+      a.textContent = item.emoji + ' ' + toolCopy(item)[0];
+      listEl.appendChild(a);
+    });
+    wrap.hidden = false;
+  }
+
+  function renderMoodChips() {
+    var box = document.getElementById('moodChips');
+    if (!box) return;
+    box.textContent = '';
+    var lbl = document.createElement('span');
+    lbl.className = 'mood-label';
+    lbl.textContent = extraT('moodLabel');
+    box.appendChild(lbl);
+    MOOD_PRESETS.forEach(function (preset) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'mood-chip' + (currentMood === preset.id ? ' is-active' : '');
+      btn.setAttribute('data-mood', preset.id);
+      btn.setAttribute('aria-pressed', currentMood === preset.id ? 'true' : 'false');
+      btn.textContent = preset.labels[currentLang] || preset.labels.en;
+      btn.addEventListener('click', function () {
+        currentMood = currentMood === preset.id ? '' : preset.id;
+        if (currentMood) {
+          currentCat = 'all';
+          document.querySelectorAll('.filter-pill').forEach(function (b) {
+            var isAll = b.getAttribute('data-cat') === 'all';
+            b.classList.toggle('is-active', isAll);
+            b.setAttribute('aria-selected', isAll ? 'true' : 'false');
+          });
+          track('wellness_lab_mood_chip', { mood_id: currentMood, lang: currentLang });
+        }
+        renderMoodChips();
+        renderGrid();
+      });
+      box.appendChild(btn);
+    });
+  }
+  var SEARCH_PH = { en: 'Search 50 tools by feeling or topic (panic, sleep, burnout, boundaries)...', ko: '지금 느끼는 감정·고민으로 50개 도구 검색 (불안, 수면, 번아웃, 경계선)...', ja: '50ツールを気分や悩みで検索（不安・睡眠・燃え尽き・境界線）...', zh: '按情绪或主题搜索 50 款免费工具（焦虑、睡眠、倦怠、边界）...', es: 'Buscar entre 50 herramientas (ansiedad, sueño, burnout, límites)...', pt: 'Buscar entre 50 ferramentas (ansiedade, sono, burnout, limites)...', de: '50 Tools nach Gefühl oder Thema durchsuchen (Angst, Schlaf, Burnout)...', fr: 'Rechercher parmi 50 outils (anxiété, sommeil, burn-out, limites)...', id: 'Cari 50 alat sesuai perasaan (cemas, tidur, burnout, batasan)...', tr: '50 araç içinde ara (kaygı, uyku, tükenmişlik, sınırlar)...', hi: '50 टूल खोजें (चिंता, नींद, बर्नआउट, सीमाएँ)...', ru: 'Поиск среди 50 инструментов (тревога, сон, выгорание, границы)...' };
 
   function detectLang() {
     var p = new URLSearchParams(window.location.search).get('lang');
@@ -825,9 +977,49 @@
     if (!grid) return;
 
     var items = currentCat === 'all' ? TOOLS : TOOLS.filter(function (x) { return x.cat === currentCat; });
+    if (currentMood) {
+      var preset = MOOD_PRESETS.find(function (m) { return m.id === currentMood; });
+      if (preset) items = items.filter(function (x) { return preset.slugs.indexOf(x.slug) !== -1; });
+    }
+    if (currentQuery) {
+      var q = currentQuery.toLowerCase();
+      items = items.filter(function (x) {
+        var locCopy = toolCopy(x);
+        var hay = (x.slug + ' ' + x.tag + ' ' + x.en[0] + ' ' + x.en[1] + ' ' + locCopy[0] + ' ' + locCopy[1]).toLowerCase();
+        return hay.indexOf(q) !== -1;
+      });
+    }
     if (countEl) countEl.textContent = t('showing').replace('{n}', String(items.length));
 
     grid.textContent = '';
+    if (items.length === 0) {
+      var empty = document.createElement('div');
+      empty.className = 'lab-empty';
+      var ep = document.createElement('p');
+      ep.textContent = extraT('emptyMsg');
+      var ebtn = document.createElement('button');
+      ebtn.type = 'button';
+      ebtn.className = 'lab-empty-btn';
+      ebtn.textContent = extraT('resetFilter');
+      ebtn.addEventListener('click', function () {
+        currentCat = 'all';
+        currentMood = '';
+        currentQuery = '';
+        var s = document.getElementById('labSearch');
+        if (s) s.value = '';
+        document.querySelectorAll('.filter-pill').forEach(function (b) {
+          var isAll = b.getAttribute('data-cat') === 'all';
+          b.classList.toggle('is-active', isAll);
+          b.setAttribute('aria-selected', isAll ? 'true' : 'false');
+        });
+        renderMoodChips();
+        renderGrid();
+      });
+      empty.appendChild(ep);
+      empty.appendChild(ebtn);
+      grid.appendChild(empty);
+      return;
+    }
     var openLabel = t('openTool');
     items.forEach(function (item) {
       var copy = toolCopy(item);
@@ -866,6 +1058,7 @@
       card.appendChild(foot);
 
       card.addEventListener('click', function () {
+        saveRecent(item.slug);
         track('wellness_lab_tool_click', { tool_slug: item.slug, category: item.cat, lang: currentLang });
       });
       grid.appendChild(card);
@@ -898,6 +1091,16 @@
       if (el) el.setAttribute('href', withLang(pair[1]));
     });
 
+    var sInput = document.getElementById('labSearch');
+    if (sInput) sInput.setAttribute('placeholder', SEARCH_PH[currentLang] || SEARCH_PH.en);
+    document.querySelectorAll('.filter-pill[data-cat]').forEach(function (btn) {
+      var cat = btn.getAttribute('data-cat');
+      if (!cat || cat === 'all') return;
+      var cnt = TOOLS.filter(function (x) { return x.cat === cat; }).length;
+      if (btn.textContent.indexOf('(') === -1) btn.textContent = btn.textContent + ' (' + cnt + ')';
+    });
+    renderRecent();
+    renderMoodChips();
     renderGrid();
   }
 
@@ -916,9 +1119,18 @@
       });
     }
 
+    var searchEl = document.getElementById('labSearch');
+    if (searchEl) {
+      searchEl.addEventListener('input', function () {
+        currentQuery = (searchEl.value || '').trim();
+        renderGrid();
+      });
+    }
     document.querySelectorAll('.filter-pill').forEach(function (btn) {
       btn.addEventListener('click', function () {
         currentCat = btn.getAttribute('data-cat') || 'all';
+        currentMood = '';
+        renderMoodChips();
         document.querySelectorAll('.filter-pill').forEach(function (b) {
           var active = b === btn;
           b.classList.toggle('is-active', active);

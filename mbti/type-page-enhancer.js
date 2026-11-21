@@ -190,6 +190,13 @@
     document.head.appendChild(styleEl);
 
     var isIntrovert = mbtiType.charAt(0) === 'I';
+    var clusterTool = (mbtiType.indexOf('NT') !== -1)
+      ? { slug: 'perfectionism-loop-decoder', label: 'Perfectionism Loop Decoder →' }
+      : (mbtiType.indexOf('NF') !== -1)
+        ? { slug: 'people-pleasing-fawn-decoder', label: 'People-Pleasing Decoder →' }
+        : (mbtiType.charAt(1) === 'S' && mbtiType.charAt(3) === 'J')
+          ? { slug: 'sunday-scaries-week-reset', label: 'Sunday Scaries Reset →' }
+          : { slug: 'adhd-focus-friction-audit', label: 'Focus Friction Audit →' };
     var primaryBook = isIntrovert
       ? { id: '0307352153', title: 'Quiet: The Power of Introverts', desc: 'Susan Cain • Thriving with deep focus, recharge rituals, and calm leadership for ' + mbtiType + ' minds.' }
       : { id: '1250179947', title: 'Surrounded by Idiots', desc: 'Thomas Erikson • Decoding behavioral communication styles for expressive ' + mbtiType + ' personalities.' };
@@ -219,8 +226,8 @@
       (isIntrovert
         ? '<a class="mbti-tool-chip" href="/portal/tools/social-battery-recharge-planner.html?lang=' + safeLang + '&source=mbti_curated_tool">Social Battery Calculator →</a>'
         : '<a class="mbti-tool-chip" href="/portal/tools/boundary-script-builder.html?lang=' + safeLang + '&source=mbti_curated_tool">Boundary Script Generator →</a>'),
-      '<a class="mbti-tool-chip" href="/portal/tools/overthinking-rumination-breaker.html?lang=' + safeLang + '&source=mbti_curated_tool">Overthinking Breaker →</a>',
-      '<a class="mbti-tool-chip" href="/portal/tools/wellness-lab.html?lang=' + safeLang + '&source=mbti_curated_tool">All 30 Mental Wellness Labs →</a>',
+      '<a class="mbti-tool-chip" href="/portal/tools/' + clusterTool.slug + '.html?lang=' + safeLang + '&source=mbti_curated_tool">' + clusterTool.label + '</a>',
+      '<a class="mbti-tool-chip" href="/portal/tools/wellness-lab.html?lang=' + safeLang + '&source=mbti_curated_tool">All 50 Mental Wellness Labs →</a>',
       '</div>',
       '<p class="mbti-curated-note">Editorial note: Hand-picked books relevant to ' + mbtiType + ' profiles. Amazon links use affiliate tag dopabrain-20 at no extra cost.</p>'
     ].join('');
