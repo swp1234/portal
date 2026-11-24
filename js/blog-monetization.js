@@ -513,18 +513,18 @@
     }
 
     var MID_JUMP_I18N = {
-        en: { kicker: 'FREE INTERACTIVE COMPANION', lab: '50 Free Labs →' },
-        ko: { kicker: '무료 인터랙티브 실습 도구', lab: '50개 무료 랩 →' },
-        zh: { kicker: '免费互动配套工具', lab: '50个免费工具 →' },
-        ja: { kicker: '無料インタラクティブツール', lab: '無料50ラボ →' },
-        es: { kicker: 'HERRAMIENTA INTERACTIVA GRATIS', lab: '50 Labos Gratis →' },
-        pt: { kicker: 'FERRAMENTA INTERATIVA GRÁTIS', lab: '50 Labos Grátis →' },
-        de: { kicker: 'KOSTENLOSES INTERAKTIVES TOOL', lab: '50 Gratis-Labs →' },
-        fr: { kicker: 'OUTIL INTERACTIF GRATUIT', lab: '50 Labos Gratuits →' },
-        id: { kicker: 'ALAT INTERAKTIF GRATIS', lab: '50 Lab Gratis →' },
-        tr: { kicker: 'ÜCRETSİZ ETKİLEŞİMLİ ARAÇ', lab: '50 Ücretsiz Lab →' },
-        hi: { kicker: 'मुफ़्त इंटरैक्टिव टूल', lab: '50 मुफ़्त लैब →' },
-        ru: { kicker: 'БЕСПЛАТНЫЙ ИНТЕРАКТИВНЫЙ ИНСТРУМЕНТ', lab: '50 практик →' }
+        en: { kicker: 'FREE INTERACTIVE COMPANION', lab: '60 Free Labs →' },
+        ko: { kicker: '무료 인터랙티브 실습 도구', lab: '60개 무료 랩 →' },
+        zh: { kicker: '免费互动配套工具', lab: '60个免费工具 →' },
+        ja: { kicker: '無料インタラクティブツール', lab: '無料60ラボ →' },
+        es: { kicker: 'HERRAMIENTA INTERACTIVA GRATIS', lab: '60 Labos Gratis →' },
+        pt: { kicker: 'FERRAMENTA INTERATIVA GRÁTIS', lab: '60 Labos Grátis →' },
+        de: { kicker: 'KOSTENLOSES INTERAKTIVES TOOL', lab: '60 Gratis-Labs →' },
+        fr: { kicker: 'OUTIL INTERACTIF GRATUIT', lab: '60 Labos Gratuits →' },
+        id: { kicker: 'ALAT INTERAKTIF GRATIS', lab: '60 Lab Gratis →' },
+        tr: { kicker: 'ÜCRETSİZ ETKİLEŞİMLİ ARAÇ', lab: '60 Ücretsiz Lab →' },
+        hi: { kicker: 'मुफ़्त इंटरैक्टिव टूल', lab: '60 मुफ़्त लैब →' },
+        ru: { kicker: 'БЕСПЛАТНЫЙ ИНТЕРАКТИВНЫЙ ИНСТРУМЕНТ', lab: '60 практик →' }
     };
 
     function initMidArticleToolJump() {
