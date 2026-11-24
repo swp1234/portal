@@ -9,11 +9,28 @@
     var DISMISS_KEY = 'db_bm_sticky_dismissed';
     var SCROLL_REVEAL_PX = 260;
 
+    var SUPPORTED_LOCS = { ko: 1, en: 1, zh: 1, hi: 1, ru: 1, ja: 1, es: 1, pt: 1, id: 1, tr: 1, de: 1, fr: 1 };
+    var langMutated = false;
+
     function getLocale() {
-        var htmlLang = (document.documentElement.getAttribute('lang') || '').trim().toLowerCase();
-        if (htmlLang) return htmlLang.slice(0, 2);
-        var match = /^\/portal\/blog\/([a-z]{2})\//i.exec(window.location.pathname || '');
-        return match ? match[1].toLowerCase() : 'en';
+        var pathMatch = /^\/portal\/blog\/([a-z]{2})\//i.exec(window.location.pathname || '');
+        if (pathMatch && SUPPORTED_LOCS[pathMatch[1].toLowerCase()]) return pathMatch[1].toLowerCase();
+        var htmlLang = (document.documentElement.getAttribute('lang') || '').trim().toLowerCase().slice(0, 2);
+        if (!langMutated) {
+            try {
+                var qLang = new URLSearchParams(window.location.search || '').get('lang');
+                if (qLang) {
+                    var normQ = qLang.trim().toLowerCase().slice(0, 2);
+                    if (SUPPORTED_LOCS[normQ] && (!htmlLang || htmlLang === 'en')) return normQ;
+                }
+            } catch (e) {}
+            if (window.i18n && window.i18n.currentLang) {
+                var normI = String(window.i18n.currentLang).trim().toLowerCase().slice(0, 2);
+                if (SUPPORTED_LOCS[normI]) return normI;
+            }
+        }
+        if (htmlLang) return htmlLang;
+        return 'en';
     }
 
     function sendEvent(name, params) {
@@ -99,6 +116,7 @@
 
         if (typeof window.MutationObserver === 'function') {
             var langObs = new window.MutationObserver(function() {
+                langMutated = true;
                 localizeCuratedCard(card);
             });
             langObs.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
@@ -266,11 +284,59 @@
         }
     }
 
+    var BRIDGE_APP_I18N = {
+        en: { badge: '70 FREE WELLNESS LABS', cta: 'Open Free Lab →' },
+        ko: { badge: '70개 무료 웰니스 랩', cta: '무료 랩 열기 →' },
+        zh: { badge: '70个免费心理实验室', cta: '打开免费工具 →' },
+        ja: { badge: '無料70ウェルネスラボ', cta: '無料ラボを開く →' },
+        es: { badge: '70 LABOS DE BIENESTAR GRATIS', cta: 'Abrir Labo Gratis →' },
+        pt: { badge: '70 LABOS DE BEM-ESTAR GRÁTIS', cta: 'Abrir Labo Grátis →' },
+        de: { badge: '70 GRATIS WELLNESS-LABS', cta: 'Gratis-Lab öffnen →' },
+        fr: { badge: '70 LABOS BIEN-ÊTRE GRATUITS', cta: 'Ouvrir le Labo →' },
+        id: { badge: '70 LAB WELLNESS GRATIS', cta: 'Buka Lab Gratis →' },
+        tr: { badge: '70 ÜCRETSİZ WELLNESS LABI', cta: 'Ücretsiz Labı Aç →' },
+        hi: { badge: '70 मुफ़्त वेलनेस लैब', cta: 'मुफ़्त लैब खोलें →' },
+        ru: { badge: '70 БЕСПЛАТНЫХ ПРАКТИК', cta: 'Открыть практику →' }
+    };
+
+    function syncBridgeLocale(bridge, cta) {
+        if (!bridge || !cta) return;
+        var pathname = window.location.pathname || '';
+        if (/^\/portal\/blog\//i.test(pathname)) return;
+        var loc = getLocale();
+        var pack = BRIDGE_APP_I18N[loc] || BRIDGE_APP_I18N.en;
+        var badge = bridge.querySelector('.bm-tool-bridge-badge');
+        if (badge && !badge.hasAttribute('data-i18n')) badge.textContent = pack.badge;
+        if (!cta.hasAttribute('data-i18n')) cta.textContent = pack.cta;
+        var baseHref = cta.getAttribute('data-bm-base-href');
+        if (!baseHref) {
+            baseHref = cta.getAttribute('href') || '';
+            cta.setAttribute('data-bm-base-href', baseHref);
+        }
+        if (baseHref && baseHref.indexOf('/portal/tools/') === 0) {
+            try {
+                var u = new URL(baseHref, window.location.origin);
+                if (loc && loc !== 'en') u.searchParams.set('lang', loc);
+                else u.searchParams.delete('lang');
+                cta.setAttribute('href', u.pathname + u.search + u.hash);
+            } catch (e) {}
+        }
+    }
+
     function initToolBridge() {
         var bridge = document.querySelector('.bm-tool-bridge[data-bm-tool-bridge="1"]');
         if (!bridge) return;
         var kind = bridge.getAttribute('data-tool-slug') || bridge.getAttribute('data-bm-bridge-kind') || 'wellness';
         var cta = bridge.querySelector('a.bm-tool-bridge-cta');
+
+        syncBridgeLocale(bridge, cta);
+        if (typeof window.MutationObserver === 'function') {
+            var bridgeLangObs = new window.MutationObserver(function() {
+                langMutated = true;
+                syncBridgeLocale(bridge, cta);
+            });
+            bridgeLangObs.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+        }
 
         observeHalfVisible(bridge, function() {
             sendEvent('blog_tool_bridge_view', {
@@ -513,18 +579,18 @@
     }
 
     var MID_JUMP_I18N = {
-        en: { kicker: 'FREE INTERACTIVE COMPANION', lab: '60 Free Labs →' },
-        ko: { kicker: '무료 인터랙티브 실습 도구', lab: '60개 무료 랩 →' },
-        zh: { kicker: '免费互动配套工具', lab: '60个免费工具 →' },
-        ja: { kicker: '無料インタラクティブツール', lab: '無料60ラボ →' },
-        es: { kicker: 'HERRAMIENTA INTERACTIVA GRATIS', lab: '60 Labos Gratis →' },
-        pt: { kicker: 'FERRAMENTA INTERATIVA GRÁTIS', lab: '60 Labos Grátis →' },
-        de: { kicker: 'KOSTENLOSES INTERAKTIVES TOOL', lab: '60 Gratis-Labs →' },
-        fr: { kicker: 'OUTIL INTERACTIF GRATUIT', lab: '60 Labos Gratuits →' },
-        id: { kicker: 'ALAT INTERAKTIF GRATIS', lab: '60 Lab Gratis →' },
-        tr: { kicker: 'ÜCRETSİZ ETKİLEŞİMLİ ARAÇ', lab: '60 Ücretsiz Lab →' },
-        hi: { kicker: 'मुफ़्त इंटरैक्टिव टूल', lab: '60 मुफ़्त लैब →' },
-        ru: { kicker: 'БЕСПЛАТНЫЙ ИНТЕРАКТИВНЫЙ ИНСТРУМЕНТ', lab: '60 практик →' }
+        en: { kicker: 'FREE INTERACTIVE COMPANION', lab: '70 Free Labs →' },
+        ko: { kicker: '무료 인터랙티브 실습 도구', lab: '70개 무료 랩 →' },
+        zh: { kicker: '免费互动配套工具', lab: '70个免费工具 →' },
+        ja: { kicker: '無料インタラクティブツール', lab: '無料70ラボ →' },
+        es: { kicker: 'HERRAMIENTA INTERACTIVA GRATIS', lab: '70 Labos Gratis →' },
+        pt: { kicker: 'FERRAMENTA INTERATIVA GRÁTIS', lab: '70 Labos Grátis →' },
+        de: { kicker: 'KOSTENLOSES INTERAKTIVES TOOL', lab: '70 Gratis-Labs →' },
+        fr: { kicker: 'OUTIL INTERACTIF GRATUIT', lab: '70 Labos Gratuits →' },
+        id: { kicker: 'ALAT INTERAKTIF GRATIS', lab: '70 Lab Gratis →' },
+        tr: { kicker: 'ÜCRETSİZ ETKİLEŞİMLİ ARAÇ', lab: '70 Ücretsiz Lab →' },
+        hi: { kicker: 'मुफ़्त इंटरैक्टिव टूल', lab: '70 मुफ़्त लैब →' },
+        ru: { kicker: 'БЕСПЛАТНЫЙ ИНТЕРАКТИВНЫЙ ИНСТРУМЕНТ', lab: '70 практик →' }
     };
 
     function initMidArticleToolJump() {
