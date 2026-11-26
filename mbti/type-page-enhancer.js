@@ -227,7 +227,7 @@
         ? '<a class="mbti-tool-chip" href="/portal/tools/social-battery-recharge-planner.html?lang=' + safeLang + '&source=mbti_curated_tool">Social Battery Calculator →</a>'
         : '<a class="mbti-tool-chip" href="/portal/tools/boundary-script-builder.html?lang=' + safeLang + '&source=mbti_curated_tool">Boundary Script Generator →</a>'),
       '<a class="mbti-tool-chip" href="/portal/tools/' + clusterTool.slug + '.html?lang=' + safeLang + '&source=mbti_curated_tool">' + clusterTool.label + '</a>',
-      '<a class="mbti-tool-chip" href="/portal/tools/wellness-lab.html?lang=' + safeLang + '&source=mbti_curated_tool">All 90 Mental Wellness Labs →</a>',
+      '<a class="mbti-tool-chip" href="/portal/tools/wellness-lab.html?lang=' + safeLang + '&source=mbti_curated_tool">All 100 Mental Wellness Labs →</a>',
       '</div>',
       '<p class="mbti-curated-note">Editorial note: Hand-picked books relevant to ' + mbtiType + ' profiles. Amazon links use affiliate tag dopabrain-20 at no extra cost.</p>'
     ].join('');
