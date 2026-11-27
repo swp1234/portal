@@ -285,18 +285,18 @@
     }
 
     var BRIDGE_APP_I18N = {
-        en: { badge: '100 FREE WELLNESS LABS', cta: 'Open Free Lab →' },
-        ko: { badge: '100개 무료 웰니스 랩', cta: '무료 랩 열기 →' },
-        zh: { badge: '100个免费心理实验室', cta: '打开免费工具 →' },
-        ja: { badge: '無料100ウェルネスラボ', cta: '無料ラボを開く →' },
-        es: { badge: '100 LABOS DE BIENESTAR GRATIS', cta: 'Abrir Labo Gratis →' },
-        pt: { badge: '100 LABOS DE BEM-ESTAR GRÁTIS', cta: 'Abrir Labo Grátis →' },
-        de: { badge: '100 GRATIS WELLNESS-LABS', cta: 'Gratis-Lab öffnen →' },
-        fr: { badge: '100 LABOS BIEN-ÊTRE GRATUITS', cta: 'Ouvrir le Labo →' },
-        id: { badge: '100 LAB WELLNESS GRATIS', cta: 'Buka Lab Gratis →' },
-        tr: { badge: '100 ÜCRETSİZ WELLNESS LABI', cta: 'Ücretsiz Labı Aç →' },
-        hi: { badge: '100 मुफ़्त वेलनेस लैब', cta: 'मुफ़्त लैब खोलें →' },
-        ru: { badge: '100 БЕСПЛАТНЫХ ПРАКТИК', cta: 'Открыть практику →' }
+        en: { badge: '110 FREE WELLNESS LABS', cta: 'Open Free Lab →' },
+        ko: { badge: '110개 무료 웰니스 랩', cta: '무료 랩 열기 →' },
+        zh: { badge: '110个免费心理实验室', cta: '打开免费工具 →' },
+        ja: { badge: '無料110ウェルネスラボ', cta: '無料ラボを開く →' },
+        es: { badge: '110 LABOS DE BIENESTAR GRATIS', cta: 'Abrir Labo Gratis →' },
+        pt: { badge: '110 LABOS DE BEM-ESTAR GRÁTIS', cta: 'Abrir Labo Grátis →' },
+        de: { badge: '110 GRATIS WELLNESS-LABS', cta: 'Gratis-Lab öffnen →' },
+        fr: { badge: '110 LABOS BIEN-ÊTRE GRATUITS', cta: 'Ouvrir le Labo →' },
+        id: { badge: '110 LAB WELLNESS GRATIS', cta: 'Buka Lab Gratis →' },
+        tr: { badge: '110 ÜCRETSİZ WELLNESS LABI', cta: 'Ücretsiz Labı Aç →' },
+        hi: { badge: '110 मुफ़्त वेलनेस लैब', cta: 'मुफ़्त लैब खोलें →' },
+        ru: { badge: '110 БЕСПЛАТНЫХ ПРАКТИК', cta: 'Открыть практику →' }
     };
 
     function syncBridgeLocale(bridge, cta) {
@@ -579,18 +579,18 @@
     }
 
     var MID_JUMP_I18N = {
-        en: { kicker: 'FREE INTERACTIVE COMPANION', lab: '100 Free Labs →' },
-        ko: { kicker: '무료 인터랙티브 실습 도구', lab: '100개 무료 랩 →' },
-        zh: { kicker: '免费互动配套工具', lab: '100个免费工具 →' },
-        ja: { kicker: '無料インタラクティブツール', lab: '無料100ラボ →' },
-        es: { kicker: 'HERRAMIENTA INTERACTIVA GRATIS', lab: '100 Labos Gratis →' },
-        pt: { kicker: 'FERRAMENTA INTERATIVA GRÁTIS', lab: '100 Labos Grátis →' },
-        de: { kicker: 'KOSTENLOSES INTERAKTIVES TOOL', lab: '100 Gratis-Labs →' },
-        fr: { kicker: 'OUTIL INTERACTIF GRATUIT', lab: '100 Labos Gratuits →' },
-        id: { kicker: 'ALAT INTERAKTIF GRATIS', lab: '100 Lab Gratis →' },
-        tr: { kicker: 'ÜCRETSİZ ETKİLEŞİMLİ ARAÇ', lab: '100 Ücretsiz Lab →' },
-        hi: { kicker: 'मुफ़्त इंटरैक्टिव टूल', lab: '100 मुफ़्त लैब →' },
-        ru: { kicker: 'БЕСПЛАТНЫЙ ИНТЕРАКТИВНЫЙ ИНСТРУМЕНТ', lab: '100 практик →' }
+        en: { kicker: 'FREE INTERACTIVE COMPANION', lab: '110 Free Labs →' },
+        ko: { kicker: '무료 인터랙티브 실습 도구', lab: '110개 무료 랩 →' },
+        zh: { kicker: '免费互动配套工具', lab: '110个免费工具 →' },
+        ja: { kicker: '無料インタラクティブツール', lab: '無料110ラボ →' },
+        es: { kicker: 'HERRAMIENTA INTERACTIVA GRATIS', lab: '110 Labos Gratis →' },
+        pt: { kicker: 'FERRAMENTA INTERATIVA GRÁTIS', lab: '110 Labos Grátis →' },
+        de: { kicker: 'KOSTENLOSES INTERAKTIVES TOOL', lab: '110 Gratis-Labs →' },
+        fr: { kicker: 'OUTIL INTERACTIF GRATUIT', lab: '110 Labos Gratuits →' },
+        id: { kicker: 'ALAT INTERAKTIF GRATIS', lab: '110 Lab Gratis →' },
+        tr: { kicker: 'ÜCRETSİZ ETKİLEŞİMLİ ARAÇ', lab: '110 Ücretsiz Lab →' },
+        hi: { kicker: 'मुफ़्त इंटरैक्टिव टूल', lab: '110 मुफ़्त लैब →' },
+        ru: { kicker: 'БЕСПЛАТНЫЙ ИНТЕРАКТИВНЫЙ ИНСТРУМЕНТ', lab: '110 практик →' }
     };
 
     function initMidArticleToolJump() {
