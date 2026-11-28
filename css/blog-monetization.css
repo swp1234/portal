@@ -1,4 +1,5 @@
 /* DopaBrain Shared Blog & Tool Monetization Components
+ * Harmonized 2026 Midnight Slate + Indigo/Sky palette.
  * Guaranteed 0px horizontal overflow at 390px and >=44px touch targets.
  */
 .curated-resources-card {
@@ -7,9 +8,9 @@
     margin: 28px auto;
     padding: 22px 20px;
     border-radius: 16px;
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.14), rgba(15, 23, 42, 0.88));
-    border: 1px solid rgba(167, 139, 250, 0.32);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+    background: linear-gradient(180deg, rgba(26, 35, 54, 0.94), rgba(17, 24, 39, 0.96));
+    border: 1px solid #273147;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.05);
     box-sizing: border-box;
     overflow: hidden;
     contain: layout style;
@@ -663,9 +664,29 @@ body.has-bm-sticky {
     }
 }
 
-/* Global Blog & Hub UX/UI Polish (Contrast, Korean Word-Break, Reduced Motion) */
+/* Global Blog & Hub UX/UI Polish (Harmonized Midnight Slate, Contrast, Korean Word-Break, Reduced Motion) */
+:root {
+    --db-bg: #090d16;
+    --db-surface: #111827;
+    --db-elevated: #1a2336;
+    --db-border: #273147;
+    --db-ink: #f1f5f9;
+    --db-ink-muted: #94a3b8;
+    --db-accent: #6366f1;
+    --db-sky: #38bdf8;
+}
+body {
+    background-color: var(--bg-dark, var(--bg, #090d16));
+}
 a.blog-card {
-    color: var(--text-primary, #f0f0f8);
+    color: var(--text-primary, #f1f5f9);
+    background: var(--db-surface);
+    border-color: var(--db-border);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+a.blog-card:hover {
+    background: var(--db-elevated);
+    border-color: rgba(99, 102, 241, 0.55);
 }
 a.blog-card:focus-visible,
 .bm-mid-jump-cta:focus-visible,
