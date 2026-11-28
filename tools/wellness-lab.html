@@ -300,14 +300,19 @@
       box-shadow: 0 8px 24px rgba(20, 184, 166, 0.28); transition: transform 0.16s ease;
     }
     .triage-cta:hover { transform: translateY(-2px); }
-    .lab-search-wrap { position: relative; margin-bottom: 12px; }
-    .lab-search-input { width: 100%; min-height: 46px; padding: 11px 16px; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,0.045); color: var(--text); font: inherit; font-size: 0.94rem; box-sizing: border-box; }
-    .lab-search-input:focus { outline: none; border-color: rgba(45, 212, 191, 0.7); box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.18); }
-    .mood-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 14px; }
+    .lab-search-wrap { position: relative; margin-bottom: 14px; }
+    .lab-search-input { width: 100%; min-height: 48px; padding: 12px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-card); color: var(--text); font: inherit; font-size: 0.94rem; box-sizing: border-box; box-shadow: inset 0 1px 0 rgba(255,255,255,0.04); }
+    .lab-search-input:focus { outline: none; border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.24); }
+    .mood-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 16px; }
     .mood-label { font-size: 0.8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-right: 2px; }
-    .mood-chip { min-height: 44px; min-width: 44px; padding: 8px 13px; border-radius: 999px; border: 1px solid rgba(45, 212, 191, 0.3); background: rgba(20, 184, 166, 0.08); color: #ccfbf1; font-weight: 700; font-size: 0.83rem; cursor: pointer; transition: all 0.16s ease; }
-    .mood-chip:hover { border-color: rgba(45, 212, 191, 0.75); background: rgba(20, 184, 166, 0.18); }
-    .mood-chip.is-active { background: linear-gradient(135deg, #0d9488, #4f46e5); color: #fff; border-color: transparent; box-shadow: 0 4px 14px rgba(20, 184, 166, 0.3); }
+    .mood-chip { min-height: 48px; min-width: 44px; padding: 10px 14px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg-elevated); color: var(--text); font-weight: 600; font-size: 0.86rem; cursor: pointer; transition: all 0.16s ease; }
+    .mood-chip:hover { border-color: rgba(99, 102, 241, 0.72); background: rgba(99, 102, 241, 0.18); }
+    .mood-chip.is-active { background: #6366f1; color: #fff; border-color: #6366f1; box-shadow: 0 6px 18px rgba(99, 102, 241, 0.34); }
+    @media (max-width: 560px) {
+      .mood-bar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .mood-label { grid-column: 1 / -1; margin-right: 0; }
+      .mood-chip { width: 100%; justify-content: center; text-align: center; }
+    }
     .recent-strip { margin-bottom: 16px; padding: 12px 14px; border-radius: 14px; background: rgba(99, 102, 241, 0.09); border: 1px solid rgba(129, 140, 248, 0.28); }
     .recent-title { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #c7d2fe; margin: 0 0 8px; }
     .recent-list { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -320,40 +325,43 @@
       display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px;
     }
     .filter-pill {
-      min-height: 44px; min-width: 44px; padding: 10px 15px; border-radius: 999px;
-      border: 1px solid var(--line); background: rgba(255,255,255,0.04); color: var(--text);
-      font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: all 0.16s ease;
+      min-height: 44px; min-width: 44px; padding: 10px 18px; border-radius: 999px;
+      border: 1px solid var(--line); background: var(--bg-card); color: var(--text);
+      font-weight: 600; font-size: 0.88rem; cursor: pointer; transition: all 0.16s ease;
     }
-    .filter-pill:hover { border-color: rgba(45, 212, 191, 0.6); }
+    .filter-pill:hover { border-color: rgba(99, 102, 241, 0.65); }
     .filter-pill.is-active {
-      background: linear-gradient(135deg, #14b8a6, #6366f1); color: #fff; border-color: transparent;
-      box-shadow: 0 6px 18px rgba(20, 184, 166, 0.26);
+      background: #6366f1; color: #fff; border-color: #6366f1;
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.34);
     }
     .lab-count {
       font-size: 0.88rem; color: var(--muted); margin: 0 0 14px; font-weight: 600;
     }
     .lab-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px;
       margin-bottom: 28px;
     }
     .lab-card {
-      display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
-      padding: 18px; border-radius: 16px; text-decoration: none; color: inherit;
-      background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.025));
-      border: 1px solid var(--line-soft);
-      box-shadow: 0 8px 24px rgba(2, 6, 23, 0.28), inset 0 1px 0 rgba(255,255,255,0.05);
-      min-height: 150px; transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 12px;
+      padding: 20px; border-radius: 16px; text-decoration: none; color: inherit;
+      background: var(--bg-card);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255,255,255,0.06);
+      min-height: 158px; transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
     }
     .lab-card:hover, .lab-card:focus-visible {
-      transform: translateY(-3px); border-color: rgba(45, 212, 191, 0.58); background: rgba(20, 184, 166, 0.09);
-      box-shadow: 0 14px 32px rgba(20, 184, 166, 0.16);
+      transform: translateY(-3px); border-color: rgba(99, 102, 241, 0.72); background: var(--bg-elevated);
+      box-shadow: 0 16px 36px rgba(99, 102, 241, 0.2);
     }
-    .lab-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .lab-emoji { font-size: 1.55rem; line-height: 1; }
+    .lab-card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .lab-emoji {
+      width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 10px; background: var(--bg-elevated); font-size: 1.35rem; line-height: 1; flex-shrink: 0;
+    }
     .lab-badge {
       font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-      padding: 4px 9px; border-radius: 999px; background: rgba(99, 102, 241, 0.16); color: #c7d2fe;
-      border: 1px solid rgba(129, 140, 248, 0.3);
+      padding: 5px 10px; border-radius: 999px; background: var(--bg-elevated); color: #00e5ff;
+      border: 1px solid var(--line);
     }
     .lab-card h3 { margin: 4px 0 4px; font-size: 1.04rem; line-height: 1.3; color: #f8fafc; }
     .lab-card p { margin: 0; font-size: 0.87rem; line-height: 1.5; color: var(--muted); }
@@ -419,7 +427,7 @@
         <p class="recent-title" id="recentTitle">Continue Where You Left Off</p>
         <div class="recent-list" id="recentList"></div>
       </div>
-      <div class="lab-search-wrap"><input type="search" id="labSearch" class="lab-search-input" autocomplete="off" placeholder="Search 50 tools by feeling or topic (e.g. panic, sleep, burnout, boundaries)..." aria-label="Search 50 interactive mental wellness tools"></div>
+      <div class="lab-search-wrap"><input type="search" id="labSearch" class="lab-search-input" autocomplete="off" placeholder="Search 170 tools by feeling or topic (e.g. panic, sleep, burnout, boundaries)..." aria-label="Search 170 interactive mental wellness tools"></div>
       <div class="mood-bar" id="moodChips" role="group" aria-label="Quick start by current feeling"></div>
       <div class="filter-bar" role="tablist" aria-label="Wellness categories">
         <button type="button" class="filter-pill is-active" role="tab" aria-selected="true" data-cat="all" data-i18n="catAll">✨ All (170)</button>
@@ -429,7 +437,7 @@
         <button type="button" class="filter-pill" role="tab" aria-selected="false" data-cat="focus" data-i18n="catFocus">🎯 ADHD &amp; Focus</button>
         <button type="button" class="filter-pill" role="tab" aria-selected="false" data-cat="sleep" data-i18n="catSleep">🌙 Sleep &amp; Confidence</button>
       </div>
-      <p class="lab-count" id="labCount" aria-live="polite">Showing 50 interactive mental wellness tools</p>
+      <p class="lab-count" id="labCount" aria-live="polite">Showing 170 interactive mental wellness tools</p>
       <div class="lab-grid" id="labGrid"></div>
     </section>
 
