@@ -329,11 +329,14 @@
     .lab-card {
       display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
       padding: 18px; border-radius: 16px; text-decoration: none; color: inherit;
-      background: rgba(255,255,255,0.035); border: 1px solid var(--line-soft);
-      min-height: 150px; transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+      background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.025));
+      border: 1px solid var(--line-soft);
+      box-shadow: 0 8px 24px rgba(2, 6, 23, 0.28), inset 0 1px 0 rgba(255,255,255,0.05);
+      min-height: 150px; transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
     }
-    .lab-card:hover {
-      transform: translateY(-3px); border-color: rgba(45, 212, 191, 0.55); background: rgba(20, 184, 166, 0.08);
+    .lab-card:hover, .lab-card:focus-visible {
+      transform: translateY(-3px); border-color: rgba(45, 212, 191, 0.58); background: rgba(20, 184, 166, 0.09);
+      box-shadow: 0 14px 32px rgba(20, 184, 166, 0.16);
     }
     .lab-card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .lab-emoji { font-size: 1.55rem; line-height: 1; }

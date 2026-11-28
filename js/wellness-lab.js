@@ -2123,10 +2123,10 @@
       stickyCta: '🧠 Need a 60s prescription? Open Daily Mind Check-In →'
     },
     ko: {
-      title: '인터랙티브 멘탈 웰니스 랩 — 무료 CBT·신체이완·자기조절 도구 50선 | DopaBrain',
-      metaDesc: '불안, 생각 과부하, 번아웃, 가스라이팅 점검, 공동의존, 완벽주의, ADHD 집중, 경계선 대화, 수면 리셋까지 브라우저에서 100% 비공개로 사용하는 50가지 무료 심리 도구를 만나보세요.',
+      title: '인터랙티브 멘탈 웰니스 랩 — 무료 CBT·신체이완·자기조절 도구 160선 | DopaBrain',
+      metaDesc: '불안, 생각 과부하, 번아웃, 가스라이팅 점검, 공동의존, 완벽주의, ADHD 집중, 경계선 대화, 수면 리셋까지 브라우저에서 100% 비공개로 사용하는 160가지 무료 심리 도구를 만나보세요.',
       skip: '멘탈 웰니스 랩 바로가기', back: '← 전체 202개 도구', langLabel: '언어:',
-      pill: '🧠 무료 인터랙티브 심리 랩 50선 · 100% 비공개',
+      pill: '🧠 무료 인터랙티브 심리 랩 160선 · 100% 비공개',
       heroTitle: '인터랙티브 멘탈 웰니스 랩',
       heroSub: 'CBT 인지 재구성, 신체 긴장 이완, 번아웃 감별, 경계선 스크립트, ADHD 집중 도구, 수면 리셋까지—회원가입 없이 브라우저에서 100% 비공개로 바로 실행하고 1080×1920 요약 카드를 저장하세요.',
       triageTitle: '지금 어떤 도구부터 시작할지 모르겠다면?',
@@ -2157,12 +2157,12 @@
       stickyCta: '🧠 지금 60초 맞춤 처방 받기 →'
     },
     ja: {
-      title: 'インタラクティブ・メンタルウェルネスラボ — 無料CBT・身体緩和ツール50選 | DopaBrain',
-      metaDesc: '不安・考えすぎ・燃え尽き・境界線・ADHD集中・睡眠リセットをブラウザ完結・完全プライベートで整える50の無料心理ツール。',
-      back: '← 全92ツール', langLabel: '言語:', pill: '🧠 無料インタラクティブツール50選 · 完全プライベート',
+      title: 'インタラクティブ・メンタルウェルネスラボ — 無料CBT・身体緩和ツール160選 | DopaBrain',
+      metaDesc: '不安・考えすぎ・燃え尽き・境界線・ADHD集中・睡眠リセットをブラウザ完結・完全プライベートで整える160の無料心理ツール。',
+      back: '← 全202ツール', langLabel: '言語:', pill: '🧠 無料インタラクティブツール160選 · 完全プライベート',
       heroTitle: 'インタラクティブ・メンタルウェルネスラボ',
       heroSub: 'CBTリフレーミング、身体緊張の緩和、バーンアウト診断、境界線スクリプト、集中・睡眠リセットまで登録不要で今すぐ使えます。',
-      triageTitle: 'どのツールから始めるか迷ったら？', triageDesc: '60秒のチェックインで今の状態に最適なツールを自動提案します。',
+      triageTitle: 'どのツールから始めるか迷ったら？', triageDesc: '60秒のチェックインで160ツールの中から今の状態に最適なツールを自動提案します。',
       triageCta: '60秒チェックインを開始 →',
       catAll: '✨ すべて (160)', catAnxiety: '🌊 不安・考えすぎ', catBurnout: '🔋 疲労・エネルギー',
       catRel: '🛡️ 境界線・対人関係', catFocus: '🎯 ADHD・集中', catSleep: '🌙 睡眠・自信',
@@ -2170,12 +2170,12 @@
       booksTitle: '📚 関連する信頼の心理学書籍', stickyCta: '🧠 60秒マインドチェックインを開く →'
     },
     zh: {
-      title: '互动心理健康实验室 — 50款免费CBT、躯体放松与自我调节工具 | DopaBrain',
-      metaDesc: '50款100%浏览器本地隐私的免费心理工具，覆盖焦虑反刍、职业倦怠、社交电量、健康边界、ADHD专注力与睡眠节律重置。',
-      back: '← 全部92款工具', langLabel: '语言:', pill: '🧠 50款免费互动工具 · 100%本地隐私',
+      title: '互动心理健康实验室 — 160款免费CBT、躯体放松与自我调节工具 | DopaBrain',
+      metaDesc: '160款100%浏览器本地隐私的免费心理工具，覆盖焦虑反刍、职业倦怠、社交电量、健康边界、ADHD专注力与睡眠节律重置。',
+      back: '← 全部202款工具', langLabel: '语言:', pill: '🧠 160款免费互动工具 · 100%本地隐私',
       heroTitle: '互动心理健康实验室',
       heroSub: '涵盖CBT认知重构、躯体放松、倦怠自查、边界话术、ADHD专注与睡眠重置——无需注册，数据不离设备，支持导出1080×1920总结卡。',
-      triageTitle: '不确定先用哪一款工具？', triageDesc: '花60秒评估精力、紧张感与脑雾，即刻获得50款工具中的专属匹配推荐。',
+      triageTitle: '不确定先用哪一款工具？', triageDesc: '花60秒评估精力、紧张感与脑雾，即刻获得160款工具中的专属匹配推荐。',
       triageCta: '开始60秒情绪自检 →',
       catAll: '✨ 全部 (160)', catAnxiety: '🌊 焦虑与过度思考', catBurnout: '🔋 倦怠与能量',
       catRel: '🛡️ 边界与人际', catFocus: '🎯 ADHD与专注', catSleep: '🌙 睡眠与自信',
@@ -2292,16 +2292,16 @@
   var EXTRA_UI = {
     en: { moodLabel: 'Quick Pick:', recentTitle: 'Continue Where You Left Off', emptyMsg: 'No labs matched that filter.', resetFilter: 'Show All 160 Labs' },
     ko: { moodLabel: '지금 기분:', recentTitle: '최근 열어본 웰니스 랩', emptyMsg: '조건에 맞는 도구가 없습니다.', resetFilter: '160개 도구 모두 보기' },
-    zh: { moodLabel: '快速直达：', recentTitle: '继续上次使用的工具', emptyMsg: '未找到匹配的工具。', resetFilter: '查看全部 60 个工具' },
-    ja: { moodLabel: '今の気分：', recentTitle: '最近開いたラボを続ける', emptyMsg: '該当するツールが見つかりません。', resetFilter: '50ツールをすべて表示' },
-    es: { moodLabel: 'Acceso rápido:', recentTitle: 'Continuar donde lo dejaste', emptyMsg: 'No se encontraron herramientas.', resetFilter: 'Ver los 60 laboratorios' },
-    pt: { moodLabel: 'Acesso rápido:', recentTitle: 'Continuar de onde parou', emptyMsg: 'Nenhuma ferramenta encontrada.', resetFilter: 'Ver todos os 60 laboratórios' },
+    zh: { moodLabel: '快速直达：', recentTitle: '继续上次使用的工具', emptyMsg: '未找到匹配的工具。', resetFilter: '查看全部 160 个工具' },
+    ja: { moodLabel: '今の気分：', recentTitle: '最近開いたラボを続ける', emptyMsg: '該当するツールが見つかりません。', resetFilter: '160ツールをすべて表示' },
+    es: { moodLabel: 'Acceso rápido:', recentTitle: 'Continuar donde lo dejaste', emptyMsg: 'No se encontraron herramientas.', resetFilter: 'Ver los 160 laboratorios' },
+    pt: { moodLabel: 'Acesso rápido:', recentTitle: 'Continuar de onde parou', emptyMsg: 'Nenhuma ferramenta encontrada.', resetFilter: 'Ver todos os 160 laboratórios' },
     de: { moodLabel: 'Schnellwahl:', recentTitle: 'Zuletzt geöffnete Labs', emptyMsg: 'Keine passenden Tools gefunden.', resetFilter: 'Alle 160 Labs anzeigen' },
     fr: { moodLabel: 'Accès rapide :', recentTitle: 'Reprendre vos derniers labos', emptyMsg: 'Aucun outil trouvé.', resetFilter: 'Afficher les 160 labos' },
-    id: { moodLabel: 'Pilih cepat:', recentTitle: 'Lanjutkan Lab Terakhir', emptyMsg: 'Tidak ada alat yang cocok.', resetFilter: 'Tampilkan Semua 60 Lab' },
-    tr: { moodLabel: 'Hızlı seçim:', recentTitle: 'Son Açtığınız Lablar', emptyMsg: 'Eşleşen araç bulunamadı.', resetFilter: 'Tüm 60 Labı Göster' },
-    hi: { moodLabel: 'त्वरित चुनें:', recentTitle: 'हाल ही में खोले गए लैब', emptyMsg: 'कोई मेल खाने वाला टूल नहीं मिला।', resetFilter: 'सभी 60 लैब दिखाएँ' },
-    ru: { moodLabel: 'Быстрый выбор:', recentTitle: 'Недавно открытые практики', emptyMsg: 'Ничего не найдено.', resetFilter: 'Показать все 60 практик' }
+    id: { moodLabel: 'Pilih cepat:', recentTitle: 'Lanjutkan Lab Terakhir', emptyMsg: 'Tidak ada alat yang cocok.', resetFilter: 'Tampilkan Semua 160 Lab' },
+    tr: { moodLabel: 'Hızlı seçim:', recentTitle: 'Son Açtığınız Lablar', emptyMsg: 'Eşleşen araç bulunamadı.', resetFilter: 'Tüm 160 Labı Göster' },
+    hi: { moodLabel: 'त्वरित चुनें:', recentTitle: 'हाल ही में खोले गए लैब', emptyMsg: 'कोई मेल खाने वाला टूल नहीं मिला।', resetFilter: 'सभी 160 लैब दिखाएँ' },
+    ru: { moodLabel: 'Быстрый выбор:', recentTitle: 'Недавно открытые практики', emptyMsg: 'Ничего не найдено.', resetFilter: 'Показать все 160 практик' }
   };
 
   function extraT(k) { return (EXTRA_UI[currentLang] && EXTRA_UI[currentLang][k]) || EXTRA_UI.en[k] || ''; }
@@ -2369,7 +2369,7 @@
       box.appendChild(btn);
     });
   }
-  var SEARCH_PH = { en: 'Search 60 tools by feeling or topic (panic, sleep, burnout, boundaries)...', ko: '지금 느끼는 감정·고민으로 160개 도구 검색 (불안, 수면, 번아웃, 경계선)...', ja: '50ツールを気分や悩みで検索（不安・睡眠・燃え尽き・境界線）...', zh: '按情绪或主题搜索 60 款免费工具（焦虑、睡眠、倦怠、边界）...', es: 'Buscar entre 160 herramientas (ansiedad, sueño, burnout, límites)...', pt: 'Buscar entre 160 ferramentas (ansiedade, sono, burnout, limites)...', de: '60 Tools nach Gefühl oder Thema durchsuchen (Angst, Schlaf, Burnout)...', fr: 'Rechercher parmi 160 outils (anxiété, sommeil, burn-out, limites)...', id: 'Cari 160 alat sesuai perasaan (cemas, tidur, burnout, batasan)...', tr: '60 araç içinde ara (kaygı, uyku, tükenmişlik, sınırlar)...', hi: '60 टूल खोजें (चिंता, नींद, बर्नआउट, सीमाएँ)...', ru: 'Поиск среди 60 инструментов (тревога, сон, выгорание, границы)...' };
+  var SEARCH_PH = { en: 'Search 160 tools by feeling or topic (panic, sleep, burnout, boundaries)...', ko: '지금 느끼는 감정·고민으로 160개 도구 검색 (불안, 수면, 번아웃, 경계선)...', ja: '160ツールを気分や悩みで検索（不安・睡眠・燃え尽き・境界線）...', zh: '按情绪或主题搜索 160 款免费工具（焦虑、睡眠、倦怠、边界）...', es: 'Buscar entre 160 herramientas (ansiedad, sueño, burnout, límites)...', pt: 'Buscar entre 160 ferramentas (ansiedade, sono, burnout, limites)...', de: '160 Tools nach Gefühl oder Thema durchsuchen (Angst, Schlaf, Burnout)...', fr: 'Rechercher parmi 160 outils (anxiété, sommeil, burn-out, limites)...', id: 'Cari 160 alat sesuai perasaan (cemas, tidur, burnout, batasan)...', tr: '160 araç içinde ara (kaygı, uyku, tükenmişlik, sınırlar)...', hi: '160 टूल खोजें (चिंता, नींद, बर्नआउट, सीमाएँ)...', ru: 'Поиск среди 160 инструментов (тревога, сон, выгорание, границы)...' };
 
   function detectLang() {
     var p = new URLSearchParams(window.location.search).get('lang');

@@ -662,3 +662,30 @@ body.has-bm-sticky {
         flex: 1 1 auto;
     }
 }
+
+/* Global Blog & Hub UX/UI Polish (Contrast, Korean Word-Break, Reduced Motion) */
+a.blog-card {
+    color: var(--text-primary, #f0f0f8);
+}
+a.blog-card:focus-visible,
+.bm-mid-jump-cta:focus-visible,
+.bm-mid-jump-lab:focus-visible,
+.bm-tool-bridge-cta:focus-visible {
+    outline: 2px solid #818cf8;
+    outline-offset: 2px;
+}
+:lang(ko) h1,
+:lang(ko) h2,
+:lang(ko) h3,
+:lang(ko) p {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+}
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

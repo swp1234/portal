@@ -29,7 +29,7 @@
 
     --text: #f0f0ff;
     --text-secondary: #a5a0d0;
-    --text-dim: #5a5580;
+    --text-dim: #928dbc;
 
     --radius: 16px;
     --radius-sm: 10px;
@@ -2642,11 +2642,23 @@ body {
     }
 
     .logo-text h1 {
-        font-size: 24px;
+        font-size: clamp(22px, 6.8vw, 30px);
+        max-width: 100%;
     }
 
     .portal-header {
-        padding: 16px 0 12px;
+        padding: 68px 0 16px;
+    }
+
+    .logo-area {
+        gap: 10px;
+        flex-wrap: nowrap;
+        max-width: 100%;
+    }
+
+    .logo-icon {
+        font-size: 34px;
+        flex-shrink: 0;
     }
 
     .search-box input {
@@ -2937,21 +2949,51 @@ input[type="submit"],
 /* Skip to main content link (hidden by default) */
 .skip-link {
     position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--primary);
-    color: white;
-    padding: 8px;
+    top: -999px;
+    left: 12px;
+    background: #4338ca;
+    color: #ffffff;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: 700;
     text-decoration: none;
-    z-index: 100;
+    z-index: 10001;
 }
 
 .skip-link:focus {
-    top: 0;
+    top: 12px;
+}
+
+:lang(ko) h1, :lang(ko) h2, :lang(ko) h3, :lang(ko) p {
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
 /* Mobile optimization - Disable complex animations on small screens */
 @media (max-width: 600px) {
+    html, body, .container {
+        overflow-x: clip;
+        max-width: 100%;
+    }
+
+    .portal-header {
+        padding: 68px 0 16px;
+    }
+
+    .logo-area {
+        gap: 10px;
+        max-width: 100%;
+    }
+
+    .logo-icon {
+        font-size: 34px;
+        flex-shrink: 0;
+    }
+
+    .logo-text h1 {
+        font-size: clamp(22px, 6.8vw, 30px);
+    }
+
     .app-card::after,
     .featured-card::after {
         display: none;

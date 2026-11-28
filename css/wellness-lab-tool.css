@@ -51,8 +51,8 @@ body.has-bm-sticky {
   position: absolute;
   top: -999px;
   left: 12px;
-  background: var(--accent);
-  color: #fff;
+  background: #4338ca;
+  color: #ffffff;
   padding: 10px 16px;
   border-radius: var(--radius-sm);
   min-height: 44px;
@@ -66,6 +66,31 @@ body.has-bm-sticky {
 }
 .skip:focus {
   top: 12px;
+}
+
+:lang(ko) h1,
+:lang(ko) h2,
+:lang(ko) h3,
+:lang(ko) .lead,
+:lang(ko) .panel-head p,
+:lang(ko) .faq-item p {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #818cf8;
+  outline-offset: 2px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #8b9bb4;
+  opacity: 1;
 }
 
 .hero {
@@ -186,12 +211,14 @@ body.has-bm-sticky {
 }
 
 .panel {
-  background: var(--bg-card);
+  background: linear-gradient(180deg, rgba(20, 30, 52, 0.88) 0%, var(--bg-card) 100%);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   padding: 24px 20px;
   margin-bottom: 24px;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 14px 36px rgba(2, 6, 23, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .panel-head {
@@ -226,27 +253,29 @@ body.has-bm-sticky {
 
 /* Preset chips & text inputs */
 .preset-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
   margin-bottom: 14px;
 }
 
 .preset-btn {
+  width: 100%;
   min-height: 44px;
   min-width: 44px;
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
+  padding: 12px 15px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.045);
   color: var(--text);
   font-family: inherit;
   font-size: 0.9rem;
   font-weight: 500;
+  line-height: 1.45;
   text-align: left;
   cursor: pointer;
   touch-action: manipulation;
-  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s, box-shadow 0.2s;
 }
 .preset-btn:hover {
   background: rgba(255, 255, 255, 0.09);
@@ -703,6 +732,7 @@ footer a {
 }
 
 @media (max-width: 720px) {
+  .preset-grid,
   .card-grid,
   .meter-stack,
   .bridge-grid,
@@ -714,7 +744,18 @@ footer a {
   }
 }
 
-/* Therapy-Prep & Personal Journaling Print Stylesheet (50 Wellness Labs) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Therapy-Prep & Personal Journaling Print Stylesheet (160 Wellness Labs) */
 @media print {
   body {
     background: #ffffff !important;
